@@ -2126,6 +2126,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-camera-roll/camera-roll@npm:^5.6.0":
+  version: 5.6.0
+  resolution: "@react-native-camera-roll/camera-roll@npm:5.6.0"
+  peerDependencies:
+    react-native: ">=0.59"
+  checksum: 736d39786d18eebd06a7856fcc59344862edab62c576b3be4ead7a897a0ffc8ca1493feb787c5b06c0b3f4414000025ab702e471fc82d4b67c01e0e43c8066fa
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-clean@npm:^10.1.1":
   version: 10.1.1
   resolution: "@react-native-community/cli-clean@npm:10.1.1"
@@ -8625,6 +8634,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-image-picker@npm:^5.4.2":
+  version: 5.4.2
+  resolution: "react-native-image-picker@npm:5.4.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: a858cb8777c99a8ce9e338c9fb4dc3ab09bef5b23f0751dd9dec7da630cc299d3afdcb479a76db2aa473e9132ad7fb6ae75ef12cf32a12f48684461a0b351212
+  languageName: node
+  linkType: hard
+
 "react-native-permissions@npm:^3.8.0":
   version: 3.8.0
   resolution: "react-native-permissions@npm:3.8.0"
@@ -8909,6 +8928,7 @@ __metadata:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.22.5
     "@babel/runtime": ^7.20.0
+    "@react-native-camera-roll/camera-roll": ^5.6.0
     "@react-native-community/eslint-config": ^3.2.0
     "@react-navigation/native": ^6.1.6
     "@react-navigation/native-stack": ^6.9.12
@@ -8929,6 +8949,7 @@ __metadata:
     react: 18.2.0
     react-native: 0.71.10
     react-native-haptic-feedback: ^2.0.3
+    react-native-image-picker: ^5.4.2
     react-native-permissions: ^3.8.0
     react-native-safe-area-context: ^4.5.3
     react-native-screens: ^3.21.0
