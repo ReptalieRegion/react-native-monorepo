@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "android": "react-native run-android",
-        "ios": "react-native run-ios",
+        "ios": "sh ./shell/ios-simulator.sh",
         "lint": "eslint .",
         "start": "react-native start",
         "test": "jest",
