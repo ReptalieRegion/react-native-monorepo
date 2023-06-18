@@ -1,5 +1,5 @@
 import React from 'react';
-import ImagePicker from '../molecules/ImagePicker';
+import ImagePicker from '../organisms/ImagePicker';
 
 const ImageCrop = () => {
     return <ImagePicker />;

@@ -7,6 +7,7 @@ import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react
 
 import HomePage from '@/pages/HomePage';
 import ImageCropPage from '@/pages/ImageCropPage';
+import ImageCropRightHeader from '@/components/ui/header/ImageCropRightHeader';
 
 const noHeaderOption: NativeStackNavigationOptions = { headerShown: false };
 
@@ -16,7 +17,15 @@ const RootRoutes = () => {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="HomePage">
                 <Stack.Screen name="HomePage" component={HomePage} options={noHeaderOption} />
-                <Stack.Screen name="ImageCropPage" component={ImageCropPage} options={{ headerTitle: '새 게시물' }} />
+                <Stack.Screen
+                    name="ImageCropPage"
+                    component={ImageCropPage}
+                    options={{
+                        headerTintColor: 'black',
+                        headerTitle: '새 게시물',
+                        headerRight: ImageCropRightHeader,
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
