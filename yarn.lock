@@ -2470,6 +2470,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@reptalieregion/webview-bridge@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@reptalieregion/webview-bridge@npm:1.0.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40reptalieregion%2Fwebview-bridge%2F1.0.2%2F45a1288f55b2972605d701804486e672149b68c3"
+  checksum: 206f27a7832c9f741468d7670977b9a2d7c08232ce3f6eb18932e6211c5effdfd1e9a029e8b79fee669388833d2205e193a146c9080b6873c03aca8235ad6de4
+  languageName: node
+  linkType: hard
+
 "@sideway/address@npm:^4.1.3":
   version: 4.1.4
   resolution: "@sideway/address@npm:4.1.4"
@@ -8932,6 +8939,7 @@ __metadata:
     "@react-native-community/eslint-config": ^3.2.0
     "@react-navigation/native": ^6.1.6
     "@react-navigation/native-stack": ^6.9.12
+    "@reptalieregion/webview-bridge": 1.0.2
     "@tsconfig/react-native": ^2.0.2
     "@types/jest": ^29.2.1
     "@types/react": ^18.0.24
