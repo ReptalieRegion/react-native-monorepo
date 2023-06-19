@@ -14,8 +14,7 @@ const HapticRunner = (command: keyof IHapticInterface, payload: unknown) => {
             Haptic.trigger(payload as TTriggerPayload);
             break;
         default:
-            console.error('Haptic', command, payload);
-            break;
+            throw new Error('[webview-bridge] not found Haptic command');
     }
 };
 

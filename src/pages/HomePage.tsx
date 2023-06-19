@@ -6,6 +6,7 @@ import { RootStackParamList } from '<Routes>';
 import { useNavigation } from '@react-navigation/native';
 import HapticRunner from '@/utils/webview-bridge/Haptic';
 import { deserialize } from '@reptalieregion/webview-bridge';
+import NavigateRunner from '@/utils/webview-bridge/Navigate';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'HomePage'>;
 
@@ -23,23 +24,27 @@ const getMessage = (event: WebViewMessageEvent, navigation: HomeScreenNavigation
     }
 
     const { module, command, data } = message;
-    switch (module) {
-        case 'Haptic':
-            HapticRunner(command, data);
-            break;
-        case 'Navigation':
-            console.log('navigation', navigation);
-            break;
-        default:
-            console.error('지정되지 않은 module', module);
-            break;
+    try {
+        switch (module) {
+            case 'Haptic':
+                HapticRunner(command, data);
+                break;
+            case 'Navigation':
+                NavigateRunner<'HomePage'>(command, data, navigation);
+                break;
+            default:
+                throw new Error('[webview-bridge] not found module');
+        }
+    } catch (error) {
+        console.error(error);
     }
 };
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);
     const navigation = useNavigation<HomeScreenNavigationProp>();
-    const uri = 'http://172.20.10.7:3000';
+    // const uri = 'http://172.20.10.7:3000';
+    const uri = 'http://192.168.0.10:3000';
     // const uri = 'http://localhost:3000';
 
     return (
