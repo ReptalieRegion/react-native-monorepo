@@ -5,8 +5,8 @@ import { RootStackParamList } from '<Routes>';
 import { NavigationContainer } from '@react-navigation/native';
 import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomePage from '@/pages/HomePage';
-import ImageCropPage from '@/pages/ImageCropPage';
+import HomePage from '@/pages/HomePage/page';
+import ImageCropPage from '@/pages/ImageCropPage/page';
 import ImageCropRightHeader from '@/components/ui/header/ImageCropRightHeader';
 
 const noHeaderOption: NativeStackNavigationOptions = { headerShown: false };
