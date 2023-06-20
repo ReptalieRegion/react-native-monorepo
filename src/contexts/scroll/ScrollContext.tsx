@@ -65,6 +65,7 @@ const ScrollContextComponent = ({ children }: IScrollContextComponentProps) => {
                 keyboardVerticalOffset={insets.bottom + insets.top + 20}
             >
                 <ScrollView
+                    keyboardShouldPersistTaps="handled"
                     style={styles.contentContainer}
                     ref={scrollViewRef}
                     onScrollBeginDrag={handleOnScrollBeginDrag}

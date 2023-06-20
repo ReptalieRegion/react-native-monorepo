@@ -7,9 +7,10 @@ import {
     Text,
     NativeSyntheticEvent,
     TextInputContentSizeChangeEventData,
-    Keyboard,
     TextInputKeyPressEventData,
     TextInputSelectionChangeEventData,
+    TouchableOpacity,
+    Keyboard,
 } from 'react-native';
 
 type TSelectionInfo = {
@@ -27,17 +28,7 @@ const WritingComponent = () => {
     const selectionRef = useRef<TSelectionInfo>({ start: 0, end: 0 });
 
     useEffect(() => {
-        if (isScrolling) {
-            textInputRef.current?.blur();
-        }
-    }, [isScrolling]);
-
-    useEffect(() => {
         const scrollIntoViewEvent = Keyboard.addListener('keyboardWillShow', () => {
-            if (isScrolling) {
-                Keyboard.dismiss();
-                return;
-            }
             scrollIntoViewTextInput(textInputRef);
         });
 
@@ -83,21 +74,29 @@ const WritingComponent = () => {
         scrollIntoViewTextInput(textInputRef);
     };
 
+    const handleTextInputFocus = () => {
+        if (!isScrolling) {
+            textInputRef.current?.focus();
+        }
+    };
+
     return (
         <View style={styles.container}>
-            <TextInput
-                pointerEvents={isScrolling ? 'none' : undefined}
-                ref={textInputRef}
-                style={[styles.textarea, { height: textInputHeight }]}
-                placeholder="일상을 공유해 주세요."
-                value={text}
-                multiline={true}
-                maxLength={MAX_CHARACTER_COUNT}
-                onKeyPress={handleKeyPress}
-                onChangeText={handleTextChange}
-                onSelectionChange={handleSelectionChange}
-                onContentSizeChange={handleContentSizeChange}
-            />
+            <TouchableOpacity activeOpacity={1} onPress={handleTextInputFocus}>
+                <TextInput
+                    pointerEvents="none"
+                    ref={textInputRef}
+                    style={[styles.textarea, { height: textInputHeight }]}
+                    placeholder="일상을 공유해 주세요."
+                    value={text}
+                    multiline={true}
+                    maxLength={MAX_CHARACTER_COUNT}
+                    onKeyPress={handleKeyPress}
+                    onChangeText={handleTextChange}
+                    onSelectionChange={handleSelectionChange}
+                    onContentSizeChange={handleContentSizeChange}
+                />
+            </TouchableOpacity>
             <View style={styles.characterCountContainer}>
                 <Text style={styles.characterCountText}>{`${text.length} / ${MAX_CHARACTER_COUNT}`}</Text>
             </View>
@@ -110,6 +109,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         paddingLeft: 15,
         paddingRight: 15,
+        marginBottom: 20,
     },
     textarea: {
         borderColor: 'lightgray',
