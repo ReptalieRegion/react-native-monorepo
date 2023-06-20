@@ -1,13 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
-import PhotoRegister from '@/components/share-post-write/atoms/PhotoRegister';
+import SharePostWrite from '@/components/share-post-write/template/SharePostWrite';
 
 const SharePostWritePage = () => {
-    return (
-        <View>
-            <PhotoRegister />
-        </View>
-    );
+    return <SharePostWrite />;
 };
 
 export default SharePostWritePage;
