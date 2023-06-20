@@ -25,16 +25,26 @@ const WritingComponent = () => {
     const [text, setText] = useState<string>('');
     const [textInputHeight, setTextInputHeight] = useState<number>(200);
     const selectionRef = useRef<TSelectionInfo>({ start: 0, end: 0 });
-    console.log(isScrolling);
+
+    useEffect(() => {
+        if (isScrolling) {
+            textInputRef.current?.blur();
+        }
+    }, [isScrolling]);
+
     useEffect(() => {
         const scrollIntoViewEvent = Keyboard.addListener('keyboardWillShow', () => {
+            if (isScrolling) {
+                Keyboard.dismiss();
+                return;
+            }
             scrollIntoViewTextInput(textInputRef);
         });
 
         return () => {
             scrollIntoViewEvent.remove();
         };
-    }, [scrollIntoViewTextInput]);
+    }, [scrollIntoViewTextInput, isScrolling]);
 
     const handleTextChange = (inputText: string) => {
         setText(inputText);

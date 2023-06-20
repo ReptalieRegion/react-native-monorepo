@@ -43,7 +43,7 @@ const ScrollContextComponent = ({ children }: IScrollContextComponentProps) => {
     const handleOnScrollEndDrag = () => {
         setTimeout(() => {
             setIsScrolling(false);
-        }, 1000);
+        }, 500);
     };
 
     const scrollIntoViewTextInput = (ref: RefObject<TextInput>) => {
