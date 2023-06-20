@@ -1,8 +1,16 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { ImageCropPageNavigationProp } from '<Routes>';
+import { useNavigation } from '@react-navigation/native';
+import { Text, TouchableOpacity } from 'react-native';
 
 const ImageCropRightHeader = () => {
-    return <Text>다음</Text>;
+    const navigate = useNavigation<ImageCropPageNavigationProp>();
+
+    return (
+        <TouchableOpacity onPress={() => navigate.push('SharePostWritePage')}>
+            <Text>다음</Text>
+        </TouchableOpacity>
+    );
 };
 
 export default ImageCropRightHeader;

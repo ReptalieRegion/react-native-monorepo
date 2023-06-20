@@ -1,6 +1,7 @@
 import React from 'react';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { shallow } from 'zustand/shallow';
 import imageCropStore from '@/stores/image-crop';
 
 interface IImageContentProps {
@@ -20,8 +21,8 @@ const ImageSelectCircle = ({ uri }: IImageSelectCircle) => {
             position: 'absolute',
             top: 5,
             right: 5,
-            width: 15,
-            height: 15,
+            width: 20,
+            height: 20,
             backgroundColor: selectedNumber !== -1 ? '#006600' : '#D2D2D2AA',
             borderColor: selectedNumber !== -1 ? '#006600' : '#FFFFFF',
             borderWidth: 1,
@@ -32,7 +33,7 @@ const ImageSelectCircle = ({ uri }: IImageSelectCircle) => {
             alignItems: 'center',
         },
         text: {
-            fontSize: 12,
+            fontSize: 14,
             color: '#FFFFFF',
         },
     });
@@ -40,10 +41,16 @@ const ImageSelectCircle = ({ uri }: IImageSelectCircle) => {
 };
 
 const ImageContent = ({ item, numColumns }: IImageContentProps) => {
-    const setCurrentSelectedPhoto = imageCropStore((state) => state.setCurrentSelectedPhoto);
-    const setSelectedPhotos = imageCropStore((state) => state.setSelectedPhotos);
-    const deleteSelectedPhotos = imageCropStore((state) => state.deleteSelectedPhotos);
-    const isCurrentPhoto = imageCropStore((state) => state.currentSelectedPhoto?.node.image.uri === item.node.image.uri);
+    const { isCurrentPhoto, setCurrentSelectedPhoto, setSelectedPhotos, deleteSelectedPhotos } = imageCropStore(
+        (state) => ({
+            setCurrentSelectedPhoto: state.setCurrentSelectedPhoto,
+            setSelectedPhotos: state.setSelectedPhotos,
+            deleteSelectedPhotos: state.deleteSelectedPhotos,
+            isCurrentPhoto: state.currentSelectedPhoto?.node.image.uri === item.node.image.uri,
+        }),
+        shallow,
+    );
+    console.log('hi');
     const imageWidth = Dimensions.get('window').width / numColumns - 2;
     const styles = StyleSheet.create({
         view: {
@@ -57,6 +64,7 @@ const ImageContent = ({ item, numColumns }: IImageContentProps) => {
             position: 'absolute',
             height: imageWidth,
             width: imageWidth,
+            opacity: isCurrentPhoto ? 0.5 : 1,
         },
     });
 
