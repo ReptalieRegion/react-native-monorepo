@@ -24,6 +24,8 @@ const defaultImageCrop: TImageCropState = {
     photos: [],
 };
 
+const MAX_SELECT_PHOTO_COUNT = 5;
+
 const imageCropStore = create<TImageCropState & IImageCropActions>()(
     devtools((set, get) => ({
         ...defaultImageCrop,
@@ -33,7 +35,7 @@ const imageCropStore = create<TImageCropState & IImageCropActions>()(
         setSelectedPhotos: (photo) => {
             const { selectedPhotos } = get();
             const isExistPhoto = selectedPhotos.findIndex(({ node }) => node.image.uri === photo.node.image.uri) !== -1;
-            if (isExistPhoto) {
+            if (isExistPhoto || selectedPhotos.length === MAX_SELECT_PHOTO_COUNT) {
                 return;
             }
 
