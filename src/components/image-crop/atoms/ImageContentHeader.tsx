@@ -2,6 +2,17 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import AlbumPicker from './AlbumPicker';
 
+const ImageContentHeader = () => {
+    return (
+        <View style={styles.container}>
+            <AlbumPicker />
+            <View style={styles.view}>
+                <Text>카메라</Text>
+            </View>
+        </View>
+    );
+};
+
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
@@ -21,16 +32,5 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
 });
-
-const ImageContentHeader = () => {
-    return (
-        <View style={styles.container}>
-            <AlbumPicker />
-            <View style={styles.view}>
-                <Text>카메라</Text>
-            </View>
-        </View>
-    );
-};
 
 export default ImageContentHeader;

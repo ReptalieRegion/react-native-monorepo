@@ -1,8 +1,22 @@
 import CancelButton from '@/assets/icons/CancelButton';
 import imageCropStore from '@/stores/image-crop';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
-import React from 'react';
+import React, { useRef } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+
+const RenderImage = ({ item }: { item: PhotoIdentifier }) => {
+    const viewRef = useRef<View>(null);
+    const deleteSelectedPhotos = imageCropStore((state) => state.deleteSelectedPhotos);
+
+    return (
+        <View ref={viewRef} style={styles.imageContainer}>
+            <TouchableOpacity style={styles.cancelButton} onPress={() => deleteSelectedPhotos(item.node.image.uri)}>
+                <CancelButton width={16} height={16} fill={'white'} />
+            </TouchableOpacity>
+            <Image style={styles.image} source={{ uri: item.node.image.uri }} />
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     imageContainer: {
@@ -33,18 +47,5 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
 });
-
-const RenderImage = ({ item }: { item: PhotoIdentifier }) => {
-    const deleteSelectedPhotos = imageCropStore((state) => state.deleteSelectedPhotos);
-
-    return (
-        <View style={styles.imageContainer}>
-            <TouchableOpacity style={styles.cancelButton} onPress={() => deleteSelectedPhotos(item.node.image.uri)}>
-                <CancelButton width={16} height={16} fill={'white'} />
-            </TouchableOpacity>
-            <Image style={styles.image} source={{ uri: item.node.image.uri }} />
-        </View>
-    );
-};
 
 export default RenderImage;

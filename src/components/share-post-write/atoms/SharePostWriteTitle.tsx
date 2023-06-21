@@ -5,6 +5,15 @@ interface ISharePostWriteTitleProps {
     title: string;
 }
 
+const SharePostWriteTitle = ({ title }: ISharePostWriteTitleProps) => {
+    return (
+        <Text style={styles.text}>
+            {title}
+            <Text style={styles.require}>{' *'}</Text>
+        </Text>
+    );
+};
+
 const styles = StyleSheet.create({
     text: {
         marginTop: 20,
@@ -16,14 +25,5 @@ const styles = StyleSheet.create({
         color: 'red',
     },
 });
-
-const SharePostWriteTitle = ({ title }: ISharePostWriteTitleProps) => {
-    return (
-        <Text style={styles.text}>
-            {title}
-            <Text style={styles.require}>{' *'}</Text>
-        </Text>
-    );
-};
 
 export default SharePostWriteTitle;

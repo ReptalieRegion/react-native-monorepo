@@ -6,16 +6,6 @@ import { FlatList, StyleSheet } from 'react-native';
 import ImageContent from '../atoms/ImageContent';
 import imageCropStore from '@/stores/image-crop';
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    contentContainer: {
-        flexGrow: 1,
-        paddingBottom: 16, // 필요에 따라 패딩을 조정하세요
-    },
-});
-
 const NUM_COLUMNS = 4;
 const LOAD_PHOTO_LIMIT = 40;
 
@@ -89,5 +79,15 @@ const ImageList = () => {
         )
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    contentContainer: {
+        flexGrow: 1,
+        paddingBottom: 16, // 필요에 따라 패딩을 조정하세요
+    },
+});
 
 export default ImageList;
