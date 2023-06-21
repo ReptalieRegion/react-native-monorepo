@@ -65,7 +65,7 @@ const imageCropStore = create<TImageCropState & IImageCropActions>()(
             set((state) => ({
                 ...state,
                 currentSelectedPhoto: firstPhoto,
-                selectedPhotos: [...selectedPhotos, firstPhoto],
+                selectedPhotos: [...selectedPhotos],
                 photos,
             }));
         },

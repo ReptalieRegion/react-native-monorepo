@@ -46,11 +46,12 @@ const ImageContent = ({ item, numColumns }: IImageContentProps) => {
             setCurrentSelectedPhoto: state.setCurrentSelectedPhoto,
             setSelectedPhotos: state.setSelectedPhotos,
             deleteSelectedPhotos: state.deleteSelectedPhotos,
-            isCurrentPhoto: state.currentSelectedPhoto?.node.image.uri === item.node.image.uri,
+            isCurrentPhoto:
+                state.selectedPhotos.length !== 0 && state.currentSelectedPhoto?.node.image.uri === item.node.image.uri,
         }),
         shallow,
     );
-    console.log('hi');
+
     const imageWidth = Dimensions.get('window').width / numColumns - 2;
     const styles = StyleSheet.create({
         view: {
