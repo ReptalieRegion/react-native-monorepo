@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { TUIPromptsDefaultProps } from '<UIPrompts>';
-import { Animated, Dimensions, StyleSheet, Text } from 'react-native';
+import { Animated, Dimensions, Easing, StyleSheet, Text } from 'react-native';
 import { trigger } from 'react-native-haptic-feedback';
 
 interface IToastContainerProps extends TUIPromptsDefaultProps {
@@ -18,6 +18,7 @@ const toastWidth = screenWidth * 0.95;
 
 const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: IToastContainerProps) => {
     const translateY = useRef(new Animated.Value(0)).current;
+    const translateX = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         const startAnimation = () => {
@@ -27,15 +28,16 @@ const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: ITo
                 useNativeDriver: true,
             }).start(({ finished }) => {
                 if (finished) {
-                    setTimeout(endAnimation, 1000);
+                    setTimeout(endAnimation, 1500);
                 }
             });
         };
 
         const endAnimation = () => {
-            Animated.timing(translateY, {
-                toValue: -50,
+            Animated.timing(translateX, {
+                toValue: screenWidth,
                 duration: 200,
+                easing: Easing.cubic,
                 useNativeDriver: true,
             }).start(({ finished }) => {
                 if (finished) {
@@ -46,7 +48,7 @@ const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: ITo
 
         trigger('impactLight', { enableVibrateFallback: true, ignoreAndroidSystemSettings: false });
         startAnimation();
-    }, [uiPromptsClose, translateY]);
+    }, [uiPromptsClose, translateY, translateX]);
 
     const customStyles = StyleSheet.create({
         container: {
@@ -58,7 +60,7 @@ const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: ITo
     });
 
     return (
-        <Animated.View style={[styles.container, customStyles.container, { transform: [{ translateY: translateY }] }]}>
+        <Animated.View style={[styles.container, customStyles.container, { transform: [{ translateY }, { translateX }] }]}>
             <Text style={[customStyles.text]}>{text}</Text>
         </Animated.View>
     );
