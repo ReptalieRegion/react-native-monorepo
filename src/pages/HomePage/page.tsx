@@ -1,18 +1,11 @@
 import React, { useRef } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 import { HomePageNavigationProp } from '<Routes>';
 import { useNavigation } from '@react-navigation/native';
 import HapticRunner from '@/utils/webview-bridge/Haptic';
 import { deserialize } from '@reptalieregion/webview-bridge';
 import NavigateRunner from '@/utils/webview-bridge/Navigate';
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
-});
 
 const getMessage = (event: WebViewMessageEvent, navigation: HomePageNavigationProp) => {
     const message = deserialize(event.nativeEvent.data);
@@ -45,16 +38,21 @@ const HomePage = () => {
     const uri = 'http://localhost:3000';
 
     return (
-        <SafeAreaView style={styles.container}>
-            <WebView
-                ref={webviewRef}
-                source={{ uri }}
-                style={styles.container}
-                webviewDebuggingEnabled={true}
-                onMessage={(event) => getMessage(event, navigation)}
-            />
-        </SafeAreaView>
+        <WebView
+            ref={webviewRef}
+            source={{ uri }}
+            style={styles.container}
+            webviewDebuggingEnabled={true}
+            onMessage={(event) => getMessage(event, navigation)}
+        />
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: 'white',
+    },
+});
 
 export default HomePage;
