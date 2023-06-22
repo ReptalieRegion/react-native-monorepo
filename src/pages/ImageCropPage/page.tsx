@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import ImageCrop from '@/components/image-crop/template/ImageCrop';
-import imageCropStore from '@/stores/image-crop';
+import SharePostStore from '@/stores/share-post';
 
 const ImageCropPage = () => {
-    const reset = imageCropStore((state) => state.reset);
+    const reset = SharePostStore((state) => state.reset);
 
     useEffect(() => {
         return () => reset();

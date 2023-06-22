@@ -1,11 +1,11 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
-import imageCropStore from '@/stores/image-crop';
+import SharePostStore from '@/stores/share-post';
 import RenderImage from '../atoms/RenderImage';
 import SharePostWriteTitle from '../atoms/SharePostWriteTitle';
 
 const PhotoRegister = () => {
-    const { selectedPhotos } = imageCropStore();
+    const { selectedPhotos } = SharePostStore();
 
     return (
         <View>

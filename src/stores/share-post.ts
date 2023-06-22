@@ -3,13 +3,13 @@ import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-type TImageCropState = {
+type TSharePostState = {
     currentSelectedPhoto: PhotoIdentifier | null;
     selectedPhotos: PhotoIdentifier[];
     photos: PhotoIdentifier[];
 };
 
-interface IImageCropActions {
+interface ISharePostActions {
     setSelectedPhotos: (photo: PhotoIdentifier) => 'limit' | 'success' | 'exists';
     deleteSelectedPhotos: (uri: string) => void;
     findSelectedPhoto: (uri: string) => number;
@@ -18,15 +18,15 @@ interface IImageCropActions {
     reset: () => void;
 }
 
-const defaultImageCrop: TImageCropState = {
+const defaultSharePost: TSharePostState = {
     currentSelectedPhoto: null,
     selectedPhotos: [],
     photos: [],
 };
 
-const imageCropStore = create<TImageCropState & IImageCropActions>()(
+const SharePostStore = create<TSharePostState & ISharePostActions>()(
     devtools((set, get) => ({
-        ...defaultImageCrop,
+        ...defaultSharePost,
         setSelectedPhotos: (photo) => {
             const { selectedPhotos } = get();
             const isExistPhoto = selectedPhotos.findIndex(({ node }) => node.image.uri === photo.node.image.uri) !== -1;
@@ -74,9 +74,9 @@ const imageCropStore = create<TImageCropState & IImageCropActions>()(
             }));
         },
         reset: () => {
-            set(defaultImageCrop);
+            set(defaultSharePost);
         },
     })),
 );
 
-export default imageCropStore;
+export default SharePostStore;

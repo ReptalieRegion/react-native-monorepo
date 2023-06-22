@@ -4,15 +4,23 @@ import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { useEffect } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import ImageContent from '../atoms/ImageContent';
-import imageCropStore from '@/stores/image-crop';
+import SharePostStore from '@/stores/share-post';
+import { shallow } from 'zustand/shallow';
 
 const NUM_COLUMNS = 4;
 const LOAD_PHOTO_LIMIT = 40;
 
 const ImageList = () => {
-    const photos = imageCropStore((state) => state.photos);
-    const addPhotos = imageCropStore((state) => state.addPhotos);
-    const initPhotos = imageCropStore((state) => state.initPhotos);
+    const { photos, addPhotos, initPhotos } = SharePostStore(
+        (state) => ({
+            photos: state.photos,
+            addPhotos: state.addPhotos,
+            initPhotos: state.initPhotos,
+        }),
+        shallow,
+    );
+
+    console.log('rerender');
 
     const isLoadingMorePhotosRef = useRef<boolean>(false);
     const isLastPhotosRef = useRef<boolean>(false);
