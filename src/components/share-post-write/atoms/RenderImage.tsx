@@ -4,12 +4,22 @@ import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import React, { useRef } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-const RenderImage = ({ item }: { item: PhotoIdentifier }) => {
+interface IRenderImageProps {
+    item: PhotoIdentifier;
+    isLastImage: boolean;
+}
+
+const RenderImage = ({ item, isLastImage }: IRenderImageProps) => {
     const viewRef = useRef<View>(null);
     const deleteSelectedPhotos = imageCropStore((state) => state.deleteSelectedPhotos);
+    const customStyle = StyleSheet.create({
+        imageContainer: {
+            marginRight: isLastImage ? 20 : undefined,
+        },
+    });
 
     return (
-        <View ref={viewRef} style={styles.imageContainer}>
+        <View ref={viewRef} style={[styles.imageContainer, customStyle.imageContainer]}>
             <TouchableOpacity style={styles.cancelButton} onPress={() => deleteSelectedPhotos(item.node.image.uri)}>
                 <CancelButton width={16} height={16} fill={'white'} />
             </TouchableOpacity>
@@ -23,7 +33,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         width: 74,
         height: 74,
-        marginLeft: 15,
+        marginLeft: 20,
     },
     cancelButton: {
         position: 'absolute',

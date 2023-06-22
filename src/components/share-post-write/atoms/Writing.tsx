@@ -124,8 +124,8 @@ const WritingComponent = () => {
 const styles = StyleSheet.create({
     container: {
         position: 'relative',
-        paddingLeft: 15,
-        paddingRight: 15,
+        paddingLeft: 20,
+        paddingRight: 20,
         marginBottom: 20,
     },
     textareaContainer: {

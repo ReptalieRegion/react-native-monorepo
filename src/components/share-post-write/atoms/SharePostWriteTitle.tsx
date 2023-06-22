@@ -17,7 +17,7 @@ const SharePostWriteTitle = ({ title }: ISharePostWriteTitleProps) => {
 const styles = StyleSheet.create({
     text: {
         marginTop: 20,
-        marginLeft: 15,
+        marginLeft: 20,
         marginBottom: 10,
         fontWeight: 'bold',
     },

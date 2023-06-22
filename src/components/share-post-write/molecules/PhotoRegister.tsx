@@ -14,7 +14,7 @@ const PhotoRegister = () => {
                 data={selectedPhotos}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                renderItem={({ item }) => <RenderImage item={item} />}
+                renderItem={({ item, index }) => <RenderImage item={item} isLastImage={selectedPhotos.length - 1 === index} />}
                 keyExtractor={(item) => item.node.image.uri}
             />
         </View>
