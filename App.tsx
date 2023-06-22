@@ -1,6 +1,11 @@
 import React from 'react';
 import RootRoutes from '@/routes';
+import UIPromptsContextComponent from '@/contexts/ui-prompts/UIPromptsContext';
 
 export default function App() {
-    return <RootRoutes />;
+    return (
+        <UIPromptsContextComponent>
+            <RootRoutes />
+        </UIPromptsContextComponent>
+    );
 }

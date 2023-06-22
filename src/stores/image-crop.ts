@@ -1,3 +1,4 @@
+import { MAX_SELECT_PHOTO_COUNT } from '@/const/image';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
@@ -9,8 +10,7 @@ type TImageCropState = {
 };
 
 interface IImageCropActions {
-    setCurrentSelectedPhoto: (photo: PhotoIdentifier) => void;
-    setSelectedPhotos: (photo: PhotoIdentifier) => void;
+    setSelectedPhotos: (photo: PhotoIdentifier) => 'limit' | 'success' | 'exists';
     deleteSelectedPhotos: (uri: string) => void;
     findSelectedPhoto: (uri: string) => number;
     addPhotos: (newPhotos: PhotoIdentifier[]) => void;
@@ -24,22 +24,24 @@ const defaultImageCrop: TImageCropState = {
     photos: [],
 };
 
-const MAX_SELECT_PHOTO_COUNT = 5;
-
 const imageCropStore = create<TImageCropState & IImageCropActions>()(
     devtools((set, get) => ({
         ...defaultImageCrop,
-        setCurrentSelectedPhoto: (photo) => {
-            set((state) => ({ ...state, currentSelectedPhoto: photo }));
-        },
         setSelectedPhotos: (photo) => {
             const { selectedPhotos } = get();
             const isExistPhoto = selectedPhotos.findIndex(({ node }) => node.image.uri === photo.node.image.uri) !== -1;
-            if (isExistPhoto || selectedPhotos.length === MAX_SELECT_PHOTO_COUNT) {
-                return;
+            if (isExistPhoto) {
+                set((state) => ({ ...state, currentSelectedPhoto: photo }));
+                return 'exists';
             }
 
-            set((state) => ({ ...state, selectedPhotos: [...selectedPhotos, photo] }));
+            const isLimitPhotos = selectedPhotos.length >= MAX_SELECT_PHOTO_COUNT;
+            if (isLimitPhotos) {
+                return 'limit';
+            }
+
+            set((state) => ({ ...state, currentSelectedPhoto: photo, selectedPhotos: [...selectedPhotos, photo] }));
+            return 'success';
         },
         deleteSelectedPhotos: (uri) => {
             const { selectedPhotos } = get();

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { shallow } from 'zustand/shallow';
 import imageCropStore from '@/stores/image-crop';
+import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
+import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
 
 interface IImageContentProps {
     item: PhotoIdentifier;
@@ -41,9 +43,9 @@ const ImageSelectCircle = ({ uri }: IImageSelectCircle) => {
 };
 
 const ImageContent = ({ item, numColumns }: IImageContentProps) => {
-    const { isCurrentPhoto, setCurrentSelectedPhoto, setSelectedPhotos, deleteSelectedPhotos } = imageCropStore(
+    const { setOpenList } = useContext(UIPromptsContext);
+    const { isCurrentPhoto, setSelectedPhotos, deleteSelectedPhotos } = imageCropStore(
         (state) => ({
-            setCurrentSelectedPhoto: state.setCurrentSelectedPhoto,
             setSelectedPhotos: state.setSelectedPhotos,
             deleteSelectedPhotos: state.deleteSelectedPhotos,
             isCurrentPhoto:
@@ -73,8 +75,11 @@ const ImageContent = ({ item, numColumns }: IImageContentProps) => {
         if (isCurrentPhoto) {
             deleteSelectedPhotos(item.node.image.uri);
         } else {
-            setCurrentSelectedPhoto(item);
-            setSelectedPhotos(item);
+            const message = setSelectedPhotos(item);
+            if (message === 'limit') {
+                const { uiPromptsOpen } = setOpenList({ openType: 'toast', props: {}, Component: PhotoLimit });
+                uiPromptsOpen();
+            }
         }
     };
 
