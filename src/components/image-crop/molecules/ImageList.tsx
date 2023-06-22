@@ -20,8 +20,6 @@ const ImageList = () => {
         shallow,
     );
 
-    console.log('rerender');
-
     const isLoadingMorePhotosRef = useRef<boolean>(false);
     const isLastPhotosRef = useRef<boolean>(false);
     const isFirstRef = useRef<boolean>(false);

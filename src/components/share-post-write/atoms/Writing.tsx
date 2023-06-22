@@ -1,4 +1,5 @@
 import { ScrollContext } from '@/contexts/scroll/ScrollContext';
+import SharePostStore from '@/stores/share-post';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
     View,
@@ -11,6 +12,7 @@ import {
     TextInputSelectionChangeEventData,
     Keyboard,
 } from 'react-native';
+import { shallow } from 'zustand/shallow';
 
 type TSelectionInfo = {
     start: number;
@@ -21,9 +23,15 @@ const MAX_CHARACTER_COUNT = 500;
 
 const WritingComponent = () => {
     const { scrollIntoView, isScrolling, scrollInfo } = useContext(ScrollContext);
+    const { postContent, setPostContent } = SharePostStore(
+        (state) => ({
+            postContent: state.postContent,
+            setPostContent: state.setPostContent,
+        }),
+        shallow,
+    );
     const textInputRef = useRef<TextInput>(null);
     const textAreaView = useRef<View>(null);
-    const [text, setText] = useState<string>('');
     const [textInputHeight, setTextInputHeight] = useState<number>(200);
     const selectionRef = useRef<TSelectionInfo>({ start: 0, end: 0 });
     const pressOutInfoRef = useRef<{ pageY: number; locationY: number }>({ pageY: 0, locationY: 0 });
@@ -48,7 +56,7 @@ const WritingComponent = () => {
     }, [scrollInfo, scrollIntoView]);
 
     const handleTextChange = (inputText: string) => {
-        setText(inputText);
+        setPostContent(inputText);
     };
 
     const handleSelectionChange = (event: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
@@ -62,15 +70,15 @@ const WritingComponent = () => {
             return;
         }
 
-        const textSize = text.length;
+        const textSize = postContent.length;
         if (key.length > 1) {
-            const newText = text.slice(0, start) + text.slice(end, textSize);
-            setText(newText);
+            const newText = postContent.slice(0, start) + postContent.slice(end, textSize);
+            setPostContent(newText);
             return;
         }
 
-        const newText = text.slice(0, start) + key + text.slice(end, textSize);
-        setText(newText);
+        const newText = postContent.slice(0, start) + key + postContent.slice(end, textSize);
+        setPostContent(newText);
         selectionRef.current = { start: textSize, end: textSize };
     };
 
@@ -99,7 +107,7 @@ const WritingComponent = () => {
                     ref={textInputRef}
                     style={[styles.textarea, { height: textInputHeight }]}
                     placeholder="일상을 공유해 주세요."
-                    value={text}
+                    value={postContent}
                     multiline={true}
                     maxLength={MAX_CHARACTER_COUNT}
                     onPressOut={(event) =>
@@ -115,7 +123,7 @@ const WritingComponent = () => {
                 />
             </View>
             <View style={styles.characterCountContainer}>
-                <Text style={styles.characterCountText}>{`${text.length} / ${MAX_CHARACTER_COUNT}`}</Text>
+                <Text style={styles.characterCountText}>{`${postContent.length} / ${MAX_CHARACTER_COUNT}`}</Text>
             </View>
         </View>
     );

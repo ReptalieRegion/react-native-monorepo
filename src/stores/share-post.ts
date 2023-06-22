@@ -7,6 +7,7 @@ type TSharePostState = {
     currentSelectedPhoto: PhotoIdentifier | null;
     selectedPhotos: PhotoIdentifier[];
     photos: PhotoIdentifier[];
+    postContent: string;
 };
 
 interface ISharePostActions {
@@ -15,6 +16,7 @@ interface ISharePostActions {
     findSelectedPhoto: (uri: string) => number;
     addPhotos: (newPhotos: PhotoIdentifier[]) => void;
     initPhotos: (photos: PhotoIdentifier[]) => void;
+    setPostContent: (content: string) => void;
     reset: () => void;
 }
 
@@ -22,6 +24,7 @@ const defaultSharePost: TSharePostState = {
     currentSelectedPhoto: null,
     selectedPhotos: [],
     photos: [],
+    postContent: '',
 };
 
 const SharePostStore = create<TSharePostState & ISharePostActions>()(
@@ -42,6 +45,9 @@ const SharePostStore = create<TSharePostState & ISharePostActions>()(
 
             set((state) => ({ ...state, currentSelectedPhoto: photo, selectedPhotos: [...selectedPhotos, photo] }));
             return 'success';
+        },
+        setPostContent: (content) => {
+            set((state) => ({ ...state, postContent: content }));
         },
         deleteSelectedPhotos: (uri) => {
             const { selectedPhotos } = get();
