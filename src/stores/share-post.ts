@@ -52,12 +52,15 @@ const SharePostStore = create<TSharePostState & ISharePostActions>()(
         deleteSelectedPhotos: (uri) => {
             const { selectedPhotos } = get();
             const filteredSelectedPhotos = selectedPhotos.filter(({ node }) => node.image.uri !== uri);
-            const lastIndex = filteredSelectedPhotos.length !== 0 ? filteredSelectedPhotos.length - 1 : 0;
+            const currentSelectedPhoto =
+                filteredSelectedPhotos.length !== 0
+                    ? filteredSelectedPhotos[filteredSelectedPhotos.length - 1]
+                    : selectedPhotos[0];
 
             set((state) => ({
                 ...state,
                 selectedPhotos: filteredSelectedPhotos,
-                currentSelectedPhoto: filteredSelectedPhotos[lastIndex],
+                currentSelectedPhoto,
             }));
         },
         findSelectedPhoto: (uri: string) => {
