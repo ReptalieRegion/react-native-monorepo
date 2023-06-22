@@ -5,7 +5,7 @@ import RenderImage from '../atoms/RenderImage';
 import SharePostWriteTitle from '../atoms/SharePostWriteTitle';
 
 const PhotoRegister = () => {
-    const { selectedPhotos } = SharePostStore();
+    const selectedPhotos = SharePostStore((state) => state.selectedPhotos);
 
     return (
         <View>

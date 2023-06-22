@@ -40,9 +40,7 @@ const Header = ({ leftIconClick, leftIcon = 'back', titleStyle, containerStyle, 
 
 const styles = StyleSheet.create({
     container: {
-        paddingLeft: 5,
-        paddingRight: 10,
-        paddingBottom: 10,
+        padding: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
