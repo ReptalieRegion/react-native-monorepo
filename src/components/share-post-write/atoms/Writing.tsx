@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     textarea: {
+        verticalAlign: 'top',
         overflow: 'hidden',
     },
     characterCountContainer: {
