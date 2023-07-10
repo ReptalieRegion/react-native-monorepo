@@ -10,7 +10,6 @@ import {
     StyleSheet,
     TextInput,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface IScrollContextComponentProps {
     children: ReactNode;
@@ -85,7 +84,6 @@ export const ScrollContext = createContext<IScrollContextValue>(defaultValue);
 const ScrollContextComponent = ({ children }: IScrollContextComponentProps) => {
     const scrollViewRef = useRef<ScrollView>(null);
     const scrollInfoRef = useRef<IScrollInfo>(defaultScrollInfo);
-    const insets = useSafeAreaInsets();
     const [isScrolling, setIsScrolling] = useState<boolean>(false);
 
     const handleOnScrollBeginDrag = () => {
@@ -152,11 +150,7 @@ const ScrollContextComponent = ({ children }: IScrollContextComponentProps) => {
 
     return (
         <ScrollContext.Provider value={{ ...defaultValue, isScrolling }}>
-            <KeyboardAvoidingView
-                style={styles.container}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                keyboardVerticalOffset={insets.bottom + insets.top + 20}
-            >
+            <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
                 <ScrollView
                     keyboardShouldPersistTaps="handled"
                     style={styles.contentContainer}

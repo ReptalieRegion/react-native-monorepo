@@ -1,21 +1,12 @@
 import React from 'react';
 import RootRoutes from '@/routes';
 import UIPromptsContextComponent from '@/contexts/ui-prompts/UIPromptsContext';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import 'react-native-gesture-handler';
 
 export default function App() {
     return (
         <UIPromptsContextComponent>
-            <SafeAreaView style={styles.container}>
-                <RootRoutes />
-            </SafeAreaView>
+            <RootRoutes />
         </UIPromptsContextComponent>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
-});
