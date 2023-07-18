@@ -14,25 +14,15 @@ const parsePayload = (payload: TPushPayload) => {
     }
 };
 
-const NavigateRunner = <RouteName extends keyof RootStackParamList>(
-    command: keyof INavigate,
-    data: unknown,
+const CustomNavigation = <RouteName extends keyof RootStackParamList>(
     navigate: NativeStackNavigationProp<RootStackParamList, RouteName>,
-) => {
-    const Navigate: INavigate = {
+): INavigate => {
+    return {
         push: (payload) => {
             const { route, params } = parsePayload(payload);
             navigate.push(route, params);
         },
     };
-
-    switch (command) {
-        case 'push':
-            Navigate.push(data as TPushPayload);
-            break;
-        default:
-            throw new Error('[webview-bridge] not found Navigate command');
-    }
 };
 
-export default NavigateRunner;
+export default CustomNavigation;
