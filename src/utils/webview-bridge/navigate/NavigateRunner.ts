@@ -9,14 +9,14 @@ interface INavigateRunnerProps<RouteName extends keyof RootStackParamList> {
 }
 
 const NavigateRunner = <RouteName extends keyof RootStackParamList>({
-    message: { module, command, data },
+    message: { module, command, payload },
     navigation,
 }: INavigateRunnerProps<RouteName>): NavigationReturnType => {
     const customNavigation = CustomNavigation<RouteName>(navigation);
 
     switch (command) {
         case 'push':
-            return { module, command, data: customNavigation.push(data) };
+            return { module, command, payload: customNavigation.push(payload) };
         default:
             throw new Error('[webview-bridge] not found Navigate command');
     }

@@ -16,7 +16,7 @@
         "@react-navigation/native": "^6.1.6",
         "@react-navigation/native-stack": "^6.9.12",
         "@react-navigation/stack": "^6.3.17",
-        "@reptalieregion/webview-bridge": "1.0.15",
+        "@reptalieregion/webview-bridge": "1.0.20",
         "ios-deploy": "^1.12.2",
         "lodash-es": "^4.17.21",
         "pod-install": "^0.1.38",

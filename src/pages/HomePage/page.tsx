@@ -5,10 +5,8 @@ import { HomePageNavigationProp } from '<Routes>';
 import { useNavigation } from '@react-navigation/native';
 import CustomSafeArea from '@/components/ui/safe-area/CustomSafeArea';
 
-import { PostReturnType, deserializeMessage, serializeReturnMessage } from '@reptalieregion/webview-bridge';
-import AsyncStorageRunner from '@/utils/webview-bridge/async-storage/AsyncStorageRunner';
-import HapticRunner from '@/utils/webview-bridge/haptic/HapticRunner';
-import NavigateRunner from '@/utils/webview-bridge/navigate/NavigateRunner';
+import { deserializeMessage } from '@reptalieregion/webview-bridge';
+import webviewBridgeRunner from '@/utils/webview-bridge';
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);
@@ -24,28 +22,9 @@ const HomePage = () => {
             return;
         }
 
-        let result: PostReturnType | undefined;
-        try {
-            switch (message.module) {
-                case 'Haptic':
-                    result = HapticRunner(message);
-                    break;
-                case 'Navigation':
-                    result = NavigateRunner<'HomePage'>({ message, navigation });
-                    break;
-                case 'AsyncStorage':
-                    result = await AsyncStorageRunner(message);
-                    break;
-                default:
-                    throw new Error('[webview-bridge] not found module');
-            }
-
-            if (result) {
-                const returnMessage = serializeReturnMessage(result);
-                webviewRef.current?.postMessage(returnMessage);
-            }
-        } catch (error) {
-            console.error(error);
+        const returnMessage = await webviewBridgeRunner({ message, navigation });
+        if (returnMessage) {
+            webviewRef.current?.postMessage(returnMessage);
         }
     };
 
