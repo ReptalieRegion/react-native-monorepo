@@ -22,7 +22,7 @@ const HomePage = () => {
             return;
         }
 
-        const returnMessage = await webviewBridgeRunner({ message, navigation });
+        const returnMessage = await webviewBridgeRunner<'HomePage'>({ message, navigation });
         if (returnMessage) {
             webviewRef.current?.postMessage(returnMessage);
         }
