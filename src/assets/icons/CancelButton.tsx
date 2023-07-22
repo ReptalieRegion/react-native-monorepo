@@ -1,14 +1,8 @@
 import React from 'react';
-import { ColorValue } from 'react-native';
-import { NumberProp, Path, Svg } from 'react-native-svg';
+import { IIconProps } from '<Icon>';
+import { Path, Svg } from 'react-native-svg';
 
-interface ICancelButtonProps {
-    width?: NumberProp;
-    height?: NumberProp;
-    fill?: ColorValue;
-}
-
-const CancelButton = ({ width = 15, height = 15, fill = 'black' }: ICancelButtonProps) => {
+const CancelButton = ({ width = 15, height = 15, fill = 'black' }: IIconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 15 15" fill="none">
             <Path
