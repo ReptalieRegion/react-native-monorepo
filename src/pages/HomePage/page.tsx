@@ -1,35 +1,54 @@
 import React, { useRef } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 import { HomePageNavigationProp } from '<Routes>';
 import { useNavigation } from '@react-navigation/native';
-import CustomSafeArea from '@/components/ui/safe-area/CustomSafeArea';
 
-import { deserializeMessage } from '@reptalieregion/webview-bridge';
+import { deserializeRN, isNextModule, isRNModule, serializeRNReturn } from '@reptalieregion/webview-bridge';
 import webviewBridgeRunner from '@/utils/webview-bridge';
+import { HomeBottomBar } from '@/components/ui/layouts/BottomBar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);
     const navigation = useNavigation<HomePageNavigationProp>();
+    const { top } = useSafeAreaInsets();
     // const uri = 'http://172.20.10.7:3000';
     // const uri = 'http://172.20.10.4:3000';
-    // const uri = 'http://192.168.1.91:3000';
-    const uri = 'http://localhost:3000';
+    const uri = 'http://192.168.0.6:3000';
+    // const uri = 'http://localhost:3000';
+
+    const postMessage = (message: string) => {
+        webviewRef.current?.postMessage(message);
+    };
 
     const getMessage = async (event: WebViewMessageEvent) => {
-        const message = deserializeMessage(event.nativeEvent.data);
-        if (message === null) {
-            return;
-        }
+        try {
+            console.log(event.nativeEvent.data);
+            const deserialized = deserializeRN(event.nativeEvent.data);
+            if (deserialized === null) {
+                return;
+            }
 
-        const returnMessage = await webviewBridgeRunner<'HomePage'>({ message, navigation });
-        if (returnMessage) {
-            webviewRef.current?.postMessage(returnMessage);
+            const { message, type } = deserialized;
+            if (type === 'call' && isRNModule(message.module)) {
+                const result = await webviewBridgeRunner<'HomePage'>({ message, navigation });
+                if (result) {
+                    const returnMessage = serializeRNReturn(result);
+                    postMessage(returnMessage);
+                }
+            }
+
+            if (type === 'return' && isNextModule(message.module)) {
+                return;
+            }
+        } catch (error) {
+            console.error(error);
         }
     };
 
     return (
-        <CustomSafeArea>
+        <View style={[styles.container, { paddingTop: top }]}>
             <WebView
                 overScrollMode="never"
                 ref={webviewRef}
@@ -37,16 +56,21 @@ const HomePage = () => {
                 style={styles.container}
                 webviewDebuggingEnabled={true}
                 onMessage={getMessage}
-                injectedJavaScript={'function test() {return }'}
             />
-        </CustomSafeArea>
+            <HomeBottomBar postMessage={postMessage} />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    keyboard: {
+        width: '100%',
+        backgroundColor: 'white',
+    },
     container: {
         flex: 1,
         backgroundColor: 'white',
+        overflow: 'hidden',
     },
 });
 

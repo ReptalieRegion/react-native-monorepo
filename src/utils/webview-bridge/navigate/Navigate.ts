@@ -1,6 +1,6 @@
 import { RootStackParamList } from '<Routes>';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { INavigate, TPushPayload } from '@reptalieregion/webview-bridge';
+import { INavigation, TPushPayload } from '@reptalieregion/webview-bridge';
 
 const parsePayload = (payload: TPushPayload) => {
     const route = payload.route as keyof RootStackParamList;
@@ -16,7 +16,7 @@ const parsePayload = (payload: TPushPayload) => {
 
 const CustomNavigation = <RouteName extends keyof RootStackParamList>(
     navigate: NativeStackNavigationProp<RootStackParamList, RouteName>,
-): INavigate => {
+): INavigation => {
     return {
         push: (payload) => {
             const { route, params } = parsePayload(payload);
