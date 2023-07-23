@@ -6,10 +6,7 @@ import Community from '@/assets/icons/Community';
 import Home from '@/assets/icons/Home';
 import My from '@/assets/icons/My';
 import Share from '@/assets/icons/Share';
-
-interface IHomBottomBarProps {
-    postMessage: (message: string) => void;
-}
+import { INextJSNavigation } from '@reptalieregion/webview-bridge';
 
 interface IAnimateScale {
     scaleX: Animated.Value;
@@ -24,7 +21,7 @@ const menus = [
     { pageURL: '/home/my', Icon: My, name: '내 정보' },
 ];
 
-export const HomeBottomBar = ({ postMessage }: IHomBottomBarProps) => {
+export const HomeBottomBar = ({ nextJSNavigation }: { nextJSNavigation: INextJSNavigation }) => {
     const { bottom } = useSafeAreaInsets();
     const [currentPath, setCurrentPath] = useState('/home');
 
@@ -37,7 +34,7 @@ export const HomeBottomBar = ({ postMessage }: IHomBottomBarProps) => {
 
     const handleClickIcon = (pageURL: string) => {
         setCurrentPath(pageURL);
-        postMessage(pageURL);
+        nextJSNavigation.push({ href: pageURL });
     };
 
     const handlePressInIcon = (index: number) => {

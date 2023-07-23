@@ -2520,10 +2520,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reptalieregion/webview-bridge@npm:1.0.23":
-  version: 1.0.23
-  resolution: "@reptalieregion/webview-bridge@npm:1.0.23::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40reptalieregion%2Fwebview-bridge%2F1.0.23%2F0dc53976b28a8c743591565cb925cc38fab4f632"
-  checksum: 1730b44c0a3f643435b9aa5110b32446069741b2e7669059042ba0f7b64828e7670ac45a37ab6611f76c436738de6a67461bf5bd05194fccc5d719cca79bb803
+"@reptalieregion/webview-bridge@npm:1.0.24":
+  version: 1.0.24
+  resolution: "@reptalieregion/webview-bridge@npm:1.0.24::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40reptalieregion%2Fwebview-bridge%2F1.0.24%2F700425a1ae90111e7aa28adb5a9676a3aa72e5f4"
+  checksum: 285dc41fa03b4747121a8b9646578b15c5e43df9da2be052e009b5b22827325f3c4a0b2b00b64f6920fb25ec0dff99d935de6520d40fb584c1c93f37d1ed0734
   languageName: node
   linkType: hard
 
@@ -9213,7 +9213,7 @@ __metadata:
     "@react-navigation/native": ^6.1.6
     "@react-navigation/native-stack": ^6.9.12
     "@react-navigation/stack": ^6.3.17
-    "@reptalieregion/webview-bridge": 1.0.23
+    "@reptalieregion/webview-bridge": 1.0.24
     "@tsconfig/react-native": ^2.0.2
     "@types/jest": ^29.2.1
     "@types/lodash-es": ^4.17.7

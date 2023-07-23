@@ -16,7 +16,8 @@ const NavigateRunner = <RouteName extends keyof RootStackParamList>({
 
     switch (command) {
         case 'push':
-            return { module, command, payload: customNavigation.push(payload) };
+            customNavigation.push(payload);
+            return { module, command, payload: undefined };
         default:
             throw new Error('[webview-bridge] not found Navigate command');
     }

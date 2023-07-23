@@ -5,9 +5,11 @@ import { HomePageNavigationProp } from '<Routes>';
 import { useNavigation } from '@react-navigation/native';
 
 import { deserializeRN, isNextModule, isRNModule, serializeRNReturn } from '@reptalieregion/webview-bridge';
-import webviewBridgeRunner from '@/utils/webview-bridge';
 import { HomeBottomBar } from '@/components/ui/layouts/BottomBar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeManager';
+import CustomNextJSNavigation from '@/utils/webview-bridge/nextjs/navigation/Navigation';
+import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);
@@ -15,8 +17,11 @@ const HomePage = () => {
     const { top } = useSafeAreaInsets();
     // const uri = 'http://172.20.10.7:3000';
     // const uri = 'http://172.20.10.4:3000';
-    const uri = 'http://192.168.0.6:3000';
-    // const uri = 'http://localhost:3000';
+    // const uri = 'http://172.16.101.193:3000';
+    // const uri = 'http://192.168.0.6:3000';
+    const uri = 'http://localhost:3000';
+    const webviewBridgeManager = new WebviewBridgeManager(webviewRef);
+    const nextJSNavigation = CustomNextJSNavigation(webviewBridgeManager);
 
     const postMessage = (message: string) => {
         webviewRef.current?.postMessage(message);
@@ -24,22 +29,24 @@ const HomePage = () => {
 
     const getMessage = async (event: WebViewMessageEvent) => {
         try {
-            console.log(event.nativeEvent.data);
-            const deserialized = deserializeRN(event.nativeEvent.data);
+            const data = event.nativeEvent.data;
+            const deserialized = deserializeRN(data);
             if (deserialized === null) {
                 return;
             }
 
             const { message, type } = deserialized;
             if (type === 'call' && isRNModule(message.module)) {
-                const result = await webviewBridgeRunner<'HomePage'>({ message, navigation });
-                if (result) {
+                const result = await WebviewBridgeRunner<'HomePage'>({ message, navigation });
+                if (result.payload) {
                     const returnMessage = serializeRNReturn(result);
                     postMessage(returnMessage);
                 }
+                return;
             }
 
             if (type === 'return' && isNextModule(message.module)) {
+                webviewBridgeManager.notifyObservers(message);
                 return;
             }
         } catch (error) {
@@ -57,7 +64,7 @@ const HomePage = () => {
                 webviewDebuggingEnabled={true}
                 onMessage={getMessage}
             />
-            <HomeBottomBar postMessage={postMessage} />
+            <HomeBottomBar nextJSNavigation={nextJSNavigation} />
         </View>
     );
 };

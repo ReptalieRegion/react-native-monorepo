@@ -1,18 +1,18 @@
 import { RNPostMessageType, RNPostReturnType } from '@reptalieregion/webview-bridge';
-import HapticRunner from './haptic/HapticRunner';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '<Routes>';
-import NavigateRunner from './navigate/NavigateRunner';
-import AsyncStorageRunner from './async-storage/AsyncStorageRunner';
+import NavigateRunner from '../navigate/NavigateRunner';
+import AsyncStorageRunner from '../async-storage/AsyncStorageRunner';
+import HapticRunner from '../haptic/HapticRunner';
 
 interface WebviewBridgeRunnerProps<RouteName extends keyof RootStackParamList> {
     message: RNPostMessageType;
     navigation: NativeStackNavigationProp<RootStackParamList, RouteName>;
 }
 
-const webviewBridgeRunner = async <RouteName extends keyof RootStackParamList>(
+const WebviewBridgeRunner = async <RouteName extends keyof RootStackParamList>(
     props: WebviewBridgeRunnerProps<RouteName>,
-): Promise<RNPostReturnType | undefined> => {
+): Promise<RNPostReturnType> => {
     const { message, navigation } = props;
     const { module } = message;
 
@@ -35,4 +35,4 @@ const webviewBridgeRunner = async <RouteName extends keyof RootStackParamList>(
     }
 };
 
-export default webviewBridgeRunner;
+export default WebviewBridgeRunner;
