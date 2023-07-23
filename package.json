@@ -7,6 +7,9 @@
         "ios": "sh ./shell/ios-simulator.sh",
         "lint": "eslint .",
         "start": "react-native start",
+        "start:local": "NODE_ENV=local npx react-native start --reset-cache",
+        "start:development": "NODE_ENV=development npx react-native start --reset-cache",
+        "start:production": "NODE_ENV=production npx react-native start --reset-cache",
         "test": "jest",
         "postinstall": "react-native setup-ios-permissions && pod-install"
     },
@@ -23,6 +26,7 @@
         "postinstall": "^0.8.0",
         "react": "18.2.0",
         "react-native": "0.71.10",
+        "react-native-dotenv": "^3.4.9",
         "react-native-fs": "^2.20.0",
         "react-native-gesture-handler": "^2.12.0",
         "react-native-haptic-feedback": "^2.0.3",

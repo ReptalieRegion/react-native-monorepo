@@ -24,6 +24,7 @@ const Header = ({ leftIconClick, leftIcon = 'back', titleStyle, containerStyle, 
     const handleBackButtonClick = () => {
         if (leftIconClick) {
             leftIconClick();
+            return;
         }
         navigation.goBack();
     };

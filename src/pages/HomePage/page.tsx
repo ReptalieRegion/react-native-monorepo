@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import WebView, { WebViewMessageEvent } from 'react-native-webview';
-import { HomePageNavigationProp } from '<Routes>';
 import { useNavigation } from '@react-navigation/native';
 
+import { HomePageNavigationProp } from '<Routes>';
+import WebView, { WebViewMessageEvent } from 'react-native-webview';
 import { deserializeRN, isNextModule, isRNModule, serializeRNReturn } from '@reptalieregion/webview-bridge';
 import { HomeBottomBar } from '@/components/ui/layouts/BottomBar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,16 +11,12 @@ import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeMana
 import CustomNextJSNavigation from '@/utils/webview-bridge/nextjs/navigation/Navigation';
 import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
 import Header from '@/components/ui/header/Header';
+import { HOME_PAGE_URI } from '@env';
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);
     const navigation = useNavigation<HomePageNavigationProp>();
     const { top } = useSafeAreaInsets();
-    // const uri = 'http://172.20.10.7:3000';
-    // const uri = 'http://172.20.10.4:3000';
-    // const uri = 'http://172.16.101.193:3000';
-    // const uri = 'http://192.168.0.6:3000';
-    const uri = 'http://localhost:3000';
     const webviewBridgeManager = new WebviewBridgeManager(webviewRef);
     const nextJSNavigation = CustomNextJSNavigation(webviewBridgeManager);
 
@@ -57,11 +53,11 @@ const HomePage = () => {
 
     return (
         <View style={[styles.container, { paddingTop: top }]}>
-            <Header leftIcon="logo" />
+            <Header leftIcon="logo" leftIconClick={() => nextJSNavigation.replace({ href: '/home' })} />
             <WebView
                 overScrollMode="never"
                 ref={webviewRef}
-                source={{ uri }}
+                source={{ uri: HOME_PAGE_URI }}
                 style={styles.container}
                 webviewDebuggingEnabled={true}
                 onMessage={getMessage}
