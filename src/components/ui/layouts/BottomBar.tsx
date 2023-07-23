@@ -34,7 +34,7 @@ export const HomeBottomBar = ({ nextJSNavigation }: { nextJSNavigation: INextJSN
 
     const handleClickIcon = (pageURL: string) => {
         setCurrentPath(pageURL);
-        nextJSNavigation.push({ href: pageURL });
+        nextJSNavigation.replace({ href: pageURL });
     };
 
     const handlePressInIcon = (index: number) => {
