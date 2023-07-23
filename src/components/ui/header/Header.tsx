@@ -1,12 +1,13 @@
 import BackButton from '@/assets/icons/BackButton';
 import CancelButton from '@/assets/icons/CancelButton';
+import Logo from '@/assets/icons/Logo';
 import { useNavigation } from '@react-navigation/native';
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 interface IHeaderProps {
     leftIconClick?: () => void;
-    leftIcon?: 'cancel' | 'back';
+    leftIcon?: 'cancel' | 'back' | 'logo';
     containerStyle?: ViewStyle;
     titleStyle?: TextStyle;
     title?: string;
@@ -30,7 +31,13 @@ const Header = ({ leftIconClick, leftIcon = 'back', titleStyle, containerStyle, 
     return (
         <View style={[styles.container, customStyles.container]}>
             <TouchableOpacity onPress={handleBackButtonClick}>
-                {leftIcon === 'back' ? <BackButton width={30} height={30} /> : <CancelButton width={30} height={30} />}
+                {leftIcon === 'back' ? (
+                    <BackButton width={30} height={30} />
+                ) : leftIcon === 'cancel' ? (
+                    <CancelButton width={30} height={30} />
+                ) : (
+                    <Logo width={30} height={30} />
+                )}
             </TouchableOpacity>
             <Text style={[styles.title, customStyles.title]}>{title}</Text>
             <View style={[styles.right]}>{typeof right === 'string' ? <Text>{right}</Text> : right}</View>

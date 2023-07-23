@@ -10,6 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeManager';
 import CustomNextJSNavigation from '@/utils/webview-bridge/nextjs/navigation/Navigation';
 import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
+import Header from '@/components/ui/header/Header';
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);
@@ -56,6 +57,7 @@ const HomePage = () => {
 
     return (
         <View style={[styles.container, { paddingTop: top }]}>
+            <Header leftIcon="logo" />
             <WebView
                 overScrollMode="never"
                 ref={webviewRef}
