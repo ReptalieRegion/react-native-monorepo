@@ -4,6 +4,7 @@ import Logo from '@/assets/icons/Logo';
 import { useNavigation } from '@react-navigation/native';
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface IHeaderProps {
     leftIconClick?: () => void;
@@ -14,7 +15,8 @@ interface IHeaderProps {
     right?: string | ReactNode;
 }
 
-const Header = ({ leftIconClick, leftIcon = 'back', titleStyle, containerStyle, title, right }: IHeaderProps) => {
+const MainHeader = ({ leftIconClick, leftIcon = 'back', titleStyle, containerStyle, title, right }: IHeaderProps) => {
+    const { top } = useSafeAreaInsets();
     const navigation = useNavigation();
     const customStyles = StyleSheet.create({
         container: containerStyle ?? {},
@@ -30,7 +32,7 @@ const Header = ({ leftIconClick, leftIcon = 'back', titleStyle, containerStyle, 
     };
 
     return (
-        <View style={[styles.container, customStyles.container]}>
+        <View style={[styles.container, customStyles.container, { paddingTop: top }]}>
             <TouchableOpacity onPress={handleBackButtonClick}>
                 {leftIcon === 'back' ? (
                     <BackButton width={30} height={30} />
@@ -69,4 +71,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Header;
+export default MainHeader;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '@/components/ui/header/Header';
+import Header from '@/components/ui/header/MainHeader';
 import ImageCropRightHeader from './ImageCropRight';
 
 const ImageCropHeader = () => {

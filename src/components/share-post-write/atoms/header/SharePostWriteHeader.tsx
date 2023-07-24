@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../../../ui/header/Header';
+import Header from '../../../ui/header/MainHeader';
 import SharePostWriteRightHeader from './SharePostWriteRight';
 
 const ShareHeader = () => {

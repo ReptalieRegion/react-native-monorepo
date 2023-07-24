@@ -10,7 +10,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeManager';
 import CustomNextJSNavigation from '@/utils/webview-bridge/nextjs/navigation/Navigation';
 import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
-import Header from '@/components/ui/header/Header';
+import Header from '@/components/ui/header/MainHeader';
 import { HOME_PAGE_URI } from '@env';
 
 const HomePage = () => {
