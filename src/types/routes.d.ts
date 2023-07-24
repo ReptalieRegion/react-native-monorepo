@@ -5,6 +5,15 @@ declare module '<Routes>' {
         HomePage: undefined;
         ImageCropPage: undefined;
         SharePostWritePage: undefined;
+        'main-routers': undefined;
+    };
+
+    type TabStackParamList = {
+        'home/list': undefined;
+        'shop/list': undefined;
+        'share-post/list': undefined;
+        'info/list': undefined;
+        'my/list': undefined;
     };
 
     type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList, 'HomePage'>;

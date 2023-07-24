@@ -8,14 +8,17 @@ import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react
 import HomePage from '@/pages/HomePage/page';
 import ImageCropPage from '@/pages/ImageCropPage/page';
 import SharePostWritePage from '@/pages/SharePostWritePage/page';
+import MainRouters from './main/route';
 
 const noHeaderOption: NativeStackNavigationOptions = { headerShown: false };
 
 const RootRoutes = () => {
     const Stack = createNativeStackNavigator<RootStackParamList>();
+
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="HomePage" screenOptions={{ headerBackTitleVisible: false }}>
+            <Stack.Navigator initialRouteName="main-routers" screenOptions={{ headerBackTitleVisible: false }}>
+                <Stack.Screen name="main-routers" component={MainRouters} options={noHeaderOption} />
                 <Stack.Screen name="HomePage" component={HomePage} options={noHeaderOption} />
                 <Stack.Screen name="ImageCropPage" component={ImageCropPage} options={noHeaderOption} />
                 <Stack.Screen name="SharePostWritePage" component={SharePostWritePage} options={noHeaderOption} />
