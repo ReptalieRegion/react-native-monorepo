@@ -48,7 +48,7 @@ const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerSty
     };
 
     return (
-        <View style={[styles.container, customStyles.container, { paddingTop: top }]}>
+        <View style={[styles.container, customStyles.container, { paddingTop: top + 10 }]}>
             <TouchableOpacity onPress={handleBackButtonClick}>
                 <Icon width={30} height={30} />
             </TouchableOpacity>
