@@ -1,15 +1,6 @@
 import React, { RefObject, useRef, useState } from 'react';
 import { ReactNode, createContext } from 'react';
-import {
-    KeyboardAvoidingView,
-    LayoutChangeEvent,
-    NativeScrollEvent,
-    NativeSyntheticEvent,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    TextInput,
-} from 'react-native';
+import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, TextInput } from 'react-native';
 
 interface IScrollContextComponentProps {
     children: ReactNode;
@@ -150,21 +141,19 @@ const ScrollContextComponent = ({ children }: IScrollContextComponentProps) => {
 
     return (
         <ScrollContext.Provider value={{ ...defaultValue, isScrolling }}>
-            <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-                <ScrollView
-                    keyboardShouldPersistTaps="handled"
-                    style={styles.contentContainer}
-                    ref={scrollViewRef}
-                    scrollEventThrottle={16}
-                    onLayout={setScrollInfoLayout}
-                    onScroll={setContentOffset}
-                    onContentSizeChange={setScrollInfoContentSize}
-                    onScrollBeginDrag={handleOnScrollBeginDrag}
-                    onScrollEndDrag={handleOnScrollEndDrag}
-                >
-                    {children}
-                </ScrollView>
-            </KeyboardAvoidingView>
+            <ScrollView
+                keyboardShouldPersistTaps="handled"
+                style={styles.contentContainer}
+                ref={scrollViewRef}
+                scrollEventThrottle={16}
+                onLayout={setScrollInfoLayout}
+                onScroll={setContentOffset}
+                onContentSizeChange={setScrollInfoContentSize}
+                onScrollBeginDrag={handleOnScrollBeginDrag}
+                onScrollEndDrag={handleOnScrollEndDrag}
+            >
+                {children}
+            </ScrollView>
         </ScrollContext.Provider>
     );
 };

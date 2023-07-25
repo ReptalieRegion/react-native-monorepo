@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import ShopIcon from '@/assets/icons/Cart';
 import InfoIcon from '@/assets/icons/Community';
 import HomeIcon from '@/assets/icons/Home';
@@ -8,6 +8,7 @@ import SharePostIcon from '@/assets/icons/Share';
 import { TabStackParamList } from '<Routes>';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { IIconProps } from '<Icon>';
+import useKeyboard from '@/hooks/useKeyboard';
 
 interface IAnimateScale {
     scaleX: Animated.Value;
@@ -93,9 +94,18 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
         ]).start();
     };
 
+    const { isKeyboardShow } = useKeyboard();
+    const dynamicStyle = StyleSheet.create({
+        container: {
+            paddingBottom: insets.bottom,
+            display: isKeyboardShow && Platform.OS === 'android' ? 'none' : 'flex',
+        },
+    });
+
     return (
-        <View style={[styles.container, { paddingBottom: insets.bottom }]}>
+        <View style={[styles.container, dynamicStyle.container]}>
             {state.routes.map((route, index) => {
+                const { Icon, name } = MENUS[route.name as keyof TabStackParamList];
                 const isFocused = state.index === index;
                 const onPress = () => {
                     const event = navigation.emit({
@@ -108,7 +118,6 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
                         navigation.navigate(route.name, { merge: true });
                     }
                 };
-                const { Icon, name } = MENUS[route.name as keyof TabStackParamList];
 
                 return (
                     <TouchableOpacity
