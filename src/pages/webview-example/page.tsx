@@ -5,12 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import { HomePageNavigationProp } from '<Routes>';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 import { deserializeRN, isNextModule, isRNModule, serializeRNReturn } from '@reptalieregion/webview-bridge';
-import { HomeBottomBar } from '@/components/ui/layouts/BottomBar';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeManager';
-import CustomNextJSNavigation from '@/utils/webview-bridge/nextjs/navigation/Navigation';
 import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
-import Header from '@/components/ui/header/MainHeader';
 import { HOME_PAGE_URI } from '@env';
 
 const HomePage = () => {
@@ -18,7 +16,6 @@ const HomePage = () => {
     const navigation = useNavigation<HomePageNavigationProp>();
     const { top } = useSafeAreaInsets();
     const webviewBridgeManager = new WebviewBridgeManager(webviewRef);
-    const nextJSNavigation = CustomNextJSNavigation(webviewBridgeManager);
 
     const postMessage = (message: string) => {
         webviewRef.current?.postMessage(message);
@@ -53,7 +50,6 @@ const HomePage = () => {
 
     return (
         <View style={[styles.container, { paddingTop: top }]}>
-            <Header leftIcon="logo" leftIconClick={() => nextJSNavigation.replace({ href: '/home' })} />
             <WebView
                 overScrollMode="never"
                 ref={webviewRef}
@@ -62,7 +58,6 @@ const HomePage = () => {
                 webviewDebuggingEnabled={true}
                 onMessage={getMessage}
             />
-            <HomeBottomBar nextJSNavigation={nextJSNavigation} />
         </View>
     );
 };

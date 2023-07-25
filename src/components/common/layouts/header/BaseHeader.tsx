@@ -30,7 +30,7 @@ const LEFT_ICON: TLeftIconMap = {
     logo: Logo,
 };
 
-const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerStyle, title, right }: IHeaderProps) => {
+export const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerStyle, title, right }: IHeaderProps) => {
     const { top } = useSafeAreaInsets();
     const navigation = useNavigation();
     const customStyles = StyleSheet.create({
@@ -81,6 +81,6 @@ const styles = StyleSheet.create({
     },
 });
 
-export default (headerProps?: IHeaderProps) => {
+export const createTabHeader = (headerProps?: IHeaderProps) => {
     return (_: BottomTabHeaderProps) => <BaseHeader {...headerProps} />;
 };

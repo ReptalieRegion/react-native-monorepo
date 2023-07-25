@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from '../../../ui/header/MainHeader';
 import SharePostWriteRightHeader from './SharePostWriteRight';
+import { BaseHeader } from '@/components/common/layouts';
 
 const ShareHeader = () => {
-    return <Header title="일상공유 등록" right={<SharePostWriteRightHeader />} />;
+    return <BaseHeader title="일상공유 등록" right={<SharePostWriteRightHeader />} />;
 };
 
 export default ShareHeader;

@@ -3,8 +3,8 @@ declare module '<Routes>' {
 
     type RootStackParamList = {
         HomePage: undefined;
-        ImageCropPage: undefined;
-        SharePostWritePage: undefined;
+        'share-post/image-crop': undefined;
+        'share-post/write': undefined;
         'main-routers': undefined;
     };
 

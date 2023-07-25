@@ -1,1 +1,1 @@
-export { default as createHeader } from './BaseHeader';
+export * from './BaseHeader';

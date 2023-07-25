@@ -5,10 +5,10 @@ import ShopListPage from '@/pages/shop/list/page';
 import SharePostListPage from '@/pages/share-post/list/page';
 import InfoListPage from '@/pages/info/list/page';
 import MyListPage from '@/pages/my/list/page';
-import { createHeader, MainBottomBar } from '@/components/common/layouts';
+import { createTabHeader, MainBottomBar } from '@/components/common/layouts';
 import { TabStackParamList } from '<Routes>';
 
-const DefaultHeader = createHeader();
+const DefaultHeader = createTabHeader();
 
 const MainRouters = () => {
     const Tab = createBottomTabNavigator<TabStackParamList>();

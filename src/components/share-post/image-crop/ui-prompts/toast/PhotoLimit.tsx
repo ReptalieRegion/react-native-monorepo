@@ -1,5 +1,5 @@
 import { TUIPromptsDefaultProps } from '<UIPrompts>';
-import ToastContainer from '@/components/ui-prompts/toast/amtos/ToastContainer';
+import ToastContainer from '@/components/common/ui-prompts/toast/amtos/ToastContainer';
 import { MAX_SELECT_PHOTO_COUNT } from '@/const/image';
 import React from 'react';
 
