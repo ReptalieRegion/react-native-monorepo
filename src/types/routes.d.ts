@@ -16,9 +16,19 @@ declare module '<Routes>' {
         'my/list': undefined;
     };
 
-    type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList, 'HomePage'>;
+    type MainStackParamList = RootStackParamList & TabStackParamList;
 
-    type ImageCropPageNavigationProp = NativeStackNavigationProp<RootStackParamList, 'ImageCropPage'>;
+    type HomeListNavigationProp = NativeStackNavigationProp<MainStackParamList, 'home/list'>;
 
-    type SharePostWritePageNavigationProp = NativeStackNavigationProp<RootStackParamList, 'SharePostWritePage'>;
+    type ShopListNavigationProp = NativeStackNavigationProp<MainStackParamList, 'shop/list'>;
+
+    type SharePostListNavigationProp = NativeStackNavigationProp<MainStackParamList, 'share-post/list'>;
+    type SharePostImageCropPageNavigationProp = NativeStackNavigationProp<MainStackParamList, 'share-post/image-crop'>;
+    type SharePostWritePageNavigationProp = NativeStackNavigationProp<MainStackParamList, 'share-post/write'>;
+
+    type InfoListNavigationProp = NativeStackNavigationProp<MainStackParamList, 'info/list'>;
+
+    type MyListNavigationProp = NativeStackNavigationProp<MainStackParamList, 'my/list'>;
+
+    type HomePageNavigationProp = NativeStackNavigationProp<MainStackParamList, 'HomePage'>;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { RootStackParamList } from '<Routes>';
+import { MainStackParamList } from '<Routes>';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -12,7 +12,7 @@ import { SharePostImageCropPage, SharePostWritePage } from '@/pages/share-post';
 const noHeaderOption: NativeStackNavigationOptions = { headerShown: false };
 
 const RootRoutes = () => {
-    const Stack = createNativeStackNavigator<RootStackParamList>();
+    const Stack = createNativeStackNavigator<MainStackParamList>();
 
     return (
         <NavigationContainer>

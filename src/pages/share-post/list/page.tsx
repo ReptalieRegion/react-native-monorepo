@@ -1,10 +1,11 @@
+import CommentIcon from '@/components/share-post/list/atoms/CommentIcon';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 const SharePostListPage = () => {
     return (
         <View>
-            <Text>hi</Text>
+            <CommentIcon />
         </View>
     );
 };

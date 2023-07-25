@@ -7,6 +7,7 @@ declare module '<Icon>' {
         width?: NumberProp;
         height?: NumberProp;
         fill?: ColorValue;
+        stroke?: ColorValue | undefined;
     }
 
     type IIcon = (props: IIconProps) => JSX.Element;
