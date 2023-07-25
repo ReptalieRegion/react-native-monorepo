@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { shallow } from 'zustand/shallow';
-import SharePostStore from '@/stores/share-post';
+import SharePostWriteStore from '@/stores/share-post/write';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
 import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
 
@@ -17,7 +17,7 @@ interface IImageSelectCircle {
 }
 
 const ImageSelectCircle = ({ uri }: IImageSelectCircle) => {
-    const selectedNumber = SharePostStore((state) => state.findSelectedPhoto(uri));
+    const selectedNumber = SharePostWriteStore((state) => state.findSelectedPhoto(uri));
     const styles = StyleSheet.create({
         circle: {
             position: 'absolute',
@@ -44,7 +44,7 @@ const ImageSelectCircle = ({ uri }: IImageSelectCircle) => {
 
 const ImageContent = ({ item, numColumns }: IImageContentProps) => {
     const { setOpenList } = useContext(UIPromptsContext);
-    const { isCurrentPhoto, setSelectedPhotos, deleteSelectedPhotos } = SharePostStore(
+    const { isCurrentPhoto, setSelectedPhotos, deleteSelectedPhotos } = SharePostWriteStore(
         (state) => ({
             setSelectedPhotos: state.setSelectedPhotos,
             deleteSelectedPhotos: state.deleteSelectedPhotos,

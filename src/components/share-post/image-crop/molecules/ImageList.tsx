@@ -4,14 +4,14 @@ import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { useEffect } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import ImageContent from '../atoms/ImageContent';
-import SharePostStore from '@/stores/share-post';
+import SharePostWriteStore from '@/stores/share-post/write';
 import { shallow } from 'zustand/shallow';
 
 const NUM_COLUMNS = 4;
 const LOAD_PHOTO_LIMIT = 40;
 
 const ImageList = () => {
-    const { photos, addPhotos, initPhotos } = SharePostStore(
+    const { photos, addPhotos, initPhotos } = SharePostWriteStore(
         (state) => ({
             photos: state.photos,
             addPhotos: state.addPhotos,

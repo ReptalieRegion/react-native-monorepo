@@ -3,14 +3,14 @@ import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-type TSharePostState = {
+type SharePostWriteState = {
     currentSelectedPhoto: PhotoIdentifier | null;
     selectedPhotos: PhotoIdentifier[];
     photos: PhotoIdentifier[];
     postContent: string;
 };
 
-interface ISharePostActions {
+interface SharePostWriteActions {
     setSelectedPhotos: (photo: PhotoIdentifier) => 'limit' | 'success' | 'exists';
     deleteSelectedPhotos: (uri: string) => void;
     findSelectedPhoto: (uri: string) => number;
@@ -20,14 +20,14 @@ interface ISharePostActions {
     reset: () => void;
 }
 
-const defaultSharePost: TSharePostState = {
+const defaultSharePost: SharePostWriteState = {
     currentSelectedPhoto: null,
     selectedPhotos: [],
     photos: [],
     postContent: '',
 };
 
-const SharePostStore = create<TSharePostState & ISharePostActions>()(
+const SharePostWriteStore = create<SharePostWriteState & SharePostWriteActions>()(
     devtools((set, get) => ({
         ...defaultSharePost,
         setSelectedPhotos: (photo) => {
@@ -88,4 +88,4 @@ const SharePostStore = create<TSharePostState & ISharePostActions>()(
     })),
 );
 
-export default SharePostStore;
+export default SharePostWriteStore;

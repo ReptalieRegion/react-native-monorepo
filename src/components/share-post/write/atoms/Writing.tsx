@@ -1,5 +1,5 @@
 import { ScrollContext } from '@/contexts/scroll/ScrollContext';
-import SharePostStore from '@/stores/share-post';
+import SharePostWriteStore from '@/stores/share-post/write';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
     View,
@@ -23,7 +23,7 @@ const MAX_CHARACTER_COUNT = 500;
 
 const WritingComponent = () => {
     const { scrollIntoView, isScrolling, scrollInfo } = useContext(ScrollContext);
-    const { postContent, setPostContent } = SharePostStore(
+    const { postContent, setPostContent } = SharePostWriteStore(
         (state) => ({
             postContent: state.postContent,
             setPostContent: state.setPostContent,

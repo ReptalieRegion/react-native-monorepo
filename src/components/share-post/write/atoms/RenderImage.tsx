@@ -1,5 +1,5 @@
 import CancelButton from '@/assets/icons/CancelButton';
-import SharePostStore from '@/stores/share-post';
+import SharePostWriteStore from '@/stores/share-post/write';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import React, { useRef } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -11,7 +11,7 @@ interface IRenderImageProps {
 
 const RenderImage = ({ item, isLastImage }: IRenderImageProps) => {
     const viewRef = useRef<View>(null);
-    const deleteSelectedPhotos = SharePostStore((state) => state.deleteSelectedPhotos);
+    const deleteSelectedPhotos = SharePostWriteStore((state) => state.deleteSelectedPhotos);
     const customStyle = StyleSheet.create({
         imageContainer: {
             marginRight: isLastImage ? 20 : undefined,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { SharePostWritePageNavigationProp } from '<Routes>';
-import SharePostStore from '@/stores/share-post';
+import SharePostWriteStore from '@/stores/share-post/write';
 import { useNavigation } from '@react-navigation/native';
 import { Text, TouchableOpacity } from 'react-native';
 import { shallow } from 'zustand/shallow';
@@ -8,7 +8,7 @@ import { throttle } from 'lodash-es';
 
 const SharePostWriteRightHeader = () => {
     const navigate = useNavigation<SharePostWritePageNavigationProp>();
-    const { selectedPhotos, postContent } = SharePostStore(
+    const { selectedPhotos, postContent } = SharePostWriteStore(
         (state) => ({
             selectedPhotos: state.selectedPhotos,
             postContent: state.postContent,
