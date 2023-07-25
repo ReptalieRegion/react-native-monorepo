@@ -1,24 +1,20 @@
 import React from 'react';
-import { Dimensions, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, FlatList, Image, StyleSheet } from 'react-native';
 import { ISharePostsData, TImage } from '<SharePostAPI>';
 
-type IImagesContentProps = Pick<ISharePostsData, 'images'> & { onTab: () => void };
+type IImagesContentProps = Pick<ISharePostsData, 'images'>;
 const { width } = Dimensions.get('screen');
 
-const RenderItem = ({ src, alt, onTab }: TImage & { onTab: () => void }) => {
-    return (
-        <TouchableOpacity onPress={onTab} activeOpacity={1}>
-            <Image source={{ uri: src }} alt={alt} style={[styles.image]} resizeMode="cover" />
-        </TouchableOpacity>
-    );
+const RenderItem = ({ src, alt }: TImage) => {
+    return <Image source={{ uri: src }} alt={alt} style={[styles.image]} resizeMode="cover" />;
 };
 
-const ImageContent = ({ images, onTab }: IImagesContentProps) => {
+const ImageContent = ({ images }: IImagesContentProps) => {
     return (
         <FlatList
             data={images}
             keyExtractor={(item, index) => item.src + index.toString()}
-            renderItem={(info) => <RenderItem {...info.item} onTab={onTab} />}
+            renderItem={(info) => <RenderItem {...info.item} />}
             horizontal
             pinchGestureEnabled
             pagingEnabled
