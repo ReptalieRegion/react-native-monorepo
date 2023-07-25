@@ -4,10 +4,6 @@ import { Animated, StyleSheet } from 'react-native';
 import { color } from '@/components/common/tokens/colors';
 
 interface IHeartAnimationProps {
-    parentSize: {
-        width: number;
-        height: number;
-    };
     startLike: boolean;
     onAnimationEnd: () => void;
 }
@@ -26,7 +22,7 @@ const dotSize = 10;
 const halfDotSize = dotSize * 0.5;
 const halfIconSize = iconSize * 0.5;
 
-const HeartAnimation = ({ parentSize, onAnimationEnd }: IHeartAnimationProps) => {
+const HeartAnimation = ({ onAnimationEnd }: IHeartAnimationProps) => {
     const test = () => {
         let animates: { [key: string]: IAnimateTranslate } = {};
         for (const dot of DOT_MAP) {
@@ -141,52 +137,48 @@ const HeartAnimation = ({ parentSize, onAnimationEnd }: IHeartAnimationProps) =>
         };
         rally().start(({ finished }) => {
             if (finished) {
-                console.log('finish');
                 onAnimationEnd();
             }
         });
     }, [hearScaleValue, onAnimationEnd, scaleValues]);
 
-    const parentWidth = parentSize.width;
-    const parentHeight = parentSize.height;
-
     const dynamicStyles = StyleSheet.create({
         leftTop: {
-            left: parentWidth * 0.35,
-            top: parentHeight * 0.28,
+            left: '35%',
+            top: '28%',
         },
         top: {
-            left: parentWidth * 0.5,
-            top: parentHeight * 0.25,
+            left: '50%',
+            top: '25%',
         },
         rightTop: {
-            left: parentWidth * 0.65,
-            top: parentHeight * 0.28,
+            left: '65%',
+            top: '28%',
         },
         right: {
-            left: parentWidth * 0.72,
-            top: parentHeight * 0.42,
+            left: '72%',
+            top: '42%',
         },
         rightBottom: {
-            left: parentWidth * 0.65,
-            top: parentHeight * 0.6,
+            left: '65%',
+            top: '60%',
         },
         bottom: {
-            left: parentWidth * 0.5,
-            top: parentHeight * 0.7,
+            left: '50%',
+            top: '70%',
         },
         leftBottom: {
-            left: parentWidth * 0.35,
-            top: parentHeight * 0.6,
+            left: '35%',
+            top: '60%',
         },
         left: {
-            left: parentWidth * 0.28,
-            top: parentHeight * 0.42,
+            left: '28%',
+            top: '42%',
         },
         center: {
             position: 'absolute',
-            left: parentWidth * 0.5,
-            top: parentHeight * 0.5,
+            left: '50%',
+            top: '50%',
             transform: [{ translateX: -halfIconSize }, { translateY: -halfIconSize }, { scale: 1.5 }],
         },
         dot: {
@@ -224,9 +216,10 @@ const HeartAnimation = ({ parentSize, onAnimationEnd }: IHeartAnimationProps) =>
             })}
             <Animated.View
                 style={[
-                    styles.heart,
                     dynamicStyles.center,
                     {
+                        width: iconSize,
+                        height: iconSize,
                         transform: [{ translateX: -halfIconSize }, { translateY: -halfIconSize }, { scale: hearScaleValue }],
                     },
                 ]}
@@ -236,12 +229,5 @@ const HeartAnimation = ({ parentSize, onAnimationEnd }: IHeartAnimationProps) =>
         </>
     );
 };
-
-const styles = StyleSheet.create({
-    heart: {
-        width: iconSize,
-        height: iconSize,
-    },
-});
 
 export default HeartAnimation;

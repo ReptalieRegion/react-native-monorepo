@@ -9,7 +9,7 @@ declare module '<SharePostAPI>' {
         isFollow: boolean;
     };
 
-    interface IPostsData {
+    interface ISharePostsData {
         userId: number;
         postId: string;
         profile: TImage;
