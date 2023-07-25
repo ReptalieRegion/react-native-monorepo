@@ -2,11 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import LikeIcon from '@/assets/icons/Like';
 import { Animated, StyleSheet } from 'react-native';
 import { color } from '@/components/common/tokens/colors';
+import sharePostListStore from '@/stores/share-post/list';
+import { ISharePostsData } from '<SharePostAPI>';
 
-interface IHeartAnimationProps {
-    startLike: boolean;
-    onAnimationEnd: () => void;
-}
+type HeartAnimationProps = Pick<ISharePostsData, 'postId'>;
 
 type TDotMap = 'leftTop' | 'top' | 'rightTop' | 'right' | 'rightBottom' | 'bottom' | 'leftBottom' | 'left';
 const DOT_MAP: TDotMap[] = ['leftTop', 'top', 'rightTop', 'right', 'rightBottom', 'bottom', 'leftBottom', 'left'];
@@ -22,7 +21,9 @@ const dotSize = 10;
 const halfDotSize = dotSize * 0.5;
 const halfIconSize = iconSize * 0.5;
 
-const HeartAnimation = ({ onAnimationEnd }: IHeartAnimationProps) => {
+const HeartAnimation = ({ postId }: HeartAnimationProps) => {
+    const setStartLikeAnimation = sharePostListStore((state) => state.setStartLikeAnimation);
+
     const test = () => {
         let animates: { [key: string]: IAnimateTranslate } = {};
         for (const dot of DOT_MAP) {
@@ -137,10 +138,10 @@ const HeartAnimation = ({ onAnimationEnd }: IHeartAnimationProps) => {
         };
         rally().start(({ finished }) => {
             if (finished) {
-                onAnimationEnd();
+                setStartLikeAnimation(postId, false);
             }
         });
-    }, [hearScaleValue, onAnimationEnd, scaleValues]);
+    }, [hearScaleValue, postId, scaleValues, setStartLikeAnimation]);
 
     const dynamicStyles = StyleSheet.create({
         leftTop: {
