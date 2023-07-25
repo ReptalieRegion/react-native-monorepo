@@ -1,11 +1,11 @@
-import CommentIcon from '@/components/share-post/list/atoms/CommentIcon';
+import Follow from '@/components/share-post/list/atoms/Follow';
 import React from 'react';
 import { View } from 'react-native';
 
 const SharePostListPage = () => {
     return (
         <View>
-            <CommentIcon />
+            <Follow isFollow={true} />
         </View>
     );
 };
