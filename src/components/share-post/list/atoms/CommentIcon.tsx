@@ -3,11 +3,15 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Comment from '@/assets/icons/Comment';
 import { useNavigation } from '@react-navigation/native';
 import { SharePostListNavigationProp } from '<Routes>';
+import { ISharePostsData } from '<SharePostAPI>';
 
-const CommentIcon = () => {
+type CommentIconType = Pick<ISharePostsData, 'postId'>;
+
+const CommentIcon = ({ postId }: CommentIconType) => {
     const navigation = useNavigation<SharePostListNavigationProp>();
 
     const handleClickComment = () => {
+        console.log(postId);
         navigation.push('share-post/image-crop');
     };
 
