@@ -132,6 +132,7 @@ const RRColor = {
     Teal: {
         50: new Color('#E0F2F1FF'),
         100: new Color('#B2DFDBFF'),
+        150: new Color('#1E8B68FF'),
         200: new Color('#80CBC4FF'),
         250: new Color('#5DC19BFF'),
         300: new Color('#4DB6ACFF'),
