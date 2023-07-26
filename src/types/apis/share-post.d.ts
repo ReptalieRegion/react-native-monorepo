@@ -10,7 +10,7 @@ declare module '<SharePostAPI>' {
     };
 
     interface ISharePostsData {
-        userId: number;
+        userId: string;
         postId: string;
         profile: TImage;
         name: string;
