@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Dimensions, FlatList, Image, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import { ISharePostsData, TImage } from '<SharePostAPI>';
 import sharePostListStore from '@/stores/share-post/list';
@@ -12,11 +12,15 @@ const RenderItem = ({ src, alt }: TImage) => {
 };
 
 const ImageContent = ({ images, postId }: ImagesContentProps) => {
+    const prevIndex = useRef(0);
     const setCurrentImageIndex = sharePostListStore((state) => state.setCurrentImageIndex);
 
-    const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         const newIndex = Math.round(event.nativeEvent.contentOffset.x / (width - 40));
-        setCurrentImageIndex(postId, newIndex);
+        if (prevIndex.current !== newIndex) {
+            prevIndex.current = newIndex;
+            setCurrentImageIndex(postId, newIndex);
+        }
     };
 
     return (
@@ -30,7 +34,8 @@ const ImageContent = ({ images, postId }: ImagesContentProps) => {
                 pagingEnabled
                 showsHorizontalScrollIndicator={false}
                 overScrollMode="never"
-                onMomentumScrollEnd={handleScrollEnd}
+                onScroll={handleScroll}
+                scrollEventThrottle={16}
             />
         </View>
     );
