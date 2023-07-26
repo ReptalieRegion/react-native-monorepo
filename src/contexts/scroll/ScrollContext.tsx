@@ -72,7 +72,7 @@ const defaultValue: IScrollContextValue = {
 
 export const ScrollContext = createContext<IScrollContextValue>(defaultValue);
 
-const ScrollContextComponent = ({ children }: IScrollContextComponentProps) => {
+export const ScrollContextComponent = ({ children }: IScrollContextComponentProps) => {
     const scrollViewRef = useRef<ScrollView>(null);
     const scrollInfoRef = useRef<IScrollInfo>(defaultScrollInfo);
     const [isScrolling, setIsScrolling] = useState<boolean>(false);
@@ -159,14 +159,9 @@ const ScrollContextComponent = ({ children }: IScrollContextComponentProps) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-    },
     contentContainer: {
         flex: 1,
         flexGrow: 1,
+        backgroundColor: 'white',
     },
 });
-
-export default ScrollContextComponent;
