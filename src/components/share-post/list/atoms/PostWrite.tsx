@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, StyleSheet, TouchableOpacity } from 'react-native';
+import { Animated, Easing, StyleSheet, TouchableOpacity, View } from 'react-native';
 import PostWriteIcon from '@/assets/icons/PostWriteIcon';
 import { useNavigation } from '@react-navigation/native';
 import { SharePostListNavigationProp } from '<Routes>';
@@ -12,7 +12,8 @@ const PostWrite = () => {
     const scaleDown = () => {
         Animated.timing(scale, {
             toValue: 0.85,
-            duration: 1,
+            easing: Easing.bezier(0.4, 0, 0.2, 1),
+            duration: 150,
             useNativeDriver: true,
         }).start();
     };
@@ -20,7 +21,8 @@ const PostWrite = () => {
     const scaleUp = () => {
         Animated.timing(scale, {
             toValue: 1,
-            duration: 1,
+            easing: Easing.bezier(0.4, 0, 0.2, 1),
+            duration: 150,
             useNativeDriver: true,
         }).start();
     };
@@ -30,29 +32,33 @@ const PostWrite = () => {
     };
 
     return (
-        <Animated.View style={{ transform: [{ scale }] }}>
-            <TouchableOpacity
-                onPressIn={scaleDown}
-                onPressOut={scaleUp}
-                onPress={handleRouteImageCrop}
-                style={styles.container}
-                activeOpacity={1}
-            >
-                <PostWriteIcon />
-            </TouchableOpacity>
-        </Animated.View>
+        <TouchableOpacity
+            onPressIn={scaleDown}
+            onPressOut={scaleUp}
+            onPress={handleRouteImageCrop}
+            style={styles.container}
+            activeOpacity={1}
+        >
+            <Animated.View style={{ transform: [{ scale }] }}>
+                <View style={styles.content}>
+                    <PostWriteIcon />
+                </View>
+            </Animated.View>
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
+    },
+    content: {
         width: 50,
         height: 50,
-        backgroundColor: color.Teal[150].toString(),
-        borderRadius: 9999,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: color.Teal[150].toString(),
+        borderRadius: 9999,
     },
 });
 
