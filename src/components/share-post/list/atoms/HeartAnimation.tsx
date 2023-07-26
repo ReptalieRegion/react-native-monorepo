@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import LikeIcon from '@/assets/icons/Like';
+import LikeIcon from '@/assets/icons/Like_55';
 import { Animated, StyleSheet } from 'react-native';
 import { color } from '@/components/common/tokens/colors';
 import sharePostListStore from '@/stores/share-post/list';
