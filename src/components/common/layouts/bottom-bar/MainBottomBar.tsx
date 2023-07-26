@@ -9,6 +9,7 @@ import { TabStackParamList } from '<Routes>';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { IIconProps } from '<Icon>';
 import useKeyboard from '@/hooks/useKeyboard';
+import { color } from '../../tokens/colors';
 
 interface IAnimateScale {
     scaleX: Animated.Value;
@@ -103,49 +104,57 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
     });
 
     return (
-        <View style={[styles.container, dynamicStyle.container]}>
-            {state.routes.map((route, index) => {
-                const { Icon, name } = MENUS[route.name as keyof TabStackParamList];
-                const isFocused = state.index === index;
-                const onPress = () => {
-                    const event = navigation.emit({
-                        type: 'tabPress',
-                        target: route.key,
-                        canPreventDefault: true,
-                    });
+        <View style={styles.bgWhite}>
+            <View style={[styles.container, dynamicStyle.container]}>
+                {state.routes.map((route, index) => {
+                    const { Icon, name } = MENUS[route.name as keyof TabStackParamList];
+                    const isFocused = state.index === index;
+                    const onPress = () => {
+                        const event = navigation.emit({
+                            type: 'tabPress',
+                            target: route.key,
+                            canPreventDefault: true,
+                        });
 
-                    if (!isFocused && !event.defaultPrevented) {
-                        navigation.navigate(route.name, { merge: true });
-                    }
-                };
+                        if (!isFocused && !event.defaultPrevented) {
+                            navigation.navigate(route.name, { merge: true });
+                        }
+                    };
 
-                return (
-                    <TouchableOpacity
-                        key={route.name}
-                        activeOpacity={1}
-                        style={[styles.iconContainer]}
-                        onPress={onPress}
-                        onPressIn={() => handlePressInIcon(index)}
-                        onPressOut={() => handlePressOutIcon(index)}
-                    >
-                        <View style={styles.icon}>
-                            <Animated.View
-                                style={{
-                                    transform: [{ scaleX: scaleValues[index].scaleX }, { scaleY: scaleValues[index].scaleY }],
-                                }}
-                            >
-                                <Icon fill={isFocused ? '#5DC19BFF' : undefined} />
-                            </Animated.View>
-                            <Text style={styles.text}>{name}</Text>
-                        </View>
-                    </TouchableOpacity>
-                );
-            })}
+                    return (
+                        <TouchableOpacity
+                            key={route.name}
+                            activeOpacity={1}
+                            style={[styles.iconContainer]}
+                            onPress={onPress}
+                            onPressIn={() => handlePressInIcon(index)}
+                            onPressOut={() => handlePressOutIcon(index)}
+                        >
+                            <View style={styles.icon}>
+                                <Animated.View
+                                    style={{
+                                        transform: [
+                                            { scaleX: scaleValues[index].scaleX },
+                                            { scaleY: scaleValues[index].scaleY },
+                                        ],
+                                    }}
+                                >
+                                    <Icon fill={isFocused ? '#5DC19BFF' : undefined} />
+                                </Animated.View>
+                                <Text style={styles.text}>{name}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    );
+                })}
+            </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    bgWhite: {
+        backgroundColor: color.White[50].toString(),
+    },
     container: {
         shadowColor: '#000000',
         shadowOpacity: 0.27,
