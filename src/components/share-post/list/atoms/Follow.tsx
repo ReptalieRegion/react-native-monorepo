@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import { ColorValue, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { ISharePostsData } from '<SharePostAPI>';
 
-type TPostHeaderProps = Pick<ISharePostsData, 'isFollow'>;
+type PostHeaderProps = Pick<ISharePostsData, 'isFollow'>;
 
-interface IFollowInfo {
+interface FollowInfo {
     color: ColorValue;
     text: string;
 }
 
-const following: IFollowInfo = { color: '#808080', text: '✓ 팔로잉' };
-const follow: IFollowInfo = { color: '#006600', text: '팔로우' };
+const following: FollowInfo = { color: '#808080', text: '✓ 팔로잉' };
+const follow: FollowInfo = { color: '#006600', text: '팔로우' };
 
 const makeFollowInfo = (isFollow: boolean) => {
     return isFollow ? following : follow;
 };
 
-const Follow = ({ isFollow }: TPostHeaderProps) => {
+const Follow = ({ isFollow }: PostHeaderProps) => {
     const [isFollowing, setIsFollowing] = useState<boolean>(isFollow);
     const followInfo = makeFollowInfo(isFollowing);
 

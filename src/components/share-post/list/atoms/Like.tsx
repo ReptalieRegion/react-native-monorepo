@@ -6,7 +6,7 @@ import Like_40 from '@/assets/icons/Like_40';
 import { Animated, TouchableOpacity } from 'react-native';
 import { color } from '@/components/common/tokens/colors';
 
-type ILikeProps = Pick<ISharePostsData, 'isLike' | 'postId'>;
+type LikeProps = Pick<ISharePostsData, 'isLike' | 'postId'>;
 
 const likeInfo = {
     fill: color.Red[500].toString(),
@@ -22,7 +22,7 @@ const makeLikeInfo = (isLike: boolean) => {
     return isLike ? likeInfo : unLikeInfo;
 };
 
-const Like = ({ postId, isLike }: ILikeProps) => {
+const Like = ({ postId, isLike }: LikeProps) => {
     const scaleAnimation = useRef(new Animated.Value(1)).current;
     const startLikeAnimation = sharePostListStore((state) => state.postsOfInfo[postId]?.startLikeAnimation);
     const [filledLikeColor, setFilledLikeColor] = useState<boolean>(isLike);

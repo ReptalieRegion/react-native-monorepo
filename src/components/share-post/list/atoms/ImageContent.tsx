@@ -3,7 +3,7 @@ import { Dimensions, FlatList, Image, NativeScrollEvent, NativeSyntheticEvent, S
 import { ISharePostsData, TImage } from '<SharePostAPI>';
 import sharePostListStore from '@/stores/share-post/list';
 
-type IImagesContentProps = Pick<ISharePostsData, 'images' | 'postId'>;
+type ImagesContentProps = Pick<ISharePostsData, 'images' | 'postId'>;
 
 const { width } = Dimensions.get('screen');
 
@@ -11,7 +11,7 @@ const RenderItem = ({ src, alt }: TImage) => {
     return <Image source={{ uri: src }} alt={alt} style={[styles.image]} resizeMode="cover" />;
 };
 
-const ImageContent = ({ images, postId }: IImagesContentProps) => {
+const ImageContent = ({ images, postId }: ImagesContentProps) => {
     const setCurrentImageIndex = sharePostListStore((state) => state.setCurrentImageIndex);
 
     const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
