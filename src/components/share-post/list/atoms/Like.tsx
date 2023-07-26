@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { ISharePostsData } from '<SharePostAPI>';
 import sharePostListStore from '@/stores/share-post/list';
 import Like_40 from '@/assets/icons/Like_40';
-import { TouchableOpacity } from 'react-native';
+import { Animated, TouchableOpacity } from 'react-native';
 import { color } from '@/components/common/tokens/colors';
 
 type ILikeProps = Pick<ISharePostsData, 'isLike' | 'postId'>;
@@ -23,6 +23,7 @@ const makeLikeInfo = (isLike: boolean) => {
 };
 
 const Like = ({ postId, isLike }: ILikeProps) => {
+    const scaleAnimation = useRef(new Animated.Value(1)).current;
     const startLikeAnimation = sharePostListStore((state) => state.postsOfInfo[postId]?.startLikeAnimation);
     const [filledLikeColor, setFilledLikeColor] = useState<boolean>(isLike);
     const { fill, stroke } = makeLikeInfo(filledLikeColor);
@@ -30,8 +31,30 @@ const Like = ({ postId, isLike }: ILikeProps) => {
     useEffect(() => {
         if (startLikeAnimation) {
             setFilledLikeColor(true);
+            Animated.sequence([
+                Animated.timing(scaleAnimation, {
+                    toValue: 0.7,
+                    duration: 0,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(scaleAnimation, {
+                    toValue: 1.3,
+                    duration: 140,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(scaleAnimation, {
+                    toValue: 1,
+                    duration: 140,
+                    useNativeDriver: true,
+                }),
+                Animated.timing(scaleAnimation, {
+                    toValue: 1,
+                    duration: 420,
+                    useNativeDriver: true,
+                }),
+            ]).start();
         }
-    }, [startLikeAnimation]);
+    }, [scaleAnimation, startLikeAnimation]);
 
     const handleLikeClick = () => {
         setFilledLikeColor((state) => !state);
@@ -39,7 +62,9 @@ const Like = ({ postId, isLike }: ILikeProps) => {
 
     return (
         <TouchableOpacity onPress={handleLikeClick} activeOpacity={1}>
-            <Like_40 fill={fill} stroke={stroke} />
+            <Animated.View style={{ transform: [{ scale: scaleAnimation }] }}>
+                <Like_40 fill={fill} stroke={stroke} />
+            </Animated.View>
         </TouchableOpacity>
     );
 };
