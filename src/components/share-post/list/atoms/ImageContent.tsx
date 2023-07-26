@@ -36,6 +36,8 @@ const ImageContent = ({ images, postId }: ImagesContentProps) => {
                 overScrollMode="never"
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
+                initialNumToRender={2}
+                maxToRenderPerBatch={2}
             />
         </View>
     );
