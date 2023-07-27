@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import BackButton from '@/assets/icons/BackButton';
 import CancelButton from '@/assets/icons/CancelButton';
@@ -8,6 +7,7 @@ import Logo from '@/assets/icons/Logo';
 import { useNavigation } from '@react-navigation/native';
 import { IconFunction } from '<Icon>';
 import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
+import MainStatusBar from '../status-bar/MainStatusBar';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
 
@@ -31,7 +31,6 @@ const LEFT_ICON: LeftIconMapType = {
 };
 
 export const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerStyle, title, right }: IHeaderProps) => {
-    const { top } = useSafeAreaInsets();
     const navigation = useNavigation();
     const customStyles = StyleSheet.create({
         container: containerStyle ?? {},
@@ -48,23 +47,28 @@ export const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, conta
     };
 
     return (
-        <View style={[styles.container, customStyles.container, { paddingTop: top + 10 }]}>
-            <TouchableOpacity onPress={handleBackButtonClick}>
-                <Icon width={30} height={30} />
-            </TouchableOpacity>
-            <Text style={[styles.title, customStyles.title]}>{title}</Text>
-            <View style={[styles.right]}>{typeof right === 'string' ? <Text>{right}</Text> : right}</View>
-        </View>
+        <>
+            <MainStatusBar />
+            <View style={[styles.bgWhite, styles.container, customStyles.container]}>
+                <TouchableOpacity onPress={handleBackButtonClick}>
+                    <Icon width={30} height={30} />
+                </TouchableOpacity>
+                <Text style={[styles.title, customStyles.title]}>{title}</Text>
+                <View style={[styles.right]}>{typeof right === 'string' ? <Text>{right}</Text> : right}</View>
+            </View>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
+    bgWhite: {
+        backgroundColor: 'white',
+    },
     container: {
         padding: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: 'white',
         borderBottomWidth: 0.5,
         borderBottomColor: 'lightgray',
     },
