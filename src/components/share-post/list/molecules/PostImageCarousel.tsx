@@ -23,10 +23,7 @@ const PostImageCarousel = ({ postId, images }: ImagesSliderProps) => {
         setStartLikeAnimation(postId, true);
 
         if (!startLikeAnimation) {
-            Haptic.trigger({
-                type: 'impactLight',
-                options: { enableVibrateFallback: true, ignoreAndroidSystemSettings: false },
-            });
+            Haptic.trigger({ type: 'impactLight' });
         }
     };
 

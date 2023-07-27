@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 import { Animated, Dimensions, Easing, StyleSheet, Text } from 'react-native';
-import { trigger } from 'react-native-haptic-feedback';
+import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 interface ToastContainerProps extends UIPromptsDefaultProps {
     text: string;
@@ -46,7 +46,7 @@ const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: Toa
             });
         };
 
-        trigger('impactLight', { enableVibrateFallback: true, ignoreAndroidSystemSettings: false });
+        Haptic.trigger({ type: 'impactLight' });
         startAnimation();
     }, [uiPromptsClose, translateY, translateX]);
 

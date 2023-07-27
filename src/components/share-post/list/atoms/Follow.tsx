@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ColorValue, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { SharePostsData } from '<SharePostAPI>';
+import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 type PostHeaderProps = Pick<SharePostsData, 'isFollow'>;
 
@@ -21,6 +22,7 @@ const Follow = ({ isFollow }: PostHeaderProps) => {
     const followInfo = makeFollowInfo(isFollowing);
 
     const handleClickFollow = () => {
+        Haptic.trigger({ type: 'impactLight' });
         setIsFollowing((state) => !state);
     };
 

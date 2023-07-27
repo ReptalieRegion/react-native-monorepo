@@ -10,6 +10,7 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { IconProps } from '<Icon>';
 import useKeyboard from '@/hooks/useKeyboard';
 import { color } from '../../tokens/colors';
+import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 interface AnimateScale {
     scaleX: Animated.Value;
@@ -117,6 +118,7 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
                         });
 
                         if (!isFocused && !event.defaultPrevented) {
+                            Haptic.trigger({ type: 'impactLight' });
                             navigation.navigate(route.name, { merge: true });
                         }
                     };
