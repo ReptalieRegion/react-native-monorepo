@@ -9,7 +9,7 @@ import { deserializeRN, isNextModule, isRNModule, serializeRNReturn } from '@rep
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeManager';
 import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
-import { HOME_PAGE_URI } from '@env';
+import ENV from '@/const/env';
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);
@@ -53,7 +53,7 @@ const HomePage = () => {
             <WebView
                 overScrollMode="never"
                 ref={webviewRef}
-                source={{ uri: HOME_PAGE_URI }}
+                source={{ uri: ENV.HOME_PAGE_URI }}
                 style={styles.container}
                 webviewDebuggingEnabled={true}
                 onMessage={getMessage}

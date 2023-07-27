@@ -1,4 +1,4 @@
-import { END_POINT_URI } from '@env';
+import ENV from '@/const/env';
 
 type TMethod = 'GET' | 'POST' | 'DELETE' | 'PUT';
 
@@ -13,7 +13,7 @@ const DEFAULT_HEADER: HeadersInit_ = {
 };
 
 const clientFetch = async (input: RequestInfo, init?: IRequestInit): Promise<Response> => {
-    const url = init?.ignorePrefix ? input : END_POINT_URI + input;
+    const url = init?.ignorePrefix ? input : ENV.END_POINT_URI + input;
     delete init?.ignorePrefix;
     const newMethod = init?.method ?? 'GET';
     const newBody = init?.body ? JSON.stringify(init.body) : undefined;
