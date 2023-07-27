@@ -5,8 +5,18 @@ import { ScrollContextComponent } from '@/contexts/scroll/ScrollContext';
 import { color } from '@/components/common/tokens/colors';
 import PostCard from '../organisms/PostCard';
 import FloatingActionButtons from '../molecules/FloatingActionButtons';
+import { useFetchPosts } from '@/apis/share-post';
+import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
 
 const Posts = () => {
+    const { data, isLoading } = useFetchPosts();
+
+    if (isLoading) {
+        return <SharePostListSkeleton />;
+    }
+
+    console.log(data);
+
     return (
         <View style={styles.container}>
             <ScrollContextComponent
