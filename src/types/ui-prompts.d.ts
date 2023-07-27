@@ -1,5 +1,5 @@
 declare module '<UIPrompts>' {
-    type TUIPromptsDefaultProps = {
+    type UIPromptsDefaultProps = {
         uiPromptsClose: () => void;
     };
 }

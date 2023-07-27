@@ -1,6 +1,6 @@
 import { GestureResponderEvent } from 'react-native';
 
-interface IDoubleTabInfo {
+interface DoubleTabInfo {
     isDoubleTab: boolean;
     moveEvent: boolean;
     startEvent: boolean;
@@ -11,7 +11,7 @@ interface IDoubleTabInfo {
     timeOut?: number;
 }
 
-const defaultTabInfo: IDoubleTabInfo = {
+const defaultTabInfo: DoubleTabInfo = {
     isDoubleTab: false,
     moveEvent: false,
     startEvent: false,
@@ -23,7 +23,7 @@ const defaultTabInfo: IDoubleTabInfo = {
 };
 
 const customDoubleTab = (duration = 400, tapThreshold = 10) => {
-    const tabInfo: IDoubleTabInfo = { ...defaultTabInfo };
+    const tabInfo: DoubleTabInfo = { ...defaultTabInfo };
     const start = () => {
         tabInfo.startEvent = true;
     };

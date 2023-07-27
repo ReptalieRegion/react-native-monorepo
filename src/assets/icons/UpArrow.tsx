@@ -1,8 +1,8 @@
-import { IIconProps } from '<Icon>';
+import { IconProps } from '<Icon>';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-const UpArrow = ({ width = 31, height = 31, fill = '#231F20' }: IIconProps) => {
+const UpArrow = ({ width = 31, height = 31, fill = '#231F20' }: IconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 31 31" fill="none">
             <Path

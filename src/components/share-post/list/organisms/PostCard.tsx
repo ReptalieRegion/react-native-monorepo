@@ -3,7 +3,7 @@ import PostHeader from '../molecules/PostHeader';
 import InteractivePost from '../molecules/InteractivePost';
 import PostContent from '../molecules/PostContent';
 import PostImageCarousel from '../molecules/PostImageCarousel';
-import { ISharePostsData } from '<SharePostAPI>';
+import { SharePostsData } from '<SharePostAPI>';
 import { StyleSheet, View } from 'react-native';
 
 const PostCard = ({
@@ -17,7 +17,7 @@ const PostCard = ({
     likeCount,
     content,
     isLike,
-}: ISharePostsData) => {
+}: SharePostsData) => {
     return (
         <View style={styles.container}>
             <PostHeader userId={userId} isFollow={isFollow} profile={profile} name={name} />

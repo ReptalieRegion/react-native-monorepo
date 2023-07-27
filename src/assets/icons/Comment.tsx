@@ -1,8 +1,8 @@
-import { IIconProps } from '<Icon>';
+import { IconProps } from '<Icon>';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-const Comment = ({ stroke = '#000' }: IIconProps) => {
+const Comment = ({ stroke = '#000' }: IconProps) => {
     return (
         <Svg width="40" height="40" viewBox="0 0 24 24" fill="none">
             <Path

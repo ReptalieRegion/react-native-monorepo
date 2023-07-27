@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { Dimensions, FlatList, Image, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
-import { ISharePostsData, TImage } from '<SharePostAPI>';
+import { SharePostsData, ShareImageType } from '<SharePostAPI>';
 import sharePostListStore from '@/stores/share-post/list';
 
-type ImagesContentProps = Pick<ISharePostsData, 'images' | 'postId'>;
+type ImagesContentProps = Pick<SharePostsData, 'images' | 'postId'>;
 
 const { width } = Dimensions.get('screen');
 
-const RenderItem = ({ src, alt }: TImage) => {
+const RenderItem = ({ src, alt }: ShareImageType) => {
     return <Image source={{ uri: src }} alt={alt} style={[styles.image]} resizeMode="cover" />;
 };
 

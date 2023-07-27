@@ -7,23 +7,23 @@ import MyIcon from '@/assets/icons/My';
 import SharePostIcon from '@/assets/icons/Share';
 import { TabStackParamList } from '<Routes>';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { IIconProps } from '<Icon>';
+import { IconProps } from '<Icon>';
 import useKeyboard from '@/hooks/useKeyboard';
 import { color } from '../../tokens/colors';
 
-interface IAnimateScale {
+interface AnimateScale {
     scaleX: Animated.Value;
     scaleY: Animated.Value;
 }
 
-type TMenus = {
+type MenusType = {
     [key in keyof TabStackParamList]: {
-        Icon: (props: IIconProps) => React.JSX.Element;
+        Icon: (props: IconProps) => React.JSX.Element;
         name: string;
     };
 };
 
-const MENUS: TMenus = {
+const MENUS: MenusType = {
     'home/list': {
         Icon: HomeIcon,
         name: '홈',
@@ -47,7 +47,7 @@ const MENUS: TMenus = {
 };
 
 const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
-    const scaleValues = useRef<IAnimateScale[]>(
+    const scaleValues = useRef<AnimateScale[]>(
         Object.entries(MENUS).map(() => ({
             scaleX: new Animated.Value(1),
             scaleY: new Animated.Value(1),

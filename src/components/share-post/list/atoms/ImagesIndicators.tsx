@@ -1,10 +1,10 @@
 import React from 'react';
-import { ISharePostsData } from '<SharePostAPI>';
+import { SharePostsData } from '<SharePostAPI>';
 import sharePostListStore from '@/stores/share-post/list';
 import { StyleSheet, View } from 'react-native';
 import DotIndicator from '@/assets/icons/DotIndicator';
 
-type ImagesIndicators = Pick<ISharePostsData, 'images' | 'postId'>;
+type ImagesIndicators = Pick<SharePostsData, 'images' | 'postId'>;
 
 const currentImage = {
     color: '#1E8B68FF',

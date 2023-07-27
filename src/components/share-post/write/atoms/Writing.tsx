@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
-type TSelectionInfo = {
+type SelectionInfo = {
     start: number;
     end: number;
 };
@@ -33,7 +33,7 @@ const WritingComponent = () => {
     const textInputRef = useRef<TextInput>(null);
     const textAreaView = useRef<View>(null);
     const [textInputHeight, setTextInputHeight] = useState<number>(200);
-    const selectionRef = useRef<TSelectionInfo>({ start: 0, end: 0 });
+    const selectionRef = useRef<SelectionInfo>({ start: 0, end: 0 });
     const pressOutInfoRef = useRef<{ pageY: number; locationY: number }>({ pageY: 0, locationY: 0 });
 
     useEffect(() => {

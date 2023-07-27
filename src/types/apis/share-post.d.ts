@@ -1,5 +1,5 @@
 declare module '<SharePostAPI>' {
-    type TImage = {
+    type ShareImageType = {
         src: StaticImport;
         alt: string;
     };
@@ -9,30 +9,30 @@ declare module '<SharePostAPI>' {
         isFollow: boolean;
     };
 
-    interface ISharePostsData {
+    interface SharePostsData {
         userId: string;
         postId: string;
-        profile: TImage;
+        profile: ShareImageType;
         name: string;
         isLike: boolean;
         isFollow: boolean;
         content: string;
-        images: TImage[];
+        images: ShareImageType[];
         likeCount: number;
         commentCount: number;
     }
 
     type TPostsInfo = {
         postsId: string;
-        thumbnail: TImage;
+        thumbnail: ShareImageType;
     };
 
-    interface IDetailPostsData {
+    interface DetailPostsData {
         nickname: string;
         name: string;
         followerCount: number;
         followingCount: number;
-        profile: TImage;
+        profile: ShareImageType;
         posts: TPostsInfo[];
     }
 }

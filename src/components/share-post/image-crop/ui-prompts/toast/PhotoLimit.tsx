@@ -1,9 +1,9 @@
-import { TUIPromptsDefaultProps } from '<UIPrompts>';
+import { UIPromptsDefaultProps } from '<UIPrompts>';
 import ToastContainer from '@/components/common/ui-prompts/toast/amtos/ToastContainer';
 import { MAX_SELECT_PHOTO_COUNT } from '@/const/image';
 import React from 'react';
 
-const PhotoLimit = ({ uiPromptsClose }: TUIPromptsDefaultProps) => {
+const PhotoLimit = ({ uiPromptsClose }: UIPromptsDefaultProps) => {
     return (
         <ToastContainer
             uiPromptsClose={uiPromptsClose}

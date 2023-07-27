@@ -1,11 +1,11 @@
-import { ISharePostsData } from '<SharePostAPI>';
+import { SharePostsData } from '<SharePostAPI>';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Profile from '../atoms/Profile';
 import Follow from '../atoms/Follow';
 import PostKebabMenu from '../atoms/PostKebabMenu';
 
-type PostHeaderProps = Pick<ISharePostsData, 'name' | 'profile' | 'isFollow' | 'userId'>;
+type PostHeaderProps = Pick<SharePostsData, 'name' | 'profile' | 'isFollow' | 'userId'>;
 
 const PostHeader = ({ name, profile, isFollow, userId }: PostHeaderProps) => {
     return (

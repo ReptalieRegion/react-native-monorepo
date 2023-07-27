@@ -1,5 +1,5 @@
 import React from 'react';
-import { IIconProps } from '<Icon>';
+import { IconProps } from '<Icon>';
 import { Path, Svg } from 'react-native-svg';
 import { color } from '@/components/common/tokens/colors';
 
@@ -8,7 +8,7 @@ const Like_55 = ({
     height = 24,
     fill = color.Red[500].toString(),
     stroke = color.Red[500].toString(),
-}: IIconProps) => {
+}: IconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 55 55" fill={fill}>
             <Path

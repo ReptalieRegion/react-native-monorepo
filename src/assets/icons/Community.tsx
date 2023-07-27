@@ -1,8 +1,8 @@
 import React from 'react';
-import { IIconProps } from '<Icon>';
+import { IconProps } from '<Icon>';
 import { Path, Svg } from 'react-native-svg';
 
-const Community = ({ fill = '#868E96FF', height = '24', width = '24' }: IIconProps) => {
+const Community = ({ fill = '#868E96FF', height = '24', width = '24' }: IconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 24 24" fill={fill}>
             <Path

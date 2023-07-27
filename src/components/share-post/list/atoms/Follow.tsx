@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ColorValue, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { ISharePostsData } from '<SharePostAPI>';
+import { SharePostsData } from '<SharePostAPI>';
 
-type PostHeaderProps = Pick<ISharePostsData, 'isFollow'>;
+type PostHeaderProps = Pick<SharePostsData, 'isFollow'>;
 
 interface FollowInfo {
     color: ColorValue;

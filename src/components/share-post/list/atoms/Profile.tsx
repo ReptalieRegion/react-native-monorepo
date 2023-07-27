@@ -1,8 +1,8 @@
 import React from 'react';
-import { ISharePostsData } from '<SharePostAPI>';
+import { SharePostsData } from '<SharePostAPI>';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-type ProfileProps = Pick<ISharePostsData, 'profile' | 'name' | 'userId'>;
+type ProfileProps = Pick<SharePostsData, 'profile' | 'name' | 'userId'>;
 
 const Profile = ({ name, profile, userId }: ProfileProps) => {
     const gotoDetailPage = () => {

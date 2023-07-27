@@ -1,8 +1,8 @@
-import { IIconProps } from '<Icon>';
+import { IconProps } from '<Icon>';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-const PostWriteIcon = ({ width = 30, height = 30 }: IIconProps) => {
+const PostWriteIcon = ({ width = 30, height = 30 }: IconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 30 30" fill="none">
             <Path

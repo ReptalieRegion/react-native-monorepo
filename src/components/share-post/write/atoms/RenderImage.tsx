@@ -4,12 +4,12 @@ import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import React, { useRef } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
-interface IRenderImageProps {
+interface RenderImageProps {
     item: PhotoIdentifier;
     isLastImage: boolean;
 }
 
-const RenderImage = ({ item, isLastImage }: IRenderImageProps) => {
+const RenderImage = ({ item, isLastImage }: RenderImageProps) => {
     const viewRef = useRef<View>(null);
     const deleteSelectedPhotos = SharePostWriteStore((state) => state.deleteSelectedPhotos);
     const customStyle = StyleSheet.create({

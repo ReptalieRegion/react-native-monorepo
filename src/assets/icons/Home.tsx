@@ -1,8 +1,8 @@
 import React from 'react';
-import { IIconProps } from '<Icon>';
+import { IconProps } from '<Icon>';
 import { ClipPath, Defs, G, Path, Rect, Svg } from 'react-native-svg';
 
-const Home = ({ fill = '#868E96FF', height = '24', width = '24' }: IIconProps) => {
+const Home = ({ fill = '#868E96FF', height = '24', width = '24' }: IconProps) => {
     return (
         <Svg viewBox="0 0 24 24" width={width} height={height}>
             <G clip-path="url(#clip0_302_2)">

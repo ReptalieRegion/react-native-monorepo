@@ -1,53 +1,53 @@
 import React, { ReactNode, createContext, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TUIPromptsDefaultProps } from '<UIPrompts>';
+import { UIPromptsDefaultProps } from '<UIPrompts>';
 
-interface IUIPromptsContextProps {
+interface UIPromptsContextProps {
     children: ReactNode;
 }
 
-interface IUIPromptsContextValue {
-    setOpenList: <Props>(props: ISetOpenListProps<Props>) => {
+interface UIPromptsContextValue {
+    setUIPrompts: <Props>(props: SetUIPromptsListProps<Props>) => {
         uiPromptsOpen: () => void;
         uiPromptsClose: () => void;
     };
 }
 
-type TUIPromptsState = {
-    [key in TOpenType]: boolean;
+type UIPromptsState = {
+    [key in UIPromptsType]: boolean;
 };
 
-type TUIPromptsList = {
-    [key in TOpenType]?: ReactNode;
+type UIPromptsList = {
+    [key in UIPromptsType]?: ReactNode;
 };
 
-type TOpenType = 'bottomSheet' | 'modal' | 'toast' | 'alert';
+type UIPromptsType = 'bottomSheet' | 'modal' | 'toast' | 'alert';
 
-interface ISetOpenListProps<Props> {
-    openType: TOpenType;
+interface SetUIPromptsListProps<Props> {
+    openType: UIPromptsType;
     props: Props;
-    Component: (props: TUIPromptsDefaultProps & Props) => React.JSX.Element;
+    Component: (props: UIPromptsDefaultProps & Props) => React.JSX.Element;
 }
 
-const defaultValue: IUIPromptsContextValue = {
-    setOpenList: () => ({
+const defaultValue: UIPromptsContextValue = {
+    setUIPrompts: () => ({
         uiPromptsOpen: () => {},
         uiPromptsClose: () => {},
     }),
 };
 
-export const UIPromptsContext = createContext<IUIPromptsContextValue>(defaultValue);
+export const UIPromptsContext = createContext<UIPromptsContextValue>(defaultValue);
 
-const UIPromptsContextComponent = ({ children }: IUIPromptsContextProps) => {
-    const uiPromptsListRef = useRef<TUIPromptsList>({
+const UIPromptsContextComponent = ({ children }: UIPromptsContextProps) => {
+    const uiPromptsListRef = useRef<UIPromptsList>({
         bottomSheet: undefined,
         modal: undefined,
         toast: undefined,
         alert: undefined,
     }).current;
-    const [open, setOpen] = useState<TUIPromptsState>({ bottomSheet: false, modal: false, toast: false, alert: false });
+    const [open, setOpen] = useState<UIPromptsState>({ bottomSheet: false, modal: false, toast: false, alert: false });
 
-    defaultValue.setOpenList = <Props,>({ openType, props, Component }: ISetOpenListProps<Props>) => {
+    defaultValue.setUIPrompts = <Props,>({ openType, props, Component }: SetUIPromptsListProps<Props>) => {
         const uiPromptsOpen = () => {
             setOpen((state) => ({ ...state, [openType]: true }));
         };

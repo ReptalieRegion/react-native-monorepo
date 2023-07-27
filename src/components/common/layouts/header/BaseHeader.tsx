@@ -6,25 +6,25 @@ import BackButton from '@/assets/icons/BackButton';
 import CancelButton from '@/assets/icons/CancelButton';
 import Logo from '@/assets/icons/Logo';
 import { useNavigation } from '@react-navigation/native';
-import { IIcon } from '<Icon>';
+import { IconFunction } from '<Icon>';
 import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
 
-type TLeftIcon = 'cancel' | 'back' | 'logo';
+type LeftIconType = 'cancel' | 'back' | 'logo';
 
 interface IHeaderProps {
     leftIconClick?: () => void;
-    leftIcon?: TLeftIcon;
+    leftIcon?: LeftIconType;
     containerStyle?: ViewStyle;
     titleStyle?: TextStyle;
     title?: string;
     right?: string | ReactNode;
 }
 
-type TLeftIconMap = {
-    [key in TLeftIcon]: IIcon;
+type LeftIconMapType = {
+    [key in LeftIconType]: IconFunction;
 };
 
-const LEFT_ICON: TLeftIconMap = {
+const LEFT_ICON: LeftIconMapType = {
     cancel: CancelButton,
     back: BackButton,
     logo: Logo,

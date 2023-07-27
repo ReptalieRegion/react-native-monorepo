@@ -3,12 +3,12 @@ declare module '<Icon>' {
     import { ColorValue } from 'react-native';
     import { NumberProp } from 'react-native-svg';
 
-    interface IIconProps {
+    interface IconProps {
         width?: NumberProp;
         height?: NumberProp;
         fill?: ColorValue;
         stroke?: ColorValue | undefined;
     }
 
-    type IIcon = (props: IIconProps) => JSX.Element;
+    type IconFunction = (props: IconProps) => JSX.Element;
 }

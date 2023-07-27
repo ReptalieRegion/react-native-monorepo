@@ -3,12 +3,12 @@ import LikeIcon from '@/assets/icons/Like_55';
 import { Animated, StyleSheet } from 'react-native';
 import { color } from '@/components/common/tokens/colors';
 import sharePostListStore from '@/stores/share-post/list';
-import { ISharePostsData } from '<SharePostAPI>';
+import { SharePostsData } from '<SharePostAPI>';
 
-type HeartAnimationProps = Pick<ISharePostsData, 'postId'>;
+type HeartAnimationProps = Pick<SharePostsData, 'postId'>;
 
-type TDotMap = 'leftTop' | 'top' | 'rightTop' | 'right' | 'rightBottom' | 'bottom' | 'leftBottom' | 'left';
-const DOT_MAP: TDotMap[] = ['leftTop', 'top', 'rightTop', 'right', 'rightBottom', 'bottom', 'leftBottom', 'left'];
+type DotMapType = 'leftTop' | 'top' | 'rightTop' | 'right' | 'rightBottom' | 'bottom' | 'leftBottom' | 'left';
+const DOT_MAP: DotMapType[] = ['leftTop', 'top', 'rightTop', 'right', 'rightBottom', 'bottom', 'leftBottom', 'left'];
 
 interface IAnimateTranslate {
     scale: Animated.Value;

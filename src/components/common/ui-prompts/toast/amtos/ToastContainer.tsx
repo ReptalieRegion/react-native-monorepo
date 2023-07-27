@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { TUIPromptsDefaultProps } from '<UIPrompts>';
+import { UIPromptsDefaultProps } from '<UIPrompts>';
 import { Animated, Dimensions, Easing, StyleSheet, Text } from 'react-native';
 import { trigger } from 'react-native-haptic-feedback';
 
-interface IToastContainerProps extends TUIPromptsDefaultProps {
+interface ToastContainerProps extends UIPromptsDefaultProps {
     text: string;
     containerStyle?: {
         backgroundColor: string;
@@ -16,7 +16,7 @@ interface IToastContainerProps extends TUIPromptsDefaultProps {
 const screenWidth = Dimensions.get('screen').width;
 const toastWidth = screenWidth * 0.95;
 
-const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: IToastContainerProps) => {
+const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: ToastContainerProps) => {
     const translateY = useRef(new Animated.Value(0)).current;
     const translateX = useRef(new Animated.Value(0)).current;
 

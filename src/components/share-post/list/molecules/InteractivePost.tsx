@@ -2,10 +2,10 @@ import React from 'react';
 import Like from '../atoms/Like';
 import CommentIcon from '../atoms/CommentIcon';
 import ImagesIndicators from '../atoms/ImagesIndicators';
-import { ISharePostsData } from '<SharePostAPI>';
+import { SharePostsData } from '<SharePostAPI>';
 import { StyleSheet, View } from 'react-native';
 
-type InteractivePostProps = Pick<ISharePostsData, 'isLike' | 'postId' | 'images'>;
+type InteractivePostProps = Pick<SharePostsData, 'isLike' | 'postId' | 'images'>;
 
 const InteractivePost = ({ postId, isLike, images }: InteractivePostProps) => {
     return (

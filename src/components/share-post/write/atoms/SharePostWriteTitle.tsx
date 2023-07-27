@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-interface ISharePostWriteTitleProps {
+interface SharePostWriteTitleProps {
     title: string;
 }
 
-const SharePostWriteTitle = ({ title }: ISharePostWriteTitleProps) => {
+const SharePostWriteTitle = ({ title }: SharePostWriteTitleProps) => {
     return (
         <Text style={styles.text}>
             {title}

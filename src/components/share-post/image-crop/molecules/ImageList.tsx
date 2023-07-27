@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         flexGrow: 1,
-        paddingBottom: 16, // 필요에 따라 패딩을 조정하세요
+        paddingBottom: 16,
     },
 });
 

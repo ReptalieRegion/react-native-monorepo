@@ -1,4 +1,4 @@
-interface IColor {
+interface ColorInterface {
     rgb(): string;
     alpha(val: number): Color;
     toString(): string;
@@ -11,7 +11,7 @@ interface RGBA {
     a: number;
 }
 
-class Color implements IColor {
+class Color implements ColorInterface {
     constructor(private color: string) {
         this.color = this.paseColor(color);
     }

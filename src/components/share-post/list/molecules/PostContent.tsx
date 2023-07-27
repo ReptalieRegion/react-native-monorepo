@@ -1,9 +1,9 @@
-import { ISharePostsData } from '<SharePostAPI>';
+import { SharePostsData } from '<SharePostAPI>';
 import { color } from '@/components/common/tokens/colors';
 import React, { useRef, useState } from 'react';
 import { NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData, TouchableOpacity, View } from 'react-native';
 
-type PostContentProps = Pick<ISharePostsData, 'likeCount' | 'commentCount' | 'content'>;
+type PostContentProps = Pick<SharePostsData, 'likeCount' | 'commentCount' | 'content'>;
 
 const PostContent = ({ likeCount, commentCount, content }: PostContentProps) => {
     const [isExpanded, setIsExpanded] = useState(false);

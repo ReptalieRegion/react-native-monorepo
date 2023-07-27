@@ -6,17 +6,17 @@ import SharePostWriteStore from '@/stores/share-post/write';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
 import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
 
-interface IImageContentProps {
+interface ImageContentProps {
     item: PhotoIdentifier;
     numColumns: number;
     index: number;
 }
 
-interface IImageSelectCircle {
+interface ImageSelectCircle {
     uri: string;
 }
 
-const ImageSelectCircle = ({ uri }: IImageSelectCircle) => {
+const ImageSelectCircle = ({ uri }: ImageSelectCircle) => {
     const selectedNumber = SharePostWriteStore((state) => state.findSelectedPhoto(uri));
     const styles = StyleSheet.create({
         circle: {
@@ -42,8 +42,8 @@ const ImageSelectCircle = ({ uri }: IImageSelectCircle) => {
     return <View style={styles.circle}>{selectedNumber !== -1 && <Text style={styles.text}>{selectedNumber + 1}</Text>}</View>;
 };
 
-const ImageContent = ({ item, numColumns }: IImageContentProps) => {
-    const { setOpenList } = useContext(UIPromptsContext);
+const ImageContent = ({ item, numColumns }: ImageContentProps) => {
+    const { setUIPrompts } = useContext(UIPromptsContext);
     const { isCurrentPhoto, setSelectedPhotos, deleteSelectedPhotos } = SharePostWriteStore(
         (state) => ({
             setSelectedPhotos: state.setSelectedPhotos,
@@ -77,7 +77,7 @@ const ImageContent = ({ item, numColumns }: IImageContentProps) => {
         } else {
             const message = setSelectedPhotos(item);
             if (message === 'limit') {
-                const { uiPromptsOpen } = setOpenList({ openType: 'toast', props: {}, Component: PhotoLimit });
+                const { uiPromptsOpen } = setUIPrompts({ openType: 'toast', props: {}, Component: PhotoLimit });
                 uiPromptsOpen();
             }
         }

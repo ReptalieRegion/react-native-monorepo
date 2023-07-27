@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getDetailPosts, getPosts, updateFollow } from './apis';
-import { IDetailPostsData, ISharePostsData } from '<SharePostAPI>';
+import { DetailPostsData, SharePostsData } from '<SharePostAPI>';
 
 export const useFetchPosts = () => {
-    return useQuery<ISharePostsData[]>({ queryKey: ['fetchPosts'], queryFn: getPosts, staleTime: Infinity });
+    return useQuery<SharePostsData[]>({ queryKey: ['fetchPosts'], queryFn: getPosts, staleTime: Infinity });
 };
 
 export const useUpdateFollow = () => {
@@ -16,5 +16,5 @@ export const useUpdateFollow = () => {
 };
 
 export const useFetchDetailPosts = (userId: string) => {
-    return useQuery<IDetailPostsData>({ queryKey: ['fetchDetailPosts'], queryFn: () => getDetailPosts(userId) });
+    return useQuery<DetailPostsData>({ queryKey: ['fetchDetailPosts'], queryFn: () => getDetailPosts(userId) });
 };

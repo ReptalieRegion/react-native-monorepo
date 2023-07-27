@@ -3,9 +3,9 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Comment from '@/assets/icons/Comment';
 import { useNavigation } from '@react-navigation/native';
 import { SharePostListNavigationProp } from '<Routes>';
-import { ISharePostsData } from '<SharePostAPI>';
+import { SharePostsData } from '<SharePostAPI>';
 
-type CommentIconType = Pick<ISharePostsData, 'postId'>;
+type CommentIconType = Pick<SharePostsData, 'postId'>;
 
 const CommentIcon = ({ postId }: CommentIconType) => {
     const navigation = useNavigation<SharePostListNavigationProp>();

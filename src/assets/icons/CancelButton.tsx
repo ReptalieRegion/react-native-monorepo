@@ -1,8 +1,8 @@
 import React from 'react';
-import { IIconProps } from '<Icon>';
+import { IconProps } from '<Icon>';
 import { Path, Svg } from 'react-native-svg';
 
-const CancelButton = ({ width = 15, height = 15, fill = 'black' }: IIconProps) => {
+const CancelButton = ({ width = 15, height = 15, fill = 'black' }: IconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 15 15" fill="none">
             <Path

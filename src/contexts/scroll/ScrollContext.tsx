@@ -10,7 +10,7 @@ import {
     View,
 } from 'react-native';
 
-interface IScrollContextComponentProps {
+interface ScrollContextComponentProps {
     fixedChildren?: {
         renderItem: ReactNode;
         position: {
@@ -24,28 +24,28 @@ interface IScrollContextComponentProps {
 }
 type ScrollDirectionType = 'UP' | 'DOWN' | '';
 
-interface IScrollContextValue {
+interface ScrollContextValue {
     scrollViewRef: RefObject<ScrollView> | null;
     scrollDirection: ScrollDirectionType;
     isScrolling: boolean;
-    scrollInfo: IScrollInfo;
-    measureTextInputLayoutInScrollView: (ref: RefObject<TextInput>) => Promise<IMeasureLayout>;
-    scrollIntoView: (props: TScrollIntoViewProps) => void;
+    scrollInfo: ScrollInfo;
+    measureTextInputLayoutInScrollView: (ref: RefObject<TextInput>) => Promise<MeasureLayout>;
+    scrollIntoView: (props: ScrollIntoViewProps) => void;
 }
 
-type TScrollIntoViewProps = {
+type ScrollIntoViewProps = {
     y: number;
     animated?: boolean;
 };
 
-interface IMeasureLayout {
+interface MeasureLayout {
     left: number;
     top: number;
     width: number;
     height: number;
 }
 
-interface IScrollInfo {
+interface ScrollInfo {
     contentSize: {
         height: number;
         width: number;
@@ -63,7 +63,7 @@ interface IScrollInfo {
     };
 }
 
-const defaultScrollInfo: IScrollInfo = {
+const defaultScrollInfo: ScrollInfo = {
     contentSize: {
         height: 0,
         width: 0,
@@ -81,7 +81,7 @@ const defaultScrollInfo: IScrollInfo = {
     },
 };
 
-const defaultValue: IScrollContextValue = {
+const defaultValue: ScrollContextValue = {
     scrollViewRef: null,
     isScrolling: false,
     scrollDirection: '',
@@ -90,11 +90,11 @@ const defaultValue: IScrollContextValue = {
     scrollIntoView: () => {},
 };
 
-export const ScrollContext = createContext<IScrollContextValue>(defaultValue);
+export const ScrollContext = createContext<ScrollContextValue>(defaultValue);
 
-export const ScrollContextComponent = ({ children, fixedChildren }: IScrollContextComponentProps) => {
+export const ScrollContextComponent = ({ children, fixedChildren }: ScrollContextComponentProps) => {
     const scrollViewRef = useRef<ScrollView>(null);
-    const scrollInfoRef = useRef<IScrollInfo>(defaultScrollInfo);
+    const scrollInfoRef = useRef<ScrollInfo>(defaultScrollInfo);
     const [isScrolling, setIsScrolling] = useState<boolean>(false);
     const [scrollDirection, setScrollDirection] = useState<'UP' | 'DOWN' | ''>('');
 
