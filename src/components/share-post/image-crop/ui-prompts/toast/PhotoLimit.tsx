@@ -1,6 +1,6 @@
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 import ToastContainer from '@/components/common/ui-prompts/toast/amtos/ToastContainer';
-import { MAX_SELECT_PHOTO_COUNT } from '@/const/image';
+import { MAX_SELECT_PHOTO_COUNT } from '@/stores/share-post/write';
 import React from 'react';
 
 const PhotoLimit = ({ uiPromptsClose }: UIPromptsDefaultProps) => {

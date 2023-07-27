@@ -1,7 +1,8 @@
-import { MAX_SELECT_PHOTO_COUNT } from '@/const/image';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+
+export const MAX_SELECT_PHOTO_COUNT = 5;
 
 type SharePostWriteState = {
     currentSelectedPhoto: PhotoIdentifier | null;
