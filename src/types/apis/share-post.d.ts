@@ -4,7 +4,7 @@ declare module '<SharePostAPI>' {
         alt: string;
     };
 
-    type TFollow = {
+    type RequestFollow = {
         postId: string;
         isFollow: boolean;
     };
