@@ -7,9 +7,10 @@ import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react
 
 import HomePage from '@/pages/webview-example/page';
 import MainRouters from './main/MainRouters';
-import { SharePostImageCropPage, SharePostWritePage } from '@/pages/share-post';
+import { SharePostImageCropPage, SharePostDetailPage, SharePostWritePage } from '@/pages/share-post';
 import ImageCropHeader from '@/components/share-post/image-crop/atoms/header/ImageCropHeader';
 import ShareHeader from '@/components/share-post/write/atoms/header/SharePostWriteHeader';
+import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/DetailHeader';
 
 const noHeaderOption: NativeStackNavigationOptions = { headerShown: false };
 
@@ -24,6 +25,11 @@ const RootRoutes = () => {
                     name="share-post/image-crop"
                     component={SharePostImageCropPage}
                     options={{ header: ImageCropHeader }}
+                />
+                <Stack.Screen
+                    name="share-post/detail"
+                    component={SharePostDetailPage}
+                    options={{ header: SharePostDetailHeader }}
                 />
                 <Stack.Screen name="share-post/write" component={SharePostWritePage} options={{ header: ShareHeader }} />
                 <Stack.Screen name="HomePage" component={HomePage} options={noHeaderOption} />

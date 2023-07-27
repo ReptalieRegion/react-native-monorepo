@@ -1,12 +1,16 @@
 import React from 'react';
 import { SharePostsData } from '<SharePostAPI>';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { SharePostListNavigationProp } from '<Routes>';
 
 type ProfileProps = Pick<SharePostsData, 'profile' | 'name' | 'userId'>;
 
 const Profile = ({ name, profile, userId }: ProfileProps) => {
+    const navigation = useNavigation<SharePostListNavigationProp>();
+
     const gotoDetailPage = () => {
-        console.log(userId);
+        navigation.push('share-post/detail', { userId, name });
     };
 
     return (
