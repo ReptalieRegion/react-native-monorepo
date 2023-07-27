@@ -1,13 +1,32 @@
 import React, { RefObject, useRef, useState } from 'react';
 import { ReactNode, createContext } from 'react';
-import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, TextInput } from 'react-native';
+import {
+    LayoutChangeEvent,
+    NativeScrollEvent,
+    NativeSyntheticEvent,
+    ScrollView,
+    StyleSheet,
+    TextInput,
+    View,
+} from 'react-native';
 
 interface IScrollContextComponentProps {
+    fixedChildren?: {
+        renderItem: ReactNode;
+        position: {
+            bottom?: number | string | undefined;
+            top?: number | string | undefined;
+            left?: number | string | undefined;
+            right?: number | string | undefined;
+        };
+    };
     children: ReactNode;
 }
+type ScrollDirectionType = 'UP' | 'DOWN' | '';
 
 interface IScrollContextValue {
     scrollViewRef: RefObject<ScrollView> | null;
+    scrollDirection: ScrollDirectionType;
     isScrolling: boolean;
     scrollInfo: IScrollInfo;
     measureTextInputLayoutInScrollView: (ref: RefObject<TextInput>) => Promise<IMeasureLayout>;
@@ -65,6 +84,7 @@ const defaultScrollInfo: IScrollInfo = {
 const defaultValue: IScrollContextValue = {
     scrollViewRef: null,
     isScrolling: false,
+    scrollDirection: '',
     scrollInfo: defaultScrollInfo,
     measureTextInputLayoutInScrollView: () => new Promise((resolve) => resolve({ height: 0, left: 0, top: 0, width: 0 })),
     scrollIntoView: () => {},
@@ -72,10 +92,11 @@ const defaultValue: IScrollContextValue = {
 
 export const ScrollContext = createContext<IScrollContextValue>(defaultValue);
 
-export const ScrollContextComponent = ({ children }: IScrollContextComponentProps) => {
+export const ScrollContextComponent = ({ children, fixedChildren }: IScrollContextComponentProps) => {
     const scrollViewRef = useRef<ScrollView>(null);
     const scrollInfoRef = useRef<IScrollInfo>(defaultScrollInfo);
     const [isScrolling, setIsScrolling] = useState<boolean>(false);
+    const [scrollDirection, setScrollDirection] = useState<'UP' | 'DOWN' | ''>('');
 
     const handleOnScrollBeginDrag = () => {
         setIsScrolling(true);
@@ -104,8 +125,15 @@ export const ScrollContextComponent = ({ children }: IScrollContextComponentProp
         };
     };
 
+    const getScrollDirection = ({ prevY, currentY }: { prevY: number; currentY: number }) => {
+        const isUpScroll = currentY - prevY < 0;
+        const isDownScroll = currentY - prevY > 0;
+        setScrollDirection(isUpScroll ? 'UP' : isDownScroll ? 'DOWN' : '');
+    };
+
     const setContentOffset = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         const { y } = event.nativeEvent.contentOffset;
+        getScrollDirection({ prevY: defaultValue.scrollInfo.contentOffset.y, currentY: y });
         defaultValue.scrollInfo.contentOffset = { y };
     };
 
@@ -140,12 +168,12 @@ export const ScrollContextComponent = ({ children }: IScrollContextComponentProp
     };
 
     return (
-        <ScrollContext.Provider value={{ ...defaultValue, isScrolling }}>
+        <ScrollContext.Provider value={{ ...defaultValue, isScrolling, scrollDirection }}>
             <ScrollView
                 keyboardShouldPersistTaps="handled"
                 style={styles.contentContainer}
                 ref={scrollViewRef}
-                scrollEventThrottle={16}
+                scrollEventThrottle={20}
                 onLayout={setScrollInfoLayout}
                 onScroll={setContentOffset}
                 onContentSizeChange={setScrollInfoContentSize}
@@ -154,6 +182,9 @@ export const ScrollContextComponent = ({ children }: IScrollContextComponentProp
             >
                 {children}
             </ScrollView>
+            {fixedChildren !== undefined && (
+                <View style={[styles.fixedContainer, { ...fixedChildren.position }]}>{fixedChildren.renderItem}</View>
+            )}
         </ScrollContext.Provider>
     );
 };
@@ -163,5 +194,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexGrow: 1,
         backgroundColor: 'white',
+    },
+    fixedContainer: {
+        position: 'absolute',
     },
 });

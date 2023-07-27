@@ -1,13 +1,8 @@
-import Follow from '@/components/share-post/list/atoms/Follow';
 import React from 'react';
-import { View } from 'react-native';
+import Posts from '@/components/share-post/list/templates/Posts';
 
 const SharePostListPage = () => {
-    return (
-        <View>
-            <Follow isFollow={true} />
-        </View>
-    );
+    return <Posts />;
 };
 
 export default SharePostListPage;

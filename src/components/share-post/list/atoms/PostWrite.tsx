@@ -1,31 +1,15 @@
 import React from 'react';
-import { Animated, Easing, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
 import PostWriteIcon from '@/assets/icons/PostWriteIcon';
 import { useNavigation } from '@react-navigation/native';
 import { SharePostListNavigationProp } from '<Routes>';
 import { color } from '@/components/common/tokens/colors';
+import { FloatingActionButtonSize } from '<SharePostComponent>';
+import useScaleDownAndUp from '../animated/useScaleDownAndUp';
 
-const PostWrite = () => {
+const PostWrite = ({ buttonSize }: FloatingActionButtonSize) => {
     const navigation = useNavigation<SharePostListNavigationProp>();
-    const scale = new Animated.Value(1);
-
-    const scaleDown = () => {
-        Animated.timing(scale, {
-            toValue: 0.85,
-            easing: Easing.bezier(0.4, 0, 0.2, 1),
-            duration: 150,
-            useNativeDriver: true,
-        }).start();
-    };
-
-    const scaleUp = () => {
-        Animated.timing(scale, {
-            toValue: 1,
-            easing: Easing.bezier(0.4, 0, 0.2, 1),
-            duration: 150,
-            useNativeDriver: true,
-        }).start();
-    };
+    const { scale, scaleDown, scaleUp } = useScaleDownAndUp();
 
     const handleRouteImageCrop = () => {
         navigation.push('share-post/image-crop');
@@ -40,7 +24,7 @@ const PostWrite = () => {
             activeOpacity={1}
         >
             <Animated.View style={{ transform: [{ scale }] }}>
-                <View style={styles.content}>
+                <View style={[buttonSize, styles.content]}>
                     <PostWriteIcon />
                 </View>
             </Animated.View>
@@ -53,8 +37,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
     content: {
-        width: 50,
-        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: color.Teal[150].toString(),
