@@ -17,6 +17,7 @@ const SquareImage = ({ item, width }: SquareImageProps) => {
 
 const styles = StyleSheet.create({
     image: {
+        margin: 1,
         aspectRatio: '1/1',
     },
 });

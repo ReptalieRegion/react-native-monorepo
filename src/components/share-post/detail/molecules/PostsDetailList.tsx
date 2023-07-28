@@ -6,7 +6,7 @@ import { SharePostDetailPostsData } from '<SharePostAPI>';
 type SharePostsDetailListProps = Pick<SharePostDetailPostsData, 'posts'>;
 
 const NUM_COLUMNS = 3;
-const ITEM_WIDTH = Dimensions.get('screen').width / NUM_COLUMNS;
+const ITEM_WIDTH = Dimensions.get('screen').width / NUM_COLUMNS - 2;
 
 const SharePostsDetailList = ({ posts }: SharePostsDetailListProps) => {
     return (
