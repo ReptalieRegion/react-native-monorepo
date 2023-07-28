@@ -22,17 +22,17 @@ declare module '<SharePostAPI>' {
         commentCount: number;
     }
 
-    type TPostsInfo = {
+    type PostsInfo = {
         postsId: string;
         thumbnail: ShareImageType;
     };
 
-    interface DetailPostsData {
+    interface SharePostDetailPostsData {
         nickname: string;
         name: string;
         followerCount: number;
         followingCount: number;
         profile: ShareImageType;
-        posts: TPostsInfo[];
+        posts: PostsInfo[];
     }
 }
