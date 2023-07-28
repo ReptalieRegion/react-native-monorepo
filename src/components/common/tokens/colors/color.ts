@@ -156,6 +156,7 @@ const RRColor = {
         500: new Color('#4CAF50FF'),
         600: new Color('#43A047FF'),
         700: new Color('#388E3CFF'),
+        750: new Color('#006600FF'),
         800: new Color('#2E7D32FF'),
         900: new Color('#1B5E20FF'),
         A100: new Color('#B9F6CAFF'),
