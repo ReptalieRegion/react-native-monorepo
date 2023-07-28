@@ -1,12 +1,8 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import SharePostDetailProfile from '@/components/share-post/detail/templates/SharePostDetailProfile';
 
 const SharePostDetailPage = () => {
-    return (
-        <View>
-            <Text>SharePostDetailPage</Text>
-        </View>
-    );
+    return <SharePostDetailProfile />;
 };
 
 export default SharePostDetailPage;
