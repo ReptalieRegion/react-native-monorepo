@@ -34,5 +34,6 @@ declare module '<SharePostAPI>' {
         followingCount: number;
         profile: ShareImageType;
         posts: PostsInfo[];
+        isFollow: boolean;
     }
 }
