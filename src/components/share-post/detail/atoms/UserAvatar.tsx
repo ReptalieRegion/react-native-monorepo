@@ -6,7 +6,7 @@ type UserAvatarProps = Pick<SharePostDetailPostsData, 'profile' | 'nickname'>;
 
 const UserAvatar = ({ profile, nickname }: UserAvatarProps) => {
     return (
-        <View>
+        <>
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
@@ -16,7 +16,7 @@ const UserAvatar = ({ profile, nickname }: UserAvatarProps) => {
                 />
             </View>
             <Text style={styles.nickname}>{nickname}</Text>
-        </View>
+        </>
     );
 };
 
