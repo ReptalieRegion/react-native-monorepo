@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ColorValue, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ColorValue, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { SharePostsData } from '<SharePostAPI>';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
@@ -27,9 +27,11 @@ const Follow = ({ isFollow }: PostHeaderProps) => {
     };
 
     return (
-        <TouchableOpacity onPress={handleClickFollow} activeOpacity={1}>
-            <Text style={[styles.fontWeight, { color: followInfo.color }]}>{followInfo.text}</Text>
-        </TouchableOpacity>
+        <TouchableWithoutFeedback onPress={handleClickFollow}>
+            <View>
+                <Text style={[styles.fontWeight, { color: followInfo.color }]}>{followInfo.text}</Text>
+            </View>
+        </TouchableWithoutFeedback>
     );
 };
 

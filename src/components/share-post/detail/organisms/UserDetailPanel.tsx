@@ -10,7 +10,9 @@ const UserDetailPanel = ({ followerCount, followingCount, posts, profile, nickna
         <View style={styles.container}>
             <UserAvatar profile={profile} nickname={nickname} />
             <ActivitySummary followerCount={followerCount} followingCount={followingCount} posts={posts} />
-            <Follow isFollow={isFollow} />
+            <View style={styles.textContainer}>
+                <Follow isFollow={isFollow} />
+            </View>
         </View>
     );
 };
@@ -21,6 +23,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         gap: 5,
+    },
+    textContainer: {
+        height: 20,
     },
 });
 

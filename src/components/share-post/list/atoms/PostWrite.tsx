@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Animated, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import PostWriteIcon from '@/assets/icons/PostWriteIcon';
 import { useNavigation } from '@react-navigation/native';
 import { SharePostListNavigationProp } from '<Routes>';
@@ -16,19 +16,18 @@ const PostWrite = ({ buttonSize }: FloatingActionButtonSize) => {
     };
 
     return (
-        <TouchableOpacity
+        <TouchableWithoutFeedback
             onPressIn={scaleDown}
             onPressOut={scaleUp}
             onPress={handleRouteImageCrop}
             style={styles.container}
-            activeOpacity={1}
         >
             <Animated.View style={{ transform: [{ scale }] }}>
                 <View style={[buttonSize, styles.content]}>
                     <PostWriteIcon />
                 </View>
             </Animated.View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
     );
 };
 
