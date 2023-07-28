@@ -46,7 +46,7 @@ const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {
     const { scrollDirection, scrollInfo, scrollIntoView } = useContext(ScrollContext);
     const { scale, scaleDown, scaleUp } = useScaleDownAndUp();
     const translateYRef = useRef(new Animated.Value(0));
-    const opacityRef = useRef(new Animated.Value(1));
+    const opacityRef = useRef(new Animated.Value(0));
 
     useEffect(() => {
         const translateY = translateYRef.current;
