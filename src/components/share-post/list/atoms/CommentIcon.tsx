@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import Comment from '@/assets/icons/Comment';
 import { useNavigation } from '@react-navigation/native';
 import { SharePostListNavigationProp } from '<Routes>';
@@ -17,9 +17,11 @@ const CommentIcon = ({ postId }: CommentIconType) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={handleClickComment} activeOpacity={1}>
-                <Comment />
-            </TouchableOpacity>
+            <TouchableWithoutFeedback onPress={handleClickComment}>
+                <View>
+                    <Comment />
+                </View>
+            </TouchableWithoutFeedback>
         </View>
     );
 };

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Animated, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import ShopIcon from '@/assets/icons/Cart';
 import InfoIcon from '@/assets/icons/Community';
 import HomeIcon from '@/assets/icons/Home';
@@ -124,28 +124,28 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
                     };
 
                     return (
-                        <TouchableOpacity
+                        <TouchableWithoutFeedback
                             key={route.name}
-                            activeOpacity={1}
-                            style={[styles.iconContainer]}
                             onPress={onPress}
                             onPressIn={() => handlePressInIcon(index)}
                             onPressOut={() => handlePressOutIcon(index)}
                         >
-                            <View style={styles.icon}>
-                                <Animated.View
-                                    style={{
-                                        transform: [
-                                            { scaleX: scaleValues[index].scaleX },
-                                            { scaleY: scaleValues[index].scaleY },
-                                        ],
-                                    }}
-                                >
-                                    <Icon fill={isFocused ? '#5DC19BFF' : undefined} />
-                                </Animated.View>
-                                <Text style={styles.text}>{name}</Text>
+                            <View style={styles.iconContainer}>
+                                <View style={styles.icon}>
+                                    <Animated.View
+                                        style={{
+                                            transform: [
+                                                { scaleX: scaleValues[index].scaleX },
+                                                { scaleY: scaleValues[index].scaleY },
+                                            ],
+                                        }}
+                                    >
+                                        <Icon fill={isFocused ? '#5DC19BFF' : undefined} />
+                                    </Animated.View>
+                                    <Text style={styles.text}>{name}</Text>
+                                </View>
                             </View>
-                        </TouchableOpacity>
+                        </TouchableWithoutFeedback>
                     );
                 })}
             </View>

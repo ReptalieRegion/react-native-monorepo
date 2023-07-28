@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { Animated, StyleSheet, TouchableOpacity } from 'react-native';
+import { Animated, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import UpArrow from '@/assets/icons/UpArrow';
 import { color } from '@/components/common/tokens/colors';
 import { FloatingActionButtonSize } from '<SharePostComponent>';
@@ -68,19 +68,15 @@ const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {
     };
 
     return (
-        <TouchableOpacity
-            onPressIn={scaleDown}
-            onPressOut={scaleUp}
-            onPress={handleIconClick}
-            style={styles.container}
-            activeOpacity={1}
-        >
-            <Animated.View style={{ transform: [{ translateY: translateYRef.current }], opacity: opacityRef.current }}>
-                <Animated.View style={[buttonSize, styles.content, { transform: [{ scale }] }]}>
-                    <UpArrow />
+        <TouchableWithoutFeedback onPressIn={scaleDown} onPressOut={scaleUp} onPress={handleIconClick}>
+            <View style={styles.container}>
+                <Animated.View style={{ transform: [{ translateY: translateYRef.current }], opacity: opacityRef.current }}>
+                    <Animated.View style={[buttonSize, styles.content, { transform: [{ scale }] }]}>
+                        <UpArrow />
+                    </Animated.View>
                 </Animated.View>
-            </Animated.View>
-        </TouchableOpacity>
+            </View>
+        </TouchableWithoutFeedback>
     );
 };
 

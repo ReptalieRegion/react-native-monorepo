@@ -1,6 +1,6 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import KebabMenu from '@/assets/icons/KebabMenu';
+import { TouchableWithoutFeedback } from 'react-native';
 
 const PostKebabMenu = () => {
     const openBottomSheet = () => {
@@ -8,9 +8,9 @@ const PostKebabMenu = () => {
     };
 
     return (
-        <TouchableOpacity onPress={openBottomSheet} activeOpacity={1}>
+        <TouchableWithoutFeedback onPress={openBottomSheet}>
             <KebabMenu />
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
     );
 };
 

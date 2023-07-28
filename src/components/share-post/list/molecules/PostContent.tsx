@@ -1,7 +1,7 @@
 import { SharePostsData } from '<SharePostAPI>';
 import { color } from '@/components/common/tokens/colors';
 import React, { useRef, useState } from 'react';
-import { NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData, TouchableOpacity, View } from 'react-native';
+import { NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData, TouchableWithoutFeedback, View } from 'react-native';
 
 type PostContentProps = Pick<SharePostsData, 'likeCount' | 'commentCount' | 'content'>;
 
@@ -22,9 +22,11 @@ const PostContent = ({ likeCount, commentCount, content }: PostContentProps) => 
                     {content}
                 </Text>
                 {isOverTwoLines && (
-                    <TouchableOpacity activeOpacity={1} onPress={() => setIsExpanded((state) => !state)}>
-                        <Text style={styles.grayFont}>{isExpanded ? '...접기' : '...더보기'}</Text>
-                    </TouchableOpacity>
+                    <TouchableWithoutFeedback onPress={() => setIsExpanded((state) => !state)}>
+                        <View>
+                            <Text style={styles.grayFont}>{isExpanded ? '...접기' : '...더보기'}</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                 )}
             </View>
             {commentCount !== 0 && <Text style={styles.grayFont}>댓글 {commentCount}개 모두 보기</Text>}

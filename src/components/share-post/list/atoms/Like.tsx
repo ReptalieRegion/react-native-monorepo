@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SharePostsData } from '<SharePostAPI>';
 import sharePostListStore from '@/stores/share-post/list';
 import Like_40 from '@/assets/icons/Like_40';
-import { Animated, TouchableOpacity } from 'react-native';
+import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { color } from '@/components/common/tokens/colors';
 
 type LikeProps = Pick<SharePostsData, 'isLike' | 'postId'>;
@@ -61,11 +61,11 @@ const Like = ({ postId, isLike }: LikeProps) => {
     };
 
     return (
-        <TouchableOpacity onPress={handleLikeClick} activeOpacity={1}>
+        <TouchableWithoutFeedback onPress={handleLikeClick}>
             <Animated.View style={{ transform: [{ scale: scaleAnimation }] }}>
                 <Like_40 fill={fill} stroke={stroke} />
             </Animated.View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
     );
 };
 export default Like;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { SharePostsData } from '<SharePostAPI>';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SharePostListNavigationProp } from '<Routes>';
 
@@ -14,7 +14,7 @@ const Profile = ({ name, profile, userId }: ProfileProps) => {
     };
 
     return (
-        <TouchableOpacity onPress={gotoDetailPage} activeOpacity={1}>
+        <TouchableWithoutFeedback onPress={gotoDetailPage}>
             <View style={styles.container}>
                 <Image
                     style={styles.image}
@@ -28,7 +28,7 @@ const Profile = ({ name, profile, userId }: ProfileProps) => {
                 />
                 <Text>{name}</Text>
             </View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
     );
 };
 
