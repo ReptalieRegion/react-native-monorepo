@@ -10,6 +10,7 @@ declare module '<SharePostAPI>' {
     };
 
     interface SharePostsData {
+        nickname: string;
         userId: string;
         postId: string;
         profile: ShareImageType;

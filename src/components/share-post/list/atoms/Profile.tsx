@@ -4,13 +4,13 @@ import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-n
 import { useNavigation } from '@react-navigation/native';
 import { SharePostListNavigationProp } from '<Routes>';
 
-type ProfileProps = Pick<SharePostsData, 'profile' | 'name' | 'userId'>;
+type ProfileProps = Pick<SharePostsData, 'profile' | 'nickname' | 'userId'>;
 
-const Profile = ({ name, profile, userId }: ProfileProps) => {
+const Profile = ({ nickname, profile, userId }: ProfileProps) => {
     const navigation = useNavigation<SharePostListNavigationProp>();
 
     const gotoDetailPage = () => {
-        navigation.push('share-post/detail', { userId });
+        navigation.push('share-post/detail', { userId, nickname });
     };
 
     return (
@@ -26,7 +26,7 @@ const Profile = ({ name, profile, userId }: ProfileProps) => {
                     alt={profile.alt}
                     resizeMode="cover"
                 />
-                <Text>{name}</Text>
+                <Text>{nickname}</Text>
             </View>
         </TouchableWithoutFeedback>
     );

@@ -5,7 +5,7 @@ import { SharePostDetailPageProp } from '<Routes>';
 
 const SharePostDetailHeader = (props: NativeStackHeaderProps) => {
     const param = props.route.params as SharePostDetailPageProp;
-    return <BaseHeader leftIcon="back" title={param.name} />;
+    return <BaseHeader leftIcon="back" title={param.nickname} />;
 };
 
 export default SharePostDetailHeader;

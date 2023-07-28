@@ -10,12 +10,11 @@ import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
 
 const Posts = () => {
     const { data, isLoading } = useFetchPosts();
+    const temp = data ? data : list;
 
     if (isLoading) {
         return <SharePostListSkeleton />;
     }
-
-    console.log(data);
 
     return (
         <View style={styles.container}>
@@ -26,7 +25,7 @@ const Posts = () => {
                 }}
             >
                 <View style={styles.ScrollContainer}>
-                    {list.map((props) => (
+                    {temp.map((props) => (
                         <PostCard key={props.postId} {...props} />
                     ))}
                 </View>

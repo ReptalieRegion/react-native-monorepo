@@ -15,7 +15,7 @@ declare module '<Routes>' {
     type SharePostWritePageNavigationProp = NativeStackNavigationProp<MainStackParamList, 'share-post/write'>;
 
     type SharePostDetailPageNavigationProp = NativeStackNavigationProp<MainStackParamList, 'share-post/detail'>;
-    type SharePostDetailPageProp = { userId: string };
+    type SharePostDetailPageProp = { userId: string; nickname: string };
     type SharePostDetailPageRouteProp = RouteProp<MainStackParamList, 'share-post/detail'>;
 
     type InfoListNavigationProp = NativeStackNavigationProp<MainStackParamList, 'info/list'>;
