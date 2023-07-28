@@ -67,4 +67,4 @@ yarn-error.log
 
 # env
 .env.*
-/src/const/config.ts
+/src/env/config.ts

@@ -1,5 +1,5 @@
 import React from 'react';
-import ENV from '@/const/env';
+import ENV from '@/env';
 import { Platform, StatusBar, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 

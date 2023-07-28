@@ -1,4 +1,4 @@
-import ENV from '@/const/env';
+import ENV from '@/env';
 
 type TMethod = 'GET' | 'POST' | 'DELETE' | 'PUT';
 

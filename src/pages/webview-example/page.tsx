@@ -9,7 +9,7 @@ import { deserializeRN, isNextModule, isRNModule, serializeRNReturn } from '@rep
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeManager';
 import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
-import ENV from '@/const/env';
+import ENV from '@/env';
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);
