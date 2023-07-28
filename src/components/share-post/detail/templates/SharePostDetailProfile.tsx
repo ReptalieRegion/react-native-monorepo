@@ -4,7 +4,7 @@ import UserDetailPanel from '../organisms/UserDetailPanel';
 import SharePostsDetailList from '../molecules/PostsDetailList';
 import { useFetchDetailPosts } from '@/apis/share-post';
 import { useRoute } from '@react-navigation/native';
-import detail from '@/mocks/data/detail.json';
+import detail from '@/mocks/data/share-post/detail.json';
 import { SharePostDetailPageRouteProp } from '<Routes>';
 
 const SharePostDetailProfile = () => {

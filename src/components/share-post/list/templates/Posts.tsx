@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import list from '@/mocks/data/list.json';
+import list from '@/mocks/data/share-post/list.json';
 import { ScrollContextComponent } from '@/contexts/scroll/ScrollContext';
 import { color } from '@/components/common/tokens/colors';
 import PostCard from '../organisms/PostCard';
