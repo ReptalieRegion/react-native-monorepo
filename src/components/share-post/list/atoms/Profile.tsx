@@ -10,7 +10,7 @@ const Profile = ({ name, profile, userId }: ProfileProps) => {
     const navigation = useNavigation<SharePostListNavigationProp>();
 
     const gotoDetailPage = () => {
-        navigation.push('share-post/detail', { userId, name });
+        navigation.push('share-post/detail', { userId });
     };
 
     return (
