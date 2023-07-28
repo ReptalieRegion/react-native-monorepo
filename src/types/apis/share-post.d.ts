@@ -23,7 +23,7 @@ declare module '<SharePostAPI>' {
     }
 
     type PostsInfo = {
-        postsId: string;
+        postId: string;
         thumbnail: ShareImageType;
     };
 
