@@ -68,4 +68,5 @@ const Like = ({ postId, isLike }: LikeProps) => {
         </TouchableWithoutFeedback>
     );
 };
+
 export default Like;

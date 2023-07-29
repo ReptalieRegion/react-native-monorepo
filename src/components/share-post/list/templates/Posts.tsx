@@ -1,19 +1,22 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import list from '@/mocks/data/share-post/list.json';
 import { ScrollContextComponent } from '@/contexts/scroll/ScrollContext';
 import { color } from '@/components/common/tokens/colors';
-import PostCard from '../organisms/PostCard';
-import FloatingActionButtons from '../molecules/FloatingActionButtons';
 import { useFetchPosts } from '@/apis/share-post';
+
 import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
+import FloatingActionButtons from '../molecules/FloatingActionButtons';
+import PostCard from '../organisms/PostCard';
 
 const Posts = () => {
     const { data, isLoading } = useFetchPosts();
-    const temp = data ? data : list;
 
     if (isLoading) {
         return <SharePostListSkeleton />;
+    }
+
+    if (!data) {
+        return null;
     }
 
     return (
@@ -25,7 +28,7 @@ const Posts = () => {
                 }}
             >
                 <View style={styles.ScrollContainer}>
-                    {temp.map((props) => (
+                    {data.map((props) => (
                         <PostCard key={props.postId} {...props} />
                     ))}
                 </View>

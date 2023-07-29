@@ -1,11 +1,12 @@
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import UserDetailPanel from '../organisms/UserDetailPanel';
 import SharePostsDetailList from '../molecules/PostsDetailList';
 import { useFetchDetailPosts } from '@/apis/share-post';
 import { useRoute } from '@react-navigation/native';
 import detail from '@/mocks/data/share-post/detail.json';
 import { SharePostDetailPageRouteProp } from '<Routes>';
+import { color } from '@/components/common/tokens/colors';
 
 const SharePostDetailProfile = () => {
     const route = useRoute<SharePostDetailPageRouteProp>();
@@ -17,11 +18,17 @@ const SharePostDetailProfile = () => {
     }
 
     return (
-        <View>
+        <View style={styles.container}>
             <UserDetailPanel {...temp} />
             <SharePostsDetailList {...temp} />
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: color.White[50].toString(),
+    },
+});
 
 export default SharePostDetailProfile;
