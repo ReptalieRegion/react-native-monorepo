@@ -21,7 +21,7 @@ const makeIndicatorsInfo = (isCurrent: boolean) => {
 };
 
 const ImagesIndicators = ({ images, postId }: ImagesIndicators) => {
-    const imageIndex = sharePostListStore((state) => state.postsOfInfo[postId]?.imageIndex);
+    const imageIndex = sharePostListStore((state) => state.postsOfInfo[postId]?.currentImageIndex);
 
     return (
         <View style={styles.container}>

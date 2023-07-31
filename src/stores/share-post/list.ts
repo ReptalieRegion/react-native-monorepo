@@ -3,7 +3,7 @@ import { devtools } from 'zustand/middleware';
 
 export type SharePostListInfo = {
     [postId: string]: {
-        imageIndex: number;
+        currentImageIndex: number;
         startLikeAnimation: boolean;
     };
 };
@@ -26,7 +26,7 @@ const sharePostListStore = create<SharePostListState & SharePostListActions>()(
             const newPostInfo: SharePostListInfo = {
                 [postId]: {
                     ...postInfo,
-                    imageIndex: index,
+                    currentImageIndex: index,
                 },
             };
             set((state) => ({
