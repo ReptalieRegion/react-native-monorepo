@@ -155,7 +155,7 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
 
 const styles = StyleSheet.create({
     bgWhite: {
-        backgroundColor: color.White[50].toString(),
+        backgroundColor: color.White.toString(),
     },
     container: {
         shadowColor: '#000000',

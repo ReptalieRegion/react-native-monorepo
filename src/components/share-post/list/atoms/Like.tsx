@@ -14,8 +14,8 @@ const likeInfo = {
 };
 
 const unLikeInfo = {
-    fill: color.White[50].toString(),
-    stroke: color.Black[50].toString(),
+    fill: color.White.toString(),
+    stroke: color.Black.toString(),
 };
 
 const makeLikeInfo = (isLike: boolean) => {

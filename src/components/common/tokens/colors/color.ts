@@ -308,12 +308,9 @@ const RRColor = {
         A400: new Color('#78909CFF'),
         A700: new Color('#455A64FF'),
     },
-    White: {
-        50: new Color('#FFFFFFFF'),
-    },
-    Black: {
-        50: new Color('#00000000'),
-    },
+    White: new Color('#FFFFFF'),
+
+    Black: new Color('#00000000'),
 } as const;
 
 export default RRColor;

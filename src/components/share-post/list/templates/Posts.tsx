@@ -40,7 +40,7 @@ const Posts = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: color.White[50].toString(),
+        backgroundColor: color.White.toString(),
     },
     ScrollContainer: {
         padding: 20,

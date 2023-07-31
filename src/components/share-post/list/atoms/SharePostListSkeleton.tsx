@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: color.White[50].toString(),
+        backgroundColor: color.White.toString(),
         flexDirection: 'column',
     },
     profile: {

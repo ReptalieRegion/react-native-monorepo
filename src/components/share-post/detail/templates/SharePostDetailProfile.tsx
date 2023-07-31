@@ -27,7 +27,7 @@ const SharePostDetailProfile = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: color.White[50].toString(),
+        backgroundColor: color.White.toString(),
     },
 });
 

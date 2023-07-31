@@ -1,5 +1,5 @@
 import { UIPromptsDefaultProps } from '<UIPrompts>';
-import ToastContainer from '@/components/common/ui-prompts/toast/amtos/ToastContainer';
+import ToastContainer from '@/components/common/ui-prompts/toast/atoms/ToastContainer';
 import { MAX_SELECT_PHOTO_COUNT } from '@/stores/share-post/write';
 import React from 'react';
 

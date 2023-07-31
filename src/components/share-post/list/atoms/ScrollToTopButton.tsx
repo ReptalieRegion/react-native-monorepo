@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderColor: color.Gray[200].toString(),
-        backgroundColor: color.White[50].toString(),
+        backgroundColor: color.White.toString(),
         borderRadius: 9999,
     },
 });
