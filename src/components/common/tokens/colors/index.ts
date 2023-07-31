@@ -1,2 +1,2 @@
-export { default as Color } from './ColorClass';
+export * from './colorUtils';
 export { default as color } from './color';
