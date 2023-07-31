@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
-import { Animated, Dimensions, Easing, StyleSheet, Text } from 'react-native';
+import { Animated, Dimensions, Easing, Platform, StyleSheet, Text } from 'react-native';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface ToastContainerProps extends UIPromptsDefaultProps {
     text: string;
@@ -17,13 +18,14 @@ const screenWidth = Dimensions.get('screen').width;
 const toastWidth = screenWidth * 0.95;
 
 const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: ToastContainerProps) => {
+    const { top } = useSafeAreaInsets();
     const translateY = useRef(new Animated.Value(0)).current;
     const translateX = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         const startAnimation = () => {
             Animated.timing(translateY, {
-                toValue: 41,
+                toValue: Platform.OS === 'ios' ? top : 10,
                 duration: 200,
                 useNativeDriver: true,
             }).start(({ finished }) => {
@@ -48,7 +50,7 @@ const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: Toa
 
         Haptic.trigger({ type: 'impactLight' });
         startAnimation();
-    }, [uiPromptsClose, translateY, translateX]);
+    }, [uiPromptsClose, translateY, translateX, top]);
 
     const customStyles = StyleSheet.create({
         container: {

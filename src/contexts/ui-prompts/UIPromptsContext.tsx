@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 
 interface UIPromptsContextProps {
@@ -64,7 +64,7 @@ const UIPromptsContextComponent = ({ children }: UIPromptsContextProps) => {
         <UIPromptsContext.Provider value={defaultValue}>
             {children}
             {open.bottomSheet && <View style={[styles.basePosition, styles.bottomSheet]}>{uiPromptsListRef.bottomSheet}</View>}
-            {open.modal && <View style={[styles.basePosition, styles.modal]}>{uiPromptsListRef.modal}</View>}
+            {open.modal && <View style={[styles.basePosition, styles.modal, styles.center]}>{uiPromptsListRef.modal}</View>}
             {open.toast && <View style={[styles.basePosition, styles.toast]}>{uiPromptsListRef.toast}</View>}
             {open.alert && <View style={[styles.basePosition, styles.alert]}>{uiPromptsListRef.alert}</View>}
         </UIPromptsContext.Provider>
@@ -73,10 +73,17 @@ const UIPromptsContextComponent = ({ children }: UIPromptsContextProps) => {
 
 const styles = StyleSheet.create({
     basePosition: {
+        width: Dimensions.get('screen').width,
+        height: Dimensions.get('screen').height,
         position: 'absolute',
+    },
+    center: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     bottomSheet: {
         zIndex: 100,
+        bottom: 0,
     },
     modal: {
         zIndex: 101,
