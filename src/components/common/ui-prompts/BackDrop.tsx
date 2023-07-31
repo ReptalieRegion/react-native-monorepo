@@ -1,21 +1,31 @@
 import React, { ReactNode } from 'react';
-import { Dimensions, TouchableWithoutFeedback, View } from 'react-native';
+import { Dimensions, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
 import { color } from '../tokens/colors';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 
+export type BackDropStyle = Pick<ViewStyle, 'backgroundColor'>;
+
 interface BackDropProps extends UIPromptsDefaultProps {
-    backDropColor?: string;
+    backDropStyle?: BackDropStyle;
     children: ReactNode;
 }
 
 const { width, height } = Dimensions.get('screen');
 
-const BackDrop = ({ children, backDropColor = color.Black.alpha(0.5).toString(), uiPromptsClose }: BackDropProps) => {
+const BackDrop = ({ children, backDropStyle, uiPromptsClose }: BackDropProps) => {
     return (
         <TouchableWithoutFeedback onPress={uiPromptsClose}>
-            <View style={{ width, height, backgroundColor: backDropColor }}>{children}</View>
+            <View style={[styles.container, backDropStyle]}>{children}</View>
         </TouchableWithoutFeedback>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        width,
+        height,
+        backgroundColor: color.Black.alpha(0.5).toString(),
+    },
+});
 
 export default BackDrop;

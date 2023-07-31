@@ -1,32 +1,30 @@
 import React, { ReactNode } from 'react';
-import { Dimensions, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { Dimensions, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import BackDrop from '../../BackDrop';
+import BackDrop, { BackDropStyle } from '../../BackDrop';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 
 export interface BottomSheetContainerProps {
     children: ReactNode;
-    height?: string | number | undefined;
-    backDropColor?: string;
-    backgroundColor?: string;
+    containerStyle?: Pick<ViewStyle, 'height' | 'backgroundColor'>;
+    backDropStyle?: BackDropStyle;
 }
 
 const { width } = Dimensions.get('screen');
 
 const BottomSheetContainer = ({
-    height = 120,
-    backDropColor,
-    backgroundColor = '#FFFFFF',
+    containerStyle,
+    backDropStyle,
     children,
     uiPromptsClose,
 }: BottomSheetContainerProps & UIPromptsDefaultProps) => {
     const { bottom } = useSafeAreaInsets();
 
     return (
-        <BackDrop uiPromptsClose={uiPromptsClose} backDropColor={backDropColor}>
+        <BackDrop uiPromptsClose={uiPromptsClose} backDropStyle={backDropStyle}>
             <TouchableWithoutFeedback>
                 <View style={[styles.container]}>
-                    <View style={{ paddingBottom: bottom, backgroundColor, width, height }}>{children}</View>
+                    <View style={[styles.viewContainer, { paddingBottom: bottom }, containerStyle]}>{children}</View>
                 </View>
             </TouchableWithoutFeedback>
         </BackDrop>
@@ -37,6 +35,11 @@ const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         bottom: 0,
+    },
+    viewContainer: {
+        width: width,
+        height: 120,
+        backgroundColor: '#FFF',
     },
 });
 
