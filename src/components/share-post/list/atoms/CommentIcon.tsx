@@ -11,8 +11,7 @@ const CommentIcon = ({ postId }: CommentIconType) => {
     const navigation = useNavigation<SharePostListNavigationProp>();
 
     const handleClickComment = () => {
-        console.log(postId);
-        navigation.push('share-post/image-crop');
+        navigation.push('share-post/comment', { postId });
     };
 
     return (

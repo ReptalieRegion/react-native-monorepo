@@ -1,11 +1,14 @@
+import { SharePostListNavigationProp } from '<Routes>';
 import { SharePostsData } from '<SharePostAPI>';
 import { color } from '@/components/common/tokens/colors';
+import { useNavigation } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import { NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData, TouchableWithoutFeedback, View } from 'react-native';
 
-type PostContentProps = Pick<SharePostsData, 'likeCount' | 'commentCount' | 'content'>;
+type PostContentProps = Pick<SharePostsData, 'likeCount' | 'commentCount' | 'content' | 'postId'>;
 
-const PostContent = ({ likeCount, commentCount, content }: PostContentProps) => {
+const PostContent = ({ likeCount, commentCount, content, postId }: PostContentProps) => {
+    const navigation = useNavigation<SharePostListNavigationProp>();
     const [isExpanded, setIsExpanded] = useState(false);
     const [isOverTwoLines, setIsOverTwoLines] = useState(false);
     const ref = useRef<Text>(null);
@@ -29,7 +32,13 @@ const PostContent = ({ likeCount, commentCount, content }: PostContentProps) => 
                     </TouchableWithoutFeedback>
                 )}
             </View>
-            {commentCount !== 0 && <Text style={styles.grayFont}>댓글 {commentCount}개 모두 보기</Text>}
+            {commentCount !== 0 && (
+                <TouchableWithoutFeedback onPress={() => navigation.push('share-post/comment', { postId })}>
+                    <View>
+                        <Text style={styles.grayFont}>댓글 {commentCount}개 모두 보기</Text>
+                    </View>
+                </TouchableWithoutFeedback>
+            )}
         </View>
     );
 };
