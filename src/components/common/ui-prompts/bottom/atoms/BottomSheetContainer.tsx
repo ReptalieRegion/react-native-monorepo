@@ -4,9 +4,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import BackDrop, { BackDropStyle } from '../../BackDrop';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 
+export type ConTainerStyle = Pick<ViewStyle, 'height' | 'backgroundColor' | 'borderRadius'>;
+
 export interface BottomSheetContainerProps {
     children: ReactNode;
-    containerStyle?: Pick<ViewStyle, 'height' | 'backgroundColor'>;
+    containerStyle?: ConTainerStyle;
     backDropStyle?: BackDropStyle;
 }
 
@@ -21,24 +23,25 @@ const BottomSheetContainer = ({
     const { bottom } = useSafeAreaInsets();
 
     return (
-        <BackDrop uiPromptsClose={uiPromptsClose} backDropStyle={backDropStyle}>
+        <>
+            <BackDrop uiPromptsClose={uiPromptsClose} backDropStyle={backDropStyle} />
             <TouchableWithoutFeedback>
                 <View style={[styles.container]}>
                     <View style={[styles.viewContainer, { paddingBottom: bottom }, containerStyle]}>{children}</View>
                 </View>
             </TouchableWithoutFeedback>
-        </BackDrop>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
-        bottom: 0,
+        flex: 1,
     },
     viewContainer: {
         width: width,
-        height: 120,
+        position: 'absolute',
+        bottom: 0,
         backgroundColor: '#FFF',
     },
 });
