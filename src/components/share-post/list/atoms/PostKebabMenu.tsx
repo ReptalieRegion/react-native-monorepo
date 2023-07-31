@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { TouchableWithoutFeedback, View } from 'react-native';
 import KebabMenu from '@/assets/icons/KebabMenu';
-import { TouchableWithoutFeedback } from 'react-native';
+import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
+import KebabMenuBottomSheet from '../ui-prompts/bottomSheet/KebabMenuBottomSheet';
+import { SharePostsData } from '<SharePostAPI>';
 
-const PostKebabMenu = () => {
+type PostKebabProps = Pick<SharePostsData, 'postId' | 'userId'>;
+
+const PostKebabMenu = (postInfo: PostKebabProps) => {
+    const { setUIPrompts } = useContext(UIPromptsContext);
+
     const openBottomSheet = () => {
-        return;
+        const { uiPromptsOpen } = setUIPrompts({
+            Component: KebabMenuBottomSheet,
+            openType: 'bottomSheet',
+            props: { postInfo },
+        });
+        uiPromptsOpen();
     };
 
     return (
         <TouchableWithoutFeedback onPress={openBottomSheet}>
-            <KebabMenu />
+            <View>
+                <KebabMenu />
+            </View>
         </TouchableWithoutFeedback>
     );
 };

@@ -20,7 +20,7 @@ const PostCard = ({
 }: SharePostsData) => {
     return (
         <View style={styles.container}>
-            <PostHeader userId={userId} isFollow={isFollow} profile={profile} nickname={nickname} />
+            <PostHeader postId={postId} userId={userId} isFollow={isFollow} profile={profile} nickname={nickname} />
             <PostImageCarousel postId={postId} images={images} />
             <InteractivePost postId={postId} isLike={isLike} images={images} />
             <PostContent likeCount={likeCount} commentCount={commentCount} content={content} postId={postId} />
