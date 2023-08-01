@@ -1,4 +1,4 @@
-cat >./src/const/config.ts <<EOF
+cat >./src/env/config.ts <<EOF
 import { ModeType } from '@env';
 
 export const REACT_NATIVE_ENV: ModeType = '$1';
