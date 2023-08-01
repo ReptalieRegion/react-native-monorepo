@@ -37,7 +37,7 @@ export const handlers = [
         const userPosts = {
             nickname: fakerKO.person.middleName(),
             name: fakerKO.person.fullName(),
-            followCount: fakerKO.number.int({ min: 0, max: 200 }),
+            followerCount: fakerKO.number.int({ min: 0, max: 200 }),
             followingCount: fakerKO.number.int({ min: 0, max: 200 }),
             isFollow: Math.random() >= 0.5,
             profile: {
