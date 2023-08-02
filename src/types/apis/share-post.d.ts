@@ -37,4 +37,24 @@ declare module '<SharePostAPI>' {
         posts: PostsInfo[];
         isFollow: boolean;
     }
+
+    type TagUserType = {
+        id: string;
+        nickname: string;
+    };
+
+    interface SharePostCommentData {
+        id: string;
+        tagUser: TagUserType[];
+        commentUser: {
+            id: string;
+            profile: {
+                src: string;
+                alt: string;
+            };
+            nickname: string;
+        };
+        content: string;
+        isExistsReplyComment: boolean;
+    }
 }

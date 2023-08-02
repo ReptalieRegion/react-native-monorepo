@@ -1,5 +1,4 @@
 import { rest } from 'msw';
-import comment from './data/share-post/comment.json';
 import { fakerKO } from '@faker-js/faker';
 import ENV from '@/env';
 
@@ -57,7 +56,25 @@ export const handlers = [
         return res(ctx.json(userPosts));
     }),
     rest.get(ENV.END_POINT_URI + 'api/posts/:postId/comment', (req, res, ctx) => {
-        // const { postId } = req.params as { postId: string };
-        return res(ctx.json(comment));
+        const comments = Array(fakerKO.number.int({ min: 1, max: 20 }))
+            .fill('')
+            .map(() => ({
+                id: fakerKO.string.uuid(),
+                tagUser: Array(5)
+                    .fill('')
+                    .map(() => fakerKO.string.uuid()),
+                commentUser: {
+                    id: fakerKO.string.uuid(),
+                    profile: {
+                        src: fakerKO.image.avatar(),
+                        alt: '프로필 이미지',
+                    },
+                    nickname: fakerKO.person.middleName(),
+                },
+                content: fakerKO.lorem.paragraphs(1),
+                isExistsReplyComment: Math.random() >= 0.5,
+            }));
+
+        return res(ctx.json(comments));
     }),
 ];
