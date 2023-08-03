@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { Animated, Platform, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import React from 'react';
+import { Platform, StyleSheet, View } from 'react-native';
 import ShopIcon from '@/assets/icons/Cart';
 import InfoIcon from '@/assets/icons/Community';
 import HomeIcon from '@/assets/icons/Home';
@@ -11,11 +11,7 @@ import { IconProps } from '<Icon>';
 import useKeyboard from '@/hooks/useKeyboard';
 import { color } from '../../tokens/colors';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
-
-interface AnimateScale {
-    scaleX: Animated.Value;
-    scaleY: Animated.Value;
-}
+import MainBottomTabBarButton from './MainBottomTabBarButton';
 
 type MenusType = {
     [key in keyof TabStackParamList]: {
@@ -48,54 +44,6 @@ const MENUS: MenusType = {
 };
 
 const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
-    const scaleValues = useRef<AnimateScale[]>(
-        Object.entries(MENUS).map(() => ({
-            scaleX: new Animated.Value(1),
-            scaleY: new Animated.Value(1),
-        })),
-    ).current;
-
-    const handlePressInIcon = (index: number) => {
-        Animated.timing(scaleValues[index].scaleX, {
-            toValue: 0.9,
-            duration: 200,
-            useNativeDriver: true,
-        }).start();
-
-        Animated.timing(scaleValues[index].scaleY, {
-            toValue: 0.9,
-            duration: 200,
-            useNativeDriver: true,
-        }).start();
-    };
-
-    const handlePressOutIcon = (index: number) => {
-        Animated.sequence([
-            Animated.timing(scaleValues[index].scaleX, {
-                toValue: 1.25,
-                duration: 200,
-                useNativeDriver: true,
-            }),
-            Animated.timing(scaleValues[index].scaleX, {
-                toValue: 1.0,
-                duration: 200,
-                useNativeDriver: true,
-            }),
-        ]).start();
-        Animated.sequence([
-            Animated.timing(scaleValues[index].scaleY, {
-                toValue: 1.15,
-                duration: 200,
-                useNativeDriver: true,
-            }),
-            Animated.timing(scaleValues[index].scaleY, {
-                toValue: 1.0,
-                duration: 200,
-                useNativeDriver: true,
-            }),
-        ]).start();
-    };
-
     const { isKeyboardShow } = useKeyboard();
     const dynamicStyle = StyleSheet.create({
         container: {
@@ -108,7 +56,8 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
         <View style={styles.bgWhite}>
             <View style={[styles.container, dynamicStyle.container]}>
                 {state.routes.map((route, index) => {
-                    const { Icon, name } = MENUS[route.name as keyof TabStackParamList];
+                    const routeName = route.name as keyof TabStackParamList;
+                    const { Icon, name } = MENUS[routeName];
                     const isFocused = state.index === index;
                     const onPress = () => {
                         const event = navigation.emit({
@@ -124,28 +73,13 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
                     };
 
                     return (
-                        <TouchableWithoutFeedback
+                        <MainBottomTabBarButton
                             key={route.name}
+                            isFocused={isFocused}
                             onPress={onPress}
-                            onPressIn={() => handlePressInIcon(index)}
-                            onPressOut={() => handlePressOutIcon(index)}
-                        >
-                            <View style={styles.iconContainer}>
-                                <View style={styles.icon}>
-                                    <Animated.View
-                                        style={{
-                                            transform: [
-                                                { scaleX: scaleValues[index].scaleX },
-                                                { scaleY: scaleValues[index].scaleY },
-                                            ],
-                                        }}
-                                    >
-                                        <Icon fill={isFocused ? '#5DC19BFF' : undefined} />
-                                    </Animated.View>
-                                    <Text style={styles.text}>{name}</Text>
-                                </View>
-                            </View>
-                        </TouchableWithoutFeedback>
+                            Icon={Icon}
+                            name={name}
+                        />
                     );
                 })}
             </View>
@@ -174,25 +108,6 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 19,
         borderTopRightRadius: 19,
         backgroundColor: 'white',
-    },
-    iconContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '20%',
-        paddingTop: 20,
-        paddingBottom: 10,
-    },
-    icon: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    text: {
-        fontSize: 10,
-        marginTop: 6,
     },
 });
 
