@@ -1,5 +1,6 @@
 import React, { ReactNode, createContext, useRef, useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
+
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 
 interface UIPromptsContextProps {

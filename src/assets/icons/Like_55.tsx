@@ -1,6 +1,7 @@
 import React from 'react';
-import { IconProps } from '<Icon>';
 import { Path, Svg } from 'react-native-svg';
+
+import { IconProps } from '<Icon>';
 import { color } from '@/components/common/tokens/colors';
 
 const Like_55 = ({

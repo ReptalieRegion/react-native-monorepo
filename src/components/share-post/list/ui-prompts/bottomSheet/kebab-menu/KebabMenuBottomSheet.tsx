@@ -1,9 +1,10 @@
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import { SharePostsData } from '<SharePostAPI>';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 import BottomSheetContainer, { ConTainerStyle } from '@/components/common/ui-prompts/bottom/atoms/BottomSheetContainer';
 import BottomSheetHeader from '@/components/common/ui-prompts/bottom/atoms/BottomSheetHeader';
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type PostInfo = Pick<SharePostsData, 'postId' | 'userId'>;
 

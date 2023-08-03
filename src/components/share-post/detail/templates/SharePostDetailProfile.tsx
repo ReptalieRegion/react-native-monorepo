@@ -1,10 +1,12 @@
+import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import UserDetailPanel from '../organisms/UserDetailPanel';
+
 import SharePostsDetailList from '../molecules/PostsDetailList';
-import { useFetchDetailPosts } from '@/apis/share-post';
-import { useRoute } from '@react-navigation/native';
+import UserDetailPanel from '../organisms/UserDetailPanel';
+
 import { SharePostDetailPageRouteProp } from '<Routes>';
+import { useFetchDetailPosts } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
 
 const SharePostDetailProfile = () => {

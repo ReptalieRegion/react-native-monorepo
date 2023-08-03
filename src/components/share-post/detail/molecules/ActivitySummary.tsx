@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+
 import ActivitySummaryItem from '../atoms/ActivitySummaryItem';
+
 import { SharePostDetailPostsData } from '<SharePostAPI>';
 
 type ActivitySummaryProps = Pick<SharePostDetailPostsData, 'followerCount' | 'followingCount' | 'posts'>;

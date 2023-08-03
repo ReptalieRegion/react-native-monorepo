@@ -1,10 +1,11 @@
-import React from 'react';
-import { SharePostWritePageNavigationProp } from '<Routes>';
-import SharePostWriteStore from '@/stores/share-post/write';
 import { useNavigation } from '@react-navigation/native';
+import { throttle } from 'lodash-es';
+import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { shallow } from 'zustand/shallow';
-import { throttle } from 'lodash-es';
+
+import { SharePostWritePageNavigationProp } from '<Routes>';
+import SharePostWriteStore from '@/stores/share-post/write';
 
 const SharePostWriteRightHeader = () => {
     const navigate = useNavigation<SharePostWritePageNavigationProp>();

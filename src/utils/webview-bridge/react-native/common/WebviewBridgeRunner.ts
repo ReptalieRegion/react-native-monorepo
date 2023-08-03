@@ -1,9 +1,11 @@
-import { RNPostMessageType, RNPostReturnType } from '@reptalieregion/webview-bridge';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { MainStackParamList } from '<Routes>';
-import NavigateRunner from '../navigate/NavigateRunner';
+import { RNPostMessageType, RNPostReturnType } from '@reptalieregion/webview-bridge';
+
 import AsyncStorageRunner from '../async-storage/AsyncStorageRunner';
 import HapticRunner from '../haptic/HapticRunner';
+import NavigateRunner from '../navigate/NavigateRunner';
+
+import { MainStackParamList } from '<Routes>';
 
 interface WebviewBridgeRunnerProps<RouteName extends keyof MainStackParamList> {
     message: RNPostMessageType;

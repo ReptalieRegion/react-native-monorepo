@@ -1,4 +1,5 @@
 import clientFetch from '../clientFetch';
+
 import { RequestFollow } from '<SharePostAPI>';
 
 export const getPosts = async () => {

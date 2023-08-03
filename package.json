@@ -7,6 +7,7 @@
         "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
         "ios": "sh ./shell/ios-simulator.sh",
         "lint": "eslint .",
+        "lint:fix": "eslint --fix .",
         "lint-front": "lint-staged",
         "set:env:local": "sh ./shell/set-env.sh local",
         "set:env:dev": "sh ./shell/set-env.sh development",

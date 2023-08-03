@@ -1,8 +1,10 @@
 import React from 'react';
 import { Dimensions, FlatList, Platform, StyleSheet } from 'react-native';
-import SquareImage from '../atoms/SquareImage';
-import { SharePostDetailPostsData } from '<SharePostAPI>';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import SquareImage from '../atoms/SquareImage';
+
+import { SharePostDetailPostsData } from '<SharePostAPI>';
 
 type SharePostsDetailListProps = Pick<SharePostDetailPostsData, 'posts'>;
 

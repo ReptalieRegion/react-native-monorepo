@@ -1,6 +1,7 @@
-import { IconProps } from '<Icon>';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
+
+import { IconProps } from '<Icon>';
 
 const Like_40 = ({ stroke, fill }: IconProps) => {
     return (

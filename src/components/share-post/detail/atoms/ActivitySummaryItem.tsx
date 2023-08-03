@@ -1,6 +1,7 @@
-import { color } from '@/components/common/tokens/colors';
 import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+
+import { color } from '@/components/common/tokens/colors';
 
 interface ActivitySummaryItemProps {
     onPress?: () => void;

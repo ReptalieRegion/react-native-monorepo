@@ -1,13 +1,14 @@
+import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 
+import MainStatusBar from '../status-bar/MainStatusBar';
+
+import { IconFunction } from '<Icon>';
 import BackButton from '@/assets/icons/BackButton';
 import CancelButton from '@/assets/icons/CancelButton';
 import Logo from '@/assets/icons/Logo';
-import { useNavigation } from '@react-navigation/native';
-import { IconFunction } from '<Icon>';
-import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
-import MainStatusBar from '../status-bar/MainStatusBar';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
 

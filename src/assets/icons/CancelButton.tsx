@@ -1,6 +1,7 @@
 import React from 'react';
-import { IconProps } from '<Icon>';
 import { Path, Svg } from 'react-native-svg';
+
+import { IconProps } from '<Icon>';
 
 const CancelButton = ({ width = 15, height = 15, fill = 'black' }: IconProps) => {
     return (

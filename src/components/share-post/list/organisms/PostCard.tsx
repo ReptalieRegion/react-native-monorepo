@@ -1,10 +1,12 @@
 import React from 'react';
-import PostHeader from '../molecules/PostHeader';
+import { StyleSheet, View } from 'react-native';
+
 import InteractivePost from '../molecules/InteractivePost';
 import PostContent from '../molecules/PostContent';
+import PostHeader from '../molecules/PostHeader';
 import PostImageCarousel from '../molecules/PostImageCarousel';
+
 import { SharePostsData } from '<SharePostAPI>';
-import { StyleSheet, View } from 'react-native';
 
 const PostCard = ({
     userId,

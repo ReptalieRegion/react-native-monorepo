@@ -1,11 +1,13 @@
-import React, { useContext } from 'react';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import React, { useContext } from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { shallow } from 'zustand/shallow';
-import SharePostWriteStore from '@/stores/share-post/write';
-import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
+
 import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
+
 import { color } from '@/components/common/tokens/colors';
+import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
+import SharePostWriteStore from '@/stores/share-post/write';
 
 interface ImageContentProps {
     item: PhotoIdentifier;

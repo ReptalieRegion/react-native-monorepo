@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+
+import Follow from '../../list/atoms/Follow';
 import UserAvatar from '../atoms/UserAvatar';
 import ActivitySummary from '../molecules/ActivitySummary';
-import Follow from '../../list/atoms/Follow';
+
 import { SharePostDetailPostsData } from '<SharePostAPI>';
 
 const UserDetailPanel = ({ followerCount, followingCount, posts, profile, nickname, isFollow }: SharePostDetailPostsData) => {

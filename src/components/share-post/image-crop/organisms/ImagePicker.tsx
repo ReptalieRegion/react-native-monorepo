@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+
+import ImageContentHeader from '../atoms/ImageContentHeader';
 import ImageEditor from '../atoms/ImageEditor';
 import ImageList from '../molecules/ImageList';
-import ImageContentHeader from '../atoms/ImageContentHeader';
 
 const ImagePicker = () => {
     return (

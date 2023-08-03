@@ -1,8 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
-import { IconProps } from '<Icon>';
+
 import { color } from '../../tokens/colors';
+
+import { IconProps } from '<Icon>';
 
 const BottomTabBarButton = ({
     isFocused,

@@ -1,9 +1,10 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import Comment from '@/assets/icons/Comment';
-import { useNavigation } from '@react-navigation/native';
+
 import { SharePostListNavigationProp } from '<Routes>';
 import { SharePostsData } from '<SharePostAPI>';
+import Comment from '@/assets/icons/Comment';
 
 type CommentIconType = Pick<SharePostsData, 'postId'>;
 

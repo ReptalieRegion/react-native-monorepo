@@ -1,7 +1,9 @@
-import { MainStackParamList } from '<Routes>';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavigationMessageType, NavigationReturnType } from '@reptalieregion/webview-bridge';
+
 import CustomNavigation from './Navigate';
+
+import { MainStackParamList } from '<Routes>';
 
 interface INavigateRunnerProps<RouteName extends keyof MainStackParamList> {
     message: NavigationMessageType;

@@ -1,5 +1,6 @@
-import { CURRENT_IP, REACT_NATIVE_ENV } from './config';
 import { END_POINT_URI, HOME_PAGE_URI, ModeType } from '@env';
+
+import { CURRENT_IP, REACT_NATIVE_ENV } from './config';
 
 const currentMode = (mode: ModeType) => REACT_NATIVE_ENV === mode;
 

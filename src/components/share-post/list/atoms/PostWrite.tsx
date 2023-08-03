@@ -1,12 +1,14 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import PostWriteIcon from '@/assets/icons/PostWriteIcon';
-import { useNavigation } from '@react-navigation/native';
-import { SharePostListNavigationProp } from '<Routes>';
-import { color } from '@/components/common/tokens/colors';
-import { FloatingActionButtonSize } from '<SharePostComponent>';
-import useScaleDownAndUp from '../animated/useScaleDownAndUp';
 import Animated from 'react-native-reanimated';
+
+import useScaleDownAndUp from '../animated/useScaleDownAndUp';
+
+import { SharePostListNavigationProp } from '<Routes>';
+import { FloatingActionButtonSize } from '<SharePostComponent>';
+import PostWriteIcon from '@/assets/icons/PostWriteIcon';
+import { color } from '@/components/common/tokens/colors';
 
 const PostWrite = ({ buttonSize }: FloatingActionButtonSize) => {
     const navigation = useNavigation<SharePostListNavigationProp>();

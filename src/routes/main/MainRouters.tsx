@@ -1,13 +1,13 @@
-import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+
+import { TabStackParamList } from '<Routes>';
+import { createTabHeader, MainBottomBar } from '@/components/common/layouts';
 import HomeListPage from '@/pages/home/list/page';
-import ShopListPage from '@/pages/shop/list/page';
 import InfoListPage from '@/pages/info/list/page';
 import MyListPage from '@/pages/my/list/page';
 import { SharePostListPage } from '@/pages/share-post';
-
-import { createTabHeader, MainBottomBar } from '@/components/common/layouts';
-import { TabStackParamList } from '<Routes>';
+import ShopListPage from '@/pages/shop/list/page';
 
 const DefaultHeader = createTabHeader();
 

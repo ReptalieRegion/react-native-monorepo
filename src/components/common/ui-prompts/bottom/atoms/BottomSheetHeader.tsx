@@ -1,6 +1,7 @@
-import { color } from '@/components/common/tokens/colors';
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
+
+import { color } from '@/components/common/tokens/colors';
 
 const { width } = Dimensions.get('screen');
 

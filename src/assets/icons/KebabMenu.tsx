@@ -1,5 +1,6 @@
 import React from 'react';
 import { Circle, Svg } from 'react-native-svg';
+
 import { IconProps } from '<Icon>';
 import { color } from '@/components/common/tokens/colors';
 

@@ -1,17 +1,16 @@
-import React from 'react';
-
-import { MainStackParamList } from '<Routes>';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
 
-import HomePage from '@/pages/webview-example/page';
 import MainRouters from './main/MainRouters';
-import { SharePostImageCropPage, SharePostDetailPage, SharePostWritePage } from '@/pages/share-post';
+
+import { MainStackParamList } from '<Routes>';
+import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/DetailHeader';
 import ImageCropHeader from '@/components/share-post/image-crop/atoms/header/ImageCropHeader';
 import ShareHeader from '@/components/share-post/write/atoms/header/SharePostWriteHeader';
-import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/DetailHeader';
+import { SharePostImageCropPage, SharePostDetailPage, SharePostWritePage } from '@/pages/share-post';
 import SharePostCommentPage from '@/pages/share-post/comment/page';
+import HomePage from '@/pages/webview-example/page';
 
 const noHeaderOption: NativeStackNavigationOptions = { headerShown: false };
 

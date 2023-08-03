@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ScrollContextComponent } from '@/contexts/scroll/ScrollContext';
-import { color } from '@/components/common/tokens/colors';
-import { useFetchPosts } from '@/apis/share-post';
 
 import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
 import FloatingActionButtons from '../molecules/FloatingActionButtons';
 import PostCard from '../organisms/PostCard';
+
+import { useFetchPosts } from '@/apis/share-post';
+import { color } from '@/components/common/tokens/colors';
+import { ScrollContextComponent } from '@/contexts/scroll/ScrollContext';
 
 const Posts = () => {
     const { data, isLoading } = useFetchPosts();

@@ -1,5 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { getCommentPost, getDetailPosts, getPosts, updateFollow } from './apis';
+
 import { SharePostCommentData, SharePostDetailPostsData, SharePostsData } from '<SharePostAPI>';
 
 export const useFetchPosts = () => {

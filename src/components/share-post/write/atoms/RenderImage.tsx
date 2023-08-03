@@ -1,9 +1,10 @@
-import CancelButton from '@/assets/icons/CancelButton';
-import { color } from '@/components/common/tokens/colors';
-import SharePostWriteStore from '@/stores/share-post/write';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import React, { useRef } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+
+import CancelButton from '@/assets/icons/CancelButton';
+import { color } from '@/components/common/tokens/colors';
+import SharePostWriteStore from '@/stores/share-post/write';
 
 interface RenderImageProps {
     item: PhotoIdentifier;

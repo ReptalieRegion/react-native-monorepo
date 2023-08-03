@@ -1,7 +1,8 @@
-import { IconProps } from '<Icon>';
-import { color } from '@/components/common/tokens/colors';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
+
+import { IconProps } from '<Icon>';
+import { color } from '@/components/common/tokens/colors';
 
 const Comment = ({ stroke = color.Black.toString() }: IconProps) => {
     return (

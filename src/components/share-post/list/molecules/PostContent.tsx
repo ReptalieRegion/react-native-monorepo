@@ -1,9 +1,10 @@
-import { SharePostListNavigationProp } from '<Routes>';
-import { SharePostsData } from '<SharePostAPI>';
-import { color } from '@/components/common/tokens/colors';
 import { useNavigation } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import { NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData, TouchableWithoutFeedback, View } from 'react-native';
+
+import { SharePostListNavigationProp } from '<Routes>';
+import { SharePostsData } from '<SharePostAPI>';
+import { color } from '@/components/common/tokens/colors';
 
 type PostContentProps = Pick<SharePostsData, 'likeCount' | 'commentCount' | 'content' | 'postId'>;
 

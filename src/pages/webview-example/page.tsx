@@ -1,15 +1,14 @@
+import { useNavigation } from '@react-navigation/native';
+import { deserializeRN, isNextModule, isRNModule, serializeRNReturn } from '@reptalieregion/webview-bridge';
 import React, { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import WebView, { WebViewMessageEvent } from 'react-native-webview';
 
 import { HomePageNavigationProp } from '<Routes>';
-import WebView, { WebViewMessageEvent } from 'react-native-webview';
-import { deserializeRN, isNextModule, isRNModule, serializeRNReturn } from '@reptalieregion/webview-bridge';
-
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeManager';
-import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
 import ENV from '@/env';
+import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
+import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeManager';
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);

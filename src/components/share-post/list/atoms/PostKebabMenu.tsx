@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import { TouchableWithoutFeedback, View } from 'react-native';
+
+import KebabMenuBottomSheet from '../ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
+
+import { SharePostsData } from '<SharePostAPI>';
 import KebabMenu from '@/assets/icons/KebabMenu';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
-import KebabMenuBottomSheet from '../ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
-import { SharePostsData } from '<SharePostAPI>';
 
 type PostKebabProps = Pick<SharePostsData, 'postId' | 'userId'>;
 

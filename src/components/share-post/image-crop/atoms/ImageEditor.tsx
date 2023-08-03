@@ -1,6 +1,7 @@
 import React from 'react';
-import SharePostWriteStore from '@/stores/share-post/write';
 import { Dimensions, Image, StyleSheet, View } from 'react-native';
+
+import SharePostWriteStore from '@/stores/share-post/write';
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height / 2 - 60;

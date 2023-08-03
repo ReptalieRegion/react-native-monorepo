@@ -1,8 +1,9 @@
-import React from 'react';
-import { SharePostsData } from '<SharePostAPI>';
-import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+
 import { SharePostListNavigationProp } from '<Routes>';
+import { SharePostsData } from '<SharePostAPI>';
 
 type ProfileProps = Pick<SharePostsData, 'profile' | 'nickname' | 'userId'>;
 

@@ -1,11 +1,13 @@
-import React, { useRef } from 'react';
-import { photoPermissionCheck } from '@/utils/permissions/photo-permission';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+import React, { useRef } from 'react';
 import { useEffect } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import ImageContent from '../atoms/ImageContent';
-import SharePostWriteStore from '@/stores/share-post/write';
 import { shallow } from 'zustand/shallow';
+
+import ImageContent from '../atoms/ImageContent';
+
+import SharePostWriteStore from '@/stores/share-post/write';
+import { photoPermissionCheck } from '@/utils/permissions/photo-permission';
 
 const NUM_COLUMNS = 4;
 const LOAD_PHOTO_LIMIT = 40;

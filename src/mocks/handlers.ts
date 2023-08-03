@@ -1,5 +1,6 @@
-import { rest } from 'msw';
 import { fakerKO } from '@faker-js/faker';
+import { rest } from 'msw';
+
 import ENV from '@/env';
 
 export const handlers = [

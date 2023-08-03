@@ -1,4 +1,5 @@
 import { INextJSNavigation } from '@reptalieregion/webview-bridge';
+
 import WebviewBridgeManager from '../../utils/WebviewBridgeManager';
 
 const CustomNextJSNavigation = (observer: WebviewBridgeManager): INextJSNavigation => {

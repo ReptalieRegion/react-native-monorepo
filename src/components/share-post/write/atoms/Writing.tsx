@@ -1,5 +1,3 @@
-import { ScrollContext } from '@/contexts/scroll/ScrollContext';
-import SharePostWriteStore from '@/stores/share-post/write';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
     View,
@@ -13,6 +11,9 @@ import {
     Keyboard,
 } from 'react-native';
 import { shallow } from 'zustand/shallow';
+
+import { ScrollContext } from '@/contexts/scroll/ScrollContext';
+import SharePostWriteStore from '@/stores/share-post/write';
 
 type SelectionInfo = {
     start: number;

@@ -1,6 +1,7 @@
-import { MainStackParamList } from '<Routes>';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { INavigation, TPushPayload } from '@reptalieregion/webview-bridge';
+
+import { MainStackParamList } from '<Routes>';
 
 const parsePayload = (payload: TPushPayload) => {
     const route = payload.route as keyof MainStackParamList;

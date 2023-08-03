@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
+
 import { SharePostDetailPostsData } from '<SharePostAPI>';
 
 type UserAvatarProps = Pick<SharePostDetailPostsData, 'profile' | 'nickname'>;

@@ -1,7 +1,9 @@
 import React, { ReactNode } from 'react';
 import { Dimensions, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import BackDrop, { BackDropStyle } from '../../BackDrop';
+
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 import { color } from '@/components/common/tokens/colors';
 

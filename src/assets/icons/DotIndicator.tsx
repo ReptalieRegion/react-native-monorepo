@@ -1,6 +1,7 @@
-import { IconProps } from '<Icon>';
 import React from 'react';
 import Svg, { Circle } from 'react-native-svg';
+
+import { IconProps } from '<Icon>';
 
 const DotIndicator = ({ fill }: IconProps) => {
     return (

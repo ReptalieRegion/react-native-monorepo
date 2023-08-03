@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import { UIPromptsDefaultProps } from '<UIPrompts>';
 import { Dimensions, Platform, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
     runOnJS,
     useAnimatedStyle,
@@ -10,6 +8,9 @@ import Animated, {
     withDelay,
     withTiming,
 } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { UIPromptsDefaultProps } from '<UIPrompts>';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 interface ToastContainerProps extends UIPromptsDefaultProps {

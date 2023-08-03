@@ -1,5 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { GestureResponderEvent, View, ViewProps } from 'react-native';
+
 import { customDoubleTab } from '@/utils/gesture';
 
 interface DoubleTabViewProps extends ViewProps {
