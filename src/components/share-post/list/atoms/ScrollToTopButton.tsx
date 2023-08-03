@@ -1,67 +1,35 @@
-import React, { useContext, useEffect, useRef } from 'react';
-import { Animated, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import UpArrow from '@/assets/icons/UpArrow';
 import { color } from '@/components/common/tokens/colors';
 import { FloatingActionButtonSize } from '<SharePostComponent>';
 import { ScrollContext } from '@/contexts/scroll/ScrollContext';
 import useScaleDownAndUp from '../animated/useScaleDownAndUp';
-
-interface ScrollToTopButtonAnimationProps {
-    translateY: Animated.Value;
-    opacity: Animated.Value;
-    moveY?: number;
-}
-
-const upAnimation = ({ translateY, opacity, moveY }: ScrollToTopButtonAnimationProps) => {
-    Animated.parallel([
-        Animated.timing(translateY, {
-            toValue: moveY ?? 60,
-            duration: 300,
-            useNativeDriver: true,
-        }),
-        Animated.timing(opacity, {
-            toValue: 1,
-            duration: 300,
-            useNativeDriver: true,
-        }),
-    ]).start();
-};
-
-const downAnimation = ({ translateY, opacity }: ScrollToTopButtonAnimationProps) => {
-    Animated.parallel([
-        Animated.timing(translateY, {
-            toValue: 0,
-            duration: 300,
-            useNativeDriver: true,
-        }),
-        Animated.timing(opacity, {
-            toValue: 0,
-            duration: 300,
-            useNativeDriver: true,
-        }),
-    ]).start();
-};
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {
-    const { scrollDirection, scrollInfo, scrollIntoView } = useContext(ScrollContext);
-    const { scale, scaleDown, scaleUp } = useScaleDownAndUp();
-    const translateYRef = useRef(new Animated.Value(0));
-    const opacityRef = useRef(new Animated.Value(0));
+    const { scrollDirection, scrollIntoView } = useContext(ScrollContext);
+    const { scaleStyle, scaleDown, scaleUp } = useScaleDownAndUp();
+    const translateY = useSharedValue(0);
+    const opacity = useSharedValue(0);
+    const animatedContainerStyle = useAnimatedStyle(() => ({
+        transform: [{ translateY: translateY.value }],
+        opacity: opacity.value,
+    }));
 
     useEffect(() => {
-        const translateY = translateYRef.current;
-        const opacity = opacityRef.current;
-
         if (scrollDirection === 'UP') {
-            upAnimation({ translateY, opacity, moveY: -(buttonSize.height + 10) });
+            translateY.value = withTiming(-(buttonSize.height + 10), { duration: 300 });
+            opacity.value = withTiming(1, { duration: 300 });
             return;
         }
 
         if (scrollDirection === 'DOWN') {
-            downAnimation({ translateY, opacity });
+            translateY.value = withTiming(0, { duration: 300 });
+            opacity.value = withTiming(0, { duration: 300 });
             return;
         }
-    }, [buttonSize.height, scrollDirection, scrollInfo.contentOffset.y]);
+    }, [buttonSize.height, scrollDirection, translateY, opacity]);
 
     const handleIconClick = () => {
         scrollIntoView({ y: 0, animated: true });
@@ -70,8 +38,8 @@ const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {
     return (
         <TouchableWithoutFeedback onPressIn={scaleDown} onPressOut={scaleUp} onPress={handleIconClick}>
             <View style={styles.container}>
-                <Animated.View style={{ transform: [{ translateY: translateYRef.current }], opacity: opacityRef.current }}>
-                    <Animated.View style={[buttonSize, styles.content, { transform: [{ scale }] }]}>
+                <Animated.View style={animatedContainerStyle}>
+                    <Animated.View style={[buttonSize, styles.content, scaleStyle]}>
                         <UpArrow />
                     </Animated.View>
                 </Animated.View>
