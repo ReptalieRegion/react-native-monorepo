@@ -1,17 +1,21 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
-import { Animated, Dimensions, Easing, Platform, StyleSheet, Text } from 'react-native';
-import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
+import { Dimensions, Platform, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Animated, {
+    runOnJS,
+    useAnimatedStyle,
+    useDerivedValue,
+    useSharedValue,
+    withDelay,
+    withTiming,
+} from 'react-native-reanimated';
+import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 interface ToastContainerProps extends UIPromptsDefaultProps {
     text: string;
-    containerStyle?: {
-        backgroundColor: string;
-    };
-    textStyle?: {
-        color: string;
-    };
+    containerStyle?: Pick<ViewStyle, 'backgroundColor'>;
+    textStyle?: Pick<TextStyle, 'color'>;
 }
 
 const screenWidth = Dimensions.get('screen').width;
@@ -19,51 +23,31 @@ const toastWidth = screenWidth * 0.95;
 
 const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: ToastContainerProps) => {
     const { top } = useSafeAreaInsets();
-    const translateY = useRef(new Animated.Value(0)).current;
-    const translateX = useRef(new Animated.Value(0)).current;
+    const translateY = useSharedValue(0);
+    const translateX = useSharedValue(0);
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [{ translateX: translateX.value }, { translateY: translateY.value }],
+    }));
 
-    useEffect(() => {
-        const startAnimation = () => {
-            Animated.timing(translateY, {
-                toValue: Platform.OS === 'ios' ? top : 10,
-                duration: 200,
-                useNativeDriver: true,
-            }).start(({ finished }) => {
-                if (finished) {
-                    setTimeout(endAnimation, 1500);
-                }
-            });
-        };
-
-        const endAnimation = () => {
-            Animated.timing(translateX, {
-                toValue: screenWidth,
-                duration: 200,
-                easing: Easing.cubic,
-                useNativeDriver: true,
-            }).start(({ finished }) => {
-                if (finished) {
-                    uiPromptsClose();
-                }
-            });
-        };
-
-        Haptic.trigger({ type: 'impactLight' });
-        startAnimation();
-    }, [uiPromptsClose, translateY, translateX, top]);
-
-    const customStyles = StyleSheet.create({
-        container: {
-            ...containerStyle,
-        },
-        text: {
-            ...textStyle,
-        },
+    useDerivedValue(() => {
+        const isFinishAnimation = translateX.value === screenWidth;
+        if (isFinishAnimation) {
+            runOnJS(uiPromptsClose)();
+        }
     });
 
+    useEffect(() => {
+        Haptic.trigger({ type: 'impactLight' });
+
+        const moveTranslateY = Platform.OS === 'ios' ? top : 10;
+        translateY.value = withTiming(moveTranslateY, { duration: 200 }, () => {
+            translateX.value = withDelay(1000, withTiming(screenWidth, { duration: 200 }));
+        });
+    }, [top, translateX, translateY]);
+
     return (
-        <Animated.View style={[styles.container, customStyles.container, { transform: [{ translateY }, { translateX }] }]}>
-            <Text style={[customStyles.text]}>{text}</Text>
+        <Animated.View style={[styles.container, containerStyle, animatedStyle]}>
+            <Text style={textStyle}>{text}</Text>
         </Animated.View>
     );
 };
