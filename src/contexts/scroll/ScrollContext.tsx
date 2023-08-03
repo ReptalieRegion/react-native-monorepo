@@ -103,9 +103,7 @@ export const ScrollContextComponent = ({ children, fixedChildren }: ScrollContex
     };
 
     const handleOnScrollEndDrag = () => {
-        setTimeout(() => {
-            setIsScrolling(false);
-        }, 500);
+        setTimeout(() => setIsScrolling(false), 500);
     };
 
     const setScrollInfoContentSize = (width: number, height: number) => {

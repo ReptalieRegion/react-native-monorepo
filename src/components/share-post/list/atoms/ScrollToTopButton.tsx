@@ -1,15 +1,17 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import UpArrow from '@/assets/icons/UpArrow';
 import { color } from '@/components/common/tokens/colors';
-import { FloatingActionButtonSize } from '<SharePostComponent>';
 import { ScrollContext } from '@/contexts/scroll/ScrollContext';
 import useScaleDownAndUp from '../animated/useScaleDownAndUp';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { FloatingActionButtonSize } from '<SharePostComponent>';
+import useLock from '@/hooks/useLock';
 
 const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {
     const { scrollDirection, scrollIntoView } = useContext(ScrollContext);
     const { scaleStyle, scaleDown, scaleUp } = useScaleDownAndUp();
+    const { isLock, lockEnd, lockStart } = useLock();
     const translateY = useSharedValue(0);
     const opacity = useSharedValue(0);
     const animatedContainerStyle = useAnimatedStyle(() => ({
@@ -17,22 +19,37 @@ const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {
         opacity: opacity.value,
     }));
 
+    const upAnimated = useCallback(() => {
+        translateY.value = withTiming(-(buttonSize.height + 10), { duration: 300 });
+        opacity.value = withTiming(1, { duration: 300 });
+    }, [buttonSize.height, opacity, translateY]);
+
+    const downAnimated = useCallback(() => {
+        translateY.value = withTiming(0, { duration: 300 });
+        opacity.value = withTiming(0, { duration: 300 });
+    }, [opacity, translateY]);
+
     useEffect(() => {
+        if (isLock()) {
+            return;
+        }
+
         if (scrollDirection === 'UP') {
-            translateY.value = withTiming(-(buttonSize.height + 10), { duration: 300 });
-            opacity.value = withTiming(1, { duration: 300 });
+            upAnimated();
             return;
         }
 
         if (scrollDirection === 'DOWN') {
-            translateY.value = withTiming(0, { duration: 300 });
-            opacity.value = withTiming(0, { duration: 300 });
+            downAnimated();
             return;
         }
-    }, [buttonSize.height, scrollDirection, translateY, opacity]);
+    }, [upAnimated, downAnimated, isLock, scrollDirection]);
 
     const handleIconClick = () => {
+        lockStart();
         scrollIntoView({ y: 0, animated: true });
+        downAnimated();
+        setTimeout(lockEnd, 500);
     };
 
     return (
