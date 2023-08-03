@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     container: {
-        shadowColor: '#000000',
+        shadowColor: color.Black.toString(),
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
         shadowOffset: {

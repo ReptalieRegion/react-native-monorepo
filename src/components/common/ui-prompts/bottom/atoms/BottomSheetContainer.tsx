@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } fro
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import BackDrop, { BackDropStyle } from '../../BackDrop';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
+import { color } from '@/components/common/tokens/colors';
 
 export type ConTainerStyle = Pick<ViewStyle, 'height' | 'backgroundColor' | 'borderRadius'>;
 
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
         width: width,
         position: 'absolute',
         bottom: 0,
-        backgroundColor: '#FFF',
+        backgroundColor: color.White.toString(),
     },
 });
 

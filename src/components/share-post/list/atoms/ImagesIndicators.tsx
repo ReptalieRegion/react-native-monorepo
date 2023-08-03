@@ -3,20 +3,21 @@ import { SharePostsData } from '<SharePostAPI>';
 import sharePostListStore from '@/stores/share-post/list';
 import { StyleSheet, View } from 'react-native';
 import DotIndicator from '@/assets/icons/DotIndicator';
+import { color } from '@/components/common/tokens/colors';
 
 type ImagesIndicators = Pick<SharePostsData, 'images' | 'postId'>;
 
 const currentImage = {
-    color: '#1E8B68FF',
+    color: color.Teal[150].toString(),
     scale: 1,
 };
 
 const otherImage = {
-    color: '#808080',
+    color: color.Gray[500].toString(),
     scale: 0.9,
 };
 
-const makeIndicatorsInfo = (isCurrent: boolean) => {
+const makeIndicatorsStyles = (isCurrent: boolean) => {
     return isCurrent ? currentImage : otherImage;
 };
 
@@ -26,10 +27,10 @@ const ImagesIndicators = ({ images, postId }: ImagesIndicators) => {
     return (
         <View style={styles.container}>
             {images.map((_, index) => {
-                const { color, scale } = makeIndicatorsInfo(index === imageIndex);
+                const styles = makeIndicatorsStyles(index === imageIndex);
                 return (
-                    <View key={index} style={{ transform: [{ scale }] }}>
-                        <DotIndicator fill={color} />
+                    <View key={index} style={{ transform: [{ scale: styles.scale }] }}>
+                        <DotIndicator fill={styles.color} />
                     </View>
                 );
             })}

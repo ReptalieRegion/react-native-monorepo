@@ -100,6 +100,7 @@ const RRColor = {
     LightBlue: {
         50: makeColor('#E1F5FEFF'),
         100: makeColor('#B3E5FCFF'),
+        150: makeColor('#B8E7FBFF'),
         200: makeColor('#81D4FAFF'),
         300: makeColor('#4FC3F7FF'),
         400: makeColor('#29B6F6FF'),
@@ -108,6 +109,7 @@ const RRColor = {
         700: makeColor('#0288D1FF'),
         800: makeColor('#0277BDFF'),
         900: makeColor('#01579BFF'),
+        950: makeColor('#07435FFF'),
         A100: makeColor('#80D8FFFF'),
         A200: makeColor('#40C4FFFF'),
         A400: makeColor('#00B0FFFF'),
@@ -281,6 +283,7 @@ const RRColor = {
         100: makeColor('#F5F5F5FF'),
         200: makeColor('#EEEEEEFF'),
         300: makeColor('#E0E0E0FF'),
+        350: makeColor('#D2D2D2FF'),
         400: makeColor('#BDBDBDFF'),
         500: makeColor('#9E9E9EFF'),
         600: makeColor('#757575FF'),

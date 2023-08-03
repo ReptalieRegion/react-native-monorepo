@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ColorValue, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { SharePostsData } from '<SharePostAPI>';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
+import { color } from '@/components/common/tokens/colors';
 
 type PostHeaderProps = Pick<SharePostsData, 'isFollow'>;
 
@@ -10,8 +11,8 @@ interface FollowInfo {
     text: string;
 }
 
-const following: FollowInfo = { color: '#808080', text: '✓ 팔로잉' };
-const follow: FollowInfo = { color: '#006600', text: '팔로우' };
+const following: FollowInfo = { color: color.Gray[500].toString(), text: '✓ 팔로잉' };
+const follow: FollowInfo = { color: color.Green[750].toString(), text: '팔로우' };
 
 const makeFollowInfo = (isFollow: boolean) => {
     return isFollow ? following : follow;

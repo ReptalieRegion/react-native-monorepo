@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 import { IconProps } from '<Icon>';
+import { color } from '../../tokens/colors';
 
 const BottomTabBarButton = ({
     isFocused,
@@ -36,7 +37,7 @@ const BottomTabBarButton = ({
             <View style={styles.iconContainer}>
                 <View style={styles.icon}>
                     <Animated.View style={animatedStyle}>
-                        <Icon fill={isFocused ? '#5DC19BFF' : undefined} />
+                        <Icon fill={isFocused ? color.Teal[250].toString() : undefined} />
                     </Animated.View>
                     <Text style={styles.text}>{name}</Text>
                 </View>

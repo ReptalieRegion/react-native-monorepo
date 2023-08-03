@@ -1,13 +1,14 @@
 import React from 'react';
-import { Circle, Rect, Svg } from 'react-native-svg';
+import { Circle, Svg } from 'react-native-svg';
+import { IconProps } from '<Icon>';
+import { color } from '@/components/common/tokens/colors';
 
-const KebabMenu = () => {
+const KebabMenu = ({ width = '24', height = '24', fill = color.Gray[900].toString() }: IconProps) => {
     return (
-        <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <Rect width="24" height="24" fill="white" />
-            <Circle cx="22.8" cy="6" r="1.2" fill="#222222" />
-            <Circle cx="22.8" cy="12" r="1.2" fill="#222222" />
-            <Circle cx="22.8" cy="18" r="1.2" fill="#222222" />
+        <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
+            <Circle cx="22.8" cy="6" r="1.2" fill={fill} />
+            <Circle cx="22.8" cy="12" r="1.2" fill={fill} />
+            <Circle cx="22.8" cy="18" r="1.2" fill={fill} />
         </Svg>
     );
 };

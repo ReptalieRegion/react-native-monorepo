@@ -1,4 +1,5 @@
 import CancelButton from '@/assets/icons/CancelButton';
+import { color } from '@/components/common/tokens/colors';
 import SharePostWriteStore from '@/stores/share-post/write';
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import React, { useRef } from 'react';
@@ -37,8 +38,7 @@ const styles = StyleSheet.create({
     },
     cancelButton: {
         position: 'absolute',
-        backgroundColor: '#000',
-        opacity: 0.6,
+        backgroundColor: color.Black.alpha(0.6).toString(),
         zIndex: 10,
         top: 0,
         right: 0,

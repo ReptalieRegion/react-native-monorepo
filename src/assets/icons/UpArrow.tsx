@@ -1,8 +1,9 @@
 import { IconProps } from '<Icon>';
+import { color } from '@/components/common/tokens/colors';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-const UpArrow = ({ width = 31, height = 31, fill = '#231F20' }: IconProps) => {
+const UpArrow = ({ width = 31, height = 31, fill = color.Gray['900'].toString() }: IconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 31 31" fill="none">
             <Path

@@ -1,10 +1,11 @@
 import React from 'react';
 import { IconProps } from '<Icon>';
 import { Circle, Path, Svg } from 'react-native-svg';
+import { color } from '@/components/common/tokens/colors';
 
-const My = ({ fill = '#868E96FF', height = '24', width = '24' }: IconProps) => {
+const My = ({ fill = color.Gray['500'].toString(), height = '24', width = '24' }: IconProps) => {
     return (
-        <Svg width={width} height={height} viewBox="0 0 24 24" fill="#868E96FF">
+        <Svg width={width} height={height} viewBox="0 0 24 24" fill={fill}>
             <Path
                 d="M5.87496 14.3334C5.01046 16.8033 5 21 5 21L18.9997 21C18.9997 20.9964 19.0428 16.9565 18.1247 14.3334C17.2497 11.8335 15.4998 11.0002 11.9998 11C8.49992 10.9998 6.74996 11.8335 5.87496 14.3334Z"
                 fill={fill}

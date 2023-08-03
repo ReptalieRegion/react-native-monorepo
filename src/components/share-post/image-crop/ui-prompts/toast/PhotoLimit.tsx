@@ -1,4 +1,5 @@
 import { UIPromptsDefaultProps } from '<UIPrompts>';
+import { color } from '@/components/common/tokens/colors';
 import ToastContainer from '@/components/common/ui-prompts/toast/atoms/ToastContainer';
 import { MAX_SELECT_PHOTO_COUNT } from '@/stores/share-post/write';
 import React from 'react';
@@ -8,18 +9,10 @@ const PhotoLimit = ({ uiPromptsClose }: UIPromptsDefaultProps) => {
         <ToastContainer
             uiPromptsClose={uiPromptsClose}
             text={`이미지는 최대 ${MAX_SELECT_PHOTO_COUNT}개 입니다.`}
-            containerStyle={containerStyle}
-            textStyle={textStyle}
+            containerStyle={{ backgroundColor: color.LightBlue['150'].toString() }}
+            textStyle={{ color: color.LightBlue['950'].toString() }}
         />
     );
-};
-
-const containerStyle = {
-    backgroundColor: '#B8E7FB',
-};
-
-const textStyle = {
-    color: '#07435F',
 };
 
 export default PhotoLimit;
