@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-
-import { SharePostsData } from '<SharePostAPI>';
+import React, { useEffect, useState } from 'react';
+import { TouchableWithoutFeedback } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 import sharePostListStore from '@/stores/share-post/list';
 import Like_40 from '@/assets/icons/Like_40';
-import { Animated, TouchableWithoutFeedback } from 'react-native';
 import { color } from '@/components/common/tokens/colors';
+import { SharePostsData } from '<SharePostAPI>';
 
 type LikeProps = Pick<SharePostsData, 'isLike' | 'postId'>;
 
@@ -23,38 +23,24 @@ const makeLikeInfo = (isLike: boolean) => {
 };
 
 const Like = ({ postId, isLike }: LikeProps) => {
-    const scaleAnimation = useRef(new Animated.Value(1)).current;
     const startLikeAnimation = sharePostListStore((state) => state.postsOfInfo[postId]?.startLikeAnimation);
     const [filledLikeColor, setFilledLikeColor] = useState<boolean>(isLike);
+    const scale = useSharedValue(1);
+    const animatedStyle = useAnimatedStyle(() => ({
+        transform: [{ scale: scale.value }],
+    }));
     const { fill, stroke } = makeLikeInfo(filledLikeColor);
 
     useEffect(() => {
         if (startLikeAnimation) {
             setFilledLikeColor(true);
-            Animated.sequence([
-                Animated.timing(scaleAnimation, {
-                    toValue: 0.7,
-                    duration: 0,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(scaleAnimation, {
-                    toValue: 1.3,
-                    duration: 140,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(scaleAnimation, {
-                    toValue: 1,
-                    duration: 140,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(scaleAnimation, {
-                    toValue: 1,
-                    duration: 420,
-                    useNativeDriver: true,
-                }),
-            ]).start();
+            scale.value = withSequence(
+                withTiming(0.7, { duration: 140 }),
+                withTiming(1.3, { duration: 140 }),
+                withTiming(1, { duration: 140 }),
+            );
         }
-    }, [scaleAnimation, startLikeAnimation]);
+    }, [scale, startLikeAnimation]);
 
     const handleLikeClick = () => {
         setFilledLikeColor((state) => !state);
@@ -62,7 +48,7 @@ const Like = ({ postId, isLike }: LikeProps) => {
 
     return (
         <TouchableWithoutFeedback onPress={handleLikeClick}>
-            <Animated.View style={{ transform: [{ scale: scaleAnimation }] }}>
+            <Animated.View style={animatedStyle}>
                 <Like_40 fill={fill} stroke={stroke} />
             </Animated.View>
         </TouchableWithoutFeedback>
