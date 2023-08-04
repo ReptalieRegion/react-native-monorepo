@@ -39,7 +39,7 @@ const defaultValue: UIPromptsContextValue = {
 
 export const UIPromptsContext = createContext<UIPromptsContextValue>(defaultValue);
 
-const UIPromptsContextComponent = ({ children }: UIPromptsContextProps) => {
+export const UIPromptsContextComponent = ({ children }: UIPromptsContextProps) => {
     const uiPromptsListRef = useRef<UIPromptsList>({
         bottomSheet: undefined,
         modal: undefined,

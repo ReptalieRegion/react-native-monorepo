@@ -3,8 +3,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { SharePostsData } from '<SharePostAPI>';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
-import BottomSheetContainer, { ConTainerStyle } from '@/components/common/ui-prompts/bottom/atoms/BottomSheetContainer';
-import BottomSheetHeader from '@/components/common/ui-prompts/bottom/atoms/BottomSheetHeader';
+import BottomSheetContainer, { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
+import BottomSheetHeader from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetHeader';
 
 type PostInfo = Pick<SharePostsData, 'postId' | 'userId'>;
 
