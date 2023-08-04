@@ -4,6 +4,8 @@ import { Dimensions } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import { Easing, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
 
+import useKeyboard from './useKeyboard';
+
 export interface UseBottomSheetGestureProps {
     snapInfo?: {
         startIndex: number;
@@ -30,6 +32,7 @@ const useBottomSheetGestureAnimation = ({
     const startY = useSharedValue(0);
     const translateY = useSharedValue(0);
     const height = useSharedValue(0);
+    const { isKeyboardWillShow } = useKeyboard();
     const closeAnimatedStyles = useAnimatedStyle(() => ({
         transform: [{ translateY: translateY.value }],
     }));
@@ -105,8 +108,9 @@ const useBottomSheetGestureAnimation = ({
     });
 
     useEffect(() => {
-        height.value = withTiming(snapPointsASC[snapInfo.startIndex], { easing: Easing.bezier(0.4, 0, 0.2, 1) });
-    }, [height, snapInfo.startIndex, snapPointsASC]);
+        const toValue = isKeyboardWillShow ? snapPointsASC[snapPointsASC.length - 1] : snapPointsASC[snapInfo.startIndex];
+        height.value = withTiming(toValue, { easing: Easing.bezier(0.4, 0, 0.2, 1) });
+    }, [height, isKeyboardWillShow, snapInfo.startIndex, snapPointsASC]);
 
     return { gesture: panGesture, snapAnimatedStyles, closeAnimatedStyles };
 };
