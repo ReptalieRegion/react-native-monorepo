@@ -4,8 +4,7 @@ import { Text, TouchableOpacity } from 'react-native';
 
 const AlbumPicker = () => {
     const openAlbumPicker = async () => {
-        const a = await CameraRoll.getAlbums({ assetType: 'All' });
-        console.log(a);
+        await CameraRoll.getAlbums({ assetType: 'All' });
     };
 
     return (

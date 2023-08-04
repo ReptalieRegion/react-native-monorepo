@@ -12,8 +12,7 @@ interface KebabMenuBottomSheetProps {
     postInfo: PostInfo;
 }
 
-const KebabMenuBottomSheet = ({ postInfo, uiPromptsClose }: KebabMenuBottomSheetProps & UIPromptsDefaultProps) => {
-    console.log(postInfo);
+const KebabMenuBottomSheet = ({ uiPromptsClose }: KebabMenuBottomSheetProps & UIPromptsDefaultProps) => {
     return (
         <BottomSheetContainer uiPromptsClose={uiPromptsClose} containerStyle={containerStyle}>
             <BottomSheetHeader />

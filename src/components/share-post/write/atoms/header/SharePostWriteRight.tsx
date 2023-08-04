@@ -21,7 +21,6 @@ const SharePostWriteRightHeader = () => {
         const formData = new FormData();
         selectedPhotos.forEach((photo) => {
             const { uri, filename } = photo.node.image;
-            console.log(filename);
             formData.append('files', {
                 uri,
                 name: filename,
