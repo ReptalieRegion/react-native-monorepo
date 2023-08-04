@@ -1,7 +1,8 @@
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import React, { useRef } from 'react';
 import { useEffect } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
 import ImageContent from '../atoms/ImageContent';

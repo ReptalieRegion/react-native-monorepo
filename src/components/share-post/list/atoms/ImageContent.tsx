@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { Dimensions, FlatList, Image, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
+import { Dimensions, Image, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 
 import { SharePostsData, ShareImageType } from '<SharePostAPI>';
 import sharePostListStore from '@/stores/share-post/list';

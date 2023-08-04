@@ -1,5 +1,6 @@
 import React from 'react';
-import { Dimensions, FlatList, Platform, StyleSheet } from 'react-native';
+import { Dimensions, Platform, StyleSheet } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import SquareImage from '../atoms/SquareImage';
