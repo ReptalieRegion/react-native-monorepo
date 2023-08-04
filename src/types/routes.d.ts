@@ -18,10 +18,6 @@ declare module '<Routes>' {
     type SharePostDetailPageProp = { userId: string; nickname: string };
     type SharePostDetailPageRouteProp = RouteProp<MainStackParamList, 'share-post/detail'>;
 
-    type SharePostCommentPageNavigationProp = NativeStackNavigationProp<MainStackParamList, 'share-post/comment'>;
-    type SharePostCommentPageProp = { postId: string };
-    type SharePostCommentPageRouteProp = RouteProp<MainStackParamList, 'share-post/comment'>;
-
     type InfoListNavigationProp = NativeStackNavigationProp<MainStackParamList, 'info/list'>;
 
     type MyListNavigationProp = NativeStackNavigationProp<MainStackParamList, 'my/list'>;
@@ -33,7 +29,6 @@ declare module '<Routes>' {
         'share-post/detail': SharePostDetailPageProp;
         'share-post/image-crop': undefined;
         'share-post/write': undefined;
-        'share-post/comment': SharePostCommentPageProp;
         'main-routers': undefined;
     };
 

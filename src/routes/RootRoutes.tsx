@@ -9,7 +9,6 @@ import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/D
 import ImageCropHeader from '@/components/share-post/image-crop/atoms/header/ImageCropHeader';
 import ShareHeader from '@/components/share-post/write/atoms/header/SharePostWriteHeader';
 import { SharePostImageCropPage, SharePostDetailPage, SharePostWritePage } from '@/pages/share-post';
-import SharePostCommentPage from '@/pages/share-post/comment/page';
 import HomePage from '@/pages/webview-example/page';
 
 const noHeaderOption: NativeStackNavigationOptions = { headerShown: false };
@@ -32,7 +31,6 @@ const RootRoutes = () => {
                     options={{ header: SharePostDetailHeader }}
                 />
                 <Stack.Screen name="share-post/write" component={SharePostWritePage} options={{ header: ShareHeader }} />
-                <Stack.Screen name="share-post/comment" component={SharePostCommentPage} options={{ header: ShareHeader }} />
                 <Stack.Screen name="HomePage" component={HomePage} options={noHeaderOption} />
             </Stack.Navigator>
         </NavigationContainer>
