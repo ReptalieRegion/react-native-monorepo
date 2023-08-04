@@ -8,7 +8,6 @@ const useLock = () => {
     };
 
     const lockEnd = () => {
-        console.log('lock end');
         lock.current = false;
     };
 
