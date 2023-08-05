@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+
+import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
 
 import { SharePostsData } from '<SharePostAPI>';
 import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
+import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
 
 type PostContentProps = Pick<SharePostsData, 'likeCount' | 'commentCount' | 'content' | 'postId'>;
 
 const PostContent = ({ likeCount, commentCount, content, postId }: PostContentProps) => {
+    const { setUIPrompts } = useContext(UIPromptsContext);
+
+    const handleClickComment = () => {
+        const { uiPromptsOpen } = setUIPrompts({
+            Component: CommentBottomSheet,
+            openType: 'bottomSheet',
+            props: { postId },
+        });
+        uiPromptsOpen();
+    };
+
     return (
         <View style={styles.container}>
             {likeCount !== 0 && <Text style={[styles.fontBold]}>{likeCount}명이 좋아합니다.</Text>}
@@ -22,7 +36,7 @@ const PostContent = ({ likeCount, commentCount, content, postId }: PostContentPr
                 ]}
             />
             {commentCount !== 0 && (
-                <TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={handleClickComment}>
                     <View>
                         <Text style={styles.grayFont}>댓글 {commentCount}개 모두 보기</Text>
                     </View>
