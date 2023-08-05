@@ -61,9 +61,12 @@ export const handlers = [
             .fill('')
             .map(() => ({
                 id: fakerKO.string.uuid(),
-                tagUser: Array(5)
+                tagUser: Array(fakerKO.number.int({ min: 0, max: 3 }))
                     .fill('')
-                    .map(() => fakerKO.string.uuid()),
+                    .map(() => ({
+                        id: fakerKO.string.uuid(),
+                        nickname: fakerKO.person.middleName(),
+                    })),
                 commentUser: {
                     id: fakerKO.string.uuid(),
                     profile: {
