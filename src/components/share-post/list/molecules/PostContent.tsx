@@ -1,35 +1,26 @@
-import React, { useRef, useState } from 'react';
-import { NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData, TouchableWithoutFeedback, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 import { SharePostsData } from '<SharePostAPI>';
+import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
 
 type PostContentProps = Pick<SharePostsData, 'likeCount' | 'commentCount' | 'content' | 'postId'>;
 
-const PostContent = ({ likeCount, commentCount, content }: PostContentProps) => {
-    const [isExpanded, setIsExpanded] = useState(false);
-    const [isOverTwoLines, setIsOverTwoLines] = useState(false);
-    const ref = useRef<Text>(null);
-
-    const onTextLayout = (event: NativeSyntheticEvent<TextLayoutEventData>) => {
-        setIsOverTwoLines(event.nativeEvent.lines.length >= 2);
-    };
-
+const PostContent = ({ likeCount, commentCount, content, postId }: PostContentProps) => {
     return (
         <View style={styles.container}>
             {likeCount !== 0 && <Text style={[styles.fontBold]}>{likeCount}명이 좋아합니다.</Text>}
-            <View>
-                <Text ref={ref} style={styles.content} numberOfLines={isExpanded ? undefined : 2} onTextLayout={onTextLayout}>
-                    {content}
-                </Text>
-                {isOverTwoLines && (
-                    <TouchableWithoutFeedback onPress={() => setIsExpanded((state) => !state)}>
-                        <View>
-                            <Text style={styles.grayFont}>{isExpanded ? '...접기' : '...더보기'}</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                )}
-            </View>
+            <AccordionMenu
+                numberOfLines={2}
+                texts={[
+                    {
+                        key: postId,
+                        content,
+                        style: styles.content,
+                    },
+                ]}
+            />
             {commentCount !== 0 && (
                 <TouchableWithoutFeedback>
                     <View>
