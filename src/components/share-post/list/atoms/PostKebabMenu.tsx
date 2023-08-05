@@ -5,7 +5,7 @@ import KebabMenuBottomSheet from '../ui-prompts/bottomSheet/kebab-menu/KebabMenu
 
 import { SharePostsData } from '<SharePostAPI>';
 import KebabMenu from '@/assets/icons/KebabMenu';
-import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
+import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
 type PostKebabProps = Pick<SharePostsData, 'postId' | 'userId'>;
 

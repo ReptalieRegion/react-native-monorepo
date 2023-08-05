@@ -6,7 +6,7 @@ import { shallow } from 'zustand/shallow';
 import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
 
 import { color } from '@/components/common/tokens/colors';
-import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
+import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 import SharePostWriteStore from '@/stores/share-post/write';
 
 interface ImageContentProps {

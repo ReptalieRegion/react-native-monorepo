@@ -3,8 +3,8 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import ReactQueryContextComponent from '@/contexts/react-query/ReactQueryContext';
-import UIPromptsContextComponent from '@/contexts/ui-prompts/UIPromptsContext';
+import ReactQueryContextComponent from '@/contexts/react-query/ReactQuery';
+import UIPromptsContextComponent from '@/contexts/ui-prompts/UIPrompts';
 import RootRoutes from '@/routes/RootRoutes';
 
 import 'react-native-gesture-handler';

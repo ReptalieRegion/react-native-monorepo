@@ -1,9 +1,11 @@
 import React, { RefObject, useRef, useState } from 'react';
 import { ReactNode, createContext } from 'react';
 import {
+    KeyboardAvoidingView,
     LayoutChangeEvent,
     NativeScrollEvent,
     NativeSyntheticEvent,
+    Platform,
     ScrollView,
     StyleSheet,
     TextInput,
@@ -167,19 +169,21 @@ export const ScrollContextComponent = ({ children, fixedChildren }: ScrollContex
 
     return (
         <ScrollContext.Provider value={{ ...defaultValue, isScrolling, scrollDirection }}>
-            <ScrollView
-                keyboardShouldPersistTaps="handled"
-                style={styles.contentContainer}
-                ref={scrollViewRef}
-                scrollEventThrottle={20}
-                onLayout={setScrollInfoLayout}
-                onScroll={setContentOffset}
-                onContentSizeChange={setScrollInfoContentSize}
-                onScrollBeginDrag={handleOnScrollBeginDrag}
-                onScrollEndDrag={handleOnScrollEndDrag}
-            >
-                {children}
-            </ScrollView>
+            <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                <ScrollView
+                    keyboardShouldPersistTaps="handled"
+                    style={styles.contentContainer}
+                    ref={scrollViewRef}
+                    scrollEventThrottle={16}
+                    onLayout={setScrollInfoLayout}
+                    onScroll={setContentOffset}
+                    onContentSizeChange={setScrollInfoContentSize}
+                    onScrollBeginDrag={handleOnScrollBeginDrag}
+                    onScrollEndDrag={handleOnScrollEndDrag}
+                >
+                    {children}
+                </ScrollView>
+            </KeyboardAvoidingView>
             {fixedChildren !== undefined && (
                 <View style={[styles.fixedContainer, { ...fixedChildren.position }]}>{fixedChildren.renderItem}</View>
             )}
@@ -188,8 +192,11 @@ export const ScrollContextComponent = ({ children, fixedChildren }: ScrollContex
 };
 
 const styles = StyleSheet.create({
-    contentContainer: {
+    container: {
         flex: 1,
+        backgroundColor: 'white',
+    },
+    contentContainer: {
         flexGrow: 1,
         backgroundColor: 'white',
     },

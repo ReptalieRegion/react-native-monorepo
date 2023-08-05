@@ -5,7 +5,7 @@ import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/Comm
 
 import { SharePostsData } from '<SharePostAPI>';
 import Comment from '@/assets/icons/Comment';
-import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
+import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
 type CommentIconType = Pick<SharePostsData, 'postId'>;
 

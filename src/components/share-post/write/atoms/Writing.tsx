@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
-import { ScrollContext } from '@/contexts/scroll/ScrollContext';
+import { ScrollContext } from '@/contexts/scroll/Scroll';
 import SharePostWriteStore from '@/stores/share-post/write';
 
 type SelectionInfo = {

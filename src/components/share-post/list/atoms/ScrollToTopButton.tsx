@@ -7,7 +7,7 @@ import useScaleDownAndUp from '../animated/useScaleDownAndUp';
 import { FloatingActionButtonSize } from '<SharePostComponent>';
 import UpArrow from '@/assets/icons/UpArrow';
 import { color } from '@/components/common/tokens/colors';
-import { ScrollContext } from '@/contexts/scroll/ScrollContext';
+import { ScrollContext } from '@/contexts/scroll/Scroll';
 import useLock from '@/hooks/useLock';
 
 const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {

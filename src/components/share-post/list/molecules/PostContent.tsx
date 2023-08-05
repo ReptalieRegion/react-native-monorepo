@@ -6,7 +6,7 @@ import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/Comm
 import { SharePostsData } from '<SharePostAPI>';
 import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
-import { UIPromptsContext } from '@/contexts/ui-prompts/UIPromptsContext';
+import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
 type PostContentProps = Pick<SharePostsData, 'likeCount' | 'commentCount' | 'content' | 'postId'>;
 

@@ -7,7 +7,7 @@ import PostCard from '../organisms/PostCard';
 
 import { useFetchPosts } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
-import { ScrollContextComponent } from '@/contexts/scroll/ScrollContext';
+import { ScrollContextComponent } from '@/contexts/scroll/Scroll';
 
 const Posts = () => {
     const { data, isLoading } = useFetchPosts();
