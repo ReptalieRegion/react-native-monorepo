@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Dimensions, StyleSheet, TouchableWithoutFeedback, ViewStyle } from 'react-native';
+import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -38,15 +38,11 @@ const BottomSheetContainer = ({
     return (
         <>
             <BackDrop uiPromptsClose={uiPromptsClose} backDropStyle={backDropStyle} />
-            <TouchableWithoutFeedback>
-                <Animated.View style={[styles.container, closeAnimatedStyles]}>
-                    <Animated.View
-                        style={[styles.viewContainer, { paddingBottom: bottom }, containerStyle, snapAnimatedStyles]}
-                    >
-                        {children}
-                    </Animated.View>
+            <Animated.View style={[styles.container, closeAnimatedStyles]}>
+                <Animated.View style={[styles.viewContainer, { paddingBottom: bottom }, containerStyle, snapAnimatedStyles]}>
+                    {children}
                 </Animated.View>
-            </TouchableWithoutFeedback>
+            </Animated.View>
         </>
     );
 };
