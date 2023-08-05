@@ -1,19 +1,19 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 const useLock = () => {
     const lock = useRef(false);
 
-    const lockStart = () => {
+    const lockStart = useCallback(() => {
         lock.current = true;
-    };
+    }, []);
 
-    const lockEnd = () => {
+    const lockEnd = useCallback(() => {
         lock.current = false;
-    };
+    }, []);
 
-    const isLock = () => {
+    const isLock = useCallback(() => {
         return lock.current;
-    };
+    }, []);
 
     return { lockStart, lockEnd, isLock };
 };
