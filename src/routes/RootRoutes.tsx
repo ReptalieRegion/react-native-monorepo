@@ -1,4 +1,5 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { useFlipper } from '@react-navigation/devtools';
+import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { NativeStackNavigationOptions, createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
@@ -15,9 +16,11 @@ const noHeaderOption: NativeStackNavigationOptions = { headerShown: false };
 
 const RootRoutes = () => {
     const Stack = createNativeStackNavigator<MainStackParamList>();
+    const navigationRef = useNavigationContainerRef();
+    useFlipper(navigationRef);
 
     return (
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
             <Stack.Navigator initialRouteName="main-routers" screenOptions={{ headerBackTitleVisible: false }}>
                 <Stack.Screen name="main-routers" component={MainRouters} options={noHeaderOption} />
                 <Stack.Screen
