@@ -10,7 +10,7 @@ import { name as appName } from './app.json';
 if (__DEV__) {
     import('react-native-url-polyfill/auto').then(() => {
         import('./src/mocks/native').then(({ native }) => {
-            native.listen();
+            native.listen({ onUnhandledRequest: 'bypass' });
         });
     });
 }
