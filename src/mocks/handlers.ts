@@ -76,7 +76,7 @@ export const handlers = [
                     nickname: fakerKO.person.middleName(),
                 },
                 content: fakerKO.lorem.paragraphs(1),
-                isExistsReplyComment: Math.random() >= 0.5,
+                replyCommentCount: fakerKO.number.int({ min: 0, max: 20 }),
             }));
 
         return res(ctx.json(comments));

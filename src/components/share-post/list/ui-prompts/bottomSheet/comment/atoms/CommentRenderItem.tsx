@@ -1,13 +1,15 @@
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
+import ReplyCommentButton from './ReplyCommentButton';
+
 import { SharePostCommentData } from '<SharePostAPI>';
 import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
 
-type CommentRenderItemProps = Pick<SharePostCommentData, 'commentUser' | 'tagUser' | 'content'>;
+type CommentRenderItemProps = Pick<SharePostCommentData, 'commentUser' | 'tagUser' | 'content' | 'replyCommentCount' | 'id'>;
 
-const CommentRenderItem = ({ commentUser, content, tagUser }: CommentRenderItemProps) => {
+const CommentRenderItem = ({ commentUser, content, tagUser, replyCommentCount, id }: CommentRenderItemProps) => {
     return (
         <View style={styles.commentItemContainer}>
             <Image style={styles.circle} source={{ uri: commentUser.profile.src }} />
@@ -16,9 +18,9 @@ const CommentRenderItem = ({ commentUser, content, tagUser }: CommentRenderItemP
                 <AccordionMenu
                     numberOfLines={3}
                     texts={[
-                        ...tagUser.map(({ id, nickname }) => ({
-                            key: id,
-                            content: '@' + nickname + ' ',
+                        ...tagUser.map((user, index) => ({
+                            key: user.id + index,
+                            content: '@' + user.nickname + ' ',
                             style: styles.color,
                         })),
                         {
@@ -32,6 +34,7 @@ const CommentRenderItem = ({ commentUser, content, tagUser }: CommentRenderItemP
                     <Text style={styles.commentActionsText}>답글 쓰기</Text>
                     <Text style={styles.commentActionsText}>신고</Text>
                 </View>
+                {replyCommentCount !== 0 && <ReplyCommentButton id={id} replyCommentCount={replyCommentCount} />}
             </View>
         </View>
     );
@@ -68,7 +71,7 @@ const styles = StyleSheet.create({
     },
     commentActionsText: {
         fontSize: 12,
-        color: 'gray',
+        color: color.Gray['600'].toString(),
     },
 });
 

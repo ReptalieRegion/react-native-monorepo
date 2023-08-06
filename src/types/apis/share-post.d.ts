@@ -55,6 +55,6 @@ declare module '<SharePostAPI>' {
             nickname: string;
         };
         content: string;
-        isExistsReplyComment: boolean;
+        replyCommentCount: number;
     }
 }

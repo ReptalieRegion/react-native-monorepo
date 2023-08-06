@@ -30,7 +30,13 @@ const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps 
                     nestedScrollEnabled
                     data={data}
                     renderItem={({ item }) => (
-                        <CommentRenderItem commentUser={item.commentUser} content={item.content} tagUser={item.tagUser} />
+                        <CommentRenderItem
+                            id={item.id}
+                            commentUser={item.commentUser}
+                            content={item.content}
+                            tagUser={item.tagUser}
+                            replyCommentCount={item.replyCommentCount}
+                        />
                     )}
                 />
                 <View>
