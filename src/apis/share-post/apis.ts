@@ -26,3 +26,9 @@ export const getCommentPost = async (postId: string) => {
 
     return response.json();
 };
+
+export const getReplyComment = async (commentId: string) => {
+    const response = await clientFetch(`api/comment/${commentId}`);
+
+    return response.json();
+};

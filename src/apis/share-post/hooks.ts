@@ -18,9 +18,19 @@ export const useUpdateFollow = () => {
 };
 
 export const useFetchDetailPosts = (userId: string) => {
-    return useQuery<SharePostDetailPostsData>({ queryKey: ['fetchDetailPosts'], queryFn: () => getDetailPosts(userId) });
+    return useQuery<SharePostDetailPostsData>({
+        queryKey: ['fetchDetailPosts' + userId],
+        queryFn: () => getDetailPosts(userId),
+    });
 };
 
 export const useFetchCommentsPost = (postId: string) => {
-    return useQuery<SharePostCommentData[]>({ queryKey: ['fetchCommentsPost'], queryFn: () => getCommentPost(postId) });
+    return useQuery<SharePostCommentData[]>({
+        queryKey: ['fetchCommentsPost' + postId],
+        queryFn: () => getCommentPost(postId),
+    });
+};
+
+export const useFetchReplyComments = (commentId: string) => {
+    return useQuery({ queryKey: ['fetchReplyComments' + commentId], queryFn: () => getCommentPost(commentId) });
 };
