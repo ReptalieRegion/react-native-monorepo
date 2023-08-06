@@ -20,10 +20,10 @@ const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps 
     return (
         <BottomSheet
             uiPromptsClose={uiPromptsClose}
-            containerStyle={containerStyle}
-            snapInfo={{ startIndex: 0, pointsFromTop: ['60%', '95%'] }}
+            containerProps={{ containerStyle }}
+            gestureProps={{ snapInfo: { startIndex: 0, pointsFromTop: ['60%', '95%'] } }}
+            headerProps={{ title: <CommentHeader /> }}
         >
-            <CommentHeader />
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.flex}>
                 <FlatList
                     contentContainerStyle={styles.commentContainer}
