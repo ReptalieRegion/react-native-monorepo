@@ -31,7 +31,7 @@ const CommentRenderItem = ({ commentUser, content, tagUser, replyCommentCount, i
                 />
 
                 <View style={styles.commentActions}>
-                    <Text style={styles.commentActionsText}>답글 쓰기</Text>
+                    <Text style={styles.commentActionsText}>댓글 쓰기</Text>
                     <Text style={styles.commentActionsText}>신고</Text>
                 </View>
                 {replyCommentCount !== 0 && <ReplyCommentButton id={id} replyCommentCount={replyCommentCount} />}

@@ -8,14 +8,14 @@ type ReplyCommentButtonProps = Pick<SharePostCommentData, 'replyCommentCount' | 
 
 const ReplyCommentButton = ({ replyCommentCount, id }: ReplyCommentButtonProps) => {
     const handleReplyShow = () => {
-        console.log('답글 보기', id);
+        console.log('댓글 보기', id);
     };
 
     return (
         <TouchableNativeFeedback onPress={handleReplyShow}>
             <View style={[styles.padding, styles.center]}>
                 <View style={styles.border} />
-                <Text style={styles.text}>답글 {replyCommentCount}개 보기</Text>
+                <Text style={styles.text}>댓글 {replyCommentCount}개 보기</Text>
             </View>
         </TouchableNativeFeedback>
     );
