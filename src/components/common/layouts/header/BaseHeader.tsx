@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
 
+import { color } from '../../tokens/colors';
 import MainStatusBar from '../status-bar/MainStatusBar';
 
 import { IconFunction } from '<Icon>';
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         borderBottomWidth: 0.5,
-        borderBottomColor: 'lightgray',
+        borderBottomColor: color.Gray[250].toString(),
     },
     right: {
         flexDirection: 'row',

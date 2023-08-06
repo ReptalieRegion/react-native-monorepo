@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
+import { color } from '@/components/common/tokens/colors';
 import { ScrollContext } from '@/contexts/scroll/Scroll';
 import SharePostWriteStore from '@/stores/share-post/write';
 
@@ -138,7 +139,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     textareaContainer: {
-        borderColor: 'lightgray',
+        borderColor: color.Gray[250].toString(),
         borderWidth: 1,
         borderRadius: 10,
         paddingTop: 15,

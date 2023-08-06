@@ -2,6 +2,7 @@ import React from 'react';
 import { Dimensions, Image, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
+import CommentHeader from '../atoms/CommentHeader';
 import CommentRenderItem from '../atoms/CommentRenderItem';
 
 import { SharePostsData } from '<SharePostAPI>';
@@ -22,6 +23,7 @@ const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps 
             containerStyle={containerStyle}
             snapInfo={{ startIndex: 0, pointsFromTop: ['60%', '95%'] }}
         >
+            <CommentHeader />
             <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.flex}>
                 <FlatList
                     contentContainerStyle={styles.commentContainer}
@@ -54,7 +56,7 @@ const containerStyle: ConTainerStyle = {
 
 const styles = StyleSheet.create({
     postContainer: {
-        borderColor: 'lightgray',
+        borderColor: color.Gray[250].toString(),
         borderBottomWidth: 1,
     },
     postImage: {
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
     bottom: {
         backgroundColor: 'white',
         padding: 8,
-        borderTopColor: 'lightgray',
+        borderTopColor: color.Gray[250].toString(),
         borderTopWidth: 0.5,
         width: Dimensions.get('screen').width,
         height: 50,
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
     textInput: {
         padding: 10,
         width: (Dimensions.get('screen').width - 30 - 20) * 0.85,
-        borderColor: 'lightgray',
+        borderColor: color.Gray[250].toString(),
         borderWidth: 0.5,
         borderRadius: 20,
         height: 30,
