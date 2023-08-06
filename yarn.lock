@@ -5643,7 +5643,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flatted@npm:^3.1.0":
+"flatted@npm:^3.1.0, flatted@npm:^3.2.4":
   version: 3.2.7
   resolution: "flatted@npm:3.2.7"
   checksum: 427633049d55bdb80201c68f7eb1cbd533e03eac541f97d3aecab8c5526f12a20ccecaeede08b57503e772c769e7f8680b37e8d482d1e5f8d7e2194687f9ea35
@@ -9662,6 +9662,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-flipper@npm:^0.210.0":
+  version: 0.210.0
+  resolution: "react-native-flipper@npm:0.210.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-native: ">0.62.0"
+  checksum: 62139535bfbf2452846dbc624c8c085c51f5b575fda22d1af50322b03655e75660def5556bd200437e51588d4c2947d16660c77170909740098a564dbcff79bf
+  languageName: node
+  linkType: hard
+
 "react-native-gesture-handler@npm:^2.12.0":
   version: 2.12.0
   resolution: "react-native-gesture-handler@npm:2.12.0"
@@ -9878,6 +9888,18 @@ __metadata:
   bin:
     react-native: cli.js
   checksum: 08780690cdbdb15798bb59666ab7deabb4555904e78bcade60be42a35ea75365a668c2b5da1f3b431a66d0f1614e143344024ed8be49c219cd034a17fabb1ae9
+  languageName: node
+  linkType: hard
+
+"react-query-native-devtools@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "react-query-native-devtools@npm:4.0.0"
+  dependencies:
+    flatted: ^3.2.4
+  peerDependencies:
+    react-native-flipper: ^0.127.0
+    react-query: ^3.34.6
+  checksum: 7da16b14a59ac19805c315a25ab2c090cc277afe22aee412a743eda5296f282a91c0b35a269d015fbf27781e9c8b65c1a642a6fd5fc258a9318821a27c6da652
   languageName: node
   linkType: hard
 
@@ -10109,6 +10131,7 @@ __metadata:
     react: 18.2.0
     react-native: 0.71.10
     react-native-dotenv: ^3.4.9
+    react-native-flipper: ^0.210.0
     react-native-gesture-handler: ^2.12.0
     react-native-haptic-feedback: ^2.0.3
     react-native-linear-gradient: ^2.8.0
@@ -10120,6 +10143,7 @@ __metadata:
     react-native-svg: ^13.9.0
     react-native-url-polyfill: ^2.0.0
     react-native-webview: ^13.2.1
+    react-query-native-devtools: ^4.0.0
     react-test-renderer: 18.2.0
     typescript: 4.8.4
     zustand: ^4.3.8
