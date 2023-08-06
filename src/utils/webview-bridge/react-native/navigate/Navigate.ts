@@ -1,21 +1,20 @@
-import { RootStackParamList } from '<Routes>';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { INavigation, TPushPayload } from '@reptalieregion/webview-bridge';
 
+import { MainStackParamList } from '<Routes>';
+
 const parsePayload = (payload: TPushPayload) => {
-    const route = payload.route as keyof RootStackParamList;
+    const route = payload.route as keyof MainStackParamList;
     switch (route) {
         case 'HomePage':
-            return { route, params: payload.params as RootStackParamList['HomePage'] };
-        case 'ImageCropPage':
-            return { route, params: payload.params as RootStackParamList['ImageCropPage'] };
+            return { route, params: payload.params as MainStackParamList['HomePage'] };
         default:
             throw new Error('[webview-bridge] not found Navigate route');
     }
 };
 
-const CustomNavigation = <RouteName extends keyof RootStackParamList>(
-    navigate: NativeStackNavigationProp<RootStackParamList, RouteName>,
+const CustomNavigation = <RouteName extends keyof MainStackParamList>(
+    navigate: NativeStackNavigationProp<MainStackParamList, RouteName>,
 ): INavigation => {
     return {
         push: (payload) => {

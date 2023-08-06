@@ -1,14 +1,16 @@
-import { RootStackParamList } from '<Routes>';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { NavigationMessageType, NavigationReturnType } from '@reptalieregion/webview-bridge';
+
 import CustomNavigation from './Navigate';
 
-interface INavigateRunnerProps<RouteName extends keyof RootStackParamList> {
+import { MainStackParamList } from '<Routes>';
+
+interface INavigateRunnerProps<RouteName extends keyof MainStackParamList> {
     message: NavigationMessageType;
-    navigation: NativeStackNavigationProp<RootStackParamList, RouteName>;
+    navigation: NativeStackNavigationProp<MainStackParamList, RouteName>;
 }
 
-const NavigateRunner = <RouteName extends keyof RootStackParamList>({
+const NavigateRunner = <RouteName extends keyof MainStackParamList>({
     message: { module, command, payload },
     navigation,
 }: INavigateRunnerProps<RouteName>): NavigationReturnType => {

@@ -48,7 +48,6 @@ export default class WebviewBridgeManager implements IWebviewBridgeManager {
 
     postMessage(message: NextJSPostMessageType) {
         const serializedMessage = serializeRNCall(message);
-        console.log(this.ref.current?.postMessage('hi'));
         this.ref.current?.postMessage(serializedMessage);
     }
 

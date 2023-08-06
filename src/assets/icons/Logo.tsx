@@ -1,8 +1,10 @@
-import { IIconProps } from '<Icon>';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-const Logo = ({ fill = '#1E8B68', height = '32', width = '32' }: IIconProps) => {
+import { IconProps } from '<Icon>';
+import { color } from '@/components/common/tokens/colors';
+
+const Logo = ({ fill = color.Teal[150].toString(), height = '32', width = '32' }: IconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 32 32" fill="none">
             <Path
