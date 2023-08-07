@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableNativeFeedback, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { SharePostCommentData } from '<SharePostAPI>';
 import { color } from '@/components/common/tokens/colors';
@@ -12,12 +13,12 @@ const ReplyCommentButton = ({ replyCommentCount, id }: ReplyCommentButtonProps) 
     };
 
     return (
-        <TouchableNativeFeedback onPress={handleReplyShow}>
+        <TouchableWithoutFeedback onPress={handleReplyShow}>
             <View style={[styles.padding, styles.center]}>
                 <View style={styles.border} />
                 <Text style={styles.text}>댓글 {replyCommentCount}개 보기</Text>
             </View>
-        </TouchableNativeFeedback>
+        </TouchableWithoutFeedback>
     );
 };
 
