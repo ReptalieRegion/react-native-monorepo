@@ -6,6 +6,7 @@ import ReplyCommentButton from './ReplyCommentButton';
 import { SharePostCommentData } from '<SharePostAPI>';
 import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
+import Tag from '@/components/share-post/common/atoms/Tag';
 
 type CommentRenderItemProps = Pick<SharePostCommentData, 'writer' | 'tags' | 'contents' | 'replyCommentCount' | 'id'>;
 
@@ -15,23 +16,17 @@ const CommentRenderItem = ({ writer, contents, tags, replyCommentCount, id }: Co
             <Image style={styles.circle} source={{ uri: writer.profile.src }} />
             <View style={styles.commentItemContent}>
                 <Text style={styles.nickname}>{writer.nickname}</Text>
-                <AccordionMenu
-                    numberOfLines={3}
-                    texts={contents.map((content, index) => {
+                <AccordionMenu numberOfLines={3}>
+                    {contents.map((content, index) => {
                         const tag = tags[content];
-                        if (content.startsWith('@') && tag) {
-                            return {
-                                key: tag.id + index,
-                                content: content + ' ',
-                                style: styles.color,
-                            };
+                        const isTag = content.startsWith('@') && tag;
+                        if (isTag) {
+                            return <Tag content={content} />;
                         }
-                        return {
-                            key: 'content' + index,
-                            content: content,
-                        };
+
+                        return <Text key={id + index}>{content}</Text>;
                     })}
-                />
+                </AccordionMenu>
 
                 <View style={styles.commentActions}>
                     <Text style={styles.commentActionsText}>댓글 쓰기</Text>

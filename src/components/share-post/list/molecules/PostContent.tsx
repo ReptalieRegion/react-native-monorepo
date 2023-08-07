@@ -25,16 +25,11 @@ const PostContent = ({ likeCount, commentCount, content, postId }: PostContentPr
     return (
         <View style={styles.container}>
             {likeCount !== 0 && <Text style={[styles.fontBold]}>{likeCount}명이 좋아합니다.</Text>}
-            <AccordionMenu
-                numberOfLines={2}
-                texts={[
-                    {
-                        key: postId,
-                        content,
-                        style: styles.content,
-                    },
-                ]}
-            />
+            <AccordionMenu numberOfLines={2}>
+                <Text key={postId} style={styles.content}>
+                    {content}
+                </Text>
+            </AccordionMenu>
             {commentCount !== 0 && (
                 <TouchableWithoutFeedback onPress={handleClickComment}>
                     <View>
