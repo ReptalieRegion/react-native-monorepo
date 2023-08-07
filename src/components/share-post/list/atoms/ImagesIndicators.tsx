@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostAPI>';
 import DotIndicator from '@/assets/icons/DotIndicator';
 import { color } from '@/components/common/tokens/colors';
 import sharePostListStore from '@/stores/share-post/list';
 
-type ImagesIndicators = Pick<SharePostsData, 'images' | 'postId'>;
+type ImagesIndicators = Pick<SharePostListData, 'images' | 'postId'>;
 
 const currentImage = {
     color: color.Teal[150].toString(),

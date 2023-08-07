@@ -7,27 +7,30 @@ import { SharePostCommentData } from '<SharePostAPI>';
 import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
 
-type CommentRenderItemProps = Pick<SharePostCommentData, 'commentUser' | 'tagUser' | 'content' | 'replyCommentCount' | 'id'>;
+type CommentRenderItemProps = Pick<SharePostCommentData, 'writer' | 'tags' | 'contents' | 'replyCommentCount' | 'id'>;
 
-const CommentRenderItem = ({ commentUser, content, tagUser, replyCommentCount, id }: CommentRenderItemProps) => {
+const CommentRenderItem = ({ writer, contents, tags, replyCommentCount, id }: CommentRenderItemProps) => {
     return (
         <View style={styles.commentItemContainer}>
-            <Image style={styles.circle} source={{ uri: commentUser.profile.src }} />
+            <Image style={styles.circle} source={{ uri: writer.profile.src }} />
             <View style={styles.commentItemContent}>
-                <Text style={styles.nickname}>{commentUser.nickname}</Text>
+                <Text style={styles.nickname}>{writer.nickname}</Text>
                 <AccordionMenu
                     numberOfLines={3}
-                    texts={[
-                        ...tagUser.map((user, index) => ({
-                            key: user.id + index,
-                            content: '@' + user.nickname + ' ',
-                            style: styles.color,
-                        })),
-                        {
-                            key: 'content',
+                    texts={contents.map((content, index) => {
+                        const tag = tags[content];
+                        if (content.startsWith('@') && tag) {
+                            return {
+                                key: tag.id + index,
+                                content: content + ' ',
+                                style: styles.color,
+                            };
+                        }
+                        return {
+                            key: 'content' + index,
                             content: content,
-                        },
-                    ]}
+                        };
+                    })}
                 />
 
                 <View style={styles.commentActions}>

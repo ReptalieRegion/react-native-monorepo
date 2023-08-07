@@ -2,10 +2,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { getCommentPost, getDetailPosts, getPosts, updateFollow } from './apis';
 
-import { SharePostCommentData, SharePostDetailPostsData, SharePostsData } from '<SharePostAPI>';
+import { SharePostCommentData, SharePostDetailPostsData, SharePostListData } from '<SharePostAPI>';
 
 export const useFetchPosts = () => {
-    return useQuery<SharePostsData[]>({ queryKey: ['fetchPosts'], queryFn: getPosts, staleTime: Infinity });
+    return useQuery<SharePostListData[]>({ queryKey: ['fetchPosts'], queryFn: getPosts, staleTime: Infinity });
 };
 
 export const useUpdateFollow = () => {

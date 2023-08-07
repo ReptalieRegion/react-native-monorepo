@@ -5,14 +5,14 @@ import { FlatList } from 'react-native-gesture-handler';
 import CommentHeader from '../atoms/CommentHeader';
 import CommentRenderItem from '../atoms/CommentRenderItem';
 
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostAPI>';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 import { useFetchCommentsPost } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
 import { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
 import BottomSheet from '@/components/common/ui-prompts/bottom-sheet/molecules/BottomSheet';
 
-export type CommentBottomSheetProps = Pick<SharePostsData, 'postId'>;
+export type CommentBottomSheetProps = Pick<SharePostListData, 'postId'>;
 
 const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps & UIPromptsDefaultProps) => {
     const { data } = useFetchCommentsPost(postId);
@@ -32,9 +32,9 @@ const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps 
                     renderItem={({ item }) => (
                         <CommentRenderItem
                             id={item.id}
-                            commentUser={item.commentUser}
-                            content={item.content}
-                            tagUser={item.tagUser}
+                            writer={item.writer}
+                            contents={item.contents}
+                            tags={item.tags}
                             replyCommentCount={item.replyCommentCount}
                         />
                     )}

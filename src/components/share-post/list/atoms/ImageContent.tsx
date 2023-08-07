@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { Dimensions, Image, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-import { SharePostsData, ShareImageType } from '<SharePostAPI>';
+import { SharePostListData, ShareImageType } from '<SharePostAPI>';
 import sharePostListStore from '@/stores/share-post/list';
 
-type ImagesContentProps = Pick<SharePostsData, 'images' | 'postId'>;
+type ImagesContentProps = Pick<SharePostListData, 'images' | 'postId'>;
 
 const { width } = Dimensions.get('screen');
 

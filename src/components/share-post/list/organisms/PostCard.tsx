@@ -6,7 +6,7 @@ import PostContent from '../molecules/PostContent';
 import PostHeader from '../molecules/PostHeader';
 import PostImageCarousel from '../molecules/PostImageCarousel';
 
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostAPI>';
 
 const PostCard = ({
     userId,
@@ -19,7 +19,7 @@ const PostCard = ({
     likeCount,
     content,
     isLike,
-}: SharePostsData) => {
+}: SharePostListData) => {
     return (
         <View style={styles.container}>
             <PostHeader postId={postId} userId={userId} isFollow={isFollow} profile={profile} nickname={nickname} />

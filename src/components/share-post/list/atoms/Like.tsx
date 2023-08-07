@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostAPI>';
 import Like_40 from '@/assets/icons/Like_40';
 import { color } from '@/components/common/tokens/colors';
 import sharePostListStore from '@/stores/share-post/list';
 
-type LikeProps = Pick<SharePostsData, 'isLike' | 'postId'>;
+type LikeProps = Pick<SharePostListData, 'isLike' | 'postId'>;
 
 const likeInfo = {
     fill: color.Red[500].toString(),

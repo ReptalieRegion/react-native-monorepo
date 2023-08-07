@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { StyleSheet, TranslateXTransform, TranslateYTransform, View, ViewStyle } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostAPI>';
 import LikeIcon from '@/assets/icons/Like_55';
 import { color } from '@/components/common/tokens/colors';
 import sharePostListStore from '@/stores/share-post/list';
 
-type HeartAnimationProps = Pick<SharePostsData, 'postId'>;
+type HeartAnimationProps = Pick<SharePostListData, 'postId'>;
 
 type DotMapType = 'leftTop' | 'top' | 'rightTop' | 'right' | 'rightBottom' | 'bottom' | 'leftBottom' | 'left';
 

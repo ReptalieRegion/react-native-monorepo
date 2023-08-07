@@ -3,9 +3,9 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 import { SharePostListNavigationProp } from '<Routes>';
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostAPI>';
 
-type ProfileProps = Pick<SharePostsData, 'profile' | 'nickname' | 'userId'>;
+type ProfileProps = Pick<SharePostListData, 'profile' | 'nickname' | 'userId'>;
 
 const Profile = ({ nickname, profile, userId }: ProfileProps) => {
     const navigation = useNavigation<SharePostListNavigationProp>();

@@ -1,6 +1,7 @@
 import { fakerKO } from '@faker-js/faker';
 import { rest } from 'msw';
 
+import { SharePostCommentData, Tags } from '<SharePostAPI>';
 import ENV from '@/env';
 
 export const handlers = [
@@ -57,27 +58,42 @@ export const handlers = [
         return res(ctx.json(userPosts));
     }),
     rest.get(ENV.END_POINT_URI + 'api/posts/:postId/comment', (req, res, ctx) => {
-        const comments = Array(fakerKO.number.int({ min: 1, max: 20 }))
+        const comments: SharePostCommentData[] = Array(fakerKO.number.int({ min: 1, max: 20 }))
             .fill('')
-            .map(() => ({
-                id: fakerKO.string.uuid(),
-                tagUser: Array(fakerKO.number.int({ min: 0, max: 3 }))
+            .map(() => {
+                let tagsMap: Tags = {};
+                const numberOfTags = fakerKO.number.int({ min: 0, max: 3 });
+                const tags = Array(numberOfTags)
                     .fill('')
-                    .map(() => ({
-                        id: fakerKO.string.uuid(),
-                        nickname: fakerKO.person.middleName(),
-                    })),
-                commentUser: {
+                    .map(() => ({ id: fakerKO.string.uuid(), nickname: '@' + fakerKO.person.middleName() }));
+
+                const contents = Array(10)
+                    .fill('')
+                    .map(() => fakerKO.lorem.sentence());
+
+                tags.forEach((tag) => {
+                    const insertionPoint = fakerKO.number.int({ min: 0, max: contents.length });
+                    contents.splice(insertionPoint, 0, tag.nickname);
+                    tagsMap[tag.nickname] = {
+                        id: tag.id,
+                    };
+                });
+
+                return {
                     id: fakerKO.string.uuid(),
-                    profile: {
-                        src: fakerKO.image.avatar(),
-                        alt: '프로필 이미지',
+                    writer: {
+                        id: fakerKO.string.uuid(),
+                        profile: {
+                            src: fakerKO.image.avatar(),
+                            alt: '프로필 이미지',
+                        },
+                        nickname: fakerKO.person.middleName(),
                     },
-                    nickname: fakerKO.person.middleName(),
-                },
-                content: fakerKO.lorem.paragraphs(1),
-                replyCommentCount: fakerKO.number.int({ min: 0, max: 20 }),
-            }));
+                    contents,
+                    tags: tagsMap,
+                    replyCommentCount: fakerKO.number.int({ min: 0, max: 20 }),
+                };
+            });
 
         return res(ctx.json(comments));
     }),

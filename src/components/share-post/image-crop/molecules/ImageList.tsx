@@ -74,19 +74,17 @@ const ImageList = () => {
             });
     };
 
-    return (
-        photos.length !== 0 && (
-            <FlatList
-                contentContainerStyle={styles.contentContainer}
-                data={photos}
-                keyExtractor={(_, index) => index.toString()}
-                numColumns={NUM_COLUMNS}
-                onEndReached={loadMorePhotos}
-                onEndReachedThreshold={0.5}
-                renderItem={({ item, index }) => <ImageContent numColumns={NUM_COLUMNS} item={item} index={index} />}
-            />
-        )
-    );
+    return photos.length !== 0 ? (
+        <FlatList
+            contentContainerStyle={styles.contentContainer}
+            data={photos}
+            keyExtractor={(_, index) => index.toString()}
+            numColumns={NUM_COLUMNS}
+            onEndReached={loadMorePhotos}
+            onEndReachedThreshold={0.5}
+            renderItem={({ item, index }) => <ImageContent numColumns={NUM_COLUMNS} item={item} index={index} />}
+        />
+    ) : null;
 };
 
 const styles = StyleSheet.create({

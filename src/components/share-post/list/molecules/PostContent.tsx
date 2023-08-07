@@ -3,12 +3,12 @@ import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 
 import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
 
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostAPI>';
 import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
-type PostContentProps = Pick<SharePostsData, 'likeCount' | 'commentCount' | 'content' | 'postId'>;
+type PostContentProps = Pick<SharePostListData, 'likeCount' | 'commentCount' | 'content' | 'postId'>;
 
 const PostContent = ({ likeCount, commentCount, content, postId }: PostContentProps) => {
     const { setUIPrompts } = useContext(UIPromptsContext);
