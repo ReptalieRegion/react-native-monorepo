@@ -17,6 +17,7 @@
         "start:development": "yarn set:env:dev && NODE_ENV=development yarn start",
         "start:production": "yarn set:env:prod && NODE_ENV=production yarn start",
         "test": "jest",
+        "typecheck": "tsc --noEmit",
         "postinstall": "react-native setup-ios-permissions && pod-install"
     },
     "dependencies": {
