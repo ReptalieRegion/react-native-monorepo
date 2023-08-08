@@ -8,11 +8,13 @@ import MainBottomTabBarButton from './MainBottomTabBarButton';
 
 import { BottomTabParamList } from '<BottomTabNavigationList>';
 import { IconProps } from '<Icon>';
-import ShopIcon from '@/assets/icons/Cart';
-import InfoIcon from '@/assets/icons/Community';
-import HomeIcon from '@/assets/icons/Home';
-import MyIcon from '@/assets/icons/My';
-import SharePostIcon from '@/assets/icons/Share';
+import {
+    Cart as ShopIcon,
+    Community as InfoIcon,
+    Home as HomeIcon,
+    My as MyIcon,
+    Share as SharePostIcon,
+} from '@/assets/icons';
 import useKeyboard from '@/hooks/useKeyboard';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 

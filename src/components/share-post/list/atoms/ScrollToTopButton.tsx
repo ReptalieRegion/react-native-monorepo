@@ -5,7 +5,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import useScaleDownAndUp from '../animated/useScaleDownAndUp';
 
 import { FloatingActionButtonSize } from '<SharePostComponent>';
-import UpArrow from '@/assets/icons/UpArrow';
+import { UpArrow } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 import { FlatListContext } from '@/contexts/flat-list/FlatList';
 import useLock from '@/hooks/useLock';

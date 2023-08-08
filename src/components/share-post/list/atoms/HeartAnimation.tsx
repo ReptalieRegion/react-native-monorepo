@@ -3,7 +3,7 @@ import { StyleSheet, TranslateXTransform, TranslateYTransform, View, ViewStyle }
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
 import { SharePostListData } from '<SharePostAPI>';
-import LikeIcon from '@/assets/icons/Like_55';
+import { Like_55 as LikeIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 import sharePostListStore from '@/stores/share-post/list';
 

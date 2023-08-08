@@ -7,7 +7,7 @@ import useScaleDownAndUp from '../animated/useScaleDownAndUp';
 
 import { BottomTabStackNavigationProp } from '<RootRoutes>';
 import { FloatingActionButtonSize } from '<SharePostComponent>';
-import PostWriteIcon from '@/assets/icons/PostWriteIcon';
+import { PostWriteIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 
 const PostWrite = ({ buttonSize }: FloatingActionButtonSize) => {

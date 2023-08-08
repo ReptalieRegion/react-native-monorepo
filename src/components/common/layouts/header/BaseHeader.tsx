@@ -6,9 +6,7 @@ import { color } from '../../tokens/colors';
 import MainStatusBar from '../status-bar/MainStatusBar';
 
 import { IconFunction } from '<Icon>';
-import BackButton from '@/assets/icons/BackButton';
-import CancelButton from '@/assets/icons/CancelButton';
-import Logo from '@/assets/icons/Logo';
+import { BackButton, CancelButton, Logo } from '@/assets/icons';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
 

@@ -4,7 +4,7 @@ import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
 
 import { SharePostListData } from '<SharePostAPI>';
-import Comment from '@/assets/icons/Comment';
+import { Comment } from '@/assets/icons';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
 type CommentIconType = Pick<SharePostListData, 'postId'>;

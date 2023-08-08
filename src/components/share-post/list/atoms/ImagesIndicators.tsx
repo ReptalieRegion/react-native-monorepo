@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { SharePostListData } from '<SharePostAPI>';
-import DotIndicator from '@/assets/icons/DotIndicator';
+import { DotIndicator } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 import sharePostListStore from '@/stores/share-post/list';
 

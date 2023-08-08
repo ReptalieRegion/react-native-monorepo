@@ -4,7 +4,7 @@ import { TouchableWithoutFeedback, View } from 'react-native';
 import KebabMenuBottomSheet from '../ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
 
 import { SharePostListData } from '<SharePostAPI>';
-import KebabMenu from '@/assets/icons/KebabMenu';
+import { KebabMenu } from '@/assets/icons';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
 type PostKebabProps = Pick<SharePostListData, 'postId' | 'userId'>;

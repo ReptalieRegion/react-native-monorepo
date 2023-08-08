@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
 import { SharePostListData } from '<SharePostAPI>';
-import Like_40 from '@/assets/icons/Like_40';
+import { Like_40 as LikeIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 import sharePostListStore from '@/stores/share-post/list';
 
@@ -50,7 +50,7 @@ const Like = ({ postId, isLike }: LikeProps) => {
     return (
         <TouchableWithoutFeedback onPress={handleLikeClick}>
             <Animated.View style={animatedStyle}>
-                <Like_40 fill={fill} stroke={stroke} />
+                <LikeIcon fill={fill} stroke={stroke} />
             </Animated.View>
         </TouchableWithoutFeedback>
     );
