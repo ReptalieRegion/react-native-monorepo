@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 
 import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
@@ -10,9 +10,14 @@ import { useFetchPosts } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
 import FlatListContextComponent from '@/contexts/flat-list/FlatList';
 
+const ListFooterLoading = (isFetchingNextPage: boolean) => {
+    return isFetchingNextPage ? <ActivityIndicator size={'small'} /> : null;
+};
+
 const Posts = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false);
-    const { data, isLoading, refetch } = useFetchPosts();
+    const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useFetchPosts();
+    const ListFooterComponent = ListFooterLoading(isFetchingNextPage);
 
     if (isLoading) {
         return <SharePostListSkeleton />;
@@ -33,12 +38,14 @@ const Posts = () => {
         <View style={styles.container}>
             <FlatListContextComponent
                 contentContainerStyle={styles.listContainer}
-                data={data}
+                data={data.pages.flatMap((page) => page.postList)}
                 keyExtractor={(item) => item.postId}
                 renderItem={({ item }) => <PostCard {...item} />}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 initialNumToRender={5}
                 maxToRenderPerBatch={10}
+                onEndReached={() => hasNextPage && fetchNextPage()}
+                ListFooterComponent={ListFooterComponent}
                 fixedChildren={{
                     renderItem: <FloatingActionButtons />,
                     position: { bottom: 20, right: 20 },

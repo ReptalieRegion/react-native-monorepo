@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import InteractivePost from '../molecules/InteractivePost';
@@ -36,4 +36,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PostCard;
+export default memo(
+    (props: SharePostListData) => <PostCard {...props} />,
+    (prevProps, nextProps) => prevProps.postId === nextProps.postId,
+);

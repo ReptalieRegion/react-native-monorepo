@@ -1,11 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { getCommentPost, getDetailPosts, getPosts, updateFollow } from './apis';
 
-import { SharePostCommentData, SharePostDetailPostsData, SharePostListData } from '<SharePostAPI>';
+import { SharePostCommentData, SharePostDetailPostsData, SharePostListsData } from '<SharePostAPI>';
 
 export const useFetchPosts = () => {
-    return useQuery<SharePostListData[]>({ queryKey: ['fetchPosts'], queryFn: getPosts, staleTime: Infinity });
+    return useInfiniteQuery<SharePostListsData>({
+        queryKey: ['fetchPosts'],
+        queryFn: getPosts,
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+    });
 };
 
 export const useUpdateFollow = () => {

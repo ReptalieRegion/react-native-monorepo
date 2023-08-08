@@ -2,8 +2,8 @@ import clientFetch from '../clientFetch';
 
 import { RequestFollow } from '<SharePostAPI>';
 
-export const getPosts = async () => {
-    const response = await clientFetch('api/posts');
+export const getPosts = async ({ pageParam = 0 }) => {
+    const response = await clientFetch(`api/posts?pageParam=${pageParam}`);
     return response.json();
 };
 

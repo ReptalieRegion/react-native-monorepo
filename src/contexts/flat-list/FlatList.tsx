@@ -64,6 +64,7 @@ const FlatListContextComponent = <ItemT extends any>({
     onScrollEndDrag,
     renderItem,
     keyExtractor,
+    onEndReached,
     data,
     contentContainerStyle,
     refreshControl,
@@ -72,6 +73,7 @@ const FlatListContextComponent = <ItemT extends any>({
     initialNumToRender,
     maxToRenderPerBatch,
     horizontal,
+    ListFooterComponent,
 }: FlatListContextComponentProps<ItemT>) => {
     const flatListRef = useRef<FlatList<ItemT>>(null);
     const contentOffsetRef = useRef<NativeScrollPoint>();
@@ -174,6 +176,8 @@ const FlatListContextComponent = <ItemT extends any>({
                 onScroll={handleScroll}
                 onScrollBeginDrag={handleScrollBeginDrag}
                 onScrollEndDrag={handleScrollEndDrag}
+                onEndReached={onEndReached}
+                ListFooterComponent={ListFooterComponent}
             />
             <FixedChildrenComponent fixedChildren={fixedChildren} />
         </FlatListContext.Provider>

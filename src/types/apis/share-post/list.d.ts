@@ -13,5 +13,11 @@ declare module '<SharePostListAPI>' {
         images: ShareImageType[];
         likeCount: number;
         commentCount: number;
+        nextPage: number;
+    }
+
+    interface SharePostListsData {
+        postList: SharePostListData[];
+        nextPage: number;
     }
 }

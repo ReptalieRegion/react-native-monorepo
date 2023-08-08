@@ -5,7 +5,9 @@ import { SharePostCommentData, Tags } from '<SharePostAPI>';
 import ENV from '@/env';
 
 export const handlers = [
-    rest.get(ENV.END_POINT_URI + 'api/posts', (_, res, ctx) => {
+    rest.get(ENV.END_POINT_URI + 'api/posts', (req, res, ctx) => {
+        const pageParam = req.url.searchParams.get('pageParam');
+
         const posts = Array(10)
             .fill('')
             .map(() => {
@@ -32,7 +34,12 @@ export const handlers = [
                 };
             });
 
-        return res(ctx.json(posts));
+        return res(
+            ctx.json({
+                postList: posts,
+                nextPage: Number(pageParam) + 1,
+            }),
+        );
     }),
     rest.get(ENV.END_POINT_URI + 'api/posts/:userId', (_, res, ctx) => {
         const userPosts = {
