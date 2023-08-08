@@ -1,5 +1,5 @@
 import { debounce } from 'lodash-es';
-import React, { ReactNode, createContext, useRef, useState, useCallback, useMemo, useContext } from 'react';
+import React, { ReactNode, createContext, useRef, useState, useCallback, useMemo, useContext, memo, forwardRef } from 'react';
 import { FlatListProps, NativeScrollEvent, NativeScrollPoint, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import { FlatList, NativeViewGestureHandlerProps } from 'react-native-gesture-handler';
 
@@ -48,8 +48,7 @@ const FlatListComponent = <ItemT extends any>(props: GestureFlatList<ItemT>, ref
     return <FlatList ref={ref} {...props} />;
 };
 
-const MemoizedFlatList = <ItemT extends any>() =>
-    React.memo(React.forwardRef<FlatList<ItemT>, FlatListProps<ItemT>>(FlatListComponent));
+const MemoizedFlatList = <ItemT extends any>() => memo(forwardRef<FlatList<ItemT>, FlatListProps<ItemT>>(FlatListComponent));
 
 const FixedChildrenComponent = ({ fixedChildren }: { fixedChildren?: FixedChildren }) => {
     if (fixedChildren === undefined) {
@@ -127,10 +126,8 @@ const FlatListContextComponent = <ItemT extends any>({
             debounce(() => {
                 setIsScrolling(false);
             }, 500),
-        [], // dependencies 배열
+        [],
     );
-
-    const scrollEnd = useCallback(debouncedScrollEnd, [debouncedScrollEnd]);
 
     const handleScrollBeginDrag = useCallback(
         (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -142,10 +139,10 @@ const FlatListContextComponent = <ItemT extends any>({
 
     const handleScrollEndDrag = useCallback(
         (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-            scrollEnd();
+            debouncedScrollEnd();
             onScrollEndDrag?.(event);
         },
-        [onScrollEndDrag, scrollEnd],
+        [debouncedScrollEnd, onScrollEndDrag],
     );
 
     const handleScroll = useCallback(
