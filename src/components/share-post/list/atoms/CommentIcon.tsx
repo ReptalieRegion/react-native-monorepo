@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
 
@@ -22,13 +23,11 @@ const CommentIcon = ({ postId }: CommentIconType) => {
     };
 
     return (
-        <View style={styles.container}>
-            <TouchableWithoutFeedback onPress={handleClickComment}>
-                <View>
-                    <Comment />
-                </View>
-            </TouchableWithoutFeedback>
-        </View>
+        <TouchableWithoutFeedback onPress={handleClickComment}>
+            <View style={styles.container}>
+                <Comment />
+            </View>
+        </TouchableWithoutFeedback>
     );
 };
 

@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect } from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import useScaleDownAndUp from '../animated/useScaleDownAndUp';
@@ -55,15 +56,15 @@ const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {
     };
 
     return (
-        <TouchableWithoutFeedback onPressIn={scaleDown} onPressOut={scaleUp} onPress={handleIconClick}>
-            <View style={styles.container}>
-                <Animated.View style={animatedContainerStyle}>
+        <View style={styles.container}>
+            <Animated.View style={[styles.container, animatedContainerStyle]}>
+                <TouchableWithoutFeedback onPressIn={scaleDown} onPressOut={scaleUp} onPress={handleIconClick}>
                     <Animated.View style={[buttonSize, styles.content, scaleStyle]}>
                         <UpArrow />
                     </Animated.View>
-                </Animated.View>
-            </View>
-        </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback>
+            </Animated.View>
+        </View>
     );
 };
 

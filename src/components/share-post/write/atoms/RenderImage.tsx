@@ -1,6 +1,7 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import React, { useRef } from 'react';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { CancelButton } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
@@ -22,8 +23,14 @@ const RenderImage = ({ item, isLastImage }: RenderImageProps) => {
 
     return (
         <View ref={viewRef} style={[styles.imageContainer, customStyle.imageContainer]}>
-            <TouchableOpacity style={styles.cancelButton} onPress={() => deleteSelectedPhotos(item.node.image.uri)}>
-                <CancelButton width={16} height={16} fill={color.White.toString()} />
+            <TouchableOpacity
+                containerStyle={styles.cancelButton}
+                style={styles.cancelBackground}
+                onPress={() => deleteSelectedPhotos(item.node.image.uri)}
+            >
+                <View>
+                    <CancelButton width={16} height={16} fill={color.White.toString()} />
+                </View>
             </TouchableOpacity>
             <Image style={styles.image} source={{ uri: item.node.image.uri }} />
         </View>
@@ -39,7 +46,6 @@ const styles = StyleSheet.create({
     },
     cancelButton: {
         position: 'absolute',
-        backgroundColor: color.Black.alpha(0.6).toString(),
         zIndex: 10,
         top: 0,
         right: 0,
@@ -47,6 +53,9 @@ const styles = StyleSheet.create({
         height: 18,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    cancelBackground: {
+        backgroundColor: color.Black.alpha(0.6).toString(),
         borderRadius: 9999,
     },
     image: {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { TouchableWithoutFeedback, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import KebabMenuBottomSheet from '../ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
 
@@ -23,9 +23,7 @@ const PostKebabMenu = (postInfo: PostKebabProps) => {
 
     return (
         <TouchableWithoutFeedback onPress={openBottomSheet}>
-            <View>
-                <KebabMenu />
-            </View>
+            <KebabMenu />
         </TouchableWithoutFeedback>
     );
 };

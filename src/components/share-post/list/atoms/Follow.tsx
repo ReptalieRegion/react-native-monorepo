@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ColorValue, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { ColorValue, StyleSheet, Text } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { SharePostListData } from '<SharePostAPI>';
 import { color } from '@/components/common/tokens/colors';
@@ -30,9 +31,7 @@ const Follow = ({ isFollow }: PostHeaderProps) => {
 
     return (
         <TouchableWithoutFeedback onPress={handleClickFollow}>
-            <View>
-                <Text style={[styles.fontWeight, { color: followInfo.color }]}>{followInfo.text}</Text>
-            </View>
+            <Text style={[styles.fontWeight, { color: followInfo.color }]}>{followInfo.text}</Text>
         </TouchableWithoutFeedback>
     );
 };

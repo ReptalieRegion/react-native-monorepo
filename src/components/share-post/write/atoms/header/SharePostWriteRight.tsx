@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { throttle } from 'lodash-es';
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
 import { BottomTabStackNavigationProp } from '<RootRoutes>';

@@ -1,6 +1,7 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import React, { useContext } from 'react';
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
 import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
@@ -76,8 +77,8 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
     };
 
     return (
-        <View style={[styles.container, { height: imageWidth, width: imageWidth }]}>
-            <TouchableOpacity onPress={handleImageClick}>
+        <TouchableOpacity onPress={handleImageClick}>
+            <View style={[styles.container, { height: imageWidth, width: imageWidth }]}>
                 <View style={[styles.circle, imageCircleStyles.styles]}>
                     <Text style={styles.text}>{imageCircleStyles.text}</Text>
                 </View>
@@ -85,8 +86,8 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
                     style={[styles.image, imageStyles, { height: imageWidth, width: imageWidth }]}
                     source={{ uri: item.node.image.uri }}
                 />
-            </TouchableOpacity>
-        </View>
+            </View>
+        </TouchableOpacity>
     );
 };
 

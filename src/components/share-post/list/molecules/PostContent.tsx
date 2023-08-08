@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
 
@@ -31,11 +32,11 @@ const PostContent = ({ likeCount, commentCount, content, postId }: PostContentPr
                 </Text>
             </AccordionMenu>
             {commentCount !== 0 && (
-                <TouchableWithoutFeedback onPress={handleClickComment}>
-                    <View>
+                <View style={styles.textTouchArea}>
+                    <TouchableWithoutFeedback onPress={handleClickComment}>
                         <Text style={styles.grayFont}>댓글 {commentCount}개 모두 보기</Text>
-                    </View>
-                </TouchableWithoutFeedback>
+                    </TouchableWithoutFeedback>
+                </View>
             )}
         </View>
     );
@@ -51,6 +52,11 @@ const styles = StyleSheet.create({
     },
     fontBold: {
         fontWeight: 'bold',
+    },
+    textTouchArea: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
     },
     grayFont: {
         color: color.Gray[500].toString(),

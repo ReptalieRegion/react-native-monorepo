@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { ReactNode } from 'react';
-import { StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { color } from '../../tokens/colors';
 import MainStatusBar from '../status-bar/MainStatusBar';

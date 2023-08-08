@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 
 import useScaleDownAndUp from '../animated/useScaleDownAndUp';
@@ -26,7 +27,7 @@ const PostWrite = ({ buttonSize }: FloatingActionButtonSize) => {
             onPressIn={scaleDown}
             onPressOut={scaleUp}
             onPress={handleRouteImageCrop}
-            style={styles.container}
+            containerStyle={styles.container}
         >
             <Animated.View style={scaleStyle}>
                 <View style={[buttonSize, styles.content]}>

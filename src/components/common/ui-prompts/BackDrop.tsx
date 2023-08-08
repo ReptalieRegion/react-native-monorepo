@@ -1,5 +1,6 @@
 import React from 'react';
-import { Dimensions, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from 'react-native';
+import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { color } from '../tokens/colors';
 

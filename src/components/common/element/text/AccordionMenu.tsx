@@ -43,9 +43,11 @@ const AccordionMenu = ({
                 {children}
             </Text>
             {showAccordionMenu && (
-                <Text style={styles.grayFont} onPress={() => setIsExpanded((state) => !state)} suppressHighlighting={true}>
-                    {isExpanded ? toggleText.expanded : toggleText.collapsed}
-                </Text>
+                <View style={styles.textTouchArea}>
+                    <Text style={styles.grayFont} onPress={() => setIsExpanded((state) => !state)} suppressHighlighting={true}>
+                        {isExpanded ? toggleText.expanded : toggleText.collapsed}
+                    </Text>
+                </View>
             )}
         </View>
     );
@@ -54,6 +56,11 @@ const AccordionMenu = ({
 const styles = StyleSheet.create({
     grayFont: {
         color: color.Gray[500].toString(),
+    },
+    textTouchArea: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
     },
 });
 
