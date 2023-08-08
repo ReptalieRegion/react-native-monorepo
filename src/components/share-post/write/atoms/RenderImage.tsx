@@ -23,7 +23,7 @@ const RenderImage = ({ item, isLastImage }: RenderImageProps) => {
     return (
         <View ref={viewRef} style={[styles.imageContainer, customStyle.imageContainer]}>
             <TouchableOpacity style={styles.cancelButton} onPress={() => deleteSelectedPhotos(item.node.image.uri)}>
-                <CancelButton width={16} height={16} fill={'white'} />
+                <CancelButton width={16} height={16} fill={color.White.toString()} />
             </TouchableOpacity>
             <Image style={styles.image} source={{ uri: item.node.image.uri }} />
         </View>

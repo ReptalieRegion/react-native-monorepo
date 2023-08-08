@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 
 import { WebviewExampleStackNavigationProp } from '<RootRoutes>';
+import { color } from '@/components/common/tokens/colors';
 import ENV from '@/env';
 import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
 import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeManager';
@@ -64,11 +65,11 @@ const HomePage = () => {
 const styles = StyleSheet.create({
     keyboard: {
         width: '100%',
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
         overflow: 'hidden',
     },
 });

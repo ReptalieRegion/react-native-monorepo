@@ -2,8 +2,9 @@ import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
 import { IconProps } from '<Icon>';
+import { color } from '@/components/common/tokens/colors';
 
-const CancelButton = ({ width = 15, height = 15, fill = 'black' }: IconProps) => {
+const CancelButton = ({ width = 15, height = 15, fill = color.Black.toString() }: IconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 15 15" fill="none">
             <Path

@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderTopLeftRadius: 19,
         borderTopRightRadius: 19,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
 });
 

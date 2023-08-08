@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     container: {
         height: Dimensions.get('screen').height,
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
         overflow: 'hidden',
         paddingBottom: 50,
     },
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     bottom: {
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
         padding: 8,
         borderTopColor: color.Gray[250].toString(),
         borderTopWidth: 0.5,

@@ -5,6 +5,8 @@ import ImageContentHeader from '../atoms/ImageContentHeader';
 import ImageEditor from '../atoms/ImageEditor';
 import ImageList from '../molecules/ImageList';
 
+import { color } from '@/components/common/tokens/colors';
+
 const ImagePicker = () => {
     return (
         <View style={styles.container}>
@@ -18,7 +20,7 @@ const ImagePicker = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
     contentContainer: {
         flexGrow: 1,

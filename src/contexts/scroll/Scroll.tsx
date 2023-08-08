@@ -11,6 +11,8 @@ import {
     View,
 } from 'react-native';
 
+import { color } from '@/components/common/tokens/colors';
+
 interface ScrollContextComponentProps {
     fixedChildren?: {
         renderItem: ReactNode;
@@ -193,11 +195,11 @@ export const ScrollContextComponent = ({ children, fixedChildren }: ScrollContex
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
     contentContainer: {
         flexGrow: 1,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
     fixedContainer: {
         position: 'absolute',

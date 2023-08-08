@@ -63,7 +63,7 @@ const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerSty
 
 const styles = StyleSheet.create({
     bgWhite: {
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
     container: {
         padding: 10,

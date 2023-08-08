@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
         paddingBottom: 30,
         paddingLeft: 15,
         paddingRight: 15,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
     textarea: {
         verticalAlign: 'top',
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     },
     characterCountText: {
         fontSize: 12,
-        color: 'gray',
+        color: color.Gray[500].toString(),
     },
 });
 
