@@ -1,4 +1,3 @@
-import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
@@ -13,7 +12,11 @@ import Logo from '@/assets/icons/Logo';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
 
-interface IHeaderProps {
+type LeftIconMapType = {
+    [key in LeftIconType]: IconFunction;
+};
+
+export interface IHeaderProps {
     leftIconClick?: () => void;
     leftIcon?: LeftIconType;
     containerStyle?: ViewStyle;
@@ -22,17 +25,13 @@ interface IHeaderProps {
     right?: string | ReactNode;
 }
 
-type LeftIconMapType = {
-    [key in LeftIconType]: IconFunction;
-};
-
 const LEFT_ICON: LeftIconMapType = {
     cancel: CancelButton,
     back: BackButton,
     logo: Logo,
 };
 
-export const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerStyle, title, right }: IHeaderProps) => {
+const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerStyle, title, right }: IHeaderProps) => {
     const navigation = useNavigation();
     const customStyles = StyleSheet.create({
         container: containerStyle ?? {},
@@ -87,6 +86,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export const createTabHeader = (headerProps?: IHeaderProps) => {
-    return (_: BottomTabHeaderProps) => <BaseHeader {...headerProps} />;
-};
+export default BaseHeader;

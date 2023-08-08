@@ -6,8 +6,8 @@ import { color } from '../../tokens/colors';
 
 import MainBottomTabBarButton from './MainBottomTabBarButton';
 
+import { BottomTabParamList } from '<BottomTabNavigationList>';
 import { IconProps } from '<Icon>';
-import { TabStackParamList } from '<Routes>';
 import ShopIcon from '@/assets/icons/Cart';
 import InfoIcon from '@/assets/icons/Community';
 import HomeIcon from '@/assets/icons/Home';
@@ -17,30 +17,30 @@ import useKeyboard from '@/hooks/useKeyboard';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 type MenusType = {
-    [key in keyof TabStackParamList]: {
+    [key in keyof BottomTabParamList]: {
         Icon: (props: IconProps) => React.JSX.Element;
         name: string;
     };
 };
 
 const MENUS: MenusType = {
-    'home/list': {
+    'bottom-tab/home/routes': {
         Icon: HomeIcon,
         name: '홈',
     },
-    'shop/list': {
+    'bottom-tab/shop/routes': {
         Icon: ShopIcon,
         name: '쇼핑',
     },
-    'share-post/list': {
+    'bottom-tab/share-post/routes': {
         Icon: SharePostIcon,
         name: '일상공유',
     },
-    'info/list': {
+    'bottom-tab/info/routes': {
         Icon: InfoIcon,
         name: '정보공유',
     },
-    'my/list': {
+    'bottom-tab/my/routes': {
         Icon: MyIcon,
         name: '내 정보',
     },
@@ -59,7 +59,7 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
         <View style={styles.bgWhite}>
             <View style={[styles.container, dynamicStyle.container]}>
                 {state.routes.map((route, index) => {
-                    const routeName = route.name as keyof TabStackParamList;
+                    const routeName = route.name as keyof BottomTabParamList;
                     const { Icon, name } = MENUS[routeName];
                     const isFocused = state.index === index;
                     const onPress = () => {
@@ -71,7 +71,7 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
 
                         if (!isFocused && !event.defaultPrevented) {
                             Haptic.trigger({ type: 'impactLight' });
-                            navigation.navigate(route.name, { merge: true });
+                            navigation.navigate(route.name);
                         }
                     };
 

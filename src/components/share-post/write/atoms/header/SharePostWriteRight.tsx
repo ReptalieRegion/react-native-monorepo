@@ -4,11 +4,11 @@ import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
-import { SharePostWritePageNavigationProp } from '<Routes>';
+import { BottomTabStackNavigationProp } from '<RootRoutes>';
 import SharePostWriteStore from '@/stores/share-post/write';
 
 const SharePostWriteRightHeader = () => {
-    const navigate = useNavigation<SharePostWritePageNavigationProp>();
+    const navigate = useNavigation<BottomTabStackNavigationProp>();
     const { selectedPhotos, postContent } = SharePostWriteStore(
         (state) => ({
             selectedPhotos: state.selectedPhotos,
@@ -54,7 +54,7 @@ const SharePostWriteRightHeader = () => {
                 })
                 .catch(() => console.log('error'));
 
-            navigate.popToTop();
+            navigate.navigate('bottom-tab', { screen: 'bottom-tab/share-post/routes', params: { screen: 'share-post/list' } });
         } catch (error) {
             console.log(error);
         }

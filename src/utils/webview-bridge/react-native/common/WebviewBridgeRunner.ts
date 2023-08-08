@@ -5,14 +5,14 @@ import AsyncStorageRunner from '../async-storage/AsyncStorageRunner';
 import HapticRunner from '../haptic/HapticRunner';
 import NavigateRunner from '../navigate/NavigateRunner';
 
-import { MainStackParamList } from '<Routes>';
+import { RootStackParamList } from '<RootRoutes>';
 
-interface WebviewBridgeRunnerProps<RouteName extends keyof MainStackParamList> {
+interface WebviewBridgeRunnerProps<RouteName extends keyof RootStackParamList> {
     message: RNPostMessageType;
-    navigation: NativeStackNavigationProp<MainStackParamList, RouteName>;
+    navigation: NativeStackNavigationProp<RootStackParamList, RouteName>;
 }
 
-const WebviewBridgeRunner = async <RouteName extends keyof MainStackParamList>(
+const WebviewBridgeRunner = async <RouteName extends keyof RootStackParamList>(
     props: WebviewBridgeRunnerProps<RouteName>,
 ): Promise<RNPostReturnType> => {
     const { message, navigation } = props;

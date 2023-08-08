@@ -1,8 +1,10 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 
 import ReplyCommentButton from './ReplyCommentButton';
 
+import { BottomTabStackNavigationProp } from '<RootRoutes>';
 import { SharePostCommentData } from '<SharePostAPI>';
 import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
@@ -11,6 +13,7 @@ import Tag from '@/components/share-post/common/atoms/Tag';
 type CommentRenderItemProps = Pick<SharePostCommentData, 'writer' | 'tags' | 'contents' | 'replyCommentCount' | 'id'>;
 
 const CommentRenderItem = ({ writer, contents, tags, replyCommentCount, id }: CommentRenderItemProps) => {
+    const navigation = useNavigation<BottomTabStackNavigationProp>();
     return (
         <View style={styles.commentItemContainer}>
             <Image style={styles.circle} source={{ uri: writer.profile.src }} />
@@ -21,7 +24,21 @@ const CommentRenderItem = ({ writer, contents, tags, replyCommentCount, id }: Co
                         const tag = tags[content];
                         const isTag = content.startsWith('@') && tag;
                         if (isTag) {
-                            return <Tag content={content} />;
+                            return (
+                                <Tag
+                                    key={id + index}
+                                    content={content}
+                                    onPress={() =>
+                                        navigation.navigate('bottom-tab-less', {
+                                            screen: 'bottom-tab-less/share-post/routes',
+                                            params: {
+                                                screen: 'share-post/detail',
+                                                params: { nickname: content.replace('@', ''), userId: tag.id },
+                                            },
+                                        })
+                                    }
+                                />
+                            );
                         }
 
                         return <Text key={id + index}>{content}</Text>;

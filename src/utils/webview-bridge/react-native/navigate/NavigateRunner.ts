@@ -3,14 +3,14 @@ import { NavigationMessageType, NavigationReturnType } from '@reptalieregion/web
 
 import CustomNavigation from './Navigate';
 
-import { MainStackParamList } from '<Routes>';
+import { RootStackParamList } from '<RootRoutes>';
 
-interface INavigateRunnerProps<RouteName extends keyof MainStackParamList> {
+interface INavigateRunnerProps<RouteName extends keyof RootStackParamList> {
     message: NavigationMessageType;
-    navigation: NativeStackNavigationProp<MainStackParamList, RouteName>;
+    navigation: NativeStackNavigationProp<RootStackParamList, RouteName>;
 }
 
-const NavigateRunner = <RouteName extends keyof MainStackParamList>({
+const NavigateRunner = <RouteName extends keyof RootStackParamList>({
     message: { module, command, payload },
     navigation,
 }: INavigateRunnerProps<RouteName>): NavigationReturnType => {
