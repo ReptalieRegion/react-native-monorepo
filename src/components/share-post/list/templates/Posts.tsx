@@ -8,7 +8,7 @@ import PostCard from '../organisms/PostCard';
 
 import { useFetchPosts } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
-import { FlatListContextComponent } from '@/contexts/flat-list/FlatList';
+import FlatListContextComponent from '@/contexts/flat-list/FlatList';
 
 const Posts = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false);

@@ -1,5 +1,5 @@
 import { debounce } from 'lodash-es';
-import React, { ReactNode, createContext, useRef, useState, useCallback, useMemo } from 'react';
+import React, { ReactNode, createContext, useRef, useState, useCallback, useMemo, useContext } from 'react';
 import { FlatListProps, NativeScrollEvent, NativeScrollPoint, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import { FlatList, NativeViewGestureHandlerProps } from 'react-native-gesture-handler';
 
@@ -24,7 +24,7 @@ const defaultValue: FlatListContextValue = {
     scrollIntoView: () => {},
 };
 
-export const FlatListContext = createContext<FlatListContextValue>(defaultValue);
+const FlatListContext = createContext<FlatListContextValue>(defaultValue);
 
 type GestureFlatList<ItemT> = React.PropsWithChildren<
     FlatListProps<ItemT> & React.RefAttributes<FlatList<ItemT>> & NativeViewGestureHandlerProps
@@ -59,7 +59,7 @@ const FixedChildrenComponent = ({ fixedChildren }: { fixedChildren?: FixedChildr
     return <View style={[styles.fixedContainer, { ...fixedChildren.position }]}>{fixedChildren.renderItem}</View>;
 };
 
-export const FlatListContextComponent = <ItemT extends any>({
+const FlatListContextComponent = <ItemT extends any>({
     onScroll,
     onScrollBeginDrag,
     onScrollEndDrag,
@@ -188,3 +188,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
 });
+
+export const useFlatList = () => {
+    return useContext(FlatListContext);
+};
+
+export default FlatListContextComponent;
