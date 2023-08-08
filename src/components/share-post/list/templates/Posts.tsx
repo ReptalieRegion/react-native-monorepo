@@ -16,7 +16,7 @@ const ListFooterLoading = (isFetchingNextPage: boolean) => {
 
 const Posts = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false);
-    const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useFetchPosts();
+    const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage, remove, refetch } = useFetchPosts();
     const ListFooterComponent = ListFooterLoading(isFetchingNextPage);
 
     if (isLoading) {
@@ -29,7 +29,7 @@ const Posts = () => {
 
     const onRefresh = () => {
         setRefreshing(true);
-        /** @todo 일상공유 리스트 pull to refresh */
+        remove();
         refetch();
         setRefreshing(false);
     };
@@ -44,7 +44,7 @@ const Posts = () => {
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 initialNumToRender={5}
                 maxToRenderPerBatch={10}
-                onEndReached={() => hasNextPage && fetchNextPage()}
+                onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
                 ListFooterComponent={ListFooterComponent}
                 fixedChildren={{
                     renderItem: <FloatingActionButtons />,
