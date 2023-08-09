@@ -1,5 +1,6 @@
 declare module '<SharePostDetail>' {
-    import { ShareImageType } from '<SharePostImage>';
+    import type { InfiniteState } from '<InfiniteState>';
+    import type { ShareImageType } from '<SharePostImage>';
 
     type PostsInfo = {
         postId: string;
@@ -15,4 +16,6 @@ declare module '<SharePostDetail>' {
         posts: PostsInfo[];
         isFollow: boolean;
     }
+
+    type SharePostDetailPostsInfiniteData = InfiniteState<SharePostDetailPostsData[]>;
 }

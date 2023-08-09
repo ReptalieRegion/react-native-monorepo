@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ColorValue, StyleSheet, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { SharePostListData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostListAPI>';
 import { color } from '@/components/common/tokens/colors';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 

@@ -4,7 +4,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
 
-import { SharePostListData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostListAPI>';
 import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';

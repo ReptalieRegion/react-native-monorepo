@@ -1,11 +1,14 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { getCommentPost, getDetailPosts, getPosts, updateFollow } from './apis';
+import { getCommentPost, getDetailPosts, getPosts, getReplyComment, updateFollow } from './apis';
 
-import { SharePostCommentData, SharePostDetailPostsData, SharePostListsData } from '<SharePostAPI>';
+import { SharePostCommentInfiniteData } from '<SharePostCommentAPI>';
+import { SharePostCommentReplyInfinityData } from '<SharePostCommentReply>';
+import { SharePostDetailPostsData } from '<SharePostDetail>';
+import { SharePostListInfiniteData } from '<SharePostListAPI>';
 
 export const useInfiniteFetchPosts = () => {
-    return useInfiniteQuery<SharePostListsData>({
+    return useInfiniteQuery<SharePostListInfiniteData>({
         queryKey: ['fetchPosts'],
         queryFn: getPosts,
         getNextPageParam: (lastPage) => lastPage.nextPage,
@@ -29,12 +32,17 @@ export const useFetchDetailPosts = (userId: string) => {
 };
 
 export const useFetchCommentsPost = (postId: string) => {
-    return useQuery<SharePostCommentData[]>({
+    return useInfiniteQuery<SharePostCommentInfiniteData>({
         queryKey: ['fetchCommentsPost' + postId],
-        queryFn: () => getCommentPost(postId),
+        queryFn: ({ pageParam }) => getCommentPost({ pageParam, postId }),
+        getNextPageParam: (lastPage) => lastPage.nextPage,
     });
 };
 
-export const useFetchReplyComments = (commentId: string) => {
-    return useQuery({ queryKey: ['fetchReplyComments' + commentId], queryFn: () => getCommentPost(commentId) });
+export const useFetchReplyComments = ({ postId, commentId }: { postId: string; commentId: string }) => {
+    return useInfiniteQuery<SharePostCommentReplyInfinityData>({
+        queryKey: ['fetchReplyComments' + commentId],
+        queryFn: ({ pageParam }) => getReplyComment({ postId, commentId, pageParam }),
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+    });
 };

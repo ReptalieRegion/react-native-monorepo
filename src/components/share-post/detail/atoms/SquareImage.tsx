@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, ListRenderItemInfo, StyleSheet } from 'react-native';
 
-import { PostsInfo } from '<SharePostAPI>';
+import { PostsInfo } from '<SharePostDetail>';
 
 type SquareImageProps = Pick<ListRenderItemInfo<PostsInfo>, 'item'> & { width: number };
 

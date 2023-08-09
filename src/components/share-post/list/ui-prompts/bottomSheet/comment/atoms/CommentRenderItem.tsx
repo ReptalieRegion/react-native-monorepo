@@ -5,7 +5,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import ReplyCommentButton from './ReplyCommentButton';
 
 import { BottomTabStackNavigationProp } from '<RootRoutes>';
-import { SharePostCommentData } from '<SharePostAPI>';
+import { SharePostCommentData } from '<SharePostCommentAPI>';
 import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
 import Tag from '@/components/share-post/common/atoms/Tag';

@@ -5,7 +5,7 @@ import { shallow } from 'zustand/shallow';
 import HeartAnimation from '../atoms/HeartAnimation';
 import ImageContent from '../atoms/ImageContent';
 
-import { SharePostListData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostListAPI>';
 import DoubleTabView from '@/components/common/element/view/DoubleTabView';
 import sharePostListStore from '@/stores/share-post/list';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';

@@ -1,5 +1,6 @@
 declare module '<SharePostListAPI>' {
-    import { ShareImageType } from '<SharePostImage>';
+    import type { InfiniteState } from '<InfiniteState>';
+    import type { ShareImageType } from '<SharePostImage>';
 
     interface SharePostListData {
         nickname: string;
@@ -13,11 +14,7 @@ declare module '<SharePostListAPI>' {
         images: ShareImageType[];
         likeCount: number;
         commentCount: number;
-        nextPage: number;
     }
 
-    interface SharePostListsData {
-        postList: SharePostListData[];
-        nextPage: number;
-    }
+    type SharePostListInfiniteData = InfiniteState<SharePostListData[]>;
 }

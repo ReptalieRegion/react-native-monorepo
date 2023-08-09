@@ -38,7 +38,7 @@ const Posts = () => {
         <View style={styles.container}>
             <FlatListContextComponent
                 contentContainerStyle={styles.listContainer}
-                data={data.pages.flatMap((page) => page.postList)}
+                data={data.pages.flatMap((page) => page.items)}
                 keyExtractor={(item) => item.postId}
                 renderItem={({ item }) => <PostCard {...item} />}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}

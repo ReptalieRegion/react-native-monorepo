@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { BottomTabSharePostListNavigationProp } from '<BottomTabSharePostRoutes>';
-import { SharePostListData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostListAPI>';
 
 type ProfileProps = Pick<SharePostListData, 'profile' | 'nickname' | 'userId'>;
 

@@ -6,7 +6,7 @@ import PostContent from '../molecules/PostContent';
 import PostHeader from '../molecules/PostHeader';
 import PostImageCarousel from '../molecules/PostImageCarousel';
 
-import { SharePostListData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostListAPI>';
 
 const PostCard = ({
     userId,
