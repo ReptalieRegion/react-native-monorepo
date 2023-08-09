@@ -6,7 +6,7 @@ import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
 import FloatingActionButtons from '../molecules/FloatingActionButtons';
 import PostCard from '../organisms/PostCard';
 
-import { useFetchPosts } from '@/apis/share-post';
+import { useInfiniteFetchPosts } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
 import FlatListContextComponent from '@/contexts/flat-list/FlatList';
 
@@ -16,7 +16,7 @@ const ListFooterLoading = (isFetchingNextPage: boolean) => {
 
 const Posts = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false);
-    const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage, remove, refetch } = useFetchPosts();
+    const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage, remove, refetch } = useInfiniteFetchPosts();
     const ListFooterComponent = ListFooterLoading(isFetchingNextPage);
 
     if (isLoading) {

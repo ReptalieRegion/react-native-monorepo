@@ -4,7 +4,7 @@ import { getCommentPost, getDetailPosts, getPosts, updateFollow } from './apis';
 
 import { SharePostCommentData, SharePostDetailPostsData, SharePostListsData } from '<SharePostAPI>';
 
-export const useFetchPosts = () => {
+export const useInfiniteFetchPosts = () => {
     return useInfiniteQuery<SharePostListsData>({
         queryKey: ['fetchPosts'],
         queryFn: getPosts,
