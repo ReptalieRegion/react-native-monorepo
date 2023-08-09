@@ -5,7 +5,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import CommentHeader from '../atoms/CommentHeader';
 import CommentRenderItem from '../atoms/CommentRenderItem';
 
-import { SharePostListData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostListAPI>';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 import { useFetchCommentsPost } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
@@ -28,7 +28,7 @@ const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps 
                 <FlatList
                     contentContainerStyle={styles.commentContainer}
                     nestedScrollEnabled
-                    data={data}
+                    data={data?.pages.flatMap((page) => page.items)}
                     renderItem={({ item }) => (
                         <CommentRenderItem
                             id={item.id}
