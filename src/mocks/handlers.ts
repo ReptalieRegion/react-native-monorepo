@@ -5,7 +5,16 @@ import createSharePostComment from './data/native/share-post/createSharePostComm
 import createSharePostList from './data/native/share-post/createSharePostList';
 import createSharePostProfile from './data/native/share-post/createSharePostProfile';
 
+import { SharePostCommentData } from '<SharePostCommentAPI>';
 import ENV from '@/env';
+
+const delay = <R>(fn: any, time: number) => {
+    return new Promise<R>((resolve) => {
+        setTimeout(() => {
+            resolve(fn());
+        }, time);
+    });
+};
 
 export const handlers = [
     rest.get(ENV.END_POINT_URI + 'api/share-posts', (req, res, ctx) => {
@@ -17,9 +26,14 @@ export const handlers = [
         const profileInfo = createSharePostProfile(10);
         return res(ctx.json(profileInfo));
     }),
-    rest.get(ENV.END_POINT_URI + 'api/share-posts/:postId/comment', (req, res, ctx) => {
-        const comments = createSharePostComment(10, 'comment');
-        const data = createInfinityData({ items: comments, searchParams: req.url.searchParams });
+    rest.get(ENV.END_POINT_URI + 'api/share-posts/:postId/comment', async (req, res, ctx) => {
+        const test = () => {
+            const comments = createSharePostComment(10, 'comment');
+            const data = createInfinityData({ items: comments, searchParams: req.url.searchParams });
+            return data;
+        };
+
+        const data = await delay<SharePostCommentData[]>(test, 500);
         return res(ctx.json(data));
     }),
     rest.get(ENV.END_POINT_URI + 'api/share-posts/:postId/comment/:commentId', (req, res, ctx) => {

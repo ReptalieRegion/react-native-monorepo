@@ -36,7 +36,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default memo(
-    (props: SharePostListData) => <PostCard {...props} />,
-    (prevProps, nextProps) => prevProps.postId === nextProps.postId,
-);
+export default memo(PostCard, (prevProps, nextProps) => prevProps.postId === nextProps.postId);

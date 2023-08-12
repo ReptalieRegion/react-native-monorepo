@@ -1,13 +1,11 @@
 import React from 'react';
-import { Dimensions, Image, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { Dimensions, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import CommentHeader from '../atoms/CommentHeader';
-import CommentRenderItem from '../atoms/CommentRenderItem';
+import { CommentFlatList } from '../organisms/CommentRenderItem';
 
 import { SharePostListData } from '<SharePostListAPI>';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
-import { useFetchCommentsPost } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
 import { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
 import BottomSheet from '@/components/common/ui-prompts/bottom-sheet/molecules/BottomSheet';
@@ -15,8 +13,6 @@ import BottomSheet from '@/components/common/ui-prompts/bottom-sheet/molecules/B
 export type CommentBottomSheetProps = Pick<SharePostListData, 'postId'>;
 
 const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps & UIPromptsDefaultProps) => {
-    const { data } = useFetchCommentsPost(postId);
-
     return (
         <BottomSheet
             uiPromptsClose={uiPromptsClose}
@@ -24,34 +20,17 @@ const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps 
             gestureProps={{ snapInfo: { startIndex: 0, pointsFromTop: ['60%', '95%'] } }}
             headerProps={{ title: <CommentHeader /> }}
         >
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.flex}>
-                <FlatList
-                    contentContainerStyle={styles.commentContainer}
-                    nestedScrollEnabled
-                    data={data?.pages.flatMap((page) => page.items)}
-                    renderItem={({ item }) => (
-                        <CommentRenderItem
-                            id={item.id}
-                            writer={item.writer}
-                            contents={item.contents}
-                            tags={item.tags}
-                            replyCommentCount={item.replyCommentCount}
-                        />
-                    )}
+            <CommentFlatList postId={postId} />
+            <View style={styles.bottom}>
+                <Image
+                    style={styles.circle}
+                    source={{
+                        uri: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F009%2F2022%2F06%2F08%2F0004974574_002_20220608070201911.jpg&type=a340',
+                    }}
                 />
-                <View>
-                    <View style={styles.bottom}>
-                        <Image
-                            style={styles.circle}
-                            source={{
-                                uri: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F009%2F2022%2F06%2F08%2F0004974574_002_20220608070201911.jpg&type=a340',
-                            }}
-                        />
-                        <TextInput placeholder="댓글을 입력하세요..." style={styles.textInput} autoFocus multiline />
-                        <Text style={styles.submit}>등록</Text>
-                    </View>
-                </View>
-            </KeyboardAvoidingView>
+                <TextInput placeholder="댓글을 입력하세요..." style={styles.textInput} autoFocus multiline />
+                <Text style={styles.submit}>등록</Text>
+            </View>
         </BottomSheet>
     );
 };
@@ -81,10 +60,6 @@ const styles = StyleSheet.create({
     },
     keyboard: {
         flex: 1,
-    },
-    commentContainer: {
-        padding: 20,
-        gap: 20,
     },
     circle: {
         width: 30,
@@ -120,6 +95,9 @@ const styles = StyleSheet.create({
     },
     flex: {
         flex: 1,
+    },
+    rel: {
+        position: 'relative',
     },
 });
 

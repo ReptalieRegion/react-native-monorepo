@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 
+import ListFooterLoading from '../../common/atoms/ListFooterComponent';
 import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
 import FloatingActionButtons from '../molecules/FloatingActionButtons';
 import PostCard from '../organisms/PostCard';
@@ -9,10 +10,6 @@ import PostCard from '../organisms/PostCard';
 import { useInfiniteFetchPosts } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
 import FlatListContextComponent from '@/contexts/flat-list/FlatList';
-
-const ListFooterLoading = (isFetchingNextPage: boolean) => {
-    return isFetchingNextPage ? <ActivityIndicator size={'small'} /> : null;
-};
 
 const Posts = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false);

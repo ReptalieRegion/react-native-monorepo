@@ -8,6 +8,7 @@ declare module '<SharePostCommentReply>' {
         writer: {
             id: string;
             profile: ShareImageType;
+            nickname: string;
         };
         contents: string[];
         tags: Tags;
