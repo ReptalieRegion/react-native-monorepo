@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, TranslateXTransform, TranslateYTransform, View, ViewStyle } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
 import { SharePostListData } from '<SharePostListAPI>';
@@ -12,7 +12,10 @@ type HeartAnimationProps = Pick<SharePostListData, 'postId'>;
 type DotMapType = 'leftTop' | 'top' | 'rightTop' | 'right' | 'rightBottom' | 'bottom' | 'leftBottom' | 'left';
 
 type DotTranslateMap = {
-    [key in DotMapType]: TranslateXTransform & TranslateYTransform;
+    [key in DotMapType]: {
+        translateX: number;
+        translateY: number;
+    };
 };
 
 type DotStyles = {
@@ -69,7 +72,8 @@ const Dot = ({ dotName }: { dotName: DotMapType }) => {
 
     useEffect(() => {
         scale.value = withTiming(0, { duration: 300 });
-        translateY.value = withTiming(TRANSLATE_MAP[dotName].translateY, { duration: 300 });
+        const dotTranslateY = TRANSLATE_MAP[dotName].translateY;
+        translateY.value = withTiming(dotTranslateY, { duration: 300 });
         translateX.value = withTiming(TRANSLATE_MAP[dotName].translateX, { duration: 300 });
     }, [dotName, scale, translateX, translateY]);
 
