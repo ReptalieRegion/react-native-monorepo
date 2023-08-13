@@ -5,7 +5,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } 
 import { SharePostListData } from '<SharePostListAPI>';
 import { Like_55 as LikeIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import sharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/list';
 
 type HeartAnimationProps = Pick<SharePostListData, 'postId'>;
 
@@ -77,7 +77,7 @@ const Dot = ({ dotName }: { dotName: DotMapType }) => {
 };
 
 const HeartAnimation = ({ postId }: HeartAnimationProps) => {
-    const setStartLikeAnimation = sharePostListStore((state) => state.setStartLikeAnimation);
+    const setStartLikeAnimation = useSharePostListStore((state) => state.setStartLikeAnimation);
     const heartScale = useSharedValue(1.5);
     const animatedHeartStyle = useAnimatedStyle(() => ({
         transform: [{ scale: heartScale.value }],

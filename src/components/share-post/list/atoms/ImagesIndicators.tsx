@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { SharePostListData } from '<SharePostListAPI>';
 import { DotIndicator } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import sharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/list';
 
 type ImagesIndicators = Pick<SharePostListData, 'images' | 'postId'>;
 
@@ -23,7 +23,7 @@ const makeIndicatorsStyles = (isCurrent: boolean) => {
 };
 
 const ImagesIndicators = ({ images, postId }: ImagesIndicators) => {
-    const imageIndex = sharePostListStore((state) => state.postsOfInfo[postId]?.currentImageIndex);
+    const imageIndex = useSharePostListStore((state) => state.postsOfInfo[postId]?.currentImageIndex);
 
     return (
         <View style={styles.container}>

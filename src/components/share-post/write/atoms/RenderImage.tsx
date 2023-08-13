@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { CancelButton } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import SharePostWriteStore from '@/stores/share-post/write';
+import useSharePostWriteStore from '@/stores/share-post/write';
 
 interface RenderImageProps {
     item: PhotoIdentifier;
@@ -14,7 +14,7 @@ interface RenderImageProps {
 
 const RenderImage = ({ item, isLastImage }: RenderImageProps) => {
     const viewRef = useRef<View>(null);
-    const deleteSelectedPhotos = SharePostWriteStore((state) => state.deleteSelectedPhotos);
+    const deleteSelectedPhotos = useSharePostWriteStore((state) => state.deleteSelectedPhotos);
     const customStyle = StyleSheet.create({
         imageContainer: {
             marginRight: isLastImage ? 20 : undefined,

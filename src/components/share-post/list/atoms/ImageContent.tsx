@@ -5,7 +5,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 import { ShareImageType } from '<SharePostImage>';
 import { SharePostListData } from '<SharePostListAPI>';
-import sharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/list';
 
 type ImagesContentProps = Pick<SharePostListData, 'images' | 'postId'>;
 
@@ -27,7 +27,7 @@ const RenderItem = ({ src }: ShareImageType) => {
 
 const ImageContent = ({ images, postId }: ImagesContentProps) => {
     const prevIndex = useRef(0);
-    const setCurrentImageIndex = sharePostListStore((state) => state.setCurrentImageIndex);
+    const setCurrentImageIndex = useSharePostListStore((state) => state.setCurrentImageIndex);
     useEffect(() => {
         setCurrentImageIndex(postId, 0);
     }, [postId, setCurrentImageIndex]);

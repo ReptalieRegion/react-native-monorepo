@@ -8,7 +8,7 @@ import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
 
 import { color } from '@/components/common/tokens/colors';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
-import SharePostWriteStore from '@/stores/share-post/write';
+import useSharePostWriteStore from '@/stores/share-post/write';
 
 interface ImageContentProps {
     item: PhotoIdentifier;
@@ -48,7 +48,7 @@ const makeImageStyles = (isCurrentSelectedImage: boolean) => {
 
 const ImageContent = ({ item, numColumns }: ImageContentProps) => {
     const { setUIPrompts } = useContext(UIPromptsContext);
-    const { isCurrentPhoto, selectedNumber, setSelectedPhotos, deleteSelectedPhotos } = SharePostWriteStore(
+    const { isCurrentPhoto, selectedNumber, setSelectedPhotos, deleteSelectedPhotos } = useSharePostWriteStore(
         (state) => ({
             setSelectedPhotos: state.setSelectedPhotos,
             deleteSelectedPhotos: state.deleteSelectedPhotos,

@@ -7,13 +7,13 @@ import ImageContent from '../atoms/ImageContent';
 
 import { SharePostListData } from '<SharePostListAPI>';
 import DoubleTabView from '@/components/common/element/view/DoubleTabView';
-import sharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/list';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 type ImagesSliderProps = Pick<SharePostListData, 'images' | 'postId'>;
 
 const PostImageCarousel = ({ postId, images }: ImagesSliderProps) => {
-    const { startLikeAnimation, setStartLikeAnimation } = sharePostListStore(
+    const { startLikeAnimation, setStartLikeAnimation } = useSharePostListStore(
         (state) => ({
             setStartLikeAnimation: state.setStartLikeAnimation,
             startLikeAnimation: state.postsOfInfo[postId]?.startLikeAnimation,

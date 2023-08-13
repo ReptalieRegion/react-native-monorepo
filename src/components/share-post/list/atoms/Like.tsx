@@ -5,7 +5,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } 
 import { SharePostListData } from '<SharePostListAPI>';
 import { Like_40 as LikeIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import sharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/list';
 
 type LikeProps = Pick<SharePostListData, 'isLike' | 'postId'>;
 
@@ -24,7 +24,7 @@ const makeLikeInfo = (isLike: boolean) => {
 };
 
 const Like = ({ postId, isLike }: LikeProps) => {
-    const startLikeAnimation = sharePostListStore((state) => state.postsOfInfo[postId]?.startLikeAnimation);
+    const startLikeAnimation = useSharePostListStore((state) => state.postsOfInfo[postId]?.startLikeAnimation);
     const [filledLikeColor, setFilledLikeColor] = useState<boolean>(isLike);
     const scale = useSharedValue(1);
     const animatedStyle = useAnimatedStyle(() => ({
