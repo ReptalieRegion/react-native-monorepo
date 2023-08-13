@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { ReactNode } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import CommentActions from './CommentActions';
 
@@ -23,7 +24,15 @@ const RenderItem = ({ FootChildren, data: { writer, tags, contents } }: RenderIt
 
     return (
         <>
-            <Image style={styles.circle} source={{ uri: writer.profile.src }} />
+            <FastImage
+                style={styles.circle}
+                source={{
+                    uri: writer.profile.src,
+                    priority: FastImage.priority.high,
+                    cache: FastImage.cacheControl.web,
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+            />
             <View style={styles.commentItemContent}>
                 <Text style={styles.nickname}>{writer.nickname}</Text>
                 <AccordionMenu numberOfLines={3}>

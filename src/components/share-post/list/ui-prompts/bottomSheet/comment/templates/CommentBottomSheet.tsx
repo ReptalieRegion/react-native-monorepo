@@ -1,5 +1,6 @@
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, TextInput, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import CommentHeader from '../atoms/CommentHeader';
 import { CommentFlatList } from '../organisms/CommentRenderItem';
@@ -22,10 +23,12 @@ const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps 
         >
             <CommentFlatList postId={postId} />
             <View style={styles.bottom}>
-                <Image
+                <FastImage
                     style={styles.circle}
                     source={{
                         uri: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F009%2F2022%2F06%2F08%2F0004974574_002_20220608070201911.jpg&type=a340',
+                        priority: FastImage.priority.normal,
+                        cache: FastImage.cacheControl.web,
                     }}
                 />
                 <TextInput placeholder="댓글을 입력하세요..." style={styles.textInput} autoFocus multiline />

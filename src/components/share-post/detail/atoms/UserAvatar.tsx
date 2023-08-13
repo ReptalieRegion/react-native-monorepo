@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import { SharePostDetailPostsData } from '<SharePostDetail>';
 
@@ -9,11 +10,14 @@ const UserAvatar = ({ profile, nickname }: UserAvatarProps) => {
     return (
         <>
             <View style={styles.imageContainer}>
-                <Image
+                <FastImage
                     style={styles.image}
-                    source={{ uri: profile.src, width: 100, height: 100 }}
-                    alt={profile.alt}
-                    resizeMode="cover"
+                    source={{
+                        uri: profile.src,
+                        priority: FastImage.priority.normal,
+                        cache: FastImage.cacheControl.web,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
                 />
             </View>
             <Text style={styles.nickname}>{nickname}</Text>

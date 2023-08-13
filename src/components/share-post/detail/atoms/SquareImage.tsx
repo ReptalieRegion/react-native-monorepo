@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image, ListRenderItemInfo, StyleSheet } from 'react-native';
+import { ListRenderItemInfo, StyleSheet } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import { PostsInfo } from '<SharePostDetail>';
 
@@ -7,11 +8,14 @@ type SquareImageProps = Pick<ListRenderItemInfo<PostsInfo>, 'item'> & { width: n
 
 const SquareImage = ({ item, width }: SquareImageProps) => {
     return (
-        <Image
-            source={{ uri: item.thumbnail.src, width: 100, height: 100 }}
-            alt={item.thumbnail.alt}
+        <FastImage
+            source={{
+                uri: item.thumbnail.src,
+                priority: FastImage.priority.high,
+                cache: FastImage.cacheControl.web,
+            }}
             style={[styles.image, { width }]}
-            resizeMode="cover"
+            resizeMode={FastImage.resizeMode.cover}
         />
     );
 };

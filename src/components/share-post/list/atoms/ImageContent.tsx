@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { Dimensions, Image, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
+import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { FlatList } from 'react-native-gesture-handler';
 
 import { ShareImageType } from '<SharePostImage>';
@@ -10,8 +11,18 @@ type ImagesContentProps = Pick<SharePostListData, 'images' | 'postId'>;
 
 const { width } = Dimensions.get('screen');
 
-const RenderItem = ({ src, alt }: ShareImageType) => {
-    return <Image source={{ uri: src }} alt={alt} style={[styles.image]} resizeMode="cover" />;
+const RenderItem = ({ src }: ShareImageType) => {
+    return (
+        <FastImage
+            source={{
+                uri: src,
+                priority: FastImage.priority.high,
+                cache: FastImage.cacheControl.web,
+            }}
+            style={[styles.image]}
+            resizeMode={FastImage.resizeMode.cover}
+        />
+    );
 };
 
 const ImageContent = ({ images, postId }: ImagesContentProps) => {
