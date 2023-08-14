@@ -17,10 +17,10 @@ interface ScrollContextComponentProps {
     fixedChildren?: {
         renderItem: ReactNode;
         position: {
-            bottom?: number | string | undefined;
-            top?: number | string | undefined;
-            left?: number | string | undefined;
-            right?: number | string | undefined;
+            bottom?: number;
+            top?: number;
+            left?: number;
+            right?: number;
         };
     };
     children: ReactNode;

@@ -8,7 +8,7 @@ interface DoubleTabInfo {
     x: number;
     y: number;
     time: number;
-    timeOut?: number;
+    timeOut?: NodeJS.Timeout;
 }
 
 const defaultTabInfo: DoubleTabInfo = {
