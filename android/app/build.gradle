@@ -106,6 +106,16 @@ android {
 }
 
 dependencies {
+    // kotlin-stdlib-jdk FlashList 라이브러리와 react-native의 버전 충돌로 인한 설정
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.22") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+    }
+
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
