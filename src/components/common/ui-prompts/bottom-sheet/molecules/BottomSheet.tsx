@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useMemo } from 'react';
+import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 
 import BottomSheetContainer, { BottomSheetContainerProps } from '../atoms/BottomSheetContainer';
@@ -34,7 +35,9 @@ const BottomSheet = ({
             {...containerProps}
         >
             <GestureDetector gesture={gesture}>
-                <BottomSheetHeader {...headerProps} />
+                <View>
+                    <BottomSheetHeader {...headerProps} />
+                </View>
             </GestureDetector>
             {memoChildren}
         </BottomSheetContainer>
