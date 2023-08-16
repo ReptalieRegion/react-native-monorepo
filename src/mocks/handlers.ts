@@ -29,7 +29,7 @@ export const handlers = [
     rest.get(ENV.END_POINT_URI + 'api/share-posts/:postId/comment', async (req, res, ctx) => {
         const test = () => {
             const comments = createSharePostComment(10, 'comment');
-            const data = createInfinityData({ items: comments, searchParams: req.url.searchParams });
+            const data = createInfinityData({ items: comments, searchParams: req.url.searchParams, isRandomFinish: true });
             return data;
         };
 
