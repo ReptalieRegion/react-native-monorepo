@@ -14,7 +14,6 @@ import FlatListContextComponent from '@/contexts/flat-list/FlatList';
 const Posts = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage, remove, refetch } = useInfiniteFetchPosts();
-    const ListFooterComponent = ListFooterLoading(isFetchingNextPage);
 
     if (isLoading) {
         return <SharePostListSkeleton />;
@@ -42,7 +41,7 @@ const Posts = () => {
                 initialNumToRender={5}
                 maxToRenderPerBatch={10}
                 onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
-                ListFooterComponent={ListFooterComponent}
+                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 fixedChildren={{
                     renderItem: <FloatingActionButtons />,
                     position: { bottom: 20, right: 20 },
