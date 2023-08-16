@@ -1,51 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { SharePostCommentData } from '<SharePostCommentAPI>';
-import { useInfiniteFetchReplyComments } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
 
 interface ReplyCommentButtonProps {
-    onPress?: (hasNextPage: boolean | undefined) => void;
-    props: Pick<SharePostCommentData, 'replyCommentCount' | 'id'>;
+    onPress?: () => void;
+    isFetching: boolean;
+    isHideComment: boolean;
+    props: Pick<SharePostCommentData, 'replyCommentCount'>;
 }
 
-const ReplyCommentButton = ({ onPress, props: { replyCommentCount, id } }: ReplyCommentButtonProps) => {
-    const [isButtonClicked, setIsButtonClicked] = useState<boolean>(false);
-    const { isFetching, hasNextPage, fetchNextPage } = useInfiniteFetchReplyComments({
-        commentId: id,
-        postId: '1',
-        enabled: isButtonClicked,
-    });
-
-    const handlePress = () => {
-        if (hasNextPage) {
-            fetchNextPage();
-            onPress?.(hasNextPage);
-            return;
-        }
-
-        if (!isButtonClicked) {
-            onPress?.(true);
-            setIsButtonClicked(true);
-        }
-    };
-
+const ReplyCommentButton = ({ onPress, isFetching, isHideComment, props: { replyCommentCount } }: ReplyCommentButtonProps) => {
     return replyCommentCount !== 0 ? (
-        <TouchableWithoutFeedback onPress={handlePress}>
+        <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.padding, styles.center]}>
                 <View style={styles.border} />
                 {isFetching ? (
                     <ActivityIndicator />
                 ) : (
-                    <Text style={styles.text}>
-                        {!isButtonClicked || hasNextPage ? `댓글 ${replyCommentCount}개 보기` : '댓글 숨기기'}
-                    </Text>
+                    <Text style={styles.text}>{isHideComment ? '댓글 숨기기' : `댓글 ${replyCommentCount}개 보기`}</Text>
                 )}
             </View>
         </TouchableWithoutFeedback>
-    ) : null;
+    ) : (
+        <View style={styles.padding} />
+    );
 };
 
 const styles = StyleSheet.create({

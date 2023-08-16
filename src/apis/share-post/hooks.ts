@@ -39,19 +39,11 @@ export const useInfiniteFetchCommentsPost = (postId: string) => {
     });
 };
 
-export const useInfiniteFetchReplyComments = ({
-    postId,
-    commentId,
-    enabled,
-}: {
-    postId: string;
-    commentId: string;
-    enabled: boolean;
-}) => {
+export const useInfiniteFetchReplyComments = ({ postId, commentId }: { postId: string; commentId: string }) => {
     return useInfiniteQuery<SharePostCommentReplyInfinityData>({
         queryKey: ['fetchReplyComments' + commentId],
         queryFn: ({ pageParam }) => getReplyComment({ postId, commentId, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
-        enabled,
+        enabled: false,
     });
 };

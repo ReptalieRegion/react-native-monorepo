@@ -4,8 +4,10 @@ import { GestureResponderEvent, StyleSheet, Text } from 'react-native';
 import { Tags } from '<SharePostTags>';
 import { color } from '@/components/common/tokens/colors';
 
+export type TagPressHandler = (event: GestureResponderEvent, content: string, tagId: string) => void;
+
 interface TaggedContentProps {
-    onPressTag?: (event: GestureResponderEvent, content: string, tagId: string) => void;
+    onPressTag?: TagPressHandler;
     tags: Tags;
     contents: string[];
 }

@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, Text, TextInput, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import CommentHeader from '../atoms/CommentHeader';
-import { CommentFlatList } from '../organisms/CommentRenderItem';
+import CommentFlashList from '../organisms/CommentFlashList';
 
 import { SharePostListData } from '<SharePostListAPI>';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
@@ -21,7 +21,7 @@ const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps 
             gestureProps={{ snapInfo: { startIndex: 0, pointsFromTop: ['60%', '95%'] } }}
             headerProps={{ title: <CommentHeader /> }}
         >
-            <CommentFlatList postId={postId} />
+            <CommentFlashList postId={postId} />
             <View style={styles.bottom}>
                 <FastImage
                     style={styles.circle}

@@ -33,10 +33,10 @@ type GestureFlatList<ItemT> = React.PropsWithChildren<
 type FixedChildren = {
     renderItem: ReactNode;
     position: {
-        bottom?: number | string | undefined;
-        top?: number | string | undefined;
-        left?: number | string | undefined;
-        right?: number | string | undefined;
+        bottom?: number;
+        top?: number;
+        left?: number;
+        right?: number;
     };
 };
 
