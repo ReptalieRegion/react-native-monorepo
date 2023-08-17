@@ -1,6 +1,7 @@
 import React from 'react';
 
 import CommentHeader from '../atoms/CommentHeader';
+import CommentTextInput from '../atoms/CommentTextInput';
 import CommentFlashList from '../organisms/CommentFlashList';
 
 import { SharePostListData } from '<SharePostListAPI>';
@@ -19,6 +20,7 @@ const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps 
             headerProps={{ title: <CommentHeader /> }}
         >
             <CommentFlashList postId={postId} />
+            <CommentTextInput />
         </BottomSheet>
     );
 };

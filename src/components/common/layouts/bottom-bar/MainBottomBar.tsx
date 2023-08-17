@@ -53,7 +53,7 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
     const dynamicStyle = StyleSheet.create({
         container: {
             paddingBottom: insets.bottom,
-            display: isKeyboardShow && Platform.OS === 'android' ? 'none' : 'flex',
+            display: isKeyboardShow.value && Platform.OS === 'android' ? 'none' : 'flex',
         },
     });
 

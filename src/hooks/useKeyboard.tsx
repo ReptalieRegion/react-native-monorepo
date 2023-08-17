@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Keyboard, KeyboardEvent, KeyboardEventName, Platform } from 'react-native';
 import { useAnimatedStyle, useSharedValue, useWorkletCallback, withSpring, withTiming } from 'react-native-reanimated';
+import { SpringConfig } from 'react-native-reanimated/lib/typescript/reanimated2/animation/springUtils';
+import { WithTimingConfig } from 'react-native-reanimated/lib/typescript/reanimated2/animation/timing';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { getKeyboardAnimationConfigs } from '@/utils/keyboard/getKeyboardAnimationConfigs';
@@ -20,46 +22,36 @@ const KEYBOARD_EVENT_MAPPER = {
 
 const useKeyboard = () => {
     const { bottom } = useSafeAreaInsets();
-    const [isKeyboardWillShow, setIsKeyboardWillShow] = useState<boolean>(false);
-    const [isKeyboardShow, setIsKeyboardShow] = useState<boolean>(false);
+    const isKeyboardShow = useSharedValue<boolean>(false);
+    const userConfig = useSharedValue<WithTimingConfig | SpringConfig | null>(null);
     const keyboardHeight = useSharedValue(bottom);
     const keyboardStyle = useAnimatedStyle(() => ({
         paddingBottom: keyboardHeight.value,
     }));
 
+    const handleKeyboardHeight = useWorkletCallback((height: number, configs: WithTimingConfig | SpringConfig) => {
+        if ('easing' in configs) {
+            return withTiming(height, configs);
+        }
+
+        return withSpring(height, configs);
+    }, []);
+
     const handleKeyboardEvent = useWorkletCallback(
-        (event: KeyboardEvent, type: 'SHOW' | 'HIDE') => {
-            const {
-                duration,
-                easing,
-                endCoordinates: { height },
-            } = event;
+        ({ duration, easing, endCoordinates }: KeyboardEvent, type: 'SHOW' | 'HIDE') => {
+            const isShow = type === 'SHOW';
+            isKeyboardShow.value = isShow;
 
-            const newHeight = type === 'SHOW' ? height : bottom;
             const configs = getKeyboardAnimationConfigs(easing, duration);
+            userConfig.value = configs;
 
-            if ('easing' in configs) {
-                keyboardHeight.value = withTiming(newHeight, configs);
-            } else {
-                keyboardHeight.value = withSpring(newHeight, configs);
-            }
+            const newHeight = isShow ? endCoordinates.height : bottom;
+            keyboardHeight.value = handleKeyboardHeight(newHeight, configs);
         },
         [keyboardHeight],
     );
 
     useEffect(() => {
-        const openKeyboard = () => {
-            setIsKeyboardShow(true);
-        };
-
-        const closeKeyboard = () => {
-            setIsKeyboardShow(false);
-        };
-
-        const willOpenKeyboard = () => {
-            setIsKeyboardWillShow(true);
-        };
-
         const handleOnKeyboardShow = (event: KeyboardEvent) => {
             handleKeyboardEvent(event, 'SHOW');
         };
@@ -71,21 +63,19 @@ const useKeyboard = () => {
         const subscriptions = [
             Keyboard.addListener(KEYBOARD_EVENT_MAPPER.KEYBOARD_SHOW, handleOnKeyboardShow),
             Keyboard.addListener(KEYBOARD_EVENT_MAPPER.KEYBOARD_HIDE, handleOnKeyboardHide),
-            Keyboard.addListener('keyboardWillShow', willOpenKeyboard),
-            Keyboard.addListener('keyboardDidShow', openKeyboard),
-            Keyboard.addListener('keyboardDidHide', closeKeyboard),
         ];
 
         return () => {
             subscriptions.forEach((subscription) => subscription.remove());
         };
-    }, [handleKeyboardEvent]);
+    }, [handleKeyboardEvent, isKeyboardShow]);
 
     return {
         isKeyboardShow,
-        isKeyboardWillShow,
         keyboardHeight,
         keyboardStyle,
+        userConfig,
+        handleKeyboardHeight,
     };
 };
 

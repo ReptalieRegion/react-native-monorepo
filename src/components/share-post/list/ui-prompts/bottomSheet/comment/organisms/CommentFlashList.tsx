@@ -15,6 +15,7 @@ const CommentFlashList = ({ postId }: { postId: string }) => {
         useInfiniteFetchCommentsPost(postId);
     const [refreshing, setRefreshing] = useState(false);
     const alreadyRenderItems = useRef<{ [key: string]: boolean }>({});
+    const flashListRef = useRef<FlashList<SharePostCommentData>>(null);
 
     useEffect(() => {
         return () => {
@@ -48,7 +49,7 @@ const CommentFlashList = ({ postId }: { postId: string }) => {
 
     if (isLoading) {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, contentContainerStyle]}>
                 <CommentSkeleton />
             </View>
         );
@@ -57,9 +58,13 @@ const CommentFlashList = ({ postId }: { postId: string }) => {
     return (
         <View style={styles.container}>
             <FlashList
+                ref={flashListRef}
+                contentContainerStyle={contentContainerStyle}
                 data={data?.pages.flatMap((page) => page.items)}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 renderItem={renderItem}
+                onScroll={(e) => console.log(e.nativeEvent.contentOffset.y)}
+                scrollEventThrottle={16}
                 keyExtractor={keyExtractor}
                 onEndReached={onEndReached}
                 renderScrollComponent={ScrollView}
@@ -71,12 +76,12 @@ const CommentFlashList = ({ postId }: { postId: string }) => {
     );
 };
 
+const contentContainerStyle = { paddingLeft: 20, paddingRight: 20 };
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         minHeight: 2,
-        paddingLeft: 20,
-        paddingRight: 20,
     },
 });
 
