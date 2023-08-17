@@ -67,7 +67,3 @@ yarn-error.log
 
 # .yarnrc.yml
 .yarnrc.yml
-
-# env
-.env.*
-/src/env/config.ts
