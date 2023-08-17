@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
-import { SharePostsData } from '<SharePostAPI>';
-import Like_40 from '@/assets/icons/Like_40';
+import { SharePostListData } from '<SharePostListAPI>';
+import { Like_40 as LikeIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import sharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/list';
 
-type LikeProps = Pick<SharePostsData, 'isLike' | 'postId'>;
+type LikeProps = Pick<SharePostListData, 'isLike' | 'postId'>;
 
 const likeInfo = {
     fill: color.Red[500].toString(),
@@ -24,7 +24,7 @@ const makeLikeInfo = (isLike: boolean) => {
 };
 
 const Like = ({ postId, isLike }: LikeProps) => {
-    const startLikeAnimation = sharePostListStore((state) => state.postsOfInfo[postId]?.startLikeAnimation);
+    const startLikeAnimation = useSharePostListStore((state) => state.postsOfInfo[postId]?.startLikeAnimation);
     const [filledLikeColor, setFilledLikeColor] = useState<boolean>(isLike);
     const scale = useSharedValue(1);
     const animatedStyle = useAnimatedStyle(() => ({
@@ -50,7 +50,7 @@ const Like = ({ postId, isLike }: LikeProps) => {
     return (
         <TouchableWithoutFeedback onPress={handleLikeClick}>
             <Animated.View style={animatedStyle}>
-                <Like_40 fill={fill} stroke={stroke} />
+                <LikeIcon fill={fill} stroke={stroke} />
             </Animated.View>
         </TouchableWithoutFeedback>
     );

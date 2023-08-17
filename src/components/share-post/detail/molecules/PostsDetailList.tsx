@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import SquareImage from '../atoms/SquareImage';
 
-import { SharePostDetailPostsData } from '<SharePostAPI>';
+import { SharePostDetailPostsData } from '<SharePostDetail>';
 
 type SharePostsDetailListProps = Pick<SharePostDetailPostsData, 'posts'>;
 

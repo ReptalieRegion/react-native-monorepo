@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextProps, TextStyle, TouchableWithoutFeedback, View } from 'react-native';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { color } from '../../tokens/colors';
 
 import useLock from '@/hooks/useLock';
 
-type TextType = {
-    key: string;
-    style?: TextStyle;
-    props?: Omit<TextProps, 'style'>;
-    content: string;
-};
-
 interface AccordionMenuProps {
     numberOfLines: number;
-    texts: TextType[];
-    accordionText?: string;
+    children: ReactNode;
+    toggleText?: {
+        expanded: string;
+        collapsed: string;
+    };
 }
 
-const AccordionMenu = ({ texts, numberOfLines }: AccordionMenuProps) => {
+const AccordionMenu = ({
+    children,
+    numberOfLines,
+    toggleText = { expanded: '...접기', collapsed: '...더보기' },
+}: AccordionMenuProps) => {
     const { isLock, lockEnd, lockStart } = useLock();
     const [showAccordionMenu, setShowAccordionMenu] = useState<boolean>(false);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -40,18 +40,14 @@ const AccordionMenu = ({ texts, numberOfLines }: AccordionMenuProps) => {
                     }
                 }}
             >
-                {texts.map((text) => (
-                    <Text key={text.key} style={text.style} {...text.props}>
-                        {text.content}
-                    </Text>
-                ))}
+                {children}
             </Text>
             {showAccordionMenu && (
-                <TouchableWithoutFeedback onPress={() => setIsExpanded((state) => !state)}>
-                    <View>
-                        <Text style={styles.grayFont}>{isExpanded ? '...접기' : '...더보기'}</Text>
-                    </View>
-                </TouchableWithoutFeedback>
+                <View style={styles.textTouchArea}>
+                    <Text style={styles.grayFont} onPress={() => setIsExpanded((state) => !state)} suppressHighlighting={true}>
+                        {isExpanded ? toggleText.expanded : toggleText.collapsed}
+                    </Text>
+                </View>
             )}
         </View>
     );
@@ -60,6 +56,11 @@ const AccordionMenu = ({ texts, numberOfLines }: AccordionMenuProps) => {
 const styles = StyleSheet.create({
     grayFont: {
         color: color.Gray[500].toString(),
+    },
+    textTouchArea: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
     },
 });
 

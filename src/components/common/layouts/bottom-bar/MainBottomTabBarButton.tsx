@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
 import { color } from '../../tokens/colors';
@@ -35,16 +36,21 @@ const BottomTabBarButton = ({
     };
 
     return (
-        <TouchableWithoutFeedback onPress={onPress} onPressIn={handlePressInIcon} onPressOut={handlePressOutIcon}>
-            <View style={styles.iconContainer}>
+        <View style={styles.iconContainer}>
+            <TouchableWithoutFeedback
+                onPress={onPress}
+                onPressIn={handlePressInIcon}
+                onPressOut={handlePressOutIcon}
+                containerStyle={styles.touchContainer}
+            >
                 <View style={styles.icon}>
                     <Animated.View style={animatedStyle}>
                         <Icon fill={isFocused ? color.Teal[250].toString() : undefined} />
                     </Animated.View>
                     <Text style={styles.text}>{name}</Text>
                 </View>
-            </View>
-        </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+        </View>
     );
 };
 
@@ -55,6 +61,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '20%',
+    },
+    touchContainer: {
         paddingTop: 20,
         paddingBottom: 10,
     },

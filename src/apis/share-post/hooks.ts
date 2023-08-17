@@ -1,11 +1,18 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { getCommentPost, getDetailPosts, getPosts, updateFollow } from './apis';
+import { getCommentPost, getDetailPosts, getPosts, getReplyComment, updateFollow } from './apis';
 
-import { SharePostCommentData, SharePostDetailPostsData, SharePostsData } from '<SharePostAPI>';
+import { SharePostCommentInfiniteData } from '<SharePostCommentAPI>';
+import { SharePostCommentReplyInfinityData } from '<SharePostCommentReply>';
+import { SharePostDetailPostsData } from '<SharePostDetail>';
+import { SharePostListInfiniteData } from '<SharePostListAPI>';
 
-export const useFetchPosts = () => {
-    return useQuery<SharePostsData[]>({ queryKey: ['fetchPosts'], queryFn: getPosts, staleTime: Infinity });
+export const useInfiniteFetchPosts = () => {
+    return useInfiniteQuery<SharePostListInfiniteData>({
+        queryKey: ['fetchPosts'],
+        queryFn: getPosts,
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+    });
 };
 
 export const useUpdateFollow = () => {
@@ -18,9 +25,25 @@ export const useUpdateFollow = () => {
 };
 
 export const useFetchDetailPosts = (userId: string) => {
-    return useQuery<SharePostDetailPostsData>({ queryKey: ['fetchDetailPosts'], queryFn: () => getDetailPosts(userId) });
+    return useQuery<SharePostDetailPostsData>({
+        queryKey: ['fetchDetailPosts' + userId],
+        queryFn: () => getDetailPosts(userId),
+    });
 };
 
-export const useFetchCommentsPost = (postId: string) => {
-    return useQuery<SharePostCommentData[]>({ queryKey: ['fetchCommentsPost'], queryFn: () => getCommentPost(postId) });
+export const useInfiniteFetchCommentsPost = (postId: string) => {
+    return useInfiniteQuery<SharePostCommentInfiniteData>({
+        queryKey: ['fetchCommentsPost' + postId],
+        queryFn: ({ pageParam }) => getCommentPost({ pageParam, postId }),
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+    });
+};
+
+export const useInfiniteFetchReplyComments = ({ postId, commentId }: { postId: string; commentId: string }) => {
+    return useInfiniteQuery<SharePostCommentReplyInfinityData>({
+        queryKey: ['fetchReplyComments' + commentId],
+        queryFn: ({ pageParam }) => getReplyComment({ postId, commentId, pageParam }),
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+        enabled: false,
+    });
 };

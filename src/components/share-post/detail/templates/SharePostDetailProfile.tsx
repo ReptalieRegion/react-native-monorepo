@@ -5,12 +5,12 @@ import { StyleSheet, View } from 'react-native';
 import SharePostsDetailList from '../molecules/PostsDetailList';
 import UserDetailPanel from '../organisms/UserDetailPanel';
 
-import { SharePostDetailPageRouteProp } from '<Routes>';
+import { BottomTabSharePostDetailRouteProp } from '<BottomTabSharePostRoutes>';
 import { useFetchDetailPosts } from '@/apis/share-post';
 import { color } from '@/components/common/tokens/colors';
 
 const SharePostDetailProfile = () => {
-    const route = useRoute<SharePostDetailPageRouteProp>();
+    const route = useRoute<BottomTabSharePostDetailRouteProp>();
     const { data, isLoading } = useFetchDetailPosts(route.params.userId);
 
     if (isLoading || !data) {

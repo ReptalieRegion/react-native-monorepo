@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 
 import ImageCrop from '@/components/share-post/image-crop/template/ImageCrop';
-import SharePostWriteStore from '@/stores/share-post/write';
+import useSharePostWriteStore from '@/stores/share-post/write';
 
-const ImageCropPage = () => {
-    const reset = SharePostWriteStore((state) => state.reset);
+const SharePostImageCropPage = () => {
+    const reset = useSharePostWriteStore((state) => state.reset);
 
     useEffect(() => () => reset());
 
     return <ImageCrop />;
 };
 
-export default ImageCropPage;
+export default SharePostImageCropPage;

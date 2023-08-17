@@ -282,6 +282,7 @@ const RRColor = {
         50: makeColor('#FAFAFAFF'),
         100: makeColor('#F5F5F5FF'),
         200: makeColor('#EEEEEEFF'),
+        250: makeColor('#D3D3D3FF'),
         300: makeColor('#E0E0E0FF'),
         350: makeColor('#D2D2D2FF'),
         400: makeColor('#BDBDBDFF'),

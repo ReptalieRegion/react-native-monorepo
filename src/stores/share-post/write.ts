@@ -1,6 +1,6 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
-import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+import { createWithEqualityFn } from 'zustand/traditional';
 
 export const MAX_SELECT_PHOTO_COUNT = 5;
 
@@ -28,7 +28,7 @@ const defaultSharePost: SharePostWriteState = {
     postContent: '',
 };
 
-const SharePostWriteStore = create<SharePostWriteState & SharePostWriteActions>()(
+const useSharePostWriteStore = createWithEqualityFn<SharePostWriteState & SharePostWriteActions>()(
     devtools((set, get) => ({
         ...defaultSharePost,
         setSelectedPhotos: (photo) => {
@@ -87,6 +87,7 @@ const SharePostWriteStore = create<SharePostWriteState & SharePostWriteActions>(
             set(defaultSharePost);
         },
     })),
+    Object.is,
 );
 
-export default SharePostWriteStore;
+export default useSharePostWriteStore;

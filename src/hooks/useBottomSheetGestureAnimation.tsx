@@ -1,8 +1,7 @@
 import { isString } from 'lodash-es';
-import { useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
-import { Easing, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
+import { runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useKeyboard from './useKeyboard';
@@ -34,13 +33,15 @@ const useBottomSheetGestureAnimation = ({
     const startY = useSharedValue(0);
     const translateY = useSharedValue(0);
     const height = useSharedValue(0);
-    const { isKeyboardWillShow } = useKeyboard();
+    const lock = useSharedValue(false);
+    const { isKeyboardShow, userConfig, handleKeyboardHeight } = useKeyboard();
     const closeAnimatedStyles = useAnimatedStyle(() => ({
         transform: [{ translateY: translateY.value }],
     }));
     const snapAnimatedStyles = useAnimatedStyle(() => ({
         height: height.value,
     }));
+
     const snapPointsASC = snapInfo.pointsFromTop.map((snapPoint) => getPixelValue(snapPoint, top)).sort((a, b) => a - b);
     const snapPointsLastIndex = snapPointsASC.length - 1;
     const minSnapPoint = 0;
@@ -109,10 +110,13 @@ const useBottomSheetGestureAnimation = ({
         }
     });
 
-    useEffect(() => {
-        const toValue = isKeyboardWillShow ? snapPointsASC[snapPointsASC.length - 1] : snapPointsASC[snapInfo.startIndex];
-        height.value = withTiming(toValue, { easing: Easing.bezier(0.4, 0, 0.2, 1) });
-    }, [height, isKeyboardWillShow, snapInfo.startIndex, snapPointsASC]);
+    useDerivedValue(() => {
+        if (userConfig.value !== null && isKeyboardShow.value && !lock.value) {
+            height.value = handleKeyboardHeight(snapPointsASC[snapPointsASC.length - 1], userConfig.value);
+        }
+
+        lock.value = isKeyboardShow.value;
+    }, [isKeyboardShow.value]);
 
     return { gesture: panGesture, snapAnimatedStyles, closeAnimatedStyles };
 };

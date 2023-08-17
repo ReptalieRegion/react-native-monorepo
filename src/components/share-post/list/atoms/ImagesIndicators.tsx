@@ -1,12 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { SharePostsData } from '<SharePostAPI>';
-import DotIndicator from '@/assets/icons/DotIndicator';
+import { SharePostListData } from '<SharePostListAPI>';
+import { DotIndicator } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import sharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/list';
 
-type ImagesIndicators = Pick<SharePostsData, 'images' | 'postId'>;
+type ImagesIndicators = Pick<SharePostListData, 'images' | 'postId'>;
 
 const currentImage = {
     color: color.Teal[150].toString(),
@@ -23,7 +23,7 @@ const makeIndicatorsStyles = (isCurrent: boolean) => {
 };
 
 const ImagesIndicators = ({ images, postId }: ImagesIndicators) => {
-    const imageIndex = sharePostListStore((state) => state.postsOfInfo[postId]?.currentImageIndex);
+    const imageIndex = useSharePostListStore((state) => state.postsOfInfo[postId]?.currentImageIndex);
 
     return (
         <View style={styles.container}>

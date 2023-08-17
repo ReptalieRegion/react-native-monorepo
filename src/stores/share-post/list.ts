@@ -1,5 +1,5 @@
-import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+import { createWithEqualityFn } from 'zustand/traditional';
 
 export type SharePostListInfo = {
     [postId: string]: {
@@ -17,7 +17,7 @@ interface SharePostListActions {
     setStartLikeAnimation: (postId: string, startLikeAnimation: boolean) => void;
 }
 
-const sharePostListStore = create<SharePostListState & SharePostListActions>()(
+const useSharePostListStore = createWithEqualityFn<SharePostListState & SharePostListActions>()(
     devtools((set, get) => ({
         postsOfInfo: {},
         setCurrentImageIndex: (postId, index) => {
@@ -55,5 +55,6 @@ const sharePostListStore = create<SharePostListState & SharePostListActions>()(
             }));
         },
     })),
+    Object.is,
 );
-export default sharePostListStore;
+export default useSharePostListStore;

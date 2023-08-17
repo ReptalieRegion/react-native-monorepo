@@ -1,38 +1,45 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useMemo } from 'react';
+import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 
 import BottomSheetContainer, { BottomSheetContainerProps } from '../atoms/BottomSheetContainer';
-import BottomSheetHeader from '../atoms/BottomSheetHeader';
+import BottomSheetHeader, { BottomSheetHeaderProps } from '../atoms/BottomSheetHeader';
 
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 import useBottomSheetGestureAnimation, { UseBottomSheetGestureProps } from '@/hooks/useBottomSheetGestureAnimation';
 
-type BottomSheetProps = BottomSheetContainerProps & Omit<UseBottomSheetGestureProps, 'onClose'> & UIPromptsDefaultProps;
+type BottomSheetProps = {
+    containerProps?: BottomSheetContainerProps;
+    gestureProps: Omit<UseBottomSheetGestureProps, 'onClose'>;
+    headerProps?: BottomSheetHeaderProps;
+} & UIPromptsDefaultProps;
 
 const BottomSheet = ({
     uiPromptsClose,
     children,
-    backDropStyle,
-    containerStyle,
-    snapInfo,
+    containerProps,
+    gestureProps,
+    headerProps,
 }: PropsWithChildren<BottomSheetProps>) => {
     const { gesture, snapAnimatedStyles, closeAnimatedStyles } = useBottomSheetGestureAnimation({
-        snapInfo,
+        ...gestureProps,
         onClose: uiPromptsClose,
     });
+    const memoChildren = useMemo(() => children, [children]);
 
     return (
         <BottomSheetContainer
             uiPromptsClose={uiPromptsClose}
-            containerStyle={containerStyle}
-            backDropStyle={backDropStyle}
             snapAnimatedStyles={snapAnimatedStyles}
             closeAnimatedStyles={closeAnimatedStyles}
+            {...containerProps}
         >
             <GestureDetector gesture={gesture}>
-                <BottomSheetHeader />
+                <View>
+                    <BottomSheetHeader {...headerProps} />
+                </View>
             </GestureDetector>
-            {children}
+            {memoChildren}
         </BottomSheetContainer>
     );
 };

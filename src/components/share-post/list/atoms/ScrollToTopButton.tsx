@@ -1,17 +1,18 @@
-import React, { useCallback, useContext, useEffect } from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import useScaleDownAndUp from '../animated/useScaleDownAndUp';
 
 import { FloatingActionButtonSize } from '<SharePostComponent>';
-import UpArrow from '@/assets/icons/UpArrow';
+import { UpArrow } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import { ScrollContext } from '@/contexts/scroll/Scroll';
+import { useFlatList } from '@/contexts/flat-list/FlatList';
 import useLock from '@/hooks/useLock';
 
 const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {
-    const { scrollDirection, scrollIntoView } = useContext(ScrollContext);
+    const { verticalDirection, overScrollingState, scrollIntoView } = useFlatList();
     const { scaleStyle, scaleDown, scaleUp } = useScaleDownAndUp();
     const { isLock, lockEnd, lockStart } = useLock();
     const translateY = useSharedValue(0);
@@ -32,38 +33,38 @@ const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {
     }, [opacity, translateY]);
 
     useEffect(() => {
-        if (isLock()) {
+        if (isLock() || overScrollingState === 'top') {
             return;
         }
 
-        if (scrollDirection === 'UP') {
+        if (verticalDirection === 'top') {
             upAnimated();
             return;
         }
 
-        if (scrollDirection === 'DOWN') {
+        if (verticalDirection === 'bottom') {
             downAnimated();
             return;
         }
-    }, [upAnimated, downAnimated, isLock, scrollDirection]);
+    }, [isLock, upAnimated, downAnimated, verticalDirection, overScrollingState]);
 
     const handleIconClick = () => {
         lockStart();
-        scrollIntoView({ y: 0, animated: true });
+        scrollIntoView({ offset: 0 });
         downAnimated();
         setTimeout(lockEnd, 500);
     };
 
     return (
-        <TouchableWithoutFeedback onPressIn={scaleDown} onPressOut={scaleUp} onPress={handleIconClick}>
-            <View style={styles.container}>
-                <Animated.View style={animatedContainerStyle}>
+        <View style={styles.container}>
+            <Animated.View style={[styles.container, animatedContainerStyle]}>
+                <TouchableWithoutFeedback onPressIn={scaleDown} onPressOut={scaleUp} onPress={handleIconClick}>
                     <Animated.View style={[buttonSize, styles.content, scaleStyle]}>
                         <UpArrow />
                     </Animated.View>
-                </Animated.View>
-            </View>
-        </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback>
+            </Animated.View>
+        </View>
     );
 };
 

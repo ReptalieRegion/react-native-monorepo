@@ -2,10 +2,17 @@ import React from 'react';
 import { Platform, StatusBar, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { color } from '../../tokens/colors';
+
 import ENV from '@/env';
 
-const iosBackground = ENV.isProd ? 'white' : ENV.isDev ? 'red' : ENV.isLocal ? 'green' : 'black';
-const androidBackground = ENV.isProd ? undefined : ENV.isDev ? 'red' : ENV.isLocal ? 'green' : 'black';
+const backgroundColor = ENV.isProd
+    ? undefined
+    : ENV.isDev
+    ? 'red'
+    : ENV.isLocal
+    ? color.Green[500].toString()
+    : color.Black.toString();
 
 const MainStatusBar = () => {
     const { top } = useSafeAreaInsets();
@@ -13,11 +20,11 @@ const MainStatusBar = () => {
     const isAndroid = Platform.OS === 'android';
 
     if (isIOS) {
-        return <View style={[{ paddingTop: top, backgroundColor: iosBackground }]} />;
+        return <View style={[{ paddingTop: top, backgroundColor }]} />;
     }
 
     if (isAndroid) {
-        return <StatusBar barStyle={'light-content'} backgroundColor={androidBackground} />;
+        return <StatusBar barStyle={'light-content'} backgroundColor={backgroundColor} />;
     }
 
     return null;

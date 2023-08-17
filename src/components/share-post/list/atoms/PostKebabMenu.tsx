@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { TouchableWithoutFeedback, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import KebabMenuBottomSheet from '../ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
 
-import { SharePostsData } from '<SharePostAPI>';
-import KebabMenu from '@/assets/icons/KebabMenu';
+import { SharePostListData } from '<SharePostListAPI>';
+import { KebabMenu } from '@/assets/icons';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
-type PostKebabProps = Pick<SharePostsData, 'postId' | 'userId'>;
+type PostKebabProps = Pick<SharePostListData, 'postId' | 'userId'>;
 
 const PostKebabMenu = (postInfo: PostKebabProps) => {
     const { setUIPrompts } = useContext(UIPromptsContext);
@@ -23,9 +23,7 @@ const PostKebabMenu = (postInfo: PostKebabProps) => {
 
     return (
         <TouchableWithoutFeedback onPress={openBottomSheet}>
-            <View>
-                <KebabMenu />
-            </View>
+            <KebabMenu />
         </TouchableWithoutFeedback>
     );
 };

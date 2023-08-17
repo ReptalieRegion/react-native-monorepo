@@ -5,14 +5,15 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 
-import { HomePageNavigationProp } from '<Routes>';
+import { WebviewExampleStackNavigationProp } from '<RootRoutes>';
+import { color } from '@/components/common/tokens/colors';
 import ENV from '@/env';
 import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';
 import WebviewBridgeManager from '@/utils/webview-bridge/utils/WebviewBridgeManager';
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);
-    const navigation = useNavigation<HomePageNavigationProp>();
+    const navigation = useNavigation<WebviewExampleStackNavigationProp>();
     const { top } = useSafeAreaInsets();
     const webviewBridgeManager = new WebviewBridgeManager(webviewRef);
 
@@ -30,7 +31,7 @@ const HomePage = () => {
 
             const { message, type } = deserialized;
             if (type === 'call' && isRNModule(message.module)) {
-                const result = await WebviewBridgeRunner<'HomePage'>({ message, navigation });
+                const result = await WebviewBridgeRunner<'webview-example'>({ message, navigation });
                 if (result.payload) {
                     const returnMessage = serializeRNReturn(result);
                     postMessage(returnMessage);
@@ -64,11 +65,11 @@ const HomePage = () => {
 const styles = StyleSheet.create({
     keyboard: {
         width: '100%',
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
         overflow: 'hidden',
     },
 });

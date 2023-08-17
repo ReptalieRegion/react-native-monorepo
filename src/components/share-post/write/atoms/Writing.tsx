@@ -12,8 +12,9 @@ import {
 } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
+import { color } from '@/components/common/tokens/colors';
 import { ScrollContext } from '@/contexts/scroll/Scroll';
-import SharePostWriteStore from '@/stores/share-post/write';
+import useSharePostWriteStore from '@/stores/share-post/write';
 
 type SelectionInfo = {
     start: number;
@@ -24,13 +25,14 @@ const MAX_CHARACTER_COUNT = 500;
 
 const WritingComponent = () => {
     const { scrollIntoView, isScrolling, scrollInfo } = useContext(ScrollContext);
-    const { postContent, setPostContent } = SharePostWriteStore(
+    const { postContent, setPostContent } = useSharePostWriteStore(
         (state) => ({
             postContent: state.postContent,
             setPostContent: state.setPostContent,
         }),
         shallow,
     );
+
     const textInputRef = useRef<TextInput>(null);
     const textAreaView = useRef<View>(null);
     const [textInputHeight, setTextInputHeight] = useState<number>(200);
@@ -138,14 +140,14 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     textareaContainer: {
-        borderColor: 'lightgray',
+        borderColor: color.Gray[250].toString(),
         borderWidth: 1,
         borderRadius: 10,
         paddingTop: 15,
         paddingBottom: 30,
         paddingLeft: 15,
         paddingRight: 15,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
     textarea: {
         verticalAlign: 'top',
@@ -158,7 +160,7 @@ const styles = StyleSheet.create({
     },
     characterCountText: {
         fontSize: 12,
-        color: 'gray',
+        color: color.Gray[500].toString(),
     },
 });
 

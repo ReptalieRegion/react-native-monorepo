@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { ColorValue, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { ColorValue, StyleSheet, Text } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostListAPI>';
 import { color } from '@/components/common/tokens/colors';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
-type PostHeaderProps = Pick<SharePostsData, 'isFollow'>;
+type PostHeaderProps = Pick<SharePostListData, 'isFollow'>;
 
 interface FollowInfo {
     color: ColorValue;
@@ -30,9 +31,7 @@ const Follow = ({ isFollow }: PostHeaderProps) => {
 
     return (
         <TouchableWithoutFeedback onPress={handleClickFollow}>
-            <View>
-                <Text style={[styles.fontWeight, { color: followInfo.color }]}>{followInfo.text}</Text>
-            </View>
+            <Text style={[styles.fontWeight, { color: followInfo.color }]}>{followInfo.text}</Text>
         </TouchableWithoutFeedback>
     );
 };

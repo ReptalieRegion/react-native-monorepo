@@ -1,15 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import { throttle } from 'lodash-es';
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
-import { SharePostWritePageNavigationProp } from '<Routes>';
-import SharePostWriteStore from '@/stores/share-post/write';
+import { BottomTabStackNavigationProp } from '<RootRoutes>';
+import useSharePostWriteStore from '@/stores/share-post/write';
 
 const SharePostWriteRightHeader = () => {
-    const navigate = useNavigation<SharePostWritePageNavigationProp>();
-    const { selectedPhotos, postContent } = SharePostWriteStore(
+    const navigate = useNavigation<BottomTabStackNavigationProp>();
+    const { selectedPhotos, postContent } = useSharePostWriteStore(
         (state) => ({
             selectedPhotos: state.selectedPhotos,
             postContent: state.postContent,
@@ -54,7 +55,7 @@ const SharePostWriteRightHeader = () => {
                 })
                 .catch(() => console.log('error'));
 
-            navigate.popToTop();
+            navigate.navigate('bottom-tab', { screen: 'bottom-tab/share-post/routes', params: { screen: 'share-post/list' } });
         } catch (error) {
             console.log(error);
         }

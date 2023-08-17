@@ -1,21 +1,25 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 
 import useScaleDownAndUp from '../animated/useScaleDownAndUp';
 
-import { SharePostListNavigationProp } from '<Routes>';
+import { BottomTabStackNavigationProp } from '<RootRoutes>';
 import { FloatingActionButtonSize } from '<SharePostComponent>';
-import PostWriteIcon from '@/assets/icons/PostWriteIcon';
+import { PostWriteIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 
 const PostWrite = ({ buttonSize }: FloatingActionButtonSize) => {
-    const navigation = useNavigation<SharePostListNavigationProp>();
+    const navigation = useNavigation<BottomTabStackNavigationProp>();
     const { scaleStyle, scaleDown, scaleUp } = useScaleDownAndUp();
 
     const handleRouteImageCrop = () => {
-        navigation.push('share-post/image-crop');
+        navigation.navigate('bottom-tab-less', {
+            screen: 'bottom-tab-less/share-post/routes',
+            params: { screen: 'share-post/image-crop' },
+        });
     };
 
     return (
@@ -23,7 +27,7 @@ const PostWrite = ({ buttonSize }: FloatingActionButtonSize) => {
             onPressIn={scaleDown}
             onPressOut={scaleUp}
             onPress={handleRouteImageCrop}
-            style={styles.container}
+            containerStyle={styles.container}
         >
             <Animated.View style={scaleStyle}>
                 <View style={[buttonSize, styles.content]}>

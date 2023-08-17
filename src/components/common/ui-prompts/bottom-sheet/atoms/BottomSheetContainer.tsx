@@ -1,7 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import BackDrop, { BackDropStyle } from '../../BackDrop';
 
@@ -33,15 +32,11 @@ const BottomSheetContainer = ({
     closeAnimatedStyles,
     uiPromptsClose,
 }: PropsWithChildren<BottomSheetContainerProps & UIPromptsDefaultProps>) => {
-    const { bottom } = useSafeAreaInsets();
-
     return (
         <>
             <BackDrop uiPromptsClose={uiPromptsClose} backDropStyle={backDropStyle} />
             <Animated.View style={[styles.container, closeAnimatedStyles]}>
-                <Animated.View style={[styles.viewContainer, { paddingBottom: bottom }, containerStyle, snapAnimatedStyles]}>
-                    {children}
-                </Animated.View>
+                <Animated.View style={[styles.viewContainer, containerStyle, snapAnimatedStyles]}>{children}</Animated.View>
             </Animated.View>
         </>
     );

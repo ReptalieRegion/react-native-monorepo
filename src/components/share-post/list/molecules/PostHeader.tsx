@@ -5,9 +5,9 @@ import Follow from '../atoms/Follow';
 import PostKebabMenu from '../atoms/PostKebabMenu';
 import Profile from '../atoms/Profile';
 
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostListAPI>';
 
-type PostHeaderProps = Pick<SharePostsData, 'nickname' | 'profile' | 'isFollow' | 'userId' | 'postId'>;
+type PostHeaderProps = Pick<SharePostListData, 'nickname' | 'profile' | 'isFollow' | 'userId' | 'postId'>;
 
 const PostHeader = ({ nickname, profile, isFollow, userId, postId }: PostHeaderProps) => {
     return (

@@ -1,5 +1,4 @@
-import React, { RefObject, useRef, useState } from 'react';
-import { ReactNode, createContext } from 'react';
+import React, { RefObject, useRef, useState, ReactNode, createContext } from 'react';
 import {
     KeyboardAvoidingView,
     LayoutChangeEvent,
@@ -12,14 +11,16 @@ import {
     View,
 } from 'react-native';
 
+import { color } from '@/components/common/tokens/colors';
+
 interface ScrollContextComponentProps {
     fixedChildren?: {
         renderItem: ReactNode;
         position: {
-            bottom?: number | string | undefined;
-            top?: number | string | undefined;
-            left?: number | string | undefined;
-            right?: number | string | undefined;
+            bottom?: number;
+            top?: number;
+            left?: number;
+            right?: number;
         };
     };
     children: ReactNode;
@@ -194,11 +195,11 @@ export const ScrollContextComponent = ({ children, fixedChildren }: ScrollContex
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
     contentContainer: {
         flexGrow: 1,
-        backgroundColor: 'white',
+        backgroundColor: color.White.toString(),
     },
     fixedContainer: {
         position: 'absolute',

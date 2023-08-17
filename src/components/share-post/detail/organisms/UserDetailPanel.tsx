@@ -5,7 +5,7 @@ import Follow from '../../list/atoms/Follow';
 import UserAvatar from '../atoms/UserAvatar';
 import ActivitySummary from '../molecules/ActivitySummary';
 
-import { SharePostDetailPostsData } from '<SharePostAPI>';
+import { SharePostDetailPostsData } from '<SharePostDetail>';
 
 const UserDetailPanel = ({ followerCount, followingCount, posts, profile, nickname, isFollow }: SharePostDetailPostsData) => {
     return (

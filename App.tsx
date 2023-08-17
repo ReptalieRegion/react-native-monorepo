@@ -4,7 +4,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import ReactQueryContextComponent from '@/contexts/react-query/ReactQuery';
-import UIPromptsContextComponent from '@/contexts/ui-prompts/UIPrompts';
 import RootRoutes from '@/routes/RootRoutes';
 
 import 'react-native-gesture-handler';
@@ -16,9 +15,7 @@ export default function App() {
         <ReactQueryContextComponent>
             <GestureHandlerRootView style={styles.gestureContainer}>
                 <SafeAreaProvider>
-                    <UIPromptsContextComponent>
-                        <RootRoutes />
-                    </UIPromptsContextComponent>
+                    <RootRoutes />
                 </SafeAreaProvider>
             </GestureHandlerRootView>
         </ReactQueryContextComponent>

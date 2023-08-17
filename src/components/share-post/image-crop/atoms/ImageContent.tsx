@@ -1,13 +1,14 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import React, { useContext } from 'react';
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
 import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
 
 import { color } from '@/components/common/tokens/colors';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
-import SharePostWriteStore from '@/stores/share-post/write';
+import useSharePostWriteStore from '@/stores/share-post/write';
 
 interface ImageContentProps {
     item: PhotoIdentifier;
@@ -47,7 +48,7 @@ const makeImageStyles = (isCurrentSelectedImage: boolean) => {
 
 const ImageContent = ({ item, numColumns }: ImageContentProps) => {
     const { setUIPrompts } = useContext(UIPromptsContext);
-    const { isCurrentPhoto, selectedNumber, setSelectedPhotos, deleteSelectedPhotos } = SharePostWriteStore(
+    const { isCurrentPhoto, selectedNumber, setSelectedPhotos, deleteSelectedPhotos } = useSharePostWriteStore(
         (state) => ({
             setSelectedPhotos: state.setSelectedPhotos,
             deleteSelectedPhotos: state.deleteSelectedPhotos,
@@ -76,8 +77,8 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
     };
 
     return (
-        <View style={[styles.container, { height: imageWidth, width: imageWidth }]}>
-            <TouchableOpacity onPress={handleImageClick}>
+        <TouchableOpacity onPress={handleImageClick}>
+            <View style={[styles.container, { height: imageWidth, width: imageWidth }]}>
                 <View style={[styles.circle, imageCircleStyles.styles]}>
                     <Text style={styles.text}>{imageCircleStyles.text}</Text>
                 </View>
@@ -85,8 +86,8 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
                     style={[styles.image, imageStyles, { height: imageWidth, width: imageWidth }]}
                     source={{ uri: item.node.image.uri }}
                 />
-            </TouchableOpacity>
-        </View>
+            </View>
+        </TouchableOpacity>
     );
 };
 

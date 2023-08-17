@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostListAPI>';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
 import BottomSheetContainer, { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
 import BottomSheetHeader from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetHeader';
 
-type PostInfo = Pick<SharePostsData, 'postId' | 'userId'>;
+type PostInfo = Pick<SharePostListData, 'postId' | 'userId'>;
 
 interface KebabMenuBottomSheetProps {
     postInfo: PostInfo;

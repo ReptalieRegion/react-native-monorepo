@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
-import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
 
-import { SharePostsData } from '<SharePostAPI>';
-import Comment from '@/assets/icons/Comment';
+import { SharePostListData } from '<SharePostListAPI>';
+import { Comment } from '@/assets/icons';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
-type CommentIconType = Pick<SharePostsData, 'postId'>;
+type CommentIconType = Pick<SharePostListData, 'postId'>;
 
 const CommentIcon = ({ postId }: CommentIconType) => {
     const { setUIPrompts } = useContext(UIPromptsContext);
@@ -22,13 +23,11 @@ const CommentIcon = ({ postId }: CommentIconType) => {
     };
 
     return (
-        <View style={styles.container}>
-            <TouchableWithoutFeedback onPress={handleClickComment}>
-                <View>
-                    <Comment />
-                </View>
-            </TouchableWithoutFeedback>
-        </View>
+        <TouchableWithoutFeedback onPress={handleClickComment}>
+            <View style={styles.container}>
+                <Comment />
+            </View>
+        </TouchableWithoutFeedback>
     );
 };
 

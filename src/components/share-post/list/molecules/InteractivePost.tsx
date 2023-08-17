@@ -5,9 +5,9 @@ import CommentIcon from '../atoms/CommentIcon';
 import ImagesIndicators from '../atoms/ImagesIndicators';
 import Like from '../atoms/Like';
 
-import { SharePostsData } from '<SharePostAPI>';
+import { SharePostListData } from '<SharePostListAPI>';
 
-type InteractivePostProps = Pick<SharePostsData, 'isLike' | 'postId' | 'images'>;
+type InteractivePostProps = Pick<SharePostListData, 'isLike' | 'postId' | 'images'>;
 
 const InteractivePost = ({ postId, isLike, images }: InteractivePostProps) => {
     return (

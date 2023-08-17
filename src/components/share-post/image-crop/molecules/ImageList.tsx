@@ -7,14 +7,14 @@ import { shallow } from 'zustand/shallow';
 
 import ImageContent from '../atoms/ImageContent';
 
-import SharePostWriteStore from '@/stores/share-post/write';
+import useSharePostWriteStore from '@/stores/share-post/write';
 import { photoPermissionCheck } from '@/utils/permissions/photo-permission';
 
 const NUM_COLUMNS = 4;
 const LOAD_PHOTO_LIMIT = 40;
 
 const ImageList = () => {
-    const { photos, addPhotos, initPhotos } = SharePostWriteStore(
+    const { photos, addPhotos, initPhotos } = useSharePostWriteStore(
         (state) => ({
             photos: state.photos,
             addPhotos: state.addPhotos,
@@ -74,19 +74,17 @@ const ImageList = () => {
             });
     };
 
-    return (
-        photos.length !== 0 && (
-            <FlatList
-                contentContainerStyle={styles.contentContainer}
-                data={photos}
-                keyExtractor={(_, index) => index.toString()}
-                numColumns={NUM_COLUMNS}
-                onEndReached={loadMorePhotos}
-                onEndReachedThreshold={0.5}
-                renderItem={({ item, index }) => <ImageContent numColumns={NUM_COLUMNS} item={item} index={index} />}
-            />
-        )
-    );
+    return photos.length !== 0 ? (
+        <FlatList
+            contentContainerStyle={styles.contentContainer}
+            data={photos}
+            keyExtractor={(_, index) => index.toString()}
+            numColumns={NUM_COLUMNS}
+            onEndReached={loadMorePhotos}
+            onEndReachedThreshold={0.5}
+            renderItem={({ item, index }) => <ImageContent numColumns={NUM_COLUMNS} item={item} index={index} />}
+        />
+    ) : null;
 };
 
 const styles = StyleSheet.create({

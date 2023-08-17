@@ -1,18 +1,21 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, TranslateXTransform, TranslateYTransform, View, ViewStyle } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
-import { SharePostsData } from '<SharePostAPI>';
-import LikeIcon from '@/assets/icons/Like_55';
+import { SharePostListData } from '<SharePostListAPI>';
+import { Like_55 as LikeIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import sharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/list';
 
-type HeartAnimationProps = Pick<SharePostsData, 'postId'>;
+type HeartAnimationProps = Pick<SharePostListData, 'postId'>;
 
 type DotMapType = 'leftTop' | 'top' | 'rightTop' | 'right' | 'rightBottom' | 'bottom' | 'leftBottom' | 'left';
 
 type DotTranslateMap = {
-    [key in DotMapType]: TranslateXTransform & TranslateYTransform;
+    [key in DotMapType]: {
+        translateX: number;
+        translateY: number;
+    };
 };
 
 type DotStyles = {
@@ -69,7 +72,8 @@ const Dot = ({ dotName }: { dotName: DotMapType }) => {
 
     useEffect(() => {
         scale.value = withTiming(0, { duration: 300 });
-        translateY.value = withTiming(TRANSLATE_MAP[dotName].translateY, { duration: 300 });
+        const dotTranslateY = TRANSLATE_MAP[dotName].translateY;
+        translateY.value = withTiming(dotTranslateY, { duration: 300 });
         translateX.value = withTiming(TRANSLATE_MAP[dotName].translateX, { duration: 300 });
     }, [dotName, scale, translateX, translateY]);
 
@@ -77,7 +81,7 @@ const Dot = ({ dotName }: { dotName: DotMapType }) => {
 };
 
 const HeartAnimation = ({ postId }: HeartAnimationProps) => {
-    const setStartLikeAnimation = sharePostListStore((state) => state.setStartLikeAnimation);
+    const setStartLikeAnimation = useSharePostListStore((state) => state.setStartLikeAnimation);
     const heartScale = useSharedValue(1.5);
     const animatedHeartStyle = useAnimatedStyle(() => ({
         transform: [{ scale: heartScale.value }],

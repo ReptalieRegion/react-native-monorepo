@@ -1,14 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { SharePostListNavigationProp } from '<Routes>';
-import { SharePostsData } from '<SharePostAPI>';
+import { BottomTabSharePostListNavigationProp } from '<BottomTabSharePostRoutes>';
+import { SharePostListData } from '<SharePostListAPI>';
 
-type ProfileProps = Pick<SharePostsData, 'profile' | 'nickname' | 'userId'>;
+type ProfileProps = Pick<SharePostListData, 'profile' | 'nickname' | 'userId'>;
 
 const Profile = ({ nickname, profile, userId }: ProfileProps) => {
-    const navigation = useNavigation<SharePostListNavigationProp>();
+    const navigation = useNavigation<BottomTabSharePostListNavigationProp>();
 
     const gotoDetailPage = () => {
         navigation.push('share-post/detail', { userId, nickname });
@@ -17,15 +19,14 @@ const Profile = ({ nickname, profile, userId }: ProfileProps) => {
     return (
         <TouchableWithoutFeedback onPress={gotoDetailPage}>
             <View style={styles.container}>
-                <Image
+                <FastImage
                     style={styles.image}
                     source={{
                         uri: profile.src,
-                        width: 30,
-                        height: 30,
+                        priority: FastImage.priority.high,
+                        cache: FastImage.cacheControl.web,
                     }}
-                    alt={profile.alt}
-                    resizeMode="cover"
+                    resizeMode={FastImage.resizeMode.cover}
                 />
                 <Text>{nickname}</Text>
             </View>
