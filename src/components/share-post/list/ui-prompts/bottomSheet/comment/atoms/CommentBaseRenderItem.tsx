@@ -9,6 +9,7 @@ import { BottomTabStackNavigationProp } from '<RootRoutes>';
 import { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentReplyData } from '<SharePostCommentReply>';
 import AccordionMenu from '@/components/common/element/text/AccordionMenu';
+import Avatar from '@/components/common/fast-image/Avatar';
 import { color } from '@/components/common/tokens/colors';
 import TaggedContent from '@/components/share-post/common/atoms/TaggedContent';
 import type { TagPressHandler } from '@/components/share-post/common/atoms/TaggedContent';
@@ -18,9 +19,9 @@ type RenderItemProps = {
         | Pick<SharePostCommentData, 'contents' | 'tags' | 'writer'>
         | Pick<SharePostCommentReplyData, 'contents' | 'tags' | 'writer'>;
     FootChildren?: ReactNode;
-};
+} & { showAnimated?: boolean };
 
-const CommentBaseRenderItem = ({ FootChildren, data: { writer, tags, contents } }: RenderItemProps) => {
+const CommentBaseRenderItem = ({ FootChildren, showAnimated, data: { writer, tags, contents } }: RenderItemProps) => {
     const navigation = useNavigation<BottomTabStackNavigationProp>();
     const onPressTag: TagPressHandler = (_, content, tagId) => {
         navigation.navigate('bottom-tab-less', {
@@ -34,21 +35,25 @@ const CommentBaseRenderItem = ({ FootChildren, data: { writer, tags, contents } 
 
     return (
         <View style={styles.container}>
-            <FastImage
-                style={styles.circle}
+            <Avatar
+                showAnimated={showAnimated}
                 source={{
                     uri: writer.profile.src,
                     priority: FastImage.priority.high,
                     cache: FastImage.cacheControl.web,
                 }}
+                defaultSource={require('../../../../../../../assets/images/avatar.png')}
                 resizeMode={FastImage.resizeMode.cover}
+                fallback
             />
             <View style={styles.commentItemContent}>
-                <Text style={styles.nickname}>{writer.nickname}</Text>
-                <AccordionMenu numberOfLines={3}>
-                    <TaggedContent tags={tags} contents={contents} onPressTag={onPressTag} />
-                </AccordionMenu>
-                <CommentActions />
+                <View style={styles.commentItemGap}>
+                    <Text style={styles.nickname}>{writer.nickname}</Text>
+                    <AccordionMenu numberOfLines={3}>
+                        <TaggedContent tags={tags} contents={contents} onPressTag={onPressTag} />
+                    </AccordionMenu>
+                    <CommentActions />
+                </View>
                 {FootChildren}
             </View>
         </View>
@@ -69,6 +74,8 @@ const styles = StyleSheet.create({
     },
     commentItemContent: {
         flex: 1,
+    },
+    commentItemGap: {
         gap: 5,
     },
     color: {

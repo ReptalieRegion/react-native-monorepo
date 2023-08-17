@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
     },
     border: {
         borderColor: color.Gray[700].toString(),
-        borderTopWidth: 0.5,
         borderBottomWidth: 0.5,
         width: 30,
     },

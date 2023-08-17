@@ -2,7 +2,7 @@ import { isString } from 'lodash-es';
 import { useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
-import { Easing, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
+import { runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useKeyboard from './useKeyboard';
@@ -111,7 +111,15 @@ const useBottomSheetGestureAnimation = ({
 
     useEffect(() => {
         const toValue = isKeyboardWillShow ? snapPointsASC[snapPointsASC.length - 1] : snapPointsASC[snapInfo.startIndex];
-        height.value = withTiming(toValue, { easing: Easing.bezier(0.4, 0, 0.2, 1) });
+        height.value = withSpring(toValue, {
+            stiffness: 1000,
+            velocity: 0,
+            mass: 3,
+            damping: 500,
+            overshootClamping: true,
+            restDisplacementThreshold: 10,
+            restSpeedThreshold: 10,
+        });
     }, [height, isKeyboardWillShow, snapInfo.startIndex, snapPointsASC]);
 
     return { gesture: panGesture, snapAnimatedStyles, closeAnimatedStyles };

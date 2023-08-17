@@ -1,6 +1,7 @@
 import { FlashList, ListRenderItem, ListRenderItemInfo } from '@shopify/flash-list';
 import React, { memo, useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
 import CommentBaseRenderItem from '../atoms/CommentBaseRenderItem';
 import ReplyCommentButton from '../atoms/ReplyCommentButton';
@@ -13,17 +14,24 @@ import { useInfiniteFetchReplyComments } from '@/apis/share-post';
 
 type FootChildrenProps = Pick<SharePostCommentData, 'id' | 'replyCommentCount'>;
 
-const FootChildren = memo(({ id, replyCommentCount }: FootChildrenProps) => {
-    const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteFetchReplyComments({
+const FootChildren = ({ id, replyCommentCount }: FootChildrenProps) => {
+    const { data, isFetching, hasNextPage, fetchNextPage, remove } = useInfiniteFetchReplyComments({
         commentId: id,
         postId: '1',
     });
-    const newData = data?.pages.flatMap((page) => page.items);
+
     const keyExtractor = useCallback((item: SharePostCommentReplyData) => item.id, []);
     const renderItem: ListRenderItem<SharePostCommentReplyData> = useCallback(
         ({ item }) => <ReplyCommentRenderItem {...item} />,
         [],
     );
+    const newData = data?.pages.flatMap((page) => page.items);
+
+    useEffect(() => {
+        return () => {
+            remove();
+        };
+    }, [remove, id]);
 
     const onPressReplyButton = () => {
         fetchNextPage();
@@ -42,31 +50,43 @@ const FootChildren = memo(({ id, replyCommentCount }: FootChildrenProps) => {
             />
         </>
     );
-});
+};
 
 const footChildrenStyles = StyleSheet.create({
     container: {
         minHeight: 2,
     },
-    gapView: {
-        height: 20,
-    },
 });
 
-type CommentRenderItemProps = ListRenderItemInfo<SharePostCommentData>;
+type CommentRenderItemProps = ListRenderItemInfo<SharePostCommentData> & { isAlreadyRenderItem: boolean };
 
-const CommentRenderItem = ({ item }: CommentRenderItemProps) => {
-    const { contents, writer, tags, id, replyCommentCount } = item;
+const CommentRenderItem = ({
+    item: { contents, writer, tags, id, replyCommentCount },
+    index,
+    isAlreadyRenderItem,
+}: CommentRenderItemProps) => {
+    const opacity = useSharedValue(1);
+    const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
+
+    const showAnimated = !isAlreadyRenderItem && (index < 5 || index % 10 < 2);
+    if (showAnimated) {
+        opacity.value = 0;
+    }
 
     useEffect(() => {
-        return () => {};
-    }, []);
+        if (showAnimated) {
+            opacity.value = withSpring(1);
+        }
+    }, [opacity, showAnimated, id]);
 
     return (
-        <CommentBaseRenderItem
-            data={{ contents, writer, tags }}
-            FootChildren={<FootChildren id={id} replyCommentCount={replyCommentCount} />}
-        />
+        <Animated.View style={animatedStyle}>
+            <CommentBaseRenderItem
+                showAnimated={showAnimated}
+                data={{ contents, writer, tags }}
+                FootChildren={<FootChildren id={id} replyCommentCount={replyCommentCount} />}
+            />
+        </Animated.View>
     );
 };
 
