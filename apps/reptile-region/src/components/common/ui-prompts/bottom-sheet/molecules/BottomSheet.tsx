@@ -2,13 +2,13 @@ import React, { PropsWithChildren, useMemo } from 'react';
 import { View } from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 
+import useBottomSheetGestureAnimation, {
+    UseBottomSheetGestureProps,
+} from '../../../../../hooks/useBottomSheetGestureAnimation';
 import BottomSheetContainer, { BottomSheetContainerProps } from '../atoms/BottomSheetContainer';
 import BottomSheetHeader, { BottomSheetHeaderProps } from '../atoms/BottomSheetHeader';
 
 import { UIPromptsDefaultProps } from '<UIPrompts>';
-import useBottomSheetGestureAnimation, {
-    UseBottomSheetGestureProps,
-} from '../../../../../hooks/useBottomSheetGestureAnimation';
 
 type BottomSheetProps = {
     containerProps?: BottomSheetContainerProps;

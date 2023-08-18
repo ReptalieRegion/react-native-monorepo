@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { ColorValue, StyleSheet, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { SharePostListData } from '<SharePostListAPI>';
-import { color } from '../../../common/tokens/colors';
 import Haptic from '../../../../utils/webview-bridge/react-native/haptic/Haptic';
+import { color } from '../../../common/tokens/colors';
+
+import { SharePostListData } from '<SharePostListAPI>';
 
 type PostHeaderProps = Pick<SharePostListData, 'isFollow'>;
 

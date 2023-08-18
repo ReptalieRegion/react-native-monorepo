@@ -12,9 +12,9 @@ import {
 } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
-import { color } from '../../../common/tokens/colors';
 import { ScrollContext } from '../../../../contexts/scroll/Scroll';
 import useSharePostWriteStore from '../../../../stores/share-post/write';
+import { color } from '../../../common/tokens/colors';
 
 type SelectionInfo = {
     start: number;

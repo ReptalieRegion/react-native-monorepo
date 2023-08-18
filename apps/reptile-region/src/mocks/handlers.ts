@@ -1,12 +1,13 @@
 import { rest } from 'msw';
 
+import ENV from '../env';
+
 import createInfinityData from './data/native/common/createInfinityData';
 import createSharePostComment from './data/native/share-post/createSharePostComment';
 import createSharePostList from './data/native/share-post/createSharePostList';
 import createSharePostProfile from './data/native/share-post/createSharePostProfile';
 
 import { SharePostCommentData } from '<SharePostCommentAPI>';
-import ENV from '../env';
 
 const delay = <R>(fn: any, time: number) => {
     return new Promise<R>((resolve) => {

@@ -1,9 +1,10 @@
 import { fakerKO } from '@faker-js/faker';
 
+import createEmptyArray from '../../../../utils/array/createEmptyArray';
+
 import { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentReplyData } from '<SharePostCommentReply>';
 import { Tags } from '<SharePostTags>';
-import createEmptyArray from '../../../../utils/array/createEmptyArray';
 
 type CommentType = 'reply' | 'comment';
 type CommentReturnType<T extends CommentType> = T extends 'comment' ? SharePostCommentData[] : SharePostCommentReplyData[];

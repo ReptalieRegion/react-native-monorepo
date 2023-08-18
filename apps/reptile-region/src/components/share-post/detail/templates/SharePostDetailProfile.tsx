@@ -2,12 +2,12 @@ import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { useFetchDetailPosts } from '../../../../apis/share-post';
+import { color } from '../../../common/tokens/colors';
 import SharePostsDetailList from '../molecules/PostsDetailList';
 import UserDetailPanel from '../organisms/UserDetailPanel';
 
 import { BottomTabSharePostDetailRouteProp } from '<BottomTabSharePostRoutes>';
-import { useFetchDetailPosts } from '../../../../apis/share-post';
-import { color } from '../../../common/tokens/colors';
 
 const SharePostDetailProfile = () => {
     const route = useRoute<BottomTabSharePostDetailRouteProp>();

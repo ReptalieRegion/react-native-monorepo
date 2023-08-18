@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 
+import { useInfiniteFetchPosts } from '../../../../apis/share-post';
+import FlatListContextComponent from '../../../../contexts/flat-list/FlatList';
+import { color } from '../../../common/tokens/colors';
 import ListFooterLoading from '../../common/atoms/ListFooterComponent';
 import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
 import FloatingActionButtons from '../molecules/FloatingActionButtons';
 import PostCard from '../organisms/PostCard';
-
-import { useInfiniteFetchPosts } from '../../../../apis/share-post';
-import { color } from '../../../common/tokens/colors';
-import FlatListContextComponent from '../../../../contexts/flat-list/FlatList';
 
 const Posts = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false);

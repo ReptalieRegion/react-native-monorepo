@@ -1,7 +1,8 @@
 import { fakerKO } from '@faker-js/faker';
 
-import { SharePostDetailPostsData } from '<SharePostDetail>';
 import createEmptyArray from '../../../../utils/array/createEmptyArray';
+
+import { SharePostDetailPostsData } from '<SharePostDetail>';
 
 const createSharePostProfile = (length: number): SharePostDetailPostsData => {
     const posts = createEmptyArray(length).map(() => ({

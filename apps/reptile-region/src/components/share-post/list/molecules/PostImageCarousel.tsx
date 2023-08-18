@@ -2,13 +2,13 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
+import useSharePostListStore from '../../../../stores/share-post/list';
+import Haptic from '../../../../utils/webview-bridge/react-native/haptic/Haptic';
+import DoubleTabView from '../../../common/element/view/DoubleTabView';
 import HeartAnimation from '../atoms/HeartAnimation';
 import ImageContent from '../atoms/ImageContent';
 
 import { SharePostListData } from '<SharePostListAPI>';
-import DoubleTabView from '../../../common/element/view/DoubleTabView';
-import useSharePostListStore from '../../../../stores/share-post/list';
-import Haptic from '../../../../utils/webview-bridge/react-native/haptic/Haptic';
 
 type ImagesSliderProps = Pick<SharePostListData, 'images' | 'postId'>;
 

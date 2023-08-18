@@ -3,11 +3,11 @@ import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { BackButton, CancelButton, Logo } from '../../../../assets/icons';
 import { color } from '../../tokens/colors';
 import MainStatusBar from '../status-bar/MainStatusBar';
 
 import { IconFunction } from '<Icon>';
-import { BackButton, CancelButton, Logo } from '../../../../assets/icons';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
 

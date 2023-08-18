@@ -1,9 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { BottomTabMyParamList } from '<BottomTabMyRoutes>';
 import { NativeStackDefaultHeader } from '../../../components/common/layouts/header/utils/create-header';
 import MyListPage from '../../../pages/my/list/page';
+
+import { BottomTabMyParamList } from '<BottomTabMyRoutes>';
 
 const MyRoutes = () => {
     const MyStack = createNativeStackNavigator<BottomTabMyParamList>();
