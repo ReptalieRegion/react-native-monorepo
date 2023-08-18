@@ -9300,6 +9300,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-monorepo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "react-native-monorepo@workspace:."
+  dependencies:
+    eslint: ^8.19.0
+    eslint-plugin-import: ^2.28.0
+    husky: ^8.0.3
+    lint-staged: ^13.2.3
+  languageName: unknown
+  linkType: soft
+
 "react-native-permissions@npm:^3.8.0":
   version: 3.8.4
   resolution: "react-native-permissions@npm:3.8.4"
@@ -9654,9 +9665,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reptile-region-react-native@workspace:.":
+"reptile-region@workspace:apps/reptile-region":
   version: 0.0.0-use.local
-  resolution: "reptile-region-react-native@workspace:."
+  resolution: "reptile-region@workspace:apps/reptile-region"
   dependencies:
     "@babel/core": ^7.20.0
     "@babel/preset-env": ^7.22.5
