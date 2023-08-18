@@ -3,9 +3,10 @@ import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View }
 import FastImage from 'react-native-fast-image';
 import { FlatList } from 'react-native-gesture-handler';
 
+import useSharePostListStore from '../../../../stores/share-post/list';
+
 import { ShareImageType } from '<SharePostImage>';
 import { SharePostListData } from '<SharePostListAPI>';
-import useSharePostListStore from '../../../../stores/share-post/list';
 
 type ImagesContentProps = Pick<SharePostListData, 'images' | 'postId'>;
 

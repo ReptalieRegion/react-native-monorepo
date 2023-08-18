@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
+import { UIPromptsContext } from '../../../../contexts/ui-prompts/UIPrompts';
+import AccordionMenu from '../../../common/element/text/AccordionMenu';
+import { color } from '../../../common/tokens/colors';
 import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
 
 import { SharePostListData } from '<SharePostListAPI>';
-import AccordionMenu from '../../../common/element/text/AccordionMenu';
-import { color } from '../../../common/tokens/colors';
-import { UIPromptsContext } from '../../../../contexts/ui-prompts/UIPrompts';
 
 type PostContentProps = Pick<SharePostListData, 'likeCount' | 'commentCount' | 'content' | 'postId'>;
 

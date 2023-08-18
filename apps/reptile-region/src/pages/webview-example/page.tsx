@@ -5,11 +5,12 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 
-import { WebviewExampleStackNavigationProp } from '<RootRoutes>';
 import { color } from '../../components/common/tokens/colors';
 import ENV from '../../env';
 import { WebviewBridgeRunner } from '../../utils/webview-bridge/react-native';
 import WebviewBridgeManager from '../../utils/webview-bridge/utils/WebviewBridgeManager';
+
+import { WebviewExampleStackNavigationProp } from '<RootRoutes>';
 
 const HomePage = () => {
     const webviewRef = useRef<WebView>(null);

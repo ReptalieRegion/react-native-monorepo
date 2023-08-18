@@ -3,16 +3,17 @@ import React, { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import CommentActions from './CommentActions';
-
-import { BottomTabStackNavigationProp } from '<RootRoutes>';
-import { SharePostCommentData } from '<SharePostCommentAPI>';
-import { SharePostCommentReplyData } from '<SharePostCommentReply>';
 import AccordionMenu from '../../../../../../common/element/text/AccordionMenu';
 import Avatar from '../../../../../../common/fast-image/Avatar';
 import { color } from '../../../../../../common/tokens/colors';
 import TaggedContent from '../../../../../common/atoms/TaggedContent';
 import type { TagPressHandler } from '../../../../../common/atoms/TaggedContent';
+
+import CommentActions from './CommentActions';
+
+import { BottomTabStackNavigationProp } from '<RootRoutes>';
+import { SharePostCommentData } from '<SharePostCommentAPI>';
+import { SharePostCommentReplyData } from '<SharePostCommentReply>';
 
 type RenderItemProps = {
     data:

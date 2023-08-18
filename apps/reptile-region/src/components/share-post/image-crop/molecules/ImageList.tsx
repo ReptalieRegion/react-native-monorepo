@@ -5,10 +5,9 @@ import { StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
-import ImageContent from '../atoms/ImageContent';
-
 import useSharePostWriteStore from '../../../../stores/share-post/write';
 import { photoPermissionCheck } from '../../../../utils/permissions/photo-permission';
+import ImageContent from '../atoms/ImageContent';
 
 const NUM_COLUMNS = 4;
 const LOAD_PHOTO_LIMIT = 40;

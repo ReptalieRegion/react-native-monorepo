@@ -4,12 +4,12 @@ import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 
+import { PostWriteIcon } from '../../../../assets/icons';
+import { color } from '../../../common/tokens/colors';
 import useScaleDownAndUp from '../animated/useScaleDownAndUp';
 
 import { BottomTabStackNavigationProp } from '<RootRoutes>';
 import { FloatingActionButtonSize } from '<SharePostComponent>';
-import { PostWriteIcon } from '../../../../assets/icons';
-import { color } from '../../../common/tokens/colors';
 
 const PostWrite = ({ buttonSize }: FloatingActionButtonSize) => {
     const navigation = useNavigation<BottomTabStackNavigationProp>();

@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
+import { Comment } from '../../../../assets/icons';
+import { UIPromptsContext } from '../../../../contexts/ui-prompts/UIPrompts';
 import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
 
 import { SharePostListData } from '<SharePostListAPI>';
-import { Comment } from '../../../../assets/icons';
-import { UIPromptsContext } from '../../../../contexts/ui-prompts/UIPrompts';
 
 type CommentIconType = Pick<SharePostListData, 'postId'>;
 

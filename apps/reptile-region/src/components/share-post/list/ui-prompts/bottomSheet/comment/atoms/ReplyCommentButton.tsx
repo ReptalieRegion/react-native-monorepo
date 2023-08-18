@@ -2,8 +2,9 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { SharePostCommentData } from '<SharePostCommentAPI>';
 import { color } from '../../../../../../common/tokens/colors';
+
+import { SharePostCommentData } from '<SharePostCommentAPI>';
 
 interface ReplyCommentButtonProps {
     onPress?: () => void;

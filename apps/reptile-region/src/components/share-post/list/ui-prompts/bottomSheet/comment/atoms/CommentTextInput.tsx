@@ -4,8 +4,8 @@ import FastImage from 'react-native-fast-image';
 import { TextInput } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 
-import { color } from '../../../../../../common/tokens/colors';
 import useKeyboard from '../../../../../../../hooks/useKeyboard';
+import { color } from '../../../../../../common/tokens/colors';
 
 const CommentTextInput = () => {
     const { keyboardStyle } = useKeyboard();

@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
-import { SharePostListData } from '<SharePostListAPI>';
 import { Like_40 as LikeIcon } from '../../../../assets/icons';
-import { color } from '../../../common/tokens/colors';
 import useSharePostListStore from '../../../../stores/share-post/list';
+import { color } from '../../../common/tokens/colors';
+
+import { SharePostListData } from '<SharePostListAPI>';
 
 type LikeProps = Pick<SharePostListData, 'isLike' | 'postId'>;
 

@@ -1,11 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { BottomTabLessSharePostParamList } from '<BottomTabLessSharePostRoutes>';
 import SharePostDetailHeader from '../../../components/share-post/detail/atoms/header/DetailHeader';
 import ImageCropHeader from '../../../components/share-post/image-crop/atoms/header/ImageCropHeader';
 import ShareHeader from '../../../components/share-post/write/atoms/header/SharePostWriteHeader';
 import { SharePostDetailPage, SharePostWritePage, SharePostImageCropPage } from '../../../pages/share-post';
+
+import { BottomTabLessSharePostParamList } from '<BottomTabLessSharePostRoutes>';
 
 const SharePostRoutes = () => {
     const SharePostStack = createNativeStackNavigator<BottomTabLessSharePostParamList>();

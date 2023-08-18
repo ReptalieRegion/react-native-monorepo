@@ -2,10 +2,9 @@ import React from 'react';
 import { View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
+import useSharePostWriteStore from '../../../../stores/share-post/write';
 import RenderImage from '../atoms/RenderImage';
 import SharePostWriteTitle from '../atoms/SharePostWriteTitle';
-
-import useSharePostWriteStore from '../../../../stores/share-post/write';
 
 const PhotoRegister = () => {
     const selectedPhotos = useSharePostWriteStore((state) => state.selectedPhotos);

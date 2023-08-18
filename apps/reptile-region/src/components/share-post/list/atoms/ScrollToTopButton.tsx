@@ -3,13 +3,13 @@ import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
+import { UpArrow } from '../../../../assets/icons';
+import { useFlatList } from '../../../../contexts/flat-list/FlatList';
+import useLock from '../../../../hooks/useLock';
+import { color } from '../../../common/tokens/colors';
 import useScaleDownAndUp from '../animated/useScaleDownAndUp';
 
 import { FloatingActionButtonSize } from '<SharePostComponent>';
-import { UpArrow } from '../../../../assets/icons';
-import { color } from '../../../common/tokens/colors';
-import { useFlatList } from '../../../../contexts/flat-list/FlatList';
-import useLock from '../../../../hooks/useLock';
 
 const ScrollToTopButton = ({ buttonSize }: FloatingActionButtonSize) => {
     const { verticalDirection, overScrollingState, scrollIntoView } = useFlatList();

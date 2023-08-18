@@ -1,13 +1,13 @@
 import React from 'react';
 
+import { ConTainerStyle } from '../../../../../../common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
+import BottomSheet from '../../../../../../common/ui-prompts/bottom-sheet/molecules/BottomSheet';
 import CommentHeader from '../atoms/CommentHeader';
 import CommentTextInput from '../atoms/CommentTextInput';
 import CommentFlashList from '../organisms/CommentFlashList';
 
 import { SharePostListData } from '<SharePostListAPI>';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
-import { ConTainerStyle } from '../../../../../../common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
-import BottomSheet from '../../../../../../common/ui-prompts/bottom-sheet/molecules/BottomSheet';
 
 export type CommentBottomSheetProps = Pick<SharePostListData, 'postId'>;
 

@@ -1,7 +1,8 @@
 import { fakerKO } from '@faker-js/faker';
 
-import { SharePostListData } from '<SharePostListAPI>';
 import createEmptyArray from '../../../../utils/array/createEmptyArray';
+
+import { SharePostListData } from '<SharePostListAPI>';
 
 const createSharePostList = (length: number): SharePostListData[] => {
     return createEmptyArray(length).map(() => ({

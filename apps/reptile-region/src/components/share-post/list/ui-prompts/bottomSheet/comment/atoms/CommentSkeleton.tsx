@@ -2,8 +2,8 @@ import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-import { color } from '../../../../../../common/tokens/colors';
 import createEmptyArray from '../../../../../../../utils/array/createEmptyArray';
+import { color } from '../../../../../../common/tokens/colors';
 
 const { width } = Dimensions.get('screen');
 const SKELETON_ITEM_COLOR = color.Gray[200].toString();
