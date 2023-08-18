@@ -5,9 +5,8 @@ import { Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
-import useSharePostWriteStore from '../../../../../stores/share-post/write';
-
 import { BottomTabStackNavigationProp } from '<RootRoutes>';
+import useSharePostWriteStore from '@/stores/share-post/write';
 
 const SharePostWriteRightHeader = () => {
     const navigate = useNavigation<BottomTabStackNavigationProp>();

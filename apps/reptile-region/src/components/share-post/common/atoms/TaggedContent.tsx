@@ -1,9 +1,8 @@
 import React from 'react';
 import { GestureResponderEvent, StyleSheet, Text } from 'react-native';
 
-import { color } from '../../../common/tokens/colors';
-
 import { Tags } from '<SharePostTags>';
+import { color } from '@/components/common/tokens/colors';
 
 export type TagPressHandler = (event: GestureResponderEvent, content: string, tagId: string) => void;
 

@@ -1,9 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { MainBottomBar } from '../../components/common/layouts';
-import UIPromptsContextComponent from '../../contexts/ui-prompts/UIPrompts';
-
 import HomeRoutes from './home/Home';
 import InfoRoutes from './info/Info';
 import MyRoutes from './my/My';
@@ -11,6 +8,8 @@ import SharePostRoutes from './share-post/SharePost';
 import ShopRoutes from './shop/Shop';
 
 import { BottomTabParamList } from '<BottomTabNavigationList>';
+import { MainBottomBar } from '@/components/common/layouts';
+import UIPromptsContextComponent from '@/contexts/ui-prompts/UIPrompts';
 
 const BottomTabRoutes = () => {
     const BottomTab = createBottomTabNavigator<BottomTabParamList>();

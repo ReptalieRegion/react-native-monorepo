@@ -2,9 +2,8 @@ import React from 'react';
 import { Dimensions, StyleSheet, View, ViewStyle } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { color } from '../tokens/colors';
-
 import { UIPromptsDefaultProps } from '<UIPrompts>';
+import { color } from '@/components/common/tokens/colors';
 
 export type BackDropStyle = Pick<ViewStyle, 'backgroundColor'>;
 

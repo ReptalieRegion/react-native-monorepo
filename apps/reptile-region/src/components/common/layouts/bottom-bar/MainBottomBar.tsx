@@ -2,21 +2,20 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 
+import MainBottomTabBarButton from './MainBottomTabBarButton';
+
+import { BottomTabParamList } from '<BottomTabNavigationList>';
+import { IconProps } from '<Icon>';
 import {
     Cart as ShopIcon,
     Community as InfoIcon,
     Home as HomeIcon,
     My as MyIcon,
     Share as SharePostIcon,
-} from '../../../../assets/icons';
-import useKeyboard from '../../../../hooks/useKeyboard';
-import Haptic from '../../../../utils/webview-bridge/react-native/haptic/Haptic';
-import { color } from '../../tokens/colors';
-
-import MainBottomTabBarButton from './MainBottomTabBarButton';
-
-import { BottomTabParamList } from '<BottomTabNavigationList>';
-import { IconProps } from '<Icon>';
+} from '@/assets/icons';
+import { color } from '@/components/common/tokens/colors';
+import useKeyboard from '@/hooks/useKeyboard';
+import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 type MenusType = {
     [key in keyof BottomTabParamList]: {

@@ -11,7 +11,7 @@ import {
     View,
 } from 'react-native';
 
-import { color } from '../../components/common/tokens/colors';
+import { color } from '@/components/common/tokens/colors';
 
 interface ScrollContextComponentProps {
     fixedChildren?: {

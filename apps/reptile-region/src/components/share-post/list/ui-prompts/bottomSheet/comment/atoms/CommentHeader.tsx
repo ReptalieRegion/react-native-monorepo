@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { color } from '../../../../../../common/tokens/colors';
+import { color } from '@/components/common/tokens/colors';
 
 const CommentHeader = () => {
     return (

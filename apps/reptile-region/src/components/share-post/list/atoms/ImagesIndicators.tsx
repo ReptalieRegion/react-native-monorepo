@@ -1,11 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { DotIndicator } from '../../../../assets/icons';
-import useSharePostListStore from '../../../../stores/share-post/list';
-import { color } from '../../../common/tokens/colors';
-
 import { SharePostListData } from '<SharePostListAPI>';
+import { DotIndicator } from '@/assets/icons';
+import { color } from '@/components/common/tokens/colors';
+import useSharePostListStore from '@/stores/share-post/list';
 
 type ImagesIndicators = Pick<SharePostListData, 'images' | 'postId'>;
 

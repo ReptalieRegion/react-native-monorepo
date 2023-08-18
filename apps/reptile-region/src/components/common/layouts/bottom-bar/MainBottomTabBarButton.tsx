@@ -3,9 +3,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
-import { color } from '../../tokens/colors';
-
 import { IconProps } from '<Icon>';
+import { color } from '@/components/common/tokens/colors';
 
 const BottomTabBarButton = ({
     isFocused,

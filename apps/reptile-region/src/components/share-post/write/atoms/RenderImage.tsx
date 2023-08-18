@@ -3,9 +3,9 @@ import React, { useRef } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { CancelButton } from '../../../../assets/icons';
-import useSharePostWriteStore from '../../../../stores/share-post/write';
-import { color } from '../../../common/tokens/colors';
+import { CancelButton } from '@/assets/icons';
+import { color } from '@/components/common/tokens/colors';
+import useSharePostWriteStore from '@/stores/share-post/write';
 
 interface RenderImageProps {
     item: PhotoIdentifier;
