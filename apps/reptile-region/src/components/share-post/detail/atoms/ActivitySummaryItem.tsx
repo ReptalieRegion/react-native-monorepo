@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { color } from '../../../common/tokens/colors';
+import { color } from '@/components/common/tokens/colors';
 
 interface ActivitySummaryItemProps {
     onPress?: () => void;

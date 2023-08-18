@@ -1,9 +1,8 @@
 import React from 'react';
 import { Circle, Svg } from 'react-native-svg';
 
-import { color } from '../../components/common/tokens/colors';
-
 import { IconProps } from '<Icon>';
+import { color } from '@/components/common/tokens/colors';
 
 const KebabMenu = ({ width = '24', height = '24', fill = color.Gray[900].toString() }: IconProps) => {
     return (

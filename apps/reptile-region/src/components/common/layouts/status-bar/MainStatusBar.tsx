@@ -2,8 +2,8 @@ import React from 'react';
 import { Platform, StatusBar, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import ENV from '../../../../env';
-import { color } from '../../tokens/colors';
+import { color } from '@/components/common/tokens/colors';
+import ENV from '@/env';
 
 const backgroundColor = ENV.isProd
     ? undefined

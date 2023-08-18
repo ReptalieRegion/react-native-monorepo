@@ -3,7 +3,6 @@ import React, { memo, useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
-import { useInfiniteFetchReplyComments } from '../../../../../../../apis/share-post';
 import CommentBaseRenderItem from '../atoms/CommentBaseRenderItem';
 import ReplyCommentButton from '../atoms/ReplyCommentButton';
 
@@ -11,6 +10,7 @@ import ReplyCommentRenderItem from './ReplyCommentRenderItem';
 
 import { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentReplyData } from '<SharePostCommentReply>';
+import { useInfiniteFetchReplyComments } from '@/apis/share-post';
 
 type FootChildrenProps = Pick<SharePostCommentData, 'id' | 'replyCommentCount'>;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { GestureResponderEvent, StyleSheet, Text } from 'react-native';
 
-import { color } from '../../../common/tokens/colors';
+import { color } from '@/components/common/tokens/colors';
 
 interface TagProps {
     onPress?: (event: GestureResponderEvent) => void;

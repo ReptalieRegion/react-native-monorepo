@@ -1,9 +1,8 @@
 import React from 'react';
 import { Circle, Path, Svg } from 'react-native-svg';
 
-import { color } from '../../components/common/tokens/colors';
-
 import { IconProps } from '<Icon>';
+import { color } from '@/components/common/tokens/colors';
 
 const My = ({ fill = color.Gray['500'].toString(), height = '24', width = '24' }: IconProps) => {
     return (

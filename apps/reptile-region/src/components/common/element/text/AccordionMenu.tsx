@@ -1,8 +1,8 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import useLock from '../../../../hooks/useLock';
-import { color } from '../../tokens/colors';
+import { color } from '@/components/common/tokens/colors';
+import useLock from '@/hooks/useLock';
 
 interface AccordionMenuProps {
     numberOfLines: number;

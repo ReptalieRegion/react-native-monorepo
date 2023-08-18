@@ -4,10 +4,11 @@ import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
-import { UIPromptsContext } from '../../../../contexts/ui-prompts/UIPrompts';
-import useSharePostWriteStore from '../../../../stores/share-post/write';
-import { color } from '../../../common/tokens/colors';
 import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
+
+import { color } from '@/components/common/tokens/colors';
+import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
+import useSharePostWriteStore from '@/stores/share-post/write';
 
 interface ImageContentProps {
     item: PhotoIdentifier;

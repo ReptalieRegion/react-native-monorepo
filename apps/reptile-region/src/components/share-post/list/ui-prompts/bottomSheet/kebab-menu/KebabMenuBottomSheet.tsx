@@ -2,11 +2,10 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import BottomSheetContainer, { ConTainerStyle } from '../../../../../common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
-import BottomSheetHeader from '../../../../../common/ui-prompts/bottom-sheet/atoms/BottomSheetHeader';
-
 import { SharePostListData } from '<SharePostListAPI>';
 import { UIPromptsDefaultProps } from '<UIPrompts>';
+import BottomSheetContainer, { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
+import BottomSheetHeader from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetHeader';
 
 type PostInfo = Pick<SharePostListData, 'postId' | 'userId'>;
 

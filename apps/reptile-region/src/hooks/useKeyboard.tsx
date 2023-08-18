@@ -5,7 +5,7 @@ import { SpringConfig } from 'react-native-reanimated/lib/typescript/reanimated2
 import { WithTimingConfig } from 'react-native-reanimated/lib/typescript/reanimated2/animation/timing';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { getKeyboardAnimationConfigs } from '../utils/keyboard/getKeyboardAnimationConfigs';
+import { getKeyboardAnimationConfigs } from '@/utils/keyboard/getKeyboardAnimationConfigs';
 
 const KEYBOARD_EVENT_MAPPER = {
     KEYBOARD_SHOW: Platform.select({

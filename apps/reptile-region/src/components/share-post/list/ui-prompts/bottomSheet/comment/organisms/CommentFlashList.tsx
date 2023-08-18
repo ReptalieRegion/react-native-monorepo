@@ -3,12 +3,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import { useInfiniteFetchCommentsPost } from '../../../../../../../apis/share-post';
 import ListFooterLoading from '../../../../../common/atoms/ListFooterComponent';
 import CommentSkeleton from '../atoms/CommentSkeleton';
 import CommentRenderItem from '../molecules/CommentRenderItem';
 
 import { SharePostCommentData } from '<SharePostCommentAPI>';
+import { useInfiniteFetchCommentsPost } from '@/apis/share-post';
 
 const CommentFlashList = ({ postId }: { postId: string }) => {
     const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage, remove, refetch } =

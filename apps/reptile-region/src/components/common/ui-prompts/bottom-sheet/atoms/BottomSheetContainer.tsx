@@ -2,10 +2,10 @@ import React, { PropsWithChildren } from 'react';
 import { Dimensions, StyleSheet, ViewStyle } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import { color } from '../../../tokens/colors';
 import BackDrop, { BackDropStyle } from '../../BackDrop';
 
 import { UIPromptsDefaultProps } from '<UIPrompts>';
+import { color } from '@/components/common/tokens/colors';
 
 type TranslateStyle = {
     transform: {
