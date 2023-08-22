@@ -9405,6 +9405,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.45.4":
+  version: 7.45.4
+  resolution: "react-hook-form@npm:7.45.4"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: 1d84c78dadf561bc9e360272c5c856c724426162e13a74929c0517c3eb8004a7f057561fff3bfd4c1121b36d6cf1437399df1dbfd01d0817b9f922503f407d8f
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.12.0 || ^17.0.0 || ^18.0.0, react-is@npm:^18.0.0, react-is@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
@@ -9928,6 +9937,7 @@ __metadata:
     pod-install: ^0.1.38
     postinstall: ^0.8.0
     react: 18.2.0
+    react-hook-form: ^7.45.4
     react-native: 0.72.3
     react-native-asset: ^2.1.1
     react-native-dotenv: ^3.4.9
