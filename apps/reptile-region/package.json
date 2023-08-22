@@ -22,6 +22,7 @@
         "postinstall": "react-native setup-ios-permissions && pod-install"
     },
     "dependencies": {
+        "@hookform/resolvers": "^3.3.0",
         "@react-native-async-storage/async-storage": "^1.19.0",
         "@react-native-camera-roll/camera-roll": "^5.6.0",
         "@react-native-masked-view/masked-view": "^0.2.9",

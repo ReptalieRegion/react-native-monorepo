@@ -1717,6 +1717,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@hookform/resolvers@npm:3.3.0"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: 72ae9a958b7eb08f4e7739164e760a2036df9c3797d449c6141650243935296885c7db5aafadd8394e2dcf4f80539d638ace1c12b26a14b98d6e575c79ab234a
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.10":
   version: 0.11.10
   resolution: "@humanwhocodes/config-array@npm:0.11.10"
@@ -9900,6 +9909,7 @@ __metadata:
     "@babel/preset-env": ^7.22.5
     "@babel/runtime": ^7.20.0
     "@faker-js/faker": ^8.0.2
+    "@hookform/resolvers": ^3.3.0
     "@react-native-async-storage/async-storage": ^1.19.0
     "@react-native-camera-roll/camera-roll": ^5.6.0
     "@react-native-masked-view/masked-view": ^0.2.9
