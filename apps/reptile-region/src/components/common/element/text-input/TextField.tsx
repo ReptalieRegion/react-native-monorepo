@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { ColorValue, DimensionValue, StyleSheet, View } from 'react-native';
+import { ColorValue, DimensionValue, StyleSheet, TextInputProps, View } from 'react-native';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { Easing, WithTimingConfig, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
@@ -9,9 +9,9 @@ type FontSizes = 'small' | 'normal' | 'large';
 
 type Variant = 'outlined' | 'standard';
 
-type TextFieldProps = {
-    onChange?: () => void;
+export type TextFieldProps = {
     label: string;
+    value?: string;
     labelColor?: ColorValue;
     focusColor?: ColorValue;
     size?: FontSizes;
@@ -21,7 +21,7 @@ type TextFieldProps = {
     paddingHorizontal?: number;
     animationDuration?: number;
     variant?: Variant;
-};
+} & Pick<TextInputProps, 'onChangeText'>;
 
 type LabelFontSize = {
     [key in FontSizes]: {
@@ -51,8 +51,9 @@ const LABEL_FONT_SIZE: LabelFontSize = {
 };
 
 const TextField = ({
-    onChange,
+    onChangeText,
     label,
+    value,
     width = '100%',
     size = 'normal',
     variant = 'standard',
@@ -112,7 +113,6 @@ const TextField = ({
     };
 
     const handleTextInputBlur = () => {
-        console.log(isExistsText.current);
         if (isExistsText.current) {
             return;
         }
@@ -125,7 +125,7 @@ const TextField = ({
 
     const handleChangeText = (text: string) => {
         isExistsText.current = text.length !== 0;
-        onChange?.();
+        onChangeText?.(text);
     };
 
     return (
@@ -135,15 +135,18 @@ const TextField = ({
                     <TextInput
                         ref={textRef}
                         style={styles.textInput}
+                        value={value}
                         onFocus={handleTextInputFocus}
                         onBlur={handleTextInputBlur}
                         onChangeText={handleChangeText}
                     />
-                    <Animated.View style={[styles.textInputContainer, labelViewAnimated]}>
-                        <Animated.Text style={labelTextAnimated}>{label}</Animated.Text>
-                    </Animated.View>
                 </Animated.View>
             </TouchableWithoutFeedback>
+            <Animated.View style={[styles.textInputContainer, labelViewAnimated]}>
+                <TouchableWithoutFeedback onPress={handleContainerClick}>
+                    <Animated.Text style={labelTextAnimated}>{label}</Animated.Text>
+                </TouchableWithoutFeedback>
+            </Animated.View>
         </View>
     );
 };
