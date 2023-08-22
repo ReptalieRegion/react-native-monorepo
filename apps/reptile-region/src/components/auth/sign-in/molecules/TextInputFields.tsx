@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { z } from 'zod';
@@ -36,13 +36,22 @@ const signInSchema = z.object({
 });
 
 const TextInputFields = () => {
-    const { control, handleSubmit } = useForm<UseFormDefaultValues<InputKey>>({
+    const {
+        control,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<UseFormDefaultValues<InputKey>>({
         defaultValues: {
             ID: '',
             PASSWORD: '',
         },
         resolver: zodResolver(signInSchema),
     });
+    const [focus, setFocus] = useState<InputKey>();
+
+    useEffect(() => {
+        setFocus('ID');
+    }, []);
 
     const handleSignInSubmit = (data: UseFormDefaultValues<InputKey>) => {
         console.log(data.ID, data.PASSWORD);
@@ -57,6 +66,8 @@ const TextInputFields = () => {
                     control={control}
                     render={({ field: { value, onChange } }) => (
                         <TextField
+                            errorMessage={errors[name]?.message}
+                            autoFocus={focus === name}
                             variant="standard"
                             size="small"
                             width="80%"
@@ -82,7 +93,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 15,
+        gap: 12,
     },
     textView: {
         width: width * 0.8,

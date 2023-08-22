@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { ColorValue, DimensionValue, StyleSheet, TextInputProps, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { ColorValue, DimensionValue, StyleSheet, Text, TextInputProps, View } from 'react-native';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { Easing, WithTimingConfig, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
@@ -12,6 +12,9 @@ type Variant = 'outlined' | 'standard';
 export type TextFieldProps = {
     label: string;
     value?: string;
+    errorMessage?: string;
+    autoFocus?: boolean;
+    errorMessColor?: ColorValue;
     labelColor?: ColorValue;
     focusColor?: ColorValue;
     size?: FontSizes;
@@ -54,12 +57,15 @@ const TextField = ({
     onChangeText,
     label,
     value,
+    errorMessage,
+    autoFocus = false,
     width = '100%',
     size = 'normal',
     variant = 'standard',
     paddingVertical = 10,
     paddingHorizontal = 0,
     borderWidth = 1,
+    errorMessColor = color.Red[500].toString(),
     labelColor = color.Gray[400].toString(),
     focusColor = color.Teal[150].toString(),
 }: TextFieldProps) => {
@@ -68,7 +74,6 @@ const TextField = ({
     const fieldColor = useSharedValue<ColorValue | undefined>(labelColor);
     const labelFontSize = useSharedValue<number>(LABEL_FONT_SIZE[size].blur);
     const top = useSharedValue<number>(paddingVertical);
-    const left = useSharedValue<number>(paddingHorizontal);
 
     const borderAnimated = useAnimatedStyle(() => {
         if (variant === 'standard') {
@@ -93,7 +98,6 @@ const TextField = ({
 
     const labelViewAnimated = useAnimatedStyle(() => ({
         top: top.value,
-        left: left.value,
     }));
 
     const labelTextAnimated = useAnimatedStyle(() => ({
@@ -101,7 +105,20 @@ const TextField = ({
         fontSize: labelFontSize.value,
     }));
 
-    const handleContainerClick = () => {
+    useEffect(() => {
+        if (autoFocus) {
+            textRef.current?.focus();
+        }
+    }, [autoFocus]);
+
+    useEffect(() => {
+        console.log(errorMessage?.length);
+        if (errorMessage) {
+            fieldColor.value = errorMessColor;
+        }
+    }, [errorMessColor, errorMessage, fieldColor]);
+
+    const handleFocus = () => {
         textRef.current?.focus();
     };
 
@@ -109,7 +126,6 @@ const TextField = ({
         fieldColor.value = focusColor;
         labelFontSize.value = withTiming(LABEL_FONT_SIZE[size].focus, userConfig);
         top.value = withTiming(-(LABEL_FONT_SIZE[size].focus / 2), userConfig);
-        left.value = withTiming(variant === 'outlined' ? 5 : 0, userConfig);
     };
 
     const handleTextInputBlur = () => {
@@ -120,7 +136,6 @@ const TextField = ({
         fieldColor.value = labelColor;
         labelFontSize.value = withTiming(LABEL_FONT_SIZE[size].blur, userConfig);
         top.value = withTiming(paddingVertical, userConfig);
-        left.value = withTiming(paddingHorizontal, userConfig);
     };
 
     const handleChangeText = (text: string) => {
@@ -130,7 +145,7 @@ const TextField = ({
 
     return (
         <View style={{ width }}>
-            <TouchableWithoutFeedback onPress={handleContainerClick}>
+            <TouchableWithoutFeedback onPress={handleFocus}>
                 <Animated.View style={[styles.container, borderAnimated, { paddingVertical, paddingHorizontal }]}>
                     <TextInput
                         ref={textRef}
@@ -143,10 +158,11 @@ const TextField = ({
                 </Animated.View>
             </TouchableWithoutFeedback>
             <Animated.View style={[styles.textInputContainer, labelViewAnimated]}>
-                <TouchableWithoutFeedback onPress={handleContainerClick}>
-                    <Animated.Text style={labelTextAnimated}>{label}</Animated.Text>
+                <TouchableWithoutFeedback onPress={handleFocus}>
+                    <Animated.Text style={[labelTextAnimated, { paddingHorizontal }]}>{label}</Animated.Text>
                 </TouchableWithoutFeedback>
             </Animated.View>
+            <Text style={[styles.errorMessage, { paddingHorizontal, color: errorMessColor }]}>{errorMessage}</Text>
         </View>
     );
 };
@@ -161,6 +177,10 @@ const styles = StyleSheet.create({
     },
     textInput: {
         padding: 0,
+    },
+    errorMessage: {
+        marginTop: 5,
+        fontSize: 12,
     },
 });
 
