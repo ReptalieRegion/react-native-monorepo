@@ -26,10 +26,10 @@ const CommentBaseRenderItem = ({ FootChildren, showAnimated, data: { writer, tag
     const navigation = useNavigation<BottomTabStackNavigationProp>();
     const onPressTag: TagPressHandler = (_, content, tagId) => {
         navigation.navigate('bottom-tab-less', {
-            screen: 'bottom-tab-less/share-post/routes',
+            screen: 'share-post/detail',
             params: {
-                screen: 'share-post/detail',
-                params: { nickname: content.replace('@', ''), userId: tagId },
+                nickname: content.replace('@', ''),
+                userId: tagId,
             },
         });
     };

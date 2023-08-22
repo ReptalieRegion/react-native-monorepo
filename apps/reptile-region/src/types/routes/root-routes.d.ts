@@ -3,6 +3,7 @@ declare module '<RootRoutes>' {
     import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
     import type { BottomTabLessParamList } from '<BottomTabLessNavigationList>';
+    import type { BottomTabLessSlideFromBottomParamList } from '<BottomTabLessSlidFromBottomNavigationList>';
     import type { BottomTabParamList } from '<BottomTabNavigationList>';
 
     type BottomTabStackNavigationProp = NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>;
@@ -14,6 +15,7 @@ declare module '<RootRoutes>' {
     type RootStackParamList = {
         'bottom-tab': NavigatorScreenParams<BottomTabParamList>;
         'bottom-tab-less': NavigatorScreenParams<BottomTabLessParamList>;
+        'bottom-tab-less-slide-from-bottom': NavigatorScreenParams<BottomTabLessSlideFromBottomParamList>;
         'webview-example': undefined;
     };
 }

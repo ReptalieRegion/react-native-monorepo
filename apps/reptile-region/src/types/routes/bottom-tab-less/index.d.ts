@@ -1,11 +1,20 @@
 declare module '<BottomTabLessNavigationList>' {
-    import type { NavigatorScreenParams } from '@react-navigation/native';
+    import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-    import type { BottomTabLessAuthParamList } from '<BottomTabLessAuthRoutes>';
-    import type { BottomTabLessSharePostParamList } from '<BottomTabLessSharePostRoutes>';
+    // SharePost
+    type BottomTabLessSharePostDetailNavigationProp = NativeStackNavigationProp<BottomTabLessParamList, 'share-post/detail'>;
+    type BottomTabLessSharePostDetailProps = { userId: string; nickname: string };
+    type BottomTabLessSharePostRouteProp = RouteProp<BottomTabLessParamList, 'share-post/detail'>;
+    type BottomTabLessSharePostWriteNavigationProp = NativeStackNavigationProp<BottomTabLessParamList, 'share-post/write'>;
+    type BottomTabLessSharePostImageCropNavigationProp = NativeStackNavigationProp<
+        BottomTabLessParamList,
+        'share-post/image-crop'
+    >;
 
+    // ParamList
     type BottomTabLessParamList = {
-        'bottom-tab-less/share-post/routes': NavigatorScreenParams<BottomTabLessSharePostParamList>;
-        'bottom-tab-less/auth/routes': NavigatorScreenParams<BottomTabLessAuthParamList>;
+        'share-post/detail': BottomTabLessSharePostDetailProps;
+        'share-post/write': undefined;
+        'share-post/image-crop': undefined;
     };
 }

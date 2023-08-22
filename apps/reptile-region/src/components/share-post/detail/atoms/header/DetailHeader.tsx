@@ -1,6 +1,6 @@
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 
-import { BottomTabLessSharePostDetailProps } from '<BottomTabLessSharePostRoutes>';
+import { BottomTabLessSharePostDetailProps } from '<BottomTabLessNavigationList>';
 import { BottomTabSharePostDetailProps } from '<BottomTabSharePostRoutes>';
 import { createNativeStackHeader } from '@/components/common/layouts/header/utils/create-header';
 
