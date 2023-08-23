@@ -4,12 +4,14 @@ import { Controller, useForm } from 'react-hook-form';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { z } from 'zod';
 
+import { RequestSignIn } from '<AuthRequest>';
 import { UseFormDefaultValues } from '<HookForm>';
+import { useSignIn } from '@/apis/auth/hooks';
 import TextField, { TextFieldProps } from '@/components/common/element/text-input/TextField';
 import TextButton from '@/components/common/layouts/button/TextButton';
 import { color } from '@/components/common/tokens/colors';
 
-type InputKey = 'ID' | 'PASSWORD';
+type InputKey = 'EMAIL' | 'PASSWORD';
 
 type InputInfoArray = Array<{ name: InputKey; textFieldProps: TextFieldProps }>;
 
@@ -17,7 +19,7 @@ const width = Dimensions.get('screen').width;
 
 const INPUT_INFO: InputInfoArray = [
     {
-        name: 'ID',
+        name: 'EMAIL',
         textFieldProps: {
             label: '아이디',
         },
@@ -26,12 +28,13 @@ const INPUT_INFO: InputInfoArray = [
         name: 'PASSWORD',
         textFieldProps: {
             label: '비밀번호',
+            secureTextEntry: true,
         },
     },
 ];
 
 const signInSchema = z.object({
-    ID: z.string().min(1, { message: '아이디를 입력해주세요.' }),
+    EMAIL: z.string().min(1, { message: '아이디를 입력해주세요.' }),
     PASSWORD: z.string().min(1, { message: '비밀번호를 입력해주세요.' }),
 });
 
@@ -42,19 +45,25 @@ const TextInputFields = () => {
         formState: { errors },
     } = useForm<UseFormDefaultValues<InputKey>>({
         defaultValues: {
-            ID: '',
+            EMAIL: '',
             PASSWORD: '',
         },
         resolver: zodResolver(signInSchema),
     });
+    const { mutate } = useSignIn();
     const [focus, setFocus] = useState<InputKey>();
 
     useEffect(() => {
-        setFocus('ID');
+        setFocus('EMAIL');
     }, []);
 
     const handleSignInSubmit = (data: UseFormDefaultValues<InputKey>) => {
-        console.log(data.ID, data.PASSWORD);
+        const { EMAIL, PASSWORD } = data;
+        const requestData: RequestSignIn = {
+            email: EMAIL,
+            password: PASSWORD,
+        };
+        mutate(requestData);
     };
 
     return (

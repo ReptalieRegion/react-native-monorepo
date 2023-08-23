@@ -63,7 +63,6 @@ const CommentFlashList = ({ postId }: { postId: string }) => {
                 data={data?.pages.flatMap((page) => page.items)}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 renderItem={renderItem}
-                onScroll={(e) => console.log(e.nativeEvent.contentOffset.y)}
                 scrollEventThrottle={16}
                 keyExtractor={keyExtractor}
                 onEndReached={onEndReached}

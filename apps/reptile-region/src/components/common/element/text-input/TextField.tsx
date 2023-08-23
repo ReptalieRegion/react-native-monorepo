@@ -14,6 +14,7 @@ export type TextFieldProps = {
     value?: string;
     errorMessage?: string;
     autoFocus?: boolean;
+    secureTextEntry?: boolean;
     errorMessColor?: ColorValue;
     labelColor?: ColorValue;
     focusColor?: ColorValue;
@@ -58,6 +59,7 @@ const TextField = ({
     label,
     value,
     errorMessage,
+    secureTextEntry = false,
     autoFocus = false,
     width = '100%',
     size = 'normal',
@@ -112,7 +114,6 @@ const TextField = ({
     }, [autoFocus]);
 
     useEffect(() => {
-        console.log(errorMessage?.length);
         if (errorMessage) {
             fieldColor.value = errorMessColor;
         }
@@ -151,6 +152,7 @@ const TextField = ({
                         ref={textRef}
                         style={styles.textInput}
                         value={value}
+                        secureTextEntry={secureTextEntry}
                         onFocus={handleTextInputFocus}
                         onBlur={handleTextInputBlur}
                         onChangeText={handleChangeText}

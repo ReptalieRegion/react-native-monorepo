@@ -1,4 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import ENV from '../env';
+
+import { AUTH_KEYS } from '@/env/constants';
 
 type TMethod = 'GET' | 'POST' | 'DELETE' | 'PUT';
 
@@ -17,8 +21,10 @@ const clientFetch = async (input: RequestInfo, init?: IRequestInit): Promise<Res
     delete init?.ignorePrefix;
     const newMethod = init?.method ?? 'GET';
     const newBody = init?.body ? JSON.stringify(init.body) : undefined;
-    const newHeaders = { ...DEFAULT_HEADER, ...init?.headers };
-    const newCredentials = init?.credentials ? init.credentials : 'include';
+    const authCookies = await AsyncStorage.multiGet(AUTH_KEYS);
+    const authCookiesMap = authCookies ? Object.fromEntries(authCookies) : {};
+    const newHeaders = Object.assign({}, DEFAULT_HEADER, init?.headers, authCookiesMap);
+    const newCredentials = init?.credentials ?? 'include';
     const newInit: RequestInit = {
         ...init,
         headers: newHeaders,
