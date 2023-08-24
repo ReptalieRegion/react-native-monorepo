@@ -10,7 +10,7 @@ const backgroundColor = ENV.isProd
     : ENV.isDev
     ? 'red'
     : ENV.isLocal
-    ? color.Green[500].toString()
+    ? color.White.toString()
     : color.Black.toString();
 
 const MainStatusBar = () => {

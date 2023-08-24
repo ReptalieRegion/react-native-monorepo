@@ -1,10 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
+import Animated, {
+    WithTimingConfig,
+    useAnimatedStyle,
+    useSharedValue,
+    withSequence,
+    withTiming,
+} from 'react-native-reanimated';
 
 import { IconProps } from '<Icon>';
 import { color } from '@/components/common/tokens/colors';
+
+const userConfig: WithTimingConfig = {
+    duration: 200,
+};
 
 const BottomTabBarButton = ({
     isFocused,
@@ -25,13 +35,13 @@ const BottomTabBarButton = ({
     }));
 
     const handlePressInIcon = () => {
-        scaleX.value = withTiming(0.9, { duration: 200 });
-        scaleY.value = withTiming(0.9, { duration: 200 });
+        scaleX.value = withTiming(0.9, userConfig);
+        scaleY.value = withTiming(0.9, userConfig);
     };
 
     const handlePressOutIcon = () => {
-        scaleX.value = withSequence(withTiming(1.25, { duration: 200 }), withTiming(1.0, { duration: 200 }));
-        scaleY.value = withSequence(withTiming(1.15, { duration: 200 }), withTiming(1.0, { duration: 200 }));
+        scaleX.value = withSequence(withTiming(1.25, userConfig), withTiming(1.0, userConfig));
+        scaleY.value = withSequence(withTiming(1.15, userConfig), withTiming(1.0, userConfig));
     };
 
     return (
@@ -62,10 +72,12 @@ const styles = StyleSheet.create({
         width: '20%',
     },
     touchContainer: {
-        paddingTop: 20,
-        paddingBottom: 10,
+        width: '100%',
     },
     icon: {
+        width: '100%',
+        paddingTop: 20,
+        paddingBottom: 10,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

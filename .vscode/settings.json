@@ -12,5 +12,6 @@
     "material-icon-theme.folders.associations": {
         "dockers": "Docker",
         "stores": "Global"
-    }
+    },
+    "cSpell.words": ["tanstack"]
 }

@@ -1,4 +1,5 @@
-import { rest } from 'msw';
+import { fakerKO } from '@faker-js/faker';
+import { compose, rest } from 'msw';
 
 import ENV from '../env';
 
@@ -19,6 +20,7 @@ const delay = <R>(fn: any, time: number) => {
 
 export const handlers = [
     rest.get(ENV.END_POINT_URI + 'api/share-posts', (req, res, ctx) => {
+        console.log(req.cookies, 'list');
         const posts = createSharePostList(10);
         const data = createInfinityData({ items: posts, searchParams: req.url.searchParams });
         return res(ctx.json(data));
@@ -41,5 +43,37 @@ export const handlers = [
         const replyComments = createSharePostComment(10, 'reply');
         const data = createInfinityData({ items: replyComments, searchParams: req.url.searchParams });
         return res(ctx.json(data));
+    }),
+    rest.post(ENV.END_POINT_URI + 'api/auth/sign-in', async (req, res, ctx) => {
+        const body = await req.json();
+
+        if (body.email === '123') {
+            return res(
+                ctx.status(401),
+                ctx.json({
+                    errorMessage: `User '${body.email}' not found`,
+                }),
+            );
+        }
+
+        const access_token = fakerKO.string.uuid();
+        const refresh_token = fakerKO.string.uuid();
+        const response = compose(
+            ctx.cookie('refresh_token', refresh_token, {
+                httpOnly: true,
+                sameSite: 'strict',
+                expires: new Date('2025'),
+                maxAge: 315360000,
+            }),
+            ctx.cookie('access_token', access_token, {
+                httpOnly: true,
+                sameSite: 'strict',
+                expires: new Date('2025'),
+                maxAge: 315360000,
+            }),
+            ctx.json(''),
+        );
+
+        return res(response);
     }),
 ];

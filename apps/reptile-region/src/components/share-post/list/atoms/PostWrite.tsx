@@ -16,10 +16,7 @@ const PostWrite = ({ buttonSize }: FloatingActionButtonSize) => {
     const { scaleStyle, scaleDown, scaleUp } = useScaleDownAndUp();
 
     const handleRouteImageCrop = () => {
-        navigation.navigate('bottom-tab-less', {
-            screen: 'bottom-tab-less/share-post/routes',
-            params: { screen: 'share-post/image-crop' },
-        });
+        navigation.navigate('bottom-tab-less', { screen: 'share-post/image-crop' });
     };
 
     return (

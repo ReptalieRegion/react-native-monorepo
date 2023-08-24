@@ -3,7 +3,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { BottomTabLessSharePostImageCropNavigationProp } from '<BottomTabLessSharePostRoutes>';
+import { BottomTabLessSharePostImageCropNavigationProp } from '<BottomTabLessNavigationList>';
 
 const ImageCropRightHeader = () => {
     const navigate = useNavigation<BottomTabLessSharePostImageCropNavigationProp>();
