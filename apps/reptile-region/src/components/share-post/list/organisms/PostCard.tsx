@@ -9,7 +9,6 @@ import PostImageCarousel from '../molecules/PostImageCarousel';
 import { SharePostListData } from '<SharePostListAPI>';
 
 const PostCard = ({ post, user }: SharePostListData) => {
-    console.log('render');
     const { id: postId, images, isLike, commentCount, contents, likeCount } = post;
     const { id: userId, isFollow, nickname, profile } = user;
 

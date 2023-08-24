@@ -1,7 +1,7 @@
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import React, { useCallback, useRef } from 'react';
-import { Dimensions, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
+import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { FlatList } from 'react-native-gesture-handler';
 
 import { ShareImageType } from '<SharePostImage>';
 import { SharePostListData } from '<SharePostListAPI>';
@@ -12,6 +12,7 @@ type ImagesContentProps = {
 };
 
 const { width } = Dimensions.get('screen');
+const IMAGE_WIDTH = width - 40;
 
 const ImageContent = ({ post }: ImagesContentProps) => {
     const { id: postId, images } = post;
@@ -36,7 +37,7 @@ const ImageContent = ({ post }: ImagesContentProps) => {
     );
 
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-        const newIndex = Math.round(event.nativeEvent.contentOffset.x / (width - 40));
+        const newIndex = Math.round(event.nativeEvent.contentOffset.x / IMAGE_WIDTH);
         if (prevIndex.current !== newIndex) {
             prevIndex.current = newIndex;
             setCurrentImageIndex(postId, newIndex);
@@ -45,7 +46,7 @@ const ImageContent = ({ post }: ImagesContentProps) => {
 
     return (
         <View style={styles.container}>
-            <FlatList
+            <FlashList
                 data={images}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
@@ -56,8 +57,7 @@ const ImageContent = ({ post }: ImagesContentProps) => {
                 overScrollMode="never"
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
-                initialNumToRender={2}
-                maxToRenderPerBatch={2}
+                estimatedItemSize={IMAGE_WIDTH}
             />
         </View>
     );
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     image: {
         minHeight: 250,
-        width: width - 40,
+        width: IMAGE_WIDTH,
     },
 });
 
