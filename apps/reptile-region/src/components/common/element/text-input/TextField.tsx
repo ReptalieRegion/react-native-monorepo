@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ColorValue, DimensionValue, StyleSheet, Text, TextInputProps, View } from 'react-native';
+import { ColorValue, DimensionValue, Platform, StyleSheet, Text, TextInputProps, View } from 'react-native';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { Easing, WithTimingConfig, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
@@ -21,6 +21,7 @@ export type TextFieldProps = {
     size?: FontSizes;
     width?: DimensionValue;
     borderWidth?: number;
+    borderRadius?: number;
     paddingVertical?: number;
     paddingHorizontal?: number;
     animationDuration?: number;
@@ -67,6 +68,7 @@ const TextField = ({
     paddingVertical = 10,
     paddingHorizontal = 0,
     borderWidth = 1,
+    borderRadius,
     errorMessColor = color.Red[500].toString(),
     labelColor = color.Gray[400].toString(),
     focusColor = color.Teal[150].toString(),
@@ -82,6 +84,7 @@ const TextField = ({
             return {
                 borderColor: fieldColor.value,
                 borderBottomWidth: borderWidth,
+                borderRadius,
             };
         }
 
@@ -89,12 +92,14 @@ const TextField = ({
             return {
                 borderColor: fieldColor.value,
                 borderWidth,
+                borderRadius,
             };
         }
 
         return {
             borderColor: fieldColor.value,
             borderWidth,
+            borderRadius,
         };
     });
 
@@ -126,7 +131,8 @@ const TextField = ({
     const handleTextInputFocus = () => {
         fieldColor.value = focusColor;
         labelFontSize.value = withTiming(LABEL_FONT_SIZE[size].focus, userConfig);
-        top.value = withTiming(-(LABEL_FONT_SIZE[size].focus / 2), userConfig);
+        const newTop = Platform.OS === 'android' ? -(LABEL_FONT_SIZE[size].blur / 2) : -(LABEL_FONT_SIZE[size].focus / 2);
+        top.value = withTiming(newTop, userConfig);
     };
 
     const handleTextInputBlur = () => {
@@ -159,9 +165,9 @@ const TextField = ({
                     />
                 </Animated.View>
             </TouchableWithoutFeedback>
-            <Animated.View style={[styles.textInputContainer, labelViewAnimated]}>
+            <Animated.View style={[styles.textInputContainer, labelViewAnimated, { marginHorizontal: paddingHorizontal }]}>
                 <TouchableWithoutFeedback onPress={handleFocus}>
-                    <Animated.Text style={[labelTextAnimated, { paddingHorizontal }]}>{label}</Animated.Text>
+                    <Animated.Text style={[labelTextAnimated]}>{label}</Animated.Text>
                 </TouchableWithoutFeedback>
             </Animated.View>
             <Text style={[styles.errorMessage, { paddingHorizontal, color: errorMessColor }]}>{errorMessage}</Text>

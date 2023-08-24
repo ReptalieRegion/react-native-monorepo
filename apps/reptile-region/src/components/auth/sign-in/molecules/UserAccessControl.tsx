@@ -1,10 +1,12 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import { BottomTabLessAuthSignInNavigationProp } from '<BottomTabLessSlidFromBottomNavigationList>';
 import TextButton from '@/components/common/layouts/button/TextButton';
-import { color } from '@/components/common/tokens/colors';
 
 const UserAccessControl = () => {
+    const navigation = useNavigation<BottomTabLessAuthSignInNavigationProp>();
     const handleFindId = () => {
         return;
     };
@@ -14,14 +16,15 @@ const UserAccessControl = () => {
     };
 
     const handleSignUp = () => {
+        navigation.push('auth/sign-up');
         return;
     };
 
     return (
         <View style={styles.textButtons}>
-            <TextButton text="아이디 찾기" textStyle={styles.textButtonsText} onPress={handleFindId} />
-            <TextButton text="비밀번호 찾기" textStyle={styles.textButtonsText} onPress={handleFindPassword} />
-            <TextButton text="회원가입" textStyle={styles.textButtonsText} onPress={handleSignUp} />
+            <TextButton text="아이디 찾기" textStyle={styles.text} onPress={handleFindId} />
+            <TextButton text="비밀번호 찾기" textStyle={styles.text} onPress={handleFindPassword} />
+            <TextButton text="회원가입" textStyle={styles.text} onPress={handleSignUp} />
         </View>
     );
 };
@@ -29,12 +32,10 @@ const UserAccessControl = () => {
 const styles = StyleSheet.create({
     textButtons: {
         flexDirection: 'row',
-        gap: 10,
     },
-    textButtonsText: {
-        fontSize: 12,
+    text: {
+        fontSize: 14,
         lineHeight: 20,
-        color: color.Gray[600].toString(),
     },
 });
 
