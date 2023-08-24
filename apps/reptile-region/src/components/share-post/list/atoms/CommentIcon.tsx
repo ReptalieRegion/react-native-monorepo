@@ -8,16 +8,18 @@ import { SharePostListData } from '<SharePostListAPI>';
 import { Comment } from '@/assets/icons';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
-type CommentIconType = Pick<SharePostListData, 'postId'>;
+type CommentIconType = {
+    post: Pick<SharePostListData['post'], 'id'>;
+};
 
-const CommentIcon = ({ postId }: CommentIconType) => {
+const CommentIcon = ({ post }: CommentIconType) => {
     const { setUIPrompts } = useContext(UIPromptsContext);
 
     const handleClickComment = () => {
         const { uiPromptsOpen } = setUIPrompts({
             Component: CommentBottomSheet,
             openType: 'bottomSheet',
-            props: { postId },
+            props: { post },
         });
         uiPromptsOpen();
     };

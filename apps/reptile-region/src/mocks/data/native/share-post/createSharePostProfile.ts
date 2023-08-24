@@ -20,7 +20,6 @@ const createSharePostProfile = (length: number): SharePostDetailPostsData => {
         isFollow: Math.random() >= 0.5,
         profile: {
             src: fakerKO.image.url(),
-            alt: '프로필 사진',
         },
         posts,
     };

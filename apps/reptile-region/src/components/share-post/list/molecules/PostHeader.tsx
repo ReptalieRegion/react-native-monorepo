@@ -7,15 +7,21 @@ import Profile from '../atoms/Profile';
 
 import { SharePostListData } from '<SharePostListAPI>';
 
-type PostHeaderProps = Pick<SharePostListData, 'nickname' | 'profile' | 'isFollow' | 'userId' | 'postId'>;
+type PostHeaderProps = {
+    user: Pick<SharePostListData['user'], 'nickname' | 'profile' | 'isFollow' | 'id'>;
+    post: Pick<SharePostListData['post'], 'id'>;
+};
 
-const PostHeader = ({ nickname, profile, isFollow, userId, postId }: PostHeaderProps) => {
+const PostHeader = ({ user, post }: PostHeaderProps) => {
+    const { id: userId, isFollow, nickname, profile } = user;
+    const { id: postId } = post;
+
     return (
         <View style={styles.container}>
-            <Profile userId={userId} nickname={nickname} profile={profile} />
+            <Profile user={{ id: userId, nickname, profile }} />
             <View style={styles.rightContent}>
-                <Follow isFollow={isFollow} />
-                <PostKebabMenu postId={postId} userId={userId} />
+                <Follow user={{ id: userId, isFollow }} post={{ id: postId }} />
+                <PostKebabMenu user={{ id: user.id }} post={{ id: post.id }} />
             </View>
         </View>
     );

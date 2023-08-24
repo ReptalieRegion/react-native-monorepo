@@ -6,32 +6,37 @@ import { DotIndicator } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 import useSharePostListStore from '@/stores/share-post/list';
 
-type ImagesIndicators = Pick<SharePostListData, 'images' | 'postId'>;
+type ImagesIndicatorsProps = {
+    post: Pick<SharePostListData['post'], 'images' | 'id'>;
+};
 
-const currentImage = {
+const CURRENT_IMAGE = {
     color: color.Teal[150].toString(),
     scale: 1,
 };
 
-const otherImage = {
+const OTHER_IMAGE = {
     color: color.Gray[500].toString(),
     scale: 0.9,
 };
 
 const makeIndicatorsStyles = (isCurrent: boolean) => {
-    return isCurrent ? currentImage : otherImage;
+    return isCurrent ? CURRENT_IMAGE : OTHER_IMAGE;
 };
 
-const ImagesIndicators = ({ images, postId }: ImagesIndicators) => {
-    const imageIndex = useSharePostListStore((state) => state.postsOfInfo[postId]?.currentImageIndex);
+const ImagesIndicators = ({ post }: ImagesIndicatorsProps) => {
+    const { id: postId, images } = post;
+
+    const imageIndex = useSharePostListStore((state) => state.postsOfInfo[postId]?.currentImageIndex ?? 0);
 
     return (
         <View style={styles.container}>
             {images.map((_, index) => {
-                const styles = makeIndicatorsStyles(index === imageIndex);
+                const indicatorsStyle = makeIndicatorsStyles(index === imageIndex);
+
                 return (
-                    <View key={index} style={{ transform: [{ scale: styles.scale }] }}>
-                        <DotIndicator fill={styles.color} />
+                    <View key={index} style={{ transform: [{ scale: indicatorsStyle.scale }] }}>
+                        <DotIndicator fill={indicatorsStyle.color} />
                     </View>
                 );
             })}

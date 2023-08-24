@@ -3,6 +3,7 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import { color } from '@/components/common/tokens/colors';
+import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const { width } = Dimensions.get('screen');
 const SKELETON_ITEM_COLOR = color.Gray[200].toString();
@@ -10,7 +11,7 @@ const SKELETON_ITEM_COLOR = color.Gray[200].toString();
 const SharePostListSkeleton = () => {
     return (
         <View style={styles.container}>
-            {Array(4)
+            {createEmptyArray(4)
                 .fill('')
                 .map((_, index) => (
                     <SkeletonPlaceholder key={index} direction="right">

@@ -7,9 +7,13 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { BottomTabSharePostListNavigationProp } from '<BottomTabSharePostRoutes>';
 import { SharePostListData } from '<SharePostListAPI>';
 
-type ProfileProps = Pick<SharePostListData, 'profile' | 'nickname' | 'userId'>;
+type ProfileProps = {
+    user: Pick<SharePostListData['user'], 'profile' | 'nickname' | 'id'>;
+};
 
-const Profile = ({ nickname, profile, userId }: ProfileProps) => {
+const Profile = ({ user }: ProfileProps) => {
+    const { id: userId, nickname, profile } = user;
+
     const navigation = useNavigation<BottomTabSharePostListNavigationProp>();
 
     const gotoDetailPage = () => {
@@ -28,7 +32,7 @@ const Profile = ({ nickname, profile, userId }: ProfileProps) => {
                     }}
                     resizeMode={FastImage.resizeMode.cover}
                 />
-                <Text>{nickname}</Text>
+                <Text>{user.nickname}</Text>
             </View>
         </TouchableWithoutFeedback>
     );

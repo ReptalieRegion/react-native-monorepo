@@ -9,16 +9,23 @@ import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import { color } from '@/components/common/tokens/colors';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
-type PostContentProps = Pick<SharePostListData, 'likeCount' | 'commentCount' | 'content' | 'postId'>;
+type PostContentProps = {
+    post: Pick<SharePostListData['post'], 'likeCount' | 'commentCount' | 'contents' | 'id'>;
+};
 
-const PostContent = ({ likeCount, commentCount, content, postId }: PostContentProps) => {
+const PostContent = ({ post }: PostContentProps) => {
+    const { id: postId, commentCount, contents, likeCount } = post;
     const { setUIPrompts } = useContext(UIPromptsContext);
 
     const handleClickComment = () => {
         const { uiPromptsOpen } = setUIPrompts({
             Component: CommentBottomSheet,
             openType: 'bottomSheet',
-            props: { postId },
+            props: {
+                post: {
+                    id: postId,
+                },
+            },
         });
         uiPromptsOpen();
     };
@@ -28,13 +35,13 @@ const PostContent = ({ likeCount, commentCount, content, postId }: PostContentPr
             {likeCount !== 0 && <Text style={[styles.fontBold]}>{likeCount}명이 좋아합니다.</Text>}
             <AccordionMenu numberOfLines={2}>
                 <Text key={postId} style={styles.content}>
-                    {content}
+                    {contents}
                 </Text>
             </AccordionMenu>
             {commentCount !== 0 && (
                 <View style={styles.textTouchArea}>
                     <TouchableWithoutFeedback onPress={handleClickComment}>
-                        <Text style={styles.grayFont}>댓글 {commentCount}개 모두 보기</Text>
+                        <Text style={styles.grayFont}>댓글 {post.commentCount}개 모두 보기</Text>
                     </TouchableWithoutFeedback>
                 </View>
             )}

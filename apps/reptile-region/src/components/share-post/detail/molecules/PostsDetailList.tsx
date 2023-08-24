@@ -20,7 +20,7 @@ const SharePostsDetailList = ({ posts }: SharePostsDetailListProps) => {
         <FlatList
             contentContainerStyle={[styles.contentContainer, { paddingBottom }]}
             data={posts}
-            keyExtractor={(item, index) => item.thumbnail.alt + index}
+            keyExtractor={(item, index) => item.thumbnail.src + index}
             numColumns={NUM_COLUMNS}
             initialNumToRender={10}
             maxToRenderPerBatch={10}

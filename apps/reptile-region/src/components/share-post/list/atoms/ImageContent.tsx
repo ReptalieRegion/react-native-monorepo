@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
+import React, { useCallback, useRef } from 'react';
+import { Dimensions, ListRenderItemInfo, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -7,30 +7,33 @@ import { ShareImageType } from '<SharePostImage>';
 import { SharePostListData } from '<SharePostListAPI>';
 import useSharePostListStore from '@/stores/share-post/list';
 
-type ImagesContentProps = Pick<SharePostListData, 'images' | 'postId'>;
+type ImagesContentProps = {
+    post: Pick<SharePostListData['post'], 'images' | 'id'>;
+};
 
 const { width } = Dimensions.get('screen');
 
-const RenderItem = ({ src }: ShareImageType) => {
-    return (
-        <FastImage
-            source={{
-                uri: src,
-                priority: FastImage.priority.high,
-                cache: FastImage.cacheControl.web,
-            }}
-            style={[styles.image]}
-            resizeMode={FastImage.resizeMode.cover}
-        />
-    );
-};
+const ImageContent = ({ post }: ImagesContentProps) => {
+    const { id: postId, images } = post;
 
-const ImageContent = ({ images, postId }: ImagesContentProps) => {
     const prevIndex = useRef(0);
     const setCurrentImageIndex = useSharePostListStore((state) => state.setCurrentImageIndex);
-    useEffect(() => {
-        setCurrentImageIndex(postId, 0);
-    }, [postId, setCurrentImageIndex]);
+
+    const keyExtractor = useCallback((item: ShareImageType, index: number) => item.src + index.toString(), []);
+    const renderItem = useCallback(
+        ({ item }: ListRenderItemInfo<ShareImageType>) => (
+            <FastImage
+                source={{
+                    uri: item.src,
+                    priority: FastImage.priority.high,
+                    cache: FastImage.cacheControl.web,
+                }}
+                style={[styles.image]}
+                resizeMode={FastImage.resizeMode.cover}
+            />
+        ),
+        [],
+    );
 
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         const newIndex = Math.round(event.nativeEvent.contentOffset.x / (width - 40));
@@ -44,8 +47,8 @@ const ImageContent = ({ images, postId }: ImagesContentProps) => {
         <View style={styles.container}>
             <FlatList
                 data={images}
-                keyExtractor={(item, index) => item.src + index.toString()}
-                renderItem={(info) => <RenderItem {...info.item} />}
+                keyExtractor={keyExtractor}
+                renderItem={renderItem}
                 horizontal
                 pinchGestureEnabled
                 pagingEnabled

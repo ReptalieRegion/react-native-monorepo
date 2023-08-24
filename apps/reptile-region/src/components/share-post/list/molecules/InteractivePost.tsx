@@ -7,16 +7,20 @@ import Like from '../atoms/Like';
 
 import { SharePostListData } from '<SharePostListAPI>';
 
-type InteractivePostProps = Pick<SharePostListData, 'isLike' | 'postId' | 'images'>;
+type InteractivePostProps = {
+    post: Pick<SharePostListData['post'], 'id' | 'isLike' | 'images'>;
+};
 
-const InteractivePost = ({ postId, isLike, images }: InteractivePostProps) => {
+const InteractivePost = ({ post }: InteractivePostProps) => {
+    const { id: postId, images, isLike } = post;
+
     return (
         <View style={[styles.container, styles.flexRow]}>
             <View style={[styles.flexRow, styles.likeCommentContent]}>
-                <Like postId={postId} isLike={isLike} />
-                <CommentIcon postId={postId} />
+                <Like post={{ id: postId, isLike }} />
+                <CommentIcon post={{ id: postId }} />
             </View>
-            <ImagesIndicators images={images} postId={postId} />
+            <ImagesIndicators post={{ id: postId, images }} />
             <View style={styles.empty} />
         </View>
     );

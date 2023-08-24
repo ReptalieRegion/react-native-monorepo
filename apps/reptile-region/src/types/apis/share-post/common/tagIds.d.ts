@@ -1,5 +1,5 @@
-declare module '<SharePostTags>' {
-    type Tags = {
+declare module '<SharePostTagIds>' {
+    type TagIds = {
         [key: string]: {
             id: string;
         };

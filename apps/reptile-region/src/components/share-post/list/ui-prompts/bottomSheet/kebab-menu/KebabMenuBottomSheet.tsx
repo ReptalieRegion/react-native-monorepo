@@ -7,11 +7,10 @@ import { UIPromptsDefaultProps } from '<UIPrompts>';
 import BottomSheetContainer, { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
 import BottomSheetHeader from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetHeader';
 
-type PostInfo = Pick<SharePostListData, 'postId' | 'userId'>;
-
-interface KebabMenuBottomSheetProps {
-    postInfo: PostInfo;
-}
+type KebabMenuBottomSheetProps = {
+    user: Pick<SharePostListData['user'], 'id'>;
+    post: Pick<SharePostListData['post'], 'id'>;
+};
 
 const KebabMenuBottomSheet = ({ uiPromptsClose }: KebabMenuBottomSheetProps & UIPromptsDefaultProps) => {
     return (

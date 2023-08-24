@@ -7,16 +7,19 @@ import { SharePostListData } from '<SharePostListAPI>';
 import { KebabMenu } from '@/assets/icons';
 import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
 
-type PostKebabProps = Pick<SharePostListData, 'postId' | 'userId'>;
+type PostKebabProps = {
+    user: Pick<SharePostListData['user'], 'id'>;
+    post: Pick<SharePostListData['post'], 'id'>;
+};
 
-const PostKebabMenu = (postInfo: PostKebabProps) => {
+const PostKebabMenu = ({ user, post }: PostKebabProps) => {
     const { setUIPrompts } = useContext(UIPromptsContext);
 
     const openBottomSheet = () => {
         const { uiPromptsOpen } = setUIPrompts({
             Component: KebabMenuBottomSheet,
             openType: 'bottomSheet',
-            props: { postInfo },
+            props: { user, post },
         });
         uiPromptsOpen();
     };

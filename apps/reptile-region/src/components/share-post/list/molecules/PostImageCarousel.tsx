@@ -10,19 +10,23 @@ import DoubleTabView from '@/components/common/element/view/DoubleTabView';
 import useSharePostListStore from '@/stores/share-post/list';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
-type ImagesSliderProps = Pick<SharePostListData, 'images' | 'postId'>;
+type ImagesSliderProps = {
+    post: Pick<SharePostListData['post'], 'images' | 'id'>;
+};
 
-const PostImageCarousel = ({ postId, images }: ImagesSliderProps) => {
+const PostImageCarousel = ({ post }: ImagesSliderProps) => {
+    const { id: postId, images } = post;
+
     const { startLikeAnimation, setStartLikeAnimation } = useSharePostListStore(
         (state) => ({
             setStartLikeAnimation: state.setStartLikeAnimation,
-            startLikeAnimation: state.postsOfInfo[postId]?.startLikeAnimation,
+            startLikeAnimation: state.postsOfInfo[post.id]?.startLikeAnimation,
         }),
         shallow,
     );
 
     const handleDoubleTabHeartAnimation = () => {
-        setStartLikeAnimation(postId, true);
+        setStartLikeAnimation(post.id, true);
 
         if (!startLikeAnimation) {
             Haptic.trigger({ type: 'impactLight' });
@@ -31,8 +35,8 @@ const PostImageCarousel = ({ postId, images }: ImagesSliderProps) => {
 
     return (
         <DoubleTabView onDoubleTab={handleDoubleTabHeartAnimation} style={styles.container}>
-            <ImageContent images={images} postId={postId} />
-            {startLikeAnimation && <HeartAnimation postId={postId} />}
+            <ImageContent post={{ id: postId, images }} />
+            {startLikeAnimation && <HeartAnimation post={{ id: postId }} />}
         </DoubleTabView>
     );
 };

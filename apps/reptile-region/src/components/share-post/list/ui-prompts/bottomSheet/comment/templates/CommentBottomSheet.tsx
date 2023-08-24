@@ -9,9 +9,11 @@ import { UIPromptsDefaultProps } from '<UIPrompts>';
 import { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
 import BottomSheet from '@/components/common/ui-prompts/bottom-sheet/molecules/BottomSheet';
 
-export type CommentBottomSheetProps = Pick<SharePostListData, 'postId'>;
+export type CommentBottomSheetProps = {
+    post: Pick<SharePostListData['post'], 'id'>;
+};
 
-const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps & UIPromptsDefaultProps) => {
+const CommentBottomSheet = ({ post, uiPromptsClose }: CommentBottomSheetProps & UIPromptsDefaultProps) => {
     return (
         <BottomSheet
             uiPromptsClose={uiPromptsClose}
@@ -19,7 +21,7 @@ const CommentBottomSheet = ({ postId, uiPromptsClose }: CommentBottomSheetProps 
             gestureProps={{ snapInfo: { startIndex: 0, pointsFromTop: ['60%', '95%'] } }}
             headerProps={{ title: <CommentHeader /> }}
         >
-            <CommentFlashList postId={postId} />
+            <CommentFlashList postId={post.id} />
             <CommentTextInput />
         </BottomSheet>
     );

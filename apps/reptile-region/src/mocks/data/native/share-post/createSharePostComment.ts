@@ -2,7 +2,7 @@ import { fakerKO } from '@faker-js/faker';
 
 import { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentReplyData } from '<SharePostCommentReply>';
-import { Tags } from '<SharePostTags>';
+import { TagIds } from '<SharePostTagIds>';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 type CommentType = 'reply' | 'comment';
@@ -10,7 +10,7 @@ type CommentReturnType<T extends CommentType> = T extends 'comment' ? SharePostC
 
 const createSharePostComment = <T extends CommentType>(length: number, type: T): CommentReturnType<T> => {
     const comments = createEmptyArray(length).map(() => {
-        let tagsMap: Tags = {};
+        let tagsMap: TagIds = {};
         const tagCount = fakerKO.number.int({ min: 0, max: 3 });
         const tags = createEmptyArray(tagCount).map(() => ({
             id: fakerKO.string.uuid(),

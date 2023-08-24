@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import InteractivePost from '../molecules/InteractivePost';
@@ -8,24 +8,17 @@ import PostImageCarousel from '../molecules/PostImageCarousel';
 
 import { SharePostListData } from '<SharePostListAPI>';
 
-const PostCard = ({
-    userId,
-    isFollow,
-    postId,
-    profile,
-    images,
-    nickname,
-    commentCount,
-    likeCount,
-    content,
-    isLike,
-}: SharePostListData) => {
+const PostCard = ({ post, user }: SharePostListData) => {
+    console.log('render');
+    const { id: postId, images, isLike, commentCount, contents, likeCount } = post;
+    const { id: userId, isFollow, nickname, profile } = user;
+
     return (
         <View style={styles.container}>
-            <PostHeader postId={postId} userId={userId} isFollow={isFollow} profile={profile} nickname={nickname} />
-            <PostImageCarousel postId={postId} images={images} />
-            <InteractivePost postId={postId} isLike={isLike} images={images} />
-            <PostContent likeCount={likeCount} commentCount={commentCount} content={content} postId={postId} />
+            <PostHeader post={{ id: postId }} user={{ id: userId, isFollow, nickname, profile }} />
+            <PostImageCarousel post={{ id: postId, images }} />
+            <InteractivePost post={{ id: postId, images, isLike }} />
+            <PostContent post={{ id: postId, commentCount, contents, likeCount }} />
         </View>
     );
 };
@@ -36,4 +29,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default memo(PostCard, (prevProps, nextProps) => prevProps.postId === nextProps.postId);
+export default PostCard;
