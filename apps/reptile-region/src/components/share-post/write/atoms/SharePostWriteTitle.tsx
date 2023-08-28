@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-interface SharePostWriteTitleProps {
+type SharePostWriteTitleProps = {
     title: string;
-}
+};
 
 const SharePostWriteTitle = ({ title }: SharePostWriteTitleProps) => {
     return (

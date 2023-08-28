@@ -1,8 +1,9 @@
 import { fakerKO } from '@faker-js/faker';
 
+import { createTagIdsAndContent } from './utils/createTagIds';
+
 import { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentReplyData } from '<SharePostCommentReply>';
-import { TagIds } from '<SharePostTagIds>';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 type CommentType = 'reply' | 'comment';
@@ -10,21 +11,7 @@ type CommentReturnType<T extends CommentType> = T extends 'comment' ? SharePostC
 
 const createSharePostComment = <T extends CommentType>(length: number, type: T): CommentReturnType<T> => {
     const comments = createEmptyArray(length).map(() => {
-        let tagsMap: TagIds = {};
-        const tagCount = fakerKO.number.int({ min: 0, max: 3 });
-        const tags = createEmptyArray(tagCount).map(() => ({
-            id: fakerKO.string.uuid(),
-            nickname: '@' + fakerKO.person.middleName(),
-        }));
-
-        const contentCount = fakerKO.number.int({ min: 1, max: 6 });
-        const contents = createEmptyArray(contentCount).map(() => fakerKO.lorem.sentence());
-
-        tags.forEach((tag) => {
-            const insertionPoint = fakerKO.number.int({ min: 0, max: contentCount });
-            contents.splice(insertionPoint, 0, tag.nickname);
-            tagsMap[tag.nickname] = { id: tag.id };
-        });
+        const { contents, tagIds } = createTagIdsAndContent();
 
         const baseComment = {
             id: fakerKO.string.uuid(),
@@ -37,7 +24,7 @@ const createSharePostComment = <T extends CommentType>(length: number, type: T):
                 nickname: fakerKO.person.middleName(),
             },
             contents,
-            tags: tagsMap,
+            tags: tagIds,
         };
 
         return type === 'comment'

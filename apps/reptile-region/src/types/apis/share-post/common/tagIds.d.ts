@@ -1,7 +1,4 @@
 declare module '<SharePostTagIds>' {
-    type TagIds = {
-        [key: string]: {
-            id: string;
-        };
-    };
+    type TagValue = { id: string };
+    type TagIds = Record<string, TagValue>;
 }

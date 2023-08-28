@@ -83,7 +83,7 @@ const CommentRenderItem = ({
         <Animated.View style={animatedStyle}>
             <CommentBaseRenderItem
                 showAnimated={showAnimated}
-                data={{ contents, writer, tags }}
+                data={{ id, contents, writer, tags }}
                 FootChildren={<FootChildren id={id} replyCommentCount={replyCommentCount} />}
             />
         </Animated.View>

@@ -11,18 +11,17 @@ import CommentActions from './CommentActions';
 import { BottomTabStackNavigationProp } from '<RootRoutes>';
 import { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentReplyData } from '<SharePostCommentReply>';
-import AccordionMenu from '@/components/common/element/text/AccordionMenu';
 import Avatar from '@/components/common/fast-image/Avatar';
 import { color } from '@/components/common/tokens/colors';
 
 type RenderItemProps = {
     data:
-        | Pick<SharePostCommentData, 'contents' | 'tags' | 'writer'>
-        | Pick<SharePostCommentReplyData, 'contents' | 'tags' | 'writer'>;
+        | Pick<SharePostCommentData, 'id' | 'contents' | 'tags' | 'writer'>
+        | Pick<SharePostCommentReplyData, 'id' | 'contents' | 'tags' | 'writer'>;
     FootChildren?: ReactNode;
 } & { showAnimated?: boolean };
 
-const CommentBaseRenderItem = ({ FootChildren, showAnimated, data: { writer, tags, contents } }: RenderItemProps) => {
+const CommentBaseRenderItem = ({ FootChildren, showAnimated, data: { id, writer, tags, contents } }: RenderItemProps) => {
     const navigation = useNavigation<BottomTabStackNavigationProp>();
     const onPressTag: TagPressHandler = (_, content, tagId) => {
         navigation.navigate('bottom-tab-less', {
@@ -50,9 +49,7 @@ const CommentBaseRenderItem = ({ FootChildren, showAnimated, data: { writer, tag
             <View style={styles.commentItemContent}>
                 <View style={styles.commentItemGap}>
                     <Text style={styles.nickname}>{writer.nickname}</Text>
-                    <AccordionMenu numberOfLines={3}>
-                        <TaggedContent tags={tags} contents={contents} onPressTag={onPressTag} />
-                    </AccordionMenu>
+                    <TaggedContent uuid={id} tags={tags} contents={contents} onPressTag={onPressTag} />
                     <CommentActions />
                 </View>
                 {FootChildren}

@@ -20,7 +20,6 @@ const delay = <R>(fn: any, time: number) => {
 
 export const handlers = [
     rest.get(ENV.END_POINT_URI + 'api/share-posts', (req, res, ctx) => {
-        console.log(req.cookies, 'list');
         const posts = createSharePostList(10);
         const data = createInfinityData({ items: posts, searchParams: req.url.searchParams });
         return res(ctx.json(data));

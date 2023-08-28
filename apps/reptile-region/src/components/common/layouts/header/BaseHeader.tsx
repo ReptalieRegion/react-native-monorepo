@@ -14,14 +14,14 @@ type LeftIconMapType = {
     [key in LeftIconType]: IconFunction;
 };
 
-export interface IHeaderProps {
+export type IHeaderProps = {
     leftIconClick?: () => void;
     leftIcon?: LeftIconType;
     containerStyle?: ViewStyle;
     titleStyle?: TextStyle;
     title?: string;
     right?: string | ReactNode;
-}
+};
 
 const LEFT_ICON: LeftIconMapType = {
     cancel: CancelButton,

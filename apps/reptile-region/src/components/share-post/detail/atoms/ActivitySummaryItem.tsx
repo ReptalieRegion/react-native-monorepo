@@ -4,11 +4,11 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { color } from '@/components/common/tokens/colors';
 
-interface ActivitySummaryItemProps {
+type ActivitySummaryItemProps = {
     onPress?: () => void;
     content: string;
     count: number;
-}
+};
 
 const ActivitySummaryItem = ({ onPress, content, count }: ActivitySummaryItemProps) => {
     return (

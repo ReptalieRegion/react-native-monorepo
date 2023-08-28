@@ -1,5 +1,5 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
@@ -7,7 +7,7 @@ import { shallow } from 'zustand/shallow';
 import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
 
 import { color } from '@/components/common/tokens/colors';
-import { UIPromptsContext } from '@/contexts/ui-prompts/UIPrompts';
+import { useUIPrompts } from '@/contexts/ui-prompts/UIPrompts';
 import useSharePostWriteStore from '@/stores/share-post/write';
 
 interface ImageContentProps {
@@ -47,7 +47,7 @@ const makeImageStyles = (isCurrentSelectedImage: boolean) => {
 };
 
 const ImageContent = ({ item, numColumns }: ImageContentProps) => {
-    const { setUIPrompts } = useContext(UIPromptsContext);
+    const { setUIPrompts } = useUIPrompts();
     const { isCurrentPhoto, selectedNumber, setSelectedPhotos, deleteSelectedPhotos } = useSharePostWriteStore(
         (state) => ({
             setSelectedPhotos: state.setSelectedPhotos,
