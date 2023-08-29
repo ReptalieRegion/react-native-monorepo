@@ -1,45 +1,86 @@
-import React from 'react';
-import { GestureResponderEvent, StyleSheet, Text } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { GestureResponderEvent, NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData } from 'react-native';
 
-import { TagIds } from '<SharePostTagIds>';
+import type { TagIds, TagValue } from '<TagIds>';
 import { color } from '@/components/common/tokens/colors';
 
 export type TagPressHandler = (event: GestureResponderEvent, content: string, tagId: string) => void;
 
-interface TaggedContentProps {
-    onPressTag?: TagPressHandler;
+type TaggedContentProps = {
+    uuid: string;
     tags: TagIds;
     contents: string[];
-}
+    onPressTag?: TagPressHandler;
+};
 
-const TaggedContent = ({ tags, contents, onPressTag }: TaggedContentProps) => {
+type TagProps = {
+    content: string;
+    tag: TagValue;
+} & Pick<TaggedContentProps, 'onPressTag'>;
+
+const Tag = ({ content, tag, onPressTag }: TagProps) => {
+    return (
+        <Text style={styles.color} onPress={(event) => onPressTag?.(event, content, tag.id)} suppressHighlighting={true}>
+            {content + ' '}
+        </Text>
+    );
+};
+
+const TaggedContent = ({ uuid, tags, contents, onPressTag }: TaggedContentProps) => {
+    const lastItemId = useRef(uuid);
+    const [isTextTooLong, setIsTextTooLong] = useState<boolean | null>(null);
+    const [isExpanded, setIsExpanded] = useState(false);
+    if (lastItemId.current !== uuid) {
+        lastItemId.current = uuid;
+        setIsTextTooLong(null);
+        setIsExpanded(false);
+    }
+
+    const onTextLayout = (event: NativeSyntheticEvent<TextLayoutEventData>) => {
+        if (isTextTooLong === null) {
+            console.log(event.nativeEvent.lines.length > 2);
+            setIsTextTooLong(event.nativeEvent.lines.length > 2);
+        }
+    };
+
     return (
         <>
-            {contents.map((content, index) => {
-                const tag = tags[content];
-                const isTag = content.startsWith('@') && tag !== undefined;
-                return isTag ? (
-                    <Text
-                        key={content + index}
-                        style={tagStyles.color}
-                        onPress={(event) => onPressTag?.(event, content, tag.id)}
-                        suppressHighlighting={true}
-                    >
-                        {content + ' '}
-                    </Text>
-                ) : (
-                    <Text key={content + index}>{content}</Text>
-                );
-            })}
+            <Text
+                textBreakStrategy="highQuality"
+                lineBreakMode="clip"
+                lineBreakStrategyIOS="hangul-word"
+                numberOfLines={isExpanded || isTextTooLong === null ? undefined : 2}
+                onTextLayout={onTextLayout}
+            >
+                {contents.map((content, index) => {
+                    const key = content + index.toString();
+                    const tag = tags[content];
+                    const isTag = content.startsWith('@') && tag !== undefined;
+
+                    if (isTag) {
+                        return <Tag key={key} content={content} tag={tag} onPressTag={onPressTag} />;
+                    }
+
+                    return <Text key={key}>{content}</Text>;
+                })}
+            </Text>
+            {isTextTooLong ? (
+                <Text style={styles.accordionMenu} suppressHighlighting={true} onPress={() => setIsExpanded((state) => !state)}>
+                    {isExpanded ? '...접기' : '...더보기'}
+                </Text>
+            ) : null}
         </>
     );
 };
 
-const tagStyles = StyleSheet.create({
+const styles = StyleSheet.create({
     color: {
-        color: color.Green['750'].toString(),
+        color: color.Green[750].toString(),
         fontWeight: '500',
         textAlignVertical: 'bottom',
+    },
+    accordionMenu: {
+        color: color.Gray[500].toString(),
     },
 });
 

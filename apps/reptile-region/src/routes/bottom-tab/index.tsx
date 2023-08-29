@@ -7,7 +7,7 @@ import MyRoutes from './my/My';
 import SharePostRoutes from './share-post/SharePost';
 import ShopRoutes from './shop/Shop';
 
-import { BottomTabParamList } from '<BottomTabNavigationList>';
+import type { BottomTabParamList } from '<BottomTabNavigationList>';
 import { MainBottomBar } from '@/components/common/layouts';
 import UIPromptsContextComponent from '@/contexts/ui-prompts/UIPrompts';
 

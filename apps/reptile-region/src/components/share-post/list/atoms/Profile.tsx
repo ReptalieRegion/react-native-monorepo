@@ -4,8 +4,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { BottomTabSharePostListNavigationProp } from '<BottomTabSharePostRoutes>';
-import { SharePostListData } from '<SharePostListAPI>';
+import type { BottomTabSharePostListNavigationProp } from '<BottomTabSharePostRoutes>';
+import type { SharePostListData } from '<SharePostAPI>';
 
 type ProfileProps = {
     user: Pick<SharePostListData['user'], 'profile' | 'nickname' | 'id'>;

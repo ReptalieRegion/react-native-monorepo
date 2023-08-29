@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { UIPromptsDefaultProps } from '<UIPrompts>';
+import type { UIPromptsDefaultProps } from '<UIPrompts>';
 import { color } from '@/components/common/tokens/colors';
 import ToastContainer from '@/components/common/ui-prompts/toast/atoms/ToastContainer';
 import { MAX_SELECT_PHOTO_COUNT } from '@/stores/share-post/write';

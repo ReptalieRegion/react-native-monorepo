@@ -3,7 +3,7 @@ import { NavigationMessageType, NavigationReturnType } from '@reptalieregion/web
 
 import CustomNavigation from './Navigate';
 
-import { RootStackParamList } from '<RootRoutes>';
+import type { RootStackParamList } from '<RootRoutes>';
 
 interface INavigateRunnerProps<RouteName extends keyof RootStackParamList> {
     message: NavigationMessageType;

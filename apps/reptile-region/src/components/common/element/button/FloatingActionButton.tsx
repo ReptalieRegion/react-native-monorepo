@@ -3,7 +3,7 @@ import { ColorValue, DimensionValue, StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import { IconFunction } from '<Icon>';
+import type { IconFunction } from '<Icon>';
 
 export type IconStyle = {
     backgroundColor?: ColorValue;

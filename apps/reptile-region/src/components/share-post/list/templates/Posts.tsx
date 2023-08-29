@@ -9,9 +9,9 @@ import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
 import FloatingActionButtons from '../molecules/FloatingActionButtons';
 import PostCard from '../organisms/PostCard';
 
-import { ScrollIntoViewProps } from '<FlashList>';
-import { SharePostListData } from '<SharePostListAPI>';
-import { useInfiniteFetchPosts } from '@/apis/share-post';
+import type { ScrollIntoViewProps } from '<FlashList>';
+import type { SharePostListData } from '<SharePostAPI>';
+import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import { color } from '@/components/common/tokens/colors';
 
 const Posts = () => {

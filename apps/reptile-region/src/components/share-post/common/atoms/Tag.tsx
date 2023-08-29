@@ -3,10 +3,10 @@ import { GestureResponderEvent, StyleSheet, Text } from 'react-native';
 
 import { color } from '@/components/common/tokens/colors';
 
-interface TagProps {
+type TagProps = {
     onPress?: (event: GestureResponderEvent) => void;
     content: string;
-}
+};
 
 const Tag = ({ onPress, content }: TagProps) => {
     return (

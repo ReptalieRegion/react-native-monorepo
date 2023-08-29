@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import clientFetch from '../clientFetch';
 
-import { RequestSignIn } from '<AuthRequest>';
+import type { RequestSignIn } from '<AuthRequest>';
 import { AUTH_KEYS } from '@/env/constants';
 import { parseCookies } from '@/utils/network/parseCookies';
 

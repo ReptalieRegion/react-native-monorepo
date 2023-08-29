@@ -10,7 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { UIPromptsDefaultProps } from '<UIPrompts>';
+import type { UIPromptsDefaultProps } from '<UIPrompts>';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 interface ToastContainerProps extends UIPromptsDefaultProps {

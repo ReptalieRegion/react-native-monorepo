@@ -5,7 +5,7 @@ import AsyncStorageRunner from '../async-storage/AsyncStorageRunner';
 import HapticRunner from '../haptic/HapticRunner';
 import NavigateRunner from '../navigate/NavigateRunner';
 
-import { RootStackParamList } from '<RootRoutes>';
+import type { RootStackParamList } from '<RootRoutes>';
 
 interface WebviewBridgeRunnerProps<RouteName extends keyof RootStackParamList> {
     message: RNPostMessageType;

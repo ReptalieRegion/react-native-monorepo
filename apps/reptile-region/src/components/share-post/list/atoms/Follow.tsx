@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { ColorValue, StyleSheet, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { SharePostListData } from '<SharePostListAPI>';
+import type { SharePostListData } from '<SharePostAPI>';
 import { color } from '@/components/common/tokens/colors';
 import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
@@ -19,7 +19,7 @@ interface FollowInfo {
 const following: FollowInfo = { color: color.Gray[500].toString(), text: '✓ 팔로잉' };
 const follow: FollowInfo = { color: color.Green[750].toString(), text: '팔로우' };
 
-const makeFollowInfo = (isFollow: boolean) => {
+const makeFollowInfo = (isFollow: boolean | undefined) => {
     return isFollow ? following : follow;
 };
 
@@ -28,7 +28,7 @@ const Follow = ({ user, post }: PostHeaderProps) => {
     const { id: postId } = post;
 
     const lastItemId = useRef(postId);
-    const [isFollowing, setIsFollowing] = useState<boolean>(isFollow);
+    const [isFollowing, setIsFollowing] = useState<boolean | undefined>(isFollow);
     const followInfo = makeFollowInfo(isFollowing);
     if (lastItemId.current !== postId) {
         lastItemId.current = postId;

@@ -4,7 +4,7 @@ import Animated from 'react-native-reanimated';
 
 import BackDrop, { BackDropStyle } from '../../BackDrop';
 
-import { UIPromptsDefaultProps } from '<UIPrompts>';
+import type { UIPromptsDefaultProps } from '<UIPrompts>';
 import { color } from '@/components/common/tokens/colors';
 
 type TranslateStyle = {

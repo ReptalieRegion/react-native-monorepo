@@ -9,7 +9,7 @@ import Animated, {
     withTiming,
 } from 'react-native-reanimated';
 
-import { IconProps } from '<Icon>';
+import type { IconProps } from '<Icon>';
 import { color } from '@/components/common/tokens/colors';
 
 const userConfig: WithTimingConfig = {

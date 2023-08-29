@@ -7,12 +7,11 @@ import ListFooterLoading from '../../../../../common/atoms/ListFooterComponent';
 import CommentSkeleton from '../atoms/CommentSkeleton';
 import CommentRenderItem from '../molecules/CommentRenderItem';
 
-import { SharePostCommentData } from '<SharePostCommentAPI>';
-import { useInfiniteFetchCommentsPost } from '@/apis/share-post';
+import type { SharePostCommentData } from '<SharePostCommentAPI>';
+import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 
 const CommentFlashList = ({ postId }: { postId: string }) => {
-    const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage, remove, refetch } =
-        useInfiniteFetchCommentsPost(postId);
+    const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage, remove, refetch } = useInfiniteComment({ postId });
     const [refreshing, setRefreshing] = useState(false);
     const alreadyRenderItems = useRef<{ [key: string]: boolean }>({});
     const flashListRef = useRef<FlashList<SharePostCommentData>>(null);
@@ -24,16 +23,14 @@ const CommentFlashList = ({ postId }: { postId: string }) => {
     }, [remove]);
 
     const renderItem: ListRenderItem<SharePostCommentData> = useCallback((props) => {
-        const {
-            item: { id },
-        } = props;
-        const isAlreadyRenderItem = alreadyRenderItems.current[id];
-        alreadyRenderItems.current[id] = true;
+        const commentId = props.item.comment.id;
+        const isAlreadyRenderItem = alreadyRenderItems.current[commentId];
+        alreadyRenderItems.current[commentId] = true;
 
         return <CommentRenderItem {...props} isAlreadyRenderItem={isAlreadyRenderItem} />;
     }, []);
 
-    const keyExtractor = useCallback((item: SharePostCommentData) => item.id, []);
+    const keyExtractor = useCallback((item: SharePostCommentData) => item.comment.id, []);
 
     const onEndReached = () => {
         if (hasNextPage && !isFetchingNextPage) {

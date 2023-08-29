@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
-import { SharePostListData } from '<SharePostListAPI>';
+import type { SharePostListData } from '<SharePostAPI>';
 import { Like_40 as LikeIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 import useSharePostListStore from '@/stores/share-post/list';
@@ -23,7 +23,7 @@ const UN_LIKE_INFO = {
     stroke: color.Black.toString(),
 };
 
-const makeLikeInfo = (isLike: boolean) => {
+const makeLikeInfo = (isLike: boolean | undefined) => {
     return isLike ? LIKE_INFO : UN_LIKE_INFO;
 };
 
@@ -37,7 +37,7 @@ const Like = ({ post }: LikeProps) => {
         transform: [{ scale: scale.value }],
     }));
 
-    const [filledLikeColor, setFilledLikeColor] = useState<boolean>(isLike);
+    const [filledLikeColor, setFilledLikeColor] = useState<boolean | undefined>(isLike);
     if (lastItemId.current !== postId) {
         lastItemId.current = postId;
         setFilledLikeColor(isLike);

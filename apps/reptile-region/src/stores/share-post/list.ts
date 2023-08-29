@@ -5,6 +5,7 @@ export type SharePostListInfo = {
     [postId: string]: {
         currentImageIndex: number;
         startLikeAnimation: boolean;
+        contentMore?: boolean;
     };
 };
 

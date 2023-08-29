@@ -6,10 +6,10 @@ import PostContent from '../molecules/PostContent';
 import PostHeader from '../molecules/PostHeader';
 import PostImageCarousel from '../molecules/PostImageCarousel';
 
-import { SharePostListData } from '<SharePostListAPI>';
+import type { SharePostListData } from '<SharePostAPI>';
 
 const PostCard = ({ post, user }: SharePostListData) => {
-    const { id: postId, images, isLike, commentCount, contents, likeCount } = post;
+    const { id: postId, images, isLike, commentCount, contents, likeCount, tagIds } = post;
     const { id: userId, isFollow, nickname, profile } = user;
 
     return (
@@ -17,7 +17,7 @@ const PostCard = ({ post, user }: SharePostListData) => {
             <PostHeader post={{ id: postId }} user={{ id: userId, isFollow, nickname, profile }} />
             <PostImageCarousel post={{ id: postId, images }} />
             <InteractivePost post={{ id: postId, images, isLike }} />
-            <PostContent post={{ id: postId, commentCount, contents, likeCount }} />
+            <PostContent post={{ id: postId, commentCount, contents, likeCount, tagIds }} />
         </View>
     );
 };

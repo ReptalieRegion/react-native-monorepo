@@ -5,7 +5,7 @@ import CommentIcon from '../atoms/CommentIcon';
 import ImagesIndicators from '../atoms/ImagesIndicators';
 import Like from '../atoms/Like';
 
-import { SharePostListData } from '<SharePostListAPI>';
+import type { SharePostListData } from '<SharePostAPI>';
 
 type InteractivePostProps = {
     post: Pick<SharePostListData['post'], 'id' | 'isLike' | 'images'>;

@@ -4,8 +4,8 @@ import { Platform, StyleSheet, View } from 'react-native';
 
 import MainBottomTabBarButton from './MainBottomTabBarButton';
 
-import { BottomTabParamList } from '<BottomTabNavigationList>';
-import { IconProps } from '<Icon>';
+import type { BottomTabParamList } from '<BottomTabNavigationList>';
+import type { IconProps } from '<Icon>';
 import {
     Cart as ShopIcon,
     Community as InfoIcon,

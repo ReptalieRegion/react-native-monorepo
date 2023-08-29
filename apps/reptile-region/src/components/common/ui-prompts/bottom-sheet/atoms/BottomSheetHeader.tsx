@@ -3,9 +3,9 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 
 import { color } from '../../../tokens/colors';
 
-export interface BottomSheetHeaderProps {
+export type BottomSheetHeaderProps = {
     title?: ReactNode;
-}
+};
 
 const { width } = Dimensions.get('screen');
 

@@ -3,4 +3,8 @@ declare module '<InfiniteState>' {
         items: Item;
         nextPage: number | undefined;
     }
+
+    type InfinitePageParam = {
+        pageParam: number;
+    };
 }

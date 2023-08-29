@@ -7,10 +7,10 @@ import { CancelButton } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 import useSharePostWriteStore from '@/stores/share-post/write';
 
-interface RenderImageProps {
+type RenderImageProps = {
     item: PhotoIdentifier;
     isLastImage: boolean;
-}
+};
 
 const RenderImage = ({ item, isLastImage }: RenderImageProps) => {
     const viewRef = useRef<View>(null);

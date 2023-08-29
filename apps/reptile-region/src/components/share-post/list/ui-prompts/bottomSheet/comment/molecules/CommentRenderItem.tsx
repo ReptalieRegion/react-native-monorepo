@@ -8,19 +8,20 @@ import ReplyCommentButton from '../atoms/ReplyCommentButton';
 
 import ReplyCommentRenderItem from './ReplyCommentRenderItem';
 
-import { SharePostCommentData } from '<SharePostCommentAPI>';
-import { SharePostCommentReplyData } from '<SharePostCommentReply>';
-import { useInfiniteFetchReplyComments } from '@/apis/share-post';
+import type { SharePostCommentData } from '<SharePostCommentAPI>';
+import type { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
+import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
 
-type FootChildrenProps = Pick<SharePostCommentData, 'id' | 'replyCommentCount'>;
+type FootChildrenProps = {
+    comment: Pick<SharePostCommentData['comment'], 'id' | 'replyCount'>;
+};
 
-const FootChildren = ({ id, replyCommentCount }: FootChildrenProps) => {
-    const { data, isFetching, hasNextPage, fetchNextPage, remove } = useInfiniteFetchReplyComments({
-        commentId: id,
-        postId: '1',
+const FootChildren = ({ comment }: FootChildrenProps) => {
+    const { data, isFetching, hasNextPage, fetchNextPage, remove } = useInfiniteCommentReply({
+        commentId: comment.id,
     });
 
-    const keyExtractor = useCallback((item: SharePostCommentReplyData) => item.id, []);
+    const keyExtractor = useCallback((item: SharePostCommentReplyData) => item.comment.id, []);
     const renderItem: ListRenderItem<SharePostCommentReplyData> = useCallback(
         ({ item }) => <ReplyCommentRenderItem {...item} />,
         [],
@@ -31,7 +32,7 @@ const FootChildren = ({ id, replyCommentCount }: FootChildrenProps) => {
         return () => {
             remove();
         };
-    }, [remove, id]);
+    }, [remove, comment.id]);
 
     const onPressReplyButton = () => {
         fetchNextPage();
@@ -43,7 +44,7 @@ const FootChildren = ({ id, replyCommentCount }: FootChildrenProps) => {
                 <FlashList keyExtractor={keyExtractor} data={newData} renderItem={renderItem} estimatedItemSize={200} />
             </View>
             <ReplyCommentButton
-                props={{ replyCommentCount: replyCommentCount - (newData?.length ?? 0) }}
+                comment={{ replyCount: comment.replyCount - (newData?.length ?? 0) }}
                 onPress={onPressReplyButton}
                 isFetching={isFetching}
                 isHideComment={!hasNextPage && !!data}
@@ -60,11 +61,7 @@ const footChildrenStyles = StyleSheet.create({
 
 type CommentRenderItemProps = ListRenderItemInfo<SharePostCommentData> & { isAlreadyRenderItem: boolean };
 
-const CommentRenderItem = ({
-    item: { contents, writer, tags, id, replyCommentCount },
-    index,
-    isAlreadyRenderItem,
-}: CommentRenderItemProps) => {
+const CommentRenderItem = ({ item, index, isAlreadyRenderItem }: CommentRenderItemProps) => {
     const opacity = useSharedValue(1);
     const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
 
@@ -77,14 +74,15 @@ const CommentRenderItem = ({
         if (showAnimated) {
             opacity.value = withSpring(1);
         }
-    }, [opacity, showAnimated, id]);
+    }, [opacity, showAnimated, item.comment.id]);
 
     return (
         <Animated.View style={animatedStyle}>
             <CommentBaseRenderItem
                 showAnimated={showAnimated}
-                data={{ contents, writer, tags }}
-                FootChildren={<FootChildren id={id} replyCommentCount={replyCommentCount} />}
+                user={item.user}
+                comment={item.comment}
+                FootChildren={<FootChildren comment={{ id: item.comment.id, replyCount: item.comment.replyCount }} />}
             />
         </Animated.View>
     );

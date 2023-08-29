@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { BottomTabLessAuthSignInNavigationProp } from '<BottomTabLessSlidFromBottomNavigationList>';
+import type { BottomTabLessAuthSignInNavigationProp } from '<BottomTabLessSlidFromBottomNavigationList>';
 import TextButton from '@/components/common/layouts/button/TextButton';
 
 const UserAccessControl = () => {

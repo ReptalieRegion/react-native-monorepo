@@ -1,19 +1,32 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Follow from '../../list/atoms/Follow';
+import Follow from '../atoms/Follow';
 import UserAvatar from '../atoms/UserAvatar';
 import ActivitySummary from '../molecules/ActivitySummary';
 
-import { SharePostDetailPostsData } from '<SharePostDetail>';
+import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 
-const UserDetailPanel = ({ followerCount, followingCount, posts, profile, nickname, isFollow }: SharePostDetailPostsData) => {
+type UserDetailPanelProps = {
+    userId: string;
+};
+
+const UserDetailPanel = ({ userId }: UserDetailPanelProps) => {
+    const { data } = useFetchUserProfile({ userId });
+
+    if (!data) {
+        return null;
+    }
+
     return (
         <View style={styles.container}>
-            <UserAvatar profile={profile} nickname={nickname} />
-            <ActivitySummary followerCount={followerCount} followingCount={followingCount} posts={posts} />
+            <UserAvatar user={{ nickname: data.user.nickname, profile: data.user.profile }} />
+            <ActivitySummary
+                user={{ followerCount: data.user.followerCount, followingCount: data.user.followingCount }}
+                post={{ count: data.post.count }}
+            />
             <View style={styles.textContainer}>
-                <Follow isFollow={isFollow} />
+                <Follow user={{ id: userId, isFollow: data.user.isFollow }} />
             </View>
         </View>
     );

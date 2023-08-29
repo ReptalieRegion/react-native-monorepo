@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { BottomTabLessSlideFromBottomParamList } from '<BottomTabLessSlidFromBottomNavigationList>';
+import type { BottomTabLessSlideFromBottomParamList } from '<BottomTabLessSlidFromBottomNavigationList>';
 import AuthSignInHeader from '@/components/auth/sign-in/header';
 import UIPromptsContextComponent from '@/contexts/ui-prompts/UIPrompts';
 import SignInPage from '@/pages/auth/sign-in/page';

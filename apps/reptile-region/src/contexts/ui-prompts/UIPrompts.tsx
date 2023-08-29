@@ -1,7 +1,7 @@
-import React, { ReactNode, createContext, useRef, useState } from 'react';
+import React, { ReactNode, createContext, useContext, useRef, useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 
-import { UIPromptsDefaultProps } from '<UIPrompts>';
+import type { UIPromptsDefaultProps } from '<UIPrompts>';
 
 interface UIPromptsContextProps {
     children: ReactNode;
@@ -37,7 +37,9 @@ const defaultValue: UIPromptsContextValue = {
     }),
 };
 
-export const UIPromptsContext = createContext<UIPromptsContextValue>(defaultValue);
+const UIPromptsContext = createContext<UIPromptsContextValue>(defaultValue);
+
+export const useUIPrompts = () => useContext(UIPromptsContext);
 
 export const UIPromptsContextComponent = ({ children }: UIPromptsContextProps) => {
     const uiPromptsListRef = useRef<UIPromptsList>({
