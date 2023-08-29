@@ -3,8 +3,8 @@ import React, { useCallback, useRef } from 'react';
 import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import { ShareImageType } from '<SharePostImage>';
-import { SharePostListData } from '<SharePostListAPI>';
+import type { ShareImageType } from '<Image>';
+import { SharePostListData } from '<SharePostAPI>';
 import useSharePostListStore from '@/stores/share-post/list';
 
 type ImagesContentProps = {

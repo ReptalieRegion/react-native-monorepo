@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-import { SharePostListData } from '<SharePostListAPI>';
+import type { SharePostListData } from '<SharePostAPI>';
 
 type LikeContentProps = {
     post: Pick<SharePostListData['post'], 'likeCount'>;

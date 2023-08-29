@@ -6,7 +6,7 @@ import PostContent from '../molecules/PostContent';
 import PostHeader from '../molecules/PostHeader';
 import PostImageCarousel from '../molecules/PostImageCarousel';
 
-import { SharePostListData } from '<SharePostListAPI>';
+import type { SharePostListData } from '<SharePostAPI>';
 
 const PostCard = ({ post, user }: SharePostListData) => {
     const { id: postId, images, isLike, commentCount, contents, likeCount, tagIds } = post;

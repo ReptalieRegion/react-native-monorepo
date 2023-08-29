@@ -5,7 +5,7 @@ import TaggedContent from '../../common/atoms/TaggedContent';
 import CommentContent from '../atoms/CommentContent';
 import LikeContent from '../atoms/LikeContent';
 
-import { SharePostListData } from '<SharePostListAPI>';
+import type { SharePostListData } from '<SharePostAPI>';
 
 type PostContentProps = {
     post: Pick<SharePostListData['post'], 'likeCount' | 'commentCount' | 'contents' | 'id' | 'tagIds'>;

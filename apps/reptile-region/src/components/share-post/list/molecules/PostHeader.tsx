@@ -5,7 +5,7 @@ import Follow from '../atoms/Follow';
 import PostKebabMenu from '../atoms/PostKebabMenu';
 import Profile from '../atoms/Profile';
 
-import { SharePostListData } from '<SharePostListAPI>';
+import type { SharePostListData } from '<SharePostAPI>';
 
 type PostHeaderProps = {
     user: Pick<SharePostListData['user'], 'nickname' | 'profile' | 'isFollow' | 'id'>;

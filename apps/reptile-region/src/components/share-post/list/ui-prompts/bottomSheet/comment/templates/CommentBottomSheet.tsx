@@ -4,8 +4,8 @@ import CommentHeader from '../atoms/CommentHeader';
 import CommentTextInput from '../atoms/CommentTextInput';
 import CommentFlashList from '../organisms/CommentFlashList';
 
-import { SharePostListData } from '<SharePostListAPI>';
-import { UIPromptsDefaultProps } from '<UIPrompts>';
+import type { SharePostListData } from '<SharePostAPI>';
+import type { UIPromptsDefaultProps } from '<UIPrompts>';
 import { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
 import BottomSheet from '@/components/common/ui-prompts/bottom-sheet/molecules/BottomSheet';
 

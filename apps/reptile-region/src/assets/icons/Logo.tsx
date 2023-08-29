@@ -1,7 +1,7 @@
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-import { IconProps } from '<Icon>';
+import type { IconProps } from '<Icon>';
 import { color } from '@/components/common/tokens/colors';
 
 const Logo = ({ fill = color.Teal[150].toString(), height = '32', width = '32' }: IconProps) => {

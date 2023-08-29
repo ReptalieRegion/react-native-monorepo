@@ -3,11 +3,16 @@ import { StyleSheet, View } from 'react-native';
 
 import ActivitySummaryItem from '../atoms/ActivitySummaryItem';
 
-import { SharePostDetailPostsData } from '<SharePostDetail>';
+import type { SharePostUserData } from '<SharePostUserAPI>';
 
-type ActivitySummaryProps = Pick<SharePostDetailPostsData, 'followerCount' | 'followingCount' | 'posts'>;
+type ActivitySummaryProps = {
+    user: Pick<SharePostUserData['user'], 'followerCount' | 'followingCount'>;
+    post: {
+        count: number;
+    };
+};
 
-const ActivitySummary = ({ followerCount, followingCount, posts }: ActivitySummaryProps) => {
+const ActivitySummary = ({ user, post }: ActivitySummaryProps) => {
     const handleClickFollower = () => {
         return;
     };
@@ -18,9 +23,9 @@ const ActivitySummary = ({ followerCount, followingCount, posts }: ActivitySumma
 
     return (
         <View style={styles.container}>
-            <ActivitySummaryItem content="게시물" count={posts.length} />
-            <ActivitySummaryItem content="팔로워" count={followerCount} onPress={handleClickFollower} />
-            <ActivitySummaryItem content="팔로잉" count={followingCount} onPress={handleClickFollowing} />
+            <ActivitySummaryItem content="게시물" count={post.count} />
+            <ActivitySummaryItem content="팔로워" count={user.followerCount} onPress={handleClickFollower} />
+            <ActivitySummaryItem content="팔로잉" count={user.followingCount} onPress={handleClickFollowing} />
         </View>
     );
 };

@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { IconFunction } from '<Icon>';
+import type { IconFunction } from '<Icon>';
 import { BackButton, CancelButton, Logo } from '@/assets/icons';
 import MainStatusBar from '@/components/common/layouts/status-bar/MainStatusBar';
 import { color } from '@/components/common/tokens/colors';

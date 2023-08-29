@@ -8,20 +8,27 @@ import type { TagPressHandler } from '../../../../../common/atoms/TaggedContent'
 
 import CommentActions from './CommentActions';
 
-import { BottomTabStackNavigationProp } from '<RootRoutes>';
-import { SharePostCommentData } from '<SharePostCommentAPI>';
-import { SharePostCommentReplyData } from '<SharePostCommentReply>';
+import type { BottomTabStackNavigationProp } from '<RootRoutes>';
+import type { SharePostCommentData } from '<SharePostCommentAPI>';
+import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
 import Avatar from '@/components/common/fast-image/Avatar';
 import { color } from '@/components/common/tokens/colors';
 
-type RenderItemProps = {
-    data:
-        | Pick<SharePostCommentData, 'id' | 'contents' | 'tags' | 'writer'>
-        | Pick<SharePostCommentReplyData, 'id' | 'contents' | 'tags' | 'writer'>;
-    FootChildren?: ReactNode;
-} & { showAnimated?: boolean };
+type RenderItemProps =
+    | {
+          user: SharePostCommentData['user'];
+          comment: SharePostCommentData['comment'];
+          FootChildren?: ReactNode;
+          showAnimated?: boolean;
+      }
+    | {
+          user: SharePostCommentReplyData['user'];
+          comment: SharePostCommentReplyData['comment'];
+          FootChildren?: ReactNode;
+          showAnimated?: boolean;
+      };
 
-const CommentBaseRenderItem = ({ FootChildren, showAnimated, data: { id, writer, tags, contents } }: RenderItemProps) => {
+const CommentBaseRenderItem = ({ FootChildren, showAnimated, user, comment }: RenderItemProps) => {
     const navigation = useNavigation<BottomTabStackNavigationProp>();
     const onPressTag: TagPressHandler = (_, content, tagId) => {
         navigation.navigate('bottom-tab-less', {
@@ -38,7 +45,7 @@ const CommentBaseRenderItem = ({ FootChildren, showAnimated, data: { id, writer,
             <Avatar
                 showAnimated={showAnimated}
                 source={{
-                    uri: writer.profile.src,
+                    uri: user.profile.src,
                     priority: FastImage.priority.high,
                     cache: FastImage.cacheControl.web,
                 }}
@@ -48,8 +55,13 @@ const CommentBaseRenderItem = ({ FootChildren, showAnimated, data: { id, writer,
             />
             <View style={styles.commentItemContent}>
                 <View style={styles.commentItemGap}>
-                    <Text style={styles.nickname}>{writer.nickname}</Text>
-                    <TaggedContent uuid={id} tags={tags} contents={contents} onPressTag={onPressTag} />
+                    <Text style={styles.nickname}>{user.nickname}</Text>
+                    <TaggedContent
+                        uuid={comment.id}
+                        tags={comment.tagIds}
+                        contents={comment.contents}
+                        onPressTag={onPressTag}
+                    />
                     <CommentActions />
                 </View>
                 {FootChildren}

@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import WebView, { WebViewMessageEvent } from 'react-native-webview';
 
-import { WebviewExampleStackNavigationProp } from '<RootRoutes>';
+import type { WebviewExampleStackNavigationProp } from '<RootRoutes>';
 import { color } from '@/components/common/tokens/colors';
 import ENV from '@/env';
 import { WebviewBridgeRunner } from '@/utils/webview-bridge/react-native';

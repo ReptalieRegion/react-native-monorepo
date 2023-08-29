@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { BottomTabLessParamList } from '<BottomTabLessNavigationList>';
+import type { BottomTabLessParamList } from '<BottomTabLessNavigationList>';
 import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/DetailHeader';
 import ImageCropHeader from '@/components/share-post/image-crop/atoms/header/ImageCropHeader';
 import ShareHeader from '@/components/share-post/write/atoms/header/SharePostWriteHeader';

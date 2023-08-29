@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { BottomTabHomeRoutesParamList } from '<BottomTabHomeRoutes>';
+import type { BottomTabHomeRoutesParamList } from '<BottomTabHomeRoutes>';
 import { NativeStackDefaultHeader } from '@/components/common/layouts/header/utils/create-header';
 import HomeListPage from '@/pages/home/list/page';
 

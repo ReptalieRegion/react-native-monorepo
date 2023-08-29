@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import KebabMenuBottomSheet from '../ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
 
-import { SharePostListData } from '<SharePostListAPI>';
+import type { SharePostListData } from '<SharePostAPI>';
 import { KebabMenu } from '@/assets/icons';
 import { useUIPrompts } from '@/contexts/ui-prompts/UIPrompts';
 

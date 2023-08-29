@@ -4,10 +4,15 @@ import ENV from '../env';
 
 import { AUTH_KEYS } from '@/env/constants';
 
-type TMethod = 'GET' | 'POST' | 'DELETE' | 'PUT';
+export const METHOD = {
+    GET: 'GET',
+    POST: 'POST',
+    DELETE: 'DELETE',
+    PUT: 'PUT',
+} as const;
 
 interface IRequestInit extends Omit<RequestInit, 'method' | 'body'> {
-    method?: TMethod;
+    method?: keyof typeof METHOD;
     body?: object;
     ignorePrefix?: boolean;
 }

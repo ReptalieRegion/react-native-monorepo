@@ -1,7 +1,7 @@
 import React from 'react';
 import { Circle, Path, Svg } from 'react-native-svg';
 
-import { IconProps } from '<Icon>';
+import type { IconProps } from '<Icon>';
 import { color } from '@/components/common/tokens/colors';
 
 const Share = ({ fill = color.Gray['500'].toString(), height = '24', width = '24' }: IconProps) => {

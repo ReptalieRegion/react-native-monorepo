@@ -7,7 +7,7 @@ import BottomTabRoutes from './bottom-tab';
 import BottomTabLessRoutes from './bottom-tab-less';
 import BottomTabLessSlideFromBottomRoutes from './bottom-tab-less/SlideFromBottom';
 
-import { RootStackParamList } from '<RootRoutes>';
+import type { RootStackParamList } from '<RootRoutes>';
 
 const RootRoutes = () => {
     const Stack = createNativeStackNavigator<RootStackParamList>();

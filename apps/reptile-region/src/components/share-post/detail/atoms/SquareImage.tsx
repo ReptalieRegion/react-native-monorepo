@@ -1,16 +1,16 @@
 import React from 'react';
-import { ListRenderItemInfo, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import { PostsInfo } from '<SharePostDetail>';
+import type { SharePostImagesData } from '<SharePostAPI>';
 
-type SquareImageProps = Pick<ListRenderItemInfo<PostsInfo>, 'item'> & { width: number };
+type SquareImageProps = SharePostImagesData & { width: number };
 
-const SquareImage = ({ item, width }: SquareImageProps) => {
+const SquareImage = ({ post, width }: SquareImageProps) => {
     return (
         <FastImage
             source={{
-                uri: item.thumbnail.src,
+                uri: post.thumbnail.src,
                 priority: FastImage.priority.high,
                 cache: FastImage.cacheControl.web,
             }}

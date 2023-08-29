@@ -2,11 +2,13 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
-import { SharePostDetailPostsData } from '<SharePostDetail>';
+import type { SharePostUserData } from '<SharePostUserAPI>';
 
-type UserAvatarProps = Pick<SharePostDetailPostsData, 'profile' | 'nickname'>;
+type UserAvatarProps = {
+    user: Pick<SharePostUserData['user'], 'nickname' | 'profile'>;
+};
 
-const UserAvatar = ({ profile, nickname }: UserAvatarProps) => {
+const UserAvatar = ({ user: { profile, nickname } }: UserAvatarProps) => {
     return (
         <>
             <View style={styles.imageContainer}>

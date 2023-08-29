@@ -2,25 +2,25 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { SharePostCommentData } from '<SharePostCommentAPI>';
+import type { SharePostCommentData } from '<SharePostCommentAPI>';
 import { color } from '@/components/common/tokens/colors';
 
 interface ReplyCommentButtonProps {
     onPress?: () => void;
     isFetching: boolean;
     isHideComment: boolean;
-    props: Pick<SharePostCommentData, 'replyCommentCount'>;
+    comment: Pick<SharePostCommentData['comment'], 'replyCount'>;
 }
 
-const ReplyCommentButton = ({ onPress, isFetching, isHideComment, props: { replyCommentCount } }: ReplyCommentButtonProps) => {
-    return replyCommentCount !== 0 ? (
+const ReplyCommentButton = ({ onPress, isFetching, isHideComment, comment: { replyCount } }: ReplyCommentButtonProps) => {
+    return replyCount !== 0 ? (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.padding, styles.center]}>
                 <View style={styles.border} />
                 {isFetching ? (
                     <ActivityIndicator />
                 ) : (
-                    <Text style={styles.text}>{isHideComment ? '댓글 숨기기' : `댓글 ${replyCommentCount}개 보기`}</Text>
+                    <Text style={styles.text}>{isHideComment ? '댓글 숨기기' : `댓글 ${replyCount}개 보기`}</Text>
                 )}
             </View>
         </TouchableWithoutFeedback>

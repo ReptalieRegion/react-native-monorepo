@@ -2,8 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import { ScrollIntoViewProps } from '<FlashList>';
-import { FloatingActionButtonSize } from '<SharePostComponent>';
+import type { ScrollIntoViewProps } from '<FlashList>';
+import type { FloatingActionButtonSize } from '<SharePostComponent>';
 import { UpArrow } from '@/assets/icons';
 import FloatingActionButton, { IconStyle } from '@/components/common/element/button/FloatingActionButton';
 import { color } from '@/components/common/tokens/colors';

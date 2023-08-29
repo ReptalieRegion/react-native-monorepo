@@ -2,25 +2,20 @@ import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import SharePostsDetailList from '../molecules/PostsDetailList';
+import SharePostsDetailList from '../organisms/PostsDetailList';
 import UserDetailPanel from '../organisms/UserDetailPanel';
 
-import { BottomTabSharePostDetailRouteProp } from '<BottomTabSharePostRoutes>';
-import { useFetchDetailPosts } from '@/apis/share-post';
+import type { BottomTabSharePostDetailRouteProp } from '<BottomTabSharePostRoutes>';
 import { color } from '@/components/common/tokens/colors';
 
 const SharePostDetailProfile = () => {
     const route = useRoute<BottomTabSharePostDetailRouteProp>();
-    const { data, isLoading } = useFetchDetailPosts(route.params.userId);
-
-    if (isLoading || !data) {
-        return null;
-    }
+    const userId = route.params.userId;
 
     return (
         <View style={styles.container}>
-            <UserDetailPanel {...data} />
-            <SharePostsDetailList {...data} />
+            <UserDetailPanel userId={userId} />
+            <SharePostsDetailList userId={userId} />
         </View>
     );
 };

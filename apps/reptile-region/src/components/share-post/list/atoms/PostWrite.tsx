@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 
-import { BottomTabStackNavigationProp } from '<RootRoutes>';
-import { FloatingActionButtonSize } from '<SharePostComponent>';
+import type { BottomTabStackNavigationProp } from '<RootRoutes>';
+import type { FloatingActionButtonSize } from '<SharePostComponent>';
 import { PostWriteIcon } from '@/assets/icons';
 import FloatingActionButton from '@/components/common/element/button/FloatingActionButton';
 import { color } from '@/components/common/tokens/colors';

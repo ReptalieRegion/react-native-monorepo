@@ -3,12 +3,12 @@ import { StyleSheet, View } from 'react-native';
 
 import CommentBaseRenderItem from '../atoms/CommentBaseRenderItem';
 
-import { SharePostCommentReplyData } from '<SharePostCommentReply>';
+import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
 
 const ReplyCommentRenderItem = (item: SharePostCommentReplyData) => {
     return (
         <View style={styles.container}>
-            <CommentBaseRenderItem data={{ contents: item.contents, writer: item.writer, tags: item.tags }} />
+            <CommentBaseRenderItem user={item.user} comment={item.comment} />
         </View>
     );
 };
