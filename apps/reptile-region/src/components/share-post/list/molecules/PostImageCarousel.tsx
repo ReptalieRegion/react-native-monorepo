@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import * as Haptic from 'react-native-haptic-feedback';
 import { shallow } from 'zustand/shallow';
 
 import HeartAnimation from '../atoms/HeartAnimation';
@@ -8,7 +9,6 @@ import ImageContent from '../atoms/ImageContent';
 import type { SharePostListData } from '<SharePostAPI>';
 import DoubleTabView from '@/components/common/element/view/DoubleTabView';
 import useSharePostListStore from '@/stores/share-post/list';
-import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 type ImagesSliderProps = {
     post: Pick<SharePostListData['post'], 'images' | 'id'>;
@@ -29,7 +29,7 @@ const PostImageCarousel = ({ post }: ImagesSliderProps) => {
         setStartLikeAnimation(post.id, true);
 
         if (!startLikeAnimation) {
-            Haptic.trigger({ type: 'impactLight' });
+            Haptic.trigger('impactLight');
         }
     };
 

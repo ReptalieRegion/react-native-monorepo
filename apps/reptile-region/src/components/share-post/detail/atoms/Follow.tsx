@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { ColorValue, StyleSheet, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import * as Haptic from 'react-native-haptic-feedback';
 
 import type { SharePostListData } from '<SharePostAPI>';
 import { color } from '@/components/common/tokens/colors';
-import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 type PostHeaderProps = {
     user: Pick<SharePostListData['user'], 'isFollow' | 'id'>;
@@ -29,7 +29,7 @@ const Follow = ({ user }: PostHeaderProps) => {
     const followInfo = makeFollowInfo(isFollowing);
 
     const handleClickFollow = () => {
-        Haptic.trigger({ type: 'impactLight' });
+        Haptic.trigger('impactLight');
         setIsFollowing((state) => !state);
     };
 

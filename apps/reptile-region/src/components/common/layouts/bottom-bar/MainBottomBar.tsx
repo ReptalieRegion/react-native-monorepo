@@ -1,6 +1,7 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
+import * as Haptic from 'react-native-haptic-feedback';
 
 import MainBottomTabBarButton from './MainBottomTabBarButton';
 
@@ -15,7 +16,6 @@ import {
 } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 import useKeyboard from '@/hooks/useKeyboard';
-import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 type MenusType = {
     [key in keyof BottomTabParamList]: {
@@ -71,7 +71,7 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
                         });
 
                         if (!isFocused && !event.defaultPrevented) {
-                            Haptic.trigger({ type: 'impactLight' });
+                            Haptic.trigger('impactLight');
                             navigation.navigate(route.name);
                         }
                     };

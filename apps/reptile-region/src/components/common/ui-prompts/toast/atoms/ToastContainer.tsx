@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Dimensions, Platform, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
+import * as Haptic from 'react-native-haptic-feedback';
 import Animated, {
     runOnJS,
     useAnimatedStyle,
@@ -11,7 +12,6 @@ import Animated, {
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { UIPromptsDefaultProps } from '<UIPrompts>';
-import Haptic from '@/utils/webview-bridge/react-native/haptic/Haptic';
 
 interface ToastContainerProps extends UIPromptsDefaultProps {
     text: string;
@@ -38,7 +38,7 @@ const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: Toa
     });
 
     useEffect(() => {
-        Haptic.trigger({ type: 'impactLight' });
+        Haptic.trigger('impactLight');
 
         const moveTranslateY = Platform.OS === 'ios' ? top : 10;
         translateY.value = withTiming(moveTranslateY, { duration: 200 }, () => {
