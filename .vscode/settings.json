@@ -13,5 +13,5 @@
         "dockers": "Docker",
         "stores": "Global"
     },
-    "cSpell.words": ["tanstack"]
+    "cSpell.words": ["hookform", "tanstack", "typecheck", "zustand"]
 }
