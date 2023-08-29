@@ -11,7 +11,6 @@ const userController = () => {
         /** GET */
         rest.get(BASE_URI + 'users/:userId/profile', (req, res, ctx) => {
             const postUserProfile = createPostUserProfile();
-            console.log(postUserProfile);
 
             return res(ctx.status(200), ctx.json(postUserProfile));
         }),
