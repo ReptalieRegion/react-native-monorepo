@@ -38,7 +38,6 @@ const TaggedContent = ({ uuid, tags, contents, onPressTag }: TaggedContentProps)
 
     const onTextLayout = (event: NativeSyntheticEvent<TextLayoutEventData>) => {
         if (isTextTooLong === null) {
-            console.log(event.nativeEvent.lines.length > 2);
             setIsTextTooLong(event.nativeEvent.lines.length > 2);
         }
     };
