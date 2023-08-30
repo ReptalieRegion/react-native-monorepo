@@ -3,7 +3,7 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 
-import ListFooterLoading from '../../common/atoms/ListFooterComponent';
+import ListFooterLoading from '../../../common/loading/ListFooterComponent';
 import { ScrollToTopButtonAnimationMode } from '../atoms/ScrollToTopButton';
 import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
 import FloatingActionButtons from '../molecules/FloatingActionButtons';

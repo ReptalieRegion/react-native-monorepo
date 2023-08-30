@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import ListFooterLoading from '../../../../../common/atoms/ListFooterComponent';
+import ListFooterLoading from '../../../../../../common/loading/ListFooterComponent';
 import CommentSkeleton from '../atoms/CommentSkeleton';
 import CommentRenderItem from '../molecules/CommentRenderItem';
 
