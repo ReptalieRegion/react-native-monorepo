@@ -3,7 +3,6 @@ import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
 
-import ListFooterLoading from '../../../common/loading/ListFooterComponent';
 import { ScrollToTopButtonAnimationMode } from '../atoms/ScrollToTopButton';
 import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
 import FloatingActionButtons from '../molecules/FloatingActionButtons';
@@ -12,6 +11,7 @@ import PostCard from '../organisms/PostCard';
 import type { ScrollIntoViewProps } from '<FlashList>';
 import type { SharePostListData } from '<SharePostAPI>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
+import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 import { color } from '@/components/common/tokens/colors';
 
 const Posts = () => {
