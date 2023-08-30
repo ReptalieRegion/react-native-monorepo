@@ -4,9 +4,9 @@ import { updateFollow } from '../../repository';
 
 import type { CreateFollowRequest } from '<SharePostUserAPI>';
 
-const useUpdateFollow = ({ userId }: CreateFollowRequest) => {
+const useUpdateFollow = () => {
     return useMutation({
-        mutationFn: () => updateFollow({ userId }),
+        mutationFn: ({ userId }: CreateFollowRequest) => updateFollow({ userId }),
     });
 };
 

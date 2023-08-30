@@ -4,9 +4,9 @@ import { deleteComment } from '../../repository';
 
 import type { DeleteCommentRequest } from '<SharePostCommentAPI>';
 
-const useDeleteComment = ({ commentId }: DeleteCommentRequest) => {
+const useDeleteComment = () => {
     return useMutation({
-        mutationFn: () => deleteComment({ commentId }),
+        mutationFn: ({ commentId }: DeleteCommentRequest) => deleteComment({ commentId }),
     });
 };
 

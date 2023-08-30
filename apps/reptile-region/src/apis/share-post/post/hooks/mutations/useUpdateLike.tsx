@@ -4,10 +4,10 @@ import { updateLike } from '../../repository';
 
 import type { UpdateLikeRequest } from '<SharePostAPI>';
 
-const useUpdateLike = ({ postId }: UpdateLikeRequest) => {
+const useUpdateLike = () => {
     return useMutation({
         mutationKey: [''],
-        mutationFn: () => updateLike({ postId }),
+        mutationFn: ({ postId }: UpdateLikeRequest) => updateLike({ postId }),
     });
 };
 

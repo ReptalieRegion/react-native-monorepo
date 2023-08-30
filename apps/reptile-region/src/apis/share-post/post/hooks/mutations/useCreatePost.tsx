@@ -4,10 +4,10 @@ import { createPost } from '../../repository';
 
 import type { CreatePostRequest } from '<SharePostAPI>';
 
-const useCreatePost = ({ contents, files, tagIds }: CreatePostRequest) => {
+const useCreatePost = () => {
     return useMutation({
         mutationKey: [''],
-        mutationFn: () => createPost({ contents, files, tagIds }),
+        mutationFn: ({ contents, files, tagIds }: CreatePostRequest) => createPost({ contents, files, tagIds }),
     });
 };
 

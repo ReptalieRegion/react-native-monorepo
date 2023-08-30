@@ -4,9 +4,9 @@ import { updateComment } from '../../repository';
 
 import type { UpdateCommentRequest } from '<SharePostCommentAPI>';
 
-const useUpdateComment = ({ commentId, contents, tagIds }: UpdateCommentRequest) => {
+const useUpdateComment = () => {
     return useMutation({
-        mutationFn: () => updateComment({ commentId, contents, tagIds }),
+        mutationFn: ({ commentId, contents, tagIds }: UpdateCommentRequest) => updateComment({ commentId, contents, tagIds }),
     });
 };
 

@@ -4,10 +4,10 @@ import { updatePost } from '../../repository';
 
 import type { UpdatePostRequest } from '<SharePostAPI>';
 
-const useUpdatePost = ({ postId, contents, files, tagIds }: UpdatePostRequest) => {
+const useUpdatePost = () => {
     return useMutation({
         mutationKey: [''],
-        mutationFn: () => updatePost({ postId, contents, files, tagIds }),
+        mutationFn: ({ postId, contents, files, tagIds }: UpdatePostRequest) => updatePost({ postId, contents, files, tagIds }),
     });
 };
 
