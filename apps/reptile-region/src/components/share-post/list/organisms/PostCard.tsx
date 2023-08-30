@@ -14,7 +14,7 @@ const PostCard = ({ post, user }: SharePostListData) => {
 
     return (
         <View style={styles.container}>
-            <PostHeader post={{ id: postId }} user={{ id: userId, isFollow, nickname, profile }} />
+            <PostHeader post={{ id: postId, isMine: post.isMine }} user={{ id: userId, isFollow, nickname, profile }} />
             <PostImageCarousel post={{ id: postId, images }} />
             <InteractivePost post={{ id: postId, images, isLike }} />
             <PostContent post={{ id: postId, commentCount, contents, likeCount, tagIds }} />

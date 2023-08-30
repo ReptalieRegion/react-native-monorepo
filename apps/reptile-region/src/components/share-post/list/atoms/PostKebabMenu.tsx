@@ -9,7 +9,7 @@ import { useUIPrompts } from '@/contexts/ui-prompts/UIPrompts';
 
 type PostKebabProps = {
     user: Pick<SharePostListData['user'], 'id'>;
-    post: Pick<SharePostListData['post'], 'id'>;
+    post: Pick<SharePostListData['post'], 'id' | 'isMine'>;
 };
 
 const PostKebabMenu = ({ user, post }: PostKebabProps) => {

@@ -9,7 +9,7 @@ import type { SharePostListData } from '<SharePostAPI>';
 
 type PostHeaderProps = {
     user: Pick<SharePostListData['user'], 'nickname' | 'profile' | 'isFollow' | 'id'>;
-    post: Pick<SharePostListData['post'], 'id'>;
+    post: Pick<SharePostListData['post'], 'id' | 'isMine'>;
 };
 
 const PostHeader = ({ user, post }: PostHeaderProps) => {
@@ -21,7 +21,7 @@ const PostHeader = ({ user, post }: PostHeaderProps) => {
             <Profile user={{ id: userId, nickname, profile }} />
             <View style={styles.rightContent}>
                 <Follow user={{ id: userId, isFollow }} post={{ id: postId }} />
-                <PostKebabMenu user={{ id: user.id }} post={{ id: post.id }} />
+                <PostKebabMenu user={{ id: user.id }} post={post} />
             </View>
         </View>
     );
