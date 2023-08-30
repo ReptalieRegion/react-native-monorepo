@@ -1,8 +1,8 @@
-import { CameraRoll } from '@react-native-camera-roll/camera-roll';
-import React, { useRef } from 'react';
+import { CameraRoll, PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import React, { useCallback, useRef } from 'react';
 import { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
 import ImageContent from '../atoms/ImageContent';
@@ -74,17 +74,28 @@ const ImageList = () => {
             });
     };
 
-    return photos.length !== 0 ? (
-        <FlatList
-            contentContainerStyle={styles.contentContainer}
-            data={photos}
-            keyExtractor={(_, index) => index.toString()}
-            numColumns={NUM_COLUMNS}
-            onEndReached={loadMorePhotos}
-            onEndReachedThreshold={0.5}
-            renderItem={({ item, index }) => <ImageContent numColumns={NUM_COLUMNS} item={item} index={index} />}
-        />
-    ) : null;
+    const keyExtractor = useCallback((_: PhotoIdentifier, index: number) => index.toString(), []);
+    const renderItem = useCallback(
+        ({ item, index }: ListRenderItemInfo<PhotoIdentifier>) => (
+            <ImageContent numColumns={NUM_COLUMNS} item={item} index={index} />
+        ),
+        [],
+    );
+
+    return (
+        <View style={styles.container}>
+            <FlashList
+                contentContainerStyle={styles.contentContainer}
+                data={photos}
+                keyExtractor={keyExtractor}
+                renderItem={renderItem}
+                numColumns={NUM_COLUMNS}
+                onEndReached={loadMorePhotos}
+                onEndReachedThreshold={0.5}
+                estimatedItemSize={Dimensions.get('window').width / NUM_COLUMNS - 2}
+            />
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -92,7 +103,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     contentContainer: {
-        flexGrow: 1,
         paddingBottom: 16,
     },
 });
