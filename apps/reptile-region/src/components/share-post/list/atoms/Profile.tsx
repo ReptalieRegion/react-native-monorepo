@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import type { BottomTabSharePostListNavigationProp } from '<BottomTabSharePostRoutes>';
@@ -23,14 +23,13 @@ const Profile = ({ user }: ProfileProps) => {
     return (
         <TouchableWithoutFeedback onPress={gotoDetailPage}>
             <View style={styles.container}>
-                <FastImage
+                <Image
                     style={styles.image}
                     source={{
                         uri: profile.src,
-                        priority: FastImage.priority.high,
-                        cache: FastImage.cacheControl.web,
                     }}
-                    resizeMode={FastImage.resizeMode.cover}
+                    priority="high"
+                    contentFit="cover"
                 />
                 <Text>{user.nickname}</Text>
             </View>

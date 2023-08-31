@@ -1,6 +1,6 @@
+import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
 
 import type { SharePostUserData } from '<SharePostUserAPI>';
 
@@ -12,14 +12,13 @@ const UserAvatar = ({ user: { profile, nickname } }: UserAvatarProps) => {
     return (
         <>
             <View style={styles.imageContainer}>
-                <FastImage
+                <Image
                     style={styles.image}
                     source={{
                         uri: profile.src,
-                        priority: FastImage.priority.normal,
-                        cache: FastImage.cacheControl.web,
                     }}
-                    resizeMode={FastImage.resizeMode.cover}
+                    priority="high"
+                    contentFit="cover"
                 />
             </View>
             <Text style={styles.nickname}>{nickname}</Text>

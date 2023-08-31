@@ -1,6 +1,6 @@
+import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import FastImage from 'react-native-fast-image';
 
 import type { SharePostImagesData } from '<SharePostAPI>';
 
@@ -8,14 +8,13 @@ type SquareImageProps = SharePostImagesData & { width: number };
 
 const SquareImage = ({ post, width }: SquareImageProps) => {
     return (
-        <FastImage
+        <Image
             source={{
                 uri: post.thumbnail.src,
-                priority: FastImage.priority.high,
-                cache: FastImage.cacheControl.web,
             }}
+            priority="high"
             style={[styles.image, { width }]}
-            resizeMode={FastImage.resizeMode.cover}
+            contentFit="cover"
         />
     );
 };
