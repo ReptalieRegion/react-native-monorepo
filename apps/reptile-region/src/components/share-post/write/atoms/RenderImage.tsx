@@ -1,6 +1,7 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { Image } from 'expo-image';
 import React, { useRef } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { CancelButton } from '@/assets/icons';

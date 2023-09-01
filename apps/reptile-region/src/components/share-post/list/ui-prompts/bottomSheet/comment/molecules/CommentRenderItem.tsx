@@ -1,5 +1,5 @@
 import { FlashList, ListRenderItem, ListRenderItemInfo } from '@shopify/flash-list';
-import React, { memo, useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
@@ -88,4 +88,4 @@ const CommentRenderItem = ({ item, index, isAlreadyRenderItem }: CommentRenderIt
     );
 };
 
-export default memo(CommentRenderItem);
+export default CommentRenderItem;
