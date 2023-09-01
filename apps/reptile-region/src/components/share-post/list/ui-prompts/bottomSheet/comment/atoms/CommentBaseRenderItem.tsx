@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
 
 import TaggedContent from '../../../../../common/atoms/TaggedContent';
 import type { TagPressHandler } from '../../../../../common/atoms/TaggedContent';
@@ -46,12 +45,10 @@ const CommentBaseRenderItem = ({ FootChildren, showAnimated, user, comment }: Re
                 showAnimated={showAnimated}
                 source={{
                     uri: user.profile.src,
-                    priority: FastImage.priority.high,
-                    cache: FastImage.cacheControl.web,
                 }}
-                defaultSource={require('../../../../../../../assets/images/avatar.png')}
-                resizeMode={FastImage.resizeMode.cover}
-                fallback
+                priority={'high'}
+                placeholder={require('../../../../../../../assets/images/avatar.png')}
+                contentFit="cover"
             />
             <View style={styles.commentItemContent}>
                 <View style={styles.commentItemGap}>

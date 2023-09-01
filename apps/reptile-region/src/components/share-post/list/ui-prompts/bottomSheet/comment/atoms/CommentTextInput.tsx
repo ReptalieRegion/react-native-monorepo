@@ -1,6 +1,6 @@
+import { Image } from 'expo-image';
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import FastImage from 'react-native-fast-image';
 import { TextInput } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 
@@ -13,12 +13,10 @@ const CommentTextInput = () => {
     return (
         <Animated.View style={keyboardStyle}>
             <View style={styles.bottom}>
-                <FastImage
+                <Image
                     style={styles.circle}
                     source={{
                         uri: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F009%2F2022%2F06%2F08%2F0004974574_002_20220608070201911.jpg&type=a340',
-                        priority: FastImage.priority.normal,
-                        cache: FastImage.cacheControl.web,
                     }}
                 />
                 <TextInput placeholder="댓글을 입력하세요..." style={styles.textInput} autoFocus multiline />

@@ -1,9 +1,9 @@
+import { Image, ImageProps } from 'expo-image';
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import FastImage, { FastImageProps } from 'react-native-fast-image';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
-type AvatarProps = Omit<FastImageProps, 'style'> & {
+type AvatarProps = Omit<ImageProps, 'style'> & {
     size?: number;
     showAnimated?: boolean;
 };
@@ -14,7 +14,7 @@ type Size = {
 };
 
 const DefaultAvatar = ({ sizeStyle }: { sizeStyle: Size }) => {
-    return <FastImage style={[styles.size, sizeStyle]} defaultSource={require('../../../assets/images/avatar.png')} />;
+    return <Image style={[styles.size, sizeStyle]} placeholder={require('../../../assets/images/avatar.png')} />;
 };
 
 const Avatar = ({ size = 30, showAnimated, ...rest }: AvatarProps) => {
@@ -39,7 +39,7 @@ const Avatar = ({ size = 30, showAnimated, ...rest }: AvatarProps) => {
         <View style={[styles.container, styles.circle, sizeStyle]}>
             <DefaultAvatar sizeStyle={sizeStyle} />
             <Animated.View style={[styles.imageContainer, animatedStyle]}>
-                <FastImage {...rest} style={[styles.size, sizeStyle]} onLoad={onLoad} />
+                <Image {...rest} style={[styles.size, sizeStyle]} onLoad={onLoad} />
             </Animated.View>
         </View>
     );

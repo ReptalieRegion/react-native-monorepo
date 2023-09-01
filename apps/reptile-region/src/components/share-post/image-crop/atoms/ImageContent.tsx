@@ -1,6 +1,7 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { Image } from 'expo-image';
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
@@ -85,6 +86,7 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
                 <Image
                     style={[styles.image, imageStyles, { height: imageWidth, width: imageWidth }]}
                     source={{ uri: item.node.image.uri }}
+                    placeholder={require('@/assets/images/default_image.png')}
                 />
             </View>
         </TouchableOpacity>

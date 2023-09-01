@@ -40,7 +40,7 @@ const Posts = () => {
         return <SharePostListSkeleton />;
     }
 
-    const scrollIntoView = ({ animated = true, offset }: ScrollIntoViewProps) => {
+    const scrollIntoView = ({ animated = false, offset }: ScrollIntoViewProps) => {
         flashListRef.current?.scrollToOffset({ animated, offset });
     };
 
