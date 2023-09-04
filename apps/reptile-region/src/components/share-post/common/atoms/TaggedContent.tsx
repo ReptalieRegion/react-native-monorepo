@@ -43,6 +43,7 @@ const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
                     if (isTag) {
                         return (
                             <Text
+                                key={key}
                                 style={styles.color}
                                 onPress={(event) => onPressTag?.(event, content)}
                                 suppressHighlighting={true}

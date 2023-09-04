@@ -5,10 +5,10 @@ import { getDetailUserPostImages } from '../../repository';
 import type { GetDetailUserPostImagesRequest, SharePostImagesInfiniteData } from '<SharePostAPI>';
 import { postQueryKeys } from '@/apis/share-post/query-keys';
 
-const useInfiniteUserPostImages = ({ userId }: GetDetailUserPostImagesRequest) => {
+const useInfiniteUserPostImages = ({ userId, nickname }: GetDetailUserPostImagesRequest) => {
     return useInfiniteQuery<SharePostImagesInfiniteData>({
-        queryKey: postQueryKeys.detailImage(userId),
-        queryFn: ({ pageParam }) => getDetailUserPostImages({ userId, pageParam }),
+        queryKey: postQueryKeys.detailImage(userId ?? nickname ?? ''),
+        queryFn: ({ pageParam }) => getDetailUserPostImages({ userId, nickname, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
     });
 };

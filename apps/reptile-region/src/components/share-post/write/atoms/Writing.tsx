@@ -3,7 +3,7 @@ import { View, TextInput, StyleSheet, Text, NativeSyntheticEvent, TextInputSelec
 import { shallow } from 'zustand/shallow';
 
 import { color } from '@/components/common/tokens/colors';
-import useSharePostWriteStore from '@/stores/share-post/write';
+import useUserTaggingStore from '@/stores/share-post/useUserTaggingStore';
 
 type Selection = TextInputSelectionChangeEventData['selection'];
 
@@ -11,14 +11,14 @@ const MAX_CHARACTER_COUNT = 500;
 
 const WritingComponent = () => {
     const [tagSelections, setTagSelections] = useState<Selection[]>();
-    const [currentSelection, setCurrentSelection] = useState<Selection>();
 
-    const { contents, resetSearchInfo, setSearchInfo, setContents } = useSharePostWriteStore(
+    const { contentsInfo, setContentsSelection, setContents, setTaggingInfo, resetTaggingInfo } = useUserTaggingStore(
         (state) => ({
-            contents: state.contents,
-            setSearchInfo: state.setSearchInfo,
-            resetSearchInfo: state.resetSearchInfo,
+            contentsInfo: state.contentsInfo,
+            setContentsSelection: state.setContentsSelection,
             setContents: state.setContents,
+            setTaggingInfo: state.setTaggingInfo,
+            resetTaggingInfo: state.resetTaggingInfo,
         }),
         shallow,
     );
@@ -40,35 +40,39 @@ const WritingComponent = () => {
         [setContents],
     );
 
-    const handleSelection = useCallback((event: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
-        setCurrentSelection(event.nativeEvent.selection);
-    }, []);
+    const handleSelection = useCallback(
+        (event: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
+            setContentsSelection(event.nativeEvent.selection);
+        },
+        [setContentsSelection],
+    );
 
     useEffect(() => {
+        const currentSelection = contentsInfo.selection;
         const isNotExistsTag = tagSelections === undefined || tagSelections.length === 0;
-        const isNotOneSelection = currentSelection === undefined || currentSelection.start !== currentSelection.end;
+        const isNotOneSelection = currentSelection === null || currentSelection.start !== currentSelection.end;
         if (isNotExistsTag || isNotOneSelection) {
-            resetSearchInfo();
+            resetTaggingInfo();
             return;
         }
 
         for (const selection of tagSelections) {
             const { start, end } = selection;
             if (start <= currentSelection.start && currentSelection.end <= end) {
-                setSearchInfo({ start, end });
+                setTaggingInfo(selection);
                 return;
             }
         }
 
-        resetSearchInfo();
-    }, [currentSelection, tagSelections, resetSearchInfo, setSearchInfo]);
+        resetTaggingInfo();
+    }, [contentsInfo.selection, tagSelections, resetTaggingInfo, setTaggingInfo]);
 
     return (
         <View style={styles.container}>
             <View style={[styles.textareaContainer]}>
                 <TextInput
+                    value={contentsInfo.contents}
                     style={[styles.textarea, styles.absolute]}
-                    value={contents}
                     placeholder="일상을 공유해 주세요."
                     maxLength={MAX_CHARACTER_COUNT}
                     onChangeText={handleTextChange}
@@ -77,7 +81,7 @@ const WritingComponent = () => {
                 />
             </View>
             <View style={styles.characterCountContainer}>
-                <Text style={styles.characterCountText}>{`${contents.length} / ${MAX_CHARACTER_COUNT}`}</Text>
+                <Text style={styles.characterCountText}>{`${contentsInfo.contents.length} / ${MAX_CHARACTER_COUNT}`}</Text>
             </View>
         </View>
     );

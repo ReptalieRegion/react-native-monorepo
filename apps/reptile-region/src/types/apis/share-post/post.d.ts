@@ -56,7 +56,8 @@ declare module '<SharePostAPI>' {
 
     // 특정 유저 게시클 이미지 패치
     type GetDetailUserPostImagesRequest = {
-        userId: string;
+        userId?: string;
+        nickname?: string;
     };
 
     // 특정 유저 게시글 패치

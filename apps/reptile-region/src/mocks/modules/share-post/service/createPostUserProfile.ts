@@ -6,6 +6,7 @@ import { fakerBoolean } from '@/mocks/utils/customFaker';
 const createPostUserProfile = (): SharePostUserData => {
     return {
         user: {
+            id: fakerKO.string.uuid(),
             nickname: fakerKO.person.middleName(),
             profile: {
                 src: fakerKO.image.avatar(),

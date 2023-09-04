@@ -10,15 +10,16 @@ import type { SharePostImagesData } from '<SharePostAPI>';
 import useInfiniteUserPostImages from '@/apis/share-post/post/hooks/queries/useInfiniteUserPostImages';
 
 type SharePostsDetailListProps = {
-    userId: string;
+    userId?: string;
+    nickname?: string;
 };
 
 const NUM_COLUMNS = 3;
 const DefaultPaddingBottom = 10;
 const ITEM_WIDTH = Dimensions.get('screen').width / NUM_COLUMNS - 2;
 
-const SharePostsDetailList = ({ userId }: SharePostsDetailListProps) => {
-    const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteUserPostImages({ userId });
+const SharePostsDetailList = ({ userId, nickname }: SharePostsDetailListProps) => {
+    const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteUserPostImages({ userId, nickname });
     const { bottom } = useSafeAreaInsets();
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);

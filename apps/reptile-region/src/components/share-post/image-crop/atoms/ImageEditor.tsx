@@ -1,24 +1,22 @@
 import { Image } from 'expo-image';
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
-import useSharePostWriteStore from '@/stores/share-post/write';
+import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
 const imageWidth = Dimensions.get('window').width;
 const imageHeight = Dimensions.get('window').height / 2 - 60;
 
 const ImageEditor = () => {
-    const currentSelectedPhoto = useSharePostWriteStore((state) => state.currentSelectedPhoto);
+    const currentSelectedPhoto = usePhotoStore((state) => state.currentSelectedPhoto);
 
-    return currentSelectedPhoto ? (
+    return (
         <Image
             style={styles.selectImage}
             source={{ uri: currentSelectedPhoto?.node.image.uri }}
             contentFit="cover"
             placeholder={require('@/assets/images/default_image.png')}
         />
-    ) : (
-        <View style={styles.selectImage} />
     );
 };
 

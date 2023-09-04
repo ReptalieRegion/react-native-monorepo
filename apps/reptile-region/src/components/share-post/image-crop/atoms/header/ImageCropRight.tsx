@@ -4,11 +4,11 @@ import { Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import type { BottomTabLessSharePostImageCropNavigationProp } from '<BottomTabLessNavigationList>';
-import useSharePostWriteStore from '@/stores/share-post/write';
+import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
 const ImageCropRightHeader = () => {
     const navigate = useNavigation<BottomTabLessSharePostImageCropNavigationProp>();
-    const hasSelectPhoto = useSharePostWriteStore((state) => state.selectedPhotos.length > 0);
+    const hasSelectPhoto = usePhotoStore((state) => state.selectedPhotos.length > 0);
 
     const handleNextPage = () => {
         if (!hasSelectPhoto) {

@@ -5,6 +5,7 @@ declare module '<SharePostUserAPI>' {
     /** Response */
     type SharePostUserData = {
         user: {
+            id: string;
             nickname: string;
             profile: ShareImageType;
             isFollow: boolean | undefined;

@@ -8,22 +8,23 @@ import { SharePostSearchFollowerUserData } from '<SharePostUserAPI>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import Avatar from '@/components/common/fast-image/Avatar';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
-import useSharePostWriteStore from '@/stores/share-post/write';
+import useUserTaggingStore from '@/stores/share-post/useUserTaggingStore';
 
 const FollowerUserList = () => {
-    const { search, contents, setContents, resetSearchInfo } = useSharePostWriteStore(
+    const { taggingInfo, contents, selectTag } = useUserTaggingStore(
         (state) => ({
-            contents: state.contents,
-            search: state.search,
-            setContents: state.setContents,
-            resetSearchInfo: state.resetSearchInfo,
+            contents: state.contentsInfo.contents,
+            taggingInfo: state.taggingInfo,
+            selectTag: state.selectTag,
         }),
         shallow,
     );
 
+    console.log(taggingInfo);
+
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
-        search: search.keyword,
-        enabled: search.isStart,
+        search: taggingInfo.keyword ?? '',
+        enabled: taggingInfo.keyword !== undefined,
     });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
@@ -31,15 +32,15 @@ const FollowerUserList = () => {
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<SharePostSearchFollowerUserData>) => {
             const handlePressItem = () => {
-                const selection = search.selection;
-                if (selection === null) {
+                if (taggingInfo.selection === null) {
                     return;
                 }
 
                 const newContents =
-                    contents.slice(0, selection.start) + item.user.nickname + contents.slice(selection.end, contents.length);
-                setContents(newContents);
-                resetSearchInfo();
+                    contents.slice(0, taggingInfo.selection.start) +
+                    item.user.nickname +
+                    contents.slice(taggingInfo.selection.end, contents.length);
+                selectTag(newContents);
                 return;
             };
 
@@ -52,7 +53,7 @@ const FollowerUserList = () => {
                 </TouchableOpacity>
             );
         },
-        [contents, search.selection, setContents, resetSearchInfo],
+        [taggingInfo.selection, contents, selectTag],
     );
     const onEndReached = useCallback(() => {
         if (hasNextPage && !isFetchingNextPage) {
@@ -60,7 +61,7 @@ const FollowerUserList = () => {
         }
     }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-    if (!search.isStart) {
+    if (taggingInfo.keyword === undefined) {
         return null;
     }
 

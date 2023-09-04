@@ -11,10 +11,11 @@ import { color } from '@/components/common/tokens/colors';
 const SharePostDetailProfile = () => {
     const route = useRoute<BottomTabSharePostDetailRouteProp>();
     const userId = route.params.userId;
+    const nickname = route.params.nickname;
 
     return (
         <View style={styles.container}>
-            <UserDetailPanel userId={userId} />
+            <UserDetailPanel userId={userId} nickname={nickname} />
             <SharePostsDetailList userId={userId} />
         </View>
     );

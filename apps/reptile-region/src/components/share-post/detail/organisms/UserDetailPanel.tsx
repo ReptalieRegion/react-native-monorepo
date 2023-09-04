@@ -8,11 +8,12 @@ import ActivitySummary from '../molecules/ActivitySummary';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 
 type UserDetailPanelProps = {
-    userId: string;
+    userId?: string;
+    nickname?: string;
 };
 
-const UserDetailPanel = ({ userId }: UserDetailPanelProps) => {
-    const { data } = useFetchUserProfile({ userId });
+const UserDetailPanel = ({ userId, nickname }: UserDetailPanelProps) => {
+    const { data } = useFetchUserProfile({ userId, nickname });
 
     if (!data) {
         return null;
@@ -26,7 +27,7 @@ const UserDetailPanel = ({ userId }: UserDetailPanelProps) => {
                 post={{ count: data.post.count }}
             />
             <View style={styles.textContainer}>
-                <Follow user={{ id: userId, isFollow: data.user.isFollow }} />
+                <Follow user={{ id: data.user.id, isFollow: data.user.isFollow }} />
             </View>
         </View>
     );

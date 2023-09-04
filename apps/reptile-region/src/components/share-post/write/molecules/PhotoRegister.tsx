@@ -8,13 +8,13 @@ import SharePostWriteTitle from '../atoms/SharePostWriteTitle';
 
 import { CancelButton } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import useSharePostWriteStore from '@/stores/share-post/write';
+import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
 const PhotoRegister = () => {
-    const { selectedPhotos, deleteSelectedPhotos } = useSharePostWriteStore(
+    const { selectedPhotos, deleteSelectedPhoto } = usePhotoStore(
         (state) => ({
             selectedPhotos: state.selectedPhotos,
-            deleteSelectedPhotos: state.deleteSelectedPhotos,
+            deleteSelectedPhoto: state.deleteSelectedPhoto,
         }),
         shallow,
     );
@@ -26,7 +26,7 @@ const PhotoRegister = () => {
 
         const photo = selectedPhotos[index];
         if (photo) {
-            deleteSelectedPhotos(photo.node.image.uri);
+            deleteSelectedPhoto(photo.node.image.uri);
         }
     };
 

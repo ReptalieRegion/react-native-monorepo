@@ -9,7 +9,7 @@ import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
 
 import { color } from '@/components/common/tokens/colors';
 import { useUIPrompts } from '@/contexts/ui-prompts/UIPrompts';
-import useSharePostWriteStore from '@/stores/share-post/write';
+import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
 interface ImageContentProps {
     item: PhotoIdentifier;
@@ -49,11 +49,20 @@ const makeImageStyles = (isCurrentSelectedImage: boolean) => {
 
 const ImageContent = ({ item, numColumns }: ImageContentProps) => {
     const { setUIPrompts } = useUIPrompts();
-    const { isCurrentPhoto, selectedNumber, setSelectedPhotos, deleteSelectedPhotos } = useSharePostWriteStore(
+    const {
+        isCurrentSelectedPhoto,
+        selectedNumber,
+        changeCurrentSelectedPhoto,
+        getImageState,
+        deleteSelectedPhoto,
+        addSelectedPhoto,
+    } = usePhotoStore(
         (state) => ({
-            setSelectedPhotos: state.setSelectedPhotos,
-            deleteSelectedPhotos: state.deleteSelectedPhotos,
-            isCurrentPhoto:
+            changeCurrentSelectedPhoto: state.changeCurrentSelectedPhoto,
+            deleteSelectedPhoto: state.deleteSelectedPhoto,
+            getImageState: state.getImageState,
+            addSelectedPhoto: state.addSelectedPhoto,
+            isCurrentSelectedPhoto:
                 state.selectedPhotos.length !== 0 && state.currentSelectedPhoto?.node.image.uri === item.node.image.uri,
             selectedNumber: state.findSelectedPhoto(item.node.image.uri),
         }),
@@ -61,19 +70,27 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
     );
 
     const imageCircleStyles = makeImageCircleStyles(selectedNumber);
-    const imageStyles = makeImageStyles(isCurrentPhoto);
+    const imageStyles = makeImageStyles(isCurrentSelectedPhoto);
     const imageWidth = Dimensions.get('window').width / numColumns - 2;
 
     const handleImageClick = () => {
-        if (isCurrentPhoto) {
-            deleteSelectedPhotos(item.node.image.uri);
-            return;
-        }
-
-        const message = setSelectedPhotos(item);
-        if (message === 'limit') {
-            const { uiPromptsOpen } = setUIPrompts({ openType: 'toast', props: {}, Component: PhotoLimit });
-            uiPromptsOpen();
+        const imageURI = item.node.image.uri;
+        const imageState = getImageState(imageURI);
+        console.log(imageState);
+        switch (imageState) {
+            case 'add':
+                addSelectedPhoto(item);
+                return;
+            case 'change':
+                changeCurrentSelectedPhoto(item);
+                return;
+            case 'delete':
+                deleteSelectedPhoto(imageURI);
+                return;
+            case 'limit':
+                const { uiPromptsOpen } = setUIPrompts({ openType: 'toast', props: {}, Component: PhotoLimit });
+                uiPromptsOpen();
+                return;
         }
     };
 

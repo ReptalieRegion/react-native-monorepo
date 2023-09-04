@@ -23,8 +23,10 @@ export const getPosts = async ({ pageParam = 0 }: GetPostsRequest) => {
 export const getDetailUserPostImages = async ({
     pageParam = 0,
     userId,
+    nickname,
 }: GetDetailUserPostImagesRequest & InfinitePageParam) => {
-    const response = await clientFetch(`api/share/posts/images/users/${userId}?pageParam=${pageParam}`);
+    const queryString = userId ? `userId=${userId}` : nickname ? `nickname=${nickname}` : '';
+    const response = await clientFetch(`api/share/posts/images/?pageParam=${pageParam}&${queryString}`);
 
     return response.json();
 };

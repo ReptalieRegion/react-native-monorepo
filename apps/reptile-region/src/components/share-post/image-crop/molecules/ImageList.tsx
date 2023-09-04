@@ -7,14 +7,14 @@ import { shallow } from 'zustand/shallow';
 
 import ImageContent from '../atoms/ImageContent';
 
-import useSharePostWriteStore from '@/stores/share-post/write';
+import usePhotoStore from '@/stores/share-post/usePhotoStore';
 import { photoPermissionCheck } from '@/utils/permissions/photo-permission';
 
 const NUM_COLUMNS = 4;
-const LOAD_PHOTO_LIMIT = 40;
+const LOAD_PHOTO_LIMIT = 60;
 
 const ImageList = () => {
-    const { photos, addPhotos, initPhotos } = useSharePostWriteStore(
+    const { photos, addPhotos, initPhotos } = usePhotoStore(
         (state) => ({
             photos: state.photos,
             addPhotos: state.addPhotos,
@@ -23,16 +23,10 @@ const ImageList = () => {
         shallow,
     );
 
-    const isLoadingMorePhotosRef = useRef<boolean>(false);
+    const onEndReachedCalledDuringMomentum = useRef(true);
     const isLastPhotosRef = useRef<boolean>(false);
-    const isFirstRef = useRef<boolean>(false);
 
     useEffect(() => {
-        if (isFirstRef.current) {
-            return;
-        }
-
-        isFirstRef.current = true;
         const fetchPhotos = async () => {
             try {
                 const hasPermission = await photoPermissionCheck();
@@ -49,29 +43,28 @@ const ImageList = () => {
     }, [initPhotos]);
 
     const loadMorePhotos = async () => {
-        if (isLoadingMorePhotosRef.current || isLastPhotosRef.current) {
+        if (isLastPhotosRef.current || onEndReachedCalledDuringMomentum.current) {
             return;
         }
 
-        isLoadingMorePhotosRef.current = true;
-        CameraRoll.getPhotos({
-            first: LOAD_PHOTO_LIMIT,
-            after: photos.length > 0 ? photos[photos.length - 1].node.image.uri : undefined,
-            assetType: 'Photos',
-        })
-            .then((result) => {
-                if (result.edges.length === 0) {
-                    isLastPhotosRef.current = true;
-                } else {
-                    addPhotos(result.edges);
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            })
-            .finally(() => {
-                isLoadingMorePhotosRef.current = false;
+        try {
+            const result = await CameraRoll.getPhotos({
+                first: LOAD_PHOTO_LIMIT,
+                after: photos.length > 0 ? photos[photos.length - 1].node.image.uri : undefined,
+                assetType: 'Photos',
             });
+
+            if (result.edges.length === 0) {
+                isLastPhotosRef.current = true;
+                return;
+            }
+
+            addPhotos(result.edges);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            onEndReachedCalledDuringMomentum.current = true;
+        }
     };
 
     const keyExtractor = useCallback((_: PhotoIdentifier, index: number) => index.toString(), []);
@@ -86,12 +79,12 @@ const ImageList = () => {
         <View style={styles.container}>
             <FlashList
                 contentContainerStyle={styles.contentContainer}
+                numColumns={NUM_COLUMNS}
                 data={photos}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
-                numColumns={NUM_COLUMNS}
                 onEndReached={loadMorePhotos}
-                onEndReachedThreshold={0.5}
+                onMomentumScrollBegin={() => (onEndReachedCalledDuringMomentum.current = false)}
                 estimatedItemSize={Dimensions.get('window').width / NUM_COLUMNS - 2}
             />
         </View>
