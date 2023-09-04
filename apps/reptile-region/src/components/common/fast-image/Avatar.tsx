@@ -13,10 +13,6 @@ type Size = {
     height: number;
 };
 
-const DefaultAvatar = ({ sizeStyle }: { sizeStyle: Size }) => {
-    return <Image style={[styles.size, sizeStyle]} placeholder={require('../../../assets/images/avatar.png')} />;
-};
-
 const Avatar = ({ size = 30, showAnimated, ...rest }: AvatarProps) => {
     const opacity = useSharedValue(0);
     const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
@@ -37,9 +33,13 @@ const Avatar = ({ size = 30, showAnimated, ...rest }: AvatarProps) => {
 
     return (
         <View style={[styles.container, styles.circle, sizeStyle]}>
-            <DefaultAvatar sizeStyle={sizeStyle} />
             <Animated.View style={[styles.imageContainer, animatedStyle]}>
-                <Image {...rest} style={[styles.size, sizeStyle]} onLoad={onLoad} />
+                <Image
+                    {...rest}
+                    placeholder={require('../../../assets/images/avatar.png')}
+                    style={[styles.size, sizeStyle]}
+                    onLoad={onLoad}
+                />
             </Animated.View>
         </View>
     );

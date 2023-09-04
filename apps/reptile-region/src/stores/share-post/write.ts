@@ -4,33 +4,72 @@ import { createWithEqualityFn } from 'zustand/traditional';
 
 export const MAX_SELECT_PHOTO_COUNT = 5;
 
+type SelectionType = {
+    start: number;
+    end: number;
+};
+
+type SearchInfo = {
+    isStart: boolean;
+    keyword: string;
+    selection: SelectionType | null;
+};
+
 type SharePostWriteState = {
+    search: SearchInfo;
+    contents: string;
     currentSelectedPhoto: PhotoIdentifier | null;
     selectedPhotos: PhotoIdentifier[];
     photos: PhotoIdentifier[];
-    postContent: string;
 };
 
 interface SharePostWriteActions {
+    resetSearchInfo: () => void;
+    setSearchInfo: (selection: SelectionType) => void;
+    setContents: (contents: string) => void;
     setSelectedPhotos: (photo: PhotoIdentifier) => 'limit' | 'success' | 'exists';
     deleteSelectedPhotos: (uri: string) => void;
     findSelectedPhoto: (uri: string) => number;
     addPhotos: (newPhotos: PhotoIdentifier[]) => void;
     initPhotos: (photos: PhotoIdentifier[]) => void;
-    setPostContent: (content: string) => void;
     reset: () => void;
 }
 
 const defaultSharePost: SharePostWriteState = {
+    search: {
+        isStart: false,
+        keyword: '',
+        selection: null,
+    },
+    contents: '',
     currentSelectedPhoto: null,
     selectedPhotos: [],
     photos: [],
-    postContent: '',
 };
 
 const useSharePostWriteStore = createWithEqualityFn<SharePostWriteState & SharePostWriteActions>()(
     devtools((set, get) => ({
         ...defaultSharePost,
+        resetSearchInfo: () => {
+            set((state) => ({
+                ...state,
+                search: {
+                    isStart: false,
+                    keyword: '',
+                    selection: null,
+                },
+            }));
+        },
+        setSearchInfo: (selection) => {
+            set((state) => ({
+                ...state,
+                search: {
+                    isStart: true,
+                    keyword: state.contents.slice(selection.start, selection.end),
+                    selection,
+                },
+            }));
+        },
         setSelectedPhotos: (photo) => {
             const { selectedPhotos } = get();
             const isExistPhoto = selectedPhotos.findIndex(({ node }) => node.image.uri === photo.node.image.uri) !== -1;
@@ -47,8 +86,8 @@ const useSharePostWriteStore = createWithEqualityFn<SharePostWriteState & ShareP
             set((state) => ({ ...state, currentSelectedPhoto: photo, selectedPhotos: [...selectedPhotos, photo] }));
             return 'success';
         },
-        setPostContent: (content) => {
-            set((state) => ({ ...state, postContent: content }));
+        setContents: (contents) => {
+            set((state) => ({ ...state, contents }));
         },
         deleteSelectedPhotos: (uri) => {
             const { selectedPhotos } = get();

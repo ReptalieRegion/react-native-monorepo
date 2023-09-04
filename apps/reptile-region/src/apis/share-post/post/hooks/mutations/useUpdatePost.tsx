@@ -7,7 +7,7 @@ import type { UpdatePostRequest } from '<SharePostAPI>';
 const useUpdatePost = () => {
     return useMutation({
         mutationKey: [''],
-        mutationFn: ({ postId, contents, files, tagIds }: UpdatePostRequest) => updatePost({ postId, contents, files, tagIds }),
+        mutationFn: ({ postId, contents, files }: UpdatePostRequest) => updatePost({ postId, contents, files }),
     });
 };
 

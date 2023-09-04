@@ -1,10 +1,8 @@
 import { fakerKO } from '@faker-js/faker';
 
-import type { TagIds } from '<TagIds>';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
-export const createTagIdsAndContent = () => {
-    let tagIdsMap: TagIds = {};
+export const createContents = () => {
     const tagIdsCount = fakerKO.number.int({ min: 0, max: 3 });
     const tags = createEmptyArray(tagIdsCount).map(() => ({
         id: fakerKO.string.uuid(),
@@ -16,8 +14,7 @@ export const createTagIdsAndContent = () => {
     tags.forEach((tag) => {
         const insertionPoint = fakerKO.number.int({ min: 0, max: contentCount });
         contents.splice(insertionPoint, 0, tag.nickname);
-        tagIdsMap[tag.nickname] = { id: tag.id };
     });
 
-    return { tagIds: tagIdsMap, contents };
+    return contents.join(' ');
 };

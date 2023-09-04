@@ -8,8 +8,7 @@ declare module '<SharePostCommentReplyAPI>' {
         };
         comment: {
             id: string;
-            contents: string[];
-            tagIds: Tags;
+            contents: string;
             isMine: boolean;
             isModified: boolean;
         };
@@ -27,8 +26,7 @@ declare module '<SharePostCommentReplyAPI>' {
     /** POST */
     type CreateCommentReplyRequest = {
         commentId: string;
-        contents: string[];
-        tagIds: string[];
+        contents: string;
     };
 
     /** PUT */
@@ -36,7 +34,6 @@ declare module '<SharePostCommentReplyAPI>' {
         commentReplyId: string;
         commentId: string;
         contents: string[];
-        tagIds: string[];
     };
 
     /** Delete */

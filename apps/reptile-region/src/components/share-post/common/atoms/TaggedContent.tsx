@@ -1,32 +1,17 @@
 import React, { useRef, useState } from 'react';
 import { GestureResponderEvent, NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData } from 'react-native';
 
-import type { TagIds, TagValue } from '<TagIds>';
 import { color } from '@/components/common/tokens/colors';
 
-export type TagPressHandler = (event: GestureResponderEvent, content: string, tagId: string) => void;
+export type TagPressHandler = (event: GestureResponderEvent, content: string) => void;
 
 type TaggedContentProps = {
     uuid: string;
-    tags: TagIds;
-    contents: string[];
+    contents: string;
     onPressTag?: TagPressHandler;
 };
 
-type TagProps = {
-    content: string;
-    tag: TagValue;
-} & Pick<TaggedContentProps, 'onPressTag'>;
-
-const Tag = ({ content, tag, onPressTag }: TagProps) => {
-    return (
-        <Text style={styles.color} onPress={(event) => onPressTag?.(event, content, tag.id)} suppressHighlighting={true}>
-            {content + ' '}
-        </Text>
-    );
-};
-
-const TaggedContent = ({ uuid, tags, contents, onPressTag }: TaggedContentProps) => {
+const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
     const lastItemId = useRef(uuid);
     const [isTextTooLong, setIsTextTooLong] = useState<boolean | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -51,13 +36,20 @@ const TaggedContent = ({ uuid, tags, contents, onPressTag }: TaggedContentProps)
                 numberOfLines={isExpanded || isTextTooLong === null ? undefined : 2}
                 onTextLayout={onTextLayout}
             >
-                {contents.map((content, index) => {
+                {contents?.split(' ').map((content, index) => {
                     const key = content + index.toString();
-                    const tag = tags[content];
-                    const isTag = content.startsWith('@') && tag !== undefined;
+                    const isTag = content.startsWith('@');
 
                     if (isTag) {
-                        return <Tag key={key} content={content} tag={tag} onPressTag={onPressTag} />;
+                        return (
+                            <Text
+                                style={styles.color}
+                                onPress={(event) => onPressTag?.(event, content)}
+                                suppressHighlighting={true}
+                            >
+                                {content + ' '}
+                            </Text>
+                        );
                     }
 
                     return <Text key={key}>{content}</Text>;

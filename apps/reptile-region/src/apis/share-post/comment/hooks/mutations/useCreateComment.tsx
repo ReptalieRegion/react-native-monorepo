@@ -6,7 +6,7 @@ import type { CreateCommentRequest } from '<SharePostCommentAPI>';
 
 const useCreateComment = () => {
     return useMutation({
-        mutationFn: ({ postId, contents, tagIds }: CreateCommentRequest) => createComment({ postId, contents, tagIds }),
+        mutationFn: ({ postId, contents }: CreateCommentRequest) => createComment({ postId, contents }),
     });
 };
 

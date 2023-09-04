@@ -5,7 +5,7 @@ declare module '<BottomTabSharePostRoutes>' {
     type BottomTabSharePostListNavigationProp = NativeStackNavigationProp<BottomTabSharePostParamList, 'share-post/list'>;
 
     type BottomTabSharePostDetailNavigationProp = NativeStackNavigationProp<BottomTabSharePostParamList, 'share-post/detail'>;
-    type BottomTabSharePostDetailProps = { userId: string; nickname: string };
+    type BottomTabSharePostDetailProps = { userId?: string; nickname: string };
     type BottomTabSharePostDetailRouteProp = RouteProp<BottomTabSharePostParamList, 'share-post/detail'>;
 
     type BottomTabSharePostParamList = {

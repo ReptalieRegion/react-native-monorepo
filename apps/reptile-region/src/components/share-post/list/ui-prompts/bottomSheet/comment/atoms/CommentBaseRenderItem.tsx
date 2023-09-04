@@ -29,12 +29,11 @@ type RenderItemProps =
 
 const CommentBaseRenderItem = ({ FootChildren, showAnimated, user, comment }: RenderItemProps) => {
     const navigation = useNavigation<BottomTabStackNavigationProp>();
-    const onPressTag: TagPressHandler = (_, content, tagId) => {
+    const onPressTag: TagPressHandler = (_, content) => {
         navigation.navigate('bottom-tab-less', {
             screen: 'share-post/detail',
             params: {
                 nickname: content.replace('@', ''),
-                userId: tagId,
             },
         });
     };
@@ -53,12 +52,7 @@ const CommentBaseRenderItem = ({ FootChildren, showAnimated, user, comment }: Re
             <View style={styles.commentItemContent}>
                 <View style={styles.commentItemGap}>
                     <Text style={styles.nickname}>{user.nickname}</Text>
-                    <TaggedContent
-                        uuid={comment.id}
-                        tags={comment.tagIds}
-                        contents={comment.contents}
-                        onPressTag={onPressTag}
-                    />
+                    <TaggedContent uuid={comment.id} contents={comment.contents} onPressTag={onPressTag} />
                     <CommentActions />
                 </View>
                 {FootChildren}

@@ -1,7 +1,12 @@
+type FilesRequest = {
+    uri: string;
+    name: string;
+    type: string;
+};
+
 declare module '<SharePostAPI>' {
     import type { ShareImageType } from '<Image>';
     import type { InfinitePageParam, InfiniteState } from '<InfiniteState>';
-    import type { TagIds } from '<TagIds>';
 
     /** Response */
     type SharePostListData = {
@@ -13,8 +18,7 @@ declare module '<SharePostAPI>' {
         };
         post: {
             id: string;
-            contents: string[];
-            tagIds: TagIds;
+            contents: string;
             images: ShareImageType[];
             isMine: boolean;
             isLike: boolean | undefined;
@@ -35,8 +39,7 @@ declare module '<SharePostAPI>' {
     type SharePostListUserDetailData = {
         post: {
             id: string;
-            contents: string[];
-            tagIds: TagIds;
+            contents: string;
             images: ShareImageType[];
             isMine: boolean;
             isLike: boolean | undefined;
@@ -64,9 +67,8 @@ declare module '<SharePostAPI>' {
     /** POST */
     // 게시글 생성
     type CreatePostRequest = {
-        files: string[];
-        contents: string[];
-        tagIds: string[];
+        files: FilesRequest[];
+        contents: string;
     };
 
     type CreateLikeRequest = {
@@ -77,9 +79,8 @@ declare module '<SharePostAPI>' {
     // 특정 게시글 수정
     type UpdatePostRequest = {
         postId: string;
-        files: string[];
-        contents: string[];
-        tagIds: string[];
+        files: FilesRequest[];
+        contents: string;
     };
 
     // 특정 게시글 좋아요 토글

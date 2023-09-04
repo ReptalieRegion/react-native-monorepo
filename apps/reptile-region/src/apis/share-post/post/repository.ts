@@ -38,11 +38,10 @@ export const getDetailUserPosts = async ({ pageParam = 0, userId }: GetDetailUse
 
 /** POST */
 // 게시글 생성
-export const createPost = async ({ contents, files, tagIds }: CreatePostRequest) => {
+export const createPost = async ({ contents, files }: CreatePostRequest) => {
     const formData = new FormData();
     formData.append('files', files);
     formData.append('contents', contents);
-    formData.append('tagIds', tagIds);
 
     const response = await clientFetch('api/share/post', {
         method: METHOD.POST,
@@ -66,11 +65,10 @@ export const createLike = async ({ postId }: CreateLikeRequest) => {
 
 /** PUT */
 // 특정 게시글 수정
-export const updatePost = async ({ postId, contents, files, tagIds }: UpdatePostRequest) => {
+export const updatePost = async ({ postId, contents, files }: UpdatePostRequest) => {
     const formData = new FormData();
     formData.append('files', files);
     formData.append('contents', contents);
-    formData.append('tagIds', tagIds);
 
     const response = await clientFetch(`api/share/post/${postId}`, {
         method: METHOD.PUT,

@@ -1,17 +1,28 @@
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
+import FollowerUserList from '../atoms/FollowerUserList';
 import PhotoRegister from '../molecules/PhotoRegister';
 import PostContentWrite from '../molecules/PostContentWrite';
 
-import { ScrollContextComponent } from '@/contexts/scroll/Scroll';
+import { color } from '@/components/common/tokens/colors';
 
 const SharePostWrite = () => {
     return (
-        <ScrollContextComponent>
+        <View style={styles.container}>
             <PhotoRegister />
             <PostContentWrite />
-        </ScrollContextComponent>
+            <FollowerUserList />
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: color.White.toString(),
+        flex: 1,
+        padding: 20,
+    },
+});
 
 export default SharePostWrite;

@@ -1,6 +1,6 @@
 import { fakerKO } from '@faker-js/faker';
 
-import { createTagIdsAndContent } from './createTagIdsAndContent';
+import { createContents } from './createTagIdsAndContent';
 
 import type { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
@@ -8,13 +8,12 @@ import { fakerBoolean } from '@/mocks/utils/customFaker';
 type CreateCommentReplyProps = {
     commentReplyId?: string;
     commentId?: string;
-    contents: string[];
-    tagIds: string[];
+    contents: string;
 };
 
 const createCommentReply = (props?: CreateCommentReplyProps): SharePostCommentReplyData => {
     const commentReplyId = props?.commentId ? props.commentId : fakerKO.string.uuid();
-    const { contents, tagIds } = createTagIdsAndContent();
+    const contents = createContents();
 
     return {
         user: {
@@ -27,7 +26,6 @@ const createCommentReply = (props?: CreateCommentReplyProps): SharePostCommentRe
         comment: {
             id: commentReplyId,
             contents,
-            tagIds,
             isMine: fakerBoolean(),
             isModified: fakerBoolean(),
         },

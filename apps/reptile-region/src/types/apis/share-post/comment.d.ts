@@ -1,7 +1,6 @@
 declare module '<SharePostCommentAPI>' {
     import type { ShareImageType } from '<Image>';
     import type { InfiniteState } from '<InfiniteState>';
-    import type { Tags } from '<SharePostTags>';
 
     /** Response */
     type SharePostCommentData = {
@@ -12,8 +11,7 @@ declare module '<SharePostCommentAPI>' {
         };
         comment: {
             id: string;
-            contents: string[];
-            tagIds: Tags;
+            contents: string;
             replyCount: number;
             isMine: boolean;
             isModified: boolean;
@@ -33,16 +31,14 @@ declare module '<SharePostCommentAPI>' {
     // 특정 게시글 댓글 생성
     type CreateCommentRequest = {
         postId: string;
-        contents: string[];
-        tagIds: string[];
+        contents: string;
     };
 
     /** PUT */
     // 특정 댓글 수정
     type UpdateCommentRequest = {
         commentId: string;
-        contents: string[];
-        tagIds: string[];
+        contents: string;
     };
 
     type DeleteCommentRequest = {

@@ -1,23 +1,29 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import TaggedContent from '../../common/atoms/TaggedContent';
+import TaggedContent, { TagPressHandler } from '../../common/atoms/TaggedContent';
 import CommentContent from '../atoms/CommentContent';
 import LikeContent from '../atoms/LikeContent';
 
+import { BottomTabSharePostListNavigationProp } from '<BottomTabSharePostRoutes>';
 import type { SharePostListData } from '<SharePostAPI>';
 
 type PostContentProps = {
-    post: Pick<SharePostListData['post'], 'likeCount' | 'commentCount' | 'contents' | 'id' | 'tagIds'>;
+    post: Pick<SharePostListData['post'], 'likeCount' | 'commentCount' | 'contents' | 'id'>;
 };
 
 const PostContent = ({ post }: PostContentProps) => {
-    const { id: postId, commentCount, contents, likeCount, tagIds } = post;
+    const { id: postId, commentCount, contents, likeCount } = post;
+    const navigation = useNavigation<BottomTabSharePostListNavigationProp>();
+    const onPressTag: TagPressHandler = (_, content) => {
+        navigation.push('share-post/detail', { nickname: content });
+    };
 
     return (
         <View style={styles.container}>
             <LikeContent post={{ likeCount }} />
-            <TaggedContent uuid={postId} tags={tagIds} contents={contents} />
+            <TaggedContent uuid={postId} contents={contents} onPressTag={onPressTag} />
             <CommentContent post={{ id: postId, commentCount }} />
         </View>
     );

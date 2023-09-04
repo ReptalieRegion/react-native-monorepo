@@ -8,8 +8,9 @@ export const postQueryKeys = {
 
 // 유저
 export const userQueryKeys = {
-    profile: (id: string) => ['profile', id],
-};
+    profile: (id: string) => ['profile', id] as const,
+    searchUser: (search: string) => ['search-user', search] as const,
+} as const;
 
 // 댓글
 export const commentQueryKeys = {
@@ -18,5 +19,5 @@ export const commentQueryKeys = {
 
 // 대댓글
 export const commentReplyQueryKeys = {
-    commentReply: (id: string) => ['comment-reply', id],
-};
+    commentReply: (id: string) => ['comment-reply', id] as const,
+} as const;

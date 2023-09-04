@@ -3,7 +3,7 @@ declare module '<BottomTabLessNavigationList>' {
 
     // SharePost
     type BottomTabLessSharePostDetailNavigationProp = NativeStackNavigationProp<BottomTabLessParamList, 'share-post/detail'>;
-    type BottomTabLessSharePostDetailProps = { userId: string; nickname: string };
+    type BottomTabLessSharePostDetailProps = { userId?: string; nickname: string };
     type BottomTabLessSharePostRouteProp = RouteProp<BottomTabLessParamList, 'share-post/detail'>;
     type BottomTabLessSharePostWriteNavigationProp = NativeStackNavigationProp<BottomTabLessParamList, 'share-post/write'>;
     type BottomTabLessSharePostImageCropNavigationProp = NativeStackNavigationProp<

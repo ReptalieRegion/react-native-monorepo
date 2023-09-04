@@ -31,7 +31,11 @@ const postController = () => {
             return res(ctx.status(200), ctx.json(data));
         }),
         /** POST */
-        rest.post(BASE_URI + 'share/post', () => {}),
+        rest.post(BASE_URI + 'share/post', (_, res, ctx) => {
+            const data = createPostList();
+
+            return res(ctx.status(200), ctx.json(data));
+        }),
         rest.post(BASE_URI + 'share/post/:postId/like', () => {}),
         /** PUT */
         rest.put(BASE_URI + 'share/post/:postId', () => {}),

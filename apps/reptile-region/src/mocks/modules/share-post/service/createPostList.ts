@@ -1,13 +1,13 @@
 import { fakerKO } from '@faker-js/faker';
 
-import { createTagIdsAndContent } from './createTagIdsAndContent';
+import { createContents } from './createTagIdsAndContent';
 
 import type { SharePostListData } from '<SharePostAPI>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const createPostList = (): SharePostListData => {
-    const { contents, tagIds } = createTagIdsAndContent();
+    const contents = createContents();
 
     return {
         user: {
@@ -21,7 +21,6 @@ const createPostList = (): SharePostListData => {
         post: {
             id: fakerKO.string.uuid(),
             contents,
-            tagIds,
             images: createEmptyArray(fakerKO.number.int({ min: 1, max: 5 })).map(() => {
                 return { src: fakerKO.image.url() };
             }),

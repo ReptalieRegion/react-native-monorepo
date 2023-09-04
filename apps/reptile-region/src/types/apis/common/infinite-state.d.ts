@@ -7,4 +7,8 @@ declare module '<InfiniteState>' {
     type InfinitePageParam = {
         pageParam: number;
     };
+
+    type EnableParam = {
+        enabled: boolean;
+    };
 }

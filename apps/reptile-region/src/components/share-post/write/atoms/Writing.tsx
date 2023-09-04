@@ -1,132 +1,83 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import {
-    View,
-    TextInput,
-    StyleSheet,
-    Text,
-    NativeSyntheticEvent,
-    TextInputContentSizeChangeEventData,
-    TextInputKeyPressEventData,
-    TextInputSelectionChangeEventData,
-    Keyboard,
-} from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, TextInput, StyleSheet, Text, NativeSyntheticEvent, TextInputSelectionChangeEventData } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
 import { color } from '@/components/common/tokens/colors';
-import { ScrollContext } from '@/contexts/scroll/Scroll';
 import useSharePostWriteStore from '@/stores/share-post/write';
 
-type SelectionInfo = {
-    start: number;
-    end: number;
-};
+type Selection = TextInputSelectionChangeEventData['selection'];
 
 const MAX_CHARACTER_COUNT = 500;
 
 const WritingComponent = () => {
-    const { scrollIntoView, isScrolling, scrollInfo } = useContext(ScrollContext);
-    const { postContent, setPostContent } = useSharePostWriteStore(
+    const [tagSelections, setTagSelections] = useState<Selection[]>();
+    const [currentSelection, setCurrentSelection] = useState<Selection>();
+
+    const { contents, resetSearchInfo, setSearchInfo, setContents } = useSharePostWriteStore(
         (state) => ({
-            postContent: state.postContent,
-            setPostContent: state.setPostContent,
+            contents: state.contents,
+            setSearchInfo: state.setSearchInfo,
+            resetSearchInfo: state.resetSearchInfo,
+            setContents: state.setContents,
         }),
         shallow,
     );
 
-    const textInputRef = useRef<TextInput>(null);
-    const textAreaView = useRef<View>(null);
-    const [textInputHeight, setTextInputHeight] = useState<number>(200);
-    const selectionRef = useRef<SelectionInfo>({ start: 0, end: 0 });
-    const pressOutInfoRef = useRef<{ pageY: number; locationY: number }>({ pageY: 0, locationY: 0 });
+    const handleTextChange = useCallback(
+        (text: string) => {
+            let currentOffset = 0;
+            const newTagSelection = text.split(' ').reduce<Selection[]>((prev, word) => {
+                if (word.startsWith('@')) {
+                    prev.push({ start: currentOffset + 1, end: currentOffset + word.length });
+                }
+
+                currentOffset += word.length + 1;
+                return prev;
+            }, []);
+            setTagSelections(newTagSelection);
+            setContents(text);
+        },
+        [setContents],
+    );
+
+    const handleSelection = useCallback((event: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
+        setCurrentSelection(event.nativeEvent.selection);
+    }, []);
 
     useEffect(() => {
-        const scrollIntoViewMountEvent = Keyboard.addListener('keyboardDidShow', async () => {
-            const keyboardMetrics = Keyboard.metrics();
-            if (!keyboardMetrics) {
+        const isNotExistsTag = tagSelections === undefined || tagSelections.length === 0;
+        const isNotOneSelection = currentSelection === undefined || currentSelection.start !== currentSelection.end;
+        if (isNotExistsTag || isNotOneSelection) {
+            resetSearchInfo();
+            return;
+        }
+
+        for (const selection of tagSelections) {
+            const { start, end } = selection;
+            if (start <= currentSelection.start && currentSelection.end <= end) {
+                setSearchInfo({ start, end });
                 return;
             }
-            const { screenY } = keyboardMetrics;
-            const { pageY } = pressOutInfoRef.current;
-            if (screenY < pageY + 16) {
-                const newY = scrollInfo.contentOffset.y + pageY / 2;
-                scrollIntoView({ y: newY });
-            }
-        });
-
-        return () => {
-            scrollIntoViewMountEvent.remove();
-        };
-    }, [scrollInfo, scrollIntoView]);
-
-    const handleTextChange = (inputText: string) => {
-        setPostContent(inputText);
-    };
-
-    const handleSelectionChange = (event: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
-        selectionRef.current = event.nativeEvent.selection;
-    };
-
-    const handleKeyPress = (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-        const { start, end } = selectionRef.current;
-        const { key } = event.nativeEvent;
-        if (start === end) {
-            return;
         }
 
-        const textSize = postContent.length;
-        if (key.length > 1) {
-            const newText = postContent.slice(0, start) + postContent.slice(end, textSize);
-            setPostContent(newText);
-            return;
-        }
-
-        const newText = postContent.slice(0, start) + key + postContent.slice(end, textSize);
-        setPostContent(newText);
-        selectionRef.current = { start: textSize, end: textSize };
-    };
-
-    const handleContentSizeChange = (event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>) => {
-        const { height } = event.nativeEvent.contentSize;
-        const minHeight = Math.max(200, height);
-        const resizeHeight = minHeight - textInputHeight < 17 ? minHeight + 17 : minHeight;
-
-        setTextInputHeight(resizeHeight);
-        if (resizeHeight !== textInputHeight) {
-            handleScrollBottom(resizeHeight - textInputHeight);
-        }
-    };
-
-    const handleScrollBottom = async (addHeight: number) => {
-        const newY = scrollInfo.contentOffset.y + addHeight;
-        scrollIntoView({ y: newY, animated: false });
-    };
+        resetSearchInfo();
+    }, [currentSelection, tagSelections, resetSearchInfo, setSearchInfo]);
 
     return (
         <View style={styles.container}>
-            <View ref={textAreaView} style={[styles.textareaContainer, { height: textInputHeight + 45 }]}>
+            <View style={[styles.textareaContainer]}>
                 <TextInput
-                    scrollEnabled={false}
-                    editable={!isScrolling}
-                    ref={textInputRef}
-                    style={[styles.textarea, { height: textInputHeight }]}
+                    style={[styles.textarea, styles.absolute]}
+                    value={contents}
                     placeholder="일상을 공유해 주세요."
-                    value={postContent}
-                    multiline={true}
                     maxLength={MAX_CHARACTER_COUNT}
-                    onPressOut={(event) =>
-                        (pressOutInfoRef.current = {
-                            pageY: event.nativeEvent.pageY,
-                            locationY: event.nativeEvent.locationY,
-                        })
-                    }
-                    onKeyPress={handleKeyPress}
                     onChangeText={handleTextChange}
-                    onSelectionChange={handleSelectionChange}
-                    onContentSizeChange={handleContentSizeChange}
+                    onSelectionChange={handleSelection}
+                    multiline
                 />
             </View>
             <View style={styles.characterCountContainer}>
-                <Text style={styles.characterCountText}>{`${postContent.length} / ${MAX_CHARACTER_COUNT}`}</Text>
+                <Text style={styles.characterCountText}>{`${contents.length} / ${MAX_CHARACTER_COUNT}`}</Text>
             </View>
         </View>
     );
@@ -135,23 +86,29 @@ const WritingComponent = () => {
 const styles = StyleSheet.create({
     container: {
         position: 'relative',
-        paddingLeft: 20,
-        paddingRight: 20,
         marginBottom: 20,
     },
+    absolute: {
+        ...StyleSheet.absoluteFillObject,
+        paddingTop: 15,
+        paddingLeft: 15,
+        paddingRight: 15,
+    },
     textareaContainer: {
-        borderColor: color.Gray[250].toString(),
-        borderWidth: 1,
-        borderRadius: 10,
         paddingTop: 15,
         paddingBottom: 30,
         paddingLeft: 15,
         paddingRight: 15,
+        borderWidth: 1,
+        borderRadius: 10,
+        height: 200,
+        borderColor: color.Gray[250].toString(),
         backgroundColor: color.White.toString(),
     },
     textarea: {
         verticalAlign: 'top',
         overflow: 'hidden',
+        height: 150,
     },
     characterCountContainer: {
         position: 'absolute',
@@ -159,6 +116,7 @@ const styles = StyleSheet.create({
         right: 30,
     },
     characterCountText: {
+        height: 20,
         fontSize: 12,
         color: color.Gray[500].toString(),
     },
