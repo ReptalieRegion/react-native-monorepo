@@ -8,7 +8,7 @@ import ImageContent from '../atoms/ImageContent';
 
 import type { SharePostListData } from '<SharePostAPI>';
 import DoubleTabView from '@/components/common/element/view/DoubleTabView';
-import useSharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 
 type ImagesSliderProps = {
     post: Pick<SharePostListData['post'], 'images' | 'id'>;

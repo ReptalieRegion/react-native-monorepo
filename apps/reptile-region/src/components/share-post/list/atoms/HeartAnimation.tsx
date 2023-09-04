@@ -5,7 +5,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } 
 import type { SharePostListData } from '<SharePostAPI>';
 import { Like_55 as LikeIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import useSharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 
 type HeartAnimationProps = {
     post: Pick<SharePostListData['post'], 'id'>;

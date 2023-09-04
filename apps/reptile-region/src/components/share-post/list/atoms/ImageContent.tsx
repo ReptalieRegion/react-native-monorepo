@@ -8,7 +8,7 @@ import { shallow } from 'zustand/shallow';
 import type { ShareImageType } from '<Image>';
 import { SharePostListData } from '<SharePostAPI>';
 import { color } from '@/components/common/tokens/colors';
-import useSharePostListStore from '@/stores/share-post/list';
+import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 
 type ImagesContentProps = {
     post: Pick<SharePostListData['post'], 'images' | 'id'>;
