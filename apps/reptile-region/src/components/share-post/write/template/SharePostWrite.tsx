@@ -10,9 +10,9 @@ import { color } from '@/components/common/tokens/colors';
 const SharePostWrite = () => {
     return (
         <View style={styles.container}>
-            <PhotoRegister />
             <PostContentWrite />
             <FollowerUserList />
+            <PhotoRegister />
         </View>
     );
 };

@@ -20,8 +20,6 @@ const FollowerUserList = () => {
         shallow,
     );
 
-    console.log(taggingInfo);
-
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
         search: taggingInfo.keyword ?? '',
         enabled: taggingInfo.keyword !== undefined,
@@ -83,6 +81,7 @@ const FollowerUserList = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        marginBottom: 20,
     },
     text: {
         paddingBottom: 10,

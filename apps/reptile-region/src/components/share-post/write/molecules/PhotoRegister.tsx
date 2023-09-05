@@ -9,8 +9,10 @@ import SharePostWriteTitle from '../atoms/SharePostWriteTitle';
 import { CancelButton } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
+import useUserTaggingStore from '@/stores/share-post/useUserTaggingStore';
 
 const PhotoRegister = () => {
+    const { taggingInfo } = useUserTaggingStore();
     const { selectedPhotos, deleteSelectedPhoto } = usePhotoStore(
         (state) => ({
             selectedPhotos: state.selectedPhotos,
@@ -29,6 +31,10 @@ const PhotoRegister = () => {
             deleteSelectedPhoto(photo.node.image.uri);
         }
     };
+
+    if (taggingInfo.keyword !== undefined) {
+        return null;
+    }
 
     return (
         <View>

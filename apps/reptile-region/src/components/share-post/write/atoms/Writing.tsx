@@ -105,14 +105,14 @@ const styles = StyleSheet.create({
         paddingRight: 15,
         borderWidth: 1,
         borderRadius: 10,
-        height: 200,
+        height: 150,
         borderColor: color.Gray[250].toString(),
         backgroundColor: color.White.toString(),
     },
     textarea: {
         verticalAlign: 'top',
         overflow: 'hidden',
-        height: 150,
+        height: 120,
     },
     characterCountContainer: {
         position: 'absolute',
