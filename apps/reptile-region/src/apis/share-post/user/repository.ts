@@ -6,11 +6,15 @@ import type {
     UpdateFollowRequest,
 } from '<SharePostUserAPI>';
 import clientFetch, { METHOD } from '@/apis/clientFetch';
+import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 특정 유저 패치
 export const getDetailUserProfile = async ({ userId, nickname }: GetDetailUserProfileRequest) => {
-    const queryString = userId ? `userId=${userId}` : nickname ? `nickname=${nickname}` : '';
+    const queryString = objectToQueryString({
+        userId,
+        nickname,
+    });
     const response = await clientFetch(`api/users/profile?${queryString}`);
 
     return response.json();
@@ -21,7 +25,11 @@ export const getSearchFollowerUserNickname = async ({
     pageParam = 0,
     search,
 }: GetSearchFollowerUserNicknameRequest & InfinitePageParam) => {
-    const response = await clientFetch(`api/users/follower/list?pageParam=${pageParam}&search=${search}`);
+    const queryString = objectToQueryString({
+        pageParam,
+        search,
+    });
+    const response = await clientFetch(`api/users/follower/list?${queryString}`);
 
     return response.json();
 };

@@ -10,11 +10,15 @@ import type {
     CreateLikeRequest,
 } from '<SharePostAPI>';
 import clientFetch, { METHOD } from '@/apis/clientFetch';
+import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 게시물 패치
 export const getPosts = async ({ pageParam = 0 }: GetPostsRequest) => {
-    const response = await clientFetch(`api/share/posts/list?pageParam=${pageParam}`);
+    const queryString = objectToQueryString({
+        pageParam,
+    });
+    const response = await clientFetch(`api/share/posts/list?${queryString}`);
 
     return response.json();
 };
@@ -25,15 +29,22 @@ export const getDetailUserPostImages = async ({
     userId,
     nickname,
 }: GetDetailUserPostImagesRequest & InfinitePageParam) => {
-    const queryString = userId ? `userId=${userId}` : nickname ? `nickname=${nickname}` : '';
-    const response = await clientFetch(`api/share/posts/images/?pageParam=${pageParam}&${queryString}`);
+    const queryString = objectToQueryString({
+        pageParam,
+        nickname,
+        userId,
+    });
+    const response = await clientFetch(`api/share/posts/images/?${queryString}`);
 
     return response.json();
 };
 
 // 특정 유저 게시글 패치
 export const getDetailUserPosts = async ({ pageParam = 0, userId }: GetDetailUserPostsRequest & InfinitePageParam) => {
-    const response = await clientFetch(`api/share/posts/list/users/${userId}?pageParam=${pageParam}`);
+    const queryString = objectToQueryString({
+        pageParam,
+    });
+    const response = await clientFetch(`api/share/posts/list/users/${userId}?${queryString}`);
 
     return response.json();
 };

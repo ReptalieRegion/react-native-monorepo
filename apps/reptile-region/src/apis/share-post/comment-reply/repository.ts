@@ -6,10 +6,14 @@ import type {
     UpdateCommentReplyRequest,
 } from '<SharePostCommentReplyAPI>';
 import clientFetch, { METHOD } from '@/apis/clientFetch';
+import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 export const getCommentReplies = async ({ pageParam = 0, commentId }: GetCommentRepliesRequest & InfinitePageParam) => {
-    const response = await clientFetch(`api/share/comment/${commentId}/replies/list?pageParam=${pageParam}`, {
+    const queryString = objectToQueryString({
+        pageParam,
+    });
+    const response = await clientFetch(`api/share/comment/${commentId}/replies/list?${queryString}`, {
         method: METHOD.GET,
     });
 

@@ -6,11 +6,15 @@ import type {
     UpdateCommentRequest,
 } from '<SharePostCommentAPI>';
 import clientFetch, { METHOD } from '@/apis/clientFetch';
+import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 특정 게시글 댓글 패치
 export const getComments = async ({ pageParam = 0, postId }: GetCommentsRequest & InfinitePageParam) => {
-    const response = await clientFetch(`api/share/post/${postId}/comments/list?pageParam=${pageParam}`, {
+    const queryString = objectToQueryString({
+        pageParam,
+    });
+    const response = await clientFetch(`api/share/post/${postId}/comments/list?${queryString}`, {
         method: METHOD.GET,
     });
 
