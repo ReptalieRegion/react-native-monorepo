@@ -1,8 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect } from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
 import type { SharePostListData } from '<SharePostAPI>';
+import useCreateLike from '@/apis/share-post/post/hooks/mutations/useCreateLike';
+import useUpdateLike from '@/apis/share-post/post/hooks/mutations/useUpdateLike';
 import { Like_40 as LikeIcon } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
 import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
@@ -30,22 +32,17 @@ const makeLikeInfo = (isLike: boolean | undefined) => {
 const Like = ({ post }: LikeProps) => {
     const { id: postId, isLike } = post;
 
-    const lastItemId = useRef(postId);
+    const createQuery = useCreateLike({ postId });
+    const updateQuery = useUpdateLike({ postId });
+
     const startLikeAnimation = useSharePostListStore((state) => state.postsOfInfo[postId]?.startLikeAnimation);
     const scale = useSharedValue(1);
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [{ scale: scale.value }],
     }));
 
-    const [filledLikeColor, setFilledLikeColor] = useState<boolean | undefined>(isLike);
-    if (lastItemId.current !== postId) {
-        lastItemId.current = postId;
-        setFilledLikeColor(isLike);
-    }
-
     useEffect(() => {
         if (startLikeAnimation) {
-            setFilledLikeColor(true);
             scale.value = withSequence(
                 withTiming(0.7, { duration: ANIMATED_DURATION }),
                 withTiming(1.3, { duration: ANIMATED_DURATION }),
@@ -55,13 +52,17 @@ const Like = ({ post }: LikeProps) => {
     }, [scale, startLikeAnimation]);
 
     const handleLikeClick = () => {
-        setFilledLikeColor((state) => !state);
+        if (isLike === undefined) {
+            createQuery.mutate();
+        } else {
+            updateQuery.mutate();
+        }
     };
 
     return (
         <TouchableWithoutFeedback onPress={handleLikeClick}>
             <Animated.View style={animatedStyle}>
-                <LikeIcon {...makeLikeInfo(filledLikeColor)} />
+                <LikeIcon {...makeLikeInfo(isLike)} />
             </Animated.View>
         </TouchableWithoutFeedback>
     );

@@ -76,7 +76,7 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
     const handleImageClick = () => {
         const imageURI = item.node.image.uri;
         const imageState = getImageState(imageURI);
-        console.log(imageState);
+
         switch (imageState) {
             case 'add':
                 addSelectedPhoto(item);

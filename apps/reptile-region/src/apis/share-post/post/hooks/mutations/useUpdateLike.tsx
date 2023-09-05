@@ -1,13 +1,51 @@
-import { useMutation } from '@tanstack/react-query';
+import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { updateLike } from '../../repository';
 
-import type { UpdateLikeRequest } from '<SharePostAPI>';
+import type { SharePostListInfiniteData, UpdateLikeRequest } from '<SharePostAPI>';
+import { postQueryKeys } from '@/apis/share-post/query-keys';
 
-const useUpdateLike = () => {
+const useUpdateLike = ({ postId }: UpdateLikeRequest) => {
+    const queryClient = useQueryClient();
+
     return useMutation({
-        mutationKey: [''],
-        mutationFn: ({ postId }: UpdateLikeRequest) => updateLike({ postId }),
+        mutationFn: () => updateLike({ postId }),
+        onSuccess: () => {
+            queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(postQueryKeys.list, (oldData) => {
+                if (oldData === undefined) {
+                    return oldData;
+                }
+
+                const updatePages = [...oldData.pages].map((page) => {
+                    const items = page.items.map((item) => {
+                        if (item.post.id === postId) {
+                            const isLike = item.post.isLike;
+                            const likeCount = item.post.likeCount;
+
+                            return {
+                                ...item,
+                                post: {
+                                    ...item.post,
+                                    isLike: !isLike,
+                                    likeCount: isLike ? likeCount - 1 : likeCount + 1,
+                                },
+                            };
+                        }
+                        return item;
+                    });
+
+                    return {
+                        ...page,
+                        items,
+                    };
+                });
+
+                return {
+                    ...oldData,
+                    pages: updatePages,
+                };
+            });
+        },
     });
 };
 

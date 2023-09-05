@@ -7,15 +7,19 @@ import HeartAnimation from '../atoms/HeartAnimation';
 import ImageContent from '../atoms/ImageContent';
 
 import type { SharePostListData } from '<SharePostAPI>';
+import useCreateLike from '@/apis/share-post/post/hooks/mutations/useCreateLike';
+import useUpdateLike from '@/apis/share-post/post/hooks/mutations/useUpdateLike';
 import DoubleTabView from '@/components/common/element/view/DoubleTabView';
 import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 
 type ImagesSliderProps = {
-    post: Pick<SharePostListData['post'], 'images' | 'id'>;
+    post: Pick<SharePostListData['post'], 'images' | 'id' | 'isLike'>;
 };
 
 const PostImageCarousel = ({ post }: ImagesSliderProps) => {
-    const { id: postId, images } = post;
+    const { id: postId, images, isLike } = post;
+    const { mutate: createMutate } = useCreateLike({ postId });
+    const { mutate: updateMutate } = useUpdateLike({ postId });
 
     const { startLikeAnimation, setStartLikeAnimation } = useSharePostListStore(
         (state) => ({
@@ -27,10 +31,13 @@ const PostImageCarousel = ({ post }: ImagesSliderProps) => {
 
     const handleDoubleTabHeartAnimation = () => {
         setStartLikeAnimation(post.id, true);
-
-        if (!startLikeAnimation) {
-            Haptic.trigger('impactLight');
+        if (isLike === undefined) {
+            createMutate();
+        } else if (!isLike) {
+            updateMutate();
         }
+
+        Haptic.trigger('impactLight');
     };
 
     return (
