@@ -12,8 +12,10 @@ const userController = () => {
 
     return [
         /** GET */
-        rest.get(BASE_URI + 'users/profile', (_, res, ctx) => {
-            const postUserProfile = createPostUserProfile();
+        rest.get(BASE_URI + 'users/profile', (req, res, ctx) => {
+            const id = req.url.searchParams.get('userId') ?? undefined;
+            const nickname = req.url.searchParams.get('nickname') ?? undefined;
+            const postUserProfile = createPostUserProfile({ user: { id, nickname } });
 
             return res(ctx.status(200), ctx.json(postUserProfile));
         }),
@@ -27,9 +29,13 @@ const userController = () => {
             return res(ctx.status(200), ctx.json(data));
         }),
         /** POST */
-        rest.post(BASE_URI + 'users/:userId/follow', () => {}),
+        rest.post(BASE_URI + 'users/:userId/follow', (_, res, ctx) => {
+            return res(ctx.status(200), ctx.json(''));
+        }),
         /** PUT */
-        rest.put(BASE_URI + 'users/:userId/follow', () => {}),
+        rest.put(BASE_URI + 'users/:userId/follow', (_, res, ctx) => {
+            return res(ctx.status(200), ctx.json(''));
+        }),
     ];
 };
 

@@ -38,7 +38,7 @@ export const getSearchFollowerUserNickname = async ({
 // 특정 유저 팔로우 생성
 export const createFollow = async ({ userId }: CreateFollowRequest) => {
     const response = await clientFetch(`api/users/${userId}/follow`, {
-        method: METHOD.PUT,
+        method: METHOD.POST,
     });
     return response.json();
 };

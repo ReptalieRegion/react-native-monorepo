@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     imageContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 150,
+        height: 250,
         marginBottom: 10,
         backgroundColor: SKELETON_ITEM_COLOR,
         borderRadius: 6,

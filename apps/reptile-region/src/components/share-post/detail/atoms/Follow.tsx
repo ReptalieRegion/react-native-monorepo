@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ColorValue, StyleSheet, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import * as Haptic from 'react-native-haptic-feedback';
 
 import type { SharePostListData } from '<SharePostAPI>';
+import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
+import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
 import { color } from '@/components/common/tokens/colors';
 
 type PostHeaderProps = {
@@ -22,16 +24,20 @@ const makeFollowInfo = (isFollow: boolean | undefined) => {
     return isFollow ? following : follow;
 };
 
-const Follow = ({ user }: PostHeaderProps) => {
-    const { isFollow } = user;
-
-    const [isFollowing, setIsFollowing] = useState<boolean | undefined>(isFollow);
-    const followInfo = makeFollowInfo(isFollowing);
+const Follow = ({ user: { id: userId, isFollow } }: PostHeaderProps) => {
+    const { mutate: createMutate } = useCreateFollow({ userId });
+    const { mutate: updateMutate } = useUpdateFollow({ userId });
 
     const handleClickFollow = () => {
+        if (isFollow === undefined) {
+            createMutate();
+        } else {
+            updateMutate();
+        }
         Haptic.trigger('impactLight');
-        setIsFollowing((state) => !state);
     };
+
+    const followInfo = makeFollowInfo(isFollow);
 
     return (
         <TouchableWithoutFeedback onPress={handleClickFollow}>

@@ -1,14 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { ColorValue, StyleSheet, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import * as Haptic from 'react-native-haptic-feedback';
 
 import type { SharePostListData } from '<SharePostAPI>';
+import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
+import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
 import { color } from '@/components/common/tokens/colors';
 
 type PostHeaderProps = {
     user: Pick<SharePostListData['user'], 'isFollow' | 'id'>;
-    post: Pick<SharePostListData['post'], 'id'>;
 };
 
 interface FollowInfo {
@@ -23,22 +24,20 @@ const makeFollowInfo = (isFollow: boolean | undefined) => {
     return isFollow ? following : follow;
 };
 
-const Follow = ({ user, post }: PostHeaderProps) => {
-    const { isFollow } = user;
-    const { id: postId } = post;
-
-    const lastItemId = useRef(postId);
-    const [isFollowing, setIsFollowing] = useState<boolean | undefined>(isFollow);
-    const followInfo = makeFollowInfo(isFollowing);
-    if (lastItemId.current !== postId) {
-        lastItemId.current = postId;
-        setIsFollowing(isFollow);
-    }
+const Follow = ({ user: { isFollow, id: userId } }: PostHeaderProps) => {
+    const { mutate: createMutate } = useCreateFollow({ userId });
+    const { mutate: updateMutate } = useUpdateFollow({ userId });
 
     const handleClickFollow = () => {
+        if (isFollow === undefined) {
+            createMutate();
+        } else {
+            updateMutate();
+        }
         Haptic.trigger('impactLight');
-        setIsFollowing((state) => !state);
     };
+
+    const followInfo = makeFollowInfo(isFollow);
 
     return (
         <TouchableWithoutFeedback onPress={handleClickFollow}>

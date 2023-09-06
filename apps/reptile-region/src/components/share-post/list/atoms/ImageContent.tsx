@@ -2,7 +2,6 @@ import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React, { useCallback, useRef } from 'react';
 import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
-import Animated from 'react-native-reanimated';
 import { shallow } from 'zustand/shallow';
 
 import type { ShareImageType } from '<Image>';
@@ -39,17 +38,17 @@ const ImageContent = ({ post }: ImagesContentProps) => {
         const isFirstImage = index === 0;
 
         return (
-            <Animated.View style={styles.imageBackground}>
-                <Image
-                    key={item.src}
-                    source={{
-                        uri: item.src,
-                    }}
-                    priority={isFirstImage ? 'high' : 'low'}
-                    style={[styles.image]}
-                    contentFit="cover"
-                />
-            </Animated.View>
+            <Image
+                key={item.src}
+                source={{
+                    uri: item.src,
+                }}
+                priority={isFirstImage ? 'high' : 'low'}
+                style={styles.image}
+                contentFit="cover"
+                placeholder={require('@/assets/images/default_image.png')}
+                placeholderContentFit="cover"
+            />
         );
     }, []);
 
@@ -86,12 +85,8 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     image: {
-        minHeight: 250,
         height: 250,
-        maxHeight: 250,
-        minWidth: IMAGE_WIDTH,
         width: IMAGE_WIDTH,
-        maxWidth: IMAGE_WIDTH,
     },
     imageBackground: {
         backgroundColor: color.Gray[250].toString(),
