@@ -45,7 +45,9 @@ const postController = () => {
             return res(ctx.status(200), ctx.json(''));
         }),
         /** DELETE */
-        rest.delete(BASE_URI + 'share/posts/:postId', () => {}),
+        rest.delete(BASE_URI + 'share/posts/:postId', (_, res, ctx) => {
+            return res(ctx.status(200), ctx.json(''));
+        }),
     ];
 };
 

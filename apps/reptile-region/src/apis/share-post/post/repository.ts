@@ -106,7 +106,7 @@ export const updateLike = async ({ postId }: UpdateLikeRequest) => {
 /** DELETE */
 // 특정 게시글 삭제
 export const deletePost = async ({ postId }: DeletePostRequest) => {
-    const response = await clientFetch(`api/share/post/${postId}`, {
+    const response = await clientFetch(`api/share/posts/${postId}`, {
         method: METHOD.DELETE,
     });
 

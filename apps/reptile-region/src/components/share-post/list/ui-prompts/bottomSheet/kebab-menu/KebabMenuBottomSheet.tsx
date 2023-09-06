@@ -26,16 +26,22 @@ const ListItem = ({ text, onPress }: ListItemProps) => {
     );
 };
 
-const KebabMenuBottomSheet = ({ uiPromptsClose, post }: KebabMenuBottomSheetProps & UIPromptsDefaultProps) => {
+const KebabMenuBottomSheet = ({ uiPromptsClose, post, user }: KebabMenuBottomSheetProps & UIPromptsDefaultProps) => {
     const { bottom } = useSafeAreaInsets();
-    const { mutate } = useDeletePost();
+    const { mutate } = useDeletePost({ postId: post.id, userId: user.id });
 
     return (
         <BottomSheetContainer uiPromptsClose={uiPromptsClose} containerStyle={containerStyle}>
             <BottomSheetHeader />
             <View style={[styles.content, { paddingBottom: bottom }]}>
                 {post.isMine ? (
-                    <ListItem text="삭제" onPress={() => mutate({ postId: post.id })} />
+                    <ListItem
+                        text="삭제"
+                        onPress={() => {
+                            mutate();
+                            uiPromptsClose();
+                        }}
+                    />
                 ) : (
                     <ListItem text="신고하기" />
                 )}

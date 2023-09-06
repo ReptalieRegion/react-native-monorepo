@@ -34,7 +34,7 @@ declare module '<SharePostAPI>' {
             thumbnail: ShareImageType;
         };
     };
-    type SharePostImagesInfiniteData = InfiniteState<SharePostImagesData>;
+    type SharePostImagesInfiniteData = InfiniteState<SharePostImagesData[]>;
 
     type SharePostListUserDetailData = {
         post: {
