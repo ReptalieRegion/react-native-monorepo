@@ -101,6 +101,7 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
                     <Text style={styles.text}>{imageCircleStyles.text}</Text>
                 </View>
                 <Image
+                    recyclingKey={item.node.image.uri}
                     style={[styles.image, imageStyles, { height: imageWidth, width: imageWidth }]}
                     source={{ uri: item.node.image.uri }}
                     placeholder={require('@/assets/images/default_image.png')}

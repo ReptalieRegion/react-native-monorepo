@@ -1,7 +1,7 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React, { useCallback, useRef } from 'react';
-import { Dimensions, NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
+import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
 import type { ShareImageType } from '<Image>';
@@ -13,11 +13,10 @@ type ImagesContentProps = {
     post: Pick<SharePostListData['post'], 'images' | 'id'>;
 };
 
-const { width } = Dimensions.get('screen');
-const IMAGE_WIDTH = width - 40;
-
 const ImageContent = ({ post }: ImagesContentProps) => {
     const { id: postId, images } = post;
+    const { width } = useWindowDimensions();
+    const imageWidth = width - 40;
 
     const { currentImageIndex, setCurrentImageIndex } = useSharePostListStore(
         (state) => ({
@@ -34,26 +33,29 @@ const ImageContent = ({ post }: ImagesContentProps) => {
     }
 
     const keyExtractor = useCallback((_: ShareImageType, index: number) => index.toString(), []);
-    const renderItem = useCallback(({ item, index }: ListRenderItemInfo<ShareImageType>) => {
-        const isFirstImage = index === 0;
+    const renderItem = useCallback(
+        ({ item, index }: ListRenderItemInfo<ShareImageType>) => {
+            const isFirstImage = index === 0;
 
-        return (
-            <Image
-                key={item.src}
-                source={{
-                    uri: item.src,
-                }}
-                priority={isFirstImage ? 'high' : 'low'}
-                style={styles.image}
-                contentFit="cover"
-                placeholder={require('@/assets/images/default_image.png')}
-                placeholderContentFit="cover"
-            />
-        );
-    }, []);
+            return (
+                <Image
+                    recyclingKey={item.src}
+                    source={{
+                        uri: item.src,
+                    }}
+                    priority={isFirstImage ? 'high' : 'low'}
+                    style={[styles.image, { width: imageWidth }]}
+                    contentFit="cover"
+                    placeholder={require('@/assets/images/default_image.png')}
+                    placeholderContentFit="cover"
+                />
+            );
+        },
+        [imageWidth],
+    );
 
     const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-        const newIndex = Math.round(event.nativeEvent.contentOffset.x / IMAGE_WIDTH);
+        const newIndex = Math.round(event.nativeEvent.contentOffset.x / imageWidth);
         if (currentImageIndex !== newIndex) {
             setCurrentImageIndex(postId, newIndex);
         }
@@ -72,8 +74,8 @@ const ImageContent = ({ post }: ImagesContentProps) => {
                 showsHorizontalScrollIndicator={false}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
-                estimatedListSize={{ height: 250, width: IMAGE_WIDTH }}
-                estimatedItemSize={IMAGE_WIDTH}
+                estimatedListSize={{ height: 250, width: imageWidth }}
+                estimatedItemSize={imageWidth}
             />
         </View>
     );
@@ -86,7 +88,6 @@ const styles = StyleSheet.create({
     },
     image: {
         height: 250,
-        width: IMAGE_WIDTH,
     },
     imageBackground: {
         backgroundColor: color.Gray[250].toString(),

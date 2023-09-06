@@ -9,12 +9,13 @@ type SquareImageProps = SharePostImagesData & { width: number };
 const SquareImage = ({ post, width }: SquareImageProps) => {
     return (
         <Image
-            source={{
-                uri: post.thumbnail.src,
-            }}
-            priority="high"
             style={[styles.image, { width }]}
+            recyclingKey={post.thumbnail.src}
+            source={{ uri: post.thumbnail.src }}
+            priority="high"
             contentFit="cover"
+            placeholder={require('@/assets/images/default_image.png')}
+            placeholderContentFit="cover"
         />
     );
 };
