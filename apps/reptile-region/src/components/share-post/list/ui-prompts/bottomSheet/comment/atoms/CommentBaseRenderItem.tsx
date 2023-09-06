@@ -53,7 +53,7 @@ const CommentBaseRenderItem = ({ FootChildren, showAnimated, user, comment }: Re
                 <View style={styles.commentItemGap}>
                     <Text style={styles.nickname}>{user.nickname}</Text>
                     <TaggedContent uuid={comment.id} contents={comment.contents} onPressTag={onPressTag} />
-                    <CommentActions />
+                    <CommentActions comment={{ isMine: comment.isMine }} />
                 </View>
                 {FootChildren}
             </View>
