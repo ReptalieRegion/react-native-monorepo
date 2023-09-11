@@ -1,12 +1,14 @@
 {
-    "name": "overlay-manger",
+    "name": "overlay-manager",
     "version": "1.0.0",
     "packageManager": "yarn@3.6.0",
     "main": "lib/index.js",
     "scripts": {
         "build": "rm -rf ./lib && tsc",
-        "postinstall": "yarn build",
-        "watch": "tsc --watch"
+        "watch": "tsc --watch",
+        "typecheck": "tsc --noEmit",
+        "prepack": "yarn build",
+        "postinstall": "yarn build"
     },
     "devDependencies": {
         "typescript": "5.2.2"

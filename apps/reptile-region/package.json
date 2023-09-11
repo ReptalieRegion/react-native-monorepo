@@ -39,7 +39,7 @@
         "install-expo-modules": "^0.6.3",
         "ios-deploy": "^1.12.2",
         "lodash-es": "^4.17.21",
-        "overlay-manger": "1.0.0",
+        "overlay-manager": "1.0.0",
         "pod-install": "^0.1.38",
         "postinstall": "^0.8.0",
         "react": "18.2.0",
