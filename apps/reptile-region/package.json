@@ -39,6 +39,7 @@
         "install-expo-modules": "^0.6.3",
         "ios-deploy": "^1.12.2",
         "lodash-es": "^4.17.21",
+        "overlay-manger": "1.0.0",
         "pod-install": "^0.1.38",
         "postinstall": "^0.8.0",
         "react": "18.2.0",
@@ -46,7 +47,7 @@
         "react-native": "0.72.3",
         "react-native-dotenv": "^3.4.9",
         "react-native-gesture-handler": "^2.12.0",
-        "react-native-haptic-feedback": "2.0.3",
+        "react-native-haptic-feedback": "2.2.0",
         "react-native-linear-gradient": "^2.8.0",
         "react-native-permissions": "^3.8.0",
         "react-native-reanimated": "3.4.2",
@@ -82,7 +83,7 @@
         "react-native-url-polyfill": "^2.0.0",
         "react-query-native-devtools": "^4.0.0",
         "react-test-renderer": "18.2.0",
-        "typescript": "4.8.4"
+        "typescript": "5.2.2"
     },
     "expo": {
         "autolinking": {
