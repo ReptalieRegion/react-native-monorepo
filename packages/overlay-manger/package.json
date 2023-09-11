@@ -1,0 +1,20 @@
+{
+    "name": "overlay-manger",
+    "version": "1.0.0",
+    "packageManager": "yarn@3.6.0",
+    "main": "lib/index.js",
+    "scripts": {
+        "build": "rm -rf ./lib && tsc",
+        "postinstall": "yarn build",
+        "watch": "tsc --watch"
+    },
+    "devDependencies": {
+        "typescript": "5.2.2"
+    },
+    "peerDependencies": {
+        "react": "*",
+        "react-native": "*"
+    },
+    "keywords": [],
+    "author": "yunchanpark"
+}
