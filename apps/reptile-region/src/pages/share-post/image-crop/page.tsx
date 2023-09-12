@@ -6,7 +6,7 @@ import usePhotoStore from '@/stores/share-post/usePhotoStore';
 const SharePostImageCropPage = () => {
     const reset = usePhotoStore((state) => state.reset);
 
-    useEffect(() => () => reset());
+    useEffect(() => () => reset(), [reset]);
 
     return <ImageCrop />;
 };
