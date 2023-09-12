@@ -17,8 +17,8 @@ if (__DEV__) {
     });
 }
 
-const ReactQueryContextComponent = ({ children }: PropsWithChildren) => {
+const ReactQueryProvider = ({ children }: PropsWithChildren) => {
     return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };
 
-export default ReactQueryContextComponent;
+export default ReactQueryProvider;
