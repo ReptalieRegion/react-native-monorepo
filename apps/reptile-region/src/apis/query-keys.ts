@@ -1,23 +1,15 @@
-// 게시글
-export const postQueryKeys = {
+/** SharePost */
+export const sharePostQueryKeys = {
+    // 게시물
     list: ['share-post', 'list'] as const,
     detailImage: (id: string) => ['share-post', 'detail', 'image', id] as const,
     detailUserPosts: (id: string) => ['share-post', 'detail', 'user-post', id] as const,
     post: (id: string) => ['share-post', id] as const,
-} as const;
-
-// 유저
-export const userQueryKeys = {
+    // 유저
     profile: (id: string) => ['profile', id] as const,
     searchUser: (search: string) => ['search-user', search] as const,
-} as const;
-
-// 댓글
-export const commentQueryKeys = {
-    comment: (id: string) => ['comment', id] as const,
-} as const;
-
-// 대댓글
-export const commentReplyQueryKeys = {
-    commentReply: (id: string) => ['comment-reply', id] as const,
+    // 댓글
+    comment: (id: string) => ['share-post', 'comment', id] as const,
+    // 대댓글
+    commentReply: (id: string) => ['share-post', 'comment-reply', id] as const,
 } as const;

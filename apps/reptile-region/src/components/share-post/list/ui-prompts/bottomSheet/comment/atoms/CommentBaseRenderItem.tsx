@@ -2,9 +2,6 @@ import { useNavigation } from '@react-navigation/native';
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import TaggedContent from '../../../../../common/atoms/TaggedContent';
-import type { TagPressHandler } from '../../../../../common/atoms/TaggedContent';
-
 import CommentActions from './CommentActions';
 
 import type { BottomTabStackNavigationProp } from '<RootRoutes>';
@@ -12,6 +9,8 @@ import type { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
 import Avatar from '@/components/common/fast-image/Avatar';
 import { color } from '@/components/common/tokens/colors';
+import type { TagPressHandler } from '@/components/share-post/common/atoms/TaggedContent';
+import TaggedContent from '@/components/share-post/common/atoms/TaggedContent';
 
 type RenderItemProps =
     | {

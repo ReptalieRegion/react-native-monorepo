@@ -4,7 +4,7 @@ import { updateFollow } from '../../repository';
 
 import { SharePostListInfiniteData } from '<SharePostAPI>';
 import type { SharePostUserData, UpdateFollowRequest } from '<SharePostUserAPI>';
-import { postQueryKeys, userQueryKeys } from '@/apis/share-post/query-keys';
+import { sharePostQueryKeys } from '@/apis/query-keys';
 
 type SetQueryDataProps = {
     queryClient: QueryClient;
@@ -13,7 +13,7 @@ type SetQueryDataProps = {
 
 // 유저 프로필 캐시 isFollow, followingCount 변경
 const updateUserProfile = ({ queryClient, userId }: SetQueryDataProps) => {
-    queryClient.setQueryData<SharePostUserData>(userQueryKeys.profile(userId), (prevUserProfile) => {
+    queryClient.setQueryData<SharePostUserData>(sharePostQueryKeys.profile(userId), (prevUserProfile) => {
         if (prevUserProfile === undefined) {
             return prevUserProfile;
         }
@@ -35,7 +35,7 @@ const updateUserProfile = ({ queryClient, userId }: SetQueryDataProps) => {
 
 // 일상 공유 리스트 캐시
 const updateSharePostList = ({ queryClient, userId }: SetQueryDataProps) => {
-    queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(postQueryKeys.list, (prevPostList) => {
+    queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(sharePostQueryKeys.list, (prevPostList) => {
         if (prevPostList === undefined) {
             return prevPostList;
         }

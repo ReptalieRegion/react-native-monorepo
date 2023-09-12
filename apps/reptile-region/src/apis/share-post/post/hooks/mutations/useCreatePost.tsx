@@ -5,7 +5,7 @@ import { createPost } from '../../repository';
 
 import type { BottomTabStackNavigationProp } from '<RootRoutes>';
 import type { CreatePostRequest, SharePostListData, SharePostListInfiniteData } from '<SharePostAPI>';
-import { postQueryKeys } from '@/apis/share-post/query-keys';
+import { sharePostQueryKeys } from '@/apis/query-keys';
 
 const useCreatePost = () => {
     const navigate = useNavigation<BottomTabStackNavigationProp>();
@@ -14,7 +14,7 @@ const useCreatePost = () => {
     return useMutation<SharePostListData, any, CreatePostRequest>({
         mutationFn: ({ contents, files }) => createPost({ contents, files }),
         onSuccess: (data) => {
-            queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(postQueryKeys.list, (oldData) => {
+            queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(sharePostQueryKeys.list, (oldData) => {
                 if (oldData === undefined) {
                     return oldData;
                 }

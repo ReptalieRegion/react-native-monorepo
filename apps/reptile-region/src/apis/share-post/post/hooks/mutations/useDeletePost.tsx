@@ -3,7 +3,7 @@ import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstac
 import { deletePost } from '../../repository';
 
 import type { DeletePostRequest, SharePostImagesInfiniteData, SharePostListInfiniteData } from '<SharePostAPI>';
-import { postQueryKeys } from '@/apis/share-post/query-keys';
+import { sharePostQueryKeys } from '@/apis/query-keys';
 
 type SetQueryDataProps = {
     queryClient: QueryClient;
@@ -13,7 +13,7 @@ type SetQueryDataProps = {
 
 const deletePostDetailImage = ({ queryClient, postId }: SetQueryDataProps) => {
     queryClient.setQueryData<InfiniteData<SharePostImagesInfiniteData>>(
-        postQueryKeys.detailImage(postId),
+        sharePostQueryKeys.detailImage(postId),
         (prevDetailImages) => {
             if (prevDetailImages === undefined) {
                 return prevDetailImages;
@@ -34,7 +34,7 @@ const deletePostDetailImage = ({ queryClient, postId }: SetQueryDataProps) => {
 };
 
 const deletePostListCache = ({ queryClient, postId }: { queryClient: QueryClient; postId: string }) => {
-    queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(postQueryKeys.list, (prevPostList) => {
+    queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(sharePostQueryKeys.list, (prevPostList) => {
         if (prevPostList === undefined) {
             return prevPostList;
         }

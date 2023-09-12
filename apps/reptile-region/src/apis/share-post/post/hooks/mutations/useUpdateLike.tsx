@@ -3,7 +3,7 @@ import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query
 import { updateLike } from '../../repository';
 
 import type { SharePostListInfiniteData, UpdateLikeRequest } from '<SharePostAPI>';
-import { postQueryKeys } from '@/apis/share-post/query-keys';
+import { sharePostQueryKeys } from '@/apis/query-keys';
 
 const useUpdateLike = ({ postId }: UpdateLikeRequest) => {
     const queryClient = useQueryClient();
@@ -11,7 +11,7 @@ const useUpdateLike = ({ postId }: UpdateLikeRequest) => {
     return useMutation({
         mutationFn: () => updateLike({ postId }),
         onSuccess: () => {
-            queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(postQueryKeys.list, (oldData) => {
+            queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(sharePostQueryKeys.list, (oldData) => {
                 if (oldData === undefined) {
                     return oldData;
                 }
