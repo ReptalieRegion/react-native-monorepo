@@ -12,17 +12,14 @@ export type OverlayComponents<ParamList extends ParamListBase, RouteName extends
     [Name in RouteName]?: ScreenComponentType<ParamList, Name>;
 };
 
-export type OverlayProp<ParamList extends ParamListBase, RouteName extends keyof ParamList> = {
-    openOverlay(
-        options: RouteName extends unknown
-            ? ParamList[RouteName] extends undefined
-                ? { name: RouteName; params?: ParamList[RouteName] }
-                : { name: RouteName; params: ParamList[RouteName] }
-            : never,
-    ): void;
-    closeOverlay(name: RouteName): void;
-    registerOverlay(
-        options: RouteName extends unknown ? { name: RouteName; component: ScreenComponentType<ParamList, RouteName> } : never,
+export type OverlayProp<ParamList extends ParamListBase> = {
+    openOverlay<RouteName extends keyof ParamList>(name: RouteName, params: ParamList[RouteName]): void;
+    closeOverlay<RouteName extends keyof ParamList>(name: RouteName): void;
+    registerOverlay<RouteName extends keyof ParamList>(
+        name: RouteName,
+        option: {
+            component: ScreenComponentType<ParamList, RouteName>;
+        },
     ): void;
 };
 
@@ -49,11 +46,16 @@ interface OverlayInitRegister<ParamList extends ParamListBase, RouteName extends
     component: OverlayComponents<ParamList, RouteName>;
 }
 
+interface OverlayResetOpenList {
+    type: 'RESET_OPEN_LIST';
+}
+
 export type OverlayActions<ParamList extends {}, RouteName extends keyof ParamList> =
     | OverlayOpen<ParamList, RouteName>
     | OverlayClose<ParamList, RouteName>
     | OverlayRegister<ParamList, RouteName>
-    | OverlayInitRegister<ParamList, RouteName>;
+    | OverlayInitRegister<ParamList, RouteName>
+    | OverlayResetOpenList;
 
 export type OverlayState<ParamList extends ParamListBase, RouteName extends keyof ParamList> = {
     component: OverlayComponents<ParamList, RouteName>;
@@ -88,4 +90,8 @@ export type RegisterOverlayHost = <ParamList extends ParamListBase, RouteName ex
 export type InitRegisterOverlayHost = <ParamList extends ParamListBase, RouteName extends keyof ParamList>(props: {
     state: OverlayState<ParamList, RouteName>;
     components: OverlayComponents<ParamList, RouteName>;
+}) => OverlayState<ParamList, RouteName>;
+
+export type ResetOpenListOverlayHost = <ParamList extends ParamListBase, RouteName extends keyof ParamList>(props: {
+    state: OverlayState<ParamList, RouteName>;
 }) => OverlayState<ParamList, RouteName>;

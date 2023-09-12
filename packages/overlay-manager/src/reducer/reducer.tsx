@@ -6,6 +6,7 @@ import {
     OverlayState,
     ParamListBase,
     RegisterOverlayHost,
+    ResetOpenListOverlayHost,
 } from '../types/overlay';
 
 const openOverlayHost: OpenOverlayHost = ({ state, name, params }) => {
@@ -36,6 +37,13 @@ const initRegisterOverlayHost: InitRegisterOverlayHost = ({ state, components })
     return cloneState;
 };
 
+const resetOpenListOverlayHost: ResetOpenListOverlayHost = ({ state }) => {
+    const cloneState = { ...state };
+    cloneState.openList = [];
+
+    return cloneState;
+};
+
 const reducer = <ParamList extends ParamListBase, RouteName extends keyof ParamList>(
     state: OverlayState<ParamList, RouteName>,
     actions: OverlayActions<ParamList, RouteName>,
@@ -49,6 +57,8 @@ const reducer = <ParamList extends ParamListBase, RouteName extends keyof ParamL
             return registerOverlayHost<ParamList, RouteName>({ state, name: actions.name, component: actions.component });
         case 'INIT_REGISTER':
             return initRegisterOverlayHost<ParamList, RouteName>({ state, components: actions.component });
+        case 'RESET_OPEN_LIST':
+            return resetOpenListOverlayHost({ state });
         default:
             return state;
     }

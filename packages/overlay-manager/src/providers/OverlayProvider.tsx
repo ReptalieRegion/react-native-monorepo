@@ -1,4 +1,4 @@
-import React, { ReactNode, memo, useReducer } from 'react';
+import React, { ReactNode, useEffect, useReducer } from 'react';
 
 import OverlayHost from '../components/OverlayHost';
 import OverlayRegister from '../components/OverlayRegister';
@@ -18,6 +18,12 @@ const OverlayProvider = <ParamList extends ParamListBase, RouteName extends keyo
 }: OverlayProviderProps<ParamList, RouteName>) => {
     const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
+    useEffect(() => {
+        return () => {
+            dispatch({ type: 'RESET_OPEN_LIST' });
+        };
+    }, []);
+
     return (
         <OverlayStateContext.Provider value={state}>
             <OverlayActionContext.Provider value={dispatch}>
@@ -31,9 +37,9 @@ const OverlayProvider = <ParamList extends ParamListBase, RouteName extends keyo
 
 const createOverlay = <ParamList extends ParamListBase, RouteName extends keyof ParamList = keyof ParamList>() => {
     return {
-        Container: memo(({ children, registerComponent }: OverlayProviderProps<ParamList, RouteName>) => {
+        Container: ({ children, registerComponent }: OverlayProviderProps<ParamList, RouteName>) => {
             return <OverlayProvider<ParamList, RouteName> registerComponent={registerComponent}>{children}</OverlayProvider>;
-        }),
+        },
     };
 };
 
