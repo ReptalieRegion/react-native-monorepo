@@ -1,27 +1,22 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import CommentBottomSheet from '../ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
-
+import { RootStackParamList } from '<RootRoutes>';
 import type { SharePostListData } from '<SharePostAPI>';
 import { Comment } from '@/assets/icons';
-import { useUIPrompts } from '@/contexts/ui-prompts/UIPrompts';
 
 type CommentIconType = {
     post: Pick<SharePostListData['post'], 'id'>;
 };
 
 const CommentIcon = ({ post }: CommentIconType) => {
-    const { setUIPrompts } = useUIPrompts();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>>();
 
     const handleClickComment = () => {
-        const { uiPromptsOpen } = setUIPrompts({
-            Component: CommentBottomSheet,
-            openType: 'bottomSheet',
-            props: { post },
-        });
-        uiPromptsOpen();
+        navigation.navigate('bottom-tab', { screen: 'share-post/comment', params: { post } });
     };
 
     return (

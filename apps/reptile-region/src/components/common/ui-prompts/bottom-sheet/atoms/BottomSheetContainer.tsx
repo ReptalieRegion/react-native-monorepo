@@ -44,6 +44,7 @@ const BottomSheetContainer = ({
 
 const styles = StyleSheet.create({
     container: {
+        opacity: 1,
         flex: 1,
     },
     viewContainer: {

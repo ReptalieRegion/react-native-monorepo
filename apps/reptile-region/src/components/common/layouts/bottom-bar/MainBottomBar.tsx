@@ -25,23 +25,23 @@ type MenusType = {
 };
 
 const MENUS: MenusType = {
-    'bottom-tab/home/routes': {
+    'home/routes': {
         Icon: HomeIcon,
         name: '홈',
     },
-    'bottom-tab/shop/routes': {
+    'shop/routes': {
         Icon: ShopIcon,
         name: '쇼핑',
     },
-    'bottom-tab/share-post/routes': {
+    'share-post/routes': {
         Icon: SharePostIcon,
         name: '일상공유',
     },
-    'bottom-tab/info/routes': {
+    'info/routes': {
         Icon: InfoIcon,
         name: '정보공유',
     },
-    'bottom-tab/my/routes': {
+    'my/routes': {
         Icon: MyIcon,
         name: '내 정보',
     },

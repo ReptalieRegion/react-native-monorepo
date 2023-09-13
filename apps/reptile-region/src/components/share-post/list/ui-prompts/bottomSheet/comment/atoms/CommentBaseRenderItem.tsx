@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import CommentActions from './CommentActions';
 
-import type { BottomTabStackNavigationProp } from '<RootRoutes>';
+import { RootStackParamList } from '<RootRoutes>';
 import type { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
 import Avatar from '@/components/common/fast-image/Avatar';
@@ -27,13 +28,10 @@ type RenderItemProps =
       };
 
 const CommentBaseRenderItem = ({ FootChildren, showAnimated, user, comment }: RenderItemProps) => {
-    const navigation = useNavigation<BottomTabStackNavigationProp>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>>();
     const onPressTag: TagPressHandler = (_, content) => {
-        navigation.navigate('bottom-tab-less', {
-            screen: 'share-post/detail',
-            params: {
-                nickname: content.replace('@', ''),
-            },
+        navigation.navigate('share-post/detail', {
+            nickname: content.replace('@', ''),
         });
     };
 

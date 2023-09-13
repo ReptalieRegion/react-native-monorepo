@@ -1,12 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { BottomTabLessAuthSignInNavigationProp } from '<BottomTabLessSlidFromBottomNavigationList>';
+import type { RootStackParamList } from '<RootRoutes>';
 import TextButton from '@/components/common/layouts/button/TextButton';
 
 const UserAccessControl = () => {
-    const navigation = useNavigation<BottomTabLessAuthSignInNavigationProp>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'auth/sign-in'>>();
     const handleFindId = () => {
         return;
     };
@@ -16,7 +17,7 @@ const UserAccessControl = () => {
     };
 
     const handleSignUp = () => {
-        navigation.push('auth/sign-up');
+        navigation.navigate('auth/sign-up');
         return;
     };
 

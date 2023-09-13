@@ -1,18 +1,15 @@
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { SharePostListData } from '<SharePostAPI>';
-import type { UIPromptsDefaultProps } from '<UIPrompts>';
+import type { BottomTabStackParamList } from '<BottomTabNavigationList>';
+import { RootStackParamList } from '<RootRoutes>';
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
 import BottomSheetContainer, { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
 import BottomSheetHeader from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetHeader';
-
-type KebabMenuBottomSheetProps = {
-    user: Pick<SharePostListData['user'], 'id'>;
-    post: Pick<SharePostListData['post'], 'id' | 'isMine'>;
-};
 
 type ListItemProps = {
     text: string;
@@ -26,25 +23,29 @@ const ListItem = ({ text, onPress }: ListItemProps) => {
     );
 };
 
-const KebabMenuBottomSheet = ({ uiPromptsClose, post, user }: KebabMenuBottomSheetProps & UIPromptsDefaultProps) => {
+const KebabMenuBottomSheet = () => {
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>>();
+    const { params } = useRoute<RouteProp<BottomTabStackParamList, 'share-post/kebab-menu'>>();
+    const { post, user } = params;
     const { bottom } = useSafeAreaInsets();
     const { mutate } = useDeletePost({ postId: post.id, userId: user.id });
 
+    const close = () => {
+        if (navigation.canGoBack()) {
+            navigation.goBack();
+        }
+    };
+
+    const deletePost = () => {
+        mutate();
+        close();
+    };
+
     return (
-        <BottomSheetContainer uiPromptsClose={uiPromptsClose} containerStyle={containerStyle}>
+        <BottomSheetContainer uiPromptsClose={close} containerStyle={containerStyle}>
             <BottomSheetHeader />
             <View style={[styles.content, { paddingBottom: bottom }]}>
-                {post.isMine ? (
-                    <ListItem
-                        text="삭제"
-                        onPress={() => {
-                            mutate();
-                            uiPromptsClose();
-                        }}
-                    />
-                ) : (
-                    <ListItem text="신고하기" />
-                )}
+                {post.isMine ? <ListItem text="삭제" onPress={deletePost} /> : <ListItem text="신고하기" />}
             </View>
         </BottomSheetContainer>
     );

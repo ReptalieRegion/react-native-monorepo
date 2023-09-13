@@ -1,21 +1,27 @@
 declare module '<RootRoutes>' {
     import type { NavigatorScreenParams } from '@react-navigation/native';
-    import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-    import type { BottomTabLessParamList } from '<BottomTabLessNavigationList>';
-    import type { BottomTabLessSlideFromBottomParamList } from '<BottomTabLessSlidFromBottomNavigationList>';
-    import type { BottomTabParamList } from '<BottomTabNavigationList>';
+    import type { BottomTabStackParamList } from '<BottomTabNavigationList>';
 
-    type BottomTabStackNavigationProp = NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>;
-
-    type BottomTabLessStackNavigationProp = NativeStackNavigationProp<RootStackParamList, 'bottom-tab-less'>;
-
-    type WebviewExampleStackNavigationProp = NativeStackNavigationProp<RootStackParamList, 'webview-example'>;
+    type SharePostDetailProps = {
+        userId?: string;
+        nickname: string;
+    };
 
     type RootStackParamList = {
-        'bottom-tab': NavigatorScreenParams<BottomTabParamList>;
-        'bottom-tab-less': NavigatorScreenParams<BottomTabLessParamList>;
-        'bottom-tab-less-slide-from-bottom': NavigatorScreenParams<BottomTabLessSlideFromBottomParamList>;
+        /** Bottom Tab 있는 페이지 */
+        'bottom-tab': NavigatorScreenParams<BottomTabStackParamList>;
+
+        /** Bottom Tab 없는 페이지 */
+        'share-post/detail': SharePostDetailProps;
+        'share-post/image-crop': undefined;
+        'share-post/write': undefined;
+
+        /** Bottom Tab 없고 밑에서 위로 올라오는 페이지 */
+        'auth/sign-in': undefined;
+        'auth/sign-up': undefined;
+
+        /** webview 예시 */
         'webview-example': undefined;
     };
 }

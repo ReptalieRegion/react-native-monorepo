@@ -14,13 +14,12 @@ type PostHeaderProps = {
 
 const PostHeader = ({ user, post }: PostHeaderProps) => {
     const { id: userId, isFollow, nickname, profile } = user;
-    const { id: postId } = post;
 
     return (
         <View style={styles.container}>
             <Profile user={{ id: userId, nickname, profile }} />
             <View style={styles.rightContent}>
-                <Follow user={{ id: userId, isFollow }} post={{ id: postId }} />
+                <Follow user={{ id: userId, isFollow }} />
                 <PostKebabMenu user={{ id: user.id }} post={post} />
             </View>
         </View>

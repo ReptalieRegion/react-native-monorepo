@@ -1,14 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import type { BottomTabStackNavigationProp } from '<RootRoutes>';
+import { RootStackParamList } from '<RootRoutes>';
 
 const MyListPage = () => {
-    const navigation = useNavigation<BottomTabStackNavigationProp>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>>();
     const navigateSignIn = () => {
-        navigation.navigate('bottom-tab-less-slide-from-bottom', { screen: 'auth/sign-in' });
+        navigation.navigate('auth/sign-in');
     };
 
     return (

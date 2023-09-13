@@ -6,6 +6,8 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 
+import 'react-native-gesture-handler';
+
 export default function App() {
     return (
         <ReactQueryProvider>

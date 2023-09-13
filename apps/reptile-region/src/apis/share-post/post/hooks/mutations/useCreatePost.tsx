@@ -1,14 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createPost } from '../../repository';
 
-import type { BottomTabStackNavigationProp } from '<RootRoutes>';
+import type { RootStackParamList } from '<RootRoutes>';
 import type { CreatePostRequest, SharePostListData, SharePostListInfiniteData } from '<SharePostAPI>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
 const useCreatePost = () => {
-    const navigate = useNavigation<BottomTabStackNavigationProp>();
+    const navigate = useNavigation<NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>>();
     const queryClient = useQueryClient();
 
     return useMutation<SharePostListData, any, CreatePostRequest>({
@@ -31,7 +32,15 @@ const useCreatePost = () => {
                 };
             });
 
-            navigate.navigate('bottom-tab', { screen: 'bottom-tab/share-post/routes', params: { screen: 'share-post/list' } });
+            navigate.navigate('bottom-tab', {
+                screen: 'bottom-tab/routes',
+                params: {
+                    screen: 'share-post/routes',
+                    params: {
+                        screen: 'share-post/list',
+                    },
+                },
+            });
         },
         onError: (error) => {
             console.log(error);

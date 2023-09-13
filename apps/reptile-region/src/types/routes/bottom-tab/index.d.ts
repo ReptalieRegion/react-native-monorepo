@@ -7,11 +7,35 @@ declare module '<BottomTabNavigationList>' {
     import type { BottomTabSharePostParamList } from '<BottomTabSharePostRoutes>';
     import type { BottomTabShopParamList } from '<BottomTabShopRoutes>';
 
+    type SharePostKebabMenuProps = {
+        post: {
+            id: string;
+            isMine: boolean;
+        };
+        user: {
+            id: string;
+        };
+    };
+
+    type SharePostCommentProps = {
+        post: {
+            id: string;
+        };
+    };
+
     type BottomTabParamList = {
-        'bottom-tab/home/routes': NavigatorScreenParams<BottomTabHomeRoutesParamList>;
-        'bottom-tab/shop/routes': NavigatorScreenParams<BottomTabShopParamList>;
-        'bottom-tab/share-post/routes': NavigatorScreenParams<BottomTabSharePostParamList>;
-        'bottom-tab/info/routes': NavigatorScreenParams<BottomTabInfoParamList>;
-        'bottom-tab/my/routes': NavigatorScreenParams<BottomTabShopParamList>;
+        'home/routes': NavigatorScreenParams<BottomTabHomeRoutesParamList>;
+        'shop/routes': NavigatorScreenParams<BottomTabShopParamList>;
+        'share-post/routes': NavigatorScreenParams<BottomTabSharePostParamList>;
+        'info/routes': NavigatorScreenParams<BottomTabInfoParamList>;
+        'my/routes': NavigatorScreenParams<BottomTabShopParamList>;
+    };
+
+    type BottomTabStackParamList = {
+        'bottom-tab/routes': NavigatorScreenParams<BottomTabParamList>;
+
+        /** Bottom Sheet */
+        'share-post/kebab-menu': SharePostKebabMenuProps;
+        'share-post/comment': SharePostCommentProps;
     };
 }

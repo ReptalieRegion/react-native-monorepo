@@ -1,13 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import type { BottomTabLessSharePostImageCropNavigationProp } from '<BottomTabLessNavigationList>';
+import type { RootStackParamList } from '<RootRoutes>';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
 const ImageCropRightHeader = () => {
-    const navigate = useNavigation<BottomTabLessSharePostImageCropNavigationProp>();
+    const navigate = useNavigation<NativeStackNavigationProp<RootStackParamList, 'share-post/image-crop'>>();
     const hasSelectPhoto = usePhotoStore((state) => state.selectedPhotos.length > 0);
 
     const handleNextPage = () => {
@@ -16,7 +17,7 @@ const ImageCropRightHeader = () => {
             return;
         }
 
-        navigate.push('share-post/write');
+        navigate.navigate('share-post/write');
     };
 
     return (

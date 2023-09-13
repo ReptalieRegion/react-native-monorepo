@@ -1,17 +1,18 @@
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 
-import type { BottomTabStackNavigationProp } from '<RootRoutes>';
+import { RootStackParamList } from '<RootRoutes>';
 import type { FloatingActionButtonSize } from '<SharePostComponent>';
 import { PostWriteIcon } from '@/assets/icons';
 import FloatingActionButton from '@/components/common/element/button/FloatingActionButton';
 import { color } from '@/components/common/tokens/colors';
 
 const PostWrite = (buttonSize: FloatingActionButtonSize) => {
-    const navigation = useNavigation<BottomTabStackNavigationProp>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'share-post/write'>>();
 
     const handleRouteImageCrop = () => {
-        navigation.navigate('bottom-tab-less', { screen: 'share-post/image-crop' });
+        navigation.navigate('share-post/image-crop');
     };
 
     return (

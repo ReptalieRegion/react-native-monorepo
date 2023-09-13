@@ -1,11 +1,10 @@
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import KebabMenuBottomSheet from '../ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
-
+import { RootStackParamList } from '<RootRoutes>';
 import type { SharePostListData } from '<SharePostAPI>';
 import { KebabMenu } from '@/assets/icons';
-import { useUIPrompts } from '@/contexts/ui-prompts/UIPrompts';
 
 type PostKebabProps = {
     user: Pick<SharePostListData['user'], 'id'>;
@@ -13,15 +12,10 @@ type PostKebabProps = {
 };
 
 const PostKebabMenu = ({ user, post }: PostKebabProps) => {
-    const { setUIPrompts } = useUIPrompts();
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
     const openBottomSheet = () => {
-        const { uiPromptsOpen } = setUIPrompts({
-            Component: KebabMenuBottomSheet,
-            openType: 'bottomSheet',
-            props: { user, post },
-        });
-        uiPromptsOpen();
+        navigation.navigate('bottom-tab', { screen: 'share-post/kebab-menu', params: { post, user } });
     };
 
     return (

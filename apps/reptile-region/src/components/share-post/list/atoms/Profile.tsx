@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import type { BottomTabSharePostListNavigationProp } from '<BottomTabSharePostRoutes>';
+import type { RootStackParamList } from '<RootRoutes>';
 import type { SharePostListData } from '<SharePostAPI>';
 
 type ProfileProps = {
@@ -14,7 +15,7 @@ type ProfileProps = {
 const Profile = ({ user }: ProfileProps) => {
     const { id: userId, nickname, profile } = user;
 
-    const navigation = useNavigation<BottomTabSharePostListNavigationProp>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>>();
 
     const gotoDetailPage = () => {
         navigation.push('share-post/detail', { userId, nickname });

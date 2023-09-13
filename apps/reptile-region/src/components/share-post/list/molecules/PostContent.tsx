@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -6,7 +7,7 @@ import TaggedContent, { TagPressHandler } from '../../common/atoms/TaggedContent
 import CommentContent from '../atoms/CommentContent';
 import LikeContent from '../atoms/LikeContent';
 
-import { BottomTabSharePostListNavigationProp } from '<BottomTabSharePostRoutes>';
+import type { RootStackParamList } from '<RootRoutes>';
 import type { SharePostListData } from '<SharePostAPI>';
 
 type PostContentProps = {
@@ -15,7 +16,8 @@ type PostContentProps = {
 
 const PostContent = ({ post }: PostContentProps) => {
     const { id: postId, commentCount, contents, likeCount } = post;
-    const navigation = useNavigation<BottomTabSharePostListNavigationProp>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>>();
+
     const onPressTag: TagPressHandler = (_, content) => {
         navigation.push('share-post/detail', { nickname: content.slice(1) });
     };
