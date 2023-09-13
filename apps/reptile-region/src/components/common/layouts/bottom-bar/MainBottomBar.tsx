@@ -5,8 +5,8 @@ import * as Haptic from 'react-native-haptic-feedback';
 
 import MainBottomTabBarButton from './MainBottomTabBarButton';
 
-import type { BottomTabParamList } from '<BottomTabNavigationList>';
 import type { IconProps } from '<Icon>';
+import { RootRoutesParamList } from '<RootRoutes>';
 import {
     Cart as ShopIcon,
     Community as InfoIcon,
@@ -18,13 +18,13 @@ import { color } from '@/components/common/tokens/colors';
 import useKeyboard from '@/hooks/useKeyboard';
 
 type MenusType = {
-    [key in keyof BottomTabParamList]: {
+    [key in keyof RootRoutesParamList]: {
         Icon: (props: IconProps) => React.JSX.Element;
         name: string;
     };
 };
 
-const MENUS: MenusType = {
+const MENUS: Partial<MenusType> = {
     'home/routes': {
         Icon: HomeIcon,
         name: '홈',
@@ -60,8 +60,14 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
         <View style={styles.bgWhite}>
             <View style={[styles.container, dynamicStyle.container]}>
                 {state.routes.map((route, index) => {
-                    const routeName = route.name as keyof BottomTabParamList;
-                    const { Icon, name } = MENUS[routeName];
+                    const routeName = route.name as keyof RootRoutesParamList;
+                    const item = MENUS[routeName];
+
+                    if (item === undefined) {
+                        return null;
+                    }
+
+                    const { Icon, name } = item;
                     const isFocused = state.index === index;
                     const onPress = () => {
                         const event = navigation.emit({

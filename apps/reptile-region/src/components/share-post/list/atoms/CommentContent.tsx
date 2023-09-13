@@ -1,11 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import type { RootStackParamList } from '<RootRoutes>';
 import type { SharePostListData } from '<SharePostAPI>';
+import type { SharePostNavigationProp } from '<SharePostRoutes>';
 import { color } from '@/components/common/tokens/colors';
 
 type CommentContentProps = {
@@ -14,13 +13,10 @@ type CommentContentProps = {
 
 const CommentContent = ({ post }: CommentContentProps) => {
     const { commentCount } = post;
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>>();
+    const navigation = useNavigation<SharePostNavigationProp<'share-post/list'>>();
 
     const handleClickComment = () => {
-        navigation.navigate('bottom-tab', {
-            screen: 'share-post/comment',
-            params: { post },
-        });
+        navigation.push('share-post/bottom-sheet/comment', { post });
     };
 
     if (commentCount === 0) {

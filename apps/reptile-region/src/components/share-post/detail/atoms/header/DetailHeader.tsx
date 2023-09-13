@@ -1,6 +1,6 @@
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 
-import type { SharePostDetailProps } from '<RootRoutes>';
+import { SharePostDetailProps } from '<SharePostRoutes>';
 import { createNativeStackHeader } from '@/components/common/layouts/header/utils/create-header';
 
 const SharePostDetailHeader = (props: NativeStackHeaderProps) => {

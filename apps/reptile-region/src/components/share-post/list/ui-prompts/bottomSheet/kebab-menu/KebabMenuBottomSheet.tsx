@@ -1,12 +1,10 @@
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { BottomTabStackParamList } from '<BottomTabNavigationList>';
-import { RootStackParamList } from '<RootRoutes>';
+import type { SharePostNavigationProp, SharePostRouteProp } from '<SharePostRoutes>';
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
 import BottomSheetContainer, { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
 import BottomSheetHeader from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetHeader';
@@ -24,8 +22,8 @@ const ListItem = ({ text, onPress }: ListItemProps) => {
 };
 
 const KebabMenuBottomSheet = () => {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>>();
-    const { params } = useRoute<RouteProp<BottomTabStackParamList, 'share-post/kebab-menu'>>();
+    const navigation = useNavigation<SharePostNavigationProp<'share-post/bottom-sheet/kebab-menu'>>();
+    const { params } = useRoute<SharePostRouteProp<'share-post/bottom-sheet/kebab-menu'>>();
     const { post, user } = params;
     const { bottom } = useSafeAreaInsets();
     const { mutate } = useDeletePost({ postId: post.id, userId: user.id });

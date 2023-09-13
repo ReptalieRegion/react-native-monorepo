@@ -1,13 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import type { BottomTabShopParamList } from '<BottomTabShopRoutes>';
+import type { ShopParamList } from '<ShopRoutes>';
 import { NativeStackDefaultHeader } from '@/components/common/layouts/header/utils/create-header';
 import ShopListPage from '@/pages/shop/list/page';
 
-const ShopRoutes = () => {
-    const ShopStack = createNativeStackNavigator<BottomTabShopParamList>();
+const ShopStack = createNativeStackNavigator<ShopParamList>();
 
+const ShopRoutes = () => {
     return (
         <ShopStack.Navigator initialRouteName="shop/list">
             <ShopStack.Screen name="shop/list" component={ShopListPage} options={{ header: NativeStackDefaultHeader }} />

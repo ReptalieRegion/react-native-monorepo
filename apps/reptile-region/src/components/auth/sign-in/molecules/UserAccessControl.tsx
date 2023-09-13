@@ -1,13 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { RootStackParamList } from '<RootRoutes>';
+import { MyNavigationProp } from '<MyRoutes>';
 import TextButton from '@/components/common/layouts/button/TextButton';
 
 const UserAccessControl = () => {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'auth/sign-in'>>();
+    const navigation = useNavigation<MyNavigationProp<'auth/sign-in'>>();
     const handleFindId = () => {
         return;
     };

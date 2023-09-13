@@ -1,13 +1,13 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import type { BottomTabHomeRoutesParamList } from '<BottomTabHomeRoutes>';
+import { HomeParamList } from '<HomeRoutes>';
 import { NativeStackDefaultHeader } from '@/components/common/layouts/header/utils/create-header';
 import HomeListPage from '@/pages/home/list/page';
 
-const HomeRoutes = () => {
-    const HomeStack = createNativeStackNavigator<BottomTabHomeRoutesParamList>();
+const HomeStack = createNativeStackNavigator<HomeParamList>();
 
+const HomeRoutes = () => {
     return (
         <HomeStack.Navigator initialRouteName="home/list">
             <HomeStack.Screen name="home/list" component={HomeListPage} options={{ header: NativeStackDefaultHeader }} />

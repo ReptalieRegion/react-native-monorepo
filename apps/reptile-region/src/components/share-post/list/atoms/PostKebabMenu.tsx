@@ -1,9 +1,9 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { RootStackParamList } from '<RootRoutes>';
 import type { SharePostListData } from '<SharePostAPI>';
+import type { SharePostNavigationProp } from '<SharePostRoutes>';
 import { KebabMenu } from '@/assets/icons';
 
 type PostKebabProps = {
@@ -12,10 +12,10 @@ type PostKebabProps = {
 };
 
 const PostKebabMenu = ({ user, post }: PostKebabProps) => {
-    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+    const navigation = useNavigation<SharePostNavigationProp<'share-post/list'>>();
 
     const openBottomSheet = () => {
-        navigation.navigate('bottom-tab', { screen: 'share-post/kebab-menu', params: { post, user } });
+        navigation.navigate('share-post/bottom-sheet/kebab-menu', { post, user });
     };
 
     return (

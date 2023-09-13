@@ -1,15 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { RootStackParamList } from '<RootRoutes>';
+import { MyNavigationProp } from '<MyRoutes>';
 
 const MyListPage = () => {
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'bottom-tab'>>();
+    const navigation = useNavigation<MyNavigationProp<'my/list'>>();
     const navigateSignIn = () => {
-        navigation.navigate('auth/sign-in');
+        navigation.push('auth/sign-in');
     };
 
     return (

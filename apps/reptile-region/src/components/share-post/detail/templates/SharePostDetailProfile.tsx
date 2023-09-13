@@ -5,11 +5,11 @@ import { StyleSheet, View } from 'react-native';
 import SharePostsDetailList from '../organisms/PostsDetailList';
 import UserDetailPanel from '../organisms/UserDetailPanel';
 
-import type { BottomTabSharePostDetailRouteProp } from '<BottomTabSharePostRoutes>';
+import { SharePostRouteProp } from '<SharePostRoutes>';
 import { color } from '@/components/common/tokens/colors';
 
 const SharePostDetailProfile = () => {
-    const route = useRoute<BottomTabSharePostDetailRouteProp>();
+    const route = useRoute<SharePostRouteProp<'share-post/detail'>>();
     const userId = route.params.userId;
     const nickname = route.params.nickname;
 
