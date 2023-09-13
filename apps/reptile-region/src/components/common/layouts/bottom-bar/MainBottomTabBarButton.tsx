@@ -48,6 +48,7 @@ const BottomTabBarButton = ({
         <View style={styles.iconContainer}>
             <TouchableWithoutFeedback
                 onPress={onPress}
+                onLongPress={onPress}
                 onPressIn={handlePressInIcon}
                 onPressOut={handlePressOutIcon}
                 containerStyle={styles.touchContainer}

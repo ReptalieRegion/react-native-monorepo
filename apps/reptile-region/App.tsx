@@ -4,7 +4,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import ReactQueryProvider from '@/providers/ReactQuery';
-// import RootRoutes from '@/routes/RootRoutes';
 import RootRoutes from '@/routes/RootRoutes';
 
 export default function App() {

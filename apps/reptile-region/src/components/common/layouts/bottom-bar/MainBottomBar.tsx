@@ -1,6 +1,6 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
 
 import MainBottomTabBarButton from './MainBottomTabBarButton';
@@ -15,16 +15,15 @@ import {
     Share as SharePostIcon,
 } from '@/assets/icons';
 import { color } from '@/components/common/tokens/colors';
-import useKeyboard from '@/hooks/useKeyboard';
 
 type MenusType = {
-    [key in keyof RootRoutesParamList]: {
+    [key in keyof RootRoutesParamList]?: {
         Icon: (props: IconProps) => React.JSX.Element;
         name: string;
     };
 };
 
-const MENUS: Partial<MenusType> = {
+const MENUS: MenusType = {
     'home/routes': {
         Icon: HomeIcon,
         name: '홈',
@@ -48,17 +47,9 @@ const MENUS: Partial<MenusType> = {
 };
 
 const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
-    const { isKeyboardShow } = useKeyboard();
-    const dynamicStyle = StyleSheet.create({
-        container: {
-            paddingBottom: insets.bottom,
-            display: isKeyboardShow.value && Platform.OS === 'android' ? 'none' : 'flex',
-        },
-    });
-
     return (
         <View style={styles.bgWhite}>
-            <View style={[styles.container, dynamicStyle.container]}>
+            <View style={[styles.container, { paddingBottom: insets.bottom }]}>
                 {state.routes.map((route, index) => {
                     const routeName = route.name as keyof RootRoutesParamList;
                     const item = MENUS[routeName];
@@ -70,14 +61,8 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
                     const { Icon, name } = item;
                     const isFocused = state.index === index;
                     const onPress = () => {
-                        const event = navigation.emit({
-                            type: 'tabPress',
-                            target: route.key,
-                            canPreventDefault: true,
-                        });
-
-                        if (!isFocused && !event.defaultPrevented) {
-                            Haptic.trigger('impactLight');
+                        Haptic.trigger('impactLight');
+                        if (!isFocused) {
                             navigation.navigate(route.name);
                         }
                     };
@@ -121,4 +106,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default (props: BottomTabBarProps) => <MainBottomBar {...props} />;
+export default MainBottomBar;
