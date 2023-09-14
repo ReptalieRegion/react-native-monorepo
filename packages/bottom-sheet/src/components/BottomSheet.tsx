@@ -32,12 +32,11 @@ const BottomSheet = ({
 }: PropsWithChildren<BottomSheetProps>) => {
     return (
         <BottomSheetProvider insets={insets} onClose={onClose} snapInfo={snapInfo}>
-            <BackDrop style={backDropStyle}>
-                <BottomSheetContainer style={containerStyle}>
-                    <BottomSheetHeader />
-                    {children}
-                </BottomSheetContainer>
-            </BackDrop>
+            <BackDrop style={backDropStyle} />
+            <BottomSheetContainer style={containerStyle}>
+                <BottomSheetHeader />
+                {children}
+            </BottomSheetContainer>
         </BottomSheetProvider>
     );
 };
