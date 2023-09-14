@@ -1,3 +1,4 @@
+import { color } from 'design-system';
 import React, { useEffect } from 'react';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
@@ -6,7 +7,6 @@ import type { SharePostListData } from '<SharePostAPI>';
 import useCreateLike from '@/apis/share-post/post/hooks/mutations/useCreateLike';
 import useUpdateLike from '@/apis/share-post/post/hooks/mutations/useUpdateLike';
 import { Like_40 as LikeIcon } from '@/assets/icons';
-import { color } from '@/components/common/tokens/colors';
 import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 
 type LikeProps = {

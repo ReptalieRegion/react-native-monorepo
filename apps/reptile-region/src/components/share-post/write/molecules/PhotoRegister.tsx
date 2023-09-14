@@ -1,3 +1,4 @@
+import { color } from 'design-system';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -7,7 +8,6 @@ import { shallow } from 'zustand/shallow';
 import SharePostWriteTitle from '../atoms/SharePostWriteTitle';
 
 import { CancelButton } from '@/assets/icons';
-import { color } from '@/components/common/tokens/colors';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
 import useUserTaggingStore from '@/stores/share-post/useUserTaggingStore';
 

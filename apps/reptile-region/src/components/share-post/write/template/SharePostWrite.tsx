@@ -1,11 +1,10 @@
+import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import FollowerUserList from '../atoms/FollowerUserList';
 import PhotoRegister from '../molecules/PhotoRegister';
 import PostContentWrite from '../molecules/PostContentWrite';
-
-import { color } from '@/components/common/tokens/colors';
 
 const SharePostWrite = () => {
     return (

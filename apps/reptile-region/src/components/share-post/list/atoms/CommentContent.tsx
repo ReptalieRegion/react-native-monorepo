@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
+import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import type { SharePostListData } from '<SharePostAPI>';
 import type { SharePostNavigationProp } from '<SharePostRoutes>';
-import { color } from '@/components/common/tokens/colors';
 
 type CommentContentProps = {
     post: Pick<SharePostListData['post'], 'commentCount' | 'id'>;

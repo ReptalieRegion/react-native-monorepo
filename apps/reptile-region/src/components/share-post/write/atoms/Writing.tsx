@@ -1,8 +1,8 @@
+import { color } from 'design-system';
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, Text, NativeSyntheticEvent, TextInputSelectionChangeEventData } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
-import { color } from '@/components/common/tokens/colors';
 import useUserTaggingStore from '@/stores/share-post/useUserTaggingStore';
 
 type Selection = TextInputSelectionChangeEventData['selection'];

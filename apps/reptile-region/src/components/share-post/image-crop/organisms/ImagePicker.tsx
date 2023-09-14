@@ -1,11 +1,10 @@
+import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import ImageContentHeader from '../atoms/ImageContentHeader';
 import ImageEditor from '../atoms/ImageEditor';
 import ImageList from '../molecules/ImageList';
-
-import { color } from '@/components/common/tokens/colors';
 
 const ImagePicker = () => {
     return (

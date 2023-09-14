@@ -1,8 +1,8 @@
+import { color } from 'design-system';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
 import type { IconProps } from '<Icon>';
-import { color } from '@/components/common/tokens/colors';
 
 const PostWriteIcon = ({ width = 30, height = 30 }: IconProps) => {
     return (

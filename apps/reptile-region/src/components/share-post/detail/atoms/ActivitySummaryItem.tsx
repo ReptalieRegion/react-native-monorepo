@@ -1,8 +1,7 @@
+import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-
-import { color } from '@/components/common/tokens/colors';
 
 type ActivitySummaryItemProps = {
     onPress?: () => void;

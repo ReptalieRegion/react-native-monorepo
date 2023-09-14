@@ -1,8 +1,8 @@
+import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
 import { Logo } from '@/assets/icons';
-import { color } from '@/components/common/tokens/colors';
 
 const LogoAndTextPage = () => {
     const { width } = useWindowDimensions();

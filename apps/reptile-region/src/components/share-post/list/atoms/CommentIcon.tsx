@@ -15,7 +15,10 @@ const CommentIcon = ({ post }: CommentIconType) => {
     const navigation = useNavigation<SharePostNavigationProp<'share-post/list'>>();
 
     const handleClickComment = () => {
-        navigation.push('share-post/bottom-sheet/comment', { post });
+        navigation.push('share-post/bottom-sheet/comment', {
+            screen: 'main',
+            params: { post },
+        });
     };
 
     return (

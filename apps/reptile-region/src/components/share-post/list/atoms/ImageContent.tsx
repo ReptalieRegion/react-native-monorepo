@@ -1,4 +1,5 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { color } from 'design-system';
 import { Image } from 'expo-image';
 import React, { useCallback, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View, useWindowDimensions } from 'react-native';
@@ -6,7 +7,6 @@ import { shallow } from 'zustand/shallow';
 
 import type { ShareImageType } from '<Image>';
 import { SharePostListData } from '<SharePostAPI>';
-import { color } from '@/components/common/tokens/colors';
 import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 
 type ImagesContentProps = {

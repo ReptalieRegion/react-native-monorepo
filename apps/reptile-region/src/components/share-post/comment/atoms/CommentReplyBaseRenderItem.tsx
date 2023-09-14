@@ -1,34 +1,26 @@
 import { useNavigation } from '@react-navigation/native';
+import { color } from 'design-system';
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import CommentActions from './CommentActions';
 
 import type { SharePostCommentData } from '<SharePostCommentAPI>';
-import type { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
 import type { SharePostNavigationProp } from '<SharePostRoutes>';
 import Avatar from '@/components/common/fast-image/Avatar';
-import { color } from '@/components/common/tokens/colors';
 import type { TagPressHandler } from '@/components/share-post/common/atoms/TaggedContent';
 import TaggedContent from '@/components/share-post/common/atoms/TaggedContent';
 
-type RenderItemProps =
-    | {
-          user: SharePostCommentData['user'];
-          comment: SharePostCommentData['comment'];
-          FootChildren?: ReactNode;
-          showAnimated?: boolean;
-      }
-    | {
-          user: SharePostCommentReplyData['user'];
-          comment: SharePostCommentReplyData['comment'];
-          FootChildren?: ReactNode;
-          showAnimated?: boolean;
-      };
+type RenderItemProps = {
+    user: SharePostCommentData['user'];
+    comment: SharePostCommentData['comment'];
+    FootChildren?: ReactNode;
+    showAnimated?: boolean;
+};
 
-const CommentBaseRenderItem = ({ FootChildren, showAnimated, user, comment }: RenderItemProps) => {
+const CommentReplyBaseRenderItem = ({ showAnimated, user, comment }: RenderItemProps) => {
     const navigation = useNavigation<SharePostNavigationProp<'share-post/bottom-sheet/comment'>>();
-    const onPressTag: TagPressHandler = (_, content) => {
+    const onPressTag: TagPressHandler = (content) => {
         navigation.push('share-post/modal/detail', {
             nickname: content.replace('@', ''),
         });
@@ -38,20 +30,17 @@ const CommentBaseRenderItem = ({ FootChildren, showAnimated, user, comment }: Re
         <View style={styles.container}>
             <Avatar
                 showAnimated={showAnimated}
-                source={{
-                    uri: user.profile.src,
-                }}
+                source={{ uri: user.profile.src }}
                 priority={'high'}
-                placeholder={require('../../../../../../../assets/images/avatar.png')}
+                placeholder={require('@/assets/images/avatar.png')}
                 contentFit="cover"
             />
             <View style={styles.commentItemContent}>
                 <View style={styles.commentItemGap}>
                     <Text style={styles.nickname}>{user.nickname}</Text>
                     <TaggedContent uuid={comment.id} contents={comment.contents} onPressTag={onPressTag} />
-                    <CommentActions comment={{ isMine: comment.isMine }} />
+                    <CommentActions isMine={comment.isMine} />
                 </View>
-                {FootChildren}
             </View>
         </View>
     );
@@ -61,6 +50,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         gap: 10,
+        paddingTop: 10,
     },
     replyCommentItemContainer: {
         gap: 10,
@@ -101,4 +91,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CommentBaseRenderItem;
+export default CommentReplyBaseRenderItem;

@@ -1,10 +1,10 @@
+import { color } from 'design-system';
 import React, { useEffect } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
 import type { SharePostListData } from '<SharePostAPI>';
 import { Like_55 as LikeIcon } from '@/assets/icons';
-import { color } from '@/components/common/tokens/colors';
 import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 
 type HeartAnimationProps = {

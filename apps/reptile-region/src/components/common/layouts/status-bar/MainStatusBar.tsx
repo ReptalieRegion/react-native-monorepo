@@ -1,8 +1,8 @@
+import { color } from 'design-system';
 import React from 'react';
 import { Platform, StatusBar, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { color } from '@/components/common/tokens/colors';
 import ENV from '@/env';
 
 const backgroundColor = ENV.isProd

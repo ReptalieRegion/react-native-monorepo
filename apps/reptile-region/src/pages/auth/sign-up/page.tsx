@@ -1,9 +1,9 @@
+import { color } from 'design-system';
 import React from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
 import TextButton from '@/components/common/layouts/button/TextButton';
-import { color } from '@/components/common/tokens/colors';
 
 type MessageType = 'duplicateCheck' | 'address' | 'password' | 'input';
 

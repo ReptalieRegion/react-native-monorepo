@@ -1,18 +1,13 @@
+import { color } from 'design-system';
 import { Image } from 'expo-image';
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
-
-import { color } from '@/components/common/tokens/colors';
-import useKeyboard from '@/hooks/useKeyboard';
 
 const CommentTextInput = () => {
-    const { keyboardStyle } = useKeyboard();
-
     return (
-        <Animated.View style={keyboardStyle}>
-            <View style={styles.bottom}>
+        <View>
+            <View style={[styles.bottom]}>
                 <Image
                     style={styles.circle}
                     source={{
@@ -22,7 +17,7 @@ const CommentTextInput = () => {
                 <TextInput placeholder="댓글을 입력하세요..." style={styles.textInput} autoFocus multiline />
                 <Text style={styles.submit}>등록</Text>
             </View>
-        </Animated.View>
+        </View>
     );
 };
 
@@ -33,7 +28,7 @@ const styles = StyleSheet.create({
         borderTopColor: color.Gray[250].toString(),
         borderTopWidth: 0.5,
         width: Dimensions.get('screen').width,
-        height: 50,
+
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',

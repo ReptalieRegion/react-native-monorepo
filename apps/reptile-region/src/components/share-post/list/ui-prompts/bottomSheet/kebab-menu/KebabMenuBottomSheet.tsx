@@ -1,4 +1,5 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { BottomSheet } from 'bottom-sheet';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -6,8 +7,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { SharePostNavigationProp, SharePostRouteProp } from '<SharePostRoutes>';
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
-import BottomSheetContainer, { ConTainerStyle } from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetContainer';
-import BottomSheetHeader from '@/components/common/ui-prompts/bottom-sheet/atoms/BottomSheetHeader';
 
 type ListItemProps = {
     text: string;
@@ -40,17 +39,12 @@ const KebabMenuBottomSheet = () => {
     };
 
     return (
-        <BottomSheetContainer uiPromptsClose={close} containerStyle={containerStyle}>
-            <BottomSheetHeader />
+        <BottomSheet onClose={close} snapInfo={{ startIndex: 0, pointsFromTop: [100] }}>
             <View style={[styles.content, { paddingBottom: bottom }]}>
                 {post.isMine ? <ListItem text="삭제" onPress={deletePost} /> : <ListItem text="신고하기" />}
             </View>
-        </BottomSheetContainer>
+        </BottomSheet>
     );
-};
-
-const containerStyle: ConTainerStyle = {
-    borderRadius: 16,
 };
 
 const styles = StyleSheet.create({

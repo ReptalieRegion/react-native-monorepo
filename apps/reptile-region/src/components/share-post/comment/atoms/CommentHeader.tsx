@@ -1,7 +1,6 @@
+import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
-import { color } from '@/components/common/tokens/colors';
 
 const CommentHeader = () => {
     return (

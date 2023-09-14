@@ -1,4 +1,5 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
@@ -14,7 +15,6 @@ import {
     My as MyIcon,
     Share as SharePostIcon,
 } from '@/assets/icons';
-import { color } from '@/components/common/tokens/colors';
 
 type MenusType = {
     [key in keyof RootRoutesParamList]?: {

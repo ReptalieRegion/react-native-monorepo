@@ -1,4 +1,5 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { color } from 'design-system';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 import { RefreshControl } from 'react-native-gesture-handler';
@@ -12,7 +13,6 @@ import type { ScrollIntoViewProps } from '<FlashList>';
 import type { SharePostListData } from '<SharePostAPI>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
-import { color } from '@/components/common/tokens/colors';
 
 const Posts = () => {
     const flashListRef = useRef<FlashList<SharePostListData>>(null);

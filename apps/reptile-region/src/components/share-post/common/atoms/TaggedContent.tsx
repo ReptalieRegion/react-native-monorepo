@@ -1,14 +1,13 @@
+import { color } from 'design-system';
 import React, { useRef, useState } from 'react';
-import { GestureResponderEvent, NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData } from 'react-native';
+import { NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData } from 'react-native';
 
-import { color } from '@/components/common/tokens/colors';
-
-export type TagPressHandler = (event: GestureResponderEvent, content: string) => void;
+export type TagPressHandler = (content: string) => void;
 
 type TaggedContentProps = {
     uuid: string;
     contents: string;
-    onPressTag?: TagPressHandler;
+    onPressTag: TagPressHandler;
 };
 
 const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
@@ -44,8 +43,8 @@ const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
                         return (
                             <Text
                                 key={key}
+                                onPress={() => onPressTag(content)}
                                 style={styles.color}
-                                onPress={(event) => onPressTag?.(event, content)}
                                 suppressHighlighting={true}
                             >
                                 {content + ' '}

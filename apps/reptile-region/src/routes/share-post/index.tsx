@@ -1,11 +1,12 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
+import SharePostCommentBottomSheetRoutes from './CommentBottomSheet';
+
 import type { SharePostParamList } from '<SharePostRoutes>';
 import { NativeStackDefaultHeader } from '@/components/common/layouts/header/utils/create-header';
 import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/DetailHeader';
 import ImageCropHeader from '@/components/share-post/image-crop/atoms/header/ImageCropHeader';
-import CommentBottomSheet from '@/components/share-post/list/ui-prompts/bottomSheet/comment/templates/CommentBottomSheet';
 import KebabMenuBottomSheet from '@/components/share-post/list/ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
 import SharePostWriteHeader from '@/components/share-post/write/atoms/header/SharePostWriteHeader';
 import { SharePostDetailPage, SharePostImageCropPage, SharePostListPage, SharePostWritePage } from '@/pages/share-post';
@@ -42,7 +43,6 @@ const SharePostRoutes = () => {
                     component={SharePostDetailPage}
                     options={{
                         header: SharePostDetailHeader,
-                        animation: 'slide_from_right',
                     }}
                 />
                 <SharePostStack.Screen
@@ -50,7 +50,6 @@ const SharePostRoutes = () => {
                     component={SharePostImageCropPage}
                     options={{
                         header: ImageCropHeader,
-                        animation: 'slide_from_right',
                     }}
                 />
                 <SharePostStack.Screen
@@ -58,7 +57,6 @@ const SharePostRoutes = () => {
                     component={SharePostWritePage}
                     options={{
                         header: SharePostWriteHeader,
-                        animation: 'slide_from_right',
                     }}
                 />
             </SharePostStack.Group>
@@ -72,7 +70,7 @@ const SharePostRoutes = () => {
                     animation: 'none',
                 }}
             >
-                <SharePostStack.Screen name="share-post/bottom-sheet/comment" component={CommentBottomSheet} />
+                <SharePostStack.Screen name="share-post/bottom-sheet/comment" component={SharePostCommentBottomSheetRoutes} />
                 <SharePostStack.Screen name="share-post/bottom-sheet/kebab-menu" component={KebabMenuBottomSheet} />
             </SharePostStack.Group>
         </SharePostStack.Navigator>

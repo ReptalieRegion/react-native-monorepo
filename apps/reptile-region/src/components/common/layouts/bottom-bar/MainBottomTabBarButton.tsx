@@ -1,3 +1,4 @@
+import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -10,7 +11,6 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import type { IconProps } from '<Icon>';
-import { color } from '@/components/common/tokens/colors';
 
 const userConfig: WithTimingConfig = {
     duration: 200,

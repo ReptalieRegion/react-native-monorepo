@@ -1,10 +1,10 @@
+import { color } from 'design-system';
 import React from 'react';
 import { Keyboard, StyleSheet, TouchableNativeFeedback, View } from 'react-native';
 
 import LogoAndTextPage from '@/components/auth/sign-in/atoms/LogoAndText';
 import TextInputFields from '@/components/auth/sign-in/molecules/TextInputFields';
 import UserAccessControl from '@/components/auth/sign-in/molecules/UserAccessControl';
-import { color } from '@/components/common/tokens/colors';
 
 const SignIn = () => {
     return (

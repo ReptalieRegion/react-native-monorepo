@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { color } from 'design-system';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Dimensions, StyleSheet, View } from 'react-native';
@@ -9,7 +10,6 @@ import type { UseFormDefaultValues } from '<HookForm>';
 import { useSignIn } from '@/apis/auth/hooks';
 import TextField, { TextFieldProps } from '@/components/common/element/text-input/TextField';
 import TextButton from '@/components/common/layouts/button/TextButton';
-import { color } from '@/components/common/tokens/colors';
 
 type InputKey = 'EMAIL' | 'PASSWORD';
 

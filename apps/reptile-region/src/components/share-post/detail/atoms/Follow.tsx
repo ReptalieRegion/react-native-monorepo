@@ -1,3 +1,4 @@
+import { color } from 'design-system';
 import React from 'react';
 import { ColorValue, StyleSheet, Text } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -6,7 +7,6 @@ import * as Haptic from 'react-native-haptic-feedback';
 import type { SharePostListData } from '<SharePostAPI>';
 import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
 import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
-import { color } from '@/components/common/tokens/colors';
 
 type PostHeaderProps = {
     user: Pick<SharePostListData['user'], 'isFollow' | 'id'>;

@@ -1,6 +1,9 @@
 declare module '<SharePostRoutes>' {
     import type { RouteProp } from '@react-navigation/native';
+    import type { NavigatorScreenParams } from '@react-navigation/native';
     import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+    import { ShareImageType } from '<Image>';
 
     type SharePostDetailProps = {
         userId?: string;
@@ -10,6 +13,21 @@ declare module '<SharePostRoutes>' {
     type SharePostCommentProps = {
         post: {
             id: string;
+        };
+    };
+
+    type SharePostCommentReplyProps = {
+        user: {
+            id: string;
+            profile: ShareImageType;
+            nickname: string;
+        };
+        comment: {
+            id: string;
+            contents: string;
+            replyCount: number;
+            isMine: boolean;
+            isModified: boolean;
         };
     };
 
@@ -23,6 +41,19 @@ declare module '<SharePostRoutes>' {
         };
     };
 
+    type SharePostCommentBottomSheetParamList = {
+        main: SharePostCommentProps;
+        reply: SharePostCommentReplyProps;
+    };
+
+    type SharePostCommentBottomSheetRouteProp<RouteName extends keyof SharePostCommentBottomSheetParamList> = RouteProp<
+        SharePostCommentBottomSheetParamList,
+        RouteName
+    >;
+
+    type SharePostCommentBottomSheetNavigationProp<RouteName extends keyof SharePostCommentBottomSheetParamList> =
+        NativeStackNavigationProp<SharePostCommentBottomSheetParamList, RouteName>;
+
     type SharePostParamList = {
         /** Bottom Tab이 있는 페이지 */
         'share-post/list': undefined;
@@ -34,7 +65,7 @@ declare module '<SharePostRoutes>' {
         'share-post/modal/write': undefined;
 
         /** Bottom Sheet */
-        'share-post/bottom-sheet/comment': SharePostCommentProps;
+        'share-post/bottom-sheet/comment': NavigatorScreenParams<SharePostCommentBottomSheetParamList>;
         'share-post/bottom-sheet/kebab-menu': SharePostKebabMenu;
     };
 

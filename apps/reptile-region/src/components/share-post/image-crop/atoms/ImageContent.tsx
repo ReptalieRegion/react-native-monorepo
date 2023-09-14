@@ -1,4 +1,5 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { color } from 'design-system';
 import { Image } from 'expo-image';
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
@@ -7,7 +8,6 @@ import { shallow } from 'zustand/shallow';
 
 import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
 
-import { color } from '@/components/common/tokens/colors';
 import { useUIPrompts } from '@/contexts/ui-prompts/UIPrompts';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
