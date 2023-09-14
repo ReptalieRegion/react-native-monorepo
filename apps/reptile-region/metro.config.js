@@ -10,7 +10,12 @@ const { mergeConfig } = require('@react-native/metro-config');
  * @type {import('metro-config').MetroConfig}
  */
 const config = {
-    watchFolders: [path.resolve(__dirname, '../../node_modules'), path.resolve(__dirname, '../../packages/overlay-manager')],
+    watchFolders: [
+        path.resolve(__dirname, '../../node_modules'),
+        path.resolve(__dirname, '../../packages/overlay-manager'),
+        path.resolve(__dirname, '../../packages/bottom-sheet'),
+        path.resolve(__dirname, '../../packages/design-system'),
+    ],
 };
 
 module.exports = mergeConfig(getDefaultConfig(__dirname), config);
