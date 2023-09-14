@@ -1,9 +1,8 @@
+import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, Text, TextStyle, TouchableOpacityProps, View, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GenericTouchableProps } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
-
-import { color } from '../../tokens/colors';
 
 type Variant = 'filled' | 'none';
 

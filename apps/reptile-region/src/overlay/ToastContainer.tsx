@@ -1,5 +1,7 @@
+import { OverlayList } from 'overlay';
+import { useOverlay } from 'overlay-manager';
 import React, { useEffect } from 'react';
-import { Dimensions, Platform, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
+import { Dimensions, Modal, Platform, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
 import Animated, {
     runOnJS,
@@ -11,9 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { UIPromptsDefaultProps } from '<UIPrompts>';
-
-interface ToastContainerProps extends UIPromptsDefaultProps {
+interface ToastContainerProps {
     text: string;
     containerStyle?: Pick<ViewStyle, 'backgroundColor'>;
     textStyle?: Pick<TextStyle, 'color'>;
@@ -22,10 +22,12 @@ interface ToastContainerProps extends UIPromptsDefaultProps {
 const screenWidth = Dimensions.get('screen').width;
 const toastWidth = screenWidth * 0.95;
 
-const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: ToastContainerProps) => {
+const ToastContainer = ({ text, containerStyle, textStyle }: ToastContainerProps) => {
+    console.log(text, containerStyle, textStyle);
     const { top } = useSafeAreaInsets();
     const translateY = useSharedValue(0);
     const translateX = useSharedValue(0);
+    const { closeOverlay } = useOverlay<OverlayList>();
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [{ translateX: translateX.value }, { translateY: translateY.value }],
     }));
@@ -33,7 +35,7 @@ const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: Toa
     useDerivedValue(() => {
         const isFinishAnimation = translateX.value === screenWidth;
         if (isFinishAnimation) {
-            runOnJS(uiPromptsClose)();
+            runOnJS(closeOverlay)('toast');
         }
     });
 
@@ -47,14 +49,17 @@ const ToastContainer = ({ uiPromptsClose, text, containerStyle, textStyle }: Toa
     }, [top, translateX, translateY]);
 
     return (
-        <Animated.View style={[styles.container, containerStyle, animatedStyle]}>
-            <Text style={textStyle}>{text}</Text>
-        </Animated.View>
+        <Modal>
+            <Animated.View style={[styles.container, containerStyle, animatedStyle]}>
+                <Text style={textStyle}>{text}</Text>
+            </Animated.View>
+        </Modal>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        position: 'absolute',
         top: 0,
         left: screenWidth / 2 - toastWidth / 2,
         width: toastWidth,

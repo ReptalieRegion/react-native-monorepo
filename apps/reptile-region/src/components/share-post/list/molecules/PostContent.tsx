@@ -17,7 +17,7 @@ const PostContent = ({ post }: PostContentProps) => {
     const { id: postId, commentCount, contents, likeCount } = post;
     const navigation = useNavigation<SharePostNavigationProp<'share-post/list'>>();
 
-    const onPressTag: TagPressHandler = (_, content) => {
+    const onPressTag: TagPressHandler = (content) => {
         navigation.push('share-post/detail', { nickname: content.slice(1) });
     };
 

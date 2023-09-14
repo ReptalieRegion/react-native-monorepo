@@ -3,11 +3,11 @@ import React from 'react';
 import { Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import type { SharePostNavigationProp } from '<SharePostRoutes>';
+import type { SharePostPostingNavigationProp } from '<SharePostRoutes>';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
 const ImageCropRightHeader = () => {
-    const navigate = useNavigation<SharePostNavigationProp<'share-post/modal/image-crop'>>();
+    const navigate = useNavigation<SharePostPostingNavigationProp<'image-crop'>>();
     const hasSelectPhoto = usePhotoStore((state) => state.selectedPhotos.length > 0);
 
     const handleNextPage = () => {
@@ -16,7 +16,7 @@ const ImageCropRightHeader = () => {
             return;
         }
 
-        navigate.push('share-post/modal/write');
+        navigate.push('write');
     };
 
     return (

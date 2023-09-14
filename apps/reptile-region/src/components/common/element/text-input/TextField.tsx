@@ -1,9 +1,8 @@
+import { color } from 'design-system';
 import React, { useEffect, useRef } from 'react';
 import { ColorValue, DimensionValue, Platform, StyleSheet, Text, TextInputProps, View } from 'react-native';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { Easing, WithTimingConfig, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-
-import { color } from '../../tokens/colors';
 
 type FontSizes = 'small' | 'normal' | 'large';
 

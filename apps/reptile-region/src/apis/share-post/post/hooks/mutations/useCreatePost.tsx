@@ -1,14 +1,15 @@
-import { useNavigation } from '@react-navigation/native';
 import { InfiniteData, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createPost } from '../../repository';
 
 import type { CreatePostRequest, SharePostListData, SharePostListInfiniteData } from '<SharePostAPI>';
-import { SharePostNavigationProp } from '<SharePostRoutes>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const useCreatePost = () => {
-    const navigate = useNavigation<SharePostNavigationProp<'share-post/modal/write'>>();
+type UseCreatePostProps = {
+    onSuccess?: () => void;
+};
+
+const useCreatePost = ({ onSuccess }: UseCreatePostProps) => {
     const queryClient = useQueryClient();
 
     return useMutation<SharePostListData, any, CreatePostRequest>({
@@ -30,8 +31,7 @@ const useCreatePost = () => {
                     pages: updatePages,
                 };
             });
-
-            navigate.popToTop();
+            onSuccess?.();
         },
         onError: (error) => {
             console.log(error);

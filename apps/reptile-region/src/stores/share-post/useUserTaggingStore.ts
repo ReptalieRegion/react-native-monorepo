@@ -24,6 +24,7 @@ interface UserTaggingActions {
     setTaggingInfo: (selection: SelectionType) => void;
     setTaggingSelection: (selection: SelectionType) => void;
     resetTaggingInfo: () => void;
+    resetUserTaggingStore: () => void;
 }
 
 const defaultUserTaggingState: UserTaggingState = {
@@ -84,6 +85,12 @@ const useUserTaggingStore = createWithEqualityFn<UserTaggingState & UserTaggingA
                     keyword: undefined,
                     selection: null,
                 },
+            }));
+        },
+        resetUserTaggingStore: () => {
+            set((state) => ({
+                ...state,
+                ...defaultUserTaggingState,
             }));
         },
     })),

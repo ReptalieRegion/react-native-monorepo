@@ -2,14 +2,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import SharePostCommentBottomSheetRoutes from './CommentBottomSheet';
+import SharePostPostingRoutes from './Posting';
 
 import type { SharePostParamList } from '<SharePostRoutes>';
 import { NativeStackDefaultHeader } from '@/components/common/layouts/header/utils/create-header';
 import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/DetailHeader';
-import ImageCropHeader from '@/components/share-post/image-crop/atoms/header/ImageCropHeader';
 import KebabMenuBottomSheet from '@/components/share-post/list/ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
-import SharePostWriteHeader from '@/components/share-post/write/atoms/header/SharePostWriteHeader';
-import { SharePostDetailPage, SharePostImageCropPage, SharePostListPage, SharePostWritePage } from '@/pages/share-post';
+import { SharePostDetailPage, SharePostListPage } from '@/pages/share-post';
 
 const SharePostStack = createNativeStackNavigator<SharePostParamList>();
 
@@ -35,7 +34,6 @@ const SharePostRoutes = () => {
                 navigationKey="share-post/modal"
                 screenOptions={{
                     presentation: 'transparentModal',
-                    animation: 'none',
                 }}
             >
                 <SharePostStack.Screen
@@ -46,18 +44,9 @@ const SharePostRoutes = () => {
                     }}
                 />
                 <SharePostStack.Screen
-                    name="share-post/modal/image-crop"
-                    component={SharePostImageCropPage}
-                    options={{
-                        header: ImageCropHeader,
-                    }}
-                />
-                <SharePostStack.Screen
-                    name="share-post/modal/write"
-                    component={SharePostWritePage}
-                    options={{
-                        header: SharePostWriteHeader,
-                    }}
+                    name="share-post/modal/posting"
+                    component={SharePostPostingRoutes}
+                    options={{ headerShown: false }}
                 />
             </SharePostStack.Group>
 

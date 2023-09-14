@@ -18,7 +18,7 @@ interface ImageStoreAction {
     changeCurrentSelectedPhoto: (photo: PhotoIdentifier) => void;
     deleteSelectedPhoto: (uri: string) => void;
     addSelectedPhoto: (uri: PhotoIdentifier) => void;
-    reset: () => void;
+    resetImageStore: () => void;
 }
 
 const defaultImageStore: Readonly<ImageStoreState> = {
@@ -86,7 +86,7 @@ const usePhotoStore = createWithEqualityFn<ImageStoreState & ImageStoreAction>()
         addPhotos: (photos) => {
             set((state) => ({ ...state, photos: [...state.photos, ...photos] }));
         },
-        reset: () => {
+        resetImageStore: () => {
             set(defaultImageStore);
         },
     })),

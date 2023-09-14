@@ -1,15 +1,14 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { color } from 'design-system';
 import { Image } from 'expo-image';
+import { OverlayList } from 'overlay';
+import { useOverlay } from 'overlay-manager';
 import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
-import PhotoLimit from '../ui-prompts/toast/PhotoLimit';
-
-import { useUIPrompts } from '@/contexts/ui-prompts/UIPrompts';
-import usePhotoStore from '@/stores/share-post/usePhotoStore';
+import usePhotoStore, { MAX_SELECT_PHOTO_COUNT } from '@/stores/share-post/usePhotoStore';
 
 interface ImageContentProps {
     item: PhotoIdentifier;
@@ -48,7 +47,7 @@ const makeImageStyles = (isCurrentSelectedImage: boolean) => {
 };
 
 const ImageContent = ({ item, numColumns }: ImageContentProps) => {
-    const { setUIPrompts } = useUIPrompts();
+    const { openOverlay } = useOverlay<OverlayList>();
     const {
         isCurrentSelectedPhoto,
         selectedNumber,
@@ -88,8 +87,11 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
                 deleteSelectedPhoto(imageURI);
                 return;
             case 'limit':
-                const { uiPromptsOpen } = setUIPrompts({ openType: 'toast', props: {}, Component: PhotoLimit });
-                uiPromptsOpen();
+                openOverlay('toast', {
+                    text: `이미지는 최대 ${MAX_SELECT_PHOTO_COUNT}개 입니다.`,
+                    containerStyle: { backgroundColor: color.LightBlue['150'].toString() },
+                    textStyle: { color: color.LightBlue['950'].toString() },
+                });
                 return;
         }
     };

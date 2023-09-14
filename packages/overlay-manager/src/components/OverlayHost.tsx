@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Modal, StyleSheet } from 'react-native';
 
 import useOverlayState from '../hooks/useOverlayState';
 
@@ -15,7 +15,7 @@ const OverlayHost = () => {
     }
 
     return (
-        <View style={styles.container}>
+        <Modal style={styles.container}>
             {overlayState.openList.map(({ name, params }) => {
                 const Component = overlayState.component?.[name];
 
@@ -25,13 +25,14 @@ const OverlayHost = () => {
 
                 return <Component key={name} {...params} />;
             })}
-        </View>
+        </Modal>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
+        zIndex: 9999,
     },
 });
 

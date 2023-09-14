@@ -5,11 +5,23 @@ declare module '<SharePostRoutes>' {
 
     import { ShareImageType } from '<Image>';
 
-    type SharePostDetailProps = {
-        userId?: string;
-        nickname: string;
+    /** 게시물 작성 관련 내비게이터 */
+    type SharePostPostingParamList = {
+        'image-crop': undefined;
+        write: undefined;
     };
 
+    type SharePostPostingRouteProp<RouteName extends keyof SharePostPostingParamList> = RouteProp<
+        SharePostPostingParamList,
+        RouteName
+    >;
+
+    type SharePostPostingNavigationProp<RouteName extends keyof SharePostPostingParamList> = NativeStackNavigationProp<
+        SharePostPostingParamList,
+        RouteName
+    >;
+
+    /** 댓글 관련 내비게이터 */
     type SharePostCommentProps = {
         post: {
             id: string;
@@ -31,16 +43,6 @@ declare module '<SharePostRoutes>' {
         };
     };
 
-    type SharePostKebabMenu = {
-        post: {
-            id: string;
-            isMine: boolean;
-        };
-        user: {
-            id: string;
-        };
-    };
-
     type SharePostCommentBottomSheetParamList = {
         main: SharePostCommentProps;
         reply: SharePostCommentReplyProps;
@@ -54,6 +56,22 @@ declare module '<SharePostRoutes>' {
     type SharePostCommentBottomSheetNavigationProp<RouteName extends keyof SharePostCommentBottomSheetParamList> =
         NativeStackNavigationProp<SharePostCommentBottomSheetParamList, RouteName>;
 
+    /** 일상공유 전체 내비게이터 */
+    type SharePostKebabMenu = {
+        post: {
+            id: string;
+            isMine: boolean;
+        };
+        user: {
+            id: string;
+        };
+    };
+
+    type SharePostDetailProps = {
+        userId?: string;
+        nickname: string;
+    };
+
     type SharePostParamList = {
         /** Bottom Tab이 있는 페이지 */
         'share-post/list': undefined;
@@ -61,8 +79,7 @@ declare module '<SharePostRoutes>' {
 
         /** Bottom Tab이 없는 페이지 */
         'share-post/modal/detail': SharePostDetailProps;
-        'share-post/modal/image-crop': undefined;
-        'share-post/modal/write': undefined;
+        'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
 
         /** Bottom Sheet */
         'share-post/bottom-sheet/comment': NavigatorScreenParams<SharePostCommentBottomSheetParamList>;
