@@ -40,6 +40,7 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
     );
 
     const animationState: BottomSheetAnimationState = {
+        insets,
         height,
         translateY,
         snapInfo: { startIndex: snapInfo.startIndex, pointsFromTop: sortedPointsFromTop },

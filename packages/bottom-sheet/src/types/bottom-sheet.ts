@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { Insets, ViewStyle } from 'react-native';
 import { SharedValue } from 'react-native-reanimated';
 
 export type BackDropStyle = Pick<ViewStyle, 'backgroundColor'>;
@@ -14,6 +14,7 @@ export type SnapInfo = {
 };
 
 export type BottomSheetAnimationState = {
+    insets?: Insets;
     height: SharedValue<number>;
     translateY: SharedValue<number>;
     snapInfo: {

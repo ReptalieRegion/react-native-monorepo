@@ -1,30 +1,45 @@
 import { color } from 'design-system';
 import React, { PropsWithChildren } from 'react';
-import { StyleSheet, useWindowDimensions } from 'react-native';
-import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import { StyleSheet, ViewStyle, useWindowDimensions } from 'react-native';
+import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 
 import useBottomSheetAnimatedState from '../hooks/useBottomSheetAnimatedState';
-import { ContainerStyle } from '../types/bottom-sheet';
 
 type BottomSheetContainerProps = {
-    style?: ContainerStyle;
+    style?: ViewStyle;
 };
 
 const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheetContainerProps>) => {
-    const { width } = useWindowDimensions();
-    const { height, translateY } = useBottomSheetAnimatedState();
-    const closeAnimatedStyles = useAnimatedStyle(() => ({
-        transform: [{ translateY: translateY.value }],
-    }));
-    const snapAnimatedStyles = useAnimatedStyle(() => ({
-        height: height.value,
-    }));
+    const dimensions = useWindowDimensions();
+    const { height, translateY, insets } = useBottomSheetAnimatedState();
+    const keyboard = useAnimatedKeyboard();
 
-    console.log(height.value);
+    const closeAnimatedStyles = useAnimatedStyle(() => {
+        const subHeight =
+            keyboard.state.value === 1 || keyboard.state.value === 2
+                ? keyboard.height.value - (insets?.bottom ?? 0)
+                : keyboard.height.value;
+        return {
+            transform: [{ translateY: translateY.value - subHeight }],
+        };
+    });
+
+    const snapAnimatedStyles = useAnimatedStyle(() => {
+        const maxHeight =
+            keyboard.state.value === 1 || keyboard.state.value === 2
+                ? Math.min(dimensions.height - (insets?.top ?? 0) - keyboard.height.value, height.value)
+                : height.value;
+
+        return {
+            height: maxHeight,
+        };
+    });
 
     return (
         <Animated.View style={[styles.container, closeAnimatedStyles]}>
-            <Animated.View style={[styles.viewContainer, { width }, snapAnimatedStyles, style]}>{children}</Animated.View>
+            <Animated.View style={[styles.viewContainer, { width: dimensions.width }, snapAnimatedStyles, style]}>
+                {children}
+            </Animated.View>
         </Animated.View>
     );
 };

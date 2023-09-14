@@ -33,7 +33,7 @@ const BottomSheet = ({
     return (
         <BottomSheetProvider insets={insets} onClose={onClose} snapInfo={snapInfo}>
             <BackDrop style={backDropStyle} />
-            <BottomSheetContainer style={containerStyle}>
+            <BottomSheetContainer style={{ ...containerStyle, paddingBottom: insets?.bottom }}>
                 <BottomSheetHeader />
                 {children}
             </BottomSheetContainer>
