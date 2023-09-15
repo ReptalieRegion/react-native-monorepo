@@ -5,8 +5,8 @@ import CommentAvatar from '../atoms/CommentAvatar';
 import CommentContents from '../molecules/CommentContents';
 
 import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
-import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
-import useUpdateComment from '@/apis/share-post/comment/hooks/mutations/useUpdateComment';
+import useDeleteCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useDeleteCommentReply';
+import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useUpdateCommentReply';
 
 type RenderItemProps = {
     user: SharePostCommentReplyData['user'];
@@ -15,16 +15,15 @@ type RenderItemProps = {
 };
 
 const CommentReplyRenderItem = ({ user, comment }: RenderItemProps) => {
-    /** @TODO CommentReply로 변경 */
-    const { mutate: updateCommentReplyMutate } = useUpdateComment();
-    const { mutate: deleteCommentReplyMutate } = useDeleteComment();
+    const { mutate: updateCommentReplyMutate } = useUpdateCommentReply();
+    const { mutate: deleteCommentReplyMutate } = useDeleteCommentReply();
 
     const handleDeleteComment = () => {
-        deleteCommentReplyMutate({ commentId: comment.id });
+        deleteCommentReplyMutate({ commentReplyId: comment.id });
     };
 
     const handleUpdateComment = () => {
-        updateCommentReplyMutate({ commentId: comment.id, contents: comment.contents });
+        updateCommentReplyMutate({ commentReplyId: comment.id, contents: comment.contents });
     };
 
     return (

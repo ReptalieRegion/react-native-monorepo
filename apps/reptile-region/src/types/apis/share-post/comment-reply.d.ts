@@ -29,14 +29,13 @@ declare module '<SharePostCommentReplyAPI>' {
         contents: string;
     };
 
-    type CreateCommentResponse = SharePostCommentReplyData;
+    type CreateCommentReplyResponse = SharePostCommentReplyData;
 
     /** PUT */
     // 사용자의 특정 대댓글 수정
     type UpdateCommentReplyRequest = {
         commentReplyId: string;
-        commentId: string;
-        contents: string[];
+        contents: string;
     };
 
     type UpdateCommentReplyResponse = {
@@ -56,6 +55,9 @@ declare module '<SharePostCommentReplyAPI>' {
     };
 
     type DeleteCommentReplyResponse = {
+        post: {
+            id: string;
+        };
         comment: {
             id: string;
         };
