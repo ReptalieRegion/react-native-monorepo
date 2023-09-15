@@ -25,14 +25,14 @@ const makeFollowInfo = (isFollow: boolean | undefined) => {
 };
 
 const Follow = ({ user: { isFollow, id: userId } }: PostHeaderProps) => {
-    const { mutate: createMutate } = useCreateFollow({ userId });
-    const { mutate: updateMutate } = useUpdateFollow({ userId });
+    const { mutate: createMutate } = useCreateFollow();
+    const { mutate: updateMutate } = useUpdateFollow();
 
     const handleClickFollow = () => {
         if (isFollow === undefined) {
-            createMutate();
+            createMutate({ userId });
         } else {
-            updateMutate();
+            updateMutate({ userId });
         }
         Haptic.trigger('impactLight');
     };

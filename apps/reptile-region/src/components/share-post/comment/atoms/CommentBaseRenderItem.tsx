@@ -49,7 +49,7 @@ const CommentBaseRenderItem = ({ showAnimated, user, comment }: RenderItemProps)
                         {user.nickname}
                     </Text>
                     <TaggedContent uuid={comment.id} contents={comment.contents} onPressTag={onPressTag} />
-                    <CommentActions isMine={comment.isMine} />
+                    <CommentActions commentId={comment.id} isMine={comment.isMine} />
                 </View>
                 <CommentReplyButton comment={comment} user={user} replyCount={comment.replyCount} />
             </View>

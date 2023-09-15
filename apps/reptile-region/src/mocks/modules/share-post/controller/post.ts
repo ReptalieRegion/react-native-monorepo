@@ -25,7 +25,7 @@ const postController = () => {
             return res(ctx.status(200), ctx.json(data));
         }),
         rest.get(BASE_URI + 'share/posts/list/users/:userId', (req, res, ctx) => {
-            const postImages = createEmptyArray(10).map(() => createUserPostImages());
+            const postImages = createEmptyArray(10).map(() => createPostList());
             const data = createInfinityData({ searchParams: req.url.searchParams, items: postImages });
 
             return res(ctx.status(200), ctx.json(data));

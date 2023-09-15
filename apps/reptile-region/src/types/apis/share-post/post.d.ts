@@ -8,7 +8,10 @@ declare module '<SharePostAPI>' {
     import type { ShareImageType } from '<Image>';
     import type { InfinitePageParam, InfiniteState } from '<InfiniteState>';
 
-    /** Response */
+    /** GET */
+    // 일상공유 무한스크롤 조회 리스트 Request, Response
+    type GetPostsRequest = InfinitePageParam;
+
     type SharePostListData = {
         user: {
             id: string;
@@ -28,13 +31,10 @@ declare module '<SharePostAPI>' {
     };
     type SharePostListInfiniteData = InfiniteState<SharePostListData[]>;
 
-    type SharePostImagesData = {
-        post: {
-            id: string;
-            thumbnail: ShareImageType;
-        };
+    // 특정 유저의 게시글 리스트 무한 스크롤 Request, Response
+    type GetDetailUserPostsRequest = {
+        nickname: string;
     };
-    type SharePostImagesInfiniteData = InfiniteState<SharePostImagesData[]>;
 
     type SharePostListUserDetailData = {
         post: {
@@ -47,51 +47,66 @@ declare module '<SharePostAPI>' {
             commentCount: number;
         };
     };
+
     type SharePostListUserDetailInfiniteData = InfiniteState<SharePostListUserDetailData>;
 
-    /** Request */
-    /** GET */
-    // 게시물 패치
-    type GetPostsRequest = InfinitePageParam;
-
-    // 특정 유저 게시클 이미지 패치
-    type GetDetailUserPostImagesRequest = {
-        userId?: string;
-        nickname?: string;
-    };
-
-    // 특정 유저 게시글 패치
-    type GetDetailUserPostsRequest = {
-        userId: string;
-    };
-
     /** POST */
-    // 게시글 생성
+    // 일상공유 게시글 생성 Request, Response
     type CreatePostRequest = {
         files: FilesRequest[];
         contents: string;
     };
 
+    type CreatePostResponse = SharePostListData;
+
+    // 사용자가 특정 게시물 좋아요 생성 Request, Response
     type CreateLikeRequest = {
         postId: string;
     };
 
+    type CreateLikeResponse = {
+        post: {
+            id: string;
+        };
+    };
+
     /** PUT */
-    // 특정 게시글 수정
+    // 사용자가 특정 게시물 좋아요 토글 Request, Response
     type UpdatePostRequest = {
         postId: string;
         files: FilesRequest[];
         contents: string;
     };
 
-    // 특정 게시글 좋아요 토글
+    type UpdatePostResponse = {
+        post: {
+            id: string;
+        };
+    };
+
+    // 사용자가 특정 게시물 좋아요 토글 Request, Response
     type UpdateLikeRequest = {
         postId: string;
     };
 
+    type UpdateLikeResponse = {
+        post: {
+            id: string;
+        };
+    };
+
     /** DELETE */
-    // 특정 게시글 삭제
+    // 사용자의 특정 게시물 삭제 Request, Response
     type DeletePostRequest = {
         postId: string;
+    };
+
+    type DeletePostResponse = {
+        post: {
+            id: string;
+        };
+        user: {
+            id: string;
+        };
     };
 }

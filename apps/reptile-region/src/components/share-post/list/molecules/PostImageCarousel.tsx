@@ -18,8 +18,8 @@ type ImagesSliderProps = {
 
 const PostImageCarousel = ({ post }: ImagesSliderProps) => {
     const { id: postId, images, isLike } = post;
-    const { mutate: createMutate } = useCreateLike({ postId });
-    const { mutate: updateMutate } = useUpdateLike({ postId });
+    const { mutate: createMutate } = useCreateLike();
+    const { mutate: updateMutate } = useUpdateLike();
 
     const { startLikeAnimation, setStartLikeAnimation } = useSharePostListStore(
         (state) => ({
@@ -32,9 +32,9 @@ const PostImageCarousel = ({ post }: ImagesSliderProps) => {
     const handleDoubleTabHeartAnimation = () => {
         setStartLikeAnimation(post.id, true);
         if (isLike === undefined) {
-            createMutate();
+            createMutate({ postId });
         } else if (!isLike) {
-            updateMutate();
+            updateMutate({ postId });
         }
 
         Haptic.trigger('impactLight');

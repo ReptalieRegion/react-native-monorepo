@@ -29,12 +29,15 @@ const userController = () => {
             return res(ctx.status(200), ctx.json(data));
         }),
         /** POST */
-        rest.post(BASE_URI + 'users/:userId/follow', (_, res, ctx) => {
-            return res(ctx.status(200), ctx.json(''));
+        rest.post(BASE_URI + 'users/:userId/follow', (req, res, ctx) => {
+            const id = req.params.userId;
+            return res(ctx.status(200), ctx.json({ user: { id } }));
         }),
         /** PUT */
-        rest.put(BASE_URI + 'users/:userId/follow', (_, res, ctx) => {
-            return res(ctx.status(200), ctx.json(''));
+        rest.put(BASE_URI + 'users/:userId/follow', (req, res, ctx) => {
+            const id = req.params.userId;
+            console.log(id);
+            return res(ctx.status(200), ctx.json({ user: { id } }));
         }),
     ];
 };

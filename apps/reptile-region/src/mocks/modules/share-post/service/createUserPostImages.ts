@@ -1,8 +1,6 @@
 import { fakerKO } from '@faker-js/faker';
 
-import type { SharePostImagesData } from '<SharePostAPI>';
-
-const createUserPostImages = (): SharePostImagesData => {
+const createUserPostImages = () => {
     return {
         post: {
             id: fakerKO.string.uuid(),

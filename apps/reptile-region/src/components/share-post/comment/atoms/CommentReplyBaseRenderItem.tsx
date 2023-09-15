@@ -39,7 +39,7 @@ const CommentReplyBaseRenderItem = ({ showAnimated, user, comment }: RenderItemP
                 <View style={styles.commentItemGap}>
                     <Text style={styles.nickname}>{user.nickname}</Text>
                     <TaggedContent uuid={comment.id} contents={comment.contents} onPressTag={onPressTag} />
-                    <CommentActions isMine={comment.isMine} />
+                    <CommentActions commentId={comment.id} isMine={comment.isMine} />
                 </View>
             </View>
         </View>

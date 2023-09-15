@@ -5,10 +5,10 @@ import { getDetailUserPosts } from '../../repository';
 import type { GetDetailUserPostsRequest, SharePostListUserDetailInfiniteData } from '<SharePostAPI>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const useInfiniteUserPosts = ({ userId }: GetDetailUserPostsRequest) => {
+const useInfiniteUserPosts = ({ nickname }: GetDetailUserPostsRequest) => {
     return useInfiniteQuery<SharePostListUserDetailInfiniteData>({
-        queryKey: sharePostQueryKeys.detailUserPosts(userId),
-        queryFn: ({ pageParam }) => getDetailUserPosts({ userId, pageParam }),
+        queryKey: sharePostQueryKeys.detailUserPosts(nickname),
+        queryFn: ({ pageParam }) => getDetailUserPosts({ nickname, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
     });
 };

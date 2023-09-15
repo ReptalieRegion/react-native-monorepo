@@ -8,12 +8,11 @@ import ActivitySummary from '../molecules/ActivitySummary';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 
 type UserDetailPanelProps = {
-    userId?: string;
-    nickname?: string;
+    nickname: string;
 };
 
-const UserDetailPanel = ({ userId, nickname }: UserDetailPanelProps) => {
-    const { data } = useFetchUserProfile({ userId, nickname });
+const UserDetailPanel = ({ nickname }: UserDetailPanelProps) => {
+    const { data } = useFetchUserProfile({ nickname });
 
     if (!data) {
         return null;

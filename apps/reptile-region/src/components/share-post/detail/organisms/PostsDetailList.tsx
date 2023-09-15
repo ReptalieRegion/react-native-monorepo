@@ -6,26 +6,27 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ListFooterLoading from '../../../common/loading/ListFooterComponent';
 import SquareImage from '../atoms/SquareImage';
 
-import type { SharePostImagesData } from '<SharePostAPI>';
-import useInfiniteUserPostImages from '@/apis/share-post/post/hooks/queries/useInfiniteUserPostImages';
+import { SharePostListUserDetailData } from '<SharePostAPI>';
+import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 
 type SharePostsDetailListProps = {
-    userId?: string;
-    nickname?: string;
+    nickname: string;
 };
 
 const NUM_COLUMNS = 3;
 const DefaultPaddingBottom = 10;
 
-const SharePostsDetailList = ({ userId, nickname }: SharePostsDetailListProps) => {
-    const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteUserPostImages({ userId, nickname });
+const SharePostsDetailList = ({ nickname }: SharePostsDetailListProps) => {
+    const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteUserPosts({ nickname });
     const { bottom } = useSafeAreaInsets();
     const { width } = useWindowDimensions();
     const itemWidth = width / NUM_COLUMNS - 2;
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
     const renderItem = useCallback(
-        ({ item }: ListRenderItemInfo<SharePostImagesData>) => <SquareImage post={item.post} width={itemWidth} />,
+        ({ item }: ListRenderItemInfo<SharePostListUserDetailData>) => (
+            <SquareImage images={item.post.images} width={itemWidth} />
+        ),
         [itemWidth],
     );
     const ListFooterComponent = useCallback(() => <ListFooterLoading isLoading={isFetchingNextPage} />, [isFetchingNextPage]);
@@ -46,7 +47,7 @@ const SharePostsDetailList = ({ userId, nickname }: SharePostsDetailListProps) =
                 }}
                 data={newData}
                 renderItem={renderItem}
-                keyExtractor={(item, index) => item.post.thumbnail.src + index}
+                keyExtractor={(item, index) => item.post.images[0].src + index}
                 numColumns={NUM_COLUMNS}
                 estimatedItemSize={itemWidth}
                 onEndReached={onEndReached}

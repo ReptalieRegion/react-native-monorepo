@@ -2,7 +2,12 @@ declare module '<SharePostUserAPI>' {
     import type { ShareImageType } from '<Image>';
     import type { InfiniteState } from '<InfiniteState>';
 
-    /** Response */
+    /** GET */
+    // 특정 유저의 프로필 Request, Response
+    type GetDetailUserProfileRequest = {
+        nickname: string;
+    };
+
     type SharePostUserData = {
         user: {
             id: string;
@@ -17,6 +22,11 @@ declare module '<SharePostUserAPI>' {
         };
     };
 
+    // 사용자의 팔로워 무한스크롤 리스트 Request, Response
+    type GetSearchFollowerUserNicknameRequest = {
+        search: string;
+    };
+
     type SharePostSearchFollowerUserData = {
         user: {
             id: string;
@@ -24,29 +34,30 @@ declare module '<SharePostUserAPI>' {
             nickname: string;
         };
     };
+
     type SharePostSearchFollowerUserInfiniteData = InfiniteState<SharePostSearchFollowerUserData[]>;
 
-    /** Request */
-    /** GET */
-    // 특정 유저 패치
-    type GetDetailUserProfileRequest = {
-        userId?: string;
-        nickname?: string;
-    };
-
-    // 팔로워한 유저중에 특정 닉네임이 포함된 유저 조회
-    type GetSearchFollowerUserNicknameRequest = {
-        search: string;
-    };
-
     /** POST */
+    // 사용자가 특정 유저를 팔로우 생성 Request, Response
     type CreateFollowRequest = {
         userId: string;
     };
 
+    type CreateFollowResponse = {
+        user: {
+            id: string;
+        };
+    };
+
     /** PUT */
-    // 특정 유저 팔로우 토글
+    // 사용자가 특정 유저 팔로우 토글
     type UpdateFollowRequest = {
         userId: string;
+    };
+
+    type UpdateFollowResponse = {
+        user: {
+            id: string;
+        };
     };
 }

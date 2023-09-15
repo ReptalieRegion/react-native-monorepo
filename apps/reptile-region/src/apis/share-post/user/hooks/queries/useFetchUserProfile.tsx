@@ -5,10 +5,10 @@ import { getDetailUserProfile } from '../../repository';
 import type { GetDetailUserProfileRequest, SharePostUserData } from '<SharePostUserAPI>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const useFetchUserProfile = ({ userId, nickname }: GetDetailUserProfileRequest) => {
+const useFetchUserProfile = ({ nickname }: GetDetailUserProfileRequest) => {
     return useQuery<SharePostUserData>({
-        queryKey: sharePostQueryKeys.profile(userId ?? nickname ?? ''),
-        queryFn: () => getDetailUserProfile({ userId, nickname }),
+        queryKey: sharePostQueryKeys.profile(nickname),
+        queryFn: () => getDetailUserProfile({ nickname }),
     });
 };
 

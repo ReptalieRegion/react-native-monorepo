@@ -10,13 +10,12 @@ import { SharePostRouteProp } from '<SharePostRoutes>';
 
 const SharePostDetailProfile = () => {
     const route = useRoute<SharePostRouteProp<'share-post/detail'>>();
-    const userId = route.params.userId;
     const nickname = route.params.nickname;
 
     return (
         <View style={styles.container}>
-            <UserDetailPanel userId={userId} nickname={nickname} />
-            <SharePostsDetailList userId={userId} />
+            <UserDetailPanel nickname={nickname} />
+            <SharePostsDetailList nickname={nickname} />
         </View>
     );
 };

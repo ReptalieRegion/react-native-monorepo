@@ -2,16 +2,16 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import type { SharePostImagesData } from '<SharePostAPI>';
+import { SharePostListUserDetailData } from '<SharePostAPI>';
 
-type SquareImageProps = SharePostImagesData & { width: number };
+type SquareImageProps = Pick<SharePostListUserDetailData['post'], 'images'> & { width: number };
 
-const SquareImage = ({ post, width }: SquareImageProps) => {
+const SquareImage = ({ images, width }: SquareImageProps) => {
     return (
         <Image
             style={[styles.image, { width }]}
-            recyclingKey={post.thumbnail.src}
-            source={{ uri: post.thumbnail.src }}
+            recyclingKey={images[0].src}
+            source={{ uri: images[0].src }}
             priority="high"
             contentFit="cover"
             placeholder={require('@/assets/images/default_image.png')}

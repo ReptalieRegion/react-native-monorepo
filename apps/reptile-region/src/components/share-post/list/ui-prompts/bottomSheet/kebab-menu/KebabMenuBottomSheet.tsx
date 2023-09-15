@@ -23,9 +23,9 @@ const ListItem = ({ text, onPress }: ListItemProps) => {
 const KebabMenuBottomSheet = () => {
     const navigation = useNavigation<SharePostNavigationProp<'share-post/bottom-sheet/kebab-menu'>>();
     const { params } = useRoute<SharePostRouteProp<'share-post/bottom-sheet/kebab-menu'>>();
-    const { post, user } = params;
+    const { post } = params;
     const { bottom } = useSafeAreaInsets();
-    const { mutate } = useDeletePost({ postId: post.id, userId: user.id });
+    const { mutate } = useDeletePost();
 
     const close = () => {
         if (navigation.canGoBack()) {
@@ -34,7 +34,7 @@ const KebabMenuBottomSheet = () => {
     };
 
     const deletePost = () => {
-        mutate();
+        mutate({ postId: post.id });
         close();
     };
 

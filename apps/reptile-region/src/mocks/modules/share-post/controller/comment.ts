@@ -33,7 +33,7 @@ const commentController = () => {
             return res(ctx.status(200), ctx.json({ ...data }));
         }),
         /** DELETE */
-        rest.delete(BASE_URI + 'share/comment/:commentId', (req, res, ctx) => {
+        rest.delete(BASE_URI + 'share/comments/:commentId', (req, res, ctx) => {
             const commentId = req.params.commentId;
 
             return res(ctx.status(200), ctx.json({ id: commentId }));

@@ -32,8 +32,8 @@ const makeLikeInfo = (isLike: boolean | undefined) => {
 const Like = ({ post }: LikeProps) => {
     const { id: postId, isLike } = post;
 
-    const createQuery = useCreateLike({ postId });
-    const updateQuery = useUpdateLike({ postId });
+    const createQuery = useCreateLike();
+    const updateQuery = useUpdateLike();
 
     const startLikeAnimation = useSharePostListStore((state) => state.postsOfInfo[postId]?.startLikeAnimation);
     const scale = useSharedValue(1);
@@ -53,9 +53,9 @@ const Like = ({ post }: LikeProps) => {
 
     const handleLikeClick = () => {
         if (isLike === undefined) {
-            createQuery.mutate();
+            createQuery.mutate({ postId });
         } else {
-            updateQuery.mutate();
+            updateQuery.mutate({ postId });
         }
     };
 

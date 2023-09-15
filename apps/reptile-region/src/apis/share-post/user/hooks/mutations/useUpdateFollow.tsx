@@ -3,7 +3,7 @@ import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstac
 import { updateFollow } from '../../repository';
 
 import { SharePostListInfiniteData } from '<SharePostAPI>';
-import type { SharePostUserData, UpdateFollowRequest } from '<SharePostUserAPI>';
+import type { SharePostUserData, UpdateFollowRequest, UpdateFollowResponse } from '<SharePostUserAPI>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
 type SetQueryDataProps = {
@@ -56,17 +56,15 @@ const updateSharePostList = ({ queryClient, userId }: SetQueryDataProps) => {
     });
 };
 
-const onSuccess = (props: SetQueryDataProps) => {
-    updateUserProfile(props);
-    updateSharePostList(props);
-};
-
-const useUpdateFollow = ({ userId }: UpdateFollowRequest) => {
+const useUpdateFollow = () => {
     const queryClient = useQueryClient();
 
-    return useMutation({
-        mutationFn: () => updateFollow({ userId }),
-        onSuccess: () => onSuccess({ queryClient, userId }),
+    return useMutation<UpdateFollowResponse, any, UpdateFollowRequest>({
+        mutationFn: ({ userId }) => updateFollow({ userId }),
+        onSuccess: ({ user }) => {
+            updateUserProfile({ queryClient, userId: user.id });
+            updateSharePostList({ queryClient, userId: user.id });
+        },
     });
 };
 
