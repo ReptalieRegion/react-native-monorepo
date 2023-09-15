@@ -32,7 +32,7 @@ const useBottomSheetGestureAnimation = () => {
                 return;
             }
 
-            if (keyboard.state.value === 4) {
+            if (keyboard.state.value === 0 || keyboard.state.value === 4) {
                 const nextHeight = Math.max(minSnapPoint, Math.min(maxSnapPoint, startY.value - event.translationY));
                 height.value = nextHeight;
             }
