@@ -38,8 +38,7 @@ const clientFetch = async (input: RequestInfo, init?: IRequestInit): Promise<Res
         body: newBody,
     };
 
-    const response = await fetch(url, newInit);
-    return response;
+    return fetch(url, newInit);
 };
 
 export default clientFetch;
