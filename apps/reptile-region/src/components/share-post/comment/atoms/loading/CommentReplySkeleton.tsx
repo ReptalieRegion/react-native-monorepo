@@ -8,9 +8,9 @@ import createEmptyArray from '@/utils/array/createEmptyArray';
 const { width } = Dimensions.get('screen');
 const SKELETON_ITEM_COLOR = color.Gray[200].toString();
 
-const CommentSkeleton = () => {
+const CommentReplySkeleton = () => {
     return (
-        <View style={styles.container}>
+        <View style={styles.subContainer}>
             {createEmptyArray(10).map((_, index) => (
                 <SkeletonPlaceholder key={index} direction="right">
                     <View style={styles.viewContainer}>
@@ -28,9 +28,14 @@ const CommentSkeleton = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
+    subContainer: {
+        flex: 1,
+        minHeight: 2,
         flexDirection: 'column',
         gap: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+        marginTop: 10,
     },
     viewContainer: {
         flexDirection: 'row',
@@ -68,4 +73,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CommentSkeleton;
+export default CommentReplySkeleton;

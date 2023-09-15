@@ -36,13 +36,15 @@ const postController = () => {
 
             return res(ctx.status(200), ctx.json(data));
         }),
-        rest.post(BASE_URI + 'share/posts/:postId/like', (_, res, ctx) => {
-            return res(ctx.status(200), ctx.json(''));
+        rest.post(BASE_URI + 'share/posts/:postId/like', (req, res, ctx) => {
+            const postId = req.params.postId;
+            return res(ctx.status(200), ctx.json({ post: { id: postId } }));
         }),
         /** PUT */
         rest.put(BASE_URI + 'share/post/:postId', () => {}),
-        rest.put(BASE_URI + 'share/posts/:postId/like', (_, res, ctx) => {
-            return res(ctx.status(200), ctx.json(''));
+        rest.put(BASE_URI + 'share/posts/:postId/like', (req, res, ctx) => {
+            const postId = req.params.postId;
+            return res(ctx.status(200), ctx.json({ post: { id: postId } }));
         }),
         /** DELETE */
         rest.delete(BASE_URI + 'share/posts/:postId', (_, res, ctx) => {

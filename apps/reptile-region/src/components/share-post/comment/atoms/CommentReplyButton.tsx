@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentBottomSheetNavigationProp } from '<SharePostRoutes>';
@@ -24,9 +25,11 @@ const CommentReplyButton = ({ user, comment, replyCount }: CommentReplyButtonPro
     }
 
     return (
-        <Text onPress={handleGoToReplyPage} style={styles.commentMoreButton} suppressHighlighting={false}>
-            답글 {replyCount}개보기
-        </Text>
+        <TouchableOpacity onPress={handleGoToReplyPage} activeOpacity={0.3}>
+            <Text style={styles.commentMoreButton} suppressHighlighting={false}>
+                답글 {replyCount}개보기
+            </Text>
+        </TouchableOpacity>
     );
 };
 

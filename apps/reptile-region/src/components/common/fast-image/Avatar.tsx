@@ -1,11 +1,12 @@
 import { Image, ImageProps } from 'expo-image';
-import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-type AvatarProps = Omit<ImageProps, 'style'> & {
+type AvatarProps = Omit<ImageProps, 'style' | 'recyclingKey'> & {
+    recyclingKey?: string;
     size?: number;
-    showAnimated?: boolean;
+    onPress?: () => void;
 };
 
 type Size = {
@@ -13,54 +14,25 @@ type Size = {
     height: number;
 };
 
-const Avatar = ({ size = 30, showAnimated, ...rest }: AvatarProps) => {
-    const opacity = useSharedValue(0);
-    const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
+const Avatar = ({ size = 30, recyclingKey, onPress, ...rest }: AvatarProps) => {
     const sizeStyle: Size = { width: size, height: size };
-    if (showAnimated) {
-        opacity.value = 1;
-    }
-
-    const onLoad = () => {
-        opacity.value = withSpring(1);
-    };
-
-    useEffect(() => {
-        if (showAnimated) {
-            opacity.value = 0;
-        }
-    }, [showAnimated, opacity, rest.source]);
 
     return (
-        <View style={[styles.container, styles.circle, sizeStyle]}>
-            <Animated.View style={[styles.imageContainer, animatedStyle]}>
-                <Image
-                    {...rest}
-                    placeholder={require('../../../assets/images/avatar.png')}
-                    style={[styles.size, sizeStyle]}
-                    onLoad={onLoad}
-                />
-            </Animated.View>
-        </View>
+        <TouchableOpacity onPress={onPress} activeOpacity={0.3}>
+            <Image
+                {...rest}
+                recyclingKey={recyclingKey}
+                style={[sizeStyle, styles.circle]}
+                placeholderContentFit="cover"
+                placeholder={require('../../../assets/images/avatar.png')}
+            />
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        width: 30,
-        height: 30,
-        position: 'relative',
-        overflow: 'hidden',
-    },
-    size: {
-        width: 30,
-        height: 30,
-    },
     circle: {
         borderRadius: 9999,
-    },
-    imageContainer: {
-        ...StyleSheet.absoluteFillObject,
     },
 });
 

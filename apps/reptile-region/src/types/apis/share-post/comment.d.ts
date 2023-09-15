@@ -2,7 +2,12 @@ declare module '<SharePostCommentAPI>' {
     import type { ShareImageType } from '<Image>';
     import type { InfiniteState } from '<InfiniteState>';
 
-    /** Response */
+    /** GET */
+    // 특정 게시글 댓글 리스트 무한 스크롤 Request, Response
+    type GetCommentsRequest = {
+        postId: string;
+    };
+
     type SharePostCommentData = {
         user: {
             id: string;
@@ -20,13 +25,6 @@ declare module '<SharePostCommentAPI>' {
 
     type SharePostCommentInfiniteData = InfiniteState<SharePostCommentData[]>;
 
-    /** Request */
-    /** GET */
-    // 특정 게시글 댓글 패치
-    type GetCommentsRequest = {
-        postId: string;
-    };
-
     /** POST */
     // 특정 게시글 댓글 생성
     type CreateCommentRequest = {
@@ -34,14 +32,37 @@ declare module '<SharePostCommentAPI>' {
         contents: string;
     };
 
+    type CreateCommentResponse = SharePostCommentData;
+
     /** PUT */
-    // 특정 댓글 수정
+    // 사용자의 특정 댓글 수정
     type UpdateCommentRequest = {
         commentId: string;
         contents: string;
     };
 
+    type UpdateCommentResponse = {
+        post: {
+            id: string;
+        };
+        comment: {
+            id: string;
+            contents: string;
+        };
+    };
+
+    /** DELETE */
+    // 사용자의 특정 댓글 삭제
     type DeleteCommentRequest = {
         commentId: string;
+    };
+
+    type DeleteCommentResponse = {
+        post: {
+            id: string;
+        };
+        comment: {
+            id: string;
+        };
     };
 }

@@ -12,7 +12,7 @@ const commentReplyController = () => {
 
     return [
         /** GET */
-        rest.get(BASE_URI + 'share/comment/:commentId/replies/list', (req, res, ctx) => {
+        rest.get(BASE_URI + 'share/comment/:commentId/replies/list', async (req, res, ctx) => {
             const commentReplies = createEmptyArray(10).map(() => createCommentReply());
             const data = createInfinityData({ searchParams: req.url.searchParams, items: commentReplies });
 

@@ -29,6 +29,7 @@ declare module '<SharePostAPI>' {
             commentCount: number;
         };
     };
+
     type SharePostListInfiniteData = InfiniteState<SharePostListData[]>;
 
     // 특정 유저의 게시글 리스트 무한 스크롤 Request, Response

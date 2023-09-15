@@ -9,6 +9,8 @@ const useInfiniteCommentReply = ({ commentId }: GetCommentRepliesRequest) => {
     return useInfiniteQuery<SharePostCommentReplyInfiniteData>({
         queryKey: sharePostQueryKeys.commentReply(commentId),
         queryFn: ({ pageParam }) => getCommentReplies({ commentId, pageParam }),
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+        suspense: true,
     });
 };
 

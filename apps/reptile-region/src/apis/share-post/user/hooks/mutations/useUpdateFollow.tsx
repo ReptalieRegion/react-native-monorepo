@@ -11,7 +11,7 @@ type SetQueryDataProps = {
     userId: string;
 };
 
-// 유저 프로필 캐시 isFollow, followingCount 변경
+// Cache Update: 특정 유저의 프로필
 const updateUserProfile = ({ queryClient, userId }: SetQueryDataProps) => {
     queryClient.setQueryData<SharePostUserData>(sharePostQueryKeys.profile(userId), (prevUserProfile) => {
         if (prevUserProfile === undefined) {
@@ -33,7 +33,7 @@ const updateUserProfile = ({ queryClient, userId }: SetQueryDataProps) => {
     });
 };
 
-// 일상 공유 리스트 캐시
+// Cache Update: 일상공유 무한스크롤 조회 리스트
 const updateSharePostList = ({ queryClient, userId }: SetQueryDataProps) => {
     queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(sharePostQueryKeys.list, (prevPostList) => {
         if (prevPostList === undefined) {

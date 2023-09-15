@@ -12,10 +12,10 @@ const commentController = () => {
 
     return [
         /** GET */
-        rest.get(BASE_URI + 'share/post/:postId/comments/list', (req, res, ctx) => {
+        rest.get(BASE_URI + 'share/post/:postId/comments/list', async (req, res, ctx) => {
             const commentReplies = createEmptyArray(10).map(() => createComment());
             const data = createInfinityData({ searchParams: req.url.searchParams, items: commentReplies });
-
+            await new Promise((resolve) => setTimeout(() => resolve(''), 3000));
             return res(ctx.status(200), ctx.json(data));
         }),
         /** POST */
@@ -26,7 +26,7 @@ const commentController = () => {
             return res(ctx.status(200), ctx.json(data));
         }),
         /** PUT */
-        rest.put(BASE_URI + 'share/comment/:commentId', async (req, res, ctx) => {
+        rest.put(BASE_URI + 'share/comments/:commentId', async (req, res, ctx) => {
             const body = (await req.json()) as UpdateCommentRequest;
             const data = createComment(body);
 
@@ -36,7 +36,7 @@ const commentController = () => {
         rest.delete(BASE_URI + 'share/comments/:commentId', (req, res, ctx) => {
             const commentId = req.params.commentId;
 
-            return res(ctx.status(200), ctx.json({ id: commentId }));
+            return res(ctx.status(200), ctx.json({ comment: { id: commentId } }));
         }),
     ];
 };
