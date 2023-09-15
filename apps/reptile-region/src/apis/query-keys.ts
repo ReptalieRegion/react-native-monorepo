@@ -1,15 +1,13 @@
 /** SharePost */
 export const sharePostQueryKeys = {
     // 게시물
-    list: ['share-post', 'list'] as const,
-    detailImage: (id: string) => ['share-post', 'detail', 'image', id] as const,
-    detailUserPosts: (id: string) => ['share-post', 'detail', 'user-post', id] as const,
-    post: (id: string) => ['share-post', id] as const,
+    list: ['share-post', 'list'],
+    detailUserPosts: (userId: string) => ['share-post', 'detail', 'user-post', userId],
     // 유저
-    profile: (id: string) => ['profile', id] as const,
-    searchUser: (search: string) => ['search-user', search] as const,
+    profile: (userId: string) => ['profile', userId],
+    searchUser: (search: string) => ['search-user', search],
     // 댓글
-    comment: (id: string) => ['share-post', 'comment', id] as const,
+    comment: (postId: string) => ['share-post', 'comment', postId],
     // 대댓글
-    commentReply: (id: string) => ['share-post', 'comment-reply', id] as const,
+    commentReply: (commentId: string) => ['share-post', 'comment-reply', commentId],
 } as const;
