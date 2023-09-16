@@ -2,43 +2,34 @@ import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { color } from 'design-system';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
-import { RefreshControl } from 'react-native-gesture-handler';
 
 import { ScrollToTopButtonAnimationMode } from '../atoms/ScrollToTopButton';
-import SharePostListSkeleton from '../atoms/SharePostListSkeleton';
 import FloatingActionButtons from '../molecules/FloatingActionButtons';
 import PostCard from '../organisms/PostCard';
 
 import type { ScrollIntoViewProps } from '<FlashList>';
 import type { SharePostListData } from '<SharePostAPI>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
+import CustomRefreshControl from '@/components/common/loading/CustomRefreshControl';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 
 const Posts = () => {
     const flashListRef = useRef<FlashList<SharePostListData>>(null);
     const lastScrollY = useRef(0);
     const [scrollDirection, setScrollDirection] = useState<ScrollToTopButtonAnimationMode>('STOP');
-    const [refreshing, setRefreshing] = useState<boolean>(false);
-    const { data, isLoading, hasNextPage, isFetchingNextPage, fetchNextPage, remove, refetch } = useInfiniteFetchPosts();
+    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data]);
     const keyExtractor = useCallback((item: SharePostListData) => item.post.id, []);
     const renderItem = useCallback(({ item }: ListRenderItemInfo<SharePostListData>) => <PostCard {...item} />, []);
     const ListFooterComponent = useCallback(() => <ListFooterLoading isLoading={isFetchingNextPage} />, [isFetchingNextPage]);
-    const onRefresh = useCallback(async () => {
-        setRefreshing(true);
-        remove();
+    const asyncOnRefresh = useCallback(async () => {
         await refetch();
-        setRefreshing(false);
-    }, [refetch, remove]);
+    }, [refetch]);
     const onEndReached = useCallback(
         () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
         [fetchNextPage, hasNextPage, isFetchingNextPage],
     );
-
-    if (isLoading || !data) {
-        return <SharePostListSkeleton />;
-    }
 
     const scrollIntoView = ({ animated = false, offset }: ScrollIntoViewProps) => {
         flashListRef.current?.scrollToOffset({ animated, offset });
@@ -64,7 +55,7 @@ const Posts = () => {
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
                 estimatedItemSize={200}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                refreshControl={<CustomRefreshControl asyncOnRefresh={asyncOnRefresh} />}
                 onEndReached={onEndReached}
                 ListFooterComponent={ListFooterComponent}
                 scrollEventThrottle={16}

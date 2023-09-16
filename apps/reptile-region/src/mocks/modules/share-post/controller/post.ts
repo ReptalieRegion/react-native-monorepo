@@ -48,8 +48,9 @@ const postController = () => {
             return res(ctx.status(200), ctx.json({ post: { id: postId } }));
         }),
         /** DELETE */
-        rest.delete(BASE_URI + 'share/posts/:postId', (_, res, ctx) => {
-            return res(ctx.status(200), ctx.json(''));
+        rest.delete(BASE_URI + 'share/posts/:postId', (req, res, ctx) => {
+            const postId = req.params.postId;
+            return res(ctx.status(200), ctx.json({ post: { id: postId } }));
         }),
     ];
 };
