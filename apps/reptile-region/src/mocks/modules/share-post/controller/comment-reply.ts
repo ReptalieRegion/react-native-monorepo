@@ -4,7 +4,7 @@ import createCommentReply from '../service/createCommentReply';
 
 import type { CreateCommentReplyRequest, UpdateCommentReplyRequest } from '<SharePostCommentReplyAPI>';
 import ENV from '@/env';
-import createInfinityData from '@/mocks/data/native/common/createInfinityData';
+import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const commentReplyController = () => {

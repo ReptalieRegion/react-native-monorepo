@@ -4,7 +4,7 @@ import createPostUserProfile from '../service/createPostUserProfile';
 import createSearchUser from '../service/createSearchUser';
 
 import ENV from '@/env';
-import createInfinityData from '@/mocks/data/native/common/createInfinityData';
+import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const userController = () => {

@@ -4,7 +4,7 @@ import createComment from '../service/createComment';
 
 import type { CreateCommentRequest, UpdateCommentRequest } from '<SharePostCommentAPI>';
 import ENV from '@/env';
-import createInfinityData from '@/mocks/data/native/common/createInfinityData';
+import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 import { wait } from '@/mocks/utils/helpers';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
