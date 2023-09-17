@@ -13,5 +13,5 @@
         "dockers": "Docker",
         "stores": "Global"
     },
-    "cSpell.words": ["hookform", "tanstack", "typecheck", "yunchanpark", "zustand"]
+    "cSpell.words": ["hookform", "mswjs", "tanstack", "typecheck", "yunchanpark", "zustand"]
 }
