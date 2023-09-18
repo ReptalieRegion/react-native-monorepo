@@ -30,18 +30,11 @@ const SharePostRoutes = () => {
             </SharePostStack.Group>
 
             {/** BottomTab이 없는 페이지 */}
-            <SharePostStack.Group
-                navigationKey="share-post/modal"
-                screenOptions={{
-                    presentation: 'transparentModal',
-                }}
-            >
+            <SharePostStack.Group navigationKey="share-post/modal" screenOptions={{ presentation: 'transparentModal' }}>
                 <SharePostStack.Screen
                     name="share-post/modal/detail"
                     component={SharePostDetailPage}
-                    options={{
-                        header: SharePostDetailHeader,
-                    }}
+                    options={{ header: SharePostDetailHeader }}
                 />
                 <SharePostStack.Screen
                     name="share-post/modal/posting"

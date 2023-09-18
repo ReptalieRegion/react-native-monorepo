@@ -1,6 +1,6 @@
 import { Keyboard } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
-import { runOnJS, useAnimatedKeyboard, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated';
+import { runOnJS, useAnimatedKeyboard, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import useBottomSheetAnimatedAction from './useBottomSheetAnimatedAction';
 import useBottomSheetAnimatedState from './useBottomSheetAnimatedState';
@@ -11,7 +11,6 @@ const useBottomSheetGestureAnimation = () => {
     const {
         snapInfo: { pointsFromTop },
         height,
-        translateY,
     } = useBottomSheetAnimatedState();
     const keyboard = useAnimatedKeyboard();
     const { bottomSheetClose } = useBottomSheetAnimatedAction();
@@ -40,7 +39,7 @@ const useBottomSheetGestureAnimation = () => {
         .onEnd((event) => {
             const handleFastSwipeDown = () => {
                 if (height.value < pointsFromTop[0]) {
-                    translateY.value = withTiming(height.value);
+                    runOnJS(bottomSheetClose)();
                     return;
                 }
 
@@ -84,13 +83,6 @@ const useBottomSheetGestureAnimation = () => {
 
             handleSlowSwipe();
         });
-
-    useDerivedValue(() => {
-        const isClose = height.value !== 0 && translateY.value === height.value;
-        if (isClose) {
-            runOnJS(bottomSheetClose)();
-        }
-    });
 
     return panGesture;
 };

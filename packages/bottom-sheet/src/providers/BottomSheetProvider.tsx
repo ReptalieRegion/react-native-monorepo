@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useCallback } from 'react';
 import { Insets, useWindowDimensions } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
+import { runOnJS, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { BottomSheetAnimationStateContext, BottomSheetAnimationActionContext } from '../contexts/BottomSheetAnimationContext';
 import { BottomSheetAnimationAction, BottomSheetAnimationState, SnapInfo } from '../types/bottom-sheet';
@@ -20,10 +20,12 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
     const sortedPointsFromTop = [...numberPointsFromTop].sort();
     const height = useSharedValue(numberPointsFromTop[snapInfo.startIndex]);
     const translateY = useSharedValue(0);
+    const opacity = useSharedValue(1);
 
     const bottomSheetClose = useCallback(() => {
-        onClose();
-    }, [onClose]);
+        translateY.value = withTiming(height.value);
+        opacity.value = withTiming(0, { duration: 250 }, (finished) => finished && runOnJS(onClose)());
+    }, [height.value, onClose, opacity, translateY]);
 
     const updateHeight = useCallback(
         (newHeight: number) => {
@@ -43,6 +45,7 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
         insets,
         height,
         translateY,
+        opacity,
         snapInfo: { startIndex: snapInfo.startIndex, pointsFromTop: sortedPointsFromTop },
         onClose,
     };

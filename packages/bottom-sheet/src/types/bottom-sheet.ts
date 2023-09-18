@@ -17,6 +17,7 @@ export type BottomSheetAnimationState = {
     insets?: Insets;
     height: SharedValue<number>;
     translateY: SharedValue<number>;
+    opacity: SharedValue<number>;
     snapInfo: {
         startIndex: number;
         pointsFromTop: number[];
