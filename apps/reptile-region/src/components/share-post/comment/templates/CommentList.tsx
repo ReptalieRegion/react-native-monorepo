@@ -1,6 +1,6 @@
 import { useRoute } from '@react-navigation/native';
 import { FlashList, ListRenderItem } from '@shopify/flash-list';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -19,7 +19,8 @@ const CommentFlashList = () => {
         post: { id: postId },
     } = params;
 
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, remove, refetch } = useInfiniteComment({ postId });
+    console.log(postId);
+    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteComment({ postId });
 
     const renderItem: ListRenderItem<SharePostCommentData> = useCallback((props) => {
         return <CommentRenderItem comment={props.item.comment} user={props.item.user} />;
@@ -27,21 +28,14 @@ const CommentFlashList = () => {
 
     const keyExtractor = useCallback((item: SharePostCommentData) => item.comment.id, []);
 
-    const onEndReached = useCallback(() => {
-        if (hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-        }
-    }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+    const onEndReached = useCallback(
+        () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
+        [fetchNextPage, hasNextPage, isFetchingNextPage],
+    );
 
     const asyncOnRefresh = useCallback(async () => {
         await refetch();
     }, [refetch]);
-
-    useEffect(() => {
-        return () => {
-            remove();
-        };
-    }, [remove]);
 
     return (
         <View style={styles.container}>
@@ -55,9 +49,8 @@ const CommentFlashList = () => {
                 keyExtractor={keyExtractor}
                 onEndReached={onEndReached}
                 renderScrollComponent={ScrollView}
-                estimatedItemSize={100}
+                estimatedItemSize={110}
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-                removeClippedSubviews={true}
             />
         </View>
     );
@@ -68,7 +61,6 @@ const contentContainerStyle = { paddingLeft: 20, paddingRight: 20 };
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        minHeight: 2,
     },
 });
 

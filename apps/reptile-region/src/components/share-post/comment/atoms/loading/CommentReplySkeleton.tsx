@@ -11,14 +11,26 @@ const SKELETON_ITEM_COLOR = color.Gray[200].toString();
 const CommentReplySkeleton = () => {
     return (
         <View style={styles.subContainer}>
+            <SkeletonPlaceholder direction="right">
+                <View style={styles.viewContainer}>
+                    <View style={styles.circle} />
+                    <View style={styles.textContainer}>
+                        <View style={styles.name} />
+                        <View style={{ ...styles.text, width: width * 0.85 - 40 }} />
+                        <View style={{ ...styles.text, width: width * 0.6 - 40 }} />
+                        <View style={{ ...styles.text, width: width * 0.2 - 40 }} />
+                    </View>
+                </View>
+            </SkeletonPlaceholder>
             {createEmptyArray(10).map((_, index) => (
                 <SkeletonPlaceholder key={index} direction="right">
-                    <View style={styles.viewContainer}>
+                    <View style={[styles.viewContainer, styles.replyComment]}>
                         <View style={styles.circle} />
                         <View style={styles.textContainer}>
                             <View style={styles.name} />
                             <View style={{ ...styles.text, width: width * 0.85 - 40 }} />
                             <View style={{ ...styles.text, width: width * 0.6 - 40 }} />
+                            <View style={{ ...styles.text, width: width * 0.2 - 40 }} />
                         </View>
                     </View>
                 </SkeletonPlaceholder>
@@ -40,6 +52,9 @@ const styles = StyleSheet.create({
     viewContainer: {
         flexDirection: 'row',
         gap: 10,
+    },
+    replyComment: {
+        paddingLeft: 40,
     },
     circle: {
         borderRadius: 9999,

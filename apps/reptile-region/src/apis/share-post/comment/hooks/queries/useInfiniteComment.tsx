@@ -10,6 +10,8 @@ const useInfiniteComment = ({ postId }: GetCommentsRequest) => {
         queryKey: sharePostQueryKeys.comment(postId),
         queryFn: ({ pageParam }) => getComments({ pageParam, postId }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
+        staleTime: 5 * 60 * 1000,
+        cacheTime: 5 * 60 * 1000,
         suspense: true,
     });
 };

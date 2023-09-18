@@ -7,7 +7,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SharePostCommentBottomSheetParamList } from '<SharePostRoutes>';
 import BottomSheetHeader from '@/components/common/layouts/header/BottomSheetHeader';
-import CommentTextInput from '@/components/share-post/comment/atoms/CommentTextInput';
 import { SharePostCommentPage, SharePostCommentReplyPage } from '@/pages/share-post';
 
 const Stack = createNativeStackNavigator<SharePostCommentBottomSheetParamList>();
@@ -45,7 +44,6 @@ const SharePostCommentBottomSheetRoutes = ({ navigation }: { navigation: any }) 
                     }}
                 />
             </Stack.Navigator>
-            <CommentTextInput />
         </BottomSheet>
     );
 };

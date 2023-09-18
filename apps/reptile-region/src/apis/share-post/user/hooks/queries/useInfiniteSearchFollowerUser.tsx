@@ -2,16 +2,15 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getSearchFollowerUserNickname } from '../../repository';
 
-import { EnableParam } from '<InfiniteState>';
 import type { GetSearchFollowerUserNicknameRequest, SharePostSearchFollowerUserInfiniteData } from '<SharePostUserAPI>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const useInfiniteSearchFollowerUser = ({ search, enabled }: GetSearchFollowerUserNicknameRequest & EnableParam) => {
+const useInfiniteSearchFollowerUser = ({ search }: GetSearchFollowerUserNicknameRequest) => {
     return useInfiniteQuery<SharePostSearchFollowerUserInfiniteData>({
         queryKey: sharePostQueryKeys.searchUser(search),
         queryFn: ({ pageParam }) => getSearchFollowerUserNickname({ search, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
-        enabled,
+        suspense: true,
     });
 };
 
