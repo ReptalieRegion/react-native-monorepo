@@ -1,7 +1,7 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { color } from 'design-system';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
+import { NativeScrollEvent, NativeSyntheticEvent, RefreshControl, StyleSheet, View } from 'react-native';
 
 import { ScrollToTopButtonAnimationMode } from '../atoms/ScrollToTopButton';
 import FloatingActionButtons from '../molecules/FloatingActionButtons';
@@ -10,12 +10,12 @@ import PostCard from '../organisms/PostCard';
 import type { ScrollIntoViewProps } from '<FlashList>';
 import type { SharePostListData } from '<SharePostAPI>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
-import CustomRefreshControl from '@/components/common/loading/CustomRefreshControl';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 
 const Posts = () => {
     const flashListRef = useRef<FlashList<SharePostListData>>(null);
     const lastScrollY = useRef(0);
+    const [refreshing, setRefreshing] = useState<boolean>(false);
     const [scrollDirection, setScrollDirection] = useState<ScrollToTopButtonAnimationMode>('STOP');
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
 
@@ -24,7 +24,9 @@ const Posts = () => {
     const renderItem = useCallback(({ item }: ListRenderItemInfo<SharePostListData>) => <PostCard {...item} />, []);
     const ListFooterComponent = useCallback(() => <ListFooterLoading isLoading={isFetchingNextPage} />, [isFetchingNextPage]);
     const asyncOnRefresh = useCallback(async () => {
+        setRefreshing(true);
         await refetch();
+        setRefreshing(false);
     }, [refetch]);
     const onEndReached = useCallback(
         () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
@@ -55,7 +57,7 @@ const Posts = () => {
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
                 estimatedItemSize={200}
-                refreshControl={<CustomRefreshControl asyncOnRefresh={asyncOnRefresh} />}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
                 onEndReached={onEndReached}
                 ListFooterComponent={ListFooterComponent}
                 scrollEventThrottle={16}

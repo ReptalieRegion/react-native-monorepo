@@ -1,35 +1,60 @@
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { color } from 'design-system';
-import { Image } from 'expo-image';
-import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import React, { useRef } from 'react';
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
-import useTag from '@/hooks/useTag';
+import { SharePostCommentBottomSheetParamList, SharePostCommentProps, SharePostCommentReplyProps } from '<SharePostRoutes>';
+import useCreateComment from '@/apis/share-post/comment/hooks/mutations/useCreateComment';
+import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
+import useTagAction from '@/hooks/useTagAction';
+import useTagState from '@/hooks/useTagState';
 
 const MAX_CHARACTER_COUNT = 500;
 
 const CommentTextInput = () => {
-    const { contents, handleChangeSelection, handleChangeText } = useTag();
+    const ref = useRef<TextInput>(null);
+    const { contents, currentSelection } = useTagState();
+
+    const { handleChangeSelection, handleChangeText } = useTagAction();
+    const { name, params } = useRoute<RouteProp<SharePostCommentBottomSheetParamList>>();
+
+    const { mutate: commentMutate } = useCreateComment();
+    const { mutate: commentReplyMutate } = useCreateCommentReply();
+
+    const handleSubmit = () => {
+        switch (name) {
+            case 'main':
+                const { post } = params as SharePostCommentProps;
+                commentMutate({ contents, postId: post.id });
+                break;
+            case 'reply':
+                const { comment } = params as SharePostCommentReplyProps;
+                commentReplyMutate({ contents, commentId: comment.id });
+                break;
+        }
+    };
 
     return (
-        <View>
-            <View style={[styles.bottom]}>
-                <Image
-                    style={styles.circle}
-                    source={{
-                        uri: 'https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F009%2F2022%2F06%2F08%2F0004974574_002_20220608070201911.jpg&type=a340',
-                    }}
-                />
+        <View style={[styles.bottom]}>
+            <View style={styles.textInputContainer}>
                 <TextInput
+                    selection={currentSelection}
+                    ref={ref}
                     value={contents}
                     style={styles.textInput}
+                    numberOfLines={4}
                     placeholder="댓글을 입력하세요..."
                     maxLength={MAX_CHARACTER_COUNT}
                     onChangeText={handleChangeText}
-                    onSelectionChange={(event) => handleChangeSelection(event.nativeEvent.selection)}
+                    onSelectionChange={(event) => {
+                        handleChangeSelection(event.nativeEvent.selection);
+                    }}
                     multiline
                 />
-                <Text style={styles.submit}>등록</Text>
+                <TouchableOpacity onPress={handleSubmit}>
+                    <Text style={styles.submit}>등록</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
@@ -48,14 +73,22 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         gap: 10,
     },
-    textInput: {
-        padding: 10,
+    textInputContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        paddingVertical: 8,
+        paddingHorizontal: 10,
         width: (Dimensions.get('screen').width - 30 - 20) * 0.85,
         borderColor: color.Gray[250].toString(),
         borderWidth: 0.5,
-        borderRadius: 20,
-        height: 30,
-        maxHeight: 100,
+        borderRadius: 12,
+        alignItems: 'center',
+    },
+    textInput: {
+        flex: 1,
+        paddingTop: 0,
+        fontSize: 14,
+        maxHeight: 84,
     },
     submit: {
         color: color.Green['750'].toString(),

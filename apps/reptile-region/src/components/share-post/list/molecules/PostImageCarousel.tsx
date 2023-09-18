@@ -31,6 +31,7 @@ const PostImageCarousel = ({ post }: ImagesSliderProps) => {
 
     const handleDoubleTabHeartAnimation = () => {
         setStartLikeAnimation(post.id, true);
+
         if (isLike === undefined) {
             createMutate({ postId });
         } else if (!isLike) {

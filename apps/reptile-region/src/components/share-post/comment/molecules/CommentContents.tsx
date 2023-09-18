@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import TaggedContent from '../../common/atoms/TaggedContent';
 import CommentActionsIsMine from '../atoms/CommentActionsIsMine';
 import CommentActionsOtherUser from '../atoms/CommentActionsOtherUser';
+import CommentContentsHeader from '../atoms/CommentContentsHeader';
 
 import { SharePostNavigationProp } from '<SharePostRoutes>';
 
@@ -16,6 +17,7 @@ type CommentContentsProps = {
         id: string;
         contents: string;
         isMine: boolean;
+        isModified: boolean;
     };
     deleteComment: () => void;
     updateComment: () => void;
@@ -29,9 +31,7 @@ const CommentContents = ({ user, comment, deleteComment, updateComment }: Commen
 
     return (
         <View style={styles.commentItemGap}>
-            <Text onPress={handleProfileClick} style={styles.nickname} suppressHighlighting>
-                {user.nickname}
-            </Text>
+            <CommentContentsHeader user={{ nickname: user.nickname }} comment={{ isModified: comment.isModified }} />
             <TaggedContent uuid={comment.id} contents={comment.contents} onPressTag={handleProfileClick} />
             {comment.isMine ? (
                 <CommentActionsIsMine deleteComment={deleteComment} updateComment={updateComment} />

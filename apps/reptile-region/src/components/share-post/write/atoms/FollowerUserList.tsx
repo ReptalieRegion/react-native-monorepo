@@ -22,7 +22,6 @@ const FollowerUserList = () => {
 
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
         search: taggingInfo.keyword ?? '',
-        enabled: taggingInfo.keyword !== undefined,
     });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);

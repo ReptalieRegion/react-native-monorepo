@@ -5,6 +5,8 @@ type FilesRequest = {
 };
 
 declare module '<SharePostAPI>' {
+    import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+
     import type { ShareImageType } from '<Image>';
     import type { InfinitePageParam, InfiniteState } from '<InfiniteState>';
 
@@ -54,7 +56,7 @@ declare module '<SharePostAPI>' {
     /** POST */
     // 일상공유 게시글 생성 Request, Response
     type CreatePostRequest = {
-        files: FilesRequest[];
+        selectedPhotos: PhotoIdentifier[];
         contents: string;
     };
 

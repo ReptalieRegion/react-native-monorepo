@@ -17,6 +17,7 @@ export const getPosts = async ({ pageParam = 0 }: GetPostsRequest) => {
     const queryString = objectToQueryString({
         pageParam,
     });
+
     const response = await clientFetch(`api/share/posts/list?${queryString}`);
 
     return response.json();
@@ -34,9 +35,17 @@ export const getDetailUserPosts = async ({ pageParam = 0, nickname }: GetDetailU
 
 /** POST */
 // 게시글 생성
-export const createPost = async ({ contents, files }: CreatePostRequest) => {
+/** @TODO Fetch로 이미지 업로드가 안됨  */
+export const createPost = async ({ contents, selectedPhotos }: CreatePostRequest) => {
     const formData = new FormData();
-    formData.append('files', files);
+    selectedPhotos.forEach((photo) => {
+        const { uri, filename } = photo.node.image;
+        formData.append('files', {
+            uri,
+            name: filename,
+            type: 'image/jpeg',
+        });
+    });
     formData.append('contents', contents);
 
     const response = await clientFetch('api/share/post', {
@@ -47,6 +56,11 @@ export const createPost = async ({ contents, files }: CreatePostRequest) => {
         },
     });
 
+    if (!response.ok) {
+        const message = await response.json();
+        throw new Error(JSON.stringify(message));
+    }
+
     return response.json();
 };
 
@@ -55,6 +69,11 @@ export const createLike = async ({ postId }: CreateLikeRequest) => {
     const response = await clientFetch(`api/share/posts/${postId}/like`, {
         method: METHOD.POST,
     });
+
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(JSON.parse(error));
+    }
 
     return response.json();
 };

@@ -5,7 +5,6 @@ import createSearchUser from '../service/createSearchUser';
 
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
-import { wait } from '@/mocks/utils/helpers';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const userController = () => {
@@ -21,13 +20,11 @@ const userController = () => {
             return res(ctx.status(200), ctx.json(postUserProfile));
         }),
         rest.get(BASE_URI + 'users/follower/list', async (req, res, ctx) => {
-            const users = createEmptyArray(10).map(() => createSearchUser());
+            const users = createEmptyArray(20).map(() => createSearchUser());
             const data = createInfinityData({
                 searchParams: req.url.searchParams,
                 items: users,
             });
-
-            await wait(3000);
 
             return res(ctx.status(200), ctx.json(data));
         }),
@@ -39,7 +36,6 @@ const userController = () => {
         /** PUT */
         rest.put(BASE_URI + 'users/:userId/follow', (req, res, ctx) => {
             const id = req.params.userId;
-            console.log(id);
             return res(ctx.status(200), ctx.json({ user: { id } }));
         }),
     ];

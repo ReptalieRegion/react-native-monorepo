@@ -1,16 +1,17 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import React, { useCallback, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { SharePostSearchFollowerUserData } from '<SharePostUserAPI>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import Avatar from '@/components/common/fast-image/Avatar';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
-import useTag from '@/hooks/useTag';
+import useTagAction from '@/hooks/useTagAction';
+import useTagState from '@/hooks/useTagState';
 
 const CommentTagList = () => {
-    const { keyword, handleSelectTag } = useTag();
+    const { keyword } = useTagState();
+    const { handleSelectTag } = useTagAction();
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
         search: keyword ?? '',
     });
@@ -19,8 +20,12 @@ const CommentTagList = () => {
     const keyExtractor = useCallback((item: SharePostSearchFollowerUserData) => item.user.id, []);
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<SharePostSearchFollowerUserData>) => {
+            const handlePressTag = (event: GestureResponderEvent) => {
+                event.preventDefault();
+                handleSelectTag(item.user.nickname);
+            };
             return (
-                <TouchableOpacity onPress={() => handleSelectTag(item.user.nickname)}>
+                <TouchableOpacity onPress={handlePressTag}>
                     <View style={styles.renderItem}>
                         <Avatar recyclingKey={item.user.profile.src} source={{ uri: item.user.profile.src }} size={30} />
                         <Text style={styles.semiBold}>{item.user.nickname}</Text>
@@ -39,10 +44,11 @@ const CommentTagList = () => {
     return (
         <View style={styles.container}>
             <FlashList
+                keyboardShouldPersistTaps="handled"
                 data={newData}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
-                ListFooterComponent={ListFooterLoading}
+                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 onEndReached={onEndReached}
                 estimatedItemSize={30}
             />

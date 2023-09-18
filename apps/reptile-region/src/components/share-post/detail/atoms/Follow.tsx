@@ -29,7 +29,6 @@ const Follow = ({ user: { id: userId, isFollow } }: PostHeaderProps) => {
     const { mutate: updateMutate } = useUpdateFollow();
 
     const handleClickFollow = () => {
-        console.log(userId, 'hi');
         if (isFollow === undefined) {
             createMutate({ userId });
         } else {

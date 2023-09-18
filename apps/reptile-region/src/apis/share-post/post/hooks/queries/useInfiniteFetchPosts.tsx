@@ -10,7 +10,7 @@ const useInfiniteFetchPosts = () => {
         queryKey: sharePostQueryKeys.list,
         queryFn: ({ pageParam }) => getPosts({ pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
-        suspense: true,
+        // suspense: true,
     });
 };
 

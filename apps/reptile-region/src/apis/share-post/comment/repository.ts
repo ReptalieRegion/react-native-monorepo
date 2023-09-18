@@ -14,7 +14,7 @@ export const getComments = async ({ pageParam = 0, postId }: GetCommentsRequest 
     const queryString = objectToQueryString({
         pageParam,
     });
-    const response = await clientFetch(`api/share/post/${postId}/comments/list?${queryString}`, {
+    const response = await clientFetch(`api/share/posts/${postId}/comments/list?${queryString}`, {
         method: METHOD.GET,
     });
 

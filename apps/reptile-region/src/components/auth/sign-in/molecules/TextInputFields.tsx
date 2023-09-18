@@ -60,7 +60,7 @@ const TextInputFields = () => {
     const handleSignInSubmit = (data: UseFormDefaultValues<InputKey>) => {
         const { EMAIL, PASSWORD } = data;
         const requestData: RequestSignIn = {
-            email: EMAIL,
+            userId: EMAIL,
             password: PASSWORD,
         };
         mutate(requestData);

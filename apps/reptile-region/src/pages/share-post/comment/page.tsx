@@ -5,11 +5,11 @@ import CommentTextInput from '@/components/share-post/comment/atoms/CommentTextI
 import CommentSkeleton from '@/components/share-post/comment/atoms/loading/CommentSkeleton';
 import CommentTagListActivityIndicator from '@/components/share-post/comment/atoms/loading/CommentTagListActivityIndicator';
 import CommentList from '@/components/share-post/comment/templates/CommentList';
-import useTag from '@/hooks/useTag';
+import useTagState from '@/hooks/useTagState';
 import TagTextInputProvider from '@/providers/TagTextInputProvider';
 
 const RenderItem = () => {
-    const { keyword } = useTag();
+    const { keyword } = useTagState();
 
     if (keyword === null) {
         return (

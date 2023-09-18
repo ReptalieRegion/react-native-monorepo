@@ -32,7 +32,7 @@ const useCreatePost = ({ onSuccess }: UseCreatePostProps) => {
     const queryClient = useQueryClient();
 
     return useMutation<CreatePostResponse, any, CreatePostRequest>({
-        mutationFn: ({ contents, files }) => createPost({ contents, files }),
+        mutationFn: ({ contents, selectedPhotos }) => createPost({ contents, selectedPhotos }),
         onSuccess: (data) => {
             updateSharePostListCache({ queryClient, data });
             onSuccess();

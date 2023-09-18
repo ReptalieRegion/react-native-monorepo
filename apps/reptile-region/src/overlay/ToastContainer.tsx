@@ -23,7 +23,6 @@ const screenWidth = Dimensions.get('screen').width;
 const toastWidth = screenWidth * 0.95;
 
 const ToastContainer = ({ text, containerStyle, textStyle }: ToastContainerProps) => {
-    console.log(text, containerStyle, textStyle);
     const { top } = useSafeAreaInsets();
     const translateY = useSharedValue(0);
     const translateX = useSharedValue(0);

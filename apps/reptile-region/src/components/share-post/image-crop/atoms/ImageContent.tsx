@@ -106,6 +106,8 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
                     recyclingKey={item.node.image.uri}
                     style={[styles.image, imageStyles, { height: imageWidth, width: imageWidth }]}
                     source={{ uri: item.node.image.uri }}
+                    contentFit="cover"
+                    placeholderContentFit="cover"
                     placeholder={require('@/assets/images/default_image.png')}
                 />
             </View>

@@ -10,13 +10,14 @@ declare module '<TagTextInput>' {
     type TagState = {
         contentsInfo: {
             contents: string;
-            selection: Selection | null;
+            selection: Selection;
         };
         taggingInfo: TaggingInfo[] | null;
         searchInfo: {
             keyword: string | null;
             selection: Selection | null;
         };
+        moveSelection: Selection | null;
     };
 
     interface TagActions {

@@ -1,26 +1,25 @@
 import { useRoute } from '@react-navigation/native';
 import { FlashList, ListRenderItem } from '@shopify/flash-list';
 import { color } from 'design-system';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import CommentReplyBaseRenderItem from '../organisms/CommentReplyRenderItem';
 import CommentReplyRenderItem from '../organisms/CommentReplyRenderItem';
 
 import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
 import { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
-import CustomRefreshControl from '@/components/common/loading/CustomRefreshControl';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 
 const CommentReplyList = () => {
     const flashListRef = useRef<FlashList<SharePostCommentReplyData>>(null);
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'reply'>>();
     const { comment } = params;
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, remove, refetch } = useInfiniteCommentReply({
+    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteCommentReply({
         commentId: comment.id,
     });
+    const [refreshing, setRefreshing] = useState<boolean>(false);
 
     const newData = useMemo(() => {
         if (data?.pages) {
@@ -29,15 +28,8 @@ const CommentReplyList = () => {
     }, [data?.pages, params]);
 
     const renderItem: ListRenderItem<SharePostCommentReplyData> = useCallback((props) => {
-        if (props.index === 0) {
-            return (
-                <View style={styles.comment}>
-                    <CommentReplyBaseRenderItem comment={props.item.comment} user={props.item.user} />
-                </View>
-            );
-        }
         return (
-            <View style={styles.renderItemContainer}>
+            <View style={props.index === 0 ? styles.comment : styles.renderItemContainer}>
                 <CommentReplyRenderItem comment={props.item.comment} user={props.item.user} />
             </View>
         );
@@ -52,14 +44,10 @@ const CommentReplyList = () => {
     }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
     const asyncOnRefresh = useCallback(async () => {
+        setRefreshing(true);
         await refetch();
+        setRefreshing(false);
     }, [refetch]);
-
-    useEffect(() => {
-        return () => {
-            remove();
-        };
-    }, [remove]);
 
     return (
         <View style={styles.container}>
@@ -68,7 +56,7 @@ const CommentReplyList = () => {
                     ref={flashListRef}
                     contentContainerStyle={contentContainerStyle}
                     data={newData}
-                    refreshControl={<CustomRefreshControl asyncOnRefresh={asyncOnRefresh} />}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
                     renderItem={renderItem}
                     scrollEventThrottle={16}
                     keyExtractor={keyExtractor}

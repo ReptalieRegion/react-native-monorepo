@@ -6,7 +6,7 @@ import CommentContents from '../molecules/CommentContents';
 
 import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
 import useDeleteCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useDeleteCommentReply';
-import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useUpdateCommentReply';
+import useTagAction from '@/hooks/useTagAction';
 
 type RenderItemProps = {
     user: SharePostCommentReplyData['user'];
@@ -15,15 +15,15 @@ type RenderItemProps = {
 };
 
 const CommentReplyRenderItem = ({ user, comment }: RenderItemProps) => {
-    const { mutate: updateCommentReplyMutate } = useUpdateCommentReply();
     const { mutate: deleteCommentReplyMutate } = useDeleteCommentReply();
+    const { handleChangeText } = useTagAction();
 
     const handleDeleteComment = () => {
         deleteCommentReplyMutate({ commentReplyId: comment.id });
     };
 
     const handleUpdateComment = () => {
-        updateCommentReplyMutate({ commentReplyId: comment.id, contents: comment.contents });
+        handleChangeText(comment.contents);
     };
 
     return (
@@ -31,7 +31,12 @@ const CommentReplyRenderItem = ({ user, comment }: RenderItemProps) => {
             <CommentAvatar uri={user.profile.src} nickname={user.nickname} />
             <View style={styles.commentItemContent}>
                 <CommentContents
-                    comment={{ contents: comment.contents, id: comment.id, isMine: comment.isMine }}
+                    comment={{
+                        contents: comment.contents,
+                        id: comment.id,
+                        isMine: comment.isMine,
+                        isModified: comment.isModified,
+                    }}
                     user={{ nickname: user.nickname }}
                     deleteComment={handleDeleteComment}
                     updateComment={handleUpdateComment}

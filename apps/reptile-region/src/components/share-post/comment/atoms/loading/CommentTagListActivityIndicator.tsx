@@ -2,10 +2,10 @@ import { color } from 'design-system';
 import React from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
-import useTag from '@/hooks/useTag';
+import useTagState from '@/hooks/useTagState';
 
 const CommentTagListActivityIndicator = () => {
-    const { keyword } = useTag();
+    const { keyword } = useTagState();
     return (
         <View style={styles.container}>
             <ActivityIndicator />

@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useState } from 'react';
+import React, { ReactNode, useCallback, useRef, useState } from 'react';
 
 import { Selection, TagState, TaggingInfo } from '<TagTextInput>';
 import { INITIAL_TAG_INFO } from '@/constants/tagTextInput';
@@ -22,13 +22,17 @@ const setTaggingInfo = (state: TagState): TagState => {
     }
 
     for (const { keyword, selection } of tagSelection) {
-        const isTagSelection = selection.start <= currentSelection.start && currentSelection.end <= selection.end;
+        const position = currentSelection.start;
+        const isTagSelection = selection.start <= position && position <= selection.end;
         if (isTagSelection) {
             return {
                 ...state,
                 searchInfo: {
                     keyword,
-                    selection,
+                    selection: {
+                        start: selection.start,
+                        end: selection.end,
+                    },
                 },
             };
         }
@@ -39,22 +43,23 @@ const setTaggingInfo = (state: TagState): TagState => {
 
 const changeContents = (state: TagState, text: string): TagState => {
     let currentOffset = 0;
-    const newTagSelection = text.split(' ').reduce<TaggingInfo[]>((prev, word) => {
-        if (word.startsWith('@')) {
-            prev.push({
-                keyword: word,
-                selection: {
-                    start: currentOffset + 1,
-                    end: currentOffset + word.length,
-                },
-            });
-        }
+    const newTagSelection = text
+        .split('\n')
+        .flatMap((value) => value.split(' '))
+        .reduce<TaggingInfo[]>((prev, word) => {
+            if (word.startsWith('@')) {
+                prev.push({
+                    keyword: word,
+                    selection: {
+                        start: currentOffset + 1,
+                        end: currentOffset + word.length,
+                    },
+                });
+            }
 
-        currentOffset += word.length + 1;
-        return prev;
-    }, []);
-
-    console.log(newTagSelection);
+            currentOffset += word.length + 1;
+            return prev;
+        }, []);
 
     const newSate = {
         ...state,
@@ -80,16 +85,16 @@ const onPressTag = (state: TagState, nickname: string): TagState => {
     }
 
     const contents = state.contentsInfo.contents;
-    const newContents = contents.slice(0, selection.start) + nickname + contents.slice(selection.end, contents.length);
+    const prefix = contents.slice(0, selection.start);
+    const suffix = contents.slice(selection.end, contents.length);
+    const newNickname = suffix.startsWith(' ') ? nickname : nickname + ' ';
+    const newContents = prefix + newNickname + suffix;
+
     return {
         ...state,
         contentsInfo: {
             ...state.contentsInfo,
             contents: newContents,
-        },
-        searchInfo: {
-            keyword: null,
-            selection: null,
         },
     };
 };
@@ -97,16 +102,55 @@ const onPressTag = (state: TagState, nickname: string): TagState => {
 const TagTextInputProvider = ({ children }: { children: ReactNode }) => {
     const [tagInfo, setTagInfo] = useState<TagState>(INITIAL_TAG_INFO);
 
+    const moveSelection = useRef<Selection | null>(null);
+
     const handleChangeText = useCallback((text: string) => {
         setTagInfo((state) => changeContents(state, text));
+        const currentMoveSelection = moveSelection.current;
+        if (currentMoveSelection !== null) {
+            console.log('change', currentMoveSelection);
+            setTagInfo((state) => ({
+                ...state,
+                contentsInfo: {
+                    ...state.contentsInfo,
+                    selection: currentMoveSelection,
+                },
+                searchInfo: {
+                    keyword: null,
+                    selection: null,
+                },
+            }));
+
+            setTimeout(() => {
+                moveSelection.current = null;
+            }, 500);
+        }
     }, []);
 
     const handleChangeSelection = useCallback((selection: Selection) => {
+        console.log(new Date());
+        if (moveSelection.current !== null) {
+            return;
+        }
+
+        console.log('selection', selection);
+
         setTagInfo((state) => changeSelection(state, selection));
     }, []);
 
     const handleSelectTag = useCallback((nickname: string) => {
-        setTagInfo((state) => onPressTag(state, nickname));
+        setTagInfo((state) => {
+            const selection = state.searchInfo.selection;
+            if (selection !== null) {
+                const position = selection.start + nickname.length + 1;
+                moveSelection.current = {
+                    start: position,
+                    end: position,
+                };
+            }
+
+            return onPressTag(state, nickname);
+        });
     }, []);
 
     return (

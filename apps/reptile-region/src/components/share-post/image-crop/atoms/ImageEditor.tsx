@@ -15,6 +15,7 @@ const ImageEditor = () => {
             style={styles.selectImage}
             source={{ uri: currentSelectedPhoto?.node.image.uri }}
             contentFit="cover"
+            placeholderContentFit="cover"
             placeholder={require('@/assets/images/default_image.png')}
         />
     );

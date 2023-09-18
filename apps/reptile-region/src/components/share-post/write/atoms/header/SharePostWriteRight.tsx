@@ -23,12 +23,7 @@ const SharePostWriteRightHeader = () => {
             return;
         }
 
-        const files = selectedPhotos.map((photo) => ({
-            uri: photo.node.image.uri,
-            name: photo.node.image.filename ?? '',
-            type: 'image/jpeg',
-        }));
-        mutate({ contents, files });
+        mutate({ contents, selectedPhotos });
     };
 
     return (
