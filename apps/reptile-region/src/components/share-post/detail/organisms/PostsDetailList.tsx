@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import React, { useCallback, useMemo } from 'react';
 import { Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
@@ -6,17 +7,18 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ListFooterLoading from '../../../common/loading/ListFooterComponent';
 import SquareImage from '../atoms/SquareImage';
 
-import { SharePostListUserDetailData } from '<SharePostAPI>';
-import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
+import UserDetailPanel from './UserDetailPanel';
 
-type SharePostsDetailListProps = {
-    nickname: string;
-};
+import { SharePostListUserDetailData } from '<SharePostAPI>';
+import { SharePostRouteProp } from '<SharePostRoutes>';
+import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 
 const NUM_COLUMNS = 3;
 const DefaultPaddingBottom = 10;
 
-const SharePostsDetailList = ({ nickname }: SharePostsDetailListProps) => {
+const SharePostsDetailList = () => {
+    const route = useRoute<SharePostRouteProp<'share-post/detail'>>();
+    const nickname = route.params.nickname;
     const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteUserPosts({ nickname });
     const { bottom } = useSafeAreaInsets();
     const { width } = useWindowDimensions();
@@ -30,6 +32,7 @@ const SharePostsDetailList = ({ nickname }: SharePostsDetailListProps) => {
         [itemWidth],
     );
     const ListFooterComponent = useCallback(() => <ListFooterLoading isLoading={isFetchingNextPage} />, [isFetchingNextPage]);
+    const ListHeaderComponent = useCallback(() => <UserDetailPanel nickname={nickname} />, [nickname]);
     const onEndReached = useCallback(
         () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
         [fetchNextPage, hasNextPage, isFetchingNextPage],
@@ -50,8 +53,9 @@ const SharePostsDetailList = ({ nickname }: SharePostsDetailListProps) => {
                 keyExtractor={(item, index) => item.post.images[0].src + index}
                 numColumns={NUM_COLUMNS}
                 estimatedItemSize={itemWidth}
-                onEndReached={onEndReached}
+                ListHeaderComponent={ListHeaderComponent}
                 ListFooterComponent={ListFooterComponent}
+                onEndReached={onEndReached}
             />
         </View>
     );

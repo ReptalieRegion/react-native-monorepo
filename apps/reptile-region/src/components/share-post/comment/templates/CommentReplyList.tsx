@@ -1,9 +1,8 @@
 import { useRoute } from '@react-navigation/native';
 import { FlashList, ListRenderItem } from '@shopify/flash-list';
 import { color } from 'design-system';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { RefreshControl, StyleSheet, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { useCallback, useMemo, useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import CommentReplyRenderItem from '../organisms/CommentReplyRenderItem';
 
@@ -15,73 +14,55 @@ import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 const CommentReplyList = () => {
     const flashListRef = useRef<FlashList<SharePostCommentReplyData>>(null);
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'reply'>>();
-    const { comment } = params;
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteCommentReply({
-        commentId: comment.id,
-    });
-    const [refreshing, setRefreshing] = useState<boolean>(false);
+    const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteCommentReply({ commentId: params.comment.id });
 
-    const newData = useMemo(() => {
-        if (data?.pages) {
-            return [params, ...data.pages.flatMap((page) => page.items)];
-        }
-    }, [data?.pages, params]);
+    const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
+
+    const keyExtractor = useCallback((item: SharePostCommentReplyData) => item.comment.id, []);
 
     const renderItem: ListRenderItem<SharePostCommentReplyData> = useCallback((props) => {
         return (
-            <View style={props.index === 0 ? styles.comment : styles.renderItemContainer}>
+            <View style={styles.renderItemContainer}>
                 <CommentReplyRenderItem comment={props.item.comment} user={props.item.user} />
             </View>
         );
     }, []);
 
-    const keyExtractor = useCallback((item: SharePostCommentReplyData) => item.comment.id, []);
+    const ListHeaderComponent = useCallback(
+        () => <CommentReplyRenderItem comment={params.comment} user={params.user} />,
+        [params],
+    );
 
-    const onEndReached = useCallback(() => {
-        if (hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-        }
-    }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
-
-    const asyncOnRefresh = useCallback(async () => {
-        setRefreshing(true);
-        await refetch();
-        setRefreshing(false);
-    }, [refetch]);
+    const onEndReached = useCallback(
+        () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
+        [fetchNextPage, hasNextPage, isFetchingNextPage],
+    );
 
     return (
         <View style={styles.container}>
-            <View style={styles.flatContainer}>
-                <FlashList
-                    ref={flashListRef}
-                    contentContainerStyle={contentContainerStyle}
-                    data={newData}
-                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
-                    renderItem={renderItem}
-                    scrollEventThrottle={16}
-                    keyExtractor={keyExtractor}
-                    onEndReached={onEndReached}
-                    renderScrollComponent={ScrollView}
-                    estimatedItemSize={110}
-                    ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-                />
-            </View>
+            <FlashList
+                ref={flashListRef}
+                data={newData}
+                keyExtractor={keyExtractor}
+                renderItem={renderItem}
+                onEndReached={onEndReached}
+                estimatedItemSize={110}
+                scrollEventThrottle={16}
+                ListHeaderComponent={ListHeaderComponent}
+                ListHeaderComponentStyle={styles.comment}
+                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+            />
         </View>
     );
 };
 
-const contentContainerStyle = {};
-
 const styles = StyleSheet.create({
-    flatContainer: {
+    container: {
         flex: 1,
     },
     renderItemContainer: {
         paddingLeft: 60,
         paddingRight: 20,
-    },
-    container: {
-        flex: 1,
     },
     comment: {
         paddingLeft: 20,

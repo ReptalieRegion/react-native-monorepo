@@ -14,11 +14,7 @@ import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 const CommentFlashList = () => {
     const flashListRef = useRef<FlashList<SharePostCommentData>>(null);
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'main'>>();
-    const {
-        post: { id: postId },
-    } = params;
-
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteComment({ postId });
+    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteComment({ postId: params.post.id });
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
     const renderItem: ListRenderItem<SharePostCommentData> = useCallback((props) => {

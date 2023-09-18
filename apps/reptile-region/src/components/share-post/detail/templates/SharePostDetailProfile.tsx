@@ -1,21 +1,13 @@
-import { useRoute } from '@react-navigation/native';
 import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import SharePostsDetailList from '../organisms/PostsDetailList';
-import UserDetailPanel from '../organisms/UserDetailPanel';
-
-import { SharePostRouteProp } from '<SharePostRoutes>';
 
 const SharePostDetailProfile = () => {
-    const route = useRoute<SharePostRouteProp<'share-post/detail'>>();
-    const nickname = route.params.nickname;
-
     return (
         <View style={styles.container}>
-            <UserDetailPanel nickname={nickname} />
-            <SharePostsDetailList nickname={nickname} />
+            <SharePostsDetailList />
         </View>
     );
 };
