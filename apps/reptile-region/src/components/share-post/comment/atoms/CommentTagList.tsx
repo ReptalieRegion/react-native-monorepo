@@ -36,11 +36,10 @@ const CommentTagList = () => {
         },
         [handleSelectTag],
     );
-    const onEndReached = useCallback(() => {
-        if (hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-        }
-    }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+    const onEndReached = useCallback(
+        () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
+        [fetchNextPage, hasNextPage, isFetchingNextPage],
+    );
 
     return (
         <View style={styles.container}>

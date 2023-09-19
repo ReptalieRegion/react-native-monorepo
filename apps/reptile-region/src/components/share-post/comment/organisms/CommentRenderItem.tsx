@@ -9,7 +9,7 @@ import CommentContents from '../molecules/CommentContents';
 import type { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentBottomSheetNavigationProp } from '<SharePostRoutes>';
 import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
-import ConditionalRendererWithNull from '@/components/common/element/ConditionalRendererWithNull';
+import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 import Avatar from '@/components/common/fast-image/Avatar';
 import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 import useTagAction from '@/hooks/useTagAction';
@@ -20,16 +20,16 @@ type RenderItemProps = {
 };
 
 const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
-    const { handleChangeText } = useTagAction();
     const navigation = useNavigation<SharePostCommentBottomSheetNavigationProp<'main'>>();
     const { navigationModalDetail } = useCommentNavigation();
-    const { mutate: deleteCommentMutate } = useDeleteComment();
+    const { mutate } = useDeleteComment();
+    const { handleChangeText } = useTagAction();
 
     const navigateCommentReply = useCallback(
         (commentingActive: boolean) => navigation.navigate('reply', { comment, user, commentingActive }),
         [navigation, comment, user],
     );
-    const deleteComment = useCallback(() => deleteCommentMutate({ commentId: comment.id }), [comment.id, deleteCommentMutate]);
+    const deleteComment = useCallback(() => mutate({ commentId: comment.id }), [comment.id, mutate]);
     const updateComment = useCallback(() => handleChangeText(comment.contents), [comment.contents, handleChangeText]);
 
     const actionButtons = useMemo<ActionButton[]>(
@@ -79,13 +79,17 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
                     user={{ nickname: user.nickname }}
                     actionButtons={actionButtons}
                 />
-                <ConditionalRendererWithNull condition={comment.replyCount !== 0}>
-                    <View style={styles.container}>
-                        <TouchableTypo variant="body4" color="secondary" onPress={() => navigateCommentReply(false)}>
-                            답글 {comment.replyCount}개보기
-                        </TouchableTypo>
-                    </View>
-                </ConditionalRendererWithNull>
+                <ConditionalRenderer
+                    condition={comment.replyCount !== 0}
+                    trueContent={
+                        <View style={styles.container}>
+                            <TouchableTypo variant="body4" color="secondary" onPress={() => navigateCommentReply(false)}>
+                                답글 {comment.replyCount}개보기
+                            </TouchableTypo>
+                        </View>
+                    }
+                    falseContent={null}
+                />
             </View>
         </View>
     );

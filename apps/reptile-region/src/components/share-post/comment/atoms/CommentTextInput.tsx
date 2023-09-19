@@ -17,9 +17,7 @@ const CommentTextInput = ({ onSubmit }: CommentTextInputProps) => {
     const { contents, currentSelection } = useTagState();
     const { handleChangeSelection, handleChangeText } = useTagAction();
 
-    const handleSubmit = useCallback(() => {
-        onSubmit(contents);
-    }, [contents, onSubmit]);
+    const handleSubmit = useCallback(() => onSubmit(contents), [contents, onSubmit]);
 
     return (
         <View style={[styles.bottom]}>
@@ -72,11 +70,6 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         fontSize: 14,
         maxHeight: 84,
-    },
-    circle: {
-        width: 30,
-        height: 30,
-        borderRadius: 9999,
     },
 });
 

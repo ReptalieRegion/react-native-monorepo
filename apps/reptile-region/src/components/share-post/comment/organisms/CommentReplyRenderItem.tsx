@@ -17,13 +17,10 @@ type RenderItemProps = {
 
 const CommentReplyRenderItem = ({ user, comment }: RenderItemProps) => {
     const { navigationModalDetail } = useCommentNavigation();
-    const { mutate: deleteCommentReplyMutate } = useDeleteCommentReply();
+    const { mutate } = useDeleteCommentReply();
     const { handleChangeText } = useTagAction();
 
-    const deleteComment = useCallback(
-        () => deleteCommentReplyMutate({ commentReplyId: comment.id }),
-        [comment.id, deleteCommentReplyMutate],
-    );
+    const deleteComment = useCallback(() => mutate({ commentReplyId: comment.id }), [comment.id, mutate]);
 
     const updateComment = useCallback(() => handleChangeText(comment.contents), [comment.contents, handleChangeText]);
 

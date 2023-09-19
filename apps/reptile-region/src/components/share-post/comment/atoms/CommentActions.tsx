@@ -2,7 +2,7 @@ import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import ConditionalRendererWithNull from '@/components/common/element/ConditionalRendererWithNull';
+import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 
 export type ActionButton = {
     label: string;
@@ -23,11 +23,16 @@ const CommentActions = ({ actionButtons, isMine }: CommentActionsProps) => {
                 const condition = (showTarget === 'other' && !isMine) || (showTarget === 'owner' && isMine);
 
                 return (
-                    <ConditionalRendererWithNull key={label} condition={condition}>
-                        <TouchableTypo variant="body4" color="placeholder" onPress={onPress}>
-                            {label}
-                        </TouchableTypo>
-                    </ConditionalRendererWithNull>
+                    <ConditionalRenderer
+                        key={label}
+                        condition={condition}
+                        trueContent={
+                            <TouchableTypo variant="body4" color="placeholder" onPress={onPress}>
+                                {label}
+                            </TouchableTypo>
+                        }
+                        falseContent={null}
+                    />
                 );
             })}
         </View>

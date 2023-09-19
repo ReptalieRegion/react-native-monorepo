@@ -4,12 +4,10 @@ import { color } from 'design-system';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import CommentTextInput from '../atoms/CommentTextInput';
 import CommentReplyRenderItem from '../organisms/CommentReplyRenderItem';
 
 import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
 import { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
-import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 
@@ -17,7 +15,6 @@ const CommentReplyList = () => {
     const flashListRef = useRef<FlashList<SharePostCommentReplyData>>(null);
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'reply'>>();
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteCommentReply({ commentId: params.comment.id });
-    const { mutate } = useCreateCommentReply();
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
 
@@ -41,29 +38,21 @@ const CommentReplyList = () => {
         [fetchNextPage, hasNextPage, isFetchingNextPage],
     );
 
-    const handleCommentReplySubmit = useCallback(
-        (contents: string) => mutate({ contents, commentId: params.comment.id }),
-        [mutate, params.comment.id],
-    );
-
     return (
-        <>
-            <View style={styles.container}>
-                <FlashList
-                    ref={flashListRef}
-                    data={newData}
-                    keyExtractor={keyExtractor}
-                    renderItem={renderItem}
-                    onEndReached={onEndReached}
-                    estimatedItemSize={110}
-                    scrollEventThrottle={16}
-                    ListHeaderComponent={ListHeaderComponent}
-                    ListHeaderComponentStyle={styles.comment}
-                    ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-                />
-            </View>
-            <CommentTextInput onSubmit={handleCommentReplySubmit} />
-        </>
+        <View style={styles.container}>
+            <FlashList
+                ref={flashListRef}
+                data={newData}
+                keyExtractor={keyExtractor}
+                renderItem={renderItem}
+                onEndReached={onEndReached}
+                estimatedItemSize={110}
+                scrollEventThrottle={16}
+                ListHeaderComponent={ListHeaderComponent}
+                ListHeaderComponentStyle={styles.comment}
+                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+            />
+        </View>
     );
 };
 

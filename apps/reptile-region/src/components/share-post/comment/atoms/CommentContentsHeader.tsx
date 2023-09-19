@@ -3,7 +3,7 @@ import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import ConditionalRendererWithNull from '@/components/common/element/ConditionalRendererWithNull';
+import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 
 type CommentContentsHeaderProps = {
@@ -23,11 +23,15 @@ const CommentContentsHeader = ({ user, comment }: CommentContentsHeaderProps) =>
             <TouchableTypo variant="title4" onPress={() => navigationModalDetail(user.nickname)}>
                 {user.nickname}
             </TouchableTypo>
-            <ConditionalRendererWithNull condition={comment.isModified}>
-                <Typo variant="body5" color="placeholder">
-                    (수정됨)
-                </Typo>
-            </ConditionalRendererWithNull>
+            <ConditionalRenderer
+                condition={comment.isModified}
+                trueContent={
+                    <Typo variant="body5" color="placeholder">
+                        (수정됨)
+                    </Typo>
+                }
+                falseContent={null}
+            />
         </View>
     );
 };
