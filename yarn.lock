@@ -3240,9 +3240,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@shopify/flash-list@npm:1.5.0":
-  version: 1.5.0
-  resolution: "@shopify/flash-list@npm:1.5.0"
+"@shopify/flash-list@npm:^1.6.1":
+  version: 1.6.1
+  resolution: "@shopify/flash-list@npm:1.6.1"
   dependencies:
     recyclerlistview: 4.2.0
     tslib: 2.4.0
@@ -3250,7 +3250,7 @@ __metadata:
     "@babel/runtime": "*"
     react: "*"
     react-native: "*"
-  checksum: 0abe0651e4cd8c22784b57137b25791f5991374d324afffd7aef3d87bea2de603dddfcd340f1533ebeb1473e5f51b7b854fe0a60cccfdbd1fb9f89b59b50d9ec
+  checksum: cde67dc83738b0d4e48bc17328dedc521321fca0e466bd35f6f8f51b20c9cb06148022733bbf52e72f9a0a4201dfff6e89f0b781d7e2bd912844ca5362d0a850
   languageName: node
   linkType: hard
 
@@ -12009,7 +12009,7 @@ __metadata:
     "@react-navigation/native-stack": ^6.9.12
     "@react-navigation/stack": ^6.3.17
     "@reptalieregion/webview-bridge": 1.0.25
-    "@shopify/flash-list": 1.5.0
+    "@shopify/flash-list": ^1.6.1
     "@tanstack/react-query": ^4.32.0
     "@tsconfig/react-native": ^3.0.0
     "@types/jest": ^29.2.1
