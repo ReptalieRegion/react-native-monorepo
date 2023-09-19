@@ -1,7 +1,6 @@
 import { TextColorType } from 'design-system';
 import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React from 'react';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import * as Haptic from 'react-native-haptic-feedback';
 
 import type { SharePostListData } from '<SharePostAPI>';
@@ -40,11 +39,9 @@ const Follow = ({ user: { isFollow, id: userId } }: PostHeaderProps) => {
     const followInfo = makeFollowInfo(isFollow);
 
     return (
-        <TouchableWithoutFeedback onPress={handleClickFollow}>
-            <TouchableTypo variant="title5" color={followInfo.color}>
-                {followInfo.text}
-            </TouchableTypo>
-        </TouchableWithoutFeedback>
+        <TouchableTypo variant="title5" color={followInfo.color} onPress={handleClickFollow}>
+            {followInfo.text}
+        </TouchableTypo>
     );
 };
 

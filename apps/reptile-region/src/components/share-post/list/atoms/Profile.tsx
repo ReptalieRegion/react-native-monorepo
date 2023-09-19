@@ -2,8 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Typo } from 'design-system';
 import { Image } from 'expo-image';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import type { SharePostListData } from '<SharePostAPI>';
 import { SharePostNavigationProp } from '<SharePostRoutes>';
@@ -22,7 +21,7 @@ const Profile = ({ user }: ProfileProps) => {
     };
 
     return (
-        <TouchableWithoutFeedback onPress={gotoDetailPage}>
+        <TouchableOpacity onPress={gotoDetailPage} activeOpacity={0.3}>
             <View style={styles.container}>
                 <Image
                     style={styles.image}
@@ -34,7 +33,7 @@ const Profile = ({ user }: ProfileProps) => {
                 />
                 <Typo variant="title5">{user.nickname}</Typo>
             </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
     );
 };
 
