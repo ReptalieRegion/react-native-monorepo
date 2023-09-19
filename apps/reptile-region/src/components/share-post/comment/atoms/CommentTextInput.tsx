@@ -1,56 +1,38 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { color } from 'design-system';
 import { TouchableTypo } from 'design-system';
-import React, { useRef } from 'react';
+import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
-import { SharePostCommentBottomSheetParamList, SharePostCommentProps, SharePostCommentReplyProps } from '<SharePostRoutes>';
-import useCreateComment from '@/apis/share-post/comment/hooks/mutations/useCreateComment';
-import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
 import useTagAction from '@/hooks/useTagAction';
 import useTagState from '@/hooks/useTagState';
 
+type CommentTextInputProps = {
+    onSubmit: (contents: string) => void;
+};
+
 const MAX_CHARACTER_COUNT = 500;
 
-const CommentTextInput = () => {
-    const ref = useRef<TextInput>(null);
+const CommentTextInput = ({ onSubmit }: CommentTextInputProps) => {
     const { contents, currentSelection } = useTagState();
-
     const { handleChangeSelection, handleChangeText } = useTagAction();
-    const { name, params } = useRoute<RouteProp<SharePostCommentBottomSheetParamList>>();
 
-    const { mutate: commentMutate } = useCreateComment();
-    const { mutate: commentReplyMutate } = useCreateCommentReply();
-
-    const handleSubmit = () => {
-        switch (name) {
-            case 'main':
-                const { post } = params as SharePostCommentProps;
-                commentMutate({ contents, postId: post.id });
-                break;
-            case 'reply':
-                const { comment } = params as SharePostCommentReplyProps;
-                commentReplyMutate({ contents, commentId: comment.id });
-                break;
-        }
-    };
+    const handleSubmit = useCallback(() => {
+        onSubmit(contents);
+    }, [contents, onSubmit]);
 
     return (
         <View style={[styles.bottom]}>
             <View style={styles.textInputContainer}>
                 <TextInput
                     selection={currentSelection}
-                    ref={ref}
                     value={contents}
                     style={styles.textInput}
                     numberOfLines={4}
                     placeholder="댓글을 입력하세요..."
                     maxLength={MAX_CHARACTER_COUNT}
                     onChangeText={handleChangeText}
-                    onSelectionChange={(event) => {
-                        handleChangeSelection(event.nativeEvent.selection);
-                    }}
+                    onSelectionChange={(event) => handleChangeSelection(event.nativeEvent.selection)}
                     multiline
                 />
                 <TouchableTypo variant="body2" color="primary" onPress={handleSubmit}>

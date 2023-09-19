@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 
 import CommentTagList from '@/components/share-post/comment/atoms/CommentTagList';
-import CommentTextInput from '@/components/share-post/comment/atoms/CommentTextInput';
 import CommentSkeleton from '@/components/share-post/comment/atoms/loading/CommentSkeleton';
 import CommentTagListActivityIndicator from '@/components/share-post/comment/atoms/loading/CommentTagListActivityIndicator';
 import CommentList from '@/components/share-post/comment/templates/CommentList';
@@ -30,7 +29,6 @@ const CommentPage = () => {
     return (
         <TagTextInputProvider>
             <RenderItem />
-            <CommentTextInput />
         </TagTextInputProvider>
     );
 };

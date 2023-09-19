@@ -26,7 +26,7 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
     const { mutate: deleteCommentMutate } = useDeleteComment();
 
     const navigateCommentReply = useCallback(
-        () => navigation.navigate('reply', { comment, user }),
+        (commentingActive: boolean) => navigation.navigate('reply', { comment, user, commentingActive }),
         [navigation, comment, user],
     );
     const deleteComment = useCallback(() => deleteCommentMutate({ commentId: comment.id }), [comment.id, deleteCommentMutate]);
@@ -47,7 +47,7 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
             {
                 label: '댓글 쓰기',
                 showTarget: 'other',
-                onPress: navigateCommentReply,
+                onPress: () => navigateCommentReply(true),
             },
             {
                 label: '신고',
@@ -81,7 +81,7 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
                 />
                 <ConditionalRendererWithNull condition={comment.replyCount !== 0}>
                     <View style={styles.container}>
-                        <TouchableTypo variant="body4" color="secondary" onPress={navigateCommentReply}>
+                        <TouchableTypo variant="body4" color="secondary" onPress={() => navigateCommentReply(false)}>
                             답글 {comment.replyCount}개보기
                         </TouchableTypo>
                     </View>

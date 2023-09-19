@@ -41,6 +41,7 @@ declare module '<SharePostRoutes>' {
             isMine: boolean;
             isModified: boolean;
         };
+        commentingActive?: boolean;
     };
 
     type SharePostCommentBottomSheetParamList = {

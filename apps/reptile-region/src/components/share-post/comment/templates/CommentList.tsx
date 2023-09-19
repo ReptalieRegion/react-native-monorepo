@@ -4,18 +4,21 @@ import React, { useCallback, useRef, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import CommentTextInput from '../atoms/CommentTextInput';
 import CommentRenderItem from '../organisms/CommentRenderItem';
 
 import type { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
+import useCreateComment from '@/apis/share-post/comment/hooks/mutations/useCreateComment';
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 
 const CommentFlashList = () => {
-    const flashListRef = useRef<FlashList<SharePostCommentData>>(null);
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'main'>>();
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteComment({ postId: params.post.id });
+    const flashListRef = useRef<FlashList<SharePostCommentData>>(null);
     const [refreshing, setRefreshing] = useState<boolean>(false);
+    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteComment({ postId: params.post.id });
+    const { mutate } = useCreateComment();
 
     const renderItem: ListRenderItem<SharePostCommentData> = useCallback((props) => {
         return <CommentRenderItem comment={props.item.comment} user={props.item.user} />;
@@ -34,22 +37,30 @@ const CommentFlashList = () => {
         setRefreshing(false);
     }, [refetch]);
 
+    const handleCommentSubmit = useCallback(
+        (contents: string) => mutate({ contents, postId: params.post.id }),
+        [mutate, params.post.id],
+    );
+
     return (
-        <View style={styles.container}>
-            <FlashList
-                ref={flashListRef}
-                contentContainerStyle={contentContainerStyle}
-                data={data?.pages.flatMap((page) => page.items)}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
-                renderItem={renderItem}
-                scrollEventThrottle={16}
-                keyExtractor={keyExtractor}
-                onEndReached={onEndReached}
-                renderScrollComponent={ScrollView}
-                estimatedItemSize={110}
-                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-            />
-        </View>
+        <>
+            <View style={styles.container}>
+                <FlashList
+                    ref={flashListRef}
+                    contentContainerStyle={contentContainerStyle}
+                    data={data?.pages.flatMap((page) => page.items)}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
+                    renderItem={renderItem}
+                    scrollEventThrottle={16}
+                    keyExtractor={keyExtractor}
+                    onEndReached={onEndReached}
+                    renderScrollComponent={ScrollView}
+                    estimatedItemSize={110}
+                    ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+                />
+            </View>
+            <CommentTextInput onSubmit={handleCommentSubmit} />
+        </>
     );
 };
 
