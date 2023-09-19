@@ -29,19 +29,34 @@ const BottomTabBarButton = ({
 }) => {
     const scaleX = useSharedValue(1);
     const scaleY = useSharedValue(1);
+    const scale = useSharedValue(1);
+    const translateY = useSharedValue(0);
 
-    const animatedStyle = useAnimatedStyle(() => ({
+    const iconAnimatedStyle = useAnimatedStyle(() => ({
         transform: [{ scaleX: scaleX.value }, { scaleY: scaleY.value }],
+    }));
+
+    const textAnimatedStyle = useAnimatedStyle(() => ({
+        transform: [{ scale: scale.value }, { translateY: translateY.value }],
     }));
 
     const handlePressInIcon = () => {
         scaleX.value = withTiming(0.9, userConfig);
         scaleY.value = withTiming(0.9, userConfig);
+        scale.value = withTiming(0.9, userConfig);
+        translateY.value = withTiming(-2, userConfig);
     };
 
     const handlePressOutIcon = () => {
-        scaleX.value = withSequence(withTiming(1.25, userConfig), withTiming(1.0, userConfig));
+        scaleX.value = withSequence(
+            withTiming(1.2, userConfig),
+            withTiming(1.1, userConfig),
+            withTiming(1.15, userConfig),
+            withTiming(1.0, userConfig),
+        );
         scaleY.value = withSequence(withTiming(1.15, userConfig), withTiming(1.0, userConfig));
+        scale.value = withTiming(1, userConfig);
+        translateY.value = withTiming(0, userConfig);
     };
 
     return (
@@ -54,12 +69,14 @@ const BottomTabBarButton = ({
                 containerStyle={styles.touchContainer}
             >
                 <View style={styles.icon}>
-                    <Animated.View style={animatedStyle}>
-                        <Icon fill={isFocused ? color.Teal[250].toString() : undefined} />
+                    <Animated.View style={iconAnimatedStyle}>
+                        <Icon fill={isFocused ? color.Green[700].toString() : undefined} />
                     </Animated.View>
-                    <View style={styles.textContainer}>
-                        <Typo variant="body5">{name}</Typo>
-                    </View>
+                    <Animated.View style={textAnimatedStyle}>
+                        <View style={styles.textContainer}>
+                            <Typo variant="body5">{name}</Typo>
+                        </View>
+                    </Animated.View>
                 </View>
             </TouchableWithoutFeedback>
         </View>
@@ -87,7 +104,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     textContainer: {
-        marginTop: 6,
+        marginTop: 4,
     },
 });
 
