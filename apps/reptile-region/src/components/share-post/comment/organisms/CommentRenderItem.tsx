@@ -4,7 +4,6 @@ import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ActionButton } from '../atoms/CommentActions';
-import CommentReplyButton from '../atoms/CommentReplyButton';
 import CommentContents from '../molecules/CommentContents';
 
 import type { SharePostCommentData } from '<SharePostCommentAPI>';
@@ -87,7 +86,6 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
                         </TouchableTypo>
                     </View>
                 </ConditionalRendererWithNull>
-                <CommentReplyButton onPress={navigateCommentReply} replyCount={comment.replyCount} />
             </View>
         </View>
     );
