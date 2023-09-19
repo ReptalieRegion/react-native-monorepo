@@ -1,10 +1,11 @@
+import { Typo } from 'design-system';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 
 const HomeListPage = () => {
     return (
         <View>
-            <Text>HomeListPage</Text>
+            <Typo variant="body2">HomeListPage</Typo>
         </View>
     );
 };

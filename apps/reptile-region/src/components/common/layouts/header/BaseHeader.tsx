@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { color } from 'design-system';
+import { Typo, color } from 'design-system';
 import React, { ReactNode } from 'react';
-import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, View, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import type { IconFunction } from '<Icon>';
@@ -52,8 +52,8 @@ const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerSty
                 <TouchableOpacity onPress={handleBackButtonClick}>
                     <Icon width={30} height={30} />
                 </TouchableOpacity>
-                <Text style={[styles.title, customStyles.title]}>{title}</Text>
-                <View style={[styles.right]}>{typeof right === 'string' ? <Text>{right}</Text> : right}</View>
+                <Typo variant="title3">{title}</Typo>
+                <View style={[styles.right]}>{typeof right === 'string' ? <Typo>{right}</Typo> : right}</View>
             </View>
         </>
     );
@@ -76,11 +76,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         minWidth: 30,
-        minHeight: 30,
-    },
-    title: {
-        fontSize: 17,
-        fontWeight: '600',
     },
 });
 

@@ -1,6 +1,6 @@
-import { color } from 'design-system';
+import { Typo, color } from 'design-system';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, {
     WithTimingConfig,
@@ -57,7 +57,9 @@ const BottomTabBarButton = ({
                     <Animated.View style={animatedStyle}>
                         <Icon fill={isFocused ? color.Teal[250].toString() : undefined} />
                     </Animated.View>
-                    <Text style={styles.text}>{name}</Text>
+                    <View style={styles.textContainer}>
+                        <Typo variant="body5">{name}</Typo>
+                    </View>
                 </View>
             </TouchableWithoutFeedback>
         </View>
@@ -84,8 +86,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    text: {
-        fontSize: 10,
+    textContainer: {
         marginTop: 6,
     },
 });

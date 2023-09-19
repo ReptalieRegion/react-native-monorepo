@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
-import { color } from 'design-system';
+import { Typo } from 'design-system';
+import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, View } from 'react-native';
 
 import { SharePostNavigationProp } from '<SharePostRoutes>';
 
@@ -22,12 +22,16 @@ const CommentContentsHeader = ({ user, comment }: CommentContentsHeaderProps) =>
     };
 
     return (
-        <TouchableOpacity onPress={handleProfileClick}>
-            <View style={styles.container}>
-                <Text style={styles.nickname}>{user.nickname}</Text>
-                {comment.isModified ? <Text style={styles.modify}>(수정됨)</Text> : null}
-            </View>
-        </TouchableOpacity>
+        <View style={styles.container}>
+            <TouchableTypo variant="title4" onPress={handleProfileClick}>
+                {user.nickname}
+            </TouchableTypo>
+            {comment.isModified ? (
+                <Typo variant="body5" color="placeholder">
+                    (수정됨)
+                </Typo>
+            ) : null}
+        </View>
     );
 };
 
@@ -36,13 +40,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,
-    },
-    nickname: {
-        fontWeight: '500',
-    },
-    modify: {
-        fontSize: 10,
-        color: color.Gray[500].toString(),
     },
 });
 

@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
+import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React from 'react';
-import { Text, View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { View } from 'react-native';
 
 import { MyNavigationProp } from '<MyRoutes>';
 
@@ -13,9 +13,7 @@ const MyListPage = () => {
 
     return (
         <View>
-            <TouchableWithoutFeedback onPress={navigateSignIn}>
-                <Text>MyListPage</Text>
-            </TouchableWithoutFeedback>
+            <TouchableTypo onPress={navigateSignIn}>MyListPage</TouchableTypo>
         </View>
     );
 };

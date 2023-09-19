@@ -1,7 +1,8 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { color } from 'design-system';
+import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React, { useRef } from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 import { SharePostCommentBottomSheetParamList, SharePostCommentProps, SharePostCommentReplyProps } from '<SharePostRoutes>';
@@ -52,9 +53,9 @@ const CommentTextInput = () => {
                     }}
                     multiline
                 />
-                <TouchableOpacity onPress={handleSubmit}>
-                    <Text style={styles.submit}>등록</Text>
-                </TouchableOpacity>
+                <TouchableTypo variant="body2" color="primary" onPress={handleSubmit}>
+                    등록
+                </TouchableTypo>
             </View>
         </View>
     );
@@ -89,9 +90,6 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         fontSize: 14,
         maxHeight: 84,
-    },
-    submit: {
-        color: color.Green['750'].toString(),
     },
     circle: {
         width: 30,

@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
+import { Typo } from 'design-system';
 import { Image } from 'expo-image';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import type { SharePostListData } from '<SharePostAPI>';
@@ -31,7 +32,7 @@ const Profile = ({ user }: ProfileProps) => {
                     priority="high"
                     contentFit="cover"
                 />
-                <Text>{user.nickname}</Text>
+                <Typo variant="title5">{user.nickname}</Typo>
             </View>
         </TouchableWithoutFeedback>
     );

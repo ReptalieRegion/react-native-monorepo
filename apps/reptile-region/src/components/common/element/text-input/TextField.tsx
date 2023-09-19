@@ -1,6 +1,6 @@
-import { color } from 'design-system';
+import { Typo, color } from 'design-system';
 import React, { useEffect, useRef } from 'react';
-import { ColorValue, DimensionValue, Platform, StyleSheet, Text, TextInputProps, View } from 'react-native';
+import { ColorValue, DimensionValue, Platform, StyleSheet, TextInputProps, View } from 'react-native';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { Easing, WithTimingConfig, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
@@ -169,7 +169,11 @@ const TextField = ({
                     <Animated.Text style={[labelTextAnimated]}>{label}</Animated.Text>
                 </TouchableWithoutFeedback>
             </Animated.View>
-            <Text style={[styles.errorMessage, { paddingHorizontal, color: errorMessColor }]}>{errorMessage}</Text>
+            <View style={[styles.error, { paddingHorizontal }]}>
+                <Typo variant="body4" color="error">
+                    {errorMessage}
+                </Typo>
+            </View>
         </View>
     );
 };
@@ -185,9 +189,8 @@ const styles = StyleSheet.create({
     textInput: {
         padding: 0,
     },
-    errorMessage: {
+    error: {
         marginTop: 5,
-        fontSize: 12,
     },
 });
 

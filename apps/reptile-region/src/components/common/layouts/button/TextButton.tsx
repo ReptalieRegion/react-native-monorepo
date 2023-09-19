@@ -1,61 +1,64 @@
-import { color } from 'design-system';
+import { Typo, color, VariantType, TextAlign, TextAlignVertical, TextColorType } from 'design-system';
 import React from 'react';
-import { StyleSheet, Text, TextStyle, TouchableOpacityProps, View, ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, TouchableOpacityProps, View, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { GenericTouchableProps } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
 
-type Variant = 'filled' | 'none';
+type ButtonType = 'view' | 'text';
 
 type TextButtonProps = {
     text: string;
-    variant?: Variant;
+    type: ButtonType;
+    textInfo?: {
+        color?: TextColorType;
+        variant?: VariantType;
+        textAlign?: TextAlign;
+        textAlignVertical?: TextAlignVertical;
+    };
     containerStyle?: Pick<ViewStyle, 'height' | 'width' | 'padding' | 'paddingVertical' | 'paddingHorizontal'>;
-    textStyle?: Pick<
-        TextStyle,
-        | 'textAlign'
-        | 'verticalAlign'
-        | 'fontSize'
-        | 'fontFamily'
-        | 'fontStyle'
-        | 'fontVariant'
-        | 'fontWeight'
-        | 'lineHeight'
-        | 'letterSpacing'
-    >;
-} & Omit<TouchableOpacityProps & GenericTouchableProps, 'containerStyle' | 'style'>;
+    touchableProps?: Omit<TouchableOpacityProps & GenericTouchableProps, 'containerStyle' | 'style'>;
+};
 
 type VariantStyles = {
-    [key in Variant]?: {
-        view?: ViewStyle;
-        text?: TextStyle;
-    };
+    view?: ViewStyle;
+    text?: TextStyle;
 };
 
 const VARIANT_STYLES: VariantStyles = {
-    filled: {
-        view: {
-            backgroundColor: color.Teal[150].toString(),
-            padding: 10,
-        },
-        text: {
-            color: color.White.toString(),
-        },
+    view: {
+        backgroundColor: color.Teal[150].toString(),
+        padding: 10,
+    },
+    text: {
+        color: color.White.toString(),
     },
 };
 
 const TextButton = ({
     text,
-    containerStyle = { width: '100%', padding: 10 },
-    textStyle,
-    activeOpacity = 0.5,
-    variant = 'none',
-    onPress,
-    ...rest
+    type = 'text',
+    textInfo = {
+        variant: 'body4',
+    },
+    containerStyle = {
+        width: '100%',
+        padding: 10,
+    },
+    touchableProps = {
+        activeOpacity: 0.5,
+    },
 }: TextButtonProps) => {
     return (
-        <TouchableOpacity activeOpacity={activeOpacity} onPress={onPress} {...rest}>
-            <View style={[styles.container, VARIANT_STYLES[variant]?.view, containerStyle]}>
-                <Text style={[styles.text, textStyle, VARIANT_STYLES[variant]?.text]}>{text}</Text>
+        <TouchableOpacity activeOpacity={touchableProps.activeOpacity} onPress={touchableProps.onPress} {...touchableProps}>
+            <View style={[styles.container, VARIANT_STYLES[type], containerStyle]}>
+                <Typo
+                    variant={textInfo.variant}
+                    textAlign={textInfo.textAlign}
+                    textAlignVertical={textInfo.textAlignVertical}
+                    color={textInfo.color}
+                >
+                    {text}
+                </Typo>
             </View>
         </TouchableOpacity>
     );

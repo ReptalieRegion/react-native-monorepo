@@ -22,9 +22,9 @@ const UserAccessControl = () => {
 
     return (
         <View style={styles.textButtons}>
-            <TextButton text="아이디 찾기" textStyle={styles.text} onPress={handleFindId} />
-            <TextButton text="비밀번호 찾기" textStyle={styles.text} onPress={handleFindPassword} />
-            <TextButton text="회원가입" textStyle={styles.text} onPress={handleSignUp} />
+            <TextButton text="아이디 찾기" type="text" touchableProps={{ onPress: handleFindId }} />
+            <TextButton text="비밀번호 찾기" type="text" touchableProps={{ onPress: handleFindPassword }} />
+            <TextButton text="회원가입" type="text" touchableProps={{ onPress: handleSignUp }} />
         </View>
     );
 };
@@ -32,10 +32,6 @@ const UserAccessControl = () => {
 const styles = StyleSheet.create({
     textButtons: {
         flexDirection: 'row',
-    },
-    text: {
-        fontSize: 14,
-        lineHeight: 20,
     },
 });
 

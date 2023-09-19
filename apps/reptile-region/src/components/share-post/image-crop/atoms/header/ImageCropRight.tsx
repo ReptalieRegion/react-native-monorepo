@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
+import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React from 'react';
-import { Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import type { SharePostPostingNavigationProp } from '<SharePostRoutes>';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
@@ -19,11 +18,7 @@ const ImageCropRightHeader = () => {
         navigate.push('write');
     };
 
-    return (
-        <TouchableOpacity onPress={handleNextPage}>
-            <Text>다음</Text>
-        </TouchableOpacity>
-    );
+    return <TouchableTypo onPress={handleNextPage}>다음</TouchableTypo>;
 };
 
 export default ImageCropRightHeader;

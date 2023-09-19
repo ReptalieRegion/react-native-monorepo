@@ -1,6 +1,7 @@
+import { Typo } from 'design-system';
 import { Image } from 'expo-image';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import type { SharePostUserData } from '<SharePostUserAPI>';
 
@@ -21,7 +22,7 @@ const UserAvatar = ({ user: { profile, nickname } }: UserAvatarProps) => {
                     contentFit="cover"
                 />
             </View>
-            <Text style={styles.nickname}>{nickname}</Text>
+            <Typo variant="title5">{nickname}</Typo>
         </>
     );
 };

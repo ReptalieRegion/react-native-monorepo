@@ -1,10 +1,10 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
-import { color } from 'design-system';
+import { Typo, color } from 'design-system';
 import { Image } from 'expo-image';
 import { OverlayList } from 'overlay';
 import { useOverlay } from 'overlay-manager';
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
@@ -100,7 +100,9 @@ const ImageContent = ({ item, numColumns }: ImageContentProps) => {
         <TouchableOpacity onPress={handleImageClick}>
             <View style={[styles.container, { height: imageWidth, width: imageWidth }]}>
                 <View style={[styles.circle, imageCircleStyles.styles]}>
-                    <Text style={styles.text}>{imageCircleStyles.text}</Text>
+                    <Typo variant="body2" color="surface">
+                        {imageCircleStyles.text}
+                    </Typo>
                 </View>
                 <Image
                     recyclingKey={item.node.image.uri}
@@ -133,10 +135,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    text: {
-        fontSize: 14,
-        color: color.White.toString(),
     },
     image: {
         position: 'absolute',

@@ -1,6 +1,6 @@
-import { color } from 'design-system';
+import { Typo, color } from 'design-system';
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, TextInput, StyleSheet, Text, NativeSyntheticEvent, TextInputSelectionChangeEventData } from 'react-native';
+import { View, TextInput, StyleSheet, NativeSyntheticEvent, TextInputSelectionChangeEventData } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
 import useUserTaggingStore from '@/stores/share-post/useUserTaggingStore';
@@ -81,7 +81,7 @@ const WritingComponent = () => {
                 />
             </View>
             <View style={styles.characterCountContainer}>
-                <Text style={styles.characterCountText}>{`${contentsInfo.contents.length} / ${MAX_CHARACTER_COUNT}`}</Text>
+                <Typo variant="body4" color="placeholder">{`${contentsInfo.contents.length} / ${MAX_CHARACTER_COUNT}`}</Typo>
             </View>
         </View>
     );
@@ -118,11 +118,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 10,
         right: 30,
-    },
-    characterCountText: {
-        height: 20,
-        fontSize: 12,
-        color: color.Gray[500].toString(),
     },
 });
 

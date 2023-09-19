@@ -1,6 +1,6 @@
-import { color } from 'design-system';
+import { Typo } from 'design-system';
 import React from 'react';
-import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import { Logo } from '@/assets/icons';
 
@@ -11,7 +11,9 @@ const LogoAndTextPage = () => {
     return (
         <View style={styles.container}>
             <Logo width={LogoSize} height={LogoSize} />
-            <Text style={styles.text}>Reptile Region</Text>
+            <Typo variant="body2" color="primary">
+                Reptile Region
+            </Typo>
         </View>
     );
 };
@@ -22,11 +24,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         gap: 2,
-    },
-    text: {
-        color: color.Teal[150].toString(),
-        fontSize: 14,
-        fontFamily: 'DancingScript-Bold',
     },
 });
 

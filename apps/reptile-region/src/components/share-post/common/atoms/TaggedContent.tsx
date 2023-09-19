@@ -1,6 +1,7 @@
-import { color } from 'design-system';
+import { Typo } from 'design-system';
+import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React, { useRef, useState } from 'react';
-import { NativeSyntheticEvent, StyleSheet, Text, TextLayoutEventData } from 'react-native';
+import { NativeSyntheticEvent, TextLayoutEventData } from 'react-native';
 
 export type TagPressHandler = (content: string) => void;
 
@@ -28,7 +29,7 @@ const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
 
     return (
         <>
-            <Text
+            <Typo
                 textBreakStrategy="highQuality"
                 lineBreakMode="clip"
                 lineBreakStrategyIOS="hangul-word"
@@ -41,38 +42,32 @@ const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
 
                     if (isTag) {
                         return (
-                            <Text
+                            <TouchableTypo
                                 key={key}
+                                variant="body2"
+                                color="primary"
+                                activeOpacity={0}
                                 onPress={() => onPressTag(content)}
-                                style={styles.color}
-                                suppressHighlighting={true}
                             >
                                 {content + ' '}
-                            </Text>
+                            </TouchableTypo>
                         );
                     }
 
-                    return <Text key={key}>{content}</Text>;
+                    return (
+                        <Typo key={key} variant="body2">
+                            {content}
+                        </Typo>
+                    );
                 })}
-            </Text>
+            </Typo>
             {isTextTooLong ? (
-                <Text style={styles.accordionMenu} suppressHighlighting={true} onPress={() => setIsExpanded((state) => !state)}>
+                <TouchableTypo variant="body2" color="placeholder" onPress={() => setIsExpanded((state) => !state)}>
                     {isExpanded ? '...접기' : '...더보기'}
-                </Text>
+                </TouchableTypo>
             ) : null}
         </>
     );
 };
-
-const styles = StyleSheet.create({
-    color: {
-        color: color.Green[750].toString(),
-        fontWeight: '500',
-        textAlignVertical: 'bottom',
-    },
-    accordionMenu: {
-        color: color.Gray[500].toString(),
-    },
-});
 
 export default TaggedContent;

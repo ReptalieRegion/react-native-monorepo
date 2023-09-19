@@ -1,9 +1,9 @@
 import { getHeaderTitle } from '@react-navigation/elements';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { BottomSheetAnimatedGesture } from 'bottom-sheet';
-import { color } from 'design-system';
+import { Typo, color } from 'design-system';
 import { useCallback } from 'react';
-import React, { StyleSheet, Text, View } from 'react-native';
+import React, { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { BackButton } from '@/assets/icons';
@@ -37,7 +37,11 @@ const BottomSheetHeader = ({ navigation, route, options }: NativeStackHeaderProp
                 <TouchableOpacity onPress={handleLeftPress}>
                     <Icon showBackButton={options.headerBackVisible} />
                 </TouchableOpacity>
-                <Text style={styles.title}>{title}</Text>
+                <View style={styles.flex}>
+                    <Typo variant="title3" textAlign="center">
+                        {title}
+                    </Typo>
+                </View>
                 <View style={styles.baseWidth} />
             </View>
         </BottomSheetAnimatedGesture>
@@ -54,14 +58,11 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderBottomColor: color.Gray[250].toString(),
     },
-    title: {
-        flex: 1,
-        textAlign: 'center',
-        fontSize: 17,
-        fontWeight: '600',
-    },
     baseWidth: {
         width: 30,
+    },
+    flex: {
+        flex: 1,
     },
 });
 

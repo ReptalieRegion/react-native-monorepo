@@ -89,9 +89,15 @@ const TextInputFields = () => {
             ))}
             <TextButton
                 text="로그인"
-                onPress={handleSubmit(handleSignInSubmit)}
+                type="text"
+                textInfo={{
+                    color: 'surface',
+                    textAlign: 'center',
+                }}
+                touchableProps={{
+                    onPress: handleSubmit(handleSignInSubmit),
+                }}
                 containerStyle={styles.textView}
-                textStyle={styles.text}
             />
         </View>
     );

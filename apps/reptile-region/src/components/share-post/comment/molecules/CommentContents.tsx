@@ -25,8 +25,8 @@ type CommentContentsProps = {
 
 const CommentContents = ({ user, comment, deleteComment, updateComment }: CommentContentsProps) => {
     const navigation = useNavigation<SharePostNavigationProp<'share-post/bottom-sheet/comment'>>();
-    const handleProfileClick = () => {
-        navigation.push('share-post/modal/detail', { nickname: user.nickname });
+    const handleProfileClick = (nickname: string) => {
+        navigation.push('share-post/modal/detail', { nickname: nickname.slice(1) });
     };
 
     return (

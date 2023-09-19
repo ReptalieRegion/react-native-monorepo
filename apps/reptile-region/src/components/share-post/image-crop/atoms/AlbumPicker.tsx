@@ -1,18 +1,13 @@
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React from 'react';
-import { Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const AlbumPicker = () => {
     const openAlbumPicker = async () => {
         await CameraRoll.getAlbums({ assetType: 'All' });
     };
 
-    return (
-        <TouchableOpacity onPress={openAlbumPicker}>
-            <Text>최근 항목</Text>
-        </TouchableOpacity>
-    );
+    return <TouchableTypo onPress={openAlbumPicker}>최근항목</TouchableTypo>;
 };
 
 export default AlbumPicker;

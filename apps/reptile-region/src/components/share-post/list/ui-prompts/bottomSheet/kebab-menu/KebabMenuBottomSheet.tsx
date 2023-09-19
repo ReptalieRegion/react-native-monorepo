@@ -1,8 +1,8 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { BottomSheet } from 'bottom-sheet';
+import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { SharePostNavigationProp, SharePostRouteProp } from '<SharePostRoutes>';
@@ -14,9 +14,11 @@ type ListItemProps = {
 };
 const ListItem = ({ text, onPress }: ListItemProps) => {
     return (
-        <TouchableOpacity onPress={onPress} style={styles.listItem}>
-            <Text>{text}</Text>
-        </TouchableOpacity>
+        <View style={styles.listItem}>
+            <TouchableTypo variant="body2" onPress={onPress}>
+                {text}
+            </TouchableTypo>
+        </View>
     );
 };
 

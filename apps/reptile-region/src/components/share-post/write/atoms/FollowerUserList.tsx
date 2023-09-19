@@ -1,6 +1,7 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { Typo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { shallow } from 'zustand/shallow';
 
@@ -45,7 +46,7 @@ const FollowerUserList = () => {
                 <TouchableOpacity onPress={handlePressItem}>
                     <View style={styles.renderItem}>
                         <Avatar recyclingKey={item.user.profile.src} source={{ uri: item.user.profile.src }} size={30} />
-                        <Text style={styles.semiBold}>{item.user.nickname}</Text>
+                        <Typo variant="title5">{item.user.nickname}</Typo>
                     </View>
                 </TouchableOpacity>
             );
@@ -64,7 +65,7 @@ const FollowerUserList = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={[styles.text, styles.semiBold]}>팔로우한 사람</Text>
+            <Typo variant="title5">팔로우한 사람</Typo>
             <FlashList
                 data={newData}
                 keyExtractor={keyExtractor}
@@ -81,18 +82,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginBottom: 20,
-    },
-    text: {
-        paddingBottom: 10,
-    },
-    semiBold: {
-        fontWeight: '600',
+        gap: 10,
     },
     renderItem: {
         alignItems: 'center',
         flexDirection: 'row',
         marginBottom: 7,
-        gap: 10,
+        gap: 12,
     },
 });
 

@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
+import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React from 'react';
-import { Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { SharePostNavigationProp } from '<SharePostRoutes>';
 import useCreatePost from '@/apis/share-post/post/hooks/mutations/useCreatePost';
@@ -27,9 +26,9 @@ const SharePostWriteRightHeader = () => {
     };
 
     return (
-        <TouchableOpacity onPress={handleSubmitSharePost} disabled={isLoading}>
-            <Text>등록</Text>
-        </TouchableOpacity>
+        <TouchableTypo onPress={handleSubmitSharePost} disabled={isLoading}>
+            등록
+        </TouchableTypo>
     );
 };
 

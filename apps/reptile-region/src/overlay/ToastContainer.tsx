@@ -1,7 +1,8 @@
+import { TextColorType, Typo, VariantType } from 'design-system';
 import { OverlayList } from 'overlay';
 import { useOverlay } from 'overlay-manager';
 import React, { useEffect } from 'react';
-import { Dimensions, Modal, Platform, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
+import { Dimensions, Modal, Platform, StyleSheet, ViewStyle } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
 import Animated, {
     runOnJS,
@@ -16,13 +17,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 interface ToastContainerProps {
     text: string;
     containerStyle?: Pick<ViewStyle, 'backgroundColor'>;
-    textStyle?: Pick<TextStyle, 'color'>;
+    variant?: VariantType;
+    color?: TextColorType;
 }
 
 const screenWidth = Dimensions.get('screen').width;
 const toastWidth = screenWidth * 0.95;
 
-const ToastContainer = ({ text, containerStyle, textStyle }: ToastContainerProps) => {
+const ToastContainer = ({ text, color, containerStyle, variant }: ToastContainerProps) => {
     const { top } = useSafeAreaInsets();
     const translateY = useSharedValue(0);
     const translateX = useSharedValue(0);
@@ -50,7 +52,9 @@ const ToastContainer = ({ text, containerStyle, textStyle }: ToastContainerProps
     return (
         <Modal>
             <Animated.View style={[styles.container, containerStyle, animatedStyle]}>
-                <Text style={textStyle}>{text}</Text>
+                <Typo variant={variant} color={color}>
+                    {text}
+                </Typo>
             </Animated.View>
         </Modal>
     );

@@ -1,8 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { color } from 'design-system';
+import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, View } from 'react-native';
 
 import { SharePostCommentData } from '<SharePostCommentAPI>';
 import { SharePostCommentBottomSheetNavigationProp } from '<SharePostRoutes>';
@@ -25,19 +24,17 @@ const CommentReplyButton = ({ user, comment, replyCount }: CommentReplyButtonPro
     }
 
     return (
-        <TouchableOpacity onPress={handleGoToReplyPage} activeOpacity={0.3}>
-            <Text style={styles.commentMoreButton} suppressHighlighting={false}>
+        <View style={styles.container}>
+            <TouchableTypo variant="body4" color="secondary" onPress={handleGoToReplyPage}>
                 답글 {replyCount}개보기
-            </Text>
-        </TouchableOpacity>
+            </TouchableTypo>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    commentMoreButton: {
+    container: {
         paddingTop: 10,
-        fontSize: 12,
-        color: color.Teal[150].toString(),
     },
 });
 

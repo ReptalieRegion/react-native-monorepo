@@ -1,6 +1,7 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { Typo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
-import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import { SharePostSearchFollowerUserData } from '<SharePostUserAPI>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
@@ -28,7 +29,7 @@ const CommentTagList = () => {
                 <TouchableOpacity onPress={handlePressTag}>
                     <View style={styles.renderItem}>
                         <Avatar recyclingKey={item.user.profile.src} source={{ uri: item.user.profile.src }} size={30} />
-                        <Text style={styles.semiBold}>{item.user.nickname}</Text>
+                        <Typo variant="title5">{item.user.nickname}</Typo>
                     </View>
                 </TouchableOpacity>
             );
@@ -62,9 +63,6 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         paddingTop: 10,
         minHeight: 2,
-    },
-    semiBold: {
-        fontWeight: '600',
     },
     renderItem: {
         alignItems: 'center',

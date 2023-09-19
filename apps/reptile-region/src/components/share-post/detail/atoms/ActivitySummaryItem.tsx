@@ -1,6 +1,6 @@
-import { color } from 'design-system';
+import { Typo } from 'design-system';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 type ActivitySummaryItemProps = {
@@ -13,8 +13,10 @@ const ActivitySummaryItem = ({ onPress, content, count }: ActivitySummaryItemPro
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={styles.container}>
-                <Text style={styles.fontSize}>{content}</Text>
-                <Text style={[styles.fontSize, styles.count]}>{count}</Text>
+                <Typo variant="body2">{content}</Typo>
+                <Typo variant="body2" color="primary">
+                    {count}
+                </Typo>
             </View>
         </TouchableWithoutFeedback>
     );
@@ -25,13 +27,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,
-    },
-    fontSize: {
-        fontSize: 14,
-        lineHeight: 20,
-    },
-    count: {
-        color: color.Green[750].toString(),
     },
 });
 

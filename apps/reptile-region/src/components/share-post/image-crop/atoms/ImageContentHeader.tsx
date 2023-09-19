@@ -1,5 +1,6 @@
+import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import AlbumPicker from './AlbumPicker';
 
@@ -8,7 +9,7 @@ const ImageContentHeader = () => {
         <View style={styles.container}>
             <AlbumPicker />
             <View style={styles.view}>
-                <Text>카메라</Text>
+                <TouchableTypo>카메라</TouchableTypo>
             </View>
         </View>
     );

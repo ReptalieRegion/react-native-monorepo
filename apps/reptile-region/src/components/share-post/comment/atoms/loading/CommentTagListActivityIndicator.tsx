@@ -1,6 +1,6 @@
-import { color } from 'design-system';
+import { Typo } from 'design-system';
 import React from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import useTagState from '@/hooks/useTagState';
 
@@ -9,7 +9,9 @@ const CommentTagListActivityIndicator = () => {
     return (
         <View style={styles.container}>
             <ActivityIndicator />
-            <Text style={styles.text}>{keyword} 검색 중</Text>
+            <Typo variant="body2" color="placeholder">
+                {keyword} 검색 중
+            </Typo>
         </View>
     );
 };
@@ -21,10 +23,6 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         gap: 15,
         padding: 20,
-    },
-    text: {
-        fontSize: 14,
-        color: color.Gray[500].toString(),
     },
 });
 

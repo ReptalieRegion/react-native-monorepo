@@ -1,5 +1,6 @@
+import { Typo } from 'design-system';
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 type SharePostWriteTitleProps = {
     title: string;
@@ -7,20 +8,20 @@ type SharePostWriteTitleProps = {
 
 const SharePostWriteTitle = ({ title }: SharePostWriteTitleProps) => {
     return (
-        <Text style={styles.text}>
-            {title}
-            <Text style={styles.require}>{' *'}</Text>
-        </Text>
+        <View style={styles.container}>
+            <Typo variant="heading3">
+                {title}
+                <Typo variant="heading3" color="require">
+                    {' *'}
+                </Typo>
+            </Typo>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    text: {
+    container: {
         marginBottom: 10,
-        fontWeight: 'bold',
-    },
-    require: {
-        color: 'red',
     },
 });
 

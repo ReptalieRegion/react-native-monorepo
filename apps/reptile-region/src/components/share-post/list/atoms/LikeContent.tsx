@@ -1,5 +1,5 @@
+import { Typo } from 'design-system';
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
 
 import type { SharePostListData } from '<SharePostAPI>';
 
@@ -12,13 +12,7 @@ const LikeContent = ({ post }: LikeContentProps) => {
         return null;
     }
 
-    return <Text style={[styles.fontBold]}>{post.likeCount}명이 좋아합니다.</Text>;
+    return <Typo variant="heading3">{post.likeCount}명이 좋아합니다.</Typo>;
 };
-
-const styles = StyleSheet.create({
-    fontBold: {
-        fontWeight: 'bold',
-    },
-});
 
 export default LikeContent;
