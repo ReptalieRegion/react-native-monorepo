@@ -1,5 +1,5 @@
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
-import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
+import { TouchableTypo } from 'design-system';
 import React from 'react';
 
 const AlbumPicker = () => {

@@ -1,4 +1,4 @@
-import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
+import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 

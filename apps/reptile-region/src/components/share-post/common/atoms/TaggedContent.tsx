@@ -1,17 +1,17 @@
 import { Typo } from 'design-system';
-import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
+import { TouchableTypo } from 'design-system';
 import React, { useRef, useState } from 'react';
 import { NativeSyntheticEvent, TextLayoutEventData } from 'react-native';
 
-export type TagPressHandler = (content: string) => void;
+import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 
 type TaggedContentProps = {
     uuid: string;
     contents: string;
-    onPressTag: TagPressHandler;
 };
 
-const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
+const TaggedContent = ({ uuid, contents }: TaggedContentProps) => {
+    const { navigationModalDetail } = useCommentNavigation();
     const lastItemId = useRef(uuid);
     const [isTextTooLong, setIsTextTooLong] = useState<boolean | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -47,7 +47,7 @@ const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
                                 variant="body2"
                                 color="primary"
                                 activeOpacity={0}
-                                onPress={() => onPressTag(content)}
+                                onPress={() => navigationModalDetail(content.slice(1))}
                             >
                                 {content + ' '}
                             </TouchableTypo>

@@ -1,5 +1,5 @@
 import { TextColorType } from 'design-system';
-import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
+import { TouchableTypo } from 'design-system';
 import React from 'react';
 import * as Haptic from 'react-native-haptic-feedback';
 

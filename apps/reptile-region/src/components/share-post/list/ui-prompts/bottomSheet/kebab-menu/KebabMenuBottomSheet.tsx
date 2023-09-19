@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { BottomSheet } from 'bottom-sheet';
-import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
+import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

@@ -108,7 +108,6 @@ const TagTextInputProvider = ({ children }: { children: ReactNode }) => {
         setTagInfo((state) => changeContents(state, text));
         const currentMoveSelection = moveSelection.current;
         if (currentMoveSelection !== null) {
-            console.log('change', currentMoveSelection);
             setTagInfo((state) => ({
                 ...state,
                 contentsInfo: {
@@ -128,12 +127,9 @@ const TagTextInputProvider = ({ children }: { children: ReactNode }) => {
     }, []);
 
     const handleChangeSelection = useCallback((selection: Selection) => {
-        console.log(new Date());
         if (moveSelection.current !== null) {
             return;
         }
-
-        console.log('selection', selection);
 
         setTagInfo((state) => changeSelection(state, selection));
     }, []);

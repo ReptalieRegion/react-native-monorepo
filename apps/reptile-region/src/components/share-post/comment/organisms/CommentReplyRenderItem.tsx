@@ -1,34 +1,67 @@
-import React, { ReactNode } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import CommentAvatar from '../atoms/CommentAvatar';
+import { ActionButton } from '../atoms/CommentActions';
 import CommentContents from '../molecules/CommentContents';
 
 import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
 import useDeleteCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useDeleteCommentReply';
+import Avatar from '@/components/common/fast-image/Avatar';
+import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 import useTagAction from '@/hooks/useTagAction';
 
 type RenderItemProps = {
     user: SharePostCommentReplyData['user'];
     comment: SharePostCommentReplyData['comment'];
-    FootChildren?: ReactNode;
 };
 
 const CommentReplyRenderItem = ({ user, comment }: RenderItemProps) => {
+    const { navigationModalDetail } = useCommentNavigation();
     const { mutate: deleteCommentReplyMutate } = useDeleteCommentReply();
     const { handleChangeText } = useTagAction();
 
-    const handleDeleteComment = () => {
-        deleteCommentReplyMutate({ commentReplyId: comment.id });
-    };
+    const deleteComment = useCallback(
+        () => deleteCommentReplyMutate({ commentReplyId: comment.id }),
+        [comment.id, deleteCommentReplyMutate],
+    );
 
-    const handleUpdateComment = () => {
-        handleChangeText(comment.contents);
-    };
+    const updateComment = useCallback(() => handleChangeText(comment.contents), [comment.contents, handleChangeText]);
+
+    const actionButtons: ActionButton[] = useMemo(
+        () => [
+            {
+                label: '수정',
+                showTarget: 'owner',
+                onPress: updateComment,
+            },
+            {
+                label: '삭제',
+                showTarget: 'owner',
+                onPress: deleteComment,
+            },
+            {
+                label: '댓글 쓰기',
+                showTarget: 'other',
+            },
+            {
+                label: '신고',
+                showTarget: 'other',
+            },
+        ],
+        [deleteComment, updateComment],
+    );
 
     return (
         <View style={styles.container}>
-            <CommentAvatar uri={user.profile.src} nickname={user.nickname} />
+            <Avatar
+                recyclingKey={user.profile.src}
+                onPress={() => navigationModalDetail(user.nickname)}
+                source={{ uri: user.profile.src }}
+                priority={'high'}
+                contentFit="cover"
+                placeholderContentFit="cover"
+                placeholder={require('@/assets/images/avatar.png')}
+            />
             <View style={styles.commentItemContent}>
                 <CommentContents
                     comment={{
@@ -38,8 +71,7 @@ const CommentReplyRenderItem = ({ user, comment }: RenderItemProps) => {
                         isModified: comment.isModified,
                     }}
                     user={{ nickname: user.nickname }}
-                    deleteComment={handleDeleteComment}
-                    updateComment={handleUpdateComment}
+                    actionButtons={actionButtons}
                 />
             </View>
         </View>

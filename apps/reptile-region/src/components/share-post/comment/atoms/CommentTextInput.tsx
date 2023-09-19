@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { color } from 'design-system';
-import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
+import { TouchableTypo } from 'design-system';
 import React, { useRef } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';

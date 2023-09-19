@@ -1,10 +1,10 @@
-import { useNavigation } from '@react-navigation/native';
 import { Typo } from 'design-system';
-import TouchableTypo from 'design-system/lib/components/Text/TouchableTypo';
+import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { SharePostNavigationProp } from '<SharePostRoutes>';
+import ConditionalRendererWithNull from '@/components/common/element/ConditionalRendererWithNull';
+import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 
 type CommentContentsHeaderProps = {
     user: {
@@ -16,21 +16,18 @@ type CommentContentsHeaderProps = {
 };
 
 const CommentContentsHeader = ({ user, comment }: CommentContentsHeaderProps) => {
-    const navigation = useNavigation<SharePostNavigationProp<'share-post/bottom-sheet/comment'>>();
-    const handleProfileClick = () => {
-        navigation.push('share-post/modal/detail', { nickname: user.nickname });
-    };
+    const { navigationModalDetail } = useCommentNavigation();
 
     return (
         <View style={styles.container}>
-            <TouchableTypo variant="title4" onPress={handleProfileClick}>
+            <TouchableTypo variant="title4" onPress={() => navigationModalDetail(user.nickname)}>
                 {user.nickname}
             </TouchableTypo>
-            {comment.isModified ? (
+            <ConditionalRendererWithNull condition={comment.isModified}>
                 <Typo variant="body5" color="placeholder">
                     (수정됨)
                 </Typo>
-            ) : null}
+            </ConditionalRendererWithNull>
         </View>
     );
 };
