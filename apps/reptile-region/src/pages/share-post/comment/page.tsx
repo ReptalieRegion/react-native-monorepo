@@ -2,11 +2,12 @@ import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TagProvider } from 'tag-text-input';
 
-import CommentTagList from '@/components/share-post/comment/atoms/CommentTagList';
 import CommentSkeleton from '@/components/share-post/comment/atoms/loading/CommentSkeleton';
 import CommentTagListActivityIndicator from '@/components/share-post/comment/atoms/loading/CommentTagListActivityIndicator';
 import CommentEditor from '@/components/share-post/comment/molecules/CommentEditor';
-import CommentList from '@/components/share-post/comment/templates/CommentList';
+
+const CommentTagList = React.lazy(() => import('@/components/share-post/comment/atoms/CommentTagList'));
+const CommentList = React.lazy(() => import('@/components/share-post/comment/templates/CommentList'));
 
 const CommentPage = () => {
     return (
