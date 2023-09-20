@@ -11,7 +11,7 @@ const extractTagFromIndex = (contentInfo: TagContentsState): TagSearchState => {
     }
 
     let newContents = '';
-    let tagStartIndex = selection.start;
+    let tagStartIndex = selection.start - 1;
     let tagEndIndex = selection.start;
 
     while (tagStartIndex >= 0 && contents[tagStartIndex] !== ' ' && contents[tagStartIndex] !== '\n') {

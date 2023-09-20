@@ -9,13 +9,11 @@ export type TagContentsState = {
 interface ChangeContentsContents {
     type: 'CHANGE_TEXT';
     contents: string;
-    callback: (contentInfo: TagContentsState) => void;
 }
 
 interface ChangeContentsSelection {
     type: 'CHANGE_SELECTION';
     selection: SelectionType;
-    callback: (contentInfo: TagContentsState) => void;
 }
 
 interface UpdateContentSelectTag {
