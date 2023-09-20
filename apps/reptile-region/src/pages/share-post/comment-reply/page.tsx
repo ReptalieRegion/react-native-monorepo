@@ -6,11 +6,10 @@ import CommentReplySkeleton from '@/components/share-post/comment/atoms/loading/
 import CommentTagListActivityIndicator from '@/components/share-post/comment/atoms/loading/CommentTagListActivityIndicator';
 import CommentReplyEditor from '@/components/share-post/comment/molecules/CommentReplyEditor';
 import CommentReplyList from '@/components/share-post/comment/templates/CommentReplyList';
-import useTagState from '@/hooks/useTagState';
-import TagTextInputProvider from '@/providers/TagTextInputProvider';
+import useTagTextInputStore from '@/stores/share-post/useTagTextInputStore';
 
 const RenderItem = () => {
-    const { keyword } = useTagState();
+    const keyword = useTagTextInputStore((state) => state.searchInfo.keyword);
 
     return (
         <ConditionalRenderer
@@ -31,10 +30,10 @@ const RenderItem = () => {
 
 const CommentReplyPage = () => {
     return (
-        <TagTextInputProvider>
+        <>
             <RenderItem />
             <CommentReplyEditor />
-        </TagTextInputProvider>
+        </>
     );
 };
 

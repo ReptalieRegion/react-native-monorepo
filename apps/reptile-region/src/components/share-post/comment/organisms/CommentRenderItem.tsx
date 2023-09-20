@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { TouchableTypo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -7,12 +7,13 @@ import { ActionButton } from '../atoms/CommentActions';
 import CommentContents from '../molecules/CommentContents';
 
 import type { SharePostCommentData } from '<SharePostCommentAPI>';
-import { SharePostCommentBottomSheetNavigationProp } from '<SharePostRoutes>';
+import { SharePostCommentBottomSheetNavigationProp, SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
 import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
 import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 import Avatar from '@/components/common/fast-image/Avatar';
 import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
-import useTagAction from '@/hooks/useTagAction';
+import useCommentStore from '@/stores/share-post/useCommentStore';
+import useTagTextInputStore from '@/stores/share-post/useTagTextInputStore';
 
 type RenderItemProps = {
     user: SharePostCommentData['user'];
@@ -20,17 +21,38 @@ type RenderItemProps = {
 };
 
 const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
+    const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'main'>>();
     const navigation = useNavigation<SharePostCommentBottomSheetNavigationProp<'main'>>();
     const { navigationModalDetail } = useCommentNavigation();
     const { mutate } = useDeleteComment();
-    const { handleChangeText } = useTagAction();
+    const { handleChangeText, setTextInputFocus, handleChangeSelection } = useTagTextInputStore((state) => ({
+        handleChangeText: state.handleChangeText,
+        setTextInputFocus: state.setTextInputFocus,
+        handleChangeSelection: state.handleChangeSelection,
+    }));
+    const setCommentRegisterType = useCommentStore((state) => state.setCommentRegisterType);
 
     const navigateCommentReply = useCallback(
         (commentingActive: boolean) => navigation.navigate('reply', { comment, user, commentingActive }),
         [navigation, comment, user],
     );
     const deleteComment = useCallback(() => mutate({ commentId: comment.id }), [comment.id, mutate]);
-    const updateComment = useCallback(() => handleChangeText(comment.contents), [comment.contents, handleChangeText]);
+    const updateComment = useCallback(() => {
+        const contents = comment.contents + ' ';
+        const position = contents.length;
+        setTextInputFocus(true);
+        handleChangeText(contents);
+        handleChangeSelection({ start: position, end: position });
+        setCommentRegisterType({ commentType: 'comment', key: params.post.id, type: 'update', id: comment.id });
+    }, [
+        params.post.id,
+        comment.contents,
+        comment.id,
+        setTextInputFocus,
+        handleChangeText,
+        handleChangeSelection,
+        setCommentRegisterType,
+    ]);
 
     const actionButtons = useMemo<ActionButton[]>(
         () => [

@@ -45,7 +45,7 @@ declare module '<SharePostUserAPI>' {
 
     type CreateFollowResponse = {
         user: {
-            id: string;
+            nickname: string;
         };
     };
 

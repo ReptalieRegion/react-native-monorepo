@@ -8,12 +8,12 @@ import { sharePostQueryKeys } from '@/apis/query-keys';
 
 type SetQueryDataProps = {
     queryClient: QueryClient;
-    userId: string;
+    nickname: string;
 };
 
 // Cache Update: 특정 유저의 프로필
-const updateUserProfile = ({ queryClient, userId }: SetQueryDataProps) => {
-    queryClient.setQueryData<SharePostUserData>(sharePostQueryKeys.profile(userId), (prevUserProfile) => {
+const updateUserProfile = ({ queryClient, nickname }: SetQueryDataProps) => {
+    queryClient.setQueryData<SharePostUserData>(sharePostQueryKeys.profile(nickname), (prevUserProfile) => {
         if (prevUserProfile === undefined) {
             return prevUserProfile;
         }
@@ -30,7 +30,7 @@ const updateUserProfile = ({ queryClient, userId }: SetQueryDataProps) => {
 };
 
 // Cache Update: 일상공유 무한스크롤 조회 리스트
-const updateSharePostList = ({ queryClient, userId }: SetQueryDataProps) => {
+const updateSharePostList = ({ queryClient, nickname }: SetQueryDataProps) => {
     queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(sharePostQueryKeys.list, (prevPostList) => {
         if (prevPostList === undefined) {
             return prevPostList;
@@ -38,7 +38,7 @@ const updateSharePostList = ({ queryClient, userId }: SetQueryDataProps) => {
 
         const updatePages = [...prevPostList.pages].map((page) => {
             const items = page.items.map((item) => {
-                const user = item.user.id === userId ? { ...item.user, isFollow: true } : item.user;
+                const user = item.user.nickname === nickname ? { ...item.user, isFollow: true } : item.user;
                 return { ...item, user };
             });
 
@@ -58,8 +58,8 @@ const useCreateFollow = () => {
     return useMutation<CreateFollowResponse, any, CreateFollowRequest>({
         mutationFn: ({ userId }) => createFollow({ userId }),
         onSuccess: ({ user }) => {
-            updateUserProfile({ queryClient, userId: user.id });
-            updateSharePostList({ queryClient, userId: user.id });
+            updateUserProfile({ queryClient, nickname: user.nickname });
+            updateSharePostList({ queryClient, nickname: user.nickname });
         },
     });
 };

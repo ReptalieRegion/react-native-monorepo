@@ -1,5 +1,5 @@
 import { color } from 'design-system';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
@@ -26,6 +26,7 @@ const ScrollToTopButton = ({
     scrollIntoView,
 }: ScrollTopButtonProps & FloatingActionButtonSize) => {
     const { isLock, lockEnd, lockStart } = useLock();
+    const lockTimeout = useRef<NodeJS.Timeout>();
     const translateY = useSharedValue(0);
     const opacity = useSharedValue(0);
     const animatedContainerStyle = useAnimatedStyle(() => ({
@@ -56,7 +57,7 @@ const ScrollToTopButton = ({
         lockStart();
         scrollIntoView({ offset: 0 });
         animateButton('DOWN');
-        setTimeout(lockEnd, LOCK_DURATION);
+        lockTimeout.current = setTimeout(lockEnd, LOCK_DURATION);
     };
 
     return (

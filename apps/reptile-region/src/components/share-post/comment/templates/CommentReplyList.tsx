@@ -46,7 +46,7 @@ const CommentReplyList = () => {
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
                 onEndReached={onEndReached}
-                estimatedItemSize={110}
+                estimatedItemSize={100}
                 scrollEventThrottle={16}
                 ListHeaderComponent={ListHeaderComponent}
                 ListHeaderComponentStyle={styles.comment}

@@ -1,11 +1,11 @@
-import { Typo } from 'design-system';
+import { Typo, color } from 'design-system';
 import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
-import useTagState from '@/hooks/useTagState';
+import useTagTextInputStore from '@/stores/share-post/useTagTextInputStore';
 
 const CommentTagListActivityIndicator = () => {
-    const { keyword } = useTagState();
+    const keyword = useTagTextInputStore((state) => state.searchInfo.keyword);
     return (
         <View style={styles.container}>
             <ActivityIndicator />
@@ -18,11 +18,17 @@ const CommentTagListActivityIndicator = () => {
 
 const styles = StyleSheet.create({
     container: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
         flex: 1,
         flexDirection: 'row',
         alignItems: 'flex-start',
         gap: 15,
         padding: 20,
+        backgroundColor: color.White.toString(),
+        width: '100%',
+        height: '100%',
     },
 });
 

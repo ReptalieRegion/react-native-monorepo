@@ -93,7 +93,10 @@ const HeartAnimation = ({ post }: HeartAnimationProps) => {
 
     useEffect(() => {
         heartScale.value = withSequence(withTiming(2.1), withTiming(1.8, { duration: 140 }));
-        setTimeout(() => setStartLikeAnimation(postId, false), 700);
+        const animationTimeout = setTimeout(() => setStartLikeAnimation(postId, false), 700);
+        return () => {
+            clearTimeout(animationTimeout);
+        };
     }, [heartScale, postId, setStartLikeAnimation]);
 
     return (

@@ -2,7 +2,6 @@ import { useRoute } from '@react-navigation/native';
 import { FlashList, ListRenderItem } from '@shopify/flash-list';
 import React, { useCallback, useRef, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 
 import CommentRenderItem from '../organisms/CommentRenderItem';
 
@@ -42,11 +41,10 @@ const CommentFlashList = () => {
                 data={data?.pages.flatMap((page) => page.items)}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
                 renderItem={renderItem}
+                estimatedItemSize={100}
                 scrollEventThrottle={16}
                 keyExtractor={keyExtractor}
                 onEndReached={onEndReached}
-                renderScrollComponent={ScrollView}
-                estimatedItemSize={110}
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
             />
         </View>

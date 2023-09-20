@@ -6,6 +6,7 @@ import PostKebabMenu from '../atoms/PostKebabMenu';
 import Profile from '../atoms/Profile';
 
 import type { SharePostListData } from '<SharePostAPI>';
+import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 
 type PostHeaderProps = {
     user: Pick<SharePostListData['user'], 'nickname' | 'profile' | 'isFollow' | 'id'>;
@@ -19,7 +20,11 @@ const PostHeader = ({ user, post }: PostHeaderProps) => {
         <View style={styles.container}>
             <Profile user={{ id: userId, nickname, profile }} />
             <View style={styles.rightContent}>
-                <Follow user={{ id: userId, isFollow }} />
+                <ConditionalRenderer
+                    condition={post.isMine}
+                    trueContent={null}
+                    falseContent={<Follow user={{ id: userId, isFollow }} />}
+                />
                 <PostKebabMenu user={{ id: user.id }} post={post} />
             </View>
         </View>

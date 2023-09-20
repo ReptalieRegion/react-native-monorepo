@@ -1,28 +1,57 @@
 import { color } from 'design-system';
 import { TouchableTypo } from 'design-system';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { shallow } from 'zustand/shallow';
 
-import useTagAction from '@/hooks/useTagAction';
-import useTagState from '@/hooks/useTagState';
+import useTagTextInputStore from '@/stores/share-post/useTagTextInputStore';
 
 type CommentTextInputProps = {
+    autoFocus?: boolean;
     onSubmit: (contents: string) => void;
 };
 
 const MAX_CHARACTER_COUNT = 500;
 
-const CommentTextInput = ({ onSubmit }: CommentTextInputProps) => {
-    const { contents, currentSelection } = useTagState();
-    const { handleChangeSelection, handleChangeText } = useTagAction();
+const CommentTextInput = ({ onSubmit, autoFocus }: CommentTextInputProps) => {
+    const textInputRef = useRef<TextInput>(null);
+
+    const { contents, currentSelection, isFocus, setTextInputFocus, handleChangeSelection, handleChangeText } =
+        useTagTextInputStore(
+            (state) => ({
+                contents: state.contentsInfo.contents,
+                currentSelection: state.contentsInfo.selection,
+                isFocus: state.isFocus,
+                setTextInputFocus: state.setTextInputFocus,
+                handleChangeSelection: state.handleChangeSelection,
+                handleChangeText: state.handleChangeText,
+            }),
+            shallow,
+        );
 
     const handleSubmit = useCallback(() => onSubmit(contents), [contents, onSubmit]);
+
+    useEffect(() => {
+        const focusTimeout = setTimeout(() => autoFocus && textInputRef.current?.focus(), 500);
+
+        return () => {
+            clearTimeout(focusTimeout);
+        };
+    }, [autoFocus]);
+
+    useEffect(() => {
+        if (isFocus) {
+            textInputRef.current?.focus();
+            setTextInputFocus(false);
+        }
+    }, [isFocus, setTextInputFocus]);
 
     return (
         <View style={[styles.bottom]}>
             <View style={styles.textInputContainer}>
                 <TextInput
+                    ref={textInputRef}
                     selection={currentSelection}
                     value={contents}
                     style={styles.textInput}

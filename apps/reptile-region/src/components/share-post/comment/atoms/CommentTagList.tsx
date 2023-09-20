@@ -2,17 +2,24 @@ import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { Typo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
 import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { shallow } from 'zustand/shallow';
 
 import { SharePostSearchFollowerUserData } from '<SharePostUserAPI>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
+import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 import Avatar from '@/components/common/fast-image/Avatar';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
-import useTagAction from '@/hooks/useTagAction';
-import useTagState from '@/hooks/useTagState';
+import useTagTextInputStore from '@/stores/share-post/useTagTextInputStore';
 
 const CommentTagList = () => {
-    const { keyword } = useTagState();
-    const { handleSelectTag } = useTagAction();
+    const { keyword, handleSelectTag } = useTagTextInputStore(
+        (state) => ({
+            keyword: state.searchInfo.keyword,
+            handleSelectTag: state.handleSelectTag,
+        }),
+        shallow,
+    );
+
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
         search: keyword ?? '',
     });
@@ -25,6 +32,7 @@ const CommentTagList = () => {
                 event.preventDefault();
                 handleSelectTag(item.user.nickname);
             };
+
             return (
                 <TouchableOpacity onPress={handlePressTag}>
                     <View style={styles.renderItem}>
@@ -42,26 +50,36 @@ const CommentTagList = () => {
     );
 
     return (
-        <View style={styles.container}>
-            <FlashList
-                keyboardShouldPersistTaps="handled"
-                data={newData}
-                keyExtractor={keyExtractor}
-                renderItem={renderItem}
-                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-                onEndReached={onEndReached}
-                estimatedItemSize={30}
-            />
-        </View>
+        <ConditionalRenderer
+            condition={keyword === null}
+            trueContent={null}
+            falseContent={
+                <View style={styles.container}>
+                    <FlashList
+                        keyboardShouldPersistTaps="handled"
+                        data={newData}
+                        keyExtractor={keyExtractor}
+                        renderItem={renderItem}
+                        ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+                        onEndReached={onEndReached}
+                        estimatedItemSize={30}
+                    />
+                </View>
+            }
+        />
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
         paddingLeft: 20,
         paddingTop: 10,
-        minHeight: 2,
+        backgroundColor: 'white',
     },
     renderItem: {
         alignItems: 'center',
