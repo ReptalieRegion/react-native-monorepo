@@ -3,14 +3,16 @@ import { TouchableTypo } from 'design-system';
 import React, { useRef, useState } from 'react';
 import { NativeSyntheticEvent, TextLayoutEventData } from 'react-native';
 
+import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 
 type TaggedContentProps = {
     uuid: string;
     contents: string;
+    onPressTag?: (nickname: string) => void;
 };
 
-const TaggedContent = ({ uuid, contents }: TaggedContentProps) => {
+const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
     const { navigationModalDetail } = useCommentNavigation();
     const lastItemId = useRef(uuid);
     const [isTextTooLong, setIsTextTooLong] = useState<boolean | null>(null);
@@ -47,7 +49,13 @@ const TaggedContent = ({ uuid, contents }: TaggedContentProps) => {
                                 variant="body2"
                                 color="primary"
                                 activeOpacity={0}
-                                onPress={() => navigationModalDetail(content.slice(1))}
+                                onPress={() => {
+                                    if (onPressTag) {
+                                        onPressTag(content.slice(1));
+                                    } else {
+                                        navigationModalDetail(content.slice(1));
+                                    }
+                                }}
                             >
                                 {content + ' '}
                             </TouchableTypo>
@@ -61,11 +69,15 @@ const TaggedContent = ({ uuid, contents }: TaggedContentProps) => {
                     );
                 })}
             </Typo>
-            {isTextTooLong ? (
-                <TouchableTypo variant="body2" color="placeholder" onPress={() => setIsExpanded((state) => !state)}>
-                    {isExpanded ? '...접기' : '...더보기'}
-                </TouchableTypo>
-            ) : null}
+            <ConditionalRenderer
+                condition={isTextTooLong === null ? false : isTextTooLong}
+                trueContent={
+                    <TouchableTypo variant="body2" color="placeholder" onPress={() => setIsExpanded((state) => !state)}>
+                        {isExpanded ? '...접기' : '...더보기'}
+                    </TouchableTypo>
+                }
+                falseContent={null}
+            />
         </>
     );
 };

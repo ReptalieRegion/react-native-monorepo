@@ -1,87 +1,26 @@
 import { Typo, color } from 'design-system';
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, TextInput, StyleSheet, NativeSyntheticEvent, TextInputSelectionChangeEventData } from 'react-native';
-import { shallow } from 'zustand/shallow';
-
-import useUserTaggingStore from '@/stores/share-post/useUserTaggingStore';
-
-type Selection = TextInputSelectionChangeEventData['selection'];
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { TagTextInput, useTag } from 'tag-text-input';
 
 const MAX_CHARACTER_COUNT = 500;
 
 const WritingComponent = () => {
-    const [tagSelections, setTagSelections] = useState<Selection[]>();
-
-    const { contentsInfo, setContentsSelection, setContents, setTaggingInfo, resetTaggingInfo } = useUserTaggingStore(
-        (state) => ({
-            contentsInfo: state.contentsInfo,
-            setContentsSelection: state.setContentsSelection,
-            setContents: state.setContents,
-            setTaggingInfo: state.setTaggingInfo,
-            resetTaggingInfo: state.resetTaggingInfo,
-        }),
-        shallow,
-    );
-
-    const handleTextChange = useCallback(
-        (text: string) => {
-            let currentOffset = 0;
-            const newTagSelection = text.split(' ').reduce<Selection[]>((prev, word) => {
-                if (word.startsWith('@')) {
-                    prev.push({ start: currentOffset + 1, end: currentOffset + word.length });
-                }
-
-                currentOffset += word.length + 1;
-                return prev;
-            }, []);
-            setTagSelections(newTagSelection);
-            setContents(text);
-        },
-        [setContents],
-    );
-
-    const handleSelection = useCallback(
-        (event: NativeSyntheticEvent<TextInputSelectionChangeEventData>) => {
-            setContentsSelection(event.nativeEvent.selection);
-        },
-        [setContentsSelection],
-    );
-
-    useEffect(() => {
-        const currentSelection = contentsInfo.selection;
-        const isNotExistsTag = tagSelections === undefined || tagSelections.length === 0;
-        const isNotOneSelection = currentSelection === null || currentSelection.start !== currentSelection.end;
-        if (isNotExistsTag || isNotOneSelection) {
-            resetTaggingInfo();
-            return;
-        }
-
-        for (const selection of tagSelections) {
-            const { start, end } = selection;
-            if (start <= currentSelection.start && currentSelection.end <= end) {
-                setTaggingInfo(selection);
-                return;
-            }
-        }
-
-        resetTaggingInfo();
-    }, [contentsInfo.selection, tagSelections, resetTaggingInfo, setTaggingInfo]);
+    const { contents } = useTag();
 
     return (
         <View style={styles.container}>
             <View style={[styles.textareaContainer]}>
-                <TextInput
-                    value={contentsInfo.contents}
+                <TagTextInput
+                    value={contents}
                     style={[styles.textarea, styles.absolute]}
                     placeholder="일상을 공유해 주세요."
                     maxLength={MAX_CHARACTER_COUNT}
-                    onChangeText={handleTextChange}
-                    onSelectionChange={handleSelection}
                     multiline
                 />
             </View>
             <View style={styles.characterCountContainer}>
-                <Typo variant="body4" color="placeholder">{`${contentsInfo.contents.length} / ${MAX_CHARACTER_COUNT}`}</Typo>
+                <Typo variant="body4" color="placeholder">{`${contents.length} / ${MAX_CHARACTER_COUNT}`}</Typo>
             </View>
         </View>
     );

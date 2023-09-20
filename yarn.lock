@@ -12052,6 +12052,7 @@ __metadata:
     react-native-webview: ^13.2.1
     react-query-native-devtools: ^4.0.0
     react-test-renderer: 18.2.0
+    tag-text-input: 1.0.0
     typescript: 5.2.2
     zod: ^3.22.2
     zustand: ^4.3.8
@@ -13191,6 +13192,17 @@ __metadata:
   checksum: 53b1e247e68e05db7b3808b99b892bd36fb096e6fba213a06da7fab22045e97597db425c724f2bbd6c99a3c295e1e73f3e4de78592289f38431049e1277ca0ae
   languageName: node
   linkType: hard
+
+"tag-text-input@1.0.0, tag-text-input@workspace:packages/tag-text-input":
+  version: 0.0.0-use.local
+  resolution: "tag-text-input@workspace:packages/tag-text-input"
+  dependencies:
+    typescript: 5.2.2
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  languageName: unknown
+  linkType: soft
 
 "tar@npm:^6.0.2, tar@npm:^6.0.5, tar@npm:^6.1.11, tar@npm:^6.1.2":
   version: 6.2.0

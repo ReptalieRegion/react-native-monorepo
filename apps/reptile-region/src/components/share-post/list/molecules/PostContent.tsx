@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import TaggedContent, { TagPressHandler } from '../../common/atoms/TaggedContent';
+import TaggedContent from '../../common/atoms/TaggedContent';
 import CommentContent from '../atoms/CommentContent';
 import LikeContent from '../atoms/LikeContent';
 
@@ -17,8 +17,8 @@ const PostContent = ({ post }: PostContentProps) => {
     const { id: postId, commentCount, contents, likeCount } = post;
     const navigation = useNavigation<SharePostNavigationProp<'share-post/list'>>();
 
-    const onPressTag: TagPressHandler = (content) => {
-        navigation.push('share-post/detail', { nickname: content.slice(1) });
+    const onPressTag = (nickname: string) => {
+        navigation.push('share-post/detail', { nickname });
     };
 
     return (

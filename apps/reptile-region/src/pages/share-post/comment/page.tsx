@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { TagProvider } from 'tag-text-input';
 
 import CommentTagList from '@/components/share-post/comment/atoms/CommentTagList';
 import CommentSkeleton from '@/components/share-post/comment/atoms/loading/CommentSkeleton';
@@ -9,7 +10,7 @@ import CommentList from '@/components/share-post/comment/templates/CommentList';
 
 const CommentPage = () => {
     return (
-        <>
+        <TagProvider>
             <View style={styles.container}>
                 <Suspense fallback={<CommentSkeleton />}>
                     <CommentList />
@@ -19,7 +20,7 @@ const CommentPage = () => {
                 </Suspense>
             </View>
             <CommentEditor />
-        </>
+        </TagProvider>
     );
 };
 

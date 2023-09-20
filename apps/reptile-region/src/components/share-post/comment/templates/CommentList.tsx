@@ -56,6 +56,7 @@ const contentContainerStyle = { paddingLeft: 20, paddingRight: 20 };
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        minHeight: 2,
     },
 });
 

@@ -1,11 +1,7 @@
-import { color } from 'design-system';
-import { TouchableTypo } from 'design-system';
-import React, { useCallback, useEffect, useRef } from 'react';
+import { TouchableTypo, color } from 'design-system';
+import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-import { shallow } from 'zustand/shallow';
-
-import useTagTextInputStore from '@/stores/share-post/useTagTextInputStore';
+import { TagTextInput, useTag } from 'tag-text-input';
 
 type CommentTextInputProps = {
     autoFocus?: boolean;
@@ -14,52 +10,19 @@ type CommentTextInputProps = {
 
 const MAX_CHARACTER_COUNT = 500;
 
-const CommentTextInput = ({ onSubmit, autoFocus }: CommentTextInputProps) => {
-    const textInputRef = useRef<TextInput>(null);
-
-    const { contents, currentSelection, isFocus, setTextInputFocus, handleChangeSelection, handleChangeText } =
-        useTagTextInputStore(
-            (state) => ({
-                contents: state.contentsInfo.contents,
-                currentSelection: state.contentsInfo.selection,
-                isFocus: state.isFocus,
-                setTextInputFocus: state.setTextInputFocus,
-                handleChangeSelection: state.handleChangeSelection,
-                handleChangeText: state.handleChangeText,
-            }),
-            shallow,
-        );
+const CommentTextInput = ({ onSubmit }: CommentTextInputProps) => {
+    const { contents } = useTag();
 
     const handleSubmit = useCallback(() => onSubmit(contents), [contents, onSubmit]);
-
-    useEffect(() => {
-        const focusTimeout = setTimeout(() => autoFocus && textInputRef.current?.focus(), 500);
-
-        return () => {
-            clearTimeout(focusTimeout);
-        };
-    }, [autoFocus]);
-
-    useEffect(() => {
-        if (isFocus) {
-            textInputRef.current?.focus();
-            setTextInputFocus(false);
-        }
-    }, [isFocus, setTextInputFocus]);
 
     return (
         <View style={[styles.bottom]}>
             <View style={styles.textInputContainer}>
-                <TextInput
-                    ref={textInputRef}
-                    selection={currentSelection}
+                <TagTextInput
                     value={contents}
                     style={styles.textInput}
-                    numberOfLines={4}
                     placeholder="댓글을 입력하세요..."
                     maxLength={MAX_CHARACTER_COUNT}
-                    onChangeText={handleChangeText}
-                    onSelectionChange={(event) => handleChangeSelection(event.nativeEvent.selection)}
                     multiline
                 />
                 <TouchableTypo variant="body2" color="primary" onPress={handleSubmit}>

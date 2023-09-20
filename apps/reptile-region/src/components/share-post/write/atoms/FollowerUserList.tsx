@@ -3,26 +3,21 @@ import { Typo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { shallow } from 'zustand/shallow';
+import { useTagHandler, useTagSearch } from 'tag-text-input';
 
 import { SharePostSearchFollowerUserData } from '<SharePostUserAPI>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
+import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 import Avatar from '@/components/common/fast-image/Avatar';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
-import useUserTaggingStore from '@/stores/share-post/useUserTaggingStore';
 
 const FollowerUserList = () => {
-    const { taggingInfo, contents, selectTag } = useUserTaggingStore(
-        (state) => ({
-            contents: state.contentsInfo.contents,
-            taggingInfo: state.taggingInfo,
-            selectTag: state.selectTag,
-        }),
-        shallow,
-    );
+    const { keyword, enabled } = useTagSearch();
+    const { handleSelectTag } = useTagHandler();
 
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
-        search: taggingInfo.keyword ?? '',
+        search: keyword,
+        enabled,
     });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
@@ -30,16 +25,7 @@ const FollowerUserList = () => {
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<SharePostSearchFollowerUserData>) => {
             const handlePressItem = () => {
-                if (taggingInfo.selection === null) {
-                    return;
-                }
-
-                const newContents =
-                    contents.slice(0, taggingInfo.selection.start) +
-                    item.user.nickname +
-                    contents.slice(taggingInfo.selection.end, contents.length);
-                selectTag(newContents);
-                return;
+                handleSelectTag(item.user.nickname);
             };
 
             return (
@@ -51,7 +37,7 @@ const FollowerUserList = () => {
                 </TouchableOpacity>
             );
         },
-        [taggingInfo.selection, contents, selectTag],
+        [handleSelectTag],
     );
     const onEndReached = useCallback(() => {
         if (hasNextPage && !isFetchingNextPage) {
@@ -59,22 +45,24 @@ const FollowerUserList = () => {
         }
     }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
-    if (taggingInfo.keyword === undefined) {
-        return null;
-    }
-
     return (
-        <View style={styles.container}>
-            <Typo variant="title5">팔로우한 사람</Typo>
-            <FlashList
-                data={newData}
-                keyExtractor={keyExtractor}
-                renderItem={renderItem}
-                ListFooterComponent={ListFooterLoading}
-                onEndReached={onEndReached}
-                estimatedItemSize={30}
-            />
-        </View>
+        <ConditionalRenderer
+            condition={enabled}
+            trueContent={
+                <View style={styles.container}>
+                    <Typo variant="title5">팔로우한 사람</Typo>
+                    <FlashList
+                        data={newData}
+                        keyExtractor={keyExtractor}
+                        renderItem={renderItem}
+                        ListFooterComponent={ListFooterLoading}
+                        onEndReached={onEndReached}
+                        estimatedItemSize={30}
+                    />
+                </View>
+            }
+            falseContent={null}
+        />
     );
 };
 

@@ -1,11 +1,11 @@
 import { Typo, color } from 'design-system';
 import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-
-import useTagTextInputStore from '@/stores/share-post/useTagTextInputStore';
+import { useTagSearch } from 'tag-text-input';
 
 const CommentTagListActivityIndicator = () => {
-    const keyword = useTagTextInputStore((state) => state.searchInfo.keyword);
+    const { keyword } = useTagSearch();
+
     return (
         <View style={styles.container}>
             <ActivityIndicator />

@@ -1,35 +1,29 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { Typo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
-import { GestureResponderEvent, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { shallow } from 'zustand/shallow';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useTagHandler, useTagSearch } from 'tag-text-input';
 
 import { SharePostSearchFollowerUserData } from '<SharePostUserAPI>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 import Avatar from '@/components/common/fast-image/Avatar';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
-import useTagTextInputStore from '@/stores/share-post/useTagTextInputStore';
 
 const CommentTagList = () => {
-    const { keyword, handleSelectTag } = useTagTextInputStore(
-        (state) => ({
-            keyword: state.searchInfo.keyword,
-            handleSelectTag: state.handleSelectTag,
-        }),
-        shallow,
-    );
+    const { keyword, enabled } = useTagSearch();
+    const { handleSelectTag } = useTagHandler();
 
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
-        search: keyword ?? '',
+        search: keyword,
+        enabled: enabled,
     });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
     const keyExtractor = useCallback((item: SharePostSearchFollowerUserData) => item.user.id, []);
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<SharePostSearchFollowerUserData>) => {
-            const handlePressTag = (event: GestureResponderEvent) => {
-                event.preventDefault();
+            const handlePressTag = () => {
                 handleSelectTag(item.user.nickname);
             };
 
@@ -51,9 +45,8 @@ const CommentTagList = () => {
 
     return (
         <ConditionalRenderer
-            condition={keyword === null}
-            trueContent={null}
-            falseContent={
+            condition={enabled}
+            trueContent={
                 <View style={styles.container}>
                     <FlashList
                         keyboardShouldPersistTaps="handled"
@@ -66,6 +59,7 @@ const CommentTagList = () => {
                     />
                 </View>
             }
+            falseContent={null}
         />
     );
 };

@@ -2,6 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { TouchableTypo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { useTagHandler } from 'tag-text-input';
 
 import { ActionButton } from '../atoms/CommentActions';
 import CommentContents from '../molecules/CommentContents';
@@ -13,7 +14,6 @@ import ConditionalRenderer from '@/components/common/element/ConditionalRenderer
 import Avatar from '@/components/common/fast-image/Avatar';
 import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 import useCommentStore from '@/stores/share-post/useCommentStore';
-import useTagTextInputStore from '@/stores/share-post/useTagTextInputStore';
 
 type RenderItemProps = {
     user: SharePostCommentData['user'];
@@ -25,12 +25,8 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
     const navigation = useNavigation<SharePostCommentBottomSheetNavigationProp<'main'>>();
     const { navigationModalDetail } = useCommentNavigation();
     const { mutate } = useDeleteComment();
-    const { handleChangeText, setTextInputFocus, handleChangeSelection } = useTagTextInputStore((state) => ({
-        handleChangeText: state.handleChangeText,
-        setTextInputFocus: state.setTextInputFocus,
-        handleChangeSelection: state.handleChangeSelection,
-    }));
     const setCommentRegisterType = useCommentStore((state) => state.setCommentRegisterType);
+    const { changeText, tagTextInputFocus } = useTagHandler();
 
     const navigateCommentReply = useCallback(
         (commentingActive: boolean) => navigation.navigate('reply', { comment, user, commentingActive }),
@@ -38,21 +34,14 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
     );
     const deleteComment = useCallback(() => mutate({ commentId: comment.id }), [comment.id, mutate]);
     const updateComment = useCallback(() => {
-        const contents = comment.contents + ' ';
-        const position = contents.length;
-        setTextInputFocus(true);
-        handleChangeText(contents);
-        handleChangeSelection({ start: position, end: position });
+        tagTextInputFocus();
+        changeText(comment.contents);
         setCommentRegisterType({ commentType: 'comment', key: params.post.id, type: 'update', id: comment.id });
-    }, [
-        params.post.id,
-        comment.contents,
-        comment.id,
-        setTextInputFocus,
-        handleChangeText,
-        handleChangeSelection,
-        setCommentRegisterType,
-    ]);
+    }, [comment.contents, comment.id, params.post.id, changeText, setCommentRegisterType, tagTextInputFocus]);
+
+    const writeCommentReply = useCallback(() => {
+        navigateCommentReply(true);
+    }, [navigateCommentReply]);
 
     const actionButtons = useMemo<ActionButton[]>(
         () => [
@@ -69,14 +58,14 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
             {
                 label: '댓글 쓰기',
                 showTarget: 'other',
-                onPress: () => navigateCommentReply(true),
+                onPress: writeCommentReply,
             },
             {
                 label: '신고',
                 showTarget: 'other',
             },
         ],
-        [deleteComment, navigateCommentReply, updateComment],
+        [deleteComment, updateComment, writeCommentReply],
     );
 
     return (

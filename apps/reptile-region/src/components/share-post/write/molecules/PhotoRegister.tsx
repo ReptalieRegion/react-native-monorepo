@@ -3,16 +3,17 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { useTagSearch } from 'tag-text-input';
 import { shallow } from 'zustand/shallow';
 
 import SharePostWriteTitle from '../atoms/SharePostWriteTitle';
 
 import { CancelButton } from '@/assets/icons';
+import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
-import useUserTaggingStore from '@/stores/share-post/useUserTaggingStore';
 
 const PhotoRegister = () => {
-    const { taggingInfo } = useUserTaggingStore();
+    const { enabled } = useTagSearch();
     const { selectedPhotos, deleteSelectedPhoto } = usePhotoStore(
         (state) => ({
             selectedPhotos: state.selectedPhotos,
@@ -32,28 +33,30 @@ const PhotoRegister = () => {
         }
     };
 
-    if (taggingInfo.keyword !== undefined) {
-        return null;
-    }
-
     return (
-        <View>
-            <SharePostWriteTitle title="사진 등록" />
-            <ScrollView contentContainerStyle={styles.container} horizontal showsHorizontalScrollIndicator={false}>
-                {selectedPhotos.map((item, index) => (
-                    <View key={index} style={styles.imageContainer}>
-                        <TouchableOpacity
-                            containerStyle={styles.cancelButton}
-                            style={styles.cancelBackground}
-                            onPress={() => handelCancelButtonClick(index)}
-                        >
-                            <CancelButton width={16} height={16} fill={color.White.toString()} />
-                        </TouchableOpacity>
-                        <Image style={styles.image} source={{ uri: item.node.image.uri }} />
-                    </View>
-                ))}
-            </ScrollView>
-        </View>
+        <ConditionalRenderer
+            condition={enabled}
+            trueContent={null}
+            falseContent={
+                <View>
+                    <SharePostWriteTitle title="사진 등록" />
+                    <ScrollView contentContainerStyle={styles.container} horizontal showsHorizontalScrollIndicator={false}>
+                        {selectedPhotos.map((item, index) => (
+                            <View key={index} style={styles.imageContainer}>
+                                <TouchableOpacity
+                                    containerStyle={styles.cancelButton}
+                                    style={styles.cancelBackground}
+                                    onPress={() => handelCancelButtonClick(index)}
+                                >
+                                    <CancelButton width={16} height={16} fill={color.White.toString()} />
+                                </TouchableOpacity>
+                                <Image style={styles.image} source={{ uri: item.node.image.uri }} />
+                            </View>
+                        ))}
+                    </ScrollView>
+                </View>
+            }
+        />
     );
 };
 

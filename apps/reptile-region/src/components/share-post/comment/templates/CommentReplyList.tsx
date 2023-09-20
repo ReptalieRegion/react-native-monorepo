@@ -59,6 +59,7 @@ const CommentReplyList = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        minHeight: 2,
     },
     renderItemContainer: {
         paddingLeft: 60,
