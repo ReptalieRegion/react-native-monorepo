@@ -3223,13 +3223,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reptalieregion/webview-bridge@npm:1.0.25":
-  version: 1.0.25
-  resolution: "@reptalieregion/webview-bridge@npm:1.0.25::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40reptalieregion%2Fwebview-bridge%2F1.0.25%2Fbb2e77ce00f3ee8d6efe0e5fc9133306c2677c45"
-  checksum: 1f45ce85a665622801ffcd9a873153017a8e330784678240515c5732e80d6d55da7b0849c8c0bd032ef6836f8682407f093f6859268bb9bd841b4bd8fb7b822b
-  languageName: node
-  linkType: hard
-
 "@segment/loosely-validate-event@npm:^2.0.0":
   version: 2.0.0
   resolution: "@segment/loosely-validate-event@npm:2.0.0"
@@ -12008,7 +12001,6 @@ __metadata:
     "@react-navigation/native": ^6.1.6
     "@react-navigation/native-stack": ^6.9.12
     "@react-navigation/stack": ^6.3.17
-    "@reptalieregion/webview-bridge": 1.0.25
     "@shopify/flash-list": ^1.6.1
     "@tanstack/react-query": ^4.32.0
     "@tsconfig/react-native": ^3.0.0
