@@ -56,7 +56,7 @@ const Posts = () => {
                 data={newData}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
-                estimatedItemSize={200}
+                estimatedItemSize={400}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
                 onEndReached={onEndReached}
                 ListFooterComponent={ListFooterComponent}

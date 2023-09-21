@@ -32,7 +32,11 @@ declare module '<SharePostCommentAPI>' {
         contents: string;
     };
 
-    type CreateCommentResponse = SharePostCommentData;
+    type CreateCommentResponse = SharePostCommentData & {
+        post: {
+            id: string;
+        };
+    };
 
     /** PUT */
     // 사용자의 특정 댓글 수정

@@ -15,7 +15,7 @@ const CommentReplyEditor = () => {
     const commentInfo = useCommentStore((state) => state.commentReply[params.comment.id]);
 
     const handleCommentReplySubmit = (contents: string) => {
-        if (commentInfo.register === 'update' && commentInfo.commentId) {
+        if (commentInfo?.register === 'update' && commentInfo?.commentId) {
             updateCommentReply({ commentReplyId: commentInfo.commentId, contents });
         } else {
             createCommentReply({ commentId: params.comment.id, contents });

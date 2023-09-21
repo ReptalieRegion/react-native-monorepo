@@ -15,10 +15,10 @@ import useCommentStore from '@/stores/share-post/useCommentStore';
 
 type RenderItemProps = {
     user: SharePostCommentReplyData['user'];
-    comment: SharePostCommentReplyData['comment'];
+    commentReply: SharePostCommentReplyData['commentReply'];
 };
 
-const CommentReplyRenderItem = ({ user, comment }: RenderItemProps) => {
+const CommentReplyRenderItem = ({ user, commentReply }: RenderItemProps) => {
     const { navigationModalDetail } = useCommentNavigation();
     const { mutate } = useDeleteCommentReply();
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'reply'>>();
@@ -26,14 +26,14 @@ const CommentReplyRenderItem = ({ user, comment }: RenderItemProps) => {
     const setCommentRegisterType = useCommentStore((state) => state.setCommentRegisterType);
     const { changeText, tagTextInputFocus } = useTagHandler();
 
-    const deleteComment = useCallback(() => mutate({ commentReplyId: comment.id }), [comment.id, mutate]);
+    const deleteComment = useCallback(() => mutate({ commentReplyId: commentReply.id }), [commentReply.id, mutate]);
 
     const updateComment = useCallback(() => {
-        const contents = comment.contents + ' ';
+        const contents = commentReply.contents + ' ';
         tagTextInputFocus();
         changeText(contents);
-        setCommentRegisterType({ commentType: 'commentReply', key: params.comment.id, type: 'update', id: comment.id });
-    }, [comment.contents, comment.id, params.comment.id, tagTextInputFocus, changeText, setCommentRegisterType]);
+        setCommentRegisterType({ commentType: 'commentReply', key: params.comment.id, type: 'update', id: commentReply.id });
+    }, [commentReply.contents, commentReply.id, tagTextInputFocus, changeText, setCommentRegisterType, params.comment.id]);
 
     const actionButtons: ActionButton[] = useMemo(
         () => [
@@ -73,10 +73,10 @@ const CommentReplyRenderItem = ({ user, comment }: RenderItemProps) => {
             <View style={styles.commentItemContent}>
                 <CommentContents
                     comment={{
-                        contents: comment.contents,
-                        id: comment.id,
-                        isMine: comment.isMine,
-                        isModified: comment.isModified,
+                        contents: commentReply.contents,
+                        id: commentReply.id,
+                        isMine: commentReply.isMine,
+                        isModified: commentReply.isModified,
                     }}
                     user={{ nickname: user.nickname }}
                     actionButtons={actionButtons}

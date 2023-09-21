@@ -23,7 +23,7 @@ const createCommentReply = (props?: CreateCommentReplyProps): SharePostCommentRe
             },
             nickname: fakerKO.person.middleName(),
         },
-        comment: {
+        commentReply: {
             id: commentReplyId,
             contents,
             isMine: fakerBoolean(),

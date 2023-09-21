@@ -15,9 +15,10 @@ const CommentEditor = () => {
     const commentInfo = useCommentStore((state) => state.comment[params.post.id]);
 
     const handleCommentSubmit = (contents: string) => {
-        if (commentInfo.register === 'update' && commentInfo.commentId) {
+        if (commentInfo?.register === 'update' && commentInfo?.commentId) {
             updateComment({ commentId: commentInfo.commentId, contents });
         } else {
+            console.log(commentInfo);
             createComment({ postId: params.post.id, contents });
         }
     };

@@ -67,7 +67,7 @@ const deleteCommentReplyListCache = ({
             }
 
             const updatePages = [...prevCommentReplyData.pages].map((page) => {
-                const items = page.items.filter((item) => item.comment.id !== data.commentReply.id);
+                const items = page.items.filter((item) => item.commentReply.id !== data.commentReply.id);
 
                 return { ...page, items };
             });

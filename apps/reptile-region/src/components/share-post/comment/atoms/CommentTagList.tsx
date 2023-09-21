@@ -16,7 +16,7 @@ const CommentTagList = () => {
 
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
         search: keyword,
-        enabled: enabled,
+        enabled,
     });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);

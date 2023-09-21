@@ -12,7 +12,7 @@ declare module '<SharePostCommentReplyAPI>' {
             profile: ShareImageType;
             nickname: string;
         };
-        comment: {
+        commentReply: {
             id: string;
             contents: string;
             isMine: boolean;
@@ -29,7 +29,14 @@ declare module '<SharePostCommentReplyAPI>' {
         contents: string;
     };
 
-    type CreateCommentReplyResponse = SharePostCommentReplyData;
+    type CreateCommentReplyResponse = SharePostCommentReplyData & {
+        post: {
+            id: string;
+        };
+        comment: {
+            id: string;
+        };
+    };
 
     /** PUT */
     // 사용자의 특정 대댓글 수정

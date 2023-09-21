@@ -18,18 +18,18 @@ const CommentReplyList = () => {
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
 
-    const keyExtractor = useCallback((item: SharePostCommentReplyData) => item.comment.id, []);
+    const keyExtractor = useCallback((item: SharePostCommentReplyData) => item.commentReply.id, []);
 
     const renderItem: ListRenderItem<SharePostCommentReplyData> = useCallback((props) => {
         return (
             <View style={styles.renderItemContainer}>
-                <CommentReplyRenderItem comment={props.item.comment} user={props.item.user} />
+                <CommentReplyRenderItem commentReply={props.item.commentReply} user={props.item.user} />
             </View>
         );
     }, []);
 
     const ListHeaderComponent = useCallback(
-        () => <CommentReplyRenderItem comment={params.comment} user={params.user} />,
+        () => <CommentReplyRenderItem commentReply={params.comment} user={params.user} />,
         [params],
     );
 

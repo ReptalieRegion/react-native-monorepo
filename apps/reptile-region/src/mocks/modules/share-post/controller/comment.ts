@@ -23,8 +23,9 @@ const commentController = () => {
         rest.post(BASE_URI + 'share/comment', async (req, res, ctx) => {
             const body = (await req.json()) as CreateCommentRequest;
             const data = createComment(body);
+            const newData = Object.assign({}, data, { post: { id: '' } });
 
-            return res(ctx.status(200), ctx.json(data));
+            return res(ctx.status(200), ctx.json(newData));
         }),
         /** PUT */
         rest.put(BASE_URI + 'share/comments/:commentId', async (req, res, ctx) => {
