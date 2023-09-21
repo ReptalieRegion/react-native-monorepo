@@ -6,7 +6,7 @@ const useCommentNavigation = () => {
     const navigation = useNavigation<SharePostNavigationProp<'share-post/bottom-sheet/comment'>>();
 
     const navigationModalDetail = (nickname: string) => {
-        navigation.navigate('share-post/modal/detail', { nickname });
+        navigation.push('share-post/modal/detail', { nickname });
     };
 
     return { navigationModalDetail };

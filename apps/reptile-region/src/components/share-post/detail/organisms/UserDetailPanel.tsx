@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         gap: 5,
+        height: 195,
     },
     textContainer: {
         height: 20,

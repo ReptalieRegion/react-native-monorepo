@@ -1,24 +1,32 @@
+import { useRoute } from '@react-navigation/native';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { color } from 'design-system';
 import React, { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
-import FloatingActionButtons from '../molecules/FloatingActionButtons';
-import PostCard from '../organisms/PostCard';
+import PostModalCard from '../organisms/PostModalCard';
 
-import type { SharePostListData } from '<SharePostAPI>';
-import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
+import type { SharePostListUserDetailData } from '<SharePostAPI>';
+import { SharePostRouteProp } from '<SharePostRoutes>';
+import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
+import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
-import useFlashListScroll from '@/hooks/flash-list/useFlashListScroll';
 
-const Posts = () => {
-    const { flashListRef, scrollDirection, scrollToTop, determineScrollDirection } = useFlashListScroll<SharePostListData>();
+const UserPosts = () => {
+    const { params } = useRoute<SharePostRouteProp<'share-post/list/user'>>();
     const [refreshing, setRefreshing] = useState<boolean>(false);
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
+    const { data: userData } = useFetchUserProfile({ nickname: params.nickname });
+    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({
+        nickname: params.nickname,
+    });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data]);
-    const keyExtractor = useCallback((item: SharePostListData) => item.post.id, []);
-    const renderItem = useCallback(({ item }: ListRenderItemInfo<SharePostListData>) => <PostCard {...item} />, []);
+    const keyExtractor = useCallback((item: SharePostListUserDetailData) => item.post.id, []);
+
+    const renderItem = useCallback(
+        (props: ListRenderItemInfo<SharePostListUserDetailData>) => <PostModalCard {...props} />,
+        [],
+    );
     const ListFooterComponent = useCallback(() => <ListFooterLoading isLoading={isFetchingNextPage} />, [isFetchingNextPage]);
     const asyncOnRefresh = useCallback(async () => {
         setRefreshing(true);
@@ -33,9 +41,9 @@ const Posts = () => {
     return (
         <View style={styles.container}>
             <FlashList
-                ref={flashListRef}
                 contentContainerStyle={styles.listContainer}
                 data={newData}
+                extraData={userData?.user}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
                 estimatedItemSize={400}
@@ -43,9 +51,7 @@ const Posts = () => {
                 onEndReached={onEndReached}
                 ListFooterComponent={ListFooterComponent}
                 scrollEventThrottle={16}
-                onScroll={determineScrollDirection}
             />
-            <FloatingActionButtons animationMode={scrollDirection} scrollToTop={scrollToTop} />
         </View>
     );
 };
@@ -60,4 +66,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Posts;
+export default UserPosts;

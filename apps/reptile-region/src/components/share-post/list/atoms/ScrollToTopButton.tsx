@@ -1,32 +1,21 @@
 import { color } from 'design-system';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import type { ScrollIntoViewProps } from '<FlashList>';
 import type { FloatingActionButtonSize } from '<SharePostComponent>';
 import { UpArrow } from '@/assets/icons';
 import FloatingActionButton, { IconStyle } from '@/components/common/element/button/FloatingActionButton';
-import useLock from '@/hooks/useLock';
-
-export type ScrollToTopButtonAnimationMode = 'UP' | 'DOWN' | 'STOP';
+import type { ScrollDirection, ScrollToTop } from '@/hooks/flash-list/useFlashListScroll';
 
 export type ScrollTopButtonProps = {
-    animationMode: ScrollToTopButtonAnimationMode;
-    scrollIntoView: (props: ScrollIntoViewProps) => void;
+    animationMode: ScrollDirection;
+    scrollToTop: ScrollToTop;
 };
 
 const ANIMATION_DURATION = 300;
-const LOCK_DURATION = 500;
 
-const ScrollToTopButton = ({
-    width,
-    height,
-    animationMode,
-    scrollIntoView,
-}: ScrollTopButtonProps & FloatingActionButtonSize) => {
-    const { isLock, lockEnd, lockStart } = useLock();
-    const lockTimeout = useRef<NodeJS.Timeout>();
+const ScrollToTopButton = ({ width, height, animationMode, scrollToTop }: ScrollTopButtonProps & FloatingActionButtonSize) => {
     const translateY = useSharedValue(0);
     const opacity = useSharedValue(0);
     const animatedContainerStyle = useAnimatedStyle(() => ({
@@ -34,31 +23,15 @@ const ScrollToTopButton = ({
         opacity: opacity.value,
     }));
 
-    const animateButton = useCallback(
-        (direction: ScrollToTopButtonAnimationMode) => {
-            const animateValue = {
-                translateY: direction === 'UP' ? -(height + 10) : 0,
-                opacity: direction === 'UP' ? 1 : 0,
-            };
-
-            translateY.value = withTiming(animateValue.translateY, { duration: ANIMATION_DURATION });
-            opacity.value = withTiming(animateValue.opacity, { duration: ANIMATION_DURATION });
-        },
-        [height, opacity, translateY],
-    );
-
     useEffect(() => {
-        if (!isLock()) {
-            animateButton(animationMode);
-        }
-    }, [animationMode, isLock, animateButton]);
+        const animateValue = {
+            translateY: animationMode === 'UP' ? -(height + 10) : 0,
+            opacity: animationMode === 'UP' ? 1 : 0,
+        };
 
-    const handleIconClick = () => {
-        lockStart();
-        scrollIntoView({ offset: 0 });
-        animateButton('DOWN');
-        lockTimeout.current = setTimeout(lockEnd, LOCK_DURATION);
-    };
+        translateY.value = withTiming(animateValue.translateY, { duration: ANIMATION_DURATION });
+        opacity.value = withTiming(animateValue.opacity, { duration: ANIMATION_DURATION });
+    }, [height, animationMode, opacity, translateY]);
 
     return (
         <Animated.View style={[styles.container, animatedContainerStyle]}>
@@ -69,7 +42,7 @@ const ScrollToTopButton = ({
                     ...iconStyle,
                 }}
                 Icon={UpArrow}
-                onPress={handleIconClick}
+                onPress={scrollToTop}
             />
         </Animated.View>
     );

@@ -7,8 +7,11 @@ import SharePostPostingRoutes from './Posting';
 import type { SharePostParamList } from '<SharePostRoutes>';
 import { NativeStackDefaultHeader } from '@/components/common/layouts/header/utils/create-header';
 import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/DetailHeader';
+import SharePostUserDetailListHeader from '@/components/share-post/list/atoms/header/SharePostUserDetailListHeader';
 import KebabMenuBottomSheet from '@/components/share-post/list/ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
 import { SharePostDetailPage, SharePostListPage } from '@/pages/share-post';
+import SharePostDetailProfileModal from '@/pages/share-post/detail/modal/page';
+import SharePostUserList from '@/pages/share-post/list/user/page';
 
 const SharePostStack = createNativeStackNavigator<SharePostParamList>();
 
@@ -23,6 +26,11 @@ const SharePostRoutes = () => {
                     options={{ header: NativeStackDefaultHeader }}
                 />
                 <SharePostStack.Screen
+                    name="share-post/list/user"
+                    component={SharePostUserList}
+                    options={{ header: SharePostUserDetailListHeader }}
+                />
+                <SharePostStack.Screen
                     name="share-post/detail"
                     component={SharePostDetailPage}
                     options={{ header: SharePostDetailHeader }}
@@ -33,8 +41,13 @@ const SharePostRoutes = () => {
             <SharePostStack.Group navigationKey="share-post/modal" screenOptions={{ presentation: 'transparentModal' }}>
                 <SharePostStack.Screen
                     name="share-post/modal/detail"
-                    component={SharePostDetailPage}
+                    component={SharePostDetailProfileModal}
                     options={{ header: SharePostDetailHeader }}
+                />
+                <SharePostStack.Screen
+                    name="share-post/modal/list/user"
+                    component={SharePostUserList}
+                    options={{ header: SharePostUserDetailListHeader }}
                 />
                 <SharePostStack.Screen
                     name="share-post/modal/posting"

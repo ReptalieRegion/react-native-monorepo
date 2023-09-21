@@ -11,14 +11,17 @@ import UserDetailPanelSkeleton from '@/components/share-post/detail/atoms/loadin
 import SharePostsDetailList from '@/components/share-post/detail/organisms/PostsDetailList';
 import UserDetailPanel from '@/components/share-post/detail/organisms/UserDetailPanel';
 
-type SharePostDetailProfileScreenNavigationProp = CompositeScreenProps<
-    NativeStackScreenProps<SharePostParamList, 'share-post/detail'>,
+type SharePostModalDetailScreenNavigationProp = CompositeScreenProps<
+    NativeStackScreenProps<SharePostParamList, 'share-post/modal/detail'>,
     BottomTabScreenProps<RootRoutesParamList, 'share-post/routes'>
 >;
 
-export default function SharePostDetailProfile({ navigation, route: { params } }: SharePostDetailProfileScreenNavigationProp) {
+export default function SharePostDetailProfileModal({
+    navigation,
+    route: { params },
+}: SharePostModalDetailScreenNavigationProp) {
     const handleImagePress = () => {
-        navigation.push('share-post/list/user', { nickname: params.nickname });
+        navigation.push('share-post/modal/list/user', { nickname: params.nickname });
     };
 
     return (

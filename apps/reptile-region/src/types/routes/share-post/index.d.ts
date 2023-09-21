@@ -1,9 +1,11 @@
 declare module '<SharePostRoutes>' {
-    import type { RouteProp } from '@react-navigation/native';
+    import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+    import type { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
     import type { NavigatorScreenParams } from '@react-navigation/native';
     import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
     import { ShareImageType } from '<Image>';
+    import { RootRoutesParamList } from '<RootRoutes>';
 
     /** 게시물 작성 관련 내비게이터 */
     type SharePostPostingParamList = {
@@ -73,14 +75,20 @@ declare module '<SharePostRoutes>' {
         nickname: string;
     };
 
+    type SharePostUserList = {
+        nickname: string;
+    };
+
     type SharePostParamList = {
         /** Bottom Tab이 있는 페이지 */
         'share-post/list': undefined;
         'share-post/detail': SharePostDetailProps;
+        'share-post/list/user': SharePostUserList;
 
         /** Bottom Tab이 없는 페이지 */
         'share-post/modal/detail': SharePostDetailProps;
         'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
+        'share-post/modal/list/user': SharePostUserList;
 
         /** Bottom Sheet */
         'share-post/bottom-sheet/comment': NavigatorScreenParams<SharePostCommentBottomSheetParamList>;
@@ -92,5 +100,10 @@ declare module '<SharePostRoutes>' {
     type SharePostNavigationProp<RouteName extends keyof SharePostParamList> = NativeStackNavigationProp<
         SharePostParamList,
         RouteName
+    >;
+
+    type Compose = CompositeNavigationProp<
+        BottomTabNavigationProp<RootRoutesParamList>,
+        NativeStackNavigationProp<SharePostParamList, 'share-post/bottom-sheet/comment'>
     >;
 }

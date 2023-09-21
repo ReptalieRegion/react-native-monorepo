@@ -2,14 +2,19 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import PostWrite from '../atoms/PostWrite';
-import ScrollToTopButton, { ScrollTopButtonProps } from '../atoms/ScrollToTopButton';
+import ScrollToTopButton from '../atoms/ScrollToTopButton';
 
-type FloatingActionButtonsProps = ScrollTopButtonProps;
+import type { ScrollDirection, ScrollToTop } from '@/hooks/flash-list/useFlashListScroll';
 
-const FloatingActionButtons = ({ animationMode, scrollIntoView }: FloatingActionButtonsProps) => {
+type FloatingActionButtonsProps = {
+    animationMode: ScrollDirection;
+    scrollToTop: ScrollToTop;
+};
+
+const FloatingActionButtons = ({ animationMode, scrollToTop }: FloatingActionButtonsProps) => {
     return (
         <View style={[styles.container, styles.buttonSize]}>
-            <ScrollToTopButton {...styles.buttonSize} animationMode={animationMode} scrollIntoView={scrollIntoView} />
+            <ScrollToTopButton {...styles.buttonSize} animationMode={animationMode} scrollToTop={scrollToTop} />
             <PostWrite {...styles.buttonSize} />
         </View>
     );

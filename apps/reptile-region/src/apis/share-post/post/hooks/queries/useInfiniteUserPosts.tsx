@@ -10,6 +10,7 @@ const useInfiniteUserPosts = ({ nickname }: GetDetailUserPostsRequest) => {
         queryKey: sharePostQueryKeys.detailUserPosts(nickname),
         queryFn: ({ pageParam }) => getDetailUserPosts({ nickname, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
+        suspense: true,
     });
 };
 

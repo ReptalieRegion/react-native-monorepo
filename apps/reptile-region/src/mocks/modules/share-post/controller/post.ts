@@ -5,6 +5,7 @@ import createUserPostImages from '../service/createUserPostImages';
 
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
+import { wait } from '@/mocks/utils/helpers';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const postController = () => {
@@ -24,9 +25,11 @@ const postController = () => {
 
             return res(ctx.status(200), ctx.json(data));
         }),
-        rest.get(BASE_URI + 'share/posts/list/users/:userId', (req, res, ctx) => {
-            const postImages = createEmptyArray(10).map(() => createPostList());
+        rest.get(BASE_URI + 'share/posts/list/users/:userId', async (req, res, ctx) => {
+            const postImages = createEmptyArray(12).map(() => createPostList());
             const data = createInfinityData({ searchParams: req.url.searchParams, items: postImages });
+
+            await wait(5000);
 
             return res(ctx.status(200), ctx.json(data));
         }),

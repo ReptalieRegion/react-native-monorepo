@@ -16,7 +16,7 @@ const SharePostCommentBottomSheetRoutes = ({ navigation }: { navigation: any }) 
     const { state } = useAnimatedKeyboard();
     const handleClose = () => {
         if (state.value === 0 || state.value === 4) {
-            navigation.navigate('share-post/list');
+            navigation.goBack();
         }
     };
 
