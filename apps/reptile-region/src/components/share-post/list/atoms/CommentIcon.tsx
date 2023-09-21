@@ -1,34 +1,22 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import type { SharePostListData } from '<SharePostAPI>';
-import type { SharePostNavigationProp } from '<SharePostRoutes>';
 import { Comment } from '@/assets/icons';
 
 type CommentIconType = {
-    post: Pick<SharePostListData['post'], 'id'>;
+    onPress: () => void;
 };
 
-const CommentIcon = ({ post }: CommentIconType) => {
-    const navigation = useNavigation<SharePostNavigationProp<'share-post/list'>>();
-
-    const handleClickComment = () => {
-        navigation.push('share-post/bottom-sheet/comment', {
-            screen: 'main',
-            params: { post },
-        });
-    };
-
+export default function CommentIcon({ onPress }: CommentIconType) {
     return (
-        <TouchableWithoutFeedback onPress={handleClickComment}>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
                 <Comment />
             </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -36,5 +24,3 @@ const styles = StyleSheet.create({
         height: 40,
     },
 });
-
-export default CommentIcon;

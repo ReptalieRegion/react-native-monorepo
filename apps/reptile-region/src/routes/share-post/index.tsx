@@ -11,7 +11,8 @@ import SharePostUserDetailListHeader from '@/components/share-post/list/atoms/he
 import KebabMenuBottomSheet from '@/components/share-post/list/ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
 import { SharePostDetailPage, SharePostListPage } from '@/pages/share-post';
 import SharePostDetailProfileModal from '@/pages/share-post/detail/modal/page';
-import SharePostUserList from '@/pages/share-post/list/user/page';
+import SharePostUserListModalPage from '@/pages/share-post/list/user/modal/page';
+import SharePostUserListPage from '@/pages/share-post/list/user/page';
 
 const SharePostStack = createNativeStackNavigator<SharePostParamList>();
 
@@ -27,7 +28,7 @@ const SharePostRoutes = () => {
                 />
                 <SharePostStack.Screen
                     name="share-post/list/user"
-                    component={SharePostUserList}
+                    component={SharePostUserListPage}
                     options={{ header: SharePostUserDetailListHeader }}
                 />
                 <SharePostStack.Screen
@@ -46,7 +47,7 @@ const SharePostRoutes = () => {
                 />
                 <SharePostStack.Screen
                     name="share-post/modal/list/user"
-                    component={SharePostUserList}
+                    component={SharePostUserListModalPage}
                     options={{ header: SharePostUserDetailListHeader }}
                 />
                 <SharePostStack.Screen

@@ -1,31 +1,46 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import Follow from '../atoms/Follow';
-import PostKebabMenu from '../atoms/PostKebabMenu';
+import Follow from '../../common/atoms/Follow';
 import Profile from '../atoms/Profile';
 
-import type { SharePostListData } from '<SharePostAPI>';
+import type { ShareImageType } from '<Image>';
+import { KebabMenu } from '@/assets/icons';
 import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 
 type PostHeaderProps = {
-    user: Pick<SharePostListData['user'], 'nickname' | 'profile' | 'isFollow' | 'id'>;
-    post: Pick<SharePostListData['post'], 'id' | 'isMine'>;
+    user: {
+        id: string;
+        nickname: string;
+        profile: ShareImageType;
+        isFollow: boolean | undefined;
+    };
+    post: {
+        isMine: boolean;
+    };
+    handleProfilePress: () => void;
+    handleKebabMenuPress: () => void;
 };
 
-const PostHeader = ({ user, post }: PostHeaderProps) => {
-    const { id: userId, isFollow, nickname, profile } = user;
-
+const PostHeader = ({
+    user: { id: userId, isFollow, nickname, profile },
+    post,
+    handleProfilePress,
+    handleKebabMenuPress,
+}: PostHeaderProps) => {
     return (
         <View style={styles.container}>
-            <Profile user={{ id: userId, nickname, profile }} />
+            <Profile user={{ nickname, profile }} onPress={handleProfilePress} />
             <View style={styles.rightContent}>
                 <ConditionalRenderer
                     condition={post.isMine}
                     trueContent={null}
                     falseContent={<Follow user={{ id: userId, isFollow }} />}
                 />
-                <PostKebabMenu user={{ id: user.id }} post={post} />
+                <TouchableOpacity onPress={handleKebabMenuPress}>
+                    <KebabMenu />
+                </TouchableOpacity>
             </View>
         </View>
     );

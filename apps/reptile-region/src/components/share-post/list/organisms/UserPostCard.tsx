@@ -3,21 +3,36 @@ import { StyleSheet, View } from 'react-native';
 
 import InteractivePost from '../molecules/InteractivePost';
 import PostContent from '../molecules/PostContent';
-import PostHeader from '../molecules/PostHeader';
 import PostImageCarousel from '../molecules/PostImageCarousel';
+import PostModalHeader from '../molecules/PostModalHeader';
 
-import type { SharePostListData } from '<SharePostAPI>';
+import type { ShareImageType } from '<Image>';
 import type { SharePostListNavigationProps } from '<SharePostComponent>';
 
-type PostCardProps = SharePostListNavigationProps & SharePostListData;
+type PostModalCardProps = {
+    post: {
+        id: string;
+        images: ShareImageType[];
+        contents: string;
+        isMine: boolean;
+        isLike: boolean | undefined;
+        likeCount: number;
+        commentCount: number;
+    };
+    user: {
+        id: string;
+        nickname: string;
+        profile: ShareImageType;
+    };
+} & SharePostListNavigationProps;
 
-export default function PostCard({
+export default function UserPostCard({
     post: { id: postId, images, isLike, commentCount, contents, likeCount, isMine },
-    user: { id: userId, isFollow, nickname, profile },
+    user: { id: userId, nickname, profile },
     navigateBottomSheetKebabMenu,
     navigateCommentPage,
     navigateDetailPage,
-}: PostCardProps) {
+}: PostModalCardProps) {
     /** navigation 시작 */
     const handleTagPress = (tag: string) => {
         navigateDetailPage({ nickname: tag });
@@ -38,9 +53,8 @@ export default function PostCard({
 
     return (
         <View style={styles.container}>
-            <PostHeader
-                post={{ isMine }}
-                user={{ id: userId, isFollow, nickname, profile }}
+            <PostModalHeader
+                user={{ nickname, profile }}
                 handleProfilePress={handleProfilePress}
                 handleKebabMenuPress={handleKebabMenuPress}
             />
@@ -48,8 +62,8 @@ export default function PostCard({
             <InteractivePost post={{ id: postId, images, isLike }} handleCommentPress={handleCommentPress} />
             <PostContent
                 post={{ id: postId, commentCount, contents, likeCount }}
-                handleTagPress={handleTagPress}
                 handleCommentPress={handleCommentPress}
+                handleTagPress={handleTagPress}
             />
         </View>
     );

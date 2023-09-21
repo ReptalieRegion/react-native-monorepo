@@ -11,14 +11,14 @@ type FloatingActionButtonsProps = {
     scrollToTop: ScrollToTop;
 };
 
-const FloatingActionButtons = ({ animationMode, scrollToTop }: FloatingActionButtonsProps) => {
+export default function FloatingActionButtons({ animationMode, scrollToTop }: FloatingActionButtonsProps) {
     return (
         <View style={[styles.container, styles.buttonSize]}>
             <ScrollToTopButton {...styles.buttonSize} animationMode={animationMode} scrollToTop={scrollToTop} />
             <PostWrite {...styles.buttonSize} />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -31,5 +31,3 @@ const styles = StyleSheet.create({
         height: 50,
     },
 });
-
-export default FloatingActionButtons;

@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -6,29 +5,30 @@ import TaggedContent from '../../common/atoms/TaggedContent';
 import CommentContent from '../atoms/CommentContent';
 import LikeContent from '../atoms/LikeContent';
 
-import type { SharePostListData } from '<SharePostAPI>';
-import type { SharePostNavigationProp } from '<SharePostRoutes>';
-
 type PostContentProps = {
-    post: Pick<SharePostListData['post'], 'likeCount' | 'commentCount' | 'contents' | 'id'>;
+    post: {
+        likeCount: number;
+        commentCount: number;
+        contents: string;
+        id: string;
+    };
+    handleTagPress: (tag: string) => void;
+    handleCommentPress: () => void;
 };
 
-const PostContent = ({ post }: PostContentProps) => {
-    const { id: postId, commentCount, contents, likeCount } = post;
-    const navigation = useNavigation<SharePostNavigationProp<'share-post/list'>>();
-
-    const onPressTag = (nickname: string) => {
-        navigation.push('share-post/detail', { nickname });
-    };
-
+export default function PostContent({
+    post: { id: postId, commentCount, contents, likeCount },
+    handleTagPress,
+    handleCommentPress,
+}: PostContentProps) {
     return (
         <View style={styles.container}>
-            <LikeContent post={{ likeCount }} />
-            <TaggedContent uuid={postId} contents={contents} onPressTag={onPressTag} />
-            <CommentContent post={{ id: postId, commentCount }} />
+            <LikeContent likeCount={likeCount} />
+            <TaggedContent uuid={postId} contents={contents} onPressTag={handleTagPress} />
+            <CommentContent commentCount={commentCount} onPress={handleCommentPress} />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -39,5 +39,3 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
 });
-
-export default PostContent;

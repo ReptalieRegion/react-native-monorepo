@@ -1,42 +1,23 @@
-import { useNavigation } from '@react-navigation/native';
 import { TouchableTypo } from 'design-system';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 
-import type { SharePostListData } from '<SharePostAPI>';
-import type { SharePostNavigationProp } from '<SharePostRoutes>';
+import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 
 type CommentContentProps = {
-    post: Pick<SharePostListData['post'], 'commentCount' | 'id'>;
+    commentCount: number;
+    onPress: () => void;
 };
 
-const CommentContent = ({ post }: CommentContentProps) => {
-    const { commentCount } = post;
-    const navigation = useNavigation<SharePostNavigationProp<'share-post/list'>>();
-
-    const handleClickComment = () => {
-        navigation.push('share-post/bottom-sheet/comment', { screen: 'main', params: { post } });
-    };
-
-    if (commentCount === 0) {
-        return null;
-    }
-
+export default function CommentContent({ commentCount, onPress }: CommentContentProps) {
     return (
-        <View style={styles.textTouchArea}>
-            <TouchableTypo variant="body2" color="placeholder" onPress={handleClickComment}>
-                댓글 {post.commentCount}개 모두 보기
-            </TouchableTypo>
-        </View>
+        <ConditionalRenderer
+            condition={commentCount === 0}
+            trueContent={null}
+            falseContent={
+                <TouchableTypo variant="body2" color="placeholder" onPress={onPress}>
+                    댓글 {commentCount}개 모두 보기
+                </TouchableTypo>
+            }
+        />
     );
-};
-
-const styles = StyleSheet.create({
-    textTouchArea: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-    },
-});
-
-export default CommentContent;
+}

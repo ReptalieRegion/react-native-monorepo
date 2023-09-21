@@ -3,27 +3,42 @@ import { TouchableTypo } from 'design-system';
 import React from 'react';
 import * as Haptic from 'react-native-haptic-feedback';
 
-import type { SharePostListData } from '<SharePostAPI>';
 import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
 import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
 
 type PostHeaderProps = {
-    user: Pick<SharePostListData['user'], 'isFollow' | 'id'>;
+    user: {
+        id: string;
+        isFollow: boolean | undefined;
+    };
 };
 
-interface FollowInfo {
-    color: TextColorType;
-    text: string;
-}
+type FollowType = 'follow' | 'following';
 
-const following: FollowInfo = { color: 'placeholder', text: '✓ 팔로잉' };
-const follow: FollowInfo = { color: 'primary', text: '팔로우' };
+type FollowInfo = {
+    [key in FollowType]: {
+        color: TextColorType;
+        text: string;
+    };
+};
+
+const FOLLOW_INFO: FollowInfo = {
+    follow: {
+        color: 'primary',
+        text: '팔로우',
+    },
+    following: {
+        color: 'placeholder',
+        text: '✓ 팔로잉',
+    },
+};
 
 const makeFollowInfo = (isFollow: boolean | undefined) => {
-    return isFollow ? following : follow;
+    const type: FollowType = isFollow ? 'follow' : 'following';
+    return FOLLOW_INFO[type];
 };
 
-const Follow = ({ user: { isFollow, id: userId } }: PostHeaderProps) => {
+export default function Follow({ user: { isFollow, id: userId } }: PostHeaderProps) {
     const { mutate: createMutate } = useCreateFollow();
     const { mutate: updateMutate } = useUpdateFollow();
 
@@ -43,6 +58,4 @@ const Follow = ({ user: { isFollow, id: userId } }: PostHeaderProps) => {
             {followInfo.text}
         </TouchableTypo>
     );
-};
-
-export default Follow;
+}

@@ -1,18 +1,18 @@
 import { Typo } from 'design-system';
 import React from 'react';
 
-import type { SharePostListData } from '<SharePostAPI>';
+import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 
 type LikeContentProps = {
-    post: Pick<SharePostListData['post'], 'likeCount'>;
+    likeCount: number;
 };
 
-const LikeContent = ({ post }: LikeContentProps) => {
-    if (post.likeCount === 0) {
-        return null;
-    }
-
-    return <Typo variant="heading3">{post.likeCount}명이 좋아합니다.</Typo>;
-};
-
-export default LikeContent;
+export default function LikeContent({ likeCount }: LikeContentProps) {
+    return (
+        <ConditionalRenderer
+            condition={likeCount === 0}
+            trueContent={null}
+            falseContent={<Typo variant="heading3">{likeCount}명이 좋아합니다.</Typo>}
+        />
+    );
+}

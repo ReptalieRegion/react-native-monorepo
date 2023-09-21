@@ -4,15 +4,17 @@ import { color } from 'design-system';
 import React, { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
-import PostModalCard from '../organisms/PostModalCard';
+import UserPostCard from '../organisms/UserPostCard';
 
 import type { SharePostListUserDetailData } from '<SharePostAPI>';
-import { SharePostRouteProp } from '<SharePostRoutes>';
+import type { SharePostListNavigationProps } from '<SharePostComponent>';
+import type { SharePostRouteProp } from '<SharePostRoutes>';
+import type { SharePostUserData } from '<SharePostUserAPI>';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 
-const UserPosts = () => {
+export default function UserPosts(props: SharePostListNavigationProps) {
     const { params } = useRoute<SharePostRouteProp<'share-post/list/user'>>();
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const { data: userData } = useFetchUserProfile({ nickname: params.nickname });
@@ -24,8 +26,12 @@ const UserPosts = () => {
     const keyExtractor = useCallback((item: SharePostListUserDetailData) => item.post.id, []);
 
     const renderItem = useCallback(
-        (props: ListRenderItemInfo<SharePostListUserDetailData>) => <PostModalCard {...props} />,
-        [],
+        ({ item, extraData }: ListRenderItemInfo<SharePostListUserDetailData>) => {
+            const { id, nickname, profile } = extraData as SharePostUserData['user'];
+
+            return <UserPostCard post={item.post} user={{ id, nickname, profile }} {...props} />;
+        },
+        [props],
     );
     const ListFooterComponent = useCallback(() => <ListFooterLoading isLoading={isFetchingNextPage} />, [isFetchingNextPage]);
     const asyncOnRefresh = useCallback(async () => {
@@ -54,7 +60,7 @@ const UserPosts = () => {
             />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -65,5 +71,3 @@ const styles = StyleSheet.create({
         padding: 20,
     },
 });
-
-export default UserPosts;

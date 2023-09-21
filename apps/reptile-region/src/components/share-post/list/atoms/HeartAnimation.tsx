@@ -3,14 +3,10 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
-import type { SharePostListData } from '<SharePostAPI>';
 import { Like_55 as LikeIcon } from '@/assets/icons';
 import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 
-type HeartAnimationProps = {
-    post: Pick<SharePostListData['post'], 'id'>;
-};
-
+/** 하트 애니메이션 옆에 점 시작 */
 type DotMapType = 'leftTop' | 'top' | 'rightTop' | 'right' | 'rightBottom' | 'bottom' | 'leftBottom' | 'left';
 
 type DotTranslateMap = {
@@ -64,7 +60,7 @@ const TRANSLATE_MAP: DotTranslateMap = {
     },
 };
 
-const Dot = ({ dotName }: { dotName: DotMapType }) => {
+function Dot({ dotName }: { dotName: DotMapType }) {
     const scale = useSharedValue(1);
     const translateX = useSharedValue(-HALF_DOT_SIZE);
     const translateY = useSharedValue(-HALF_DOT_SIZE);
@@ -80,36 +76,7 @@ const Dot = ({ dotName }: { dotName: DotMapType }) => {
     }, [dotName, scale, translateX, translateY]);
 
     return <Animated.View style={[styles.dot, dotStyles[dotName], animatedStyle]} />;
-};
-
-const HeartAnimation = ({ post }: HeartAnimationProps) => {
-    const { id: postId } = post;
-
-    const setStartLikeAnimation = useSharePostListStore((state) => state.setStartLikeAnimation);
-    const heartScale = useSharedValue(1.5);
-    const animatedHeartStyle = useAnimatedStyle(() => ({
-        transform: [{ scale: heartScale.value }],
-    }));
-
-    useEffect(() => {
-        heartScale.value = withSequence(withTiming(2.1), withTiming(1.8, { duration: 140 }));
-        const animationTimeout = setTimeout(() => setStartLikeAnimation(postId, false), 700);
-        return () => {
-            clearTimeout(animationTimeout);
-        };
-    }, [heartScale, postId, setStartLikeAnimation]);
-
-    return (
-        <View style={styles.container}>
-            {DOT_MAP.map((dotName) => (
-                <Dot key={dotName} dotName={dotName} />
-            ))}
-            <Animated.View style={[styles.heart, animatedHeartStyle]}>
-                <LikeIcon width={ICON_SIZE} height={ICON_SIZE} />
-            </Animated.View>
-        </View>
-    );
-};
+}
 
 const dotStyles: DotStyles = {
     leftTop: {
@@ -145,6 +112,43 @@ const dotStyles: DotStyles = {
         top: '44%',
     },
 };
+/** 하트 애니메이션 옆에 점 시작 */
+
+/** 이미지 캐러셀 하트 애니메이션 시작 */
+type HeartAnimationProps = {
+    post: {
+        id: string;
+    };
+};
+
+export default function HeartAnimation({ post: { id: postId } }: HeartAnimationProps) {
+    /** UI 로직 시작 */
+    const setStartLikeAnimation = useSharePostListStore((state) => state.setStartLikeAnimation);
+    const heartScale = useSharedValue(1.5);
+    const animatedHeartStyle = useAnimatedStyle(() => ({
+        transform: [{ scale: heartScale.value }],
+    }));
+
+    useEffect(() => {
+        heartScale.value = withSequence(withTiming(2.1), withTiming(1.8, { duration: 140 }));
+        const animationTimeout = setTimeout(() => setStartLikeAnimation(postId, false), 700);
+        return () => {
+            clearTimeout(animationTimeout);
+        };
+    }, [heartScale, postId, setStartLikeAnimation]);
+    /** UI 로직 끝 */
+
+    return (
+        <View style={styles.container}>
+            {DOT_MAP.map((dotName) => (
+                <Dot key={dotName} dotName={dotName} />
+            ))}
+            <Animated.View style={[styles.heart, animatedHeartStyle]}>
+                <LikeIcon width={ICON_SIZE} height={ICON_SIZE} />
+            </Animated.View>
+        </View>
+    );
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -174,5 +178,4 @@ const styles = StyleSheet.create({
         transform: [{ translateX: -HALF_ICON_SIZE }, { translateY: -HALF_ICON_SIZE }],
     },
 });
-
-export default HeartAnimation;
+/** 이미지 캐러셀 하트 애니메이션 끝 */

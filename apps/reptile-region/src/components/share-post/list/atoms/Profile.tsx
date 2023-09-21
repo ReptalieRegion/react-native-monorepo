@@ -1,41 +1,28 @@
-import { useNavigation } from '@react-navigation/native';
-import { Typo } from 'design-system';
-import { Image } from 'expo-image';
+import { TouchableTypo } from 'design-system';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-import type { SharePostListData } from '<SharePostAPI>';
-import { SharePostNavigationProp } from '<SharePostRoutes>';
+import { ShareImageType } from '<Image>';
+import Avatar from '@/components/common/fast-image/Avatar';
 
 type ProfileProps = {
-    user: Pick<SharePostListData['user'], 'profile' | 'nickname' | 'id'>;
-};
-
-const Profile = ({ user }: ProfileProps) => {
-    const { id: userId, nickname, profile } = user;
-
-    const navigation = useNavigation<SharePostNavigationProp<'share-post/list'>>();
-
-    const gotoDetailPage = () => {
-        navigation.push('share-post/detail', { userId, nickname });
+    user: {
+        profile: ShareImageType;
+        nickname: string;
     };
-
-    return (
-        <TouchableOpacity onPress={gotoDetailPage} activeOpacity={0.3}>
-            <View style={styles.container}>
-                <Image
-                    style={styles.image}
-                    source={{
-                        uri: profile.src,
-                    }}
-                    priority="high"
-                    contentFit="cover"
-                />
-                <Typo variant="title5">{user.nickname}</Typo>
-            </View>
-        </TouchableOpacity>
-    );
+    onPress: () => void;
 };
+
+export default function Profile({ user: { nickname, profile }, onPress }: ProfileProps) {
+    return (
+        <View style={styles.container}>
+            <Avatar onPress={onPress} size={30} source={{ uri: profile.src }} priority="high" />
+            <TouchableTypo onPress={onPress} variant="title5">
+                {nickname}
+            </TouchableTypo>
+        </View>
+    );
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -49,5 +36,3 @@ const styles = StyleSheet.create({
         borderRadius: 9999,
     },
 });
-
-export default Profile;

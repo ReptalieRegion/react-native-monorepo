@@ -7,18 +7,23 @@ import FloatingActionButtons from '../molecules/FloatingActionButtons';
 import PostCard from '../organisms/PostCard';
 
 import type { SharePostListData } from '<SharePostAPI>';
+import type { SharePostListNavigationProps } from '<SharePostComponent>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 import useFlashListScroll from '@/hooks/flash-list/useFlashListScroll';
 
-const Posts = () => {
+export default function Posts(props: SharePostListNavigationProps) {
+    /** FlashList 시작 */
     const { flashListRef, scrollDirection, scrollToTop, determineScrollDirection } = useFlashListScroll<SharePostListData>();
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data]);
     const keyExtractor = useCallback((item: SharePostListData) => item.post.id, []);
-    const renderItem = useCallback(({ item }: ListRenderItemInfo<SharePostListData>) => <PostCard {...item} />, []);
+    const renderItem = useCallback(
+        ({ item }: ListRenderItemInfo<SharePostListData>) => <PostCard {...item} {...props} />,
+        [props],
+    );
     const ListFooterComponent = useCallback(() => <ListFooterLoading isLoading={isFetchingNextPage} />, [isFetchingNextPage]);
     const asyncOnRefresh = useCallback(async () => {
         setRefreshing(true);
@@ -29,6 +34,7 @@ const Posts = () => {
         () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
         [fetchNextPage, hasNextPage, isFetchingNextPage],
     );
+    /** FlashList 끝 */
 
     return (
         <View style={styles.container}>
@@ -48,7 +54,7 @@ const Posts = () => {
             <FloatingActionButtons animationMode={scrollDirection} scrollToTop={scrollToTop} />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -59,5 +65,3 @@ const styles = StyleSheet.create({
         padding: 20,
     },
 });
-
-export default Posts;

@@ -1,11 +1,10 @@
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import React from 'react';
 
-import Follow from '../Follow';
-
 import { SharePostUserListParams } from '<RootRoutes>';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import BaseHeader from '@/components/common/layouts/header/BaseHeader';
+import Follow from '@/components/share-post/common/atoms/Follow';
 
 export default function SharePostUserDetailListHeader(props: NativeStackHeaderProps) {
     const params = props.route.params as SharePostUserListParams;

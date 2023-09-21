@@ -1,37 +1,49 @@
 import { color } from 'design-system';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ColorValue, StyleSheet, View } from 'react-native';
 
-import type { SharePostListData } from '<SharePostAPI>';
 import { DotIndicator } from '@/assets/icons';
 import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
+import createEmptyArray from '@/utils/array/createEmptyArray';
 
 type ImagesIndicatorsProps = {
-    post: Pick<SharePostListData['post'], 'images' | 'id'>;
+    post: {
+        id: string;
+    };
+    imageCount: number;
 };
 
-const CURRENT_IMAGE = {
-    color: color.Teal[150].toString(),
-    scale: 1,
+type ImageType = 'current' | 'other';
+
+type ImageInfo = {
+    [key in ImageType]: {
+        color: ColorValue;
+        scale: number;
+    };
 };
 
-const OTHER_IMAGE = {
-    color: color.Gray[500].toString(),
-    scale: 0.9,
+const IMAGE_INFO: ImageInfo = {
+    current: {
+        color: color.Teal[150].toString(),
+        scale: 1,
+    },
+    other: {
+        color: color.Gray[500].toString(),
+        scale: 0.9,
+    },
 };
 
 const makeIndicatorsStyles = (isCurrent: boolean) => {
-    return isCurrent ? CURRENT_IMAGE : OTHER_IMAGE;
+    const type: ImageType = isCurrent ? 'current' : 'other';
+    return IMAGE_INFO[type];
 };
 
-const ImagesIndicators = ({ post }: ImagesIndicatorsProps) => {
-    const { id: postId, images } = post;
-
+export default function ImagesIndicators({ post: { id: postId }, imageCount }: ImagesIndicatorsProps) {
     const imageIndex = useSharePostListStore((state) => state.postsOfInfo[postId]?.currentImageIndex ?? 0);
 
     return (
         <View style={styles.container}>
-            {images.map((_, index) => {
+            {createEmptyArray(imageCount).map((_, index) => {
                 const indicatorsStyle = makeIndicatorsStyles(index === imageIndex);
 
                 return (
@@ -42,7 +54,7 @@ const ImagesIndicators = ({ post }: ImagesIndicatorsProps) => {
             })}
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -51,5 +63,3 @@ const styles = StyleSheet.create({
         gap: 1,
     },
 });
-
-export default ImagesIndicators;
