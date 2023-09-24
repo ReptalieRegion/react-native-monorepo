@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useTagHandler, useTagSearch } from 'tag-text-input';
 
-import { SharePostSearchFollowerUserData } from '<SharePostUserAPI>';
+import type { FetchFollowerSearchResponse } from '<api/share/post/user>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 import Avatar from '@/components/common/fast-image/Avatar';
@@ -21,9 +21,9 @@ const FollowerUserList = () => {
     });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
-    const keyExtractor = useCallback((item: SharePostSearchFollowerUserData) => item.user.id, []);
+    const keyExtractor = useCallback((item: FetchFollowerSearchResponse) => item.user.id, []);
     const renderItem = useCallback(
-        ({ item }: ListRenderItemInfo<SharePostSearchFollowerUserData>) => {
+        ({ item }: ListRenderItemInfo<FetchFollowerSearchResponse>) => {
             const handlePressItem = () => {
                 handleSelectTag(item.user.nickname);
             };

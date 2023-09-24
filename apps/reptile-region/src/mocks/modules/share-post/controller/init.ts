@@ -1,6 +1,8 @@
 import { rest } from 'msw';
 
-import { initDBDate } from '../service/createInitialData';
+// import { initDBDate } from '../service/createInitialData';
+
+import { createJson } from '../service/createJson';
 
 import ENV from '@/env';
 
@@ -9,7 +11,8 @@ const initController = () => {
 
     return [
         rest.post(BASE_URI + 'init', (_, res, ctx) => {
-            initDBDate();
+            // initDBDate();
+            createJson();
             return res(ctx.status(200), ctx.json(''));
         }),
     ];

@@ -1,16 +1,16 @@
-import { InfinitePageParam } from '<InfiniteState>';
 import type {
     CreateFollowRequest,
-    GetDetailUserProfileRequest,
-    GetSearchFollowerUserNicknameRequest,
+    FetchDetailUserProfileRequest,
+    FetchFollowerSearchRequest,
     UpdateFollowRequest,
-} from '<SharePostUserAPI>';
+} from '<api/share/post/user>';
+import type { InfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/clientFetch';
 import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 특정 유저의 프로필
-export const getDetailUserProfile = async ({ nickname }: GetDetailUserProfileRequest) => {
+export const getDetailUserProfile = async ({ nickname }: FetchDetailUserProfileRequest) => {
     const queryString = objectToQueryString({ nickname });
     const response = await clientFetch(`api/users/profile?${queryString}`);
 
@@ -21,7 +21,7 @@ export const getDetailUserProfile = async ({ nickname }: GetDetailUserProfileReq
 export const getSearchFollowerUserNickname = async ({
     pageParam = 0,
     search,
-}: GetSearchFollowerUserNicknameRequest & InfinitePageParam) => {
+}: FetchFollowerSearchRequest & InfinitePageParam) => {
     const queryString = objectToQueryString({ pageParam, search });
     const response = await clientFetch(`api/users/follower/list?${queryString}`);
 

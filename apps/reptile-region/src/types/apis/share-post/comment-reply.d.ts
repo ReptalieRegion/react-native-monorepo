@@ -1,45 +1,64 @@
-declare module '<SharePostCommentReplyAPI>' {
-    import { InfiniteState } from '<InfiniteState>';
-    /** GET */
-    // 대댓글 리스트 무한 스크롤 Request, Response
-    type GetCommentRepliesRequest = {
+declare module '<api/share/post/comment-reply>' {
+    import type { InfiniteState, ServerAPI } from '<api/utils>';
+    import type { ImageType } from '<image>';
+
+    /** GET 시작 */
+    /** 대댓글 리스트 무한스크롤 시작 */
+    type FetchCommentReplyRequest = {
         commentId: string;
     };
 
-    type SharePostCommentReplyData = {
-        user: {
-            id: string;
-            profile: ShareImageType;
-            nickname: string;
-        };
+    type FetchCommentReplyResponse = {
         commentReply: {
             id: string;
             contents: string;
             isMine: boolean;
             isModified: boolean;
+            user: {
+                id: string;
+                profile: ImageType;
+                nickname: string;
+            };
         };
     };
 
-    type SharePostCommentReplyInfiniteData = InfiniteState<SharePostCommentReplyData[]>;
+    type FetchCommentReply = ServerAPI<FetchCommentReplyRequest, InfiniteState<FetchCommentReplyResponse[]>>;
+    /** 대댓글 리스트 무한스크롤 끝 */
+    /** GET 끝 */
 
-    /** POST */
-    // 대댓글 생성
+    /** POST 시작 */
+    /** 대댓글 생성 시작 */
     type CreateCommentReplyRequest = {
         commentId: string;
         contents: string;
     };
 
-    type CreateCommentReplyResponse = SharePostCommentReplyData & {
+    type CreateCommentReplyResponse = {
         post: {
             id: string;
-        };
-        comment: {
-            id: string;
+            comment: {
+                id: string;
+                commentReply: {
+                    id: string;
+                    contents: string;
+                    isMine: true;
+                    isModified: false;
+                    user: {
+                        id: string;
+                        profile: ImageType;
+                        nickname: string;
+                    };
+                };
+            };
         };
     };
 
-    /** PUT */
-    // 사용자의 특정 대댓글 수정
+    type CreateCommentReply = ServerAPI<CreateCommentReplyRequest, CreateCommentReplyResponse>;
+    /** 대댓글 생성 끝 */
+    /** POST 끝 */
+
+    /** PUT 시작 */
+    /** 사용자의 특정 대댓글 수정 시작 */
     type UpdateCommentReplyRequest = {
         commentReplyId: string;
         contents: string;
@@ -48,15 +67,19 @@ declare module '<SharePostCommentReplyAPI>' {
     type UpdateCommentReplyResponse = {
         comment: {
             id: string;
-        };
-        commentReply: {
-            id: string;
-            contents: string;
+            commentReply: {
+                id: string;
+                contents: string;
+            };
         };
     };
 
-    /** Delete */
-    // 사용자의 특정 대댓글 삭제
+    type UpdateCommentReply = ServerAPI<UpdateCommentReplyRequest, UpdateCommentReplyResponse>;
+    /** 사용자의 특정 대댓글 수정 끝 */
+    /** PUT 끝 */
+
+    /** Delete 시작 */
+    /** 사용자의 특정 대댓글 삭제 시작 */
     type DeleteCommentReplyRequest = {
         commentReplyId: string;
     };
@@ -64,12 +87,16 @@ declare module '<SharePostCommentReplyAPI>' {
     type DeleteCommentReplyResponse = {
         post: {
             id: string;
-        };
-        comment: {
-            id: string;
-        };
-        commentReply: {
-            id: string;
+            comment: {
+                id: string;
+                commentReply: {
+                    id: string;
+                };
+            };
         };
     };
+
+    type DeleteCommentReply = ServerAPI<DeleteCommentReplyRequest, DeleteCommentReplyResponse>;
+    /** 사용자의 특정 대댓글 삭제 끝 */
+    /** Delete 끝 */
 }

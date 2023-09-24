@@ -6,7 +6,7 @@ import { shallow } from 'zustand/shallow';
 import HeartAnimation from '../atoms/HeartAnimation';
 import ImageContent from '../atoms/ImageContent';
 
-import type { ShareImageType } from '<Image>';
+import type { ImageType } from '<image>';
 import useCreateLike from '@/apis/share-post/post/hooks/mutations/useCreateLike';
 import useUpdateLike from '@/apis/share-post/post/hooks/mutations/useUpdateLike';
 import DoubleTabView from '@/components/common/element/view/DoubleTabView';
@@ -15,7 +15,7 @@ import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 type ImagesSliderProps = {
     post: {
         id: string;
-        images: ShareImageType[];
+        images: ImageType[];
         isLike: boolean | undefined;
     };
 };

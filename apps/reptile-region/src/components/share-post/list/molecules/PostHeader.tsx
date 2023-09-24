@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import Follow from '../../common/atoms/Follow';
 import Profile from '../atoms/Profile';
 
-import type { ShareImageType } from '<Image>';
+import type { ImageType } from '<image>';
 import { KebabMenu } from '@/assets/icons';
 import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 
@@ -13,7 +13,7 @@ type PostHeaderProps = {
     user: {
         id: string;
         nickname: string;
-        profile: ShareImageType;
+        profile: ImageType;
         isFollow: boolean | undefined;
     };
     post: {

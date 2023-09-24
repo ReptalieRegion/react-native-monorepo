@@ -2,78 +2,66 @@ import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstac
 
 import { deleteCommentReply } from '../../repository';
 
-import { SharePostCommentInfiniteData } from '<SharePostCommentAPI>';
-import {
-    DeleteCommentReplyRequest,
-    DeleteCommentReplyResponse,
-    SharePostCommentReplyInfiniteData,
-} from '<SharePostCommentReplyAPI>';
+import type { DeleteCommentReply, FetchCommentReply } from '<api/share/post/comment-reply>';
+import type { FetchComment } from '<api/share/post/comment>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
-// Cache Update: 특정 게시글 댓글 리스트 무한 스크롤
-const updateCommentListCache = ({
-    queryClient,
-    data,
-}: {
-    queryClient: QueryClient;
-    data: Pick<DeleteCommentReplyResponse, 'post' | 'comment'>;
-}) => {
-    queryClient.setQueryData<InfiniteData<SharePostCommentInfiniteData>>(
-        sharePostQueryKeys.comment(data.post.id),
-        (prevCommentData) => {
-            if (prevCommentData === undefined) {
-                return undefined;
-            }
+/** 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 감소 */
+const updateCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteCommentReply['Response'] }) => {
+    const queryKey = sharePostQueryKeys.comment(data.post.id);
+    queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
+        if (prevCommentList === undefined) {
+            return undefined;
+        }
 
-            const updatePages = [...prevCommentData.pages].map((page) => {
-                const items = page.items.map((item) => {
-                    if (item.comment.id === data.comment.id) {
-                        return {
-                            ...item,
-                            comment: {
-                                ...item.comment,
-                                replyCount: item.comment.replyCount - 1,
-                            },
-                        };
-                    }
-
-                    return item;
-                });
-
-                return { ...page, items };
-            });
-
+        const { pageParams, pages } = prevCommentList;
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
             return {
-                ...prevCommentData,
-                pages: updatePages,
+                nextPage,
+                items: items.map((item) => {
+                    const isTargetComment = item.comment.id === data.post.comment.id;
+                    return isTargetComment ? { comment: { ...item.comment, replyCount: item.comment.replyCount - 1 } } : item;
+                }),
             };
-        },
-    );
+        });
+
+        return {
+            pageParams,
+            pages: updatePages,
+        };
+    });
 };
 
-// 대댓글 리스트 무한스크롤
+/** 대댓글 리스트 무한스크롤 대댓글 삭제 */
 const deleteCommentReplyListCache = ({
     queryClient,
     data,
 }: {
     queryClient: QueryClient;
-    data: Pick<DeleteCommentReplyResponse, 'comment' | 'commentReply'>;
+    data: DeleteCommentReply['Response'];
 }) => {
-    queryClient.setQueryData<InfiniteData<SharePostCommentReplyInfiniteData>>(
-        sharePostQueryKeys.commentReply(data.comment.id),
-        (prevCommentReplyData) => {
-            if (prevCommentReplyData === undefined) {
-                return prevCommentReplyData;
+    const queryKey = data.post.comment.id;
+    queryClient.setQueryData<InfiniteData<FetchCommentReply['Response']>>(
+        sharePostQueryKeys.commentReply(queryKey),
+        (prevCommentReplyList) => {
+            if (prevCommentReplyList === undefined) {
+                return prevCommentReplyList;
             }
 
-            const updatePages = [...prevCommentReplyData.pages].map((page) => {
-                const items = page.items.filter((item) => item.commentReply.id !== data.commentReply.id);
+            const { pageParams, pages } = prevCommentReplyList;
 
-                return { ...page, items };
+            const updatePages = [...pages].map((page) => {
+                const { items, nextPage } = page;
+
+                return {
+                    nextPage,
+                    items: items.filter((item) => item.commentReply.id !== data.post.comment.commentReply.id),
+                };
             });
 
             return {
-                ...prevCommentReplyData,
+                pageParams,
                 pages: updatePages,
             };
         },
@@ -82,11 +70,12 @@ const deleteCommentReplyListCache = ({
 
 const useDeleteCommentReply = () => {
     const queryClient = useQueryClient();
-    return useMutation<DeleteCommentReplyResponse, any, DeleteCommentReplyRequest>({
+
+    return useMutation<DeleteCommentReply['Response'], any, DeleteCommentReply['Request']>({
         mutationFn: ({ commentReplyId }) => deleteCommentReply({ commentReplyId }),
-        onSuccess: ({ post, comment, commentReply }) => {
-            updateCommentListCache({ queryClient, data: { post, comment } });
-            deleteCommentReplyListCache({ queryClient, data: { comment, commentReply } });
+        onSuccess: (data) => {
+            updateCommentListCache({ queryClient, data });
+            deleteCommentReplyListCache({ queryClient, data });
         },
     });
 };

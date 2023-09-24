@@ -5,13 +5,13 @@ import CommentIcon from '../atoms/CommentIcon';
 import ImagesIndicators from '../atoms/ImagesIndicators';
 import Like from '../atoms/LikeIcon';
 
-import { ShareImageType } from '<Image>';
+import type { ImageType } from '<image>';
 
 type InteractivePostProps = {
     post: {
         id: string;
         isLike: boolean | undefined;
-        images: ShareImageType[];
+        images: ImageType[];
     };
     handleCommentPress: () => void;
 };

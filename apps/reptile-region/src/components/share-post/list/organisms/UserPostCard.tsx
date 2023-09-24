@@ -6,29 +6,37 @@ import PostContent from '../molecules/PostContent';
 import PostImageCarousel from '../molecules/PostImageCarousel';
 import PostModalHeader from '../molecules/PostModalHeader';
 
-import type { ShareImageType } from '<Image>';
+import type { ImageType } from '<image>';
 import type { SharePostListNavigationProps } from '<SharePostComponent>';
 
 type PostModalCardProps = {
     post: {
         id: string;
-        images: ShareImageType[];
+        images: ImageType[];
         contents: string;
         isMine: boolean;
         isLike: boolean | undefined;
         likeCount: number;
         commentCount: number;
-    };
-    user: {
-        id: string;
-        nickname: string;
-        profile: ShareImageType;
+        user: {
+            id: string;
+            nickname: string;
+            profile: ImageType;
+        };
     };
 } & SharePostListNavigationProps;
 
 export default function UserPostCard({
-    post: { id: postId, images, isLike, commentCount, contents, likeCount, isMine },
-    user: { id: userId, nickname, profile },
+    post: {
+        id: postId,
+        images,
+        isLike,
+        commentCount,
+        contents,
+        likeCount,
+        isMine,
+        user: { id: userId, nickname, profile },
+    },
     navigateBottomSheetKebabMenu,
     navigateCommentPage,
     navigateDetailPage,
@@ -43,7 +51,7 @@ export default function UserPostCard({
     };
 
     const handleKebabMenuPress = () => {
-        navigateBottomSheetKebabMenu({ post: { id: postId, isMine }, user: { id: userId } });
+        navigateBottomSheetKebabMenu({ post: { id: postId, isMine, user: { id: userId } } });
     };
 
     const handleCommentPress = () => {

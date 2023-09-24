@@ -2,7 +2,7 @@ import { rest } from 'msw';
 
 import createCommentReply from '../service/createCommentReply';
 
-import type { CreateCommentReplyRequest, UpdateCommentReplyRequest } from '<SharePostCommentReplyAPI>';
+import type { CreateCommentReplyResponse, UpdateCommentReplyResponse } from '<api/share/post/comment-reply>';
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 import { wait } from '@/mocks/utils/helpers';
@@ -21,7 +21,7 @@ const commentReplyController = () => {
         }),
         /** POST */
         rest.post(BASE_URI + 'share/comment-reply', async (req, res, ctx) => {
-            const body = (await req.json()) as CreateCommentReplyRequest;
+            const body = (await req.json()) as CreateCommentReplyResponse;
             const data = createCommentReply(body);
 
             return res(ctx.status(200), ctx.json(data));
@@ -29,7 +29,7 @@ const commentReplyController = () => {
         /** PUT */
         rest.put(BASE_URI + 'share/comment-replies/:commentId', async (req, res, ctx) => {
             const commentId = req.params.commentId;
-            const body = (await req.json()) as UpdateCommentReplyRequest;
+            const body = (await req.json()) as UpdateCommentReplyResponse;
 
             return res(ctx.status(200), ctx.json({ id: commentId, ...body }));
         }),

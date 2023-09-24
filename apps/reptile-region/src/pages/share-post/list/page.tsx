@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 
-import { SharePostParamList } from '<SharePostRoutes>';
+import type { SharePostParamList } from '<SharePostRoutes>';
 import SharePostListSkeleton from '@/components/share-post/list/atoms/loading/SharePostListSkeleton';
 
 type SharePostListPageScreen = NativeStackScreenProps<SharePostParamList, 'share-post/list'>;
@@ -9,7 +9,7 @@ type SharePostListPageScreen = NativeStackScreenProps<SharePostParamList, 'share
 const Posts = React.lazy(() => import('@/components/share-post/list/templates/Posts'));
 
 export default function SharePostListPage({ navigation }: SharePostListPageScreen) {
-    const navigateBottomSheetKebabMenu = (props: { post: { id: string; isMine: boolean }; user: { id: string } }) => {
+    const navigateBottomSheetKebabMenu = (props: { post: { id: string; isMine: boolean; user: { id: string } } }) => {
         navigation.navigate('share-post/bottom-sheet/kebab-menu', props);
     };
 

@@ -3,10 +3,13 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { SharePostUserData } from '<SharePostUserAPI>';
+import type { ImageType } from '<image>';
 
 type UserAvatarProps = {
-    user: Pick<SharePostUserData['user'], 'nickname' | 'profile'>;
+    user: {
+        nickname: string;
+        profile: ImageType;
+    };
 };
 
 const UserAvatar = ({ user: { profile, nickname } }: UserAvatarProps) => {
@@ -16,7 +19,7 @@ const UserAvatar = ({ user: { profile, nickname } }: UserAvatarProps) => {
                 <Image
                     style={styles.image}
                     source={{
-                        uri: profile.src,
+                        uri: profile.src.replace('https://reptalie-region.s3.ap-northeast-2.amazonaws.com/', ''),
                     }}
                     priority="high"
                     contentFit="cover"

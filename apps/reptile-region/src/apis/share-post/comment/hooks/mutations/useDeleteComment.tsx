@@ -2,78 +2,73 @@ import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstac
 
 import { deleteComment } from '../../repository';
 
-import { SharePostListInfiniteData } from '<SharePostAPI>';
-import type { DeleteCommentRequest, DeleteCommentResponse, SharePostCommentInfiniteData } from '<SharePostCommentAPI>';
+import type { DeleteComment, FetchComment } from '<api/share/post/comment>';
+import type { FetchPost } from '<api/share/post>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
-// Cache Update: 일상공유 무한스크롤 조회 리스트
-const updateSharePostListCache = ({
-    queryClient,
-    post,
-}: {
-    queryClient: QueryClient;
-    post: Pick<DeleteCommentResponse['post'], 'id'>;
-}) => {
-    queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(sharePostQueryKeys.list, (prevSharePostListData) => {
-        if (prevSharePostListData === undefined) {
+/** 일상공유 무한스크롤 조회 리스트 댓글 개수 감소 **/
+const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteComment['Response'] }) => {
+    const queryKey = sharePostQueryKeys.list;
+
+    queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevSharePostList) => {
+        if (prevSharePostList === undefined) {
             return undefined;
         }
 
-        const updatePages = [...prevSharePostListData.pages].map((page) => {
-            const items = page.items.map((item) => {
-                if (item.post.id === post.id) {
-                    return {
-                        ...item,
-                        post: {
-                            ...item.post,
-                            commentCount: item.post.commentCount - 1,
-                        },
-                    };
-                }
+        const { pageParams, pages } = prevSharePostList;
 
-                return item;
-            });
-
-            return { ...page, items };
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
+            return {
+                nextPage,
+                items: items.map((item) => {
+                    const isTargetPost = item.post.id === data.post.id;
+                    return isTargetPost ? { post: { ...item.post, commentCount: item.post.commentCount - 1 } } : item;
+                }),
+            };
         });
 
         return {
-            ...prevSharePostListData,
+            pageParams,
             pages: updatePages,
         };
     });
 };
 
-// Cache Update: 특정 게시글 댓글 리스트 무한 스크롤
-const deleteCommentCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteCommentResponse }) => {
-    queryClient.setQueryData<InfiniteData<SharePostCommentInfiniteData>>(
-        sharePostQueryKeys.comment(data.post.id),
-        (prevComments) => {
-            if (prevComments === undefined) {
-                return prevComments;
-            }
+/** 특정 게시글 댓글 리스트 무한 스크롤 댓글 삭제 */
+const deleteCommentCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteComment['Response'] }) => {
+    const queryKey = sharePostQueryKeys.comment(data.post.id);
 
-            const updatePages = [...prevComments.pages].map((page) => {
-                const items = page.items.filter((item) => item.comment.id !== data.comment.id);
+    queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
+        if (prevCommentList === undefined) {
+            return prevCommentList;
+        }
 
-                return { ...page, items };
-            });
+        const { pageParams, pages } = prevCommentList;
+
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
 
             return {
-                ...prevComments,
-                pages: updatePages,
+                nextPage,
+                items: items.filter((item) => item.comment.id !== data.post.comment.id),
             };
-        },
-    );
+        });
+
+        return {
+            pageParams,
+            pages: updatePages,
+        };
+    });
 };
 
 const useDeleteComment = () => {
     const queryClient = useQueryClient();
-    return useMutation<DeleteCommentResponse, any, DeleteCommentRequest>({
+    return useMutation<DeleteComment['Response'], any, DeleteComment['Request']>({
         mutationFn: ({ commentId }) => deleteComment({ commentId }),
         onSuccess: (data) => {
             deleteCommentCache({ queryClient, data });
-            updateSharePostListCache({ queryClient, post: data.post });
+            updateSharePostListCache({ queryClient, data });
         },
     });
 };

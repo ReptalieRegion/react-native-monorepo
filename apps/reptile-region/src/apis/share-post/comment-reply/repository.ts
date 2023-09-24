@@ -1,17 +1,18 @@
-import type { InfinitePageParam } from '<InfiniteState>';
 import type {
     CreateCommentReplyRequest,
     DeleteCommentReplyRequest,
-    GetCommentRepliesRequest,
+    FetchCommentReplyRequest,
     UpdateCommentReplyRequest,
-} from '<SharePostCommentReplyAPI>';
+} from '<api/share/post/comment-reply>';
+import type { InfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/clientFetch';
 import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
-export const getCommentReplies = async ({ pageParam = 0, commentId }: GetCommentRepliesRequest & InfinitePageParam) => {
+// 대댓글 리스트 무한스크롤
+export const getCommentReplies = async ({ pageParam = 0, commentId }: FetchCommentReplyRequest & InfinitePageParam) => {
     const queryString = objectToQueryString({ pageParam });
-    const response = await clientFetch(`api/share/comment/${commentId}/replies/list?${queryString}`, {
+    const response = await clientFetch(`api/share/comments/${commentId}/replies/list?${queryString}`, {
         method: METHOD.GET,
     });
 
@@ -30,7 +31,7 @@ export const createCommentReply = async (body: CreateCommentReplyRequest) => {
 };
 
 /** PUT */
-// 특정 대댓글 수정
+// 사용자의 특정 대댓글 수정
 export const updateCommentReply = async ({ commentReplyId }: UpdateCommentReplyRequest) => {
     const response = await clientFetch(`api/share/comment-replies/${commentReplyId}`, {
         method: METHOD.PUT,
@@ -40,7 +41,7 @@ export const updateCommentReply = async ({ commentReplyId }: UpdateCommentReplyR
 };
 
 /** DELETE */
-// 특정 대댓글 삭제
+// 사용자의 특정 대댓글 삭제
 export const deleteCommentReply = async ({ commentReplyId }: DeleteCommentReplyRequest) => {
     const response = await clientFetch(`api/share/comment-replies/${commentReplyId}`, {
         method: METHOD.DELETE,

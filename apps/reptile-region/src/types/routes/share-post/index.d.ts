@@ -31,17 +31,17 @@ declare module '<SharePostRoutes>' {
     };
 
     type SharePostCommentReplyProps = {
-        user: {
-            id: string;
-            profile: ShareImageType;
-            nickname: string;
-        };
         comment: {
             id: string;
             contents: string;
             replyCount: number;
             isMine: boolean;
             isModified: boolean;
+            user: {
+                id: string;
+                profile: ShareImageType;
+                nickname: string;
+            };
         };
         commentingActive?: boolean;
     };
@@ -64,9 +64,9 @@ declare module '<SharePostRoutes>' {
         post: {
             id: string;
             isMine: boolean;
-        };
-        user: {
-            id: string;
+            user: {
+                id: string;
+            };
         };
     };
 

@@ -6,31 +6,46 @@ import { StyleSheet, View } from 'react-native';
 
 import CommentReplyRenderItem from '../organisms/CommentReplyRenderItem';
 
-import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
-import { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
+import type { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
+import type { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 
 const CommentReplyList = () => {
-    const flashListRef = useRef<FlashList<SharePostCommentReplyData>>(null);
-    const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'reply'>>();
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteCommentReply({ commentId: params.comment.id });
+    const flashListRef = useRef<FlashList<FetchCommentReplyResponse>>(null);
+    const {
+        params: { comment },
+    } = useRoute<SharePostCommentBottomSheetRouteProp<'reply'>>();
+    const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteCommentReply({ commentId: comment.id });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
+    console.log(newData);
 
-    const keyExtractor = useCallback((item: SharePostCommentReplyData) => item.commentReply.id, []);
+    const keyExtractor = useCallback((item: FetchCommentReplyResponse) => item.commentReply.id, []);
 
-    const renderItem: ListRenderItem<SharePostCommentReplyData> = useCallback((props) => {
+    const renderItem: ListRenderItem<FetchCommentReplyResponse> = useCallback(({ item }) => {
         return (
             <View style={styles.renderItemContainer}>
-                <CommentReplyRenderItem commentReply={props.item.commentReply} user={props.item.user} />
+                <CommentReplyRenderItem items={item} />
             </View>
         );
     }, []);
 
     const ListHeaderComponent = useCallback(
-        () => <CommentReplyRenderItem commentReply={params.comment} user={params.user} />,
-        [params],
+        () => (
+            <CommentReplyRenderItem
+                items={{
+                    commentReply: {
+                        id: comment.id,
+                        contents: comment.contents,
+                        isMine: comment.isMine,
+                        isModified: comment.isModified,
+                        user: comment.user,
+                    },
+                }}
+            />
+        ),
+        [comment],
     );
 
     const onEndReached = useCallback(

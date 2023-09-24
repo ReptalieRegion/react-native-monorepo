@@ -2,9 +2,9 @@
 export const sharePostQueryKeys = {
     // 게시물
     list: ['share-post', 'list'],
-    detailUserPosts: (userId: string) => ['share-post', 'detail', 'user-post', userId],
+    detailUserPosts: (nickname: string) => ['share-post', 'detail', 'user-post', nickname],
     // 유저
-    profile: (userId: string) => ['profile', userId],
+    profile: (nickname: string) => ['profile', nickname],
     searchUser: (search: string) => ['search-user', search],
     // 댓글
     comment: (postId: string) => ['share-post', 'comment', postId],

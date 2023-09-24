@@ -5,13 +5,13 @@ import React, { useCallback, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { shallow } from 'zustand/shallow';
 
-import type { ShareImageType } from '<Image>';
+import type { ImageType } from '<image>';
 import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 
 type ImagesContentProps = {
     post: {
         id: string;
-        images: ShareImageType[];
+        images: ImageType[];
     };
 };
 
@@ -22,20 +22,20 @@ export default function ImageContent({ post: { id: postId, images } }: ImagesCon
     /** UI 끝 */
 
     /** FlashList 시작 */
-    const flashRef = useRef<FlashList<ShareImageType>>(null);
+    const flashRef = useRef<FlashList<ImageType>>(null);
     const lastItemId = useRef(postId);
     if (lastItemId.current !== postId) {
         lastItemId.current = postId;
         flashRef.current?.scrollToIndex({ index: 0 });
     }
 
-    const keyExtractor = useCallback((_: ShareImageType, index: number) => index.toString(), []);
+    const keyExtractor = useCallback((_: ImageType, index: number) => index.toString(), []);
 
     const renderItem = useCallback(
-        ({ item, index }: ListRenderItemInfo<ShareImageType>) => {
+        ({ item, index }: ListRenderItemInfo<ImageType>) => {
             const isFirstImage = index === 0;
             const priority = isFirstImage ? 'high' : 'low';
-            const source = { uri: item.src };
+            const source = { uri: item.src.replace('https://reptalie-region.s3.ap-northeast-2.amazonaws.com/', '') };
             const recyclingKey = item.src;
 
             return (

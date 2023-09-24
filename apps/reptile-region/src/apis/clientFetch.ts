@@ -15,6 +15,7 @@ interface IRequestInit extends Omit<RequestInit, 'method' | 'body'> {
     method?: keyof typeof METHOD;
     body?: object;
     ignorePrefix?: boolean;
+    isFormData?: boolean;
 }
 
 const DEFAULT_HEADER: HeadersInit_ = {
@@ -22,13 +23,15 @@ const DEFAULT_HEADER: HeadersInit_ = {
 };
 
 const clientFetch = async (input: RequestInfo, init?: IRequestInit): Promise<Response> => {
+    const isFormData = init?.isFormData;
     const url = init?.ignorePrefix ? input : ENV.END_POINT_URI + input;
     delete init?.ignorePrefix;
+    delete init?.isFormData;
     const newMethod = init?.method ?? 'GET';
-    const newBody = init?.body ? JSON.stringify(init.body) : undefined;
+    const newBody = init?.body ? (isFormData ? (init.body as FormData) : JSON.stringify(init.body)) : undefined;
     const authCookies = await AsyncStorage.multiGet(AUTH_KEYS);
     const authCookiesMap = authCookies ? Object.fromEntries(authCookies) : {};
-    const newHeaders = Object.assign({}, DEFAULT_HEADER, init?.headers, authCookiesMap);
+    const newHeaders = isFormData ? undefined : Object.assign({}, DEFAULT_HEADER, init?.headers, authCookiesMap);
     const newCredentials = init?.credentials ?? 'include';
     const newInit: RequestInit = {
         ...init,

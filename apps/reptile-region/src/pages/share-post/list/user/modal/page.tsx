@@ -19,7 +19,6 @@ export default function SharePostUserListModalPage({ navigation }: SharePostList
     };
 
     const navigateDetailPage = (props: { nickname: string }) => {
-        console.log('hi');
         navigation.push('share-post/modal/detail', props);
     };
 

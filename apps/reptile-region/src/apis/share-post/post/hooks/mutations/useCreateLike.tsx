@@ -2,38 +2,62 @@ import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstac
 
 import { createLike } from '../../repository';
 
-import type { CreateLikeRequest, CreateLikeResponse, SharePostListInfiniteData } from '<SharePostAPI>';
+import type { CreateLike, FetchDetailUserPost, FetchPost } from '<api/share/post>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateLikeResponse }) => {
-    queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(sharePostQueryKeys.list, (oldData) => {
-        if (oldData === undefined) {
-            return oldData;
+/** 일상공유 무한스크롤 조회 리스트 좋아요 생성 */
+const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateLike['Response'] }) => {
+    const queryKey = sharePostQueryKeys.list;
+
+    queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevPostList) => {
+        if (prevPostList === undefined) {
+            return prevPostList;
         }
 
-        const updatePages = [...oldData.pages].map((page) => {
-            const items = page.items.map((item) => {
-                if (item.post.id === data.post.id) {
-                    return {
-                        ...item,
-                        post: {
-                            ...item.post,
-                            isLike: true,
-                            likeCount: item.post.likeCount + 1,
-                        },
-                    };
-                }
-                return item;
-            });
+        const { pages, pageParams } = prevPostList;
 
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
             return {
-                ...page,
-                items,
+                nextPage,
+                items: items.map((item) => {
+                    const isTargetPost = item.post.id === data.post.id;
+                    return isTargetPost ? { post: { ...item.post, isLike: true, likeCount: item.post.likeCount + 1 } } : item;
+                }),
             };
         });
 
         return {
-            ...oldData,
+            pageParams,
+            pages: updatePages,
+        };
+    });
+};
+
+/** 특정 유저의 게시글 리스트 무한 스크롤 좋아요 생성 */
+const updateSharePostUserDetailCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateLike['Response'] }) => {
+    const queryKey = sharePostQueryKeys.detailUserPosts(data.post.user.nickname);
+
+    queryClient.setQueryData<InfiniteData<FetchDetailUserPost['Response']>>(queryKey, (prevPostDetailList) => {
+        if (prevPostDetailList === undefined) {
+            return prevPostDetailList;
+        }
+
+        const { pageParams, pages } = prevPostDetailList;
+
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
+            return {
+                nextPage,
+                items: [...items].map((item) => {
+                    const isTargetPost = item.post.id === data.post.id;
+                    return isTargetPost ? { post: { ...item.post, isLike: true, likeCount: item.post.likeCount + 1 } } : item;
+                }),
+            };
+        });
+
+        return {
+            pageParams,
             pages: updatePages,
         };
     });
@@ -42,10 +66,11 @@ const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryCli
 const useCreateLike = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<CreateLikeResponse, any, CreateLikeRequest>({
+    return useMutation<CreateLike['Response'], any, CreateLike['Request']>({
         mutationFn: ({ postId }) => createLike({ postId }),
         onSuccess: (data) => {
             updateSharePostListCache({ queryClient, data });
+            updateSharePostUserDetailCache({ queryClient, data });
         },
     });
 };

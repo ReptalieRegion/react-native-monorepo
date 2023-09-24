@@ -6,14 +6,22 @@ import PostContent from '../molecules/PostContent';
 import PostHeader from '../molecules/PostHeader';
 import PostImageCarousel from '../molecules/PostImageCarousel';
 
-import type { SharePostListData } from '<SharePostAPI>';
+import { FetchPostResponse } from '<api/share/post>';
 import type { SharePostListNavigationProps } from '<SharePostComponent>';
 
-type PostCardProps = SharePostListNavigationProps & SharePostListData;
+type PostCardProps = SharePostListNavigationProps & FetchPostResponse;
 
 export default function PostCard({
-    post: { id: postId, images, isLike, commentCount, contents, likeCount, isMine },
-    user: { id: userId, isFollow, nickname, profile },
+    post: {
+        id: postId,
+        images,
+        isLike,
+        commentCount,
+        contents,
+        likeCount,
+        isMine,
+        user: { id: userId, isFollow, nickname, profile },
+    },
     navigateBottomSheetKebabMenu,
     navigateCommentPage,
     navigateDetailPage,

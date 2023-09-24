@@ -2,55 +2,64 @@ import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstac
 
 import { updateFollow } from '../../repository';
 
-import { SharePostListInfiniteData } from '<SharePostAPI>';
-import type { SharePostUserData, UpdateFollowRequest, UpdateFollowResponse } from '<SharePostUserAPI>';
+import type { FetchDetailUserProfile, UpdateFollow } from '<api/share/post/user>';
+import type { FetchPost } from '<api/share/post>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
 type SetQueryDataProps = {
     queryClient: QueryClient;
-    userId: string;
+    data: UpdateFollow['Response'];
 };
 
-// Cache Update: 특정 유저의 프로필
-const updateUserProfile = ({ queryClient, userId }: SetQueryDataProps) => {
-    queryClient.setQueryData<SharePostUserData>(sharePostQueryKeys.profile(userId), (prevUserProfile) => {
+/** 특정 유저의 프로필 팔로우 수정 */
+const updateUserProfile = ({ queryClient, data }: SetQueryDataProps) => {
+    const queryKey = sharePostQueryKeys.profile(data.user.nickname);
+
+    queryClient.setQueryData<FetchDetailUserProfile['Response']>(queryKey, (prevUserProfile) => {
         if (prevUserProfile === undefined) {
             return prevUserProfile;
         }
 
-        const { isFollow, followingCount } = prevUserProfile.user;
+        const { isFollow, followerCount } = prevUserProfile.user;
         const currentIsFollow = !isFollow;
-        const currentFollowingCount = isFollow ? followingCount - 1 : followingCount + 1;
+        const currentFollowerCount = isFollow ? followerCount - 1 : followerCount + 1;
 
         return {
             ...prevUserProfile,
             user: {
                 ...prevUserProfile.user,
                 isFollow: currentIsFollow,
-                followingCount: currentFollowingCount,
+                followerCount: currentFollowerCount,
             },
         };
     });
 };
 
-// Cache Update: 일상공유 무한스크롤 조회 리스트
-const updateSharePostList = ({ queryClient, userId }: SetQueryDataProps) => {
-    queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(sharePostQueryKeys.list, (prevPostList) => {
+/** 일상공유 무한스크롤 조회 리스트 팔로우 수정 */
+const updateSharePostList = ({ queryClient, data }: SetQueryDataProps) => {
+    const queryKey = sharePostQueryKeys.list;
+    queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevPostList) => {
         if (prevPostList === undefined) {
             return prevPostList;
         }
 
-        const updatePages = [...prevPostList.pages].map((page) => {
-            const items = page.items.map((item) => {
-                const user = item.user.id === userId ? { ...item.user, isFollow: !item.user.isFollow } : item.user;
-                return { ...item, user };
-            });
+        const { pageParams, pages } = prevPostList;
 
-            return { ...page, items };
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
+            return {
+                nextPage,
+                items: items.map((item) => {
+                    const isTargetPost = item.post.user.nickname === data.user.nickname;
+                    return isTargetPost
+                        ? { post: { ...item.post, user: { ...item.post.user, isFollow: !item.post.user.isFollow } } }
+                        : item;
+                }),
+            };
         });
 
         return {
-            ...prevPostList,
+            pageParams,
             pages: updatePages,
         };
     });
@@ -59,11 +68,11 @@ const updateSharePostList = ({ queryClient, userId }: SetQueryDataProps) => {
 const useUpdateFollow = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<UpdateFollowResponse, any, UpdateFollowRequest>({
+    return useMutation<UpdateFollow['Response'], any, UpdateFollow['Request']>({
         mutationFn: ({ userId }) => updateFollow({ userId }),
-        onSuccess: ({ user }) => {
-            updateUserProfile({ queryClient, userId: user.id });
-            updateSharePostList({ queryClient, userId: user.id });
+        onSuccess: (data) => {
+            updateUserProfile({ queryClient, data });
+            updateSharePostList({ queryClient, data });
         },
     });
 };

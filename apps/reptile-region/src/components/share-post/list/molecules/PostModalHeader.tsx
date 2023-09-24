@@ -4,13 +4,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import Profile from '../atoms/Profile';
 
-import type { ShareImageType } from '<Image>';
+import type { ImageType } from '<image>';
 import { KebabMenu } from '@/assets/icons';
 
 type PostModalHeaderProps = {
     user: {
         nickname: string;
-        profile: ShareImageType;
+        profile: ImageType;
     };
     handleProfilePress: () => void;
     handleKebabMenuPress: () => void;

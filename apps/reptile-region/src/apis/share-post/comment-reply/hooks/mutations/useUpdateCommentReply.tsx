@@ -2,65 +2,52 @@ import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstac
 
 import { updateCommentReply } from '../../repository';
 
-import {
-    SharePostCommentReplyInfiniteData,
-    UpdateCommentReplyRequest,
-    UpdateCommentReplyResponse,
-} from '<SharePostCommentReplyAPI>';
+import type { FetchCommentReply, UpdateCommentReply } from '<api/share/post/comment-reply>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
+/** 대댓글 리스트 무한스크롤 대댓글 수정 */
 const updateCommentReplyListCache = ({
     queryClient,
-    queryKey,
     data,
 }: {
     queryClient: QueryClient;
-    queryKey: string;
-    data: Pick<UpdateCommentReplyResponse, 'commentReply'>;
+    data: UpdateCommentReply['Response'];
 }) => {
-    queryClient.setQueryData<InfiniteData<SharePostCommentReplyInfiniteData>>(
-        sharePostQueryKeys.commentReply(queryKey),
-        (prevCommentReplyData) => {
-            if (prevCommentReplyData === undefined) {
-                return prevCommentReplyData;
-            }
+    const queryKey = sharePostQueryKeys.commentReply(data.comment.id);
 
-            const updatePages = [...prevCommentReplyData.pages].map((page) => {
-                const items = page.items.map((item) => {
-                    if (item.commentReply.id === data.commentReply.id) {
-                        return {
-                            ...item,
-                            commentReply: {
-                                ...item.commentReply,
-                                contents: data.commentReply.contents,
-                                isModified: true,
-                            },
-                        };
-                    }
+    queryClient.setQueryData<InfiniteData<FetchCommentReply['Response']>>(queryKey, (prevCommentReplyList) => {
+        if (prevCommentReplyList === undefined) {
+            return prevCommentReplyList;
+        }
 
-                    return item;
-                });
-
-                return {
-                    ...page,
-                    items,
-                };
-            });
-
+        const { pageParams, pages } = prevCommentReplyList;
+        const updatePages = [...pages].map((page) => {
+            const { nextPage, items } = page;
             return {
-                ...prevCommentReplyData,
-                pages: updatePages,
+                nextPage,
+                items: items.map((item) => {
+                    const isTargetCommentReply = item.commentReply.id === data.comment.commentReply.id;
+                    return isTargetCommentReply
+                        ? { commentReply: { ...item.commentReply, ...data.comment.commentReply } }
+                        : item;
+                }),
             };
-        },
-    );
+        });
+
+        return {
+            pageParams,
+            pages: updatePages,
+        };
+    });
 };
 
 const useUpdateCommentReply = () => {
     const queryClient = useQueryClient();
-    return useMutation<UpdateCommentReplyResponse, any, UpdateCommentReplyRequest>({
+
+    return useMutation<UpdateCommentReply['Response'], any, UpdateCommentReply['Request']>({
         mutationFn: ({ commentReplyId, contents }) => updateCommentReply({ commentReplyId, contents }),
         onSuccess: (data) => {
-            updateCommentReplyListCache({ queryClient, queryKey: data.comment.id, data: { commentReply: data.commentReply } });
+            updateCommentReplyListCache({ queryClient, data });
         },
     });
 };

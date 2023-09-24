@@ -1,19 +1,20 @@
-import type { InfinitePageParam } from '<InfiniteState>';
 import type {
+    CreateLikeRequest,
     CreatePostRequest,
     DeletePostRequest,
-    GetDetailUserPostsRequest,
-    GetPostsRequest,
+    FetchDetailUserPostRequest,
+    FetchPostRequest,
     UpdateLikeRequest,
     UpdatePostRequest,
-    CreateLikeRequest,
-} from '<SharePostAPI>';
+} from '<api/share/post>';
+import type { InfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/clientFetch';
+import { uploadImage } from '@/utils/camera-roll/camera-roll';
 import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 게시물 패치
-export const getPosts = async ({ pageParam = 0 }: GetPostsRequest) => {
+export const getPosts = async ({ pageParam = 0 }: FetchPostRequest) => {
     const queryString = objectToQueryString({
         pageParam,
     });
@@ -24,7 +25,7 @@ export const getPosts = async ({ pageParam = 0 }: GetPostsRequest) => {
 };
 
 // 특정 유저 게시글 패치
-export const getDetailUserPosts = async ({ pageParam = 0, nickname }: GetDetailUserPostsRequest & InfinitePageParam) => {
+export const getDetailUserPosts = async ({ pageParam = 0, nickname }: FetchDetailUserPostRequest & InfinitePageParam) => {
     const queryString = objectToQueryString({
         pageParam,
     });
@@ -38,22 +39,16 @@ export const getDetailUserPosts = async ({ pageParam = 0, nickname }: GetDetailU
 /** @TODO Fetch로 이미지 업로드가 안됨  */
 export const createPost = async ({ contents, selectedPhotos }: CreatePostRequest) => {
     const formData = new FormData();
-    selectedPhotos.forEach((photo) => {
-        const { uri, filename } = photo.node.image;
-        formData.append('files', {
-            uri,
-            name: filename,
-            type: 'image/jpeg',
-        });
-    });
+    for (const photo of selectedPhotos) {
+        const file = await uploadImage(photo);
+        formData.append('files', file);
+    }
     formData.append('contents', contents);
 
     const response = await clientFetch('api/share/post', {
         method: METHOD.POST,
         body: formData,
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
+        isFormData: true,
     });
 
     if (!response.ok) {

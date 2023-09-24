@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ListFooterLoading from '../../../common/loading/ListFooterComponent';
 import SquareImage from '../atoms/SquareImage';
 
-import { SharePostListUserDetailData } from '<SharePostAPI>';
+import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 
 type SharePostDetailProps = {
@@ -38,10 +38,10 @@ const SharePostsDetailList = ({ nickname, handleImagePress }: SharePostDetailPro
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
 
     const renderItem = useCallback(
-        ({ item }: ListRenderItemInfo<SharePostListUserDetailData>) => {
+        ({ item }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
             return (
                 <TouchableOpacity onPress={handleImagePress}>
-                    <SquareImage images={item.post.images} width={itemWidth} />
+                    <SquareImage post={{ images: item.post.images }} width={itemWidth} />
                 </TouchableOpacity>
             );
         },

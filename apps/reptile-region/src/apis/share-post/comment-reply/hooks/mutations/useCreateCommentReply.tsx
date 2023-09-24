@@ -2,105 +2,82 @@ import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstac
 
 import { createCommentReply } from '../../repository';
 
-import { SharePostCommentInfiniteData } from '<SharePostCommentAPI>';
-import {
-    CreateCommentReplyRequest,
-    CreateCommentReplyResponse,
-    SharePostCommentReplyInfiniteData,
-} from '<SharePostCommentReplyAPI>';
+import type { CreateCommentReply, FetchCommentReply } from '<api/share/post/comment-reply>';
+import type { FetchComment } from '<api/share/post/comment>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const updateCommentListCache = ({
-    queryClient,
-    queryKey,
-    data,
-}: {
-    queryClient: QueryClient;
-    queryKey: string;
-    data: Pick<CreateCommentReplyResponse, 'comment'>;
-}) => {
-    queryClient.setQueryData<InfiniteData<SharePostCommentInfiniteData>>(
-        sharePostQueryKeys.comment(queryKey),
-        (prevCommentListData) => {
-            if (prevCommentListData === undefined) {
-                return prevCommentListData;
-            }
+/** 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 수정 */
+const updateCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateCommentReply['Response'] }) => {
+    const queryKey = sharePostQueryKeys.comment(data.post.id);
 
-            const updatePages = [...prevCommentListData.pages].map((page) => {
-                const items = page.items.map((item) => {
-                    if (item.comment.id === data.comment.id) {
-                        return {
-                            ...item,
-                            comment: {
-                                ...item.comment,
-                                replyCount: item.comment.replyCount + 1,
-                            },
-                        };
-                    }
+    queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
+        if (prevCommentList === undefined) {
+            return prevCommentList;
+        }
 
-                    return item;
-                });
+        const { pageParams, pages } = prevCommentList;
+        return {
+            pageParams,
+            pages: [...pages].map((page) => {
+                const { items, nextPage } = page;
 
                 return {
-                    ...page,
-                    items,
-                };
-            });
+                    nextPage,
+                    items: items.map((item) => {
+                        if (item.comment.id === data.post.comment.id) {
+                            return {
+                                ...item,
+                                comment: {
+                                    ...item.comment,
+                                    replyCount: item.comment.replyCount + 1,
+                                },
+                            };
+                        }
 
-            return {
-                ...prevCommentListData,
-                pages: updatePages,
-            };
-        },
-    );
+                        return item;
+                    }),
+                };
+            }),
+        };
+    });
 };
 
+/** 대댓글 리스트 무한스크롤 대댓글 추가 */
 const updateCommentReplyListCache = ({
     queryClient,
-    queryKey,
     data,
 }: {
     queryClient: QueryClient;
-    queryKey: string;
-    data: Pick<CreateCommentReplyResponse, 'commentReply' | 'user'>;
+    data: CreateCommentReply['Response'];
 }) => {
-    queryClient.setQueryData<InfiniteData<SharePostCommentReplyInfiniteData>>(
-        sharePostQueryKeys.commentReply(queryKey),
-        (prevCommentReplyData) => {
-            if (prevCommentReplyData === undefined) {
-                return prevCommentReplyData;
-            }
+    const queryKey = sharePostQueryKeys.commentReply(data.post.comment.id);
 
-            const updatePages = [...prevCommentReplyData.pages];
-            updatePages[0] = {
-                nextPage: updatePages[0].nextPage,
-                items: [data, ...updatePages[0].items],
-            };
+    queryClient.setQueryData<InfiniteData<FetchCommentReply['Response']>>(queryKey, (prevCommentReplyData) => {
+        if (prevCommentReplyData === undefined) {
+            return prevCommentReplyData;
+        }
 
-            return {
-                ...prevCommentReplyData,
-                pages: updatePages,
-            };
-        },
-    );
+        const updatePages = [...prevCommentReplyData.pages];
+        const commentReply = data.post.comment.commentReply;
+        updatePages[0] = {
+            nextPage: updatePages[0].nextPage,
+            items: [{ commentReply }, ...updatePages[0].items],
+        };
+
+        return {
+            ...prevCommentReplyData,
+            pages: updatePages,
+        };
+    });
 };
 
 const useCreateCommentReply = () => {
     const queryClient = useQueryClient();
-    return useMutation<CreateCommentReplyResponse, any, CreateCommentReplyRequest>({
+    return useMutation<CreateCommentReply['Response'], any, CreateCommentReply['Request']>({
         mutationFn: ({ commentId, contents }) => createCommentReply({ commentId, contents }),
         onSuccess: (data) => {
-            updateCommentListCache({
-                queryClient,
-                queryKey: data.post.id,
-                data: { comment: data.comment },
-            });
-
-            updateCommentReplyListCache({
-                queryClient,
-                queryKey: data.comment.id,
-                data: { commentReply: data.commentReply, user: data.user },
-            });
+            updateCommentListCache({ queryClient, data });
+            updateCommentReplyListCache({ queryClient, data });
         },
     });
 };

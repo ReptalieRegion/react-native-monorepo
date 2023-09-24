@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import Follow from '../atoms/Follow';
+import Follow from '../../common/atoms/Follow';
 import UserAvatar from '../atoms/UserAvatar';
 import ActivitySummary from '../molecules/ActivitySummary';
 
+import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 
 type UserDetailPanelProps = {
@@ -13,6 +14,7 @@ type UserDetailPanelProps = {
 
 const UserDetailPanel = ({ nickname }: UserDetailPanelProps) => {
     const { data } = useFetchUserProfile({ nickname });
+    const { data: post } = useInfiniteUserPosts({ nickname });
 
     if (!data) {
         return null;
@@ -23,7 +25,7 @@ const UserDetailPanel = ({ nickname }: UserDetailPanelProps) => {
             <UserAvatar user={{ nickname: data.user.nickname, profile: data.user.profile }} />
             <ActivitySummary
                 user={{ followerCount: data.user.followerCount, followingCount: data.user.followingCount }}
-                post={{ count: data.post.count }}
+                post={{ count: post?.pages.flatMap((page) => page.items).length ?? 0 }}
             />
             <View style={styles.textContainer}>
                 <Follow user={{ id: data.user.id, isFollow: data.user.isFollow }} />

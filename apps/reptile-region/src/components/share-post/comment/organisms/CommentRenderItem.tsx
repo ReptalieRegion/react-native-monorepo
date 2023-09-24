@@ -7,20 +7,19 @@ import { useTagHandler } from 'tag-text-input';
 import { ActionButton } from '../atoms/CommentActions';
 import CommentContents from '../molecules/CommentContents';
 
-import type { SharePostCommentData } from '<SharePostCommentAPI>';
-import { SharePostCommentBottomSheetNavigationProp, SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
+import type { FetchCommentResponse } from '<api/share/post/comment>';
+import type { SharePostCommentBottomSheetNavigationProp, SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
 import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
 import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
 import Avatar from '@/components/common/fast-image/Avatar';
 import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 import useCommentStore from '@/stores/share-post/useCommentStore';
 
-type RenderItemProps = {
-    user: SharePostCommentData['user'];
-    comment: SharePostCommentData['comment'];
+type CommentRenderItemProps = {
+    item: FetchCommentResponse;
 };
 
-const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
+const CommentRenderItem = ({ item }: CommentRenderItemProps) => {
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'main'>>();
     const navigation = useNavigation<SharePostCommentBottomSheetNavigationProp<'main'>>();
     const { navigationModalDetail } = useCommentNavigation();
@@ -29,15 +28,15 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
     const { changeText, tagTextInputFocus } = useTagHandler();
 
     const navigateCommentReply = useCallback(
-        (commentingActive: boolean) => navigation.navigate('reply', { comment, user, commentingActive }),
-        [navigation, comment, user],
+        (commentingActive: boolean) => navigation.navigate('reply', { comment: item.comment, commentingActive }),
+        [item.comment, navigation],
     );
-    const deleteComment = useCallback(() => mutate({ commentId: comment.id }), [comment.id, mutate]);
+    const deleteComment = useCallback(() => mutate({ commentId: item.comment.id }), [item.comment.id, mutate]);
     const updateComment = useCallback(() => {
         tagTextInputFocus();
-        changeText(comment.contents);
-        setCommentRegisterType({ commentType: 'comment', key: params.post.id, type: 'update', id: comment.id });
-    }, [comment.contents, comment.id, params.post.id, changeText, setCommentRegisterType, tagTextInputFocus]);
+        changeText(item.comment.contents);
+        setCommentRegisterType({ commentType: 'comment', key: params.post.id, type: 'update', id: item.comment.id });
+    }, [tagTextInputFocus, changeText, setCommentRegisterType, item.comment.contents, item.comment.id, params.post.id]);
 
     const writeCommentReply = useCallback(() => {
         navigateCommentReply(true);
@@ -71,9 +70,9 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
     return (
         <View style={styles.container}>
             <Avatar
-                recyclingKey={user.profile.src}
-                onPress={() => navigationModalDetail(user.nickname)}
-                source={{ uri: user.profile.src }}
+                recyclingKey={item.comment.user.profile.src}
+                onPress={() => navigationModalDetail(item.comment.user.nickname)}
+                source={{ uri: item.comment.user.profile.src }}
                 priority={'high'}
                 contentFit="cover"
                 placeholderContentFit="cover"
@@ -82,20 +81,20 @@ const CommentRenderItem = ({ user, comment }: RenderItemProps) => {
             <View style={styles.commentItemContent}>
                 <CommentContents
                     comment={{
-                        contents: comment.contents,
-                        id: comment.id,
-                        isMine: comment.isMine,
-                        isModified: comment.isModified,
+                        contents: item.comment.contents,
+                        id: item.comment.id,
+                        isMine: item.comment.isMine,
+                        isModified: item.comment.isModified,
                     }}
-                    user={{ nickname: user.nickname }}
+                    user={{ nickname: item.comment.user.nickname }}
                     actionButtons={actionButtons}
                 />
                 <ConditionalRenderer
-                    condition={comment.replyCount !== 0}
+                    condition={item.comment.replyCount !== 0}
                     trueContent={
                         <View style={styles.container}>
                             <TouchableTypo variant="body4" color="secondary" onPress={() => navigateCommentReply(false)}>
-                                답글 {comment.replyCount}개보기
+                                답글 {item.comment.replyCount}개보기
                             </TouchableTypo>
                         </View>
                     }

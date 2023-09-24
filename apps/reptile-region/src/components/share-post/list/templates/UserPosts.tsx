@@ -6,10 +6,10 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import UserPostCard from '../organisms/UserPostCard';
 
-import type { SharePostListUserDetailData } from '<SharePostAPI>';
+import type { FetchDetailUserProfileResponse } from '<api/share/post/user>';
+import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import type { SharePostListNavigationProps } from '<SharePostComponent>';
 import type { SharePostRouteProp } from '<SharePostRoutes>';
-import type { SharePostUserData } from '<SharePostUserAPI>';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
@@ -21,15 +21,19 @@ export default function UserPosts(props: SharePostListNavigationProps) {
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({
         nickname: params.nickname,
     });
+    console.log(userData);
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data]);
-    const keyExtractor = useCallback((item: SharePostListUserDetailData) => item.post.id, []);
+
+    const keyExtractor = useCallback((item: FetchDetailUserPostResponse) => item.post.id, []);
 
     const renderItem = useCallback(
-        ({ item, extraData }: ListRenderItemInfo<SharePostListUserDetailData>) => {
-            const { id, nickname, profile } = extraData as SharePostUserData['user'];
+        ({ item, extraData }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
+            const {
+                user: { id, nickname, profile },
+            } = extraData as FetchDetailUserProfileResponse;
 
-            return <UserPostCard post={item.post} user={{ id, nickname, profile }} {...props} />;
+            return <UserPostCard post={{ ...item.post, user: { id, nickname, profile } }} {...props} />;
         },
         [props],
     );

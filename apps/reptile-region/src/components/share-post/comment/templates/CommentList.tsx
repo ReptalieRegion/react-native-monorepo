@@ -5,22 +5,22 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import CommentRenderItem from '../organisms/CommentRenderItem';
 
-import type { SharePostCommentData } from '<SharePostCommentAPI>';
-import { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
+import type { FetchCommentResponse } from '<api/share/post/comment>';
+import type { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 
 const CommentFlashList = () => {
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'main'>>();
-    const flashListRef = useRef<FlashList<SharePostCommentData>>(null);
+    const flashListRef = useRef<FlashList<FetchCommentResponse>>(null);
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteComment({ postId: params.post.id });
 
-    const renderItem: ListRenderItem<SharePostCommentData> = useCallback((props) => {
-        return <CommentRenderItem comment={props.item.comment} user={props.item.user} />;
+    const renderItem: ListRenderItem<FetchCommentResponse> = useCallback(({ item }) => {
+        return <CommentRenderItem item={item} />;
     }, []);
 
-    const keyExtractor = useCallback((item: SharePostCommentData) => item.comment.id, []);
+    const keyExtractor = useCallback((item: FetchCommentResponse) => item.comment.id, []);
 
     const onEndReached = useCallback(
         () => hasNextPage && !isFetchingNextPage && fetchNextPage(),

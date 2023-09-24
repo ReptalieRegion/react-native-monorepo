@@ -3,10 +3,11 @@ import { StyleSheet, View } from 'react-native';
 
 import ActivitySummaryItem from '../atoms/ActivitySummaryItem';
 
-import type { SharePostUserData } from '<SharePostUserAPI>';
-
 type ActivitySummaryProps = {
-    user: Pick<SharePostUserData['user'], 'followerCount' | 'followingCount'>;
+    user: {
+        followerCount: number;
+        followingCount: number;
+    };
     post: {
         count: number;
     };

@@ -2,41 +2,64 @@ import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstac
 
 import { updateLike } from '../../repository';
 
-import type { SharePostListInfiniteData, UpdateLikeRequest, UpdateLikeResponse } from '<SharePostAPI>';
+import type { FetchDetailUserPost, FetchPost, UpdateLike } from '<api/share/post>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: UpdateLikeResponse }) => {
-    queryClient.setQueryData<InfiniteData<SharePostListInfiniteData>>(sharePostQueryKeys.list, (oldData) => {
-        if (oldData === undefined) {
-            return oldData;
+/** 일상공유 무한스크롤 조회 리스트 좋아요 수정 */
+const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: UpdateLike['Response'] }) => {
+    const queryKey = sharePostQueryKeys.list;
+
+    queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevPostList) => {
+        if (prevPostList === undefined) {
+            return prevPostList;
         }
 
-        const updatePages = [...oldData.pages].map((page) => {
-            const items = page.items.map((item) => {
-                if (item.post.id === data.post.id) {
-                    const isLike = item.post.isLike;
-                    const likeCount = item.post.likeCount;
+        const { pageParams, pages } = prevPostList;
 
-                    return {
-                        ...item,
-                        post: {
-                            ...item.post,
-                            isLike: !isLike,
-                            likeCount: isLike ? likeCount - 1 : likeCount + 1,
-                        },
-                    };
-                }
-                return item;
-            });
-
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
             return {
-                ...page,
-                items,
+                nextPage,
+                items: items.map((item) => {
+                    const isTargetPost = item.post.id === data.post.id;
+                    const { isLike, likeCount } = item.post;
+                    return isTargetPost
+                        ? { post: { ...item.post, isLike: !isLike, likeCount: isLike ? likeCount - 1 : likeCount + 1 } }
+                        : item;
+                }),
             };
         });
 
         return {
-            ...oldData,
+            pageParams,
+            pages: updatePages,
+        };
+    });
+};
+
+/** 특정 유저의 게시글 리스트 무한 스크롤 좋아요 수정  */
+const updateSharePostUserDetailCache = ({ queryClient, data }: { queryClient: QueryClient; data: UpdateLike['Response'] }) => {
+    const queryKey = sharePostQueryKeys.detailUserPosts(data.post.user.nickname);
+    queryClient.setQueryData<InfiniteData<FetchDetailUserPost['Response']>>(queryKey, (prevPostDetailData) => {
+        if (prevPostDetailData === undefined) {
+            return prevPostDetailData;
+        }
+
+        const { pageParams, pages } = prevPostDetailData;
+
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
+            return {
+                nextPage,
+                items: items.map((item) => {
+                    const isTargetPost = item.post.id === data.post.id;
+                    return isTargetPost ? { post: { ...item.post, isLike: true } } : item;
+                }),
+            };
+        });
+
+        return {
+            pageParams,
             pages: updatePages,
         };
     });
@@ -45,10 +68,11 @@ const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryCli
 const useUpdateLike = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<UpdateLikeResponse, any, UpdateLikeRequest>({
+    return useMutation<UpdateLike['Response'], any, UpdateLike['Request']>({
         mutationFn: ({ postId }) => updateLike({ postId }),
         onSuccess: (data) => {
             updateSharePostListCache({ queryClient, data });
+            updateSharePostUserDetailCache({ queryClient, data });
         },
     });
 };

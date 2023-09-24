@@ -2,11 +2,11 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getComments } from '../../repository';
 
-import type { GetCommentsRequest, SharePostCommentInfiniteData } from '<SharePostCommentAPI>';
+import type { FetchComment } from '<api/share/post/comment>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const useInfiniteComment = ({ postId }: GetCommentsRequest) => {
-    return useInfiniteQuery<SharePostCommentInfiniteData>({
+const useInfiniteComment = ({ postId }: FetchComment['Request']) => {
+    return useInfiniteQuery<FetchComment['Response']>({
         queryKey: sharePostQueryKeys.comment(postId),
         queryFn: ({ pageParam }) => getComments({ pageParam, postId }),
         getNextPageParam: (lastPage) => lastPage.nextPage,

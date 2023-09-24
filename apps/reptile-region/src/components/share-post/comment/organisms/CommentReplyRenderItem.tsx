@@ -6,19 +6,18 @@ import { useTagHandler } from 'tag-text-input';
 import { ActionButton } from '../atoms/CommentActions';
 import CommentContents from '../molecules/CommentContents';
 
-import { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
-import { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
+import type { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
+import type { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
 import useDeleteCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useDeleteCommentReply';
 import Avatar from '@/components/common/fast-image/Avatar';
 import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 import useCommentStore from '@/stores/share-post/useCommentStore';
 
 type RenderItemProps = {
-    user: SharePostCommentReplyData['user'];
-    commentReply: SharePostCommentReplyData['commentReply'];
+    items: FetchCommentReplyResponse;
 };
 
-const CommentReplyRenderItem = ({ user, commentReply }: RenderItemProps) => {
+const CommentReplyRenderItem = ({ items }: RenderItemProps) => {
     const { navigationModalDetail } = useCommentNavigation();
     const { mutate } = useDeleteCommentReply();
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'reply'>>();
@@ -26,14 +25,26 @@ const CommentReplyRenderItem = ({ user, commentReply }: RenderItemProps) => {
     const setCommentRegisterType = useCommentStore((state) => state.setCommentRegisterType);
     const { changeText, tagTextInputFocus } = useTagHandler();
 
-    const deleteComment = useCallback(() => mutate({ commentReplyId: commentReply.id }), [commentReply.id, mutate]);
+    const deleteComment = useCallback(() => mutate({ commentReplyId: items.commentReply.id }), [items.commentReply.id, mutate]);
 
     const updateComment = useCallback(() => {
-        const contents = commentReply.contents + ' ';
+        const contents = items.commentReply.contents + ' ';
         tagTextInputFocus();
         changeText(contents);
-        setCommentRegisterType({ commentType: 'commentReply', key: params.comment.id, type: 'update', id: commentReply.id });
-    }, [commentReply.contents, commentReply.id, tagTextInputFocus, changeText, setCommentRegisterType, params.comment.id]);
+        setCommentRegisterType({
+            commentType: 'commentReply',
+            key: params.comment.id,
+            type: 'update',
+            id: items.commentReply.id,
+        });
+    }, [
+        params.comment.id,
+        items.commentReply.contents,
+        items.commentReply.id,
+        tagTextInputFocus,
+        changeText,
+        setCommentRegisterType,
+    ]);
 
     const actionButtons: ActionButton[] = useMemo(
         () => [
@@ -62,9 +73,9 @@ const CommentReplyRenderItem = ({ user, commentReply }: RenderItemProps) => {
     return (
         <View style={styles.container}>
             <Avatar
-                recyclingKey={user.profile.src}
-                onPress={() => navigationModalDetail(user.nickname)}
-                source={{ uri: user.profile.src }}
+                recyclingKey={items.commentReply.user.profile.src}
+                onPress={() => navigationModalDetail(items.commentReply.user.nickname)}
+                source={{ uri: items.commentReply.user.profile.src }}
                 priority={'high'}
                 contentFit="cover"
                 placeholderContentFit="cover"
@@ -73,12 +84,12 @@ const CommentReplyRenderItem = ({ user, commentReply }: RenderItemProps) => {
             <View style={styles.commentItemContent}>
                 <CommentContents
                     comment={{
-                        contents: commentReply.contents,
-                        id: commentReply.id,
-                        isMine: commentReply.isMine,
-                        isModified: commentReply.isModified,
+                        contents: items.commentReply.contents,
+                        id: items.commentReply.id,
+                        isMine: items.commentReply.isMine,
+                        isModified: items.commentReply.isModified,
                     }}
-                    user={{ nickname: user.nickname }}
+                    user={{ nickname: items.commentReply.user.nickname }}
                     actionButtons={actionButtons}
                 />
             </View>
