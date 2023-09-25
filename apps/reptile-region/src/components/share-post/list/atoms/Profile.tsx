@@ -19,7 +19,7 @@ export default function Profile({ user: { nickname, profile }, onPress }: Profil
             <Avatar
                 onPress={onPress}
                 size={30}
-                source={{ uri: profile.src.replace('https://reptalie-region.s3.ap-northeast-2.amazonaws.com/', '') }}
+                source={{ uri: profile?.src.replace('https://reptalie-region.s3.ap-northeast-2.amazonaws.com/', '') ?? '' }}
                 priority="high"
             />
             <TouchableTypo onPress={onPress} variant="title5">

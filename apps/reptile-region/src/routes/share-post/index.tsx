@@ -4,7 +4,7 @@ import React from 'react';
 import SharePostCommentBottomSheetRoutes from './CommentBottomSheet';
 import SharePostPostingRoutes from './Posting';
 
-import type { SharePostParamList } from '<SharePostRoutes>';
+import { SharePostParamList } from '<RootRoutes>';
 import { NativeStackDefaultHeader } from '@/components/common/layouts/header/utils/create-header';
 import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/DetailHeader';
 import SharePostUserDetailListHeader from '@/components/share-post/list/atoms/header/SharePostUserDetailListHeader';

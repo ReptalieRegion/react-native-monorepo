@@ -30,11 +30,10 @@ const createUser = (): User => {
 };
 
 export const createJson = () => {
-    const users = createEmptyArray(50).reduce<User[]>((prev) => {
+    createEmptyArray(50).reduce<User[]>((prev) => {
         const user = createUser();
         const newUser = prev.filter((prevUser) => prevUser?.nickname !== user.nickname || prevUser?.userId !== user.userId);
         newUser.push(user);
         return newUser;
     }, []);
-    console.log(users);
 };

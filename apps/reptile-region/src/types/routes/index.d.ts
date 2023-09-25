@@ -2,6 +2,7 @@ declare module '<RootRoutes>' {
     import type { NavigatorScreenParams } from '@react-navigation/native';
 
     import type { HomeParamList } from '<HomeRoutes>';
+    import { ImageType } from '<image>';
     import { ShareImageType } from '<Image>';
     import type { InfoParamList } from '<InfoRoutes>';
     import type { MyParamList } from '<MyRoutes>';
@@ -57,10 +58,13 @@ declare module '<RootRoutes>' {
 
     type SharePostDetailParams = {
         nickname: string;
+        profile: ImageType;
+        isFollow: boolean | undefined;
     };
 
     type SharePostUserListParams = {
         nickname: string;
+        startIndex: number;
     };
 
     type SharePostParamList = {

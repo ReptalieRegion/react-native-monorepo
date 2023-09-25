@@ -12,13 +12,14 @@ import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfini
 
 type SharePostDetailProps = {
     nickname: string;
-    handleImagePress: () => void;
+    ListHeaderComponent: React.JSX.Element;
+    handleImagePress: (index: number) => void;
 };
 
 const NUM_COLUMNS = 3;
 const DefaultPaddingBottom = 10;
 
-const SharePostsDetailList = ({ nickname, handleImagePress }: SharePostDetailProps) => {
+const SharePostsDetailList = ({ nickname, ListHeaderComponent, handleImagePress }: SharePostDetailProps) => {
     /** UI */
     const { bottom } = useSafeAreaInsets();
     const { width } = useWindowDimensions();
@@ -34,13 +35,14 @@ const SharePostsDetailList = ({ nickname, handleImagePress }: SharePostDetailPro
 
     /** Data */
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteUserPosts({ nickname });
-
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
 
+    const keyExtractor = useCallback((item: FetchDetailUserPostResponse) => item.post.images[0].src, []);
+
     const renderItem = useCallback(
-        ({ item }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
+        ({ item, index }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
             return (
-                <TouchableOpacity onPress={handleImagePress}>
+                <TouchableOpacity onPress={() => handleImagePress(index)}>
                     <SquareImage post={{ images: item.post.images }} width={itemWidth} />
                 </TouchableOpacity>
             );
@@ -59,12 +61,13 @@ const SharePostsDetailList = ({ nickname, handleImagePress }: SharePostDetailPro
             <FlashList
                 contentContainerStyle={contentContainerStyle}
                 data={newData}
-                keyExtractor={(item, index) => item.post.images[0].src + index}
+                keyExtractor={keyExtractor}
+                ListHeaderComponent={ListHeaderComponent}
                 renderItem={renderItem}
                 numColumns={NUM_COLUMNS}
                 estimatedItemSize={itemWidth}
-                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 onEndReached={onEndReached}
+                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
             />
         </View>
     );

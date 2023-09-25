@@ -28,11 +28,11 @@ export default function PostCard({
 }: PostCardProps) {
     /** navigation 시작 */
     const handleTagPress = (tag: string) => {
-        navigateDetailPage({ nickname: tag });
+        navigateDetailPage({ nickname: tag, isFollow, profile });
     };
 
     const handleProfilePress = () => {
-        navigateDetailPage({ nickname });
+        navigateDetailPage({ nickname, isFollow, profile });
     };
 
     const handleKebabMenuPress = () => {

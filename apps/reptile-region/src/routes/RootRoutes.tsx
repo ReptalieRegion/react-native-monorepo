@@ -3,7 +3,7 @@ import { useFlipper } from '@react-navigation/devtools';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { OverlayList } from 'overlay';
 import { createOverlay } from 'overlay-manager';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import HomeRoutes from './home';
 import InfoRoutes from './info';
@@ -12,6 +12,7 @@ import SharePostRoutes from './share-post';
 import ShopRoutes from './shop';
 
 import { RootRoutesParamList } from '<RootRoutes>';
+import { useSignIn } from '@/apis/auth';
 import { MainBottomBar } from '@/components/common/layouts';
 import ToastContainer from '@/overlay/ToastContainer';
 
@@ -21,6 +22,12 @@ const Overlay = createOverlay<OverlayList>();
 const RootRoutes = () => {
     const navigationRef = useNavigationContainerRef();
     useFlipper(navigationRef);
+
+    const { mutate } = useSignIn();
+
+    useEffect(() => {
+        mutate({ userId: '3de3fm3cw3fl3i4.3d73ft3hk@gmail.com', password: '123123' });
+    }, [mutate]);
 
     return (
         <Overlay.Container registerComponent={{ toast: ToastContainer }}>

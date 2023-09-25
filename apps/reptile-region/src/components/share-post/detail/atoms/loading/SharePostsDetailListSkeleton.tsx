@@ -2,26 +2,38 @@ import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-import createEmptyArray from '@/utils/array/createEmptyArray';
-
 const NUM_COLUMNS = 3;
 
 export default function SharePostsDetailListSkeleton() {
     const { width } = useWindowDimensions();
-    const itemWidth = width / NUM_COLUMNS - 2;
-    const imageStyle = {
-        width: itemWidth,
-        height: itemWidth,
-        margin: 1,
-    };
+    const itemSize = width / NUM_COLUMNS - 2;
 
     return (
         <View style={styles.container}>
-            {createEmptyArray(15).map((_, index) => (
-                <SkeletonPlaceholder direction="right" key={index.toString() + 'detail'}>
-                    <View style={imageStyle} />
-                </SkeletonPlaceholder>
-            ))}
+            <SkeletonPlaceholder backgroundColor={'#d9d9d9'} direction="right">
+                <SkeletonPlaceholder.Item flexDirection="column">
+                    <SkeletonPlaceholder.Item flexDirection="row">
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                    </SkeletonPlaceholder.Item>
+                    <SkeletonPlaceholder.Item flexDirection="row">
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                    </SkeletonPlaceholder.Item>
+                    <SkeletonPlaceholder.Item flexDirection="row">
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                    </SkeletonPlaceholder.Item>
+                    <SkeletonPlaceholder.Item flexDirection="row">
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                        <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
+                    </SkeletonPlaceholder.Item>
+                </SkeletonPlaceholder.Item>
+            </SkeletonPlaceholder>
         </View>
     );
 }

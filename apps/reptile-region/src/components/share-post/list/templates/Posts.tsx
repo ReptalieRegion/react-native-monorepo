@@ -9,6 +9,7 @@ import PostCard from '../organisms/PostCard';
 import type { FetchPostResponse } from '<api/share/post>';
 import type { SharePostListNavigationProps } from '<SharePostComponent>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
+import FadeInCellRenderComponent from '@/components/common/fast-image/FadeInCellRenderComponent';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 import useFlashListScroll from '@/hooks/flash-list/useFlashListScroll';
 
@@ -19,7 +20,6 @@ export default function Posts(props: SharePostListNavigationProps) {
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data]);
-    console.log(newData);
     const keyExtractor = useCallback((item: FetchPostResponse) => item.post.id, []);
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<FetchPostResponse>) => <PostCard {...item} {...props} />,
@@ -48,6 +48,7 @@ export default function Posts(props: SharePostListNavigationProps) {
                 estimatedItemSize={400}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
                 onEndReached={onEndReached}
+                CellRendererComponent={FadeInCellRenderComponent}
                 ListFooterComponent={ListFooterComponent}
                 scrollEventThrottle={16}
                 onScroll={determineScrollDirection}

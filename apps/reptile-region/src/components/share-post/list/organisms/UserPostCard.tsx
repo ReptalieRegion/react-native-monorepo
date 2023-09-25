@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import InteractivePost from '../molecules/InteractivePost';
 import PostContent from '../molecules/PostContent';
@@ -22,6 +23,7 @@ type PostModalCardProps = {
             id: string;
             nickname: string;
             profile: ImageType;
+            isFollow: boolean | undefined;
         };
     };
 } & SharePostListNavigationProps;
@@ -35,7 +37,7 @@ export default function UserPostCard({
         contents,
         likeCount,
         isMine,
-        user: { id: userId, nickname, profile },
+        user: { id: userId, nickname, profile, isFollow },
     },
     navigateBottomSheetKebabMenu,
     navigateCommentPage,
@@ -43,15 +45,15 @@ export default function UserPostCard({
 }: PostModalCardProps) {
     /** navigation 시작 */
     const handleTagPress = (tag: string) => {
-        navigateDetailPage({ nickname: tag });
+        navigateDetailPage({ nickname: tag, isFollow, profile });
     };
 
     const handleProfilePress = () => {
-        navigateDetailPage({ nickname });
+        navigateDetailPage({ nickname, isFollow, profile });
     };
 
     const handleKebabMenuPress = () => {
-        navigateBottomSheetKebabMenu({ post: { id: postId, isMine, user: { id: userId } } });
+        navigateBottomSheetKebabMenu({ post: { id: postId, isMine: isMine }, user: { id: userId } });
     };
 
     const handleCommentPress = () => {
@@ -60,7 +62,7 @@ export default function UserPostCard({
     /** navigation 끝 */
 
     return (
-        <View style={styles.container}>
+        <Animated.View style={[styles.itemContainer]}>
             <PostModalHeader
                 user={{ nickname, profile }}
                 handleProfilePress={handleProfilePress}
@@ -73,12 +75,15 @@ export default function UserPostCard({
                 handleCommentPress={handleCommentPress}
                 handleTagPress={handleTagPress}
             />
-        </View>
+        </Animated.View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginBottom: 40,
+    itemContainer: {
+        marginTop: 20,
+        marginBottom: 20,
+        minHeight: 444,
+        maxHeight: 444,
     },
 });

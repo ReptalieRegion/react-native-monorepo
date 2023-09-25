@@ -9,7 +9,6 @@ const useFetchUserProfile = ({ nickname }: FetchDetailUserProfile['Request']) =>
     return useQuery<FetchDetailUserProfile['Response']>({
         queryKey: sharePostQueryKeys.profile(nickname),
         queryFn: () => getDetailUserProfile({ nickname }),
-        suspense: true,
     });
 };
 

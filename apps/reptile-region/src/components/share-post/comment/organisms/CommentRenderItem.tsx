@@ -2,6 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { TouchableTypo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { useTagHandler } from 'tag-text-input';
 
 import { ActionButton } from '../atoms/CommentActions';
@@ -68,7 +69,7 @@ const CommentRenderItem = ({ item }: CommentRenderItemProps) => {
     );
 
     return (
-        <View style={styles.container}>
+        <Animated.View style={styles.container} entering={FadeIn} exiting={FadeOut}>
             <Avatar
                 recyclingKey={item.comment.user.profile.src}
                 onPress={() => navigationModalDetail(item.comment.user.nickname)}
@@ -101,7 +102,7 @@ const CommentRenderItem = ({ item }: CommentRenderItemProps) => {
                     falseContent={null}
                 />
             </View>
-        </View>
+        </Animated.View>
     );
 };
 

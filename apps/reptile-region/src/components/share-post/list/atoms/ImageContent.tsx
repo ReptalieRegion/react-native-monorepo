@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     image: {
-        height: 250,
+        height: 300,
     },
     imageBackground: {
         backgroundColor: color.Gray[250].toString(),

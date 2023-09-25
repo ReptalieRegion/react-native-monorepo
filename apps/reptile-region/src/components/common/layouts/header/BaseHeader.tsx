@@ -48,11 +48,15 @@ const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerSty
     return (
         <>
             <MainStatusBar />
-            <View style={[styles.bgWhite, styles.container, customStyles.container]}>
-                <TouchableOpacity onPress={handleBackButtonClick}>
+            <View style={[styles.container, customStyles.container]}>
+                <TouchableOpacity onPress={handleBackButtonClick} containerStyle={styles.left}>
                     <Icon width={30} height={30} />
                 </TouchableOpacity>
-                <Typo variant="title3">{title}</Typo>
+                <View style={styles.center}>
+                    <Typo variant="title3" textAlign="center">
+                        {title}
+                    </Typo>
+                </View>
                 <View style={[styles.right]}>{typeof right === 'string' ? <Typo>{right}</Typo> : right}</View>
             </View>
         </>
@@ -60,22 +64,31 @@ const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerSty
 };
 
 const styles = StyleSheet.create({
-    bgWhite: {
-        backgroundColor: color.White.toString(),
-    },
     container: {
-        padding: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderBottomWidth: 0.5,
-        borderBottomColor: color.Gray[250].toString(),
-    },
-    right: {
+        height: 50,
+        position: 'relative',
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        minWidth: 30,
+        borderBottomWidth: 0.5,
+        borderBottomColor: color.Gray[250].toString(),
+        backgroundColor: color.White.toString(),
+    },
+    left: {
+        position: 'absolute',
+        left: 10,
+        zIndex: 1,
+    },
+    center: {
+        flex: 1,
+    },
+    right: {
+        position: 'absolute',
+        right: 10,
+        height: 30,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

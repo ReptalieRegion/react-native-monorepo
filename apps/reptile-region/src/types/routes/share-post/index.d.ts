@@ -71,12 +71,12 @@ declare module '<SharePostRoutes>' {
     };
 
     type SharePostDetailProps = {
-        userId?: string;
         nickname: string;
     };
 
     type SharePostUserList = {
         nickname: string;
+        startIndex: number;
     };
 
     type SharePostParamList = {

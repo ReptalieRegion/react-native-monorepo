@@ -1,6 +1,7 @@
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
 import type { ImageType } from '<image>';
 
@@ -11,9 +12,12 @@ type SquareImageProps = {
     width: number;
 };
 
+const AnimatedImage = Animated.createAnimatedComponent(Image);
+
 const SquareImage = ({ post: { images }, width }: SquareImageProps) => {
     return (
-        <Image
+        <AnimatedImage
+            entering={FadeIn}
             style={[styles.image, { width }]}
             recyclingKey={images[0].src}
             source={{ uri: images[0].src.replace('https://reptalie-region.s3.ap-northeast-2.amazonaws.com/', '') }}

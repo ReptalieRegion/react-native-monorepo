@@ -9,6 +9,7 @@ import CommentReplyRenderItem from '../organisms/CommentReplyRenderItem';
 import type { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
 import type { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
+import FadeInCellRenderComponent from '@/components/common/fast-image/FadeInCellRenderComponent';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 
 const CommentReplyList = () => {
@@ -19,7 +20,6 @@ const CommentReplyList = () => {
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteCommentReply({ commentId: comment.id });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
-    console.log(newData);
 
     const keyExtractor = useCallback((item: FetchCommentReplyResponse) => item.commentReply.id, []);
 
@@ -63,6 +63,7 @@ const CommentReplyList = () => {
                 onEndReached={onEndReached}
                 estimatedItemSize={100}
                 scrollEventThrottle={16}
+                CellRendererComponent={FadeInCellRenderComponent}
                 ListHeaderComponent={ListHeaderComponent}
                 ListHeaderComponentStyle={styles.comment}
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}

@@ -5,7 +5,6 @@ import createUserPostImages from '../service/createUserPostImages';
 
 import { FetchPostResponse } from '<api/share/post>';
 import ENV from '@/env';
-import { AUTH_KEYS } from '@/env/constants';
 import comments from '@/mocks/data/comment.json';
 import follows from '@/mocks/data/follow.json';
 import likes from '@/mocks/data/like.json';
@@ -21,7 +20,7 @@ const staticPostController = () => {
         /** GET */
         rest.get(BASE_URI + 'share/posts/list', async (req, res, ctx) => {
             const cookies = req.cookies;
-            console.log(cookies[AUTH_KEYS[0]]);
+
             const cookie = cookies[''];
             const pageParam = Number(req.url.searchParams.get('pageParam')) ?? 0;
             const postsLength = posts.length;

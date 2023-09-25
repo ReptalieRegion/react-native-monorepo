@@ -1,41 +1,67 @@
-import { useRoute } from '@react-navigation/native';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import { useQueryClient } from '@tanstack/react-query';
 import { color } from 'design-system';
 import React, { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import UserPostCard from '../organisms/UserPostCard';
 
-import type { FetchDetailUserProfileResponse } from '<api/share/post/user>';
+import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import type { SharePostListNavigationProps } from '<SharePostComponent>';
-import type { SharePostRouteProp } from '<SharePostRoutes>';
+import { sharePostQueryKeys } from '@/apis/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
-import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
 
-export default function UserPosts(props: SharePostListNavigationProps) {
-    const { params } = useRoute<SharePostRouteProp<'share-post/list/user'>>();
-    const [refreshing, setRefreshing] = useState<boolean>(false);
-    const { data: userData } = useFetchUserProfile({ nickname: params.nickname });
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({
-        nickname: params.nickname,
-    });
-    console.log(userData);
+type UserPostsProps = {
+    nickname: string;
+    startIndex: number;
+} & SharePostListNavigationProps;
 
-    const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data]);
+export default function UserPosts({
+    nickname,
+    startIndex,
+    navigateBottomSheetKebabMenu,
+    navigateCommentPage,
+    navigateDetailPage,
+}: UserPostsProps) {
+    const [refreshing, setRefreshing] = useState<boolean>(false);
+
+    /** Data 시작 */
+    const queryClient = useQueryClient();
+    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(sharePostQueryKeys.profile(nickname));
+    const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({ nickname });
+
+    const newData = useMemo(() => userPost?.pages.flatMap((page) => page.items), [userPost]);
 
     const keyExtractor = useCallback((item: FetchDetailUserPostResponse) => item.post.id, []);
 
     const renderItem = useCallback(
         ({ item, extraData }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
-            const {
-                user: { id, nickname, profile },
-            } = extraData as FetchDetailUserProfileResponse;
+            const userData = extraData as FetchDetailUserProfileResponse | undefined;
 
-            return <UserPostCard post={{ ...item.post, user: { id, nickname, profile } }} {...props} />;
+            const post = {
+                ...item.post,
+                user: {
+                    id: userData?.user.id ?? '',
+                    nickname: userData?.user.nickname ?? '',
+                    profile: userData?.user.profile ?? {
+                        src: '',
+                    },
+                    isFollow: userData?.user.isFollow,
+                },
+            };
+
+            return (
+                <UserPostCard
+                    post={post}
+                    navigateBottomSheetKebabMenu={navigateBottomSheetKebabMenu}
+                    navigateCommentPage={navigateCommentPage}
+                    navigateDetailPage={navigateDetailPage}
+                />
+            );
         },
-        [props],
+        [navigateBottomSheetKebabMenu, navigateCommentPage, navigateDetailPage],
     );
     const ListFooterComponent = useCallback(() => <ListFooterLoading isLoading={isFetchingNextPage} />, [isFetchingNextPage]);
     const asyncOnRefresh = useCallback(async () => {
@@ -47,20 +73,22 @@ export default function UserPosts(props: SharePostListNavigationProps) {
         () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
         [fetchNextPage, hasNextPage, isFetchingNextPage],
     );
+    /** Data 시작 */
 
     return (
         <View style={styles.container}>
             <FlashList
                 contentContainerStyle={styles.listContainer}
                 data={newData}
-                extraData={userData?.user}
+                extraData={userProfile}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
-                estimatedItemSize={400}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
                 onEndReached={onEndReached}
                 ListFooterComponent={ListFooterComponent}
                 scrollEventThrottle={16}
+                estimatedItemSize={484}
+                initialScrollIndex={startIndex}
             />
         </View>
     );
@@ -72,6 +100,8 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     listContainer: {
-        padding: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 20,
     },
 });

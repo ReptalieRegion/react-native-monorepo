@@ -1,34 +1,55 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Follow from '../../common/atoms/Follow';
 import UserAvatar from '../atoms/UserAvatar';
 import ActivitySummary from '../molecules/ActivitySummary';
 
-import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
+import { ImageType } from '<image>';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 
 type UserDetailPanelProps = {
     nickname: string;
+    profile: ImageType;
+    isFollow: boolean | undefined;
 };
 
-const UserDetailPanel = ({ nickname }: UserDetailPanelProps) => {
+const UserDetailPanel = ({ nickname, profile, isFollow }: UserDetailPanelProps) => {
     const { data } = useFetchUserProfile({ nickname });
-    const { data: post } = useInfiniteUserPosts({ nickname });
 
-    if (!data) {
-        return null;
-    }
+    const newData = useMemo(
+        () => ({
+            avatar: {
+                user: {
+                    nickname: data?.user.nickname ?? nickname,
+                    profile: data?.user.profile ?? profile,
+                },
+            },
+            activitySummary: {
+                user: {
+                    followerCount: data?.user.followerCount ?? 0,
+                    followingCount: data?.user.followingCount ?? 0,
+                },
+                post: {
+                    count: 0,
+                },
+            },
+            follow: {
+                user: {
+                    id: data?.user.id ?? '',
+                    isFollow: data?.user.isFollow ?? isFollow,
+                },
+            },
+        }),
+        [data, isFollow, nickname, profile],
+    );
 
     return (
         <View style={styles.container}>
-            <UserAvatar user={{ nickname: data.user.nickname, profile: data.user.profile }} />
-            <ActivitySummary
-                user={{ followerCount: data.user.followerCount, followingCount: data.user.followingCount }}
-                post={{ count: post?.pages.flatMap((page) => page.items).length ?? 0 }}
-            />
+            <UserAvatar {...newData.avatar} />
+            <ActivitySummary {...newData.activitySummary} />
             <View style={styles.textContainer}>
-                <Follow user={{ id: data.user.id, isFollow: data.user.isFollow }} />
+                <Follow {...newData.follow} />
             </View>
         </View>
     );

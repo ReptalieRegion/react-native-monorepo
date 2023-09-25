@@ -18,7 +18,6 @@ const CommentEditor = () => {
         if (commentInfo?.register === 'update' && commentInfo?.commentId) {
             updateComment({ commentId: commentInfo.commentId, contents });
         } else {
-            console.log(commentInfo);
             createComment({ postId: params.post.id, contents });
         }
     };
