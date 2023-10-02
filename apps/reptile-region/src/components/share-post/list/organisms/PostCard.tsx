@@ -36,7 +36,7 @@ export default function PostCard({
     };
 
     const handleKebabMenuPress = () => {
-        navigateBottomSheetKebabMenu({ post: { id: postId, isMine }, user: { id: userId } });
+        navigateBottomSheetKebabMenu({ post: { id: postId, isMine, contents, images }, user: { id: userId } });
     };
 
     const handleCommentPress = () => {

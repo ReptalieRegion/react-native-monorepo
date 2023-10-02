@@ -53,7 +53,7 @@ export default function UserPostCard({
     };
 
     const handleKebabMenuPress = () => {
-        navigateBottomSheetKebabMenu({ post: { id: postId, isMine: isMine }, user: { id: userId } });
+        navigateBottomSheetKebabMenu({ post: { id: postId, isMine: isMine, contents, images }, user: { id: userId } });
     };
 
     const handleCommentPress = () => {

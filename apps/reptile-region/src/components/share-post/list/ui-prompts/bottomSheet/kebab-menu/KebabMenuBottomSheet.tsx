@@ -40,10 +40,24 @@ const KebabMenuBottomSheet = () => {
         close();
     };
 
+    const navigateUpdatePage = () => {
+        navigation.navigate('share-post/modal/posting', {
+            screen: 'update',
+            params: { post: { contents: post.contents, id: post.id, images: post.images } },
+        });
+    };
+
     return (
-        <BottomSheet onClose={close} snapInfo={{ startIndex: 0, pointsFromTop: [100] }}>
+        <BottomSheet onClose={close} snapInfo={{ startIndex: 0, pointsFromTop: [150] }}>
             <View style={[styles.content, { paddingBottom: bottom }]}>
-                {post.isMine ? <ListItem text="삭제" onPress={deletePost} /> : <ListItem text="신고하기" />}
+                {post.isMine ? (
+                    <>
+                        <ListItem text="삭제" onPress={deletePost} />
+                        <ListItem text="수정" onPress={navigateUpdatePage} />
+                    </>
+                ) : (
+                    <ListItem text="신고하기" />
+                )}
             </View>
         </BottomSheet>
     );

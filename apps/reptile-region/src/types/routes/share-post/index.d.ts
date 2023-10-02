@@ -4,13 +4,23 @@ declare module '<SharePostRoutes>' {
     import type { NavigatorScreenParams } from '@react-navigation/native';
     import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+    import { ImageType } from '<image>';
     import { ShareImageType } from '<Image>';
     import { RootRoutesParamList } from '<RootRoutes>';
 
     /** 게시물 작성 관련 내비게이터 */
+    type SharePostPostingUpdateProps = {
+        post: {
+            id: string;
+            images: ImageType[];
+            contents: string;
+        };
+    };
+
     type SharePostPostingParamList = {
         'image-crop': undefined;
         write: undefined;
+        update: SharePostPostingUpdateProps;
     };
 
     type SharePostPostingRouteProp<RouteName extends keyof SharePostPostingParamList> = RouteProp<
@@ -63,6 +73,8 @@ declare module '<SharePostRoutes>' {
     type SharePostKebabMenu = {
         post: {
             id: string;
+            images: ImageType[];
+            contents: string;
             isMine: boolean;
             user: {
                 id: string;

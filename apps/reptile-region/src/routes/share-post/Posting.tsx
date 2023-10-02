@@ -6,7 +6,7 @@ import { TagProvider } from 'tag-text-input';
 import { SharePostPostingParamList } from '<SharePostRoutes>';
 import ImageCropHeader from '@/components/share-post/image-crop/atoms/header/ImageCropHeader';
 import SharePostWriteHeader from '@/components/share-post/write/atoms/header/SharePostWriteHeader';
-import { SharePostImageCropPage, SharePostWritePage } from '@/pages/share-post';
+import { SharePostImageCropPage, SharePostUpdatePage, SharePostWritePage } from '@/pages/share-post';
 
 const Stack = createNativeStackNavigator<SharePostPostingParamList>();
 
@@ -24,10 +24,16 @@ const SharePostPostingRoutes = () => {
                         header: ImageCropHeader,
                     }}
                 />
-
                 <Stack.Screen
                     name="write"
                     component={SharePostWritePage}
+                    options={{
+                        header: SharePostWriteHeader,
+                    }}
+                />
+                <Stack.Screen
+                    name="update"
+                    component={SharePostUpdatePage}
                     options={{
                         header: SharePostWriteHeader,
                     }}

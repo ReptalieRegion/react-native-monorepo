@@ -49,6 +49,8 @@ declare module '<RootRoutes>' {
     type SharePostKebabMenuParams = {
         post: {
             id: string;
+            images: ImageType[];
+            contents: string;
             isMine: boolean;
         };
         user: {
