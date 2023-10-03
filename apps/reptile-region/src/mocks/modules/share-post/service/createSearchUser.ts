@@ -1,8 +1,8 @@
 import { fakerKO } from '@faker-js/faker';
 
-import { SharePostSearchFollowerUserData } from '<SharePostUserAPI>';
+import { FetchFollowerSearchResponse } from '<api/share/post/user>';
 
-const createSearchUser = (): SharePostSearchFollowerUserData => {
+const createSearchUser = (): FetchFollowerSearchResponse => {
     return {
         user: {
             id: fakerKO.string.uuid(),

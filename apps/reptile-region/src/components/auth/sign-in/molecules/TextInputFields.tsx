@@ -8,8 +8,9 @@ import { z } from 'zod';
 import type { RequestSignIn } from '<AuthRequest>';
 import type { UseFormDefaultValues } from '<HookForm>';
 import { useSignIn } from '@/apis/auth/hooks';
-import TextField, { TextFieldProps } from '@/components/common/element/text-input/TextField';
-import TextButton from '@/components/common/layouts/button/TextButton';
+import { TextButton } from '@/components/@common/atoms';
+import TextField from '@/components/@common/atoms/TextField';
+import type { TextFieldProps } from '@/components/@common/atoms/TextField';
 
 type InputKey = 'EMAIL' | 'PASSWORD';
 
@@ -38,7 +39,7 @@ const signInSchema = z.object({
     PASSWORD: z.string().min(1, { message: '비밀번호를 입력해주세요.' }),
 });
 
-const TextInputFields = () => {
+export default function TextInputFields() {
     const {
         control,
         handleSubmit,
@@ -101,7 +102,7 @@ const TextInputFields = () => {
             />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -122,5 +123,3 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 });
-
-export default TextInputFields;

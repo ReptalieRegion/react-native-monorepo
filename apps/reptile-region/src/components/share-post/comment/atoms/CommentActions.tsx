@@ -2,7 +2,7 @@ import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 
 export type ActionButton = {
     label: string;

@@ -1,5 +1,6 @@
 import React from 'react';
-import { ColorValue, DimensionValue, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import type { ColorValue, DimensionValue } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
@@ -19,8 +20,9 @@ type FloatingActionButtonProps = {
     iconStyle?: IconStyle;
 };
 
-const FloatingActionButton = ({ onPress, Icon, iconStyle }: FloatingActionButtonProps) => {
+export default function FloatingActionButton({ onPress, Icon, iconStyle }: FloatingActionButtonProps) {
     const scale = useSharedValue(1);
+
     const scaleStyle = useAnimatedStyle(() => ({
         transform: [{ scale: scale.value }],
     }));
@@ -47,7 +49,7 @@ const FloatingActionButton = ({ onPress, Icon, iconStyle }: FloatingActionButton
             </Animated.View>
         </TouchableWithoutFeedback>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -59,5 +61,3 @@ const styles = StyleSheet.create({
         borderRadius: 9999,
     },
 });
-
-export default FloatingActionButton;

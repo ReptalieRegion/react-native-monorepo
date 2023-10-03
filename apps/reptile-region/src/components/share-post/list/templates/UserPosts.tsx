@@ -11,7 +11,7 @@ import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import type { SharePostListNavigationProps } from '<SharePostComponent>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
-import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
+import { ListFooterLoading } from '@/components/@common/atoms';
 
 type UserPostsProps = {
     nickname: string;
@@ -63,7 +63,7 @@ export default function UserPosts({
         },
         [navigateBottomSheetKebabMenu, navigateCommentPage, navigateDetailPage],
     );
-    const ListFooterComponent = useCallback(() => <ListFooterLoading isLoading={isFetchingNextPage} />, [isFetchingNextPage]);
+
     const asyncOnRefresh = useCallback(async () => {
         setRefreshing(true);
         await refetch();
@@ -85,7 +85,7 @@ export default function UserPosts({
                 renderItem={renderItem}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
                 onEndReached={onEndReached}
-                ListFooterComponent={ListFooterComponent}
+                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 scrollEventThrottle={16}
                 estimatedItemSize={484}
                 initialScrollIndex={startIndex}

@@ -13,7 +13,7 @@ import ShopRoutes from './shop';
 
 import { RootRoutesParamList } from '<RootRoutes>';
 import { useSignIn } from '@/apis/auth';
-import { MainBottomBar } from '@/components/common/layouts';
+import { MainBottomBar } from '@/components/@common/molecules';
 import ToastContainer from '@/overlay/ToastContainer';
 
 const BottomTab = createBottomTabNavigator<RootRoutesParamList>();

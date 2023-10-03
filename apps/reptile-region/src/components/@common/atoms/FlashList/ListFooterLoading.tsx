@@ -5,9 +5,9 @@ type ListFooterLoadingProps = {
     isLoading: boolean;
 };
 
-const ListFooterLoading = ({ isLoading }: ListFooterLoadingProps) => {
+export default function ListFooterLoading({ isLoading }: ListFooterLoadingProps) {
     return isLoading ? <ActivityIndicator size={'small'} style={styles.padding} /> : null;
-};
+}
 
 const styles = StyleSheet.create({
     padding: {
@@ -15,5 +15,3 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
 });
-
-export default ListFooterLoading;

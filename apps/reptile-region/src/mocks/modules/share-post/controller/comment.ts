@@ -1,8 +1,8 @@
 import { rest } from 'msw';
 
+import type { CreateCommentProps } from '../service/createComment';
 import createComment from '../service/createComment';
 
-import type { CreateCommentRequest, UpdateCommentRequest } from '<SharePostCommentAPI>';
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 import { wait } from '@/mocks/utils/helpers';
@@ -21,7 +21,7 @@ const commentController = () => {
         }),
         /** POST */
         rest.post(BASE_URI + 'share/comment', async (req, res, ctx) => {
-            const body = (await req.json()) as CreateCommentRequest;
+            const body = (await req.json()) as CreateCommentProps;
             const data = createComment(body);
             const newData = Object.assign({}, data, { post: { id: '' } });
 
@@ -29,7 +29,7 @@ const commentController = () => {
         }),
         /** PUT */
         rest.put(BASE_URI + 'share/comments/:commentId', async (req, res, ctx) => {
-            const body = (await req.json()) as UpdateCommentRequest;
+            const body = (await req.json()) as CreateCommentProps;
             const data = createComment(body);
 
             return res(ctx.status(200), ctx.json({ ...data }));

@@ -4,7 +4,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-na
 
 const AnimatedCellContainer = Animated.createAnimatedComponent(CellContainer);
 
-const FadeInCellRenderComponent = (props: any, _: any) => {
+export default React.forwardRef(function FadeInCellRenderComponent(props: any, _: any) {
     const opacity = useSharedValue(0);
     const animatedStyles = useAnimatedStyle(() => {
         return {
@@ -18,6 +18,4 @@ const FadeInCellRenderComponent = (props: any, _: any) => {
     }, []);
 
     return <AnimatedCellContainer {...props} style={[animatedStyles, props.style]} />;
-};
-
-export default React.forwardRef(FadeInCellRenderComponent);
+});

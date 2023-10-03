@@ -5,12 +5,11 @@ type ConditionalRendererProps = {
     trueContent?: ReactNode;
     falseContent?: ReactNode;
 };
-const ConditionalRenderer = ({ condition, trueContent = null, falseContent = null }: ConditionalRendererProps) => {
+
+export default function ConditionalRenderer({ condition, trueContent = null, falseContent = null }: ConditionalRendererProps) {
     if (condition) {
         return trueContent;
     }
 
     return falseContent;
-};
-
-export default ConditionalRenderer;
+}

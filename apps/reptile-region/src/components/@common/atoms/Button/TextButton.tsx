@@ -34,7 +34,7 @@ const VARIANT_STYLES: VariantStyles = {
     },
 };
 
-const TextButton = ({
+export default function TextButton({
     text,
     type = 'text',
     textInfo = {
@@ -47,7 +47,7 @@ const TextButton = ({
     touchableProps = {
         activeOpacity: 0.5,
     },
-}: TextButtonProps) => {
+}: TextButtonProps) {
     return (
         <TouchableOpacity activeOpacity={touchableProps.activeOpacity} onPress={touchableProps.onPress} {...touchableProps}>
             <View style={[styles.container, VARIANT_STYLES[type], containerStyle]}>
@@ -62,7 +62,7 @@ const TextButton = ({
             </View>
         </TouchableOpacity>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -74,5 +74,3 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 });
-
-export default TextButton;

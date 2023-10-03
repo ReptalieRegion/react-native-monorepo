@@ -1,3 +1,3 @@
-import { createNativeStackHeader } from '@/components/common/layouts/header/utils/create-header';
+import { createNativeStackHeader } from '@/components/@common/molecules';
 
 export default createNativeStackHeader({ leftIcon: 'cancel' });

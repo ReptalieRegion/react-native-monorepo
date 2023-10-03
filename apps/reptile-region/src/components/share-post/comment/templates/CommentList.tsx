@@ -8,7 +8,7 @@ import CommentRenderItem from '../organisms/CommentRenderItem';
 import type { FetchCommentResponse } from '<api/share/post/comment>';
 import type { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
-import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
+import { ListFooterLoading } from '@/components/@common/atoms';
 
 const CommentFlashList = () => {
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'main'>>();

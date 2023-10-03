@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { MyNavigationProp } from '<MyRoutes>';
-import TextButton from '@/components/common/layouts/button/TextButton';
+import { TextButton } from '@/components/@common/atoms';
 
 const UserAccessControl = () => {
     const navigation = useNavigation<MyNavigationProp<'auth/sign-in'>>();

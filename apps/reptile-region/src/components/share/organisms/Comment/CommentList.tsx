@@ -10,7 +10,7 @@ import { FetchCommentResponse } from '<api/share/post/comment>';
 import { SharePostCommentParamList, SharePostParamList } from '<RootRoutes>';
 import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
-import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
+import { ListFooterLoading } from '@/components/@common/atoms';
 
 type CommentScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostCommentParamList, 'main'>,

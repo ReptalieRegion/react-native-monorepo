@@ -9,7 +9,7 @@ import ImageContent from '../atoms/ImageContent';
 import type { ImageType } from '<image>';
 import useCreateLike from '@/apis/share-post/post/hooks/mutations/useCreateLike';
 import useUpdateLike from '@/apis/share-post/post/hooks/mutations/useUpdateLike';
-import DoubleTabView from '@/components/common/element/view/DoubleTabView';
+import { DoubleTabView } from '@/components/@common/atoms';
 import useSharePostListStore from '@/stores/share-post/useSharePostListStore';
 
 type ImagesSliderProps = {

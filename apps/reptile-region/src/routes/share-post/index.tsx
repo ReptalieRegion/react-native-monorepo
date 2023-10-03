@@ -5,7 +5,7 @@ import SharePostCommentBottomSheetRoutes from './CommentBottomSheet';
 import SharePostPostingRoutes from './Posting';
 
 import { SharePostParamList } from '<RootRoutes>';
-import { NativeStackDefaultHeader } from '@/components/common/layouts/header/utils/create-header';
+import { NativeStackDefaultHeader } from '@/components/@common/molecules';
 import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/DetailHeader';
 import SharePostUserDetailListHeader from '@/components/share-post/list/atoms/header/SharePostUserDetailListHeader';
 import KebabMenuBottomSheet from '@/components/share-post/list/ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';

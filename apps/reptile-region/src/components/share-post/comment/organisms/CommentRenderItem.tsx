@@ -11,8 +11,8 @@ import CommentContents from '../molecules/CommentContents';
 import type { FetchCommentResponse } from '<api/share/post/comment>';
 import type { SharePostCommentBottomSheetNavigationProp, SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
 import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
-import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
-import Avatar from '@/components/common/fast-image/Avatar';
+import { ConditionalRenderer } from '@/components/@common/atoms';
+import { Avatar } from '@/components/@common/atoms';
 import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 import useCommentStore from '@/stores/share-post/useCommentStore';
 

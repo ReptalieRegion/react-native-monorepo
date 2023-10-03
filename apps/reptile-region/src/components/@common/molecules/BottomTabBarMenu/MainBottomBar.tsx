@@ -1,13 +1,13 @@
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { color } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
 
-import MainBottomTabBarButton from './MainBottomTabBarButton';
+import { BottomTabBarButton } from '../../atoms';
 
 import type { IconProps } from '<Icon>';
-import { RootRoutesParamList } from '<RootRoutes>';
+import type { RootRoutesParamList } from '<RootRoutes>';
 import {
     Cart as ShopIcon,
     Community as InfoIcon,
@@ -46,7 +46,7 @@ const MENUS: MenusType = {
     },
 };
 
-const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
+export default function MainBottomBar({ state, navigation, insets }: BottomTabBarProps) {
     return (
         <View style={styles.bgWhite}>
             <View style={[styles.container, { paddingBottom: insets.bottom }]}>
@@ -68,19 +68,13 @@ const MainBottomBar = ({ state, navigation, insets }: BottomTabBarProps) => {
                     };
 
                     return (
-                        <MainBottomTabBarButton
-                            key={route.name}
-                            isFocused={isFocused}
-                            onPress={onPress}
-                            Icon={Icon}
-                            name={name}
-                        />
+                        <BottomTabBarButton key={route.name} isFocused={isFocused} onPress={onPress} Icon={Icon} name={name} />
                     );
                 })}
             </View>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     bgWhite: {
@@ -105,5 +99,3 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
 });
-
-export default MainBottomBar;

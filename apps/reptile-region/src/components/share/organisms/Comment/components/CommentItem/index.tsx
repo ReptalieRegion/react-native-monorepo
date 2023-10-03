@@ -6,8 +6,8 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import CommentActionButtons, { CommentActionButtonsAction } from '../ActionButtons';
 
 import type { FetchCommentResponse } from '<api/share/post/comment>';
-import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
-import Avatar from '@/components/common/fast-image/Avatar';
+import { ConditionalRenderer } from '@/components/@common/atoms';
+import { Avatar } from '@/components/@common/atoms';
 import TaggedContent from '@/components/share-post/common/atoms/TaggedContent';
 
 type CommentListProps = {

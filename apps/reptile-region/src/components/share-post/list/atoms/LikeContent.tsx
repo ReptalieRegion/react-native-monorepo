@@ -1,7 +1,7 @@
 import { Typo } from 'design-system';
 import React from 'react';
 
-import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 
 type LikeContentProps = {
     likeCount: number;

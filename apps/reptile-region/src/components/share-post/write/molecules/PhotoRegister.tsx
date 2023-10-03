@@ -9,7 +9,7 @@ import { shallow } from 'zustand/shallow';
 import SharePostWriteTitle from '../atoms/SharePostWriteTitle';
 
 import { CancelButton } from '@/assets/icons';
-import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
 const PhotoRegister = () => {

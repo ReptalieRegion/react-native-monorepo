@@ -6,7 +6,7 @@ import { useAnimatedKeyboard } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SharePostCommentBottomSheetParamList } from '<SharePostRoutes>';
-import BottomSheetHeader from '@/components/common/layouts/header/BottomSheetHeader';
+import { BottomSheetHeader } from '@/components/@common/molecules';
 import { SharePostCommentPage, SharePostCommentReplyPage } from '@/pages/share-post';
 
 const Stack = createNativeStackNavigator<SharePostCommentBottomSheetParamList>();

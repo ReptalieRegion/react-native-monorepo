@@ -9,8 +9,7 @@ import PostCard from '../organisms/PostCard';
 import type { FetchPostResponse } from '<api/share/post>';
 import type { SharePostListNavigationProps } from '<SharePostComponent>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
-import FadeInCellRenderComponent from '@/components/common/fast-image/FadeInCellRenderComponent';
-import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
+import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
 import useFlashListScroll from '@/hooks/flash-list/useFlashListScroll';
 
 export default function Posts(props: SharePostListNavigationProps) {

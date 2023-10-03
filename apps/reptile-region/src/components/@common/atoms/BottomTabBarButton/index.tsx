@@ -16,7 +16,7 @@ const userConfig: WithTimingConfig = {
     duration: 200,
 };
 
-const BottomTabBarButton = ({
+export default function BottomTabBarButton({
     isFocused,
     onPress,
     Icon,
@@ -26,7 +26,7 @@ const BottomTabBarButton = ({
     onPress: () => void;
     Icon: (props: IconProps) => React.JSX.Element;
     name: string;
-}) => {
+}) {
     const scaleX = useSharedValue(1);
     const scaleY = useSharedValue(1);
     const scale = useSharedValue(1);
@@ -81,7 +81,7 @@ const BottomTabBarButton = ({
             </TouchableWithoutFeedback>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     iconContainer: {
@@ -106,5 +106,3 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
 });
-
-export default BottomTabBarButton;

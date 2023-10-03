@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import type { IconFunction } from '<Icon>';
 import { BackButton, CancelButton, Logo } from '@/assets/icons';
-import MainStatusBar from '@/components/common/layouts/status-bar/MainStatusBar';
+import MainStatusBar from '@/components/@common/atoms/StatusBar';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
 
@@ -29,7 +29,14 @@ const LEFT_ICON: LeftIconMapType = {
     logo: Logo,
 };
 
-const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerStyle, title, right }: IHeaderProps) => {
+export default function BaseHeader({
+    leftIconClick,
+    leftIcon = 'logo',
+    titleStyle,
+    containerStyle,
+    title,
+    right,
+}: IHeaderProps) {
     const navigation = useNavigation();
     const customStyles = StyleSheet.create({
         container: containerStyle ?? {},
@@ -61,7 +68,7 @@ const BaseHeader = ({ leftIconClick, leftIcon = 'logo', titleStyle, containerSty
             </View>
         </>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -91,5 +98,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-
-export default BaseHeader;

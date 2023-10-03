@@ -5,7 +5,7 @@ import Animated, { WithTimingConfig, useAnimatedStyle, useSharedValue, withTimin
 
 import type { FloatingActionButtonSize } from '<SharePostComponent>';
 import { UpArrow } from '@/assets/icons';
-import FloatingActionButton, { IconStyle } from '@/components/common/element/button/FloatingActionButton';
+import { FloatingActionButton } from '@/components/@common/atoms';
 import type { ScrollDirection, ScrollToTop } from '@/hooks/flash-list/useFlashListScroll';
 
 type ScrollTopButtonProps = {
@@ -15,7 +15,12 @@ type ScrollTopButtonProps = {
 
 const TIMING_CONFIG: WithTimingConfig = { duration: 300 };
 
-const ScrollToTopButton = ({ width, height, animationMode, scrollToTop }: ScrollTopButtonProps & FloatingActionButtonSize) => {
+export default function ScrollToTopButton({
+    width,
+    height,
+    animationMode,
+    scrollToTop,
+}: ScrollTopButtonProps & FloatingActionButtonSize) {
     /** UI 로직 시작 */
     const translateY = useSharedValue(0);
     const opacity = useSharedValue(0);
@@ -34,7 +39,6 @@ const ScrollToTopButton = ({ width, height, animationMode, scrollToTop }: Scroll
         opacity.value = withTiming(animateValue.opacity, TIMING_CONFIG);
     }, [height, animationMode, opacity, translateY]);
     /** UI 로직 끝 */
-
     return (
         <Animated.View style={[styles.container, animatedContainerStyle]}>
             <FloatingActionButton
@@ -48,9 +52,9 @@ const ScrollToTopButton = ({ width, height, animationMode, scrollToTop }: Scroll
             />
         </Animated.View>
     );
-};
+}
 
-const iconStyle: IconStyle = {
+const iconStyle = {
     backgroundColor: color.White.toString(),
     borderColor: color.Gray[200].toString(),
     borderWidth: 1,
@@ -61,5 +65,3 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
 });
-
-export default ScrollToTopButton;

@@ -6,9 +6,8 @@ import { useTagHandler, useTagSearch } from 'tag-text-input';
 
 import type { FetchFollowerSearchResponse } from '<api/share/post/user>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
-import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
-import Avatar from '@/components/common/fast-image/Avatar';
-import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
+import { ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
+import { Avatar } from '@/components/@common/atoms';
 
 const CommentTagList = () => {
     const { keyword, enabled } = useTagSearch();

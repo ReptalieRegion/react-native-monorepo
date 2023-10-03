@@ -1,8 +1,8 @@
 import { rest } from 'msw';
 
-import createCommentReply from '../service/createCommentReply';
+import createCommentReply, { CreateCommentReplyProps } from '../service/createCommentReply';
 
-import type { CreateCommentReplyResponse, UpdateCommentReplyResponse } from '<api/share/post/comment-reply>';
+import type { UpdateCommentReplyResponse } from '<api/share/post/comment-reply>';
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 import { wait } from '@/mocks/utils/helpers';
@@ -21,7 +21,7 @@ const commentReplyController = () => {
         }),
         /** POST */
         rest.post(BASE_URI + 'share/comment-reply', async (req, res, ctx) => {
-            const body = (await req.json()) as CreateCommentReplyResponse;
+            const body = (await req.json()) as CreateCommentReplyProps;
             const data = createCommentReply(body);
 
             return res(ctx.status(200), ctx.json(data));

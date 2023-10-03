@@ -6,6 +6,8 @@ import { useCallback } from 'react';
 import React, { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { ConditionalRenderer } from '../../atoms';
+
 import { BackButton } from '@/assets/icons';
 
 type LeftIcon = 'none' | 'back';
@@ -15,15 +17,7 @@ export type BottomSheetHeaderProps = {
     leftIcon?: LeftIcon;
 };
 
-const Icon = ({ showBackButton }: { showBackButton: boolean | undefined }) => {
-    if (showBackButton) {
-        return <BackButton width={30} height={30} />;
-    }
-
-    return <View style={styles.baseWidth} />;
-};
-
-const BottomSheetHeader = ({ navigation, route, options }: NativeStackHeaderProps) => {
+export default function BottomSheetHeader({ navigation, route, options }: NativeStackHeaderProps) {
     const title = getHeaderTitle(options, route.name);
     const handleLeftPress = useCallback(() => {
         if (options.headerBackVisible && navigation.canGoBack()) {
@@ -35,7 +29,11 @@ const BottomSheetHeader = ({ navigation, route, options }: NativeStackHeaderProp
         <BottomSheetAnimatedGesture>
             <View style={styles.container}>
                 <TouchableOpacity onPress={handleLeftPress}>
-                    <Icon showBackButton={options.headerBackVisible} />
+                    <ConditionalRenderer
+                        condition={options.headerBackVisible === undefined ? false : options.headerBackVisible}
+                        trueContent={<BackButton width={30} height={30} />}
+                        falseContent={<View style={styles.baseWidth} />}
+                    />
                 </TouchableOpacity>
                 <View style={styles.flex}>
                     <Typo variant="title3" textAlign="center">
@@ -46,7 +44,7 @@ const BottomSheetHeader = ({ navigation, route, options }: NativeStackHeaderProp
             </View>
         </BottomSheetAnimatedGesture>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -65,5 +63,3 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
-
-export default BottomSheetHeader;

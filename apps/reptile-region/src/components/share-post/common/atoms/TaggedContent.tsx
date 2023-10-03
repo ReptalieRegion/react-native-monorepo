@@ -3,7 +3,7 @@ import { TouchableTypo } from 'design-system';
 import React, { useRef, useState } from 'react';
 import { NativeSyntheticEvent, TextLayoutEventData } from 'react-native';
 
-import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 
 type TaggedContentProps = {
     uuid: string;

@@ -7,7 +7,7 @@ interface DoubleTabViewProps extends ViewProps {
     onDoubleTab: (event: GestureResponderEvent) => void;
 }
 
-const DoubleTabView = ({ children, onDoubleTab, ...props }: PropsWithChildren<DoubleTabViewProps>) => {
+export default function DoubleTabView({ children, onDoubleTab, ...props }: PropsWithChildren<DoubleTabViewProps>) {
     const doubleTab = customDoubleTab();
     const touchEndEvent = (event: GestureResponderEvent) => {
         if (!onDoubleTab) {
@@ -32,6 +32,4 @@ const DoubleTabView = ({ children, onDoubleTab, ...props }: PropsWithChildren<Do
             {children}
         </View>
     );
-};
-
-export default DoubleTabView;
+}

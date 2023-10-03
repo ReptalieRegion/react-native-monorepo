@@ -1,7 +1,7 @@
 import { TouchableTypo } from 'design-system';
 import React from 'react';
 
-import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 
 type CommentContentProps = {
     commentCount: number;

@@ -1,4 +1,4 @@
-import { useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { FlashList, ListRenderItem } from '@shopify/flash-list';
 import { color } from 'design-system';
 import React, { useCallback, useMemo, useRef } from 'react';
@@ -7,16 +7,15 @@ import { StyleSheet, View } from 'react-native';
 import CommentReplyRenderItem from '../organisms/CommentReplyRenderItem';
 
 import type { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
-import type { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
+import { SharePostCommentParamList } from '<RootRoutes>';
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
-import FadeInCellRenderComponent from '@/components/common/fast-image/FadeInCellRenderComponent';
-import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
+import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
 
 const CommentReplyList = () => {
     const flashListRef = useRef<FlashList<FetchCommentReplyResponse>>(null);
     const {
         params: { comment },
-    } = useRoute<SharePostCommentBottomSheetRouteProp<'reply'>>();
+    } = useRoute<RouteProp<SharePostCommentParamList, 'reply'>>();
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteCommentReply({ commentId: comment.id });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);

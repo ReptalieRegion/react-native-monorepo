@@ -5,9 +5,9 @@ import React from 'react';
 import type { FloatingActionButtonSize } from '<SharePostComponent>';
 import type { SharePostNavigationProp } from '<SharePostRoutes>';
 import { PostWriteIcon } from '@/assets/icons';
-import FloatingActionButton from '@/components/common/element/button/FloatingActionButton';
+import { FloatingActionButton } from '@/components/@common/atoms';
 
-const PostWrite = (buttonSize: FloatingActionButtonSize) => {
+export default function PostWrite(buttonSize: FloatingActionButtonSize) {
     const navigation = useNavigation<SharePostNavigationProp<'share-post/list'>>();
 
     const handleRouteImageCrop = () => {
@@ -24,6 +24,4 @@ const PostWrite = (buttonSize: FloatingActionButtonSize) => {
             }}
         />
     );
-};
-
-export default PostWrite;
+}

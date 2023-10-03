@@ -11,7 +11,7 @@ import { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
 import { SharePostCommentParamList, SharePostParamList } from '<RootRoutes>';
 import useDeleteCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useDeleteCommentReply';
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
-import ListFooterLoading from '@/components/common/loading/ListFooterComponent';
+import { ListFooterLoading } from '@/components/@common/atoms';
 
 type CommentScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostCommentParamList, 'reply'>,

@@ -1,6 +1,6 @@
 import { random } from 'lodash-es';
 
-import type { InfiniteState } from '<InfiniteState>';
+import { InfiniteState } from '<api/utils>';
 
 type CreateInfinityDataProps<ItemT> = {
     items: ItemT;

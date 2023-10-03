@@ -4,11 +4,11 @@ import { Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import ListFooterLoading from '../../../common/loading/ListFooterComponent';
 import SquareImage from '../atoms/SquareImage';
 
 import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
+import { ListFooterLoading } from '@/components/@common/atoms';
 
 type SharePostDetailProps = {
     nickname: string;

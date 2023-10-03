@@ -7,7 +7,7 @@ import Profile from '../atoms/Profile';
 
 import type { ImageType } from '<image>';
 import { KebabMenu } from '@/assets/icons';
-import ConditionalRenderer from '@/components/common/element/ConditionalRenderer';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 
 type PostHeaderProps = {
     user: {

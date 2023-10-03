@@ -3,7 +3,7 @@ import React from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
-import TextButton from '@/components/common/layouts/button/TextButton';
+import { TextButton } from '@/components/@common/atoms';
 
 type MessageType = 'duplicateCheck' | 'address' | 'password' | 'input';
 
@@ -73,7 +73,7 @@ const SignUpPage = () => {
                                         </View>
                                         <View style={styles.item}>
                                             <TextInput placeholder={item.placeholder} style={styles.textInput} />
-                                            <TextButton text="중복 확인" textInfo={{ variant: 'body4' }} type="view" />
+                                            <TextButton text="중복 확인" type="view" />
                                         </View>
                                     </View>
                                 );

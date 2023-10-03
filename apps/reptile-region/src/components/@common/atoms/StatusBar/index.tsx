@@ -13,7 +13,7 @@ const backgroundColor = ENV.isProd
     ? color.White.toString()
     : color.Black.toString();
 
-const MainStatusBar = () => {
+export default function MainStatusBar() {
     const { top } = useSafeAreaInsets();
     const isIOS = Platform.OS === 'ios';
     const isAndroid = Platform.OS === 'android';
@@ -27,6 +27,4 @@ const MainStatusBar = () => {
     }
 
     return null;
-};
-
-export default MainStatusBar;
+}

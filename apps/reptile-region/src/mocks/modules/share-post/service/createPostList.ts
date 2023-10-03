@@ -2,22 +2,14 @@ import { fakerKO } from '@faker-js/faker';
 
 import { createContents } from './createTagIdsAndContent';
 
-import type { SharePostListData } from '<SharePostAPI>';
+import type { FetchPostResponse } from '<api/share/post>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
-const createPostList = (): SharePostListData => {
+const createPostList = (): FetchPostResponse => {
     const contents = createContents();
 
     return {
-        user: {
-            id: fakerKO.string.uuid(),
-            nickname: fakerKO.person.middleName(),
-            profile: {
-                src: fakerKO.image.avatar(),
-            },
-            isFollow: fakerBoolean(),
-        },
         post: {
             id: fakerKO.string.uuid(),
             contents,
@@ -28,6 +20,14 @@ const createPostList = (): SharePostListData => {
             isMine: fakerBoolean(),
             commentCount: fakerKO.number.int({ min: 0, max: 200 }),
             likeCount: fakerKO.number.int({ min: 0, max: 200 }),
+            user: {
+                id: fakerKO.string.uuid(),
+                nickname: fakerKO.person.middleName(),
+                profile: {
+                    src: fakerKO.image.avatar(),
+                },
+                isFollow: fakerBoolean(),
+            },
         },
     };
 };

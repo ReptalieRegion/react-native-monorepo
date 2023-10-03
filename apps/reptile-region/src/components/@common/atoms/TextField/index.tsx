@@ -54,7 +54,7 @@ const LABEL_FONT_SIZE: LabelFontSize = {
     },
 };
 
-const TextField = ({
+export default function TextField({
     onChangeText,
     label,
     value,
@@ -71,7 +71,7 @@ const TextField = ({
     errorMessColor = color.Red[500].toString(),
     labelColor = color.Gray[400].toString(),
     focusColor = color.Teal[150].toString(),
-}: TextFieldProps) => {
+}: TextFieldProps) {
     const textRef = useRef<TextInput>(null);
     const isExistsText = useRef<boolean>(false);
     const fieldColor = useSharedValue<ColorValue | undefined>(labelColor);
@@ -176,7 +176,7 @@ const TextField = ({
             </View>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -193,5 +193,3 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
 });
-
-export default TextField;

@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import type { ImageType } from '<image>';
-import Avatar from '@/components/common/fast-image/Avatar';
+import { Avatar } from '@/components/@common/atoms';
 
 type UserAvatarProps = {
     user: {

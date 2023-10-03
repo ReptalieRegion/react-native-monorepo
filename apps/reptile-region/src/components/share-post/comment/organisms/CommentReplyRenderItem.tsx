@@ -9,7 +9,7 @@ import CommentContents from '../molecules/CommentContents';
 import type { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
 import type { SharePostCommentBottomSheetRouteProp } from '<SharePostRoutes>';
 import useDeleteCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useDeleteCommentReply';
-import Avatar from '@/components/common/fast-image/Avatar';
+import { Avatar } from '@/components/@common/atoms';
 import useCommentNavigation from '@/hooks/navigation/useCommentNavigation';
 import useCommentStore from '@/stores/share-post/useCommentStore';
 
@@ -21,6 +21,7 @@ const CommentReplyRenderItem = ({ items }: RenderItemProps) => {
     const { navigationModalDetail } = useCommentNavigation();
     const { mutate } = useDeleteCommentReply();
     const { params } = useRoute<SharePostCommentBottomSheetRouteProp<'reply'>>();
+    console.log(params);
 
     const setCommentRegisterType = useCommentStore((state) => state.setCommentRegisterType);
     const { changeText, tagTextInputFocus } = useTagHandler();

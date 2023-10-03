@@ -2,11 +2,11 @@ import { fakerKO } from '@faker-js/faker';
 
 import { createContents } from './createTagIdsAndContent';
 
-import { SharePostListUserDetailData } from '<SharePostAPI>';
+import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
-const createPost = (): SharePostListUserDetailData => {
+const createPost = (): FetchDetailUserPostResponse => {
     const contents = createContents();
 
     return {
