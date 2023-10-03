@@ -25,16 +25,17 @@ declare module '<RootRoutes>' {
     };
 
     type SharePostCommentReplyParams = {
-        user: {
-            id: string;
-            profile: ShareImageType;
-        };
         comment: {
             id: string;
             contents: string;
             replyCount: number;
             isMine: boolean;
             isModified: boolean;
+            user: {
+                id: string;
+                profile: ShareImageType;
+                nickname: string;
+            };
         };
         commentingActive?: boolean;
     };

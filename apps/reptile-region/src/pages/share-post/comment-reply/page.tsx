@@ -1,29 +1,34 @@
+import { CompositeScreenProps } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TagProvider } from 'tag-text-input';
 
+import { SharePostCommentParamList, SharePostParamList } from '<RootRoutes>';
+import Comment, { CommentReplyList, CommentTagList } from '@/components/share/organisms/Comment';
 import CommentReplySkeleton from '@/components/share-post/comment/atoms/loading/CommentReplySkeleton';
 import CommentTagListActivityIndicator from '@/components/share-post/comment/atoms/loading/CommentTagListActivityIndicator';
 import CommentReplyEditor from '@/components/share-post/comment/molecules/CommentReplyEditor';
 
-const CommentTagList = React.lazy(() => import('@/components/share-post/comment/atoms/CommentTagList'));
-const CommentReplyList = React.lazy(() => import('@/components/share-post/comment/templates/CommentReplyList'));
+type CommentScreenProps = CompositeScreenProps<
+    NativeStackScreenProps<SharePostCommentParamList, 'reply'>,
+    NativeStackScreenProps<SharePostParamList, 'share-post/bottom-sheet/comment'>
+>;
 
-const CommentReplyPage = () => {
+export default function CommentReplyPage(props: CommentScreenProps) {
     return (
-        <TagProvider>
+        <Comment>
             <View style={styles.container}>
                 <Suspense fallback={<CommentReplySkeleton />}>
-                    <CommentReplyList />
+                    <CommentReplyList {...props} />
                 </Suspense>
                 <Suspense fallback={<CommentTagListActivityIndicator />}>
                     <CommentTagList />
                 </Suspense>
             </View>
             <CommentReplyEditor />
-        </TagProvider>
+        </Comment>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -31,5 +36,3 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
 });
-
-export default CommentReplyPage;

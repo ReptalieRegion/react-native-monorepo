@@ -1,29 +1,33 @@
+import { CompositeScreenProps } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TagProvider } from 'tag-text-input';
 
+import { SharePostCommentParamList, SharePostParamList } from '<RootRoutes>';
+import Comment, { CommentList, CommentTagList, CommentTextEditor } from '@/components/share/organisms/Comment';
 import CommentSkeleton from '@/components/share-post/comment/atoms/loading/CommentSkeleton';
 import CommentTagListActivityIndicator from '@/components/share-post/comment/atoms/loading/CommentTagListActivityIndicator';
-import CommentEditor from '@/components/share-post/comment/molecules/CommentEditor';
 
-const CommentTagList = React.lazy(() => import('@/components/share-post/comment/atoms/CommentTagList'));
-const CommentList = React.lazy(() => import('@/components/share-post/comment/templates/CommentList'));
+type CommentScreenProps = CompositeScreenProps<
+    NativeStackScreenProps<SharePostCommentParamList, 'main'>,
+    NativeStackScreenProps<SharePostParamList, 'share-post/bottom-sheet/comment'>
+>;
 
-const CommentPage = () => {
+export default function CommentPage(props: CommentScreenProps) {
     return (
-        <TagProvider>
+        <Comment>
             <View style={styles.container}>
                 <Suspense fallback={<CommentSkeleton />}>
-                    <CommentList />
+                    <CommentList {...props} />
                 </Suspense>
                 <Suspense fallback={<CommentTagListActivityIndicator />}>
                     <CommentTagList />
                 </Suspense>
             </View>
-            <CommentEditor />
-        </TagProvider>
+            <CommentTextEditor />
+        </Comment>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -31,5 +35,3 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
 });
-
-export default CommentPage;
