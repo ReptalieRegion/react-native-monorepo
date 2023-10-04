@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useCallback } from 'react';
+import React, { PropsWithChildren, useCallback, useEffect } from 'react';
 import { Insets, useWindowDimensions } from 'react-native';
 import { runOnJS, useSharedValue, withTiming } from 'react-native-reanimated';
 
@@ -18,7 +18,7 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
         getPixel({ baseHeight: dimensions.height - (insets?.top ?? 0), snapPoint }),
     );
     const sortedPointsFromTop = [...numberPointsFromTop].sort();
-    const height = useSharedValue(numberPointsFromTop[snapInfo.startIndex]);
+    const height = useSharedValue(0);
     const translateY = useSharedValue(0);
     const opacity = useSharedValue(1);
 
@@ -26,20 +26,6 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
         translateY.value = withTiming(height.value);
         opacity.value = withTiming(0, { duration: 250 }, (finished) => finished && runOnJS(onClose)());
     }, [height.value, onClose, opacity, translateY]);
-
-    const updateHeight = useCallback(
-        (newHeight: number) => {
-            height.value = newHeight;
-        },
-        [height],
-    );
-
-    const updateTranslateY = useCallback(
-        (newTranslateY: number) => {
-            translateY.value = newTranslateY;
-        },
-        [translateY],
-    );
 
     const animationState: BottomSheetAnimationState = {
         insets,
@@ -52,9 +38,12 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
 
     const animationActions: BottomSheetAnimationAction = {
         bottomSheetClose,
-        updateHeight,
-        updateTranslateY,
     };
+
+    useEffect(() => {
+        height.value = withTiming(numberPointsFromTop[snapInfo.startIndex]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <BottomSheetAnimationActionContext.Provider value={animationActions}>

@@ -27,6 +27,4 @@ export type BottomSheetAnimationState = {
 
 export type BottomSheetAnimationAction = {
     bottomSheetClose: () => void;
-    updateHeight: (height: number) => void;
-    updateTranslateY: (translateY: number) => void;
 };

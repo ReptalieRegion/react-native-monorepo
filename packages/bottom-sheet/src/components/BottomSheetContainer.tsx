@@ -11,7 +11,12 @@ type BottomSheetContainerProps = {
 
 const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheetContainerProps>) => {
     const dimensions = useWindowDimensions();
-    const { height, translateY, insets } = useBottomSheetAnimatedState();
+    const {
+        snapInfo: { pointsFromTop },
+        height,
+        translateY,
+        insets,
+    } = useBottomSheetAnimatedState();
     const keyboard = useAnimatedKeyboard();
 
     const closeAnimatedStyles = useAnimatedStyle(() => {
@@ -19,6 +24,7 @@ const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheet
             keyboard.state.value === 1 || keyboard.state.value === 2
                 ? keyboard.height.value - (insets?.bottom ?? 0)
                 : keyboard.height.value;
+        console.log('translateY: ', translateY.value - subHeight);
         return {
             transform: [{ translateY: translateY.value - subHeight }],
         };
@@ -27,9 +33,11 @@ const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheet
     const snapAnimatedStyles = useAnimatedStyle(() => {
         const maxHeight =
             keyboard.state.value === 1 || keyboard.state.value === 2
-                ? Math.min(dimensions.height - (insets?.top ?? 0) - keyboard.height.value, height.value)
+                ? pointsFromTop[pointsFromTop.length - 1] + (insets?.bottom ?? 0) - keyboard.height.value
+                : keyboard.state.value === 3
+                ? height.value - keyboard.height.value
                 : height.value;
-
+        console.log('height: ', maxHeight);
         return {
             height: maxHeight,
         };
