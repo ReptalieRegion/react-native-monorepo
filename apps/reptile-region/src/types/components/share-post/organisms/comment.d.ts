@@ -12,5 +12,10 @@ declare module '<context/share-post/comment>' {
         submitType: SubmitType;
     }
 
-    type CommentActions = ChangeSubmitType;
+    interface SetCreateSubmitType {
+        type: 'SET_CREATE_SUBMIT_TYPE';
+        id: string;
+    }
+
+    type CommentActions = ChangeSubmitType | SetCreateSubmitType;
 }

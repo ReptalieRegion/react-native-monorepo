@@ -53,37 +53,30 @@ export default function CommentList({ navigation, route: { params } }: CommentSc
             };
 
             const handlePressWriteButton = () => {
-                navigation.push('share-post/bottom-sheet/comment', {
-                    screen: 'reply',
-                    params: {
-                        comment: {
-                            id: commentId,
-                            contents,
-                            isMine,
-                            isModified,
-                            replyCount,
-                            user: { id: userId, profile, nickname },
-                        },
-                        commentingActive: false,
+                navigation.push('reply', {
+                    comment: {
+                        id: commentId,
+                        contents,
+                        isMine,
+                        isModified,
+                        replyCount,
+                        user: { id: userId, profile, nickname },
                     },
+                    commentingActive: false,
                 });
             };
 
             const handlePressShowCommentReplyButton = () => {
-                console.log(commentId);
-                navigation.push('share-post/bottom-sheet/comment', {
-                    screen: 'reply',
-                    params: {
-                        comment: {
-                            id: commentId,
-                            contents,
-                            isMine,
-                            isModified,
-                            replyCount,
-                            user: { id: userId, profile, nickname },
-                        },
-                        commentingActive: true,
+                navigation.push('reply', {
+                    comment: {
+                        id: commentId,
+                        contents,
+                        isMine,
+                        isModified,
+                        replyCount,
+                        user: { id: userId, profile, nickname },
                     },
+                    commentingActive: true,
                 });
             };
 

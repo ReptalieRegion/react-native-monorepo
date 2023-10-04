@@ -32,9 +32,10 @@ export const createCommentReply = async (body: CreateCommentReplyRequest) => {
 
 /** PUT */
 // 사용자의 특정 대댓글 수정
-export const updateCommentReply = async ({ commentReplyId }: UpdateCommentReplyRequest) => {
+export const updateCommentReply = async ({ commentReplyId, contents }: UpdateCommentReplyRequest) => {
     const response = await clientFetch(`api/share/comment-replies/${commentReplyId}`, {
         method: METHOD.PUT,
+        body: { contents },
     });
 
     return response.json();

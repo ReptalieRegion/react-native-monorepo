@@ -19,12 +19,12 @@ export default function CommentTextInputEditor({ onSubmit }: CommentTextInputPro
     const { contents } = useTag();
     const { id, submitType } = useComment();
     const { tagTextInputFocus, changeText } = useTagHandler();
-    const { changeCommentSubmitType } = useCommentActions();
+    const { setCreateCommentSubmitType } = useCommentActions();
 
     useEffect(() => {
         const resetSubmitType = () => {
             changeText('');
-            changeCommentSubmitType({ id: '', submitType: 'CREATE' });
+            setCreateCommentSubmitType();
         };
 
         const keyboard = Keyboard.addListener('keyboardDidHide', () => {
@@ -46,7 +46,7 @@ export default function CommentTextInputEditor({ onSubmit }: CommentTextInputPro
         return () => {
             keyboard.remove();
         };
-    }, [submitType, changeCommentSubmitType, changeText, tagTextInputFocus]);
+    }, [submitType, changeText, setCreateCommentSubmitType, tagTextInputFocus]);
 
     const handleSubmit = () => {
         onSubmit({ id, submitType, contents });

@@ -15,7 +15,7 @@ type CommentScreenProps = CompositeScreenProps<
 
 export default function CommentReplyPage(props: CommentScreenProps) {
     return (
-        <Comment>
+        <Comment id={props.route.params.comment.id}>
             <View style={styles.container}>
                 <Suspense fallback={<CommentReplySkeleton />}>
                     <CommentReplyList {...props} />
