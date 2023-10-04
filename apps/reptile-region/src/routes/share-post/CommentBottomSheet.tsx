@@ -21,7 +21,7 @@ const SharePostCommentBottomSheetRoutes = ({ navigation }: { navigation: any }) 
     };
 
     return (
-        <BottomSheet onClose={handleClose} snapInfo={{ startIndex: 0, pointsFromTop: ['60%', '100%'] }} insets={insets}>
+        <BottomSheet onClose={handleClose} snapInfo={{ startIndex: 1, pointsFromTop: ['60%', '100%'] }} insets={insets}>
             <Stack.Navigator
                 initialRouteName="main"
                 screenOptions={{ contentStyle: { backgroundColor: color.White.toString() } }}
