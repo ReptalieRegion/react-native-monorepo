@@ -35,7 +35,7 @@ export default function CommentTagList() {
             return (
                 <TouchableOpacity onPress={handlePressTag}>
                     <View style={styles.renderItem}>
-                        <Avatar recyclingKey={profile.src} source={{ uri: profile.src }} size={30} />
+                        <Avatar recyclingKey={profile.src} image={{ src: profile.src }} size={30} />
                         <Typo variant="title5">{nickname}</Typo>
                     </View>
                 </TouchableOpacity>

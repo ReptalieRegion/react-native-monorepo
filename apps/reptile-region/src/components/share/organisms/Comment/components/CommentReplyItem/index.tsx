@@ -8,7 +8,7 @@ import CommentActionButtons, { CommentActionButtonsAction } from '../ActionButto
 import { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { Avatar } from '@/components/@common/atoms';
-import TaggedContent from '@/components/share-post/common/atoms/TaggedContent';
+import TaggedContents from '@/components/share/molecules/TaggedContents';
 
 type CommentListProps = {
     item: FetchCommentReplyResponse;
@@ -49,7 +49,7 @@ export default function CommentItem({
             <Avatar
                 recyclingKey={profile.src}
                 onPress={handlePressNickname}
-                source={{ uri: profile.src }}
+                image={{ src: profile.src }}
                 priority={'high'}
                 contentFit="cover"
                 placeholderContentFit="cover"
@@ -70,7 +70,7 @@ export default function CommentItem({
                         falseContent={null}
                     />
                 </View>
-                <TaggedContent uuid={commentId} contents={contents} onPressTag={handlePressTag} />
+                <TaggedContents uuid={commentId} contents={contents} onPressTag={handlePressTag} />
                 <CommentActionButtons
                     comment={{
                         id: commentId,

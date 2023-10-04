@@ -3,18 +3,25 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-type ActivitySummaryItemProps = {
-    onPress?: () => void;
-    content: string;
+export type ActivitySummaryItemProps = {
+    label: string;
     count: number;
 };
 
-const ActivitySummaryItem = ({ onPress, content, count }: ActivitySummaryItemProps) => {
+export interface ActivitySummaryItemActions {
+    onPress: () => void;
+}
+
+export default function UserActivitySummaryItem({
+    label,
+    count,
+    onPress,
+}: ActivitySummaryItemProps & ActivitySummaryItemActions) {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={styles.container}>
                 <Typo variant="body2" textAlign="center">
-                    {content + ' '}
+                    {label + ' '}
                     <Typo variant="body2" color="primary">
                         {count}
                     </Typo>
@@ -22,7 +29,7 @@ const ActivitySummaryItem = ({ onPress, content, count }: ActivitySummaryItemPro
             </View>
         </TouchableWithoutFeedback>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -33,5 +40,3 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
-
-export default ActivitySummaryItem;

@@ -6,11 +6,11 @@ import SharePostPostingRoutes from './Posting';
 
 import { SharePostParamList } from '<RootRoutes>';
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
-import SharePostDetailHeader from '@/components/share-post/detail/atoms/header/DetailHeader';
 import SharePostUserDetailListHeader from '@/components/share-post/list/atoms/header/SharePostUserDetailListHeader';
 import KebabMenuBottomSheet from '@/components/share-post/list/ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
 import { SharePostDetailPage, SharePostListPage } from '@/pages/share-post';
-import SharePostDetailProfileModal from '@/pages/share-post/detail/modal/page';
+import SharePostDetailProfileModal, { SharePostDetailModalHeader } from '@/pages/share-post/detail/modal/page';
+import { SharePostDetailHeader } from '@/pages/share-post/detail/page';
 import SharePostUserListModalPage from '@/pages/share-post/list/user/modal/page';
 import SharePostUserListPage from '@/pages/share-post/list/user/page';
 
@@ -43,7 +43,7 @@ const SharePostRoutes = () => {
                 <SharePostStack.Screen
                     name="share-post/modal/detail"
                     component={SharePostDetailProfileModal}
-                    options={{ header: SharePostDetailHeader }}
+                    options={{ header: SharePostDetailModalHeader }}
                 />
                 <SharePostStack.Screen
                     name="share-post/modal/list/user"

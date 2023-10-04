@@ -3,7 +3,7 @@ import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useTagSearch } from 'tag-text-input';
 
-const CommentTagListActivityIndicator = () => {
+export default function CommentTagListActivityIndicator() {
     const { keyword } = useTagSearch();
 
     return (
@@ -14,7 +14,7 @@ const CommentTagListActivityIndicator = () => {
             </Typo>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -31,5 +31,3 @@ const styles = StyleSheet.create({
         height: '100%',
     },
 });
-
-export default CommentTagListActivityIndicator;

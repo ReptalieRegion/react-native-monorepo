@@ -1,13 +1,12 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { SharePostCommentParamList, SharePostParamList } from '<RootRoutes>';
-import Comment, { CommentReplyList, CommentTagList } from '@/components/share/organisms/Comment';
-import CommentReplySkeleton from '@/components/share-post/comment/atoms/loading/CommentReplySkeleton';
-import CommentTagListActivityIndicator from '@/components/share-post/comment/atoms/loading/CommentTagListActivityIndicator';
-import CommentReplyEditor from '@/components/share-post/comment/molecules/CommentReplyEditor';
+import type { SharePostCommentParamList, SharePostParamList } from '<RootRoutes>';
+import CommentReplySkeleton from '@/components/share/atoms/Suspense/CommentReplySkeleton';
+import CommentTagListActivityIndicator from '@/components/share/atoms/Suspense/CommentTagListActivityIndicator';
+import Comment, { CommentReplyList, CommentReplyTextEditor, CommentTagList } from '@/components/share/organisms/Comment';
 
 type CommentScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostCommentParamList, 'reply'>,
@@ -25,7 +24,7 @@ export default function CommentReplyPage(props: CommentScreenProps) {
                     <CommentTagList />
                 </Suspense>
             </View>
-            <CommentReplyEditor />
+            <CommentReplyTextEditor />
         </Comment>
     );
 }

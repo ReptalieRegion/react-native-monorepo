@@ -29,7 +29,7 @@ const FollowerUserList = () => {
             return (
                 <TouchableOpacity onPress={handlePressItem}>
                     <View style={styles.renderItem}>
-                        <Avatar recyclingKey={item.user.profile.src} source={{ uri: item.user.profile.src }} size={30} />
+                        <Avatar recyclingKey={item.user.profile.src} image={{ src: item.user.profile.src }} size={30} />
                         <Typo variant="title5">{item.user.nickname}</Typo>
                     </View>
                 </TouchableOpacity>

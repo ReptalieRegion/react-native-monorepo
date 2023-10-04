@@ -1,12 +1,12 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { SharePostCommentParamList, SharePostParamList } from '<RootRoutes>';
+import type { SharePostCommentParamList, SharePostParamList } from '<RootRoutes>';
+import CommentSkeleton from '@/components/share/atoms/Suspense/CommentSkeleton';
+import CommentTagListActivityIndicator from '@/components/share/atoms/Suspense/CommentTagListActivityIndicator';
 import Comment, { CommentList, CommentTagList, CommentTextEditor } from '@/components/share/organisms/Comment';
-import CommentSkeleton from '@/components/share-post/comment/atoms/loading/CommentSkeleton';
-import CommentTagListActivityIndicator from '@/components/share-post/comment/atoms/loading/CommentTagListActivityIndicator';
 
 type CommentScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostCommentParamList, 'main'>,

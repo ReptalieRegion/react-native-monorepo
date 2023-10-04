@@ -5,7 +5,7 @@ import type { SharePostUserListParams } from '<RootRoutes>';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { BaseHeader } from '@/components/@common/molecules';
-import Follow from '@/components/share-post/common/atoms/Follow';
+import Follow from '@/components/share/atoms/Follow';
 
 export default function SharePostUserDetailListHeader(props: NativeStackHeaderProps) {
     const params = props.route.params as SharePostUserListParams;

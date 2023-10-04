@@ -2,12 +2,12 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import Follow from '../../common/atoms/Follow';
 import Profile from '../atoms/Profile';
 
 import type { ImageType } from '<image>';
 import { KebabMenu } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
+import Follow from '@/components/share/atoms/Follow';
 
 type PostHeaderProps = {
     user: {

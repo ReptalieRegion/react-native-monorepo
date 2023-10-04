@@ -16,12 +16,7 @@ type ProfileProps = {
 export default function Profile({ user: { nickname, profile }, onPress }: ProfileProps) {
     return (
         <View style={styles.container}>
-            <Avatar
-                onPress={onPress}
-                size={30}
-                source={{ uri: profile?.src.replace('https://reptalie-region.s3.ap-northeast-2.amazonaws.com/', '') ?? '' }}
-                priority="high"
-            />
+            <Avatar image={{ src: profile?.src ?? '' }} size={30} priority="high" onPress={onPress} />
             <TouchableTypo onPress={onPress} variant="title5">
                 {nickname}
             </TouchableTypo>

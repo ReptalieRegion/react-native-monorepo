@@ -1,17 +1,19 @@
-import { Typo } from 'design-system';
-import { TouchableTypo } from 'design-system';
+import { TouchableTypo, Typo } from 'design-system';
 import React, { useRef, useState } from 'react';
-import { NativeSyntheticEvent, TextLayoutEventData } from 'react-native';
+import type { NativeSyntheticEvent, TextLayoutEventData } from 'react-native';
+
+import type { TagActions } from '../../atoms/Tag';
+import Tag from '../../atoms/Tag';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 
 type TaggedContentProps = {
     uuid: string;
     contents: string;
-    onPressTag?: (tag: string) => void;
+    onPressTag: TagActions['onPressTag'];
 };
 
-const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
+export default function TaggedContents({ uuid, contents, onPressTag }: TaggedContentProps) {
     const lastItemId = useRef(uuid);
     const [isTextTooLong, setIsTextTooLong] = useState<boolean | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
@@ -20,6 +22,10 @@ const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
         setIsTextTooLong(null);
         setIsExpanded(false);
     }
+
+    const toggleExpanded = () => {
+        setIsExpanded((state) => !state);
+    };
 
     const onTextLayout = (event: NativeSyntheticEvent<TextLayoutEventData>) => {
         if (isTextTooLong === null) {
@@ -41,21 +47,7 @@ const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
                     const isTag = content.startsWith('@');
 
                     if (isTag) {
-                        return (
-                            <TouchableTypo
-                                key={key}
-                                variant="body2"
-                                color="primary"
-                                activeOpacity={0}
-                                onPress={() => {
-                                    if (onPressTag) {
-                                        onPressTag(content.slice(1));
-                                    }
-                                }}
-                            >
-                                {content + ' '}
-                            </TouchableTypo>
-                        );
+                        return <Tag contents={content} onPressTag={onPressTag} />;
                     }
 
                     return (
@@ -68,7 +60,7 @@ const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
             <ConditionalRenderer
                 condition={isTextTooLong === null ? false : isTextTooLong}
                 trueContent={
-                    <TouchableTypo variant="body2" color="placeholder" onPress={() => setIsExpanded((state) => !state)}>
+                    <TouchableTypo variant="body2" color="placeholder" onPress={toggleExpanded}>
                         {isExpanded ? '...접기' : '...더보기'}
                     </TouchableTypo>
                 }
@@ -76,6 +68,4 @@ const TaggedContent = ({ uuid, contents, onPressTag }: TaggedContentProps) => {
             />
         </>
     );
-};
-
-export default TaggedContent;
+}

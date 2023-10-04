@@ -6,7 +6,7 @@ import type { CommentTextInputProps } from './components/TextInputEditor';
 import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
 import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useUpdateCommentReply';
 
-export default function CommentTextEditor() {
+export default function CommentReplyTextEditor() {
     const createCommentReply = useCreateCommentReply();
     const updateCommentReply = useUpdateCommentReply();
 

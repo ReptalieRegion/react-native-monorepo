@@ -1,14 +1,13 @@
 import { color } from 'design-system';
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
-const { width } = Dimensions.get('screen');
-const SKELETON_ITEM_COLOR = color.Gray[200].toString();
+export default function CommentSkeleton() {
+    const { width } = useWindowDimensions();
 
-const CommentSkeleton = () => {
     return (
         <View style={styles.subContainer}>
             {createEmptyArray(10).map((_, index) => (
@@ -25,7 +24,7 @@ const CommentSkeleton = () => {
             ))}
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     subContainer: {
@@ -43,13 +42,13 @@ const styles = StyleSheet.create({
     },
     circle: {
         borderRadius: 9999,
-        backgroundColor: SKELETON_ITEM_COLOR,
+        backgroundColor: color.Gray[200].toString(),
         width: 30,
         height: 30,
     },
     name: {
         borderRadius: 9999,
-        backgroundColor: SKELETON_ITEM_COLOR,
+        backgroundColor: color.Gray[200].toString(),
         width: 60,
         height: 14,
     },
@@ -58,7 +57,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: 150,
         marginBottom: 10,
-        backgroundColor: SKELETON_ITEM_COLOR,
+        backgroundColor: color.Gray[200].toString(),
         borderRadius: 6,
     },
     textContainer: {
@@ -68,9 +67,7 @@ const styles = StyleSheet.create({
     },
     text: {
         borderRadius: 9999,
-        backgroundColor: SKELETON_ITEM_COLOR,
+        backgroundColor: color.Gray[200].toString(),
         height: 14,
     },
 });
-
-export default CommentSkeleton;

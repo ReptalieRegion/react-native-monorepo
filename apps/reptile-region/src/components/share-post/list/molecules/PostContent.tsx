@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import TaggedContent from '../../common/atoms/TaggedContent';
 import CommentContent from '../atoms/CommentContent';
 import LikeContent from '../atoms/LikeContent';
+
+import TaggedContents from '@/components/share/molecules/TaggedContents';
 
 type PostContentProps = {
     post: {
@@ -24,7 +25,7 @@ export default function PostContent({
     return (
         <View style={styles.container}>
             <LikeContent likeCount={likeCount} />
-            <TaggedContent uuid={postId} contents={contents} onPressTag={handleTagPress} />
+            <TaggedContents uuid={postId} contents={contents} onPressTag={handleTagPress} />
             <CommentContent commentCount={commentCount} onPress={handleCommentPress} />
         </View>
     );
