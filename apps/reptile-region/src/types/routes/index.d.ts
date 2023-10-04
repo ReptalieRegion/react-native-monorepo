@@ -83,7 +83,7 @@ declare module '<RootRoutes>' {
 
         // Bottom Sheet
         'share-post/bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
-        'share-post/bottom-sheet/kebab-menu': SharePostKebabMenu;
+        'share-post/bottom-sheet/post-options-menu': SharePostKebabMenu;
     };
     /** SharePost Main Routes End */
     /** SharePost End */

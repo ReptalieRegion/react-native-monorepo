@@ -11,7 +11,7 @@ const Posts = React.lazy(() => import('@/components/share-post/list/templates/Po
 
 export default function SharePostListPage({ navigation }: SharePostListPageScreen) {
     const navigateBottomSheetKebabMenu: NavigateBottomSheetKebabMenu = (props) => {
-        navigation.navigate('share-post/bottom-sheet/kebab-menu', props);
+        navigation.navigate('share-post/bottom-sheet/post-options-menu', props);
     };
 
     const navigateCommentPage: NavigateCommentPage = (props) => {

@@ -7,58 +7,58 @@ import SharePostPostingRoutes from './Posting';
 import { SharePostParamList } from '<RootRoutes>';
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
 import SharePostUserDetailListHeader from '@/components/share-post/list/atoms/header/SharePostUserDetailListHeader';
-import KebabMenuBottomSheet from '@/components/share-post/list/ui-prompts/bottomSheet/kebab-menu/KebabMenuBottomSheet';
 import { SharePostDetailPage, SharePostListPage } from '@/pages/share-post';
+import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostDetailProfileModal, { SharePostDetailModalHeader } from '@/pages/share-post/detail/modal/page';
 import { SharePostDetailHeader } from '@/pages/share-post/detail/page';
 import SharePostUserListModalPage from '@/pages/share-post/list/user/modal/page';
 import SharePostUserListPage from '@/pages/share-post/list/user/page';
 
-const SharePostStack = createNativeStackNavigator<SharePostParamList>();
+const Stack = createNativeStackNavigator<SharePostParamList>();
 
 const SharePostRoutes = () => {
     return (
-        <SharePostStack.Navigator initialRouteName="share-post/list">
+        <Stack.Navigator initialRouteName="share-post/list">
             {/** BottomTab이 있는 페이지 */}
-            <SharePostStack.Group navigationKey="share-post/bottom-tab">
-                <SharePostStack.Screen
+            <Stack.Group navigationKey="share-post/bottom-tab">
+                <Stack.Screen
                     name="share-post/list"
                     component={SharePostListPage}
                     options={{ header: NativeStackDefaultHeader }}
                 />
-                <SharePostStack.Screen
+                <Stack.Screen
                     name="share-post/list/user"
                     component={SharePostUserListPage}
                     options={{ header: SharePostUserDetailListHeader }}
                 />
-                <SharePostStack.Screen
+                <Stack.Screen
                     name="share-post/detail"
                     component={SharePostDetailPage}
                     options={{ header: SharePostDetailHeader }}
                 />
-            </SharePostStack.Group>
+            </Stack.Group>
 
             {/** BottomTab이 없는 페이지 */}
-            <SharePostStack.Group navigationKey="share-post/modal" screenOptions={{ presentation: 'transparentModal' }}>
-                <SharePostStack.Screen
+            <Stack.Group navigationKey="share-post/modal" screenOptions={{ presentation: 'transparentModal' }}>
+                <Stack.Screen
                     name="share-post/modal/detail"
                     component={SharePostDetailProfileModal}
                     options={{ header: SharePostDetailModalHeader }}
                 />
-                <SharePostStack.Screen
+                <Stack.Screen
                     name="share-post/modal/list/user"
                     component={SharePostUserListModalPage}
                     options={{ header: SharePostUserDetailListHeader }}
                 />
-                <SharePostStack.Screen
+                <Stack.Screen
                     name="share-post/modal/posting"
                     component={SharePostPostingRoutes}
                     options={{ headerShown: false }}
                 />
-            </SharePostStack.Group>
+            </Stack.Group>
 
             {/** Bottom Sheet */}
-            <SharePostStack.Group
+            <Stack.Group
                 navigationKey="share-post/bottom-sheet"
                 screenOptions={{
                     headerShown: false,
@@ -66,10 +66,10 @@ const SharePostRoutes = () => {
                     animation: 'none',
                 }}
             >
-                <SharePostStack.Screen name="share-post/bottom-sheet/comment" component={SharePostCommentBottomSheetRoutes} />
-                <SharePostStack.Screen name="share-post/bottom-sheet/kebab-menu" component={KebabMenuBottomSheet} />
-            </SharePostStack.Group>
-        </SharePostStack.Navigator>
+                <Stack.Screen name="share-post/bottom-sheet/comment" component={SharePostCommentBottomSheetRoutes} />
+                <Stack.Screen name="share-post/bottom-sheet/post-options-menu" component={PostOptionsMenu} />
+            </Stack.Group>
+        </Stack.Navigator>
     );
 };
 

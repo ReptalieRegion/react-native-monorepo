@@ -9,7 +9,7 @@ type SharePostListPageScreen = NativeStackScreenProps<SharePostParamList, 'share
 
 export default function SharePostUserListModalPage({ navigation, route: { params } }: SharePostListPageScreen) {
     const navigateBottomSheetKebabMenu: NavigateBottomSheetKebabMenu = (props) => {
-        navigation.navigate('share-post/bottom-sheet/kebab-menu', props);
+        navigation.navigate('share-post/bottom-sheet/post-options-menu', props);
     };
 
     const navigateCommentPage: NavigateCommentPage = (props) => {

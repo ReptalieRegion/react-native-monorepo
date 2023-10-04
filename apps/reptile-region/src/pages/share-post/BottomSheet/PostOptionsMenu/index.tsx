@@ -12,6 +12,7 @@ type ListItemProps = {
     text: string;
     onPress?: () => void;
 };
+
 const ListItem = ({ text, onPress }: ListItemProps) => {
     return (
         <View style={styles.listItem}>
@@ -22,9 +23,9 @@ const ListItem = ({ text, onPress }: ListItemProps) => {
     );
 };
 
-const KebabMenuBottomSheet = () => {
-    const navigation = useNavigation<SharePostNavigationProp<'share-post/bottom-sheet/kebab-menu'>>();
-    const { params } = useRoute<SharePostRouteProp<'share-post/bottom-sheet/kebab-menu'>>();
+export default function PostOptionsMenu() {
+    const navigation = useNavigation<SharePostNavigationProp<'share-post/bottom-sheet/post-options-menu'>>();
+    const { params } = useRoute<SharePostRouteProp<'share-post/bottom-sheet/post-options-menu'>>();
     const { post } = params;
     const { bottom } = useSafeAreaInsets();
     const { mutate } = useDeletePost();
@@ -61,7 +62,7 @@ const KebabMenuBottomSheet = () => {
             </View>
         </BottomSheet>
     );
-};
+}
 
 const styles = StyleSheet.create({
     content: {
@@ -75,5 +76,3 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
 });
-
-export default KebabMenuBottomSheet;

@@ -104,7 +104,7 @@ declare module '<SharePostRoutes>' {
 
         /** Bottom Sheet */
         'share-post/bottom-sheet/comment': NavigatorScreenParams<SharePostCommentBottomSheetParamList>;
-        'share-post/bottom-sheet/kebab-menu': SharePostKebabMenu;
+        'share-post/bottom-sheet/post-options-menu': SharePostKebabMenu;
     };
 
     type SharePostRouteProp<RouteName extends keyof SharePostParamList> = RouteProp<SharePostParamList, RouteName>;

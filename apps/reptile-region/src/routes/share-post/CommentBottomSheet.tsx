@@ -7,13 +7,15 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SharePostCommentBottomSheetParamList } from '<SharePostRoutes>';
 import { BottomSheetHeader } from '@/components/@common/molecules';
-import { SharePostCommentPage, SharePostCommentReplyPage } from '@/pages/share-post';
+import CommentPage from '@/pages/share-post/BottomSheet/Comment/main';
+import CommentReplyPage from '@/pages/share-post/BottomSheet/Comment/reply';
 
 const Stack = createNativeStackNavigator<SharePostCommentBottomSheetParamList>();
 
-const SharePostCommentBottomSheetRoutes = ({ navigation }: { navigation: any }) => {
+export default function SharePostCommentBottomSheetRoutes({ navigation }: { navigation: any }) {
     const insets = useSafeAreaInsets();
     const { state } = useAnimatedKeyboard();
+
     const handleClose = () => {
         if (state.value === 0 || state.value === 4) {
             navigation.goBack();
@@ -28,7 +30,7 @@ const SharePostCommentBottomSheetRoutes = ({ navigation }: { navigation: any }) 
             >
                 <Stack.Screen
                     name="main"
-                    component={SharePostCommentPage}
+                    component={CommentPage}
                     options={{
                         headerTitle: '댓글',
                         header: BottomSheetHeader,
@@ -36,7 +38,7 @@ const SharePostCommentBottomSheetRoutes = ({ navigation }: { navigation: any }) 
                 />
                 <Stack.Screen
                     name="reply"
-                    component={SharePostCommentReplyPage}
+                    component={CommentReplyPage}
                     options={{
                         headerBackVisible: true,
                         headerTitle: '답글',
@@ -46,6 +48,4 @@ const SharePostCommentBottomSheetRoutes = ({ navigation }: { navigation: any }) 
             </Stack.Navigator>
         </BottomSheet>
     );
-};
-
-export default SharePostCommentBottomSheetRoutes;
+}
