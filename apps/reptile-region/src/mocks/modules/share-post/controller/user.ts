@@ -6,7 +6,6 @@ import createSearchUser from '../service/createSearchUser';
 import ENV from '@/env';
 import users from '@/mocks/data/user.json';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
-import { wait } from '@/mocks/utils/helpers';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const userController = () => {
@@ -18,7 +17,6 @@ const userController = () => {
             const id = req.url.searchParams.get('userId') ?? undefined;
             const nickname = req.url.searchParams.get('nickname') ?? undefined;
             const postUserProfile = createPostUserProfile({ user: { id, nickname } });
-            await wait(5000);
             return res(ctx.status(200), ctx.json(postUserProfile));
         }),
         rest.get(BASE_URI + 'users/follower/list', async (req, res, ctx) => {

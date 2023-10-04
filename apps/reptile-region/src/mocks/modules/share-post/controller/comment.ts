@@ -5,7 +5,6 @@ import createComment from '../service/createComment';
 
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
-import { wait } from '@/mocks/utils/helpers';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const commentController = () => {
@@ -16,7 +15,6 @@ const commentController = () => {
         rest.get(BASE_URI + 'share/posts/:postId/comments/list', async (req, res, ctx) => {
             const commentReplies = createEmptyArray(10).map(() => createComment());
             const data = createInfinityData({ searchParams: req.url.searchParams, items: commentReplies });
-            await wait(500);
             return res(ctx.status(200), ctx.json(data));
         }),
         /** POST */

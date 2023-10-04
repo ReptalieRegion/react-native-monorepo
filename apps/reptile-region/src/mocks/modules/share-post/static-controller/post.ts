@@ -10,7 +10,6 @@ import follows from '@/mocks/data/follow.json';
 import likes from '@/mocks/data/like.json';
 import posts from '@/mocks/data/post.json';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
-import { wait } from '@/mocks/utils/helpers';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const staticPostController = () => {
@@ -55,8 +54,6 @@ const staticPostController = () => {
         rest.get(BASE_URI + 'share/posts/list/users/:userId', async (req, res, ctx) => {
             const postImages = createEmptyArray(12).map(() => createPostList());
             const data = createInfinityData({ searchParams: req.url.searchParams, items: postImages });
-
-            await wait(5000);
 
             return res(ctx.status(200), ctx.json(data));
         }),

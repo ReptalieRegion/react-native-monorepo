@@ -84,7 +84,7 @@ export default function ImageContent({ post: { id: postId, images } }: ImagesCon
                 showsHorizontalScrollIndicator={false}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
-                estimatedListSize={{ height: 250, width: imageWidth }}
+                estimatedListSize={{ height: 300, width: imageWidth }}
                 estimatedItemSize={imageWidth}
             />
         </View>
