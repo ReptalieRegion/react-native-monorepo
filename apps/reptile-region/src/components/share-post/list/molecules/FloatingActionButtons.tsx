@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import PostWrite from '../atoms/PostWrite';
 import ScrollToTopButton from '../atoms/ScrollToTopButton';
 
-import type { ScrollDirection, ScrollToTop } from '@/hooks/flash-list/useFlashListScroll';
+import type { ScrollDirection, ScrollToTop } from '@/hooks/useFlashListScroll';
 
 type FloatingActionButtonsProps = {
     animationMode: ScrollDirection;

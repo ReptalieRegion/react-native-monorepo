@@ -10,7 +10,7 @@ import type { FetchPostResponse } from '<api/share/post>';
 import type { SharePostListNavigationProps } from '<SharePostComponent>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
-import useFlashListScroll from '@/hooks/flash-list/useFlashListScroll';
+import useFlashListScroll from '@/hooks/useFlashListScroll';
 
 export default function Posts(props: SharePostListNavigationProps) {
     /** FlashList 시작 */

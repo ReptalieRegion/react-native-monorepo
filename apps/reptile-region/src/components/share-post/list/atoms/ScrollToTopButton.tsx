@@ -6,7 +6,7 @@ import Animated, { WithTimingConfig, useAnimatedStyle, useSharedValue, withTimin
 import type { FloatingActionButtonSize } from '<SharePostComponent>';
 import { UpArrow } from '@/assets/icons';
 import { FloatingActionButton } from '@/components/@common/atoms';
-import type { ScrollDirection, ScrollToTop } from '@/hooks/flash-list/useFlashListScroll';
+import type { ScrollDirection, ScrollToTop } from '@/hooks/useFlashListScroll';
 
 type ScrollTopButtonProps = {
     animationMode: ScrollDirection;
