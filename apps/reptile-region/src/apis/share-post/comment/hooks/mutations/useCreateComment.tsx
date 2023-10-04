@@ -4,6 +4,7 @@ import { createComment } from '../../repository';
 
 import type { CreateComment, FetchComment } from '<api/share/post/comment>';
 import type { FetchPost } from '<api/share/post>';
+import { OnSuccessParam } from '<api/utils>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 댓글 추가 */
@@ -58,11 +59,12 @@ const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryCli
     });
 };
 
-const useCreateComment = () => {
+const useCreateComment = ({ onSuccess }: OnSuccessParam) => {
     const queryClient = useQueryClient();
     return useMutation<CreateComment['Response'], any, CreateComment['Request']>({
         mutationFn: ({ postId, contents }) => createComment({ postId, contents }),
         onSuccess: (data) => {
+            onSuccess();
             updateShareCommentListCache({ queryClient, data });
             updateSharePostListCache({ queryClient, data });
         },

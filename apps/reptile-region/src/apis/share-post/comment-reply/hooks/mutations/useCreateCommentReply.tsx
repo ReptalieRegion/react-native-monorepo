@@ -4,6 +4,7 @@ import { createCommentReply } from '../../repository';
 
 import type { CreateCommentReply, FetchCommentReply } from '<api/share/post/comment-reply>';
 import type { FetchComment } from '<api/share/post/comment>';
+import { OnSuccessParam } from '<api/utils>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 수정 */
@@ -71,11 +72,12 @@ const updateCommentReplyListCache = ({
     });
 };
 
-const useCreateCommentReply = () => {
+const useCreateCommentReply = ({ onSuccess }: OnSuccessParam) => {
     const queryClient = useQueryClient();
     return useMutation<CreateCommentReply['Response'], any, CreateCommentReply['Request']>({
         mutationFn: ({ commentId, contents }) => createCommentReply({ commentId, contents }),
         onSuccess: (data) => {
+            onSuccess();
             updateCommentListCache({ queryClient, data });
             updateCommentReplyListCache({ queryClient, data });
         },

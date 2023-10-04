@@ -1,16 +1,30 @@
 import React, { useCallback } from 'react';
+import { Keyboard } from 'react-native';
+import { useTagHandler } from 'tag-text-input';
 
 import TextInputEditor from './components/TextInputEditor';
-import type { CommentTextInputProps } from './components/TextInputEditor';
+import type { CommentTextInputActions } from './components/TextInputEditor';
+import useCommentActions from './hooks/useCommentActions';
 
 import useCreateComment from '@/apis/share-post/comment/hooks/mutations/useCreateComment';
 import useUpdateComment from '@/apis/share-post/comment/hooks/mutations/useUpdateComment';
 
 export default function CommentTextEditor() {
-    const createMutate = useCreateComment();
-    const updateMutate = useUpdateComment();
+    const { changeText } = useTagHandler();
+    const { setCreateCommentSubmitType } = useCommentActions();
+    const handleSuccess = () => {
+        Keyboard.dismiss();
+        changeText('');
+    };
+    const createMutate = useCreateComment({ onSuccess: handleSuccess });
+    const updateMutate = useUpdateComment({
+        onSuccess: () => {
+            setCreateCommentSubmitType();
+            handleSuccess();
+        },
+    });
 
-    const handleSubmit: CommentTextInputProps['onSubmit'] = useCallback(
+    const handleSubmit: CommentTextInputActions['onSubmit'] = useCallback(
         ({ id, submitType, contents }) => {
             switch (submitType) {
                 case 'UPDATE':
@@ -24,5 +38,5 @@ export default function CommentTextEditor() {
         [createMutate, updateMutate],
     );
 
-    return <TextInputEditor onSubmit={handleSubmit} />;
+    return <TextInputEditor onSubmit={handleSubmit} isLoadingSubmit={createMutate.isLoading || updateMutate.isLoading} />;
 }

@@ -1,16 +1,30 @@
 import React, { useCallback } from 'react';
+import { Keyboard } from 'react-native';
+import { useTagHandler } from 'tag-text-input';
 
 import TextInputEditor from './components/TextInputEditor';
-import type { CommentTextInputProps } from './components/TextInputEditor';
+import type { CommentTextInputActions } from './components/TextInputEditor';
+import useCommentActions from './hooks/useCommentActions';
 
 import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
 import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useUpdateCommentReply';
 
 export default function CommentReplyTextEditor() {
-    const createCommentReply = useCreateCommentReply();
-    const updateCommentReply = useUpdateCommentReply();
+    const { changeText } = useTagHandler();
+    const { setCreateCommentSubmitType } = useCommentActions();
+    const handleSuccess = () => {
+        Keyboard.dismiss();
+        changeText('');
+    };
+    const createCommentReply = useCreateCommentReply({ onSuccess: handleSuccess });
+    const updateCommentReply = useUpdateCommentReply({
+        onSuccess: () => {
+            setCreateCommentSubmitType();
+            handleSuccess();
+        },
+    });
 
-    const handleSubmit: CommentTextInputProps['onSubmit'] = useCallback(
+    const handleSubmit: CommentTextInputActions['onSubmit'] = useCallback(
         ({ id, submitType, contents }) => {
             switch (submitType) {
                 case 'UPDATE':
@@ -24,5 +38,10 @@ export default function CommentReplyTextEditor() {
         [createCommentReply, updateCommentReply],
     );
 
-    return <TextInputEditor onSubmit={handleSubmit} />;
+    return (
+        <TextInputEditor
+            onSubmit={handleSubmit}
+            isLoadingSubmit={createCommentReply.isLoading || updateCommentReply.isLoading}
+        />
+    );
 }

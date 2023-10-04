@@ -14,6 +14,10 @@ declare module '<api/utils>' {
     type EnableParam = {
         enabled: boolean;
     };
+
+    type OnSuccessParam = {
+        onSuccess: () => void;
+    };
     /** react query option 관련 끝 */
 
     /** 서버 api 관련 시작 */

@@ -3,6 +3,7 @@ import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstac
 import { updateComment } from '../../repository';
 
 import type { FetchComment, UpdateComment } from '<api/share/post/comment>';
+import { OnSuccessParam } from '<api/utils>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 댓글 수정 */
@@ -22,7 +23,7 @@ const updateShareCommentListCache = ({ queryClient, data }: { queryClient: Query
                 nextPage,
                 items: items.map((item) => {
                     const isTargetComment = item.comment.id === data.post.comment.id;
-                    return isTargetComment ? { comment: { ...item.comment, ...data.post.comment } } : item;
+                    return isTargetComment ? { comment: { ...item.comment, ...data.post.comment, isModified: true } } : item;
                 }),
             };
         });
@@ -34,12 +35,13 @@ const updateShareCommentListCache = ({ queryClient, data }: { queryClient: Query
     });
 };
 
-const useUpdateComment = () => {
+const useUpdateComment = ({ onSuccess }: OnSuccessParam) => {
     const queryClient = useQueryClient();
 
     return useMutation<UpdateComment['Response'], any, UpdateComment['Request']>({
         mutationFn: ({ commentId, contents }) => updateComment({ commentId, contents }),
         onSuccess: (data) => {
+            onSuccess();
             updateShareCommentListCache({ queryClient, data });
         },
     });

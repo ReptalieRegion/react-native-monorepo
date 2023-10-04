@@ -1,6 +1,6 @@
 import { TouchableTypo, color } from 'design-system';
 import React, { useEffect } from 'react';
-import { Alert, Dimensions, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, Dimensions, StyleSheet, View } from 'react-native';
 import { Keyboard } from 'react-native';
 import { TagTextInput, useTag, useTagHandler } from 'tag-text-input';
 
@@ -8,22 +8,26 @@ import useComment from '../../hooks/useComment';
 import useCommentActions from '../../hooks/useCommentActions';
 
 import { SubmitType } from '<context/share-post/comment>';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 
 export type CommentTextInputProps = {
-    onSubmit({ id, submitType, contents }: { id: string; submitType: SubmitType; contents: string }): void;
+    isLoadingSubmit: boolean;
 };
+
+export interface CommentTextInputActions {
+    onSubmit({ id, submitType, contents }: { id: string; submitType: SubmitType; contents: string }): void;
+}
 
 const MAX_CHARACTER_COUNT = 500;
 
-export default function CommentTextInputEditor({ onSubmit }: CommentTextInputProps) {
+export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: CommentTextInputProps & CommentTextInputActions) {
     const { contents } = useTag();
     const { id, submitType } = useComment();
-    const { tagTextInputFocus, changeText } = useTagHandler();
+    const { tagTextInputFocus } = useTagHandler();
     const { setCreateCommentSubmitType } = useCommentActions();
 
     useEffect(() => {
         const resetSubmitType = () => {
-            changeText('');
             setCreateCommentSubmitType();
         };
 
@@ -46,7 +50,7 @@ export default function CommentTextInputEditor({ onSubmit }: CommentTextInputPro
         return () => {
             keyboard.remove();
         };
-    }, [submitType, changeText, setCreateCommentSubmitType, tagTextInputFocus]);
+    }, [submitType, setCreateCommentSubmitType, tagTextInputFocus]);
 
     const handleSubmit = () => {
         onSubmit({ id, submitType, contents });
@@ -62,9 +66,15 @@ export default function CommentTextInputEditor({ onSubmit }: CommentTextInputPro
                     maxLength={MAX_CHARACTER_COUNT}
                     multiline
                 />
-                <TouchableTypo variant="body2" color="primary" onPress={handleSubmit}>
-                    등록
-                </TouchableTypo>
+                <ConditionalRenderer
+                    condition={isLoadingSubmit}
+                    trueContent={<ActivityIndicator size={'small'} color={color.Green[750].toString()} />}
+                    falseContent={
+                        <TouchableTypo variant="body2" color="primary" onPress={handleSubmit}>
+                            등록
+                        </TouchableTypo>
+                    }
+                />
             </View>
         </View>
     );
