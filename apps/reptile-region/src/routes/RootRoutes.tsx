@@ -1,23 +1,19 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useFlipper } from '@react-navigation/devtools';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
-import { OverlayList } from 'overlay';
-import { createOverlay } from 'overlay-manager';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 
-import HomeRoutes from './home';
-import InfoRoutes from './info';
-import MyRoutes from './my';
-import SharePostRoutes from './share-post';
-import ShopRoutes from './shop';
+import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
+import SharePostModalRoutes from './modal/SharePostModalRoutes';
+import SharePostPostingRoutes from './modal/SharePostPostingRoutes';
 
-import { RootRoutesParamList } from '<RootRoutes>';
+import { RootRoutesParamList } from '<RootRoutesV2>';
 import { useSignIn } from '@/apis/auth';
-import { MainBottomBar } from '@/components/@common/molecules';
-import ToastContainer from '@/overlay/ToastContainer';
+import SignInHeader from '@/components/auth/sign-in/header';
+import SignInPage from '@/pages/auth/sign-in/page';
+import SignUpPage from '@/pages/auth/sign-up/page';
 
-const BottomTab = createBottomTabNavigator<RootRoutesParamList>();
-const Overlay = createOverlay<OverlayList>();
+const Stack = createNativeStackNavigator<RootRoutesParamList>();
 
 const RootRoutes = () => {
     const navigationRef = useNavigationContainerRef();
@@ -30,22 +26,50 @@ const RootRoutes = () => {
     }, [mutate]);
 
     return (
-        <Overlay.Container registerComponent={{ toast: ToastContainer }}>
-            <NavigationContainer ref={navigationRef}>
-                <BottomTab.Navigator
-                    initialRouteName="home/routes"
-                    screenOptions={{ headerShown: false }}
-                    tabBar={MainBottomBar}
-                    screenListeners={{ tabPress: (e) => e.preventDefault() }}
-                >
-                    <BottomTab.Screen name="home/routes" component={HomeRoutes} />
-                    <BottomTab.Screen name="shop/routes" component={ShopRoutes} />
-                    <BottomTab.Screen name="share-post/routes" component={SharePostRoutes} />
-                    <BottomTab.Screen name="info/routes" component={InfoRoutes} />
-                    <BottomTab.Screen name="my/routes" component={MyRoutes} />
-                </BottomTab.Navigator>
-            </NavigationContainer>
-        </Overlay.Container>
+        <NavigationContainer ref={navigationRef}>
+            <Stack.Navigator initialRouteName="bottom-tab/routes">
+                {/** 바텀 탭 시작 */}
+                <Stack.Screen
+                    name="bottom-tab/routes"
+                    component={BottomTabNativeStackRoutes}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                {/** 바텀 탭 끝 */}
+
+                {/** 인증 시작 */}
+                <Stack.Group navigationKey="auth">
+                    <Stack.Screen
+                        name="sign-in"
+                        component={SignInPage}
+                        options={{
+                            header: SignInHeader,
+                            animation: 'slide_from_bottom',
+                        }}
+                    />
+                    <Stack.Screen
+                        name="sign-up"
+                        component={SignUpPage}
+                        options={{
+                            header: SignInHeader,
+                        }}
+                    />
+                </Stack.Group>
+                {/** 인증 끝 */}
+
+                {/** 일상공유 시작 */}
+                <Stack.Group screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="share-post/modal" component={SharePostModalRoutes} />
+                    <Stack.Screen
+                        name="share-post/modal/posting"
+                        component={SharePostPostingRoutes}
+                        options={{ animation: 'slide_from_bottom' }}
+                    />
+                </Stack.Group>
+                {/** 일상공유 끝 */}
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 };
 

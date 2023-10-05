@@ -1,12 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableTypo } from 'design-system';
 import React from 'react';
 
-import type { SharePostPostingNavigationProp } from '<SharePostRoutes>';
+import { SharePostPostingParamList } from '<RootRoutesV2>';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
+type ImageCropNavigationProp = NativeStackNavigationProp<SharePostPostingParamList, 'image-crop'>;
+
 const ImageCropRightHeader = () => {
-    const navigate = useNavigation<SharePostPostingNavigationProp<'image-crop'>>();
+    const navigate = useNavigation<ImageCropNavigationProp>();
     const hasSelectPhoto = usePhotoStore((state) => state.selectedPhotos.length > 0);
 
     const handleNextPage = () => {

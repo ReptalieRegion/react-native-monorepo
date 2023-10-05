@@ -3,13 +3,12 @@ import { color } from 'design-system';
 import React, { Suspense, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { SharePostParamList } from '<RootRoutes>';
-import type { SharePostDetailProps } from '<SharePostRoutes>';
+import type { SharePostDetailProps, SharePostTabParamList } from '<routes/bottom-tab>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import SharePostsDetailListSkeleton from '@/components/share/atoms/Suspense/DetailListSkeleton';
 import { UserProfile } from '@/components/share/organisms/UserProfile';
 
-type SharePostDetailProfileScreenNavigationProp = NativeStackScreenProps<SharePostParamList, 'share-post/detail'>;
+type SharePostDetailProfileScreenNavigationProp = NativeStackScreenProps<SharePostTabParamList, 'share-post/detail'>;
 
 const PostDetailList = React.lazy(() => import('@/components/share/organisms/PostDetail'));
 

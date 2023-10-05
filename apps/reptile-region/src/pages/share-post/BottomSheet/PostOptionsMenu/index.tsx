@@ -1,11 +1,13 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { BottomSheet } from 'bottom-sheet';
 import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { SharePostNavigationProp, SharePostRouteProp } from '<SharePostRoutes>';
+import { RootRoutesParamList } from '<RootRoutesV2>';
+import { BottomTabBottomSheetParamList } from '<routes/bottom-tab>';
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
 
 type ListItemProps = {
@@ -23,9 +25,15 @@ const ListItem = ({ text, onPress }: ListItemProps) => {
     );
 };
 
+type PostOptionsMenuNavigation = CompositeNavigationProp<
+    NativeStackNavigationProp<BottomTabBottomSheetParamList, 'share-post/post-options-menu'>,
+    NativeStackNavigationProp<RootRoutesParamList>
+>;
+type PostOptionsMenuRoute = RouteProp<BottomTabBottomSheetParamList, 'share-post/post-options-menu'>;
+
 export default function PostOptionsMenu() {
-    const navigation = useNavigation<SharePostNavigationProp<'share-post/bottom-sheet/post-options-menu'>>();
-    const { params } = useRoute<SharePostRouteProp<'share-post/bottom-sheet/post-options-menu'>>();
+    const navigation = useNavigation<PostOptionsMenuNavigation>();
+    const { params } = useRoute<PostOptionsMenuRoute>();
     const { post } = params;
     const { bottom } = useSafeAreaInsets();
     const { mutate } = useDeletePost();
@@ -42,10 +50,10 @@ export default function PostOptionsMenu() {
     };
 
     const navigateUpdatePage = () => {
-        navigation.navigate('share-post/modal/posting', {
-            screen: 'update',
-            params: { post: { contents: post.contents, id: post.id, images: post.images } },
-        });
+        // navigation.navigate('share-post/modal/posting', {
+        //     screen: 'update',
+        //     params: { post: { contents: post.contents, id: post.id, images: post.images } },
+        // });
     };
 
     return (

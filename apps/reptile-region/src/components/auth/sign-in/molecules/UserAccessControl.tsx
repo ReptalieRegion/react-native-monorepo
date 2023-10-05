@@ -1,12 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { MyNavigationProp } from '<MyRoutes>';
+import { RootRoutesParamList } from '<RootRoutesV2>';
 import { TextButton } from '@/components/@common/atoms';
 
 const UserAccessControl = () => {
-    const navigation = useNavigation<MyNavigationProp<'auth/sign-in'>>();
+    const navigation = useNavigation<NavigationProp<RootRoutesParamList, 'sign-in'>>();
     const handleFindId = () => {
         return;
     };
@@ -16,7 +16,7 @@ const UserAccessControl = () => {
     };
 
     const handleSignUp = () => {
-        navigation.navigate('auth/sign-up');
+        navigation.navigate('sign-up');
         return;
     };
 

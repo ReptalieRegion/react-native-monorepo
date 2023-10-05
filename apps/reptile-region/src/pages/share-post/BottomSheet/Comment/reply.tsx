@@ -3,14 +3,15 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { SharePostCommentParamList, SharePostParamList } from '<RootRoutes>';
+import { RootRoutesParamList } from '<RootRoutesV2>';
+import { SharePostCommentParamList } from '<routes/bottom-tab>';
 import CommentReplySkeleton from '@/components/share/atoms/Suspense/CommentReplySkeleton';
 import CommentTagListActivityIndicator from '@/components/share/atoms/Suspense/CommentTagListActivityIndicator';
 import Comment, { CommentReplyList, CommentReplyTextEditor, CommentTagList } from '@/components/share/organisms/Comment';
 
 type CommentScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostCommentParamList, 'reply'>,
-    NativeStackScreenProps<SharePostParamList, 'share-post/bottom-sheet/comment'>
+    NativeStackScreenProps<RootRoutesParamList>
 >;
 
 export default function CommentReplyPage(props: CommentScreenProps) {

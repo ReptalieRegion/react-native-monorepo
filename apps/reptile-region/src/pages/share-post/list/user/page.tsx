@@ -1,19 +1,23 @@
+import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { SharePostParamList } from '<RootRoutes>';
+import { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
 import { NavigateCommentPage, NavigateDetailPage, NavigateBottomSheetKebabMenu } from '<SharePostComponent>';
 import UserPosts from '@/components/share-post/list/templates/UserPosts';
 
-type SharePostListPageScreen = NativeStackScreenProps<SharePostParamList, 'share-post/list/user'>;
+type SharePostListPageScreen = CompositeScreenProps<
+    NativeStackScreenProps<SharePostTabParamList, 'share-post/list/user'>,
+    NativeStackScreenProps<BottomTabNativeStackParamList>
+>;
 
 export default function SharePostUserListPage({ navigation, route: { params } }: SharePostListPageScreen) {
     const navigateBottomSheetKebabMenu: NavigateBottomSheetKebabMenu = (props) => {
-        navigation.navigate('share-post/bottom-sheet/post-options-menu', props);
+        navigation.navigate('bottom-sheet/post-options-menu', props);
     };
 
     const navigateCommentPage: NavigateCommentPage = (props) => {
-        navigation.push('share-post/bottom-sheet/comment', {
+        navigation.push('bottom-sheet/comment', {
             screen: 'main',
             params: props,
         });

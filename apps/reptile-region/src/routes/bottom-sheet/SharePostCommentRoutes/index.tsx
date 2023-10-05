@@ -5,14 +5,14 @@ import React from 'react';
 import { useAnimatedKeyboard } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { SharePostCommentBottomSheetParamList } from '<SharePostRoutes>';
+import { SharePostCommentParamList } from '<routes/bottom-tab>';
 import { BottomSheetHeader } from '@/components/@common/molecules';
 import CommentPage from '@/pages/share-post/BottomSheet/Comment/main';
 import CommentReplyPage from '@/pages/share-post/BottomSheet/Comment/reply';
 
-const Stack = createNativeStackNavigator<SharePostCommentBottomSheetParamList>();
+const Stack = createNativeStackNavigator<SharePostCommentParamList>();
 
-export default function SharePostCommentBottomSheetRoutes({ navigation }: { navigation: any }) {
+export default function SharePostCommentRoutes({ navigation }: { navigation: any }) {
     const insets = useSafeAreaInsets();
     const { state } = useAnimatedKeyboard();
 

@@ -1,100 +1,104 @@
-declare module '<RootRoutes>' {
-    import type { NavigatorScreenParams } from '@react-navigation/native';
+declare module '<RootRoutesV2>' {
+    import { NavigatorScreenParams } from '@react-navigation/native';
 
-    import type { HomeParamList } from '<HomeRoutes>';
-    import { ShareImageType } from '<Image>';
     import { ImageType } from '<image>';
-    import type { InfoParamList } from '<InfoRoutes>';
-    import type { MyParamList } from '<MyRoutes>';
-    import type { SharePostParamList } from '<SharePostRoutes>';
-    import type { ShopParamList } from '<ShopRoutes>';
+    import { BottomTabNativeStackParamList } from '<routes/bottom-tab>';
 
-    /** SharePost Start */
-    /** Posting Route Start */
+    /** SharePost 시작 */
+    /** SharePost 글쓰기 시작 */
     type SharePostPostingParamList = {
         'image-crop': undefined;
         write: undefined;
     };
-    /** Posting Route End */
+    /** SharePost 글쓰기 끝 */
 
-    /** Comment Route Start */
-    type SharePostCommentParams = {
-        post: {
-            id: string;
-        };
-    };
-
-    type SharePostCommentReplyParams = {
-        comment: {
-            id: string;
-            contents: string;
-            replyCount: number;
-            isMine: boolean;
-            isModified: boolean;
-            user: {
-                id: string;
-                profile: ShareImageType;
-                nickname: string;
-            };
-        };
-        commentingActive?: boolean;
-    };
-
-    type SharePostCommentParamList = {
-        main: SharePostCommentParams;
-        reply: SharePostCommentReplyParams;
-    };
-    /** Comment Route End */
-
-    /** SharePost Main Routes Start */
-    type SharePostKebabMenuParams = {
-        post: {
-            id: string;
-            images: ImageType[];
-            contents: string;
-            isMine: boolean;
-        };
-        user: {
-            id: string;
-        };
-    };
-
-    type SharePostDetailParams = {
+    type SharePostDetailProps = {
         nickname: string;
         profile: ImageType;
         isFollow: boolean | undefined;
     };
 
-    type SharePostUserListParams = {
+    type SharePostUserListProps = {
         nickname: string;
         startIndex: number;
     };
 
-    type SharePostParamList = {
-        // Bottom Tab이 있는 페이지
-        'share-post/list': undefined;
-        'share-post/detail': SharePostDetailParams;
-        'share-post/list/user': SharePostUserListParams;
-
-        // Bottom Tab이 없는 페이지
-        'share-post/modal/detail': SharePostDetailParams;
-        'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
-        'share-post/modal/list/user': SharePostUserListParams;
-
-        // Bottom Sheet
-        'share-post/bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
-        'share-post/bottom-sheet/post-options-menu': SharePostKebabMenu;
+    type SharePostPostingUpdateProps = {
+        post: {
+            id: string;
+            images: ImageType[];
+            contents: string;
+        };
     };
-    /** SharePost Main Routes End */
-    /** SharePost End */
 
-    /** RootRoutes Start */
+    type SharePostOptionsMenuProps = {
+        post: {
+            id: string;
+            images: ImageType[];
+            contents: string;
+            isMine: boolean;
+            user: {
+                id: string;
+            };
+        };
+    };
+    /** SharePost 끝 */
+
+    /** 댓글 시작 */
+    type SharePostCommentProps = {
+        post: {
+            id: string;
+        };
+    };
+
+    type SharePostCommentReplyProps = {
+        comment: {
+            id: string;
+            contents: string;
+            isMine: boolean;
+            isModified: boolean;
+            user: {
+                id: string;
+                profile: ImageType;
+                nickname: string;
+            };
+        };
+        isFocus: boolean;
+    };
+
+    type SharePostCommentParamList = {
+        main: SharePostCommentProps;
+        reply: SharePostCommentReplyProps;
+    };
+    /** 댓글 끝 */
+
+    /** 게시물 옵션 메뉴 시작 */
+    type SharePostOptionsMenuProps = {
+        post: {
+            id: string;
+            images: ImageType[];
+            contents: string;
+            isMine: boolean;
+            user: {
+                id: string;
+            };
+        };
+    };
+    /** 게시물 옵션 메뉴 끝 */
+
+    type SharePostModalParamList = {
+        detail: SharePostDetailProps;
+        'list/user': SharePostUserListProps;
+        'posting/update': SharePostPostingUpdateProps;
+        'bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
+        'bottom-sheet/post-options-menu': SharePostOptionsMenuProps;
+    };
+
     type RootRoutesParamList = {
-        'home/routes': NavigatorScreenParams<HomeParamList>;
-        'shop/routes': NavigatorScreenParams<ShopParamList>;
-        'share-post/routes': NavigatorScreenParams<SharePostParamList>;
-        'info/routes': NavigatorScreenParams<InfoParamList>;
-        'my/routes': NavigatorScreenParams<MyParamList>;
+        'bottom-tab/routes': NavigatorScreenParams<BottomTabNativeStackParamList>;
+        'sign-in': undefined;
+        'sign-up': undefined;
+        'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
+        'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
     };
-    /** RootRoutes End */
 }

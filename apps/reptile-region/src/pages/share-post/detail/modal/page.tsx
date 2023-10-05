@@ -3,13 +3,12 @@ import { color } from 'design-system';
 import React, { Suspense, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { SharePostParamList } from '<RootRoutes>';
-import type { SharePostDetailProps } from '<SharePostRoutes>';
+import type { SharePostDetailProps, SharePostModalParamList } from '<RootRoutesV2>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import SharePostsDetailListSkeleton from '@/components/share/atoms/Suspense/DetailListSkeleton';
 import { UserProfile } from '@/components/share/organisms/UserProfile';
 
-type SharePostModalDetailScreenNavigationProp = NativeStackScreenProps<SharePostParamList, 'share-post/modal/detail'>;
+type SharePostModalDetailScreenNavigationProp = NativeStackScreenProps<SharePostModalParamList, 'detail'>;
 
 const PostDetailList = React.lazy(() => import('@/components/share/organisms/PostDetail'));
 
@@ -27,7 +26,7 @@ export default function SharePostDetailProfileModal({
     }, [params]);
 
     const handleImagePress = (index: number) => {
-        navigation.push('share-post/modal/list/user', { nickname: params.nickname, startIndex: index });
+        navigation.push('list/user', { nickname: params.nickname, startIndex: index });
     };
 
     return (

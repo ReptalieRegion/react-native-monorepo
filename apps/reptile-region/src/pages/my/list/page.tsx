@@ -1,14 +1,20 @@
-import { useNavigation } from '@react-navigation/native';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { View } from 'react-native';
 
-import { MyNavigationProp } from '<MyRoutes>';
+import { RootRoutesParamList } from '<RootRoutesV2>';
+import { MyTabParamList } from '<routes/bottom-tab>';
 
-const MyListPage = () => {
-    const navigation = useNavigation<MyNavigationProp<'my/list'>>();
+type MyListScreenProps = CompositeScreenProps<
+    NativeStackScreenProps<MyTabParamList, 'my/list'>,
+    NativeStackScreenProps<RootRoutesParamList>
+>;
+
+const MyListPage = ({ navigation }: MyListScreenProps) => {
     const navigateSignIn = () => {
-        navigation.push('auth/sign-in');
+        navigation.navigate('sign-in');
     };
 
     return (

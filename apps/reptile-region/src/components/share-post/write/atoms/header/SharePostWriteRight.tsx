@@ -1,19 +1,33 @@
-import { useNavigation } from '@react-navigation/native';
+import { CompositeNavigationProp, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { useTag } from 'tag-text-input';
 
-import { SharePostNavigationProp } from '<SharePostRoutes>';
+import { RootRoutesParamList, SharePostPostingParamList } from '<RootRoutesV2>';
 import useCreatePost from '@/apis/share-post/post/hooks/mutations/useCreatePost';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
+type PostWriteNavigationProp = CompositeNavigationProp<
+    NativeStackNavigationProp<SharePostPostingParamList, 'write'>,
+    NativeStackNavigationProp<RootRoutesParamList>
+>;
+
 const SharePostWriteRightHeader = () => {
-    const navigate = useNavigation<SharePostNavigationProp<'share-post/modal/posting'>>();
+    const navigate = useNavigation<PostWriteNavigationProp>();
     const selectedPhotos = usePhotoStore((state) => state.selectedPhotos);
     const { contents } = useTag();
     const { isLoading, mutate } = useCreatePost({
         onSuccess: () => {
-            navigate.navigate('share-post/list');
+            navigate.navigate('bottom-tab/routes', {
+                screen: 'tab',
+                params: {
+                    screen: 'share-post/routes',
+                    params: {
+                        screen: 'share-post/list',
+                    },
+                },
+            });
         },
     });
 

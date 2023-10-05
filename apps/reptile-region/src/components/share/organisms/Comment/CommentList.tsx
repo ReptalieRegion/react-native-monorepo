@@ -7,14 +7,15 @@ import { RefreshControl } from 'react-native';
 import CommentItem from './components/CommentItem';
 
 import { FetchCommentResponse } from '<api/share/post/comment>';
-import { SharePostCommentParamList, SharePostParamList } from '<RootRoutes>';
+import { RootRoutesParamList } from '<RootRoutesV2>';
+import { SharePostCommentParamList } from '<routes/bottom-tab>';
 import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 
 type CommentScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostCommentParamList, 'main'>,
-    NativeStackScreenProps<SharePostParamList, 'share-post/bottom-sheet/comment'>
+    NativeStackScreenProps<RootRoutesParamList>
 >;
 
 export default function CommentList({ navigation, route: { params } }: CommentScreenProps) {
@@ -31,7 +32,6 @@ export default function CommentList({ navigation, route: { params } }: CommentSc
                     contents,
                     isMine,
                     isModified,
-                    replyCount,
                     user: { id: userId, nickname, profile },
                 },
             } = item;
@@ -45,11 +45,17 @@ export default function CommentList({ navigation, route: { params } }: CommentSc
             const handlePressUpdateButton = () => {};
 
             const handlePressNickname = () => {
-                navigation.push('share-post/modal/detail', { nickname, profile, isFollow: false });
+                navigation.push('share-post/modal', {
+                    screen: 'detail',
+                    params: { nickname, profile, isFollow: false },
+                });
             };
 
             const handlePressTag = () => {
-                navigation.push('share-post/modal/detail', { nickname, profile, isFollow: false });
+                navigation.push('share-post/modal', {
+                    screen: 'detail',
+                    params: { nickname, profile, isFollow: false },
+                });
             };
 
             const handlePressWriteButton = () => {
@@ -59,10 +65,9 @@ export default function CommentList({ navigation, route: { params } }: CommentSc
                         contents,
                         isMine,
                         isModified,
-                        replyCount,
                         user: { id: userId, profile, nickname },
                     },
-                    commentingActive: false,
+                    isFocus: false,
                 });
             };
 
@@ -73,10 +78,9 @@ export default function CommentList({ navigation, route: { params } }: CommentSc
                         contents,
                         isMine,
                         isModified,
-                        replyCount,
                         user: { id: userId, profile, nickname },
                     },
-                    commentingActive: true,
+                    isFocus: true,
                 });
             };
 

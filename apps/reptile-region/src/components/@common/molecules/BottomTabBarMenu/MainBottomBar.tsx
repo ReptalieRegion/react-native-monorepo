@@ -7,7 +7,7 @@ import * as Haptic from 'react-native-haptic-feedback';
 import { BottomTabBarButton } from '../../atoms';
 
 import type { IconProps } from '<Icon>';
-import type { RootRoutesParamList } from '<RootRoutes>';
+import { BottomTabParamList } from '<routes/bottom-tab>';
 import {
     Cart as ShopIcon,
     Community as InfoIcon,
@@ -17,7 +17,7 @@ import {
 } from '@/assets/icons';
 
 type MenusType = {
-    [key in keyof RootRoutesParamList]?: {
+    [key in keyof BottomTabParamList]?: {
         Icon: (props: IconProps) => React.JSX.Element;
         name: string;
     };
@@ -51,7 +51,7 @@ export default function MainBottomBar({ state, navigation, insets }: BottomTabBa
         <View style={styles.bgWhite}>
             <View style={[styles.container, { paddingBottom: insets.bottom }]}>
                 {state.routes.map((route, index) => {
-                    const routeName = route.name as keyof RootRoutesParamList;
+                    const routeName = route.name as keyof BottomTabParamList;
                     const item = MENUS[routeName];
 
                     if (item === undefined) {
