@@ -38,7 +38,7 @@ export const getDetailUserPosts = async ({ pageParam = 0, nickname }: FetchDetai
 
 /** POST */
 // 게시글 생성
-/** @TODO Fetch로 이미지 업로드가 안됨  */
+// TODO Fetch로 이미지 업로드가 안됨
 export const createPost = async ({ contents, selectedPhotos }: CreatePostRequest) => {
     const formData = new FormData();
     for (const photo of selectedPhotos) {

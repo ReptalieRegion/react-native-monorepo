@@ -4,10 +4,10 @@ import { ActivityIndicator, Alert, Dimensions, StyleSheet, View } from 'react-na
 import { Keyboard } from 'react-native';
 import { TagTextInput, useTag, useTagHandler } from 'tag-text-input';
 
+import type { SubmitType } from '../../contexts/CommentContext';
 import useComment from '../../hooks/useComment';
 import useCommentActions from '../../hooks/useCommentActions';
 
-import { SubmitType } from '<context/share-post/comment>';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 
 export type CommentTextInputProps = {

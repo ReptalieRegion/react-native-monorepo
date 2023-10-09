@@ -1,8 +1,7 @@
 import { useContext } from 'react';
 
+import type { CommentState } from '../contexts/CommentContext';
 import { CommentActionContext, CommentDefaultIdState } from '../contexts/CommentContext';
-
-import { CommentState } from '<context/share-post/comment>';
 
 const useCommentActions = () => {
     const defaultId = useContext(CommentDefaultIdState);

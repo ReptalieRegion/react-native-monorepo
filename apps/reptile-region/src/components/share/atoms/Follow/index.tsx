@@ -1,17 +1,16 @@
 import { TextColorType } from 'design-system';
 import { TouchableTypo } from 'design-system';
 import React from 'react';
-import * as Haptic from 'react-native-haptic-feedback';
 
-import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
-import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
-
-type PostHeaderProps = {
-    user: {
-        id: string;
-        isFollow: boolean | undefined;
-    };
+type FollowState = {
+    isFollow: boolean | undefined;
 };
+
+interface FollowActions {
+    onPress(): void;
+}
+
+type FollowProps = FollowState & FollowActions;
 
 type FollowType = 'follow' | 'following';
 
@@ -38,23 +37,11 @@ const makeFollowInfo = (isFollow: boolean | undefined) => {
     return FOLLOW_INFO[type];
 };
 
-export default function Follow({ user: { isFollow, id: userId } }: PostHeaderProps) {
-    const { mutate: createMutate } = useCreateFollow();
-    const { mutate: updateMutate } = useUpdateFollow();
-
-    const handleClickFollow = () => {
-        if (isFollow === undefined) {
-            createMutate({ userId });
-        } else {
-            updateMutate({ userId });
-        }
-        Haptic.trigger('impactLight');
-    };
-
+export default function Follow({ isFollow, onPress }: FollowProps) {
     const followInfo = makeFollowInfo(isFollow);
 
     return (
-        <TouchableTypo variant="title5" color={followInfo.color} onPress={handleClickFollow}>
+        <TouchableTypo variant="title5" color={followInfo.color} onPress={onPress}>
             {followInfo.text}
         </TouchableTypo>
     );

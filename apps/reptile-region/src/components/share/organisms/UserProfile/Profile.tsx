@@ -49,6 +49,7 @@ export default function Profile({ nickname, profile, isFollow }: UserDetailPanel
         },
     };
 
+    // TODO 유저 프로필 액션
     const activitySummaryItems: Array<ActivitySummaryItemProps & ActivitySummaryItemActions> = [
         {
             label: '게시물',
@@ -77,7 +78,8 @@ export default function Profile({ nickname, profile, isFollow }: UserDetailPanel
                 ))}
             </View>
             <View style={styles.textContainer}>
-                <Follow user={{ id: newData.user.id, isFollow: newData.user.isFollow }} />
+                {/** TODO 팔로우 */}
+                <Follow isFollow={newData.user.isFollow} onPress={() => {}} />
             </View>
         </View>
     );

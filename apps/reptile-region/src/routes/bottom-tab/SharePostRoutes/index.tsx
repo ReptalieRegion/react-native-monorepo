@@ -3,10 +3,10 @@ import React from 'react';
 
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
-import SharePostUserDetailListHeader from '@/components/share-post/list/atoms/header/SharePostUserDetailListHeader';
-import { SharePostDetailPage, SharePostListPage } from '@/pages/share-post';
+import { SharePostDetailPage } from '@/pages/share-post';
 import { SharePostDetailHeader } from '@/pages/share-post/detail/page';
-import SharePostUserListPage from '@/pages/share-post/list/user/page';
+import SharePostListPage from '@/pages/share-post/List/ListPage';
+import SharePostUserDetailListPage, { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailListPage';
 
 const Stack = createNativeStackNavigator<SharePostTabParamList>();
 
@@ -22,7 +22,7 @@ const SharePostRoutes = () => {
                 />
                 <Stack.Screen
                     name="share-post/list/user"
-                    component={SharePostUserListPage}
+                    component={SharePostUserDetailListPage}
                     options={{ header: SharePostUserDetailListHeader }}
                 />
                 <Stack.Screen

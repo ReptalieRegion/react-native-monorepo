@@ -40,8 +40,10 @@ export default function CommentList({ navigation, route: { params } }: CommentSc
                 deleteMutate.mutate({ commentId });
             };
 
+            // TODO 신고하기
             const handlePressDeclarationButton = () => {};
 
+            // TODO 수정하기
             const handlePressUpdateButton = () => {};
 
             const handlePressNickname = () => {

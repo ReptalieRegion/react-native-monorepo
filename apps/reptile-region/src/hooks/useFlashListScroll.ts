@@ -1,5 +1,5 @@
 import { FlashList } from '@shopify/flash-list';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 
 export type ScrollDirection = 'UP' | 'DOWN' | 'TOP';
@@ -8,10 +8,17 @@ export type ScrollIntoView = (props: { offset: number; animated?: boolean }) => 
 
 export type ScrollToTop = (animated?: boolean) => void;
 
-const useFlashListScroll = <T>() => {
+interface UseFlashListScrollActions {
+    onScrollUp?(): void;
+    onScrollDown?(): void;
+}
+
+type UseFlashListScrollProps = UseFlashListScrollActions;
+
+const useFlashListScroll = <T>(props?: UseFlashListScrollProps) => {
     const flashListRef = useRef<FlashList<T>>(null);
+    const prevDirection = useRef<ScrollDirection>('TOP');
     const prevScrollYRef = useRef(0);
-    const [scrollDirection, setScrollDirection] = useState<ScrollDirection>('TOP');
 
     const scrollIntoView: ScrollIntoView = useCallback(({ offset, animated = false }) => {
         flashListRef.current?.scrollToOffset({ offset, animated });
@@ -19,24 +26,30 @@ const useFlashListScroll = <T>() => {
 
     const scrollToTop: ScrollToTop = useCallback((animated = false) => {
         flashListRef.current?.scrollToOffset({ offset: 0, animated });
-        setScrollDirection('TOP');
     }, []);
 
-    const determineScrollDirection = useCallback((event: NativeSyntheticEvent<NativeScrollEvent>) => {
-        const currentScrollY = event.nativeEvent.contentOffset.y;
-        const prevScrollY = prevScrollYRef.current;
-        if (currentScrollY <= 0 || currentScrollY > prevScrollY) {
-            setScrollDirection('DOWN');
-        } else if (currentScrollY < prevScrollY) {
-            setScrollDirection('UP');
-        }
+    const determineScrollDirection = useCallback(
+        (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+            if (!props?.onScrollDown || !props?.onScrollUp) {
+                return;
+            }
+            const currentScrollY = event.nativeEvent.contentOffset.y;
+            const prevScrollY = prevScrollYRef.current;
+            if ((currentScrollY <= 0 || currentScrollY > prevScrollY) && prevDirection.current !== 'DOWN') {
+                prevDirection.current = 'DOWN';
+                props.onScrollDown();
+            } else if (currentScrollY < prevScrollY && prevDirection.current !== 'UP') {
+                prevDirection.current = 'UP';
+                props.onScrollUp();
+            }
 
-        prevScrollYRef.current = currentScrollY;
-    }, []);
+            prevScrollYRef.current = currentScrollY;
+        },
+        [props],
+    );
 
     return {
         flashListRef,
-        scrollDirection,
         scrollToTop,
         scrollIntoView,
         determineScrollDirection,

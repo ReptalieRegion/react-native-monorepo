@@ -12,9 +12,9 @@ const ImageCropRightHeader = () => {
     const navigate = useNavigation<ImageCropNavigationProp>();
     const hasSelectPhoto = usePhotoStore((state) => state.selectedPhotos.length > 0);
 
+    // TODO: Toast Message
     const handleNextPage = () => {
         if (!hasSelectPhoto) {
-            /** TODO: Toast Message */
             return;
         }
 
