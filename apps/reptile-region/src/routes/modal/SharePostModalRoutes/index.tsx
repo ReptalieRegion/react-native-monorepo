@@ -3,7 +3,9 @@ import React from 'react';
 
 import type { SharePostModalParamList } from '<routes/root>';
 import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
-import SharePostDetailProfileModal, { SharePostDetailModalHeader } from '@/pages/share-post/detail/modal/page';
+import SharePostDetailImageListModalPage, {
+    SharePostDetailImageListModalHeader,
+} from '@/pages/share-post/DetailImageList/DetailImageListModalPage';
 import SharePostUserDetailListModalPage, {
     SharePostUserDetailListModalHeader,
 } from '@/pages/share-post/List/UserDetailListModalPage';
@@ -16,8 +18,8 @@ export default function SharePostModalRoutes() {
         <Stack.Navigator>
             <Stack.Screen
                 name="detail"
-                component={SharePostDetailProfileModal}
-                options={{ header: SharePostDetailModalHeader }}
+                component={SharePostDetailImageListModalPage}
+                options={{ header: SharePostDetailImageListModalHeader }}
             />
             <Stack.Screen
                 name="list/user"

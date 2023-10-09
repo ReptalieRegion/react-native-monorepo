@@ -4,17 +4,17 @@ import { Typo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import UserActivitySummaryItem, {
-    ActivitySummaryItemActions,
-    ActivitySummaryItemProps,
-} from '../../molecules/UserActivitySummaryItem';
-
 import type { FetchDetailUserPost } from '<api/share/post>';
 import type { ImageType } from '<image>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { Avatar } from '@/components/@common/atoms';
 import Follow from '@/components/share/atoms/Follow';
+import UserActivitySummaryItem from '@/components/share/molecules/UserActivitySummaryItem';
+import type {
+    ActivitySummaryItemActions,
+    ActivitySummaryItemProps,
+} from '@/components/share/molecules/UserActivitySummaryItem';
 
 type UserDetailPanelProps = {
     nickname: string;
@@ -22,7 +22,7 @@ type UserDetailPanelProps = {
     isFollow: boolean | undefined;
 };
 
-export default function Profile({ nickname, profile, isFollow }: UserDetailPanelProps) {
+export default function UserProfile({ nickname, profile, isFollow }: UserDetailPanelProps) {
     const { data } = useFetchUserProfile({ nickname });
     const queryClient = useQueryClient();
     const post = queryClient.getQueryData<InfiniteData<FetchDetailUserPost['Response']>>(

@@ -3,21 +3,25 @@ import { color } from 'design-system';
 import React, { Suspense, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import SharePostsDetailListSkeleton from '../loading';
+import UserProfile from '../UserProfile';
+
 import type { SharePostDetailProps, SharePostTabParamList } from '<routes/bottom-tab>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import SharePostsDetailListSkeleton from '@/components/share/atoms/Suspense/DetailListSkeleton';
-import { UserProfile } from '@/components/share/organisms/UserProfile';
 
 type SharePostDetailProfileScreenNavigationProp = NativeStackScreenProps<SharePostTabParamList, 'share-post/detail'>;
 
-const PostDetailList = React.lazy(() => import('@/components/share/organisms/PostDetail'));
+const PostImageList = React.lazy(() => import('../PostImageList'));
 
-export function SharePostDetailHeader(props: NativeStackHeaderProps) {
+export function SharePostDetailImageListHeader(props: NativeStackHeaderProps) {
     const param = props.route.params as SharePostDetailProps;
     return createNativeStackHeader({ leftIcon: 'back', title: param.nickname })(props);
 }
 
-export default function SharePostDetailProfile({ navigation, route: { params } }: SharePostDetailProfileScreenNavigationProp) {
+export default function SharePostDetailImageListPage({
+    navigation,
+    route: { params },
+}: SharePostDetailProfileScreenNavigationProp) {
     const ListHeaderComponent = useMemo(() => {
         return <UserProfile nickname={params.nickname} profile={params.profile} isFollow={params.isFollow} />;
     }, [params]);
@@ -36,7 +40,7 @@ export default function SharePostDetailProfile({ navigation, route: { params } }
                     </>
                 }
             >
-                <PostDetailList
+                <PostImageList
                     nickname={params.nickname}
                     ListHeaderComponent={ListHeaderComponent}
                     handleImagePress={handleImagePress}

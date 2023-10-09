@@ -3,21 +3,23 @@ import { color } from 'design-system';
 import React, { Suspense, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { SharePostDetailProps, SharePostModalParamList } from '<routes/root>';
+import SharePostsDetailListSkeleton from '../loading';
+import UserProfile from '../UserProfile';
+
+import type { SharePostDetailProps } from '<routes/bottom-tab>';
+import type { SharePostModalParamList } from '<routes/root>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import SharePostsDetailListSkeleton from '@/components/share/atoms/Suspense/DetailListSkeleton';
-import { UserProfile } from '@/components/share/organisms/UserProfile';
 
 type SharePostModalDetailScreenNavigationProp = NativeStackScreenProps<SharePostModalParamList, 'detail'>;
 
-const PostDetailList = React.lazy(() => import('@/components/share/organisms/PostDetail'));
+const PostImageList = React.lazy(() => import('../PostImageList'));
 
-export function SharePostDetailModalHeader(props: NativeStackHeaderProps) {
+export function SharePostDetailImageListModalHeader(props: NativeStackHeaderProps) {
     const param = props.route.params as SharePostDetailProps;
     return createNativeStackHeader({ leftIcon: 'back', title: param.nickname })(props);
 }
 
-export default function SharePostDetailProfileModal({
+export default function SharePostDetailImageListModalPage({
     navigation,
     route: { params },
 }: SharePostModalDetailScreenNavigationProp) {
@@ -39,7 +41,7 @@ export default function SharePostDetailProfileModal({
                     </>
                 }
             >
-                <PostDetailList
+                <PostImageList
                     nickname={params.nickname}
                     ListHeaderComponent={ListHeaderComponent}
                     handleImagePress={handleImagePress}

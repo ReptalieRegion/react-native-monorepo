@@ -13,7 +13,7 @@ type SharePostDetailProps = {
 
 const NUM_COLUMNS = 3;
 
-export default function PostsDetailList({ nickname, ListHeaderComponent, handleImagePress }: SharePostDetailProps) {
+export default function PostImageList({ nickname, ListHeaderComponent, handleImagePress }: SharePostDetailProps) {
     const { width } = useWindowDimensions();
     const itemWidth = width / NUM_COLUMNS - 2;
 

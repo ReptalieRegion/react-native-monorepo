@@ -3,8 +3,9 @@ import React from 'react';
 
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
-import { SharePostDetailPage } from '@/pages/share-post';
-import { SharePostDetailHeader } from '@/pages/share-post/detail/page';
+import SharePostDetailImageListPage, {
+    SharePostDetailImageListHeader,
+} from '@/pages/share-post/DetailImageList/DetailImageListPage';
 import SharePostListPage from '@/pages/share-post/List/ListPage';
 import SharePostUserDetailListPage, { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailListPage';
 
@@ -27,8 +28,8 @@ const SharePostRoutes = () => {
                 />
                 <Stack.Screen
                     name="share-post/detail"
-                    component={SharePostDetailPage}
-                    options={{ header: SharePostDetailHeader }}
+                    component={SharePostDetailImageListPage}
+                    options={{ header: SharePostDetailImageListHeader }}
                 />
             </Stack.Group>
         </Stack.Navigator>
