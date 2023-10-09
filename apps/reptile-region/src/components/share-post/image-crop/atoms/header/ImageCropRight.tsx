@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableTypo } from 'design-system';
 import React from 'react';
 
-import { SharePostPostingParamList } from '<RootRoutesV2>';
+import type { SharePostPostingParamList } from '<routes/root>';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
 
 type ImageCropNavigationProp = NativeStackNavigationProp<SharePostPostingParamList, 'image-crop'>;

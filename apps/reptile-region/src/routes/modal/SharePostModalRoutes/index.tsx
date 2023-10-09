@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { SharePostModalParamList } from '<RootRoutesV2>';
+import type { SharePostModalParamList } from '<routes/root>';
 import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostDetailProfileModal, { SharePostDetailModalHeader } from '@/pages/share-post/detail/modal/page';
 import SharePostUserDetailListModalPage, {

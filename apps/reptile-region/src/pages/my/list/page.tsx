@@ -4,8 +4,8 @@ import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { View } from 'react-native';
 
-import { RootRoutesParamList } from '<RootRoutesV2>';
-import { MyTabParamList } from '<routes/bottom-tab>';
+import type { MyTabParamList } from '<routes/bottom-tab>';
+import type { RootRoutesParamList } from '<routes/root>';
 
 type MyListScreenProps = CompositeScreenProps<
     NativeStackScreenProps<MyTabParamList, 'my/list'>,

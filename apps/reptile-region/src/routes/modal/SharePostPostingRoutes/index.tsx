@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { TagProvider } from 'tag-text-input';
 
-import { SharePostPostingParamList } from '<RootRoutesV2>';
+import type { SharePostPostingParamList } from '<routes/root>';
 import ImageCropHeader from '@/components/share-post/image-crop/atoms/header/ImageCropHeader';
 import SharePostWriteHeader from '@/components/share-post/write/atoms/header/SharePostWriteHeader';
 import { SharePostImageCropPage, SharePostWritePage } from '@/pages/share-post';

@@ -3,7 +3,7 @@ import { color } from 'design-system';
 import React, { Suspense, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { SharePostDetailProps, SharePostModalParamList } from '<RootRoutesV2>';
+import type { SharePostDetailProps, SharePostModalParamList } from '<routes/root>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import SharePostsDetailListSkeleton from '@/components/share/atoms/Suspense/DetailListSkeleton';
 import { UserProfile } from '@/components/share/organisms/UserProfile';

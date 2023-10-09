@@ -4,7 +4,7 @@ import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { useTag } from 'tag-text-input';
 
-import { RootRoutesParamList, SharePostPostingParamList } from '<RootRoutesV2>';
+import type { RootRoutesParamList, SharePostPostingParamList } from '<routes/root>';
 import useCreatePost from '@/apis/share-post/post/hooks/mutations/useCreatePost';
 import usePhotoStore from '@/stores/share-post/usePhotoStore';
 

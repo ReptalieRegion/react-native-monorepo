@@ -7,7 +7,7 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import type { FetchDetailUserPostResponse } from '<api/share/post>';
-import type { SharePostModalParamList } from '<RootRoutesV2>';
+import type { SharePostModalParamList } from '<routes/root>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';

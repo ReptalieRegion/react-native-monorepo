@@ -5,9 +5,9 @@ import { color } from 'design-system';
 import React, { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
-import { FetchPostResponse } from '<api/share/post>';
-import { RootRoutesParamList } from '<RootRoutesV2>';
-import { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
+import type { FetchPostResponse } from '<api/share/post>';
+import type { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
+import type { RootRoutesParamList } from '<routes/root>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';

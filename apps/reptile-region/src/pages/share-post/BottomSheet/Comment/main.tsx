@@ -3,8 +3,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { RootRoutesParamList } from '<RootRoutesV2>';
-import { SharePostCommentParamList } from '<routes/bottom-tab>';
+import type { SharePostCommentParamList } from '<routes/bottom-tab>';
+import type { RootRoutesParamList } from '<routes/root>';
 import CommentSkeleton from '@/components/share/atoms/Suspense/CommentSkeleton';
 import CommentTagListActivityIndicator from '@/components/share/atoms/Suspense/CommentTagListActivityIndicator';
 import Comment, { CommentList, CommentTagList, CommentTextEditor } from '@/components/share/organisms/Comment';

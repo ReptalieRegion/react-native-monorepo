@@ -7,9 +7,9 @@ import { StyleSheet, View } from 'react-native';
 
 import CommentReplyItem from './components/CommentReplyItem';
 
-import { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
-import { RootRoutesParamList } from '<RootRoutesV2>';
-import { SharePostCommentParamList } from '<routes/bottom-tab>';
+import type { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
+import type { SharePostCommentParamList } from '<routes/bottom-tab>';
+import type { RootRoutesParamList } from '<routes/root>';
 import useDeleteCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useDeleteCommentReply';
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';

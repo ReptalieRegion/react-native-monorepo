@@ -6,8 +6,8 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { RootRoutesParamList } from '<RootRoutesV2>';
-import { BottomTabBottomSheetParamList } from '<routes/bottom-tab>';
+import type { BottomTabBottomSheetParamList } from '<routes/bottom-tab>';
+import type { RootRoutesParamList } from '<routes/root>';
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
 
 type ListItemProps = {

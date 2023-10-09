@@ -1,4 +1,4 @@
-declare module '<RootRoutesV2>' {
+declare module '<routes/root>' {
     import { NavigatorScreenParams } from '@react-navigation/native';
 
     import { ImageType } from '<image>';

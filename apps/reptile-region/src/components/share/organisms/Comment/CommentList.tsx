@@ -6,9 +6,9 @@ import { RefreshControl } from 'react-native';
 
 import CommentItem from './components/CommentItem';
 
-import { FetchCommentResponse } from '<api/share/post/comment>';
-import { RootRoutesParamList } from '<RootRoutesV2>';
-import { SharePostCommentParamList } from '<routes/bottom-tab>';
+import type { FetchCommentResponse } from '<api/share/post/comment>';
+import type { SharePostCommentParamList } from '<routes/bottom-tab>';
+import type { RootRoutesParamList } from '<routes/root>';
 import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';

@@ -2,7 +2,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { RootRoutesParamList } from '<RootRoutesV2>';
+import type { RootRoutesParamList } from '<routes/root>';
 import { TextButton } from '@/components/@common/atoms';
 
 const UserAccessControl = () => {

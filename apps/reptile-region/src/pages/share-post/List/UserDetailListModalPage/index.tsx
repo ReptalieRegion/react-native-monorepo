@@ -6,7 +6,7 @@ import SharePostListSkeleton from '../loading';
 
 import UserDetailListModalPage from './page';
 
-import type { SharePostModalParamList, SharePostUserListProps } from '<RootRoutesV2>';
+import type { SharePostModalParamList, SharePostUserListProps } from '<routes/root>';
 import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
 import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';

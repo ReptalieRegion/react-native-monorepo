@@ -7,7 +7,7 @@ import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
 import SharePostModalRoutes from './modal/SharePostModalRoutes';
 import SharePostPostingRoutes from './modal/SharePostPostingRoutes';
 
-import { RootRoutesParamList } from '<RootRoutesV2>';
+import type { RootRoutesParamList } from '<routes/root>';
 import { useSignIn } from '@/apis/auth';
 import SignInHeader from '@/components/auth/sign-in/header';
 import SignInPage from '@/pages/auth/sign-in/page';
