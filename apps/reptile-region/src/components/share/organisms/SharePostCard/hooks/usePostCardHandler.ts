@@ -1,17 +1,15 @@
 import { useContext } from 'react';
 
 import { HeartAnimationActionsContext } from '../contexts/HeartAnimation';
-import { ImageIndicatorActionsContext } from '../contexts/ImagesIndicators';
 
 const usePostCardHandler = () => {
     const heartAnimationDispatch = useContext(HeartAnimationActionsContext);
-    const imagesIndicatorDispatch = useContext(ImageIndicatorActionsContext);
 
-    if (heartAnimationDispatch === null || imagesIndicatorDispatch === null) {
+    if (heartAnimationDispatch === null) {
         throw new Error('PostCard Provider를 감싸주세요.');
     }
 
-    return { ...heartAnimationDispatch, ...imagesIndicatorDispatch };
+    return { ...heartAnimationDispatch };
 };
 
 export default usePostCardHandler;

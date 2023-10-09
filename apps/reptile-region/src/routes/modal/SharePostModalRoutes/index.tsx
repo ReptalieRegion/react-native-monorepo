@@ -2,7 +2,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import type { SharePostModalParamList } from '<routes/root>';
-import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostDetailImageListModalPage, {
     SharePostDetailImageListModalHeader,
 } from '@/pages/share-post/DetailImageList/DetailImageListModalPage';
@@ -34,7 +33,6 @@ export default function SharePostModalRoutes() {
                 }}
             >
                 <Stack.Screen name="bottom-sheet/comment" component={SharePostCommentRoutes} />
-                <Stack.Screen name="bottom-sheet/post-options-menu" component={PostOptionsMenu} />
             </Stack.Group>
         </Stack.Navigator>
     );

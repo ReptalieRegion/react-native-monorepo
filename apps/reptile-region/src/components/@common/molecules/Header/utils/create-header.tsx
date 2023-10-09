@@ -2,14 +2,18 @@ import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import React from 'react';
 
-import BaseHeader, { IHeaderProps } from '../BaseHeader';
+import BaseHeader, { HeaderProps } from '../BaseHeader';
 import BottomSheetHeader, { BottomSheetHeaderProps } from '../BottomSheetHeader';
 
-export const createNativeStackHeader = (headerProps?: IHeaderProps) => {
-    return (_: NativeStackHeaderProps) => <BaseHeader {...headerProps} />;
+export const createNativeStackHeader = (headerProps?: HeaderProps) => {
+    return (props: NativeStackHeaderProps) => {
+        const HeaderRight = props.options.headerRight?.({ canGoBack: props.navigation.canGoBack() });
+
+        return <BaseHeader {...headerProps} right={HeaderRight} />;
+    };
 };
 
-export const createBottomTabHeader = (headerProps?: IHeaderProps) => {
+export const createBottomTabHeader = (headerProps?: HeaderProps) => {
     return (_: BottomTabHeaderProps) => <BaseHeader {...headerProps} />;
 };
 

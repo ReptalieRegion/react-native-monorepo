@@ -5,7 +5,6 @@ import SharePostCommentRoutes from './bottom-sheet/SharePostCommentRoutes';
 import BottomTabRoutes from './bottom-tab';
 
 import { BottomTabNativeStackParamList } from '<routes/bottom-tab>';
-import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 
 const Stack = createNativeStackNavigator<BottomTabNativeStackParamList>();
 
@@ -20,7 +19,6 @@ export default function BottomTabNativeStackRoutes() {
                 }}
             >
                 <Stack.Screen name="bottom-sheet/comment" component={SharePostCommentRoutes} />
-                <Stack.Screen name="bottom-sheet/post-options-menu" component={PostOptionsMenu} />
             </Stack.Group>
         </Stack.Navigator>
     );

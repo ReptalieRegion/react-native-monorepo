@@ -86,12 +86,21 @@ declare module '<routes/root>' {
     };
     /** 게시물 옵션 메뉴 끝 */
 
+    /** 게시물 수정 시작 */
+    type SharePostUpdatePost = {
+        post: {
+            id: string;
+            images: ImageType[];
+            contents: string;
+        };
+    };
+    /** 게시물 수정 끝 */
+
     type SharePostModalParamList = {
         detail: SharePostDetailProps;
         'list/user': SharePostUserListProps;
         'posting/update': SharePostPostingUpdateProps;
         'bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
-        'bottom-sheet/post-options-menu': SharePostOptionsMenuProps;
     };
 
     type RootRoutesParamList = {
@@ -100,5 +109,7 @@ declare module '<routes/root>' {
         'sign-up': undefined;
         'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
         'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
+        'share-post/bottom-sheet/post-options-menu': SharePostOptionsMenuProps;
+        'share-post/post/update': SharePostUpdatePost;
     };
 }

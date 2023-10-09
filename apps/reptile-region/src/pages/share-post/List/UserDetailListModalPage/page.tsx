@@ -1,3 +1,4 @@
+import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { useQueryClient } from '@tanstack/react-query';
@@ -7,14 +8,17 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import type { FetchDetailUserPostResponse } from '<api/share/post>';
-import type { SharePostModalParamList } from '<routes/root>';
+import type { RootRoutesParamList, SharePostModalParamList } from '<routes/root>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share/organisms/SharePostCard/SharePostCard';
 import useSharePostActions from '@/hooks/useSharePostActions';
 
-type SharePostListPageScreen = NativeStackScreenProps<SharePostModalParamList, 'list/user'>;
+type SharePostListPageScreen = CompositeScreenProps<
+    NativeStackScreenProps<SharePostModalParamList, 'list/user'>,
+    NativeStackScreenProps<RootRoutesParamList>
+>;
 
 export function UserDetailListModalHeader() {}
 
@@ -63,7 +67,7 @@ export default function UserDetailListModalPage({
             };
 
             const handlePressPostOptionsMenu = () => {
-                navigation.push('bottom-sheet/post-options-menu', {
+                navigation.push('share-post/bottom-sheet/post-options-menu', {
                     post: {
                         id: postId,
                         images,

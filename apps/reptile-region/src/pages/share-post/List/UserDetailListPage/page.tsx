@@ -9,6 +9,7 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import type { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
+import { RootRoutesParamList } from '<routes/root>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';
@@ -17,7 +18,7 @@ import useSharePostActions from '@/hooks/useSharePostActions';
 
 type SharePostListPageScreen = CompositeScreenProps<
     NativeStackScreenProps<SharePostTabParamList, 'share-post/list/user'>,
-    NativeStackScreenProps<BottomTabNativeStackParamList>
+    CompositeScreenProps<NativeStackScreenProps<BottomTabNativeStackParamList>, NativeStackScreenProps<RootRoutesParamList>>
 >;
 
 export default function UserDetailListPage({
@@ -65,7 +66,7 @@ export default function UserDetailListPage({
             };
 
             const handlePressPostOptionsMenu = () => {
-                navigation.push('bottom-sheet/post-options-menu', {
+                navigation.push('share-post/bottom-sheet/post-options-menu', {
                     post: {
                         id: postId,
                         images,

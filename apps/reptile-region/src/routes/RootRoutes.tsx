@@ -12,6 +12,8 @@ import { useSignIn } from '@/apis/auth';
 import SignInHeader from '@/components/auth/sign-in/header';
 import SignInPage from '@/pages/auth/sign-in/page';
 import SignUpPage from '@/pages/auth/sign-up/page';
+import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
+import SharePostUpdatePage, { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost';
 
 const Stack = createNativeStackNavigator<RootRoutesParamList>();
 
@@ -66,7 +68,21 @@ const RootRoutes = () => {
                         component={SharePostPostingRoutes}
                         options={{ animation: 'slide_from_bottom' }}
                     />
+                    <Stack.Screen
+                        name="share-post/bottom-sheet/post-options-menu"
+                        component={PostOptionsMenu}
+                        options={{
+                            header: SignInHeader,
+                            presentation: 'containedTransparentModal',
+                            animation: 'none',
+                        }}
+                    />
                 </Stack.Group>
+                <Stack.Screen
+                    name="share-post/post/update"
+                    component={SharePostUpdatePage}
+                    options={{ header: SharePostUpdateHeader, animation: 'slide_from_bottom' }}
+                />
                 {/** 일상공유 끝 */}
             </Stack.Navigator>
         </NavigationContainer>

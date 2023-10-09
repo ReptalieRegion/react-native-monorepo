@@ -1,12 +1,10 @@
-import { CompositeNavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BottomSheet } from 'bottom-sheet';
 import { TouchableTypo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { BottomTabBottomSheetParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
 
@@ -25,15 +23,9 @@ const ListItem = ({ text, onPress }: ListItemProps) => {
     );
 };
 
-type PostOptionsMenuNavigation = CompositeNavigationProp<
-    NativeStackNavigationProp<BottomTabBottomSheetParamList, 'share-post/post-options-menu'>,
-    NativeStackNavigationProp<RootRoutesParamList>
->;
-type PostOptionsMenuRoute = RouteProp<BottomTabBottomSheetParamList, 'share-post/post-options-menu'>;
+type PostOptionsMenuScreen = NativeStackScreenProps<RootRoutesParamList, 'share-post/bottom-sheet/post-options-menu'>;
 
-export default function PostOptionsMenu() {
-    const navigation = useNavigation<PostOptionsMenuNavigation>();
-    const { params } = useRoute<PostOptionsMenuRoute>();
+export default function PostOptionsMenu({ navigation, route: { params } }: PostOptionsMenuScreen) {
     const { post } = params;
     const { bottom } = useSafeAreaInsets();
     const { mutate } = useDeletePost();
@@ -50,10 +42,9 @@ export default function PostOptionsMenu() {
     };
 
     const navigateUpdatePage = () => {
-        // navigation.navigate('share-post/modal/posting', {
-        //     screen: 'update',
-        //     params: { post: { contents: post.contents, id: post.id, images: post.images } },
-        // });
+        navigation.replace('share-post/post/update', {
+            post: { contents: post.contents, id: post.id, images: post.images },
+        });
     };
 
     return (

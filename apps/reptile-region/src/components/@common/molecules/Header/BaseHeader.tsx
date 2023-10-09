@@ -14,7 +14,7 @@ type LeftIconMapType = {
     [key in LeftIconType]: IconFunction;
 };
 
-export type IHeaderProps = {
+export type HeaderProps = {
     leftIconClick?: () => void;
     leftIcon?: LeftIconType;
     containerStyle?: ViewStyle;
@@ -36,7 +36,7 @@ export default function BaseHeader({
     containerStyle,
     title,
     right,
-}: IHeaderProps) {
+}: HeaderProps) {
     const navigation = useNavigation();
     const customStyles = StyleSheet.create({
         container: containerStyle ?? {},

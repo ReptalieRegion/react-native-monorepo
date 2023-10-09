@@ -1,3 +1,4 @@
+import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackHeaderProps, NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 import * as Haptic from 'react-native-haptic-feedback';
@@ -6,7 +7,7 @@ import SharePostListSkeleton from '../loading';
 
 import UserDetailListModalPage from './page';
 
-import type { SharePostModalParamList, SharePostUserListProps } from '<routes/root>';
+import type { RootRoutesParamList, SharePostModalParamList, SharePostUserListProps } from '<routes/root>';
 import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
 import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
@@ -14,7 +15,10 @@ import { ConditionalRenderer } from '@/components/@common/atoms';
 import { BaseHeader } from '@/components/@common/molecules';
 import Follow from '@/components/share/atoms/Follow';
 
-type SharePostListPageScreen = NativeStackScreenProps<SharePostModalParamList, 'list/user'>;
+type SharePostListPageScreen = CompositeScreenProps<
+    NativeStackScreenProps<SharePostModalParamList, 'list/user'>,
+    NativeStackScreenProps<RootRoutesParamList>
+>;
 
 export function SharePostUserDetailListModalHeader(props: NativeStackHeaderProps) {
     const params = props.route.params as SharePostUserListProps;

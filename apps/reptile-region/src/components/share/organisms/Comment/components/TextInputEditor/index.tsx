@@ -23,11 +23,12 @@ const MAX_CHARACTER_COUNT = 500;
 export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: CommentTextInputProps & CommentTextInputActions) {
     const { contents } = useTag();
     const { id, submitType } = useComment();
-    const { tagTextInputFocus } = useTagHandler();
+    const { tagTextInputFocus, changeText } = useTagHandler();
     const { setCreateCommentSubmitType } = useCommentActions();
 
     useEffect(() => {
         const resetSubmitType = () => {
+            changeText('');
             setCreateCommentSubmitType();
         };
 
@@ -50,7 +51,7 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
         return () => {
             keyboard.remove();
         };
-    }, [submitType, setCreateCommentSubmitType, tagTextInputFocus]);
+    }, [submitType, setCreateCommentSubmitType, tagTextInputFocus, changeText]);
 
     const handleSubmit = () => {
         onSubmit({ id, submitType, contents });

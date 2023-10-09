@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import ImageIndicators from '../ImageIndicators';
 import InteractiveHeart from '../InteractiveHeart';
 
 import { Comment } from '@/assets/icons';
+import ImageCarousel from '@/components/@common/organisms/ImageCarousel/providers/ImageCarousel';
 
 type InteractiveState = {
     isLike: boolean | undefined;
@@ -28,7 +28,7 @@ export default function InteractivePost({ isLike, imageCount, onPressHeart, onPr
                     <Comment />
                 </TouchableOpacity>
             </View>
-            <ImageIndicators imageCount={imageCount} />
+            <ImageCarousel.Indicators imageCount={imageCount} />
             <View style={styles.empty} />
         </View>
     );

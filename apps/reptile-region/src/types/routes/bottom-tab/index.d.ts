@@ -31,25 +31,10 @@ declare module '<routes/bottom-tab>' {
         reply: SharePostCommentReplyProps;
     };
     /** 댓글 끝 */
-
-    /** 게시물 옵션 메뉴 시작 */
-    type SharePostOptionsMenuProps = {
-        post: {
-            id: string;
-            images: ImageType[];
-            contents: string;
-            isMine: boolean;
-            user: {
-                id: string;
-            };
-        };
-    };
-    /** 게시물 옵션 메뉴 끝 */
     /** SharePost 끝 */
 
     type BottomTabBottomSheetParamList = {
         'share-post/comment': NavigatorScreenParams<SharePostCommentParamList>;
-        'share-post/post-options-menu': SharePostOptionsMenuProps;
     };
 
     /** HOME 시작 */
@@ -106,6 +91,5 @@ declare module '<routes/bottom-tab>' {
     type BottomTabNativeStackParamList = {
         tab: NavigatorScreenParams<BottomTabParamList>;
         'bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
-        'bottom-sheet/post-options-menu': SharePostOptionsMenuProps;
     };
 }

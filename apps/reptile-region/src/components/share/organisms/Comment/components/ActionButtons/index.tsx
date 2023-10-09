@@ -44,6 +44,7 @@ export default function CommentActionButtons({
                 {
                     label: '수정',
                     onPress: () => {
+                        console.log('hi');
                         changeText(comment.contents);
                         tagTextInputFocus();
                         changeCommentSubmitType({ id: comment.id, submitType: 'UPDATE' });

@@ -55,7 +55,7 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
             };
 
             const handlePressPostOptionsMenu = () => {
-                navigation.push('bottom-sheet/post-options-menu', {
+                navigation.push('share-post/bottom-sheet/post-options-menu', {
                     post: {
                         id: postId,
                         images,
