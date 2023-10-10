@@ -5,19 +5,31 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
-export default function CommentSkeleton() {
+export default function CommentReplySkeleton() {
     const { width } = useWindowDimensions();
 
     return (
         <View style={styles.subContainer}>
-            {createEmptyArray(20).map((_, index) => (
+            <SkeletonPlaceholder direction="right">
+                <View style={styles.viewContainer}>
+                    <View style={styles.circle} />
+                    <View style={styles.textContainer}>
+                        <View style={styles.name} />
+                        <View style={{ ...styles.text, width: width * 0.85 - 40 }} />
+                        <View style={{ ...styles.text, width: width * 0.6 - 40 }} />
+                        <View style={{ ...styles.text, width: width * 0.2 - 40 }} />
+                    </View>
+                </View>
+            </SkeletonPlaceholder>
+            {createEmptyArray(10).map((_, index) => (
                 <SkeletonPlaceholder key={index} direction="right">
-                    <View style={styles.viewContainer}>
+                    <View style={[styles.viewContainer, styles.replyComment]}>
                         <View style={styles.circle} />
                         <View style={styles.textContainer}>
                             <View style={styles.name} />
                             <View style={{ ...styles.text, width: width * 0.85 - 40 }} />
                             <View style={{ ...styles.text, width: width * 0.6 - 40 }} />
+                            <View style={{ ...styles.text, width: width * 0.2 - 40 }} />
                         </View>
                     </View>
                 </SkeletonPlaceholder>
@@ -39,6 +51,9 @@ const styles = StyleSheet.create({
     viewContainer: {
         flexDirection: 'row',
         gap: 10,
+    },
+    replyComment: {
+        paddingLeft: 40,
     },
     circle: {
         borderRadius: 9999,
