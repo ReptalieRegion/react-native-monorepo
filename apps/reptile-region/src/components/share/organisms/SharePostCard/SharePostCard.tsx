@@ -57,8 +57,8 @@ export default function SharePostCard({
     onPressTag,
 }: PostCardProps) {
     return (
-        <PostCard uuid={postId}>
-            <View style={[styles.container, containerStyle]}>
+        <View style={[styles.container, containerStyle]}>
+            <PostCard uuid={postId}>
                 <PostCard.Header
                     profileImage={profile}
                     isFollow={isFollow}
@@ -80,8 +80,8 @@ export default function SharePostCard({
                     onPressComment={onPressComment}
                     onPressTag={onPressTag}
                 />
-            </View>
-        </PostCard>
+            </PostCard>
+        </View>
     );
 }
 

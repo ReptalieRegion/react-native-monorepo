@@ -31,6 +31,7 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
     });
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
+    console.log('data:', data);
 
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<FetchPostResponse>) => {

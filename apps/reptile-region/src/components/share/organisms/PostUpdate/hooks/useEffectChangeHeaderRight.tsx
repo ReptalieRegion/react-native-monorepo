@@ -2,21 +2,20 @@ import { TouchableTypo } from 'design-system';
 import React, { useEffect } from 'react';
 import { useTag } from 'tag-text-input';
 
-import useUpdatePost from '@/apis/share-post/post/hooks/mutations/useUpdatePost';
-
-export type ChangeHeaderSubmitButtonProps = {
-    postId: string;
+interface ChangeHeaderSubmitButtonActions {
+    onSubmit(props: { contents: string }): void;
     onChangeHeaderRight(headerRight: () => React.JSX.Element): void;
-};
+}
 
-export default function ChangeHeaderSubmitButton({ postId, onChangeHeaderRight }: ChangeHeaderSubmitButtonProps) {
-    const { mutate } = useUpdatePost();
+type ChangeHeaderSubmitButtonProps = ChangeHeaderSubmitButtonActions;
+
+const useEffectChangeHeaderRight = ({ onSubmit, onChangeHeaderRight }: ChangeHeaderSubmitButtonProps) => {
     const { contents } = useTag();
 
     useEffect(() => {
         const headerRight = () => {
             const handleSubmitUpdatePost = () => {
-                mutate({ postId, contents, files: [] });
+                onSubmit({ contents });
             };
 
             return (
@@ -27,7 +26,7 @@ export default function ChangeHeaderSubmitButton({ postId, onChangeHeaderRight }
         };
 
         onChangeHeaderRight(headerRight);
-    }, [contents, postId, mutate, onChangeHeaderRight]);
+    }, [contents, onChangeHeaderRight, onSubmit]);
+};
 
-    return null;
-}
+export default useEffectChangeHeaderRight;

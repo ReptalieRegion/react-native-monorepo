@@ -1,17 +1,16 @@
 import { FlashList, FlashListProps, ListRenderItemInfo } from '@shopify/flash-list';
 import { Image } from 'expo-image';
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { NativeScrollEvent, NativeSyntheticEvent, StyleSheet, View } from 'react-native';
 
 import useImageCarouselHandler from '../../hooks/useImageCarouselHandler';
 import useImageCarouselRef from '../../hooks/useImageCarouselRef';
 
 import { ImageType } from '<image>';
-import { ConditionalRenderer } from '@/components/@common/atoms';
 
 export type ImageCarouselProps = {
     images: ImageType[];
-    ImageItemOverlay?: ReactNode;
+    ImageItemOverlay?: (props: { image: ImageType }) => React.JSX.Element;
     width: number;
     height: number;
 } & Omit<
@@ -47,34 +46,20 @@ export default function ImageCarouselList({ images, width, height, ImageItemOver
         const newUri = uri.startsWith('https') ? uri : TEMP + uri;
 
         return (
-            <ConditionalRenderer
-                condition={!!ImageItemOverlay}
-                trueContent={
-                    <View style={[styles.itemContainer, { width, height }]}>
-                        <Image
-                            source={{ uri: newUri, width, height }}
-                            priority={priority}
-                            recyclingKey={recyclingKey}
-                            style={{ width, height }}
-                            contentFit="cover"
-                            placeholderContentFit="cover"
-                            placeholder={require('@/assets/images/default_image.png')}
-                        />
-                        <View style={[styles.overlayItemContainer, { width, height }]}>{ImageItemOverlay}</View>
-                    </View>
-                }
-                falseContent={
-                    <Image
-                        source={{ uri: newUri, width, height }}
-                        priority={priority}
-                        recyclingKey={recyclingKey}
-                        style={{ width, height }}
-                        contentFit="cover"
-                        placeholderContentFit="cover"
-                        placeholder={require('@/assets/images/default_image.png')}
-                    />
-                }
-            />
+            <View style={[styles.itemContainer, { width, height }]}>
+                <Image
+                    source={{ uri: newUri, width, height }}
+                    priority={priority}
+                    recyclingKey={recyclingKey}
+                    style={{ width, height }}
+                    contentFit="cover"
+                    placeholderContentFit="cover"
+                    placeholder={require('@/assets/images/default_image.png')}
+                />
+                {ImageItemOverlay ? (
+                    <View style={[styles.overlayItemContainer, { width, height }]}>{<ImageItemOverlay image={item} />}</View>
+                ) : null}
+            </View>
         );
     };
 

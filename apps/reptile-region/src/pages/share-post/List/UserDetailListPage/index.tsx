@@ -8,6 +8,7 @@ import SharePostListSkeleton from '../loading';
 import UserDetailListPage from './page';
 
 import { BottomTabNativeStackParamList, SharePostTabParamList, SharePostUserListProps } from '<routes/bottom-tab>';
+import { RootRoutesParamList } from '<routes/root>';
 import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
 import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
@@ -17,7 +18,7 @@ import Follow from '@/components/share/atoms/Follow';
 
 type SharePostListPageScreen = CompositeScreenProps<
     NativeStackScreenProps<SharePostTabParamList, 'share-post/list/user'>,
-    NativeStackScreenProps<BottomTabNativeStackParamList>
+    CompositeScreenProps<NativeStackScreenProps<BottomTabNativeStackParamList>, NativeStackScreenProps<RootRoutesParamList>>
 >;
 
 export function SharePostUserDetailListHeader(props: NativeStackHeaderProps) {

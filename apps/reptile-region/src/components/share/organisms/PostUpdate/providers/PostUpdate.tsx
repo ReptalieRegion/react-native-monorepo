@@ -1,6 +1,7 @@
 import React, { ReactNode, useReducer } from 'react';
 import { TagProvider } from 'tag-text-input';
 
+import PostUpdateList from '../components/PostUpdateList';
 import { ImageActionsContext, ImageStateContext } from '../contexts/ImageContext';
 import imageReducer from '../reducer/image-reducer';
 
@@ -19,3 +20,5 @@ export default function PostUpdate({ children }: PostUpdateProps) {
         </TagProvider>
     );
 }
+
+PostUpdate.List = PostUpdateList;

@@ -13,3 +13,4 @@ export { default as My } from './My';
 export { default as PostWriteIcon } from './PostWriteIcon';
 export { default as Share } from './Share';
 export { default as UpArrow } from './UpArrow';
+export { default as Trash } from './Trash';
