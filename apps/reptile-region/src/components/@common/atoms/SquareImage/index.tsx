@@ -1,24 +1,23 @@
 import { Image } from 'expo-image';
 import React from 'react';
-import { StyleSheet } from 'react-native';
 
 import type { ImageType } from '<image>';
 
 type SquareImageProps = {
-    images: ImageType;
+    image: ImageType;
     size: number;
 };
 
 const TEMP = 'https://reptalie-region.s3.ap-northeast-2.amazonaws.com/';
 
-export default function SquareImage({ images, size }: SquareImageProps) {
-    const uri = images.src.replace(TEMP, '');
-    const newUri = uri.startsWith('https') ? uri : TEMP + uri;
+export default function SquareImage({ image, size }: SquareImageProps) {
+    const uri = image.src.replace(TEMP, '');
+    const newUri = uri.startsWith('https') || uri.startsWith('ph') || uri.startsWith('file') ? uri : TEMP + uri;
 
     return (
         <Image
-            style={[styles.image, { width: size, height: size }]}
-            recyclingKey={images.src}
+            style={{ width: size, height: size }}
+            recyclingKey={image.src}
             source={{ uri: newUri }}
             priority="high"
             contentFit="cover"
@@ -27,9 +26,3 @@ export default function SquareImage({ images, size }: SquareImageProps) {
         />
     );
 }
-
-const styles = StyleSheet.create({
-    image: {
-        margin: 1,
-    },
-});

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, StyleSheet } from 'react-native';
+import { Modal } from 'react-native';
 
 import useOverlayState from '../hooks/useOverlayState';
 
@@ -15,7 +15,7 @@ const OverlayHost = () => {
     }
 
     return (
-        <Modal style={styles.container}>
+        <Modal transparent={true}>
             {overlayState.openList.map(({ name, params }) => {
                 const Component = overlayState.component?.[name];
 
@@ -28,12 +28,5 @@ const OverlayHost = () => {
         </Modal>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        ...StyleSheet.absoluteFillObject,
-        zIndex: 9999,
-    },
-});
 
 export default OverlayHost;

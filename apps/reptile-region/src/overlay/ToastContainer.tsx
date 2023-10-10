@@ -50,7 +50,7 @@ const ToastContainer = ({ text, color, containerStyle, variant }: ToastContainer
     }, [top, translateX, translateY]);
 
     return (
-        <Modal>
+        <Modal transparent={true}>
             <Animated.View style={[styles.container, containerStyle, animatedStyle]}>
                 <Typo variant={variant} color={color}>
                     {text}

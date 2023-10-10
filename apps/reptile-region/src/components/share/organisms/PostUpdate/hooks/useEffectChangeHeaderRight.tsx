@@ -27,6 +27,8 @@ const useEffectChangeHeaderRight = ({ onSubmit, onChangeHeaderRight }: ChangeHea
 
         onChangeHeaderRight(headerRight);
     }, [contents, onChangeHeaderRight, onSubmit]);
+
+    return null;
 };
 
 export default useEffectChangeHeaderRight;

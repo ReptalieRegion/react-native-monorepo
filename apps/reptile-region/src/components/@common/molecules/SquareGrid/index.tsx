@@ -15,6 +15,7 @@ type SquareGridProps = {
 } & Omit<FlashListProps<ImageType>, 'keyExtractor' | 'estimatedItemSize' | 'renderItem'>;
 
 interface SquareGridActions {
+    ImageItemOverlay?: (props: { image: ImageType }) => React.JSX.Element;
     onPressImage?({ index, src }: { index: number; src: string }): void;
 }
 
@@ -40,9 +41,13 @@ export default function SquareGrid({
 
     const renderItem = useCallback(
         ({ item, index }: ListRenderItemInfo<ImageType>) => {
+            const handlePress = () => {
+                onPressImage?.({ index, src: item.src });
+            };
+
             return (
-                <TouchableOpacity onPress={() => onPressImage?.({ index, src: item.src })} activeOpacity={activeOpacity}>
-                    <SquareImage images={item} size={size} />
+                <TouchableOpacity onPress={handlePress} activeOpacity={activeOpacity}>
+                    <SquareImage image={item} size={size} />
                 </TouchableOpacity>
             );
         },
