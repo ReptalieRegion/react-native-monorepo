@@ -47,17 +47,30 @@ export default function PostOptionsMenu({ navigation, route: { params } }: PostO
         });
     };
 
+    const listItem = post.isMine
+        ? [
+              {
+                  text: '삭제',
+                  onPress: deletePost,
+              },
+              {
+                  text: '수정',
+                  onPress: navigateUpdatePage,
+              },
+          ]
+        : [
+              {
+                  text: '신고하기',
+                  onPress: () => {},
+              },
+          ];
+
     return (
-        <BottomSheet onClose={close} snapInfo={{ startIndex: 0, pointsFromTop: [150] }}>
+        <BottomSheet onClose={close} snapInfo={{ startIndex: 0, pointsFromTop: [59 + 38 * listItem.length] }}>
             <View style={[styles.content, { paddingBottom: bottom }]}>
-                {post.isMine ? (
-                    <>
-                        <ListItem text="삭제" onPress={deletePost} />
-                        <ListItem text="수정" onPress={navigateUpdatePage} />
-                    </>
-                ) : (
-                    <ListItem text="신고하기" />
-                )}
+                {listItem.map(({ text, onPress }) => (
+                    <ListItem key={text} text={text} onPress={onPress} />
+                ))}
             </View>
         </BottomSheet>
     );
