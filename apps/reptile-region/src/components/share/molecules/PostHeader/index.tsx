@@ -43,8 +43,8 @@ export default function PostHeader({
             <View style={styles.rightItemContainer}>
                 <ConditionalRenderer
                     condition={showFollowButton}
-                    trueContent={null}
-                    falseContent={<Follow isFollow={isFollow} onPress={onPressFollow} />}
+                    trueContent={<Follow isFollow={isFollow} onPress={onPressFollow} />}
+                    falseContent={null}
                 />
                 <TouchableOpacity onPress={onPressPostOptionsMenu}>
                     <KebabMenu />
