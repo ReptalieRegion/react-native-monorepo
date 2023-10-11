@@ -13,7 +13,7 @@ export default function CommentReplyTextEditor() {
     const { changeText } = useTagHandler();
     const { setCreateCommentSubmitType } = useCommentActions();
     const handleSuccess = () => {
-        Keyboard.dismiss();
+        setTimeout(Keyboard.dismiss, 500);
         changeText('');
     };
     const createCommentReply = useCreateCommentReply({ onSuccess: handleSuccess });

@@ -100,7 +100,7 @@ declare module '<api/share/post>' {
     /** 사용자의 특정 게시물 수정 시작 */
     type UpdatePostRequest = {
         postId: string;
-        files: string[];
+        files: ImageType[];
         contents: string;
     };
 

@@ -21,7 +21,6 @@ export interface CommentTextInputActions {
 
 export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: CommentTextInputProps & CommentTextInputActions) {
     const { contents, selection } = useTag();
-    console.log(contents, selection);
     const { id, submitType } = useComment();
     const { tagTextInputFocus, changeText } = useTagHandler();
     const { setCreateCommentSubmitType } = useCommentActions();
@@ -69,15 +68,17 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
                     maxLength={POST_MAX_CONTENT_LENGTH}
                     multiline
                 />
-                <ConditionalRenderer
-                    condition={isLoadingSubmit}
-                    trueContent={<ActivityIndicator size={'small'} color={color.Green[750].toString()} />}
-                    falseContent={
-                        <TouchableTypo variant="body2" color="primary" onPress={handleSubmit}>
-                            등록
-                        </TouchableTypo>
-                    }
-                />
+                <View style={styles.submitButtonContainer}>
+                    <ConditionalRenderer
+                        condition={isLoadingSubmit}
+                        trueContent={<ActivityIndicator size={'small'} color={color.Green[750].toString()} />}
+                        falseContent={
+                            <TouchableTypo variant="body2" color="primary" onPress={handleSubmit}>
+                                등록
+                            </TouchableTypo>
+                        }
+                    />
+                </View>
             </View>
         </View>
     );
@@ -112,5 +113,8 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         fontSize: 14,
         maxHeight: 84,
+    },
+    submitButtonContainer: {
+        height: 20,
     },
 });

@@ -13,7 +13,7 @@ export default function CommentTextEditor() {
     const { changeText } = useTagHandler();
     const { setCreateCommentSubmitType } = useCommentActions();
     const handleSuccess = () => {
-        Keyboard.dismiss();
+        setTimeout(Keyboard.dismiss, 500);
         changeText('');
     };
     const createMutate = useCreateComment({ onSuccess: handleSuccess });

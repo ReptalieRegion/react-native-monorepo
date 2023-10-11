@@ -6,7 +6,6 @@ import useTagSearch from '../../hooks/useTagSearch';
 
 export default function FollowerUserListSkeleton() {
     const { keyword } = useTagSearch();
-    console.log(keyword);
 
     return (
         <View style={styles.container}>

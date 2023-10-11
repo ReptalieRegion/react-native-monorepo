@@ -24,8 +24,7 @@ export default function ChangeHeader({ postId, navigation }: ChangeHeaderProps) 
     useEffect(() => {
         const headerRight = () => {
             const handleSubmitUpdatePost = () => {
-                console.log(postId, contents, images);
-                // mutate({ postId, contents, files: images });
+                mutate({ postId, contents, files: images });
             };
 
             return (
