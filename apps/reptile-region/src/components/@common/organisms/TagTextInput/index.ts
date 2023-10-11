@@ -1,3 +1,4 @@
+export * from './components/FollowerUserList';
 export { default as TagTextInput } from './components/TagTextInput';
 export { default as TagProvider } from './providers/TagProvider';
 export { default as useTag } from './hooks/useTag';

@@ -1,16 +1,16 @@
 import { CompositeNavigationProp, CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { TouchableTypo } from 'design-system';
-import React, { useEffect } from 'react';
-import { ActivityIndicator, Keyboard } from 'react-native';
+import { TouchableTypo, color } from 'design-system';
+import React, { Suspense, useEffect } from 'react';
+import { ActivityIndicator, Keyboard, StyleSheet, View } from 'react-native';
 
 import { RootRoutesParamList, SharePostPostingParamList } from '<routes/root>';
 import useCreatePost from '@/apis/share-post/post/hooks/mutations/useCreatePost';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import usePhotoSelect from '@/components/@common/organisms/CameraAlbum/hooks/usePhotoSelect';
-import { TagProvider, useTag } from '@/components/@common/organisms/TagTextInput';
-import SharePostWrite from '@/components/share-post/write/template/SharePostWrite';
+import { FollowerUserList, FollowerUserListSkeleton, TagProvider, useTag } from '@/components/@common/organisms/TagTextInput';
+import { ContentsWriting, PhotoRegisterCarousel } from '@/components/share/organisms/Posting';
 
 type WritePostScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostPostingParamList, 'write'>,
@@ -80,7 +80,28 @@ export default function WritePostPage({ navigation }: WritePostScreenProps) {
     return (
         <TagProvider>
             <ChangeHeader navigation={navigation} />
-            <SharePostWrite />
+            <View style={styles.container}>
+                <ContentsWriting />
+                <View style={styles.followerUserListContainer}>
+                    <Suspense fallback={<FollowerUserListSkeleton />}>
+                        <FollowerUserList />
+                    </Suspense>
+                    <PhotoRegisterCarousel />
+                </View>
+            </View>
         </TagProvider>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: color.White.toString(),
+        flex: 1,
+        padding: 20,
+    },
+    followerUserListContainer: {
+        flex: 1,
+        marginBottom: 20,
+        gap: 10,
+    },
+});

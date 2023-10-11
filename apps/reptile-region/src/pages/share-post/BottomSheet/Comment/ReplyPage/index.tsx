@@ -7,8 +7,8 @@ import CommentReplySkeleton from './loading';
 
 import type { SharePostCommentParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
-import CommentTagListActivityIndicator from '@/components/share/atoms/Suspense/CommentTagListActivityIndicator';
-import Comment, { CommentReplyList, CommentReplyTextEditor, CommentTagList } from '@/components/share/organisms/Comment';
+import { FollowerUserList, FollowerUserListSkeleton } from '@/components/@common/organisms/TagTextInput';
+import Comment, { CommentReplyList, CommentReplyTextEditor } from '@/components/share/organisms/Comment';
 
 type CommentScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostCommentParamList, 'reply'>,
@@ -22,9 +22,11 @@ export default function CommentReplyPage(props: CommentScreenProps) {
                 <Suspense fallback={<CommentReplySkeleton />}>
                     <CommentReplyList {...props} />
                 </Suspense>
-                <Suspense fallback={<CommentTagListActivityIndicator />}>
-                    <CommentTagList />
-                </Suspense>
+                <View style={styles.followerUserListContainer}>
+                    <Suspense fallback={<FollowerUserListSkeleton />}>
+                        <FollowerUserList />
+                    </Suspense>
+                </View>
             </View>
             <CommentReplyTextEditor />
         </Comment>
@@ -36,5 +38,15 @@ const styles = StyleSheet.create({
         flex: 1,
         position: 'relative',
         minHeight: 2,
+    },
+    followerUserListContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        paddingLeft: 20,
+        paddingTop: 10,
+        backgroundColor: 'white',
     },
 });

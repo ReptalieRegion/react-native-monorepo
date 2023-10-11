@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import { TextInput, TextInputProps } from 'react-native';
 
-import { TagTextInputStateContext } from '../contexts/TagTextInputContext';
-import useTag from '../hooks/useTag';
-import useTagHandler from '../hooks/useTagHandler';
+import { TagTextInputStateContext } from '../../contexts/TagTextInputContext';
+import useTag from '../../hooks/useTag';
+import useTagHandler from '../../hooks/useTagHandler';
 
 export default function TagTextInput({ onChangeText, onSelectionChange, ...props }: TextInputProps) {
     const state = useContext(TagTextInputStateContext);

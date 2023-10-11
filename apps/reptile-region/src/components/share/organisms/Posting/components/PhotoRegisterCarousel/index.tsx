@@ -4,15 +4,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-import SharePostWriteTitle from '../atoms/SharePostWriteTitle';
+import Title from '../Title';
 
 import { CancelButton } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
-import useCameraAlbumHandler from '@/components/@common/organisms/CameraAlbum/hooks/useCameraAlbumHandler';
-import usePhotoSelect from '@/components/@common/organisms/CameraAlbum/hooks/usePhotoSelect';
+import { useCameraAlbumHandler, usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 import { useTagSearch } from '@/components/@common/organisms/TagTextInput';
 
-const PhotoRegister = () => {
+export default function PhotoRegisterCarousel() {
     const { enabled } = useTagSearch();
     const { deleteSelectedPhoto } = useCameraAlbumHandler();
     const { selectedPhotos } = usePhotoSelect();
@@ -34,7 +33,7 @@ const PhotoRegister = () => {
             trueContent={null}
             falseContent={
                 <View>
-                    <SharePostWriteTitle title="사진 등록" />
+                    <Title title="사진 등록" />
                     <ScrollView contentContainerStyle={styles.container} horizontal showsHorizontalScrollIndicator={false}>
                         {selectedPhotos.map((item, index) => (
                             <View key={index} style={styles.imageContainer}>
@@ -53,7 +52,7 @@ const PhotoRegister = () => {
             }
         />
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -87,5 +86,3 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
 });
-
-export default PhotoRegister;

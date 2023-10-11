@@ -4,12 +4,14 @@ import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import useTagHandler from '../../hooks/useTagHandler';
+import useTagSearch from '../../hooks/useTagSearch';
+
 import type { FetchFollowerSearchResponse } from '<api/share/post/user>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import { Avatar, ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
-import { useTagHandler, useTagSearch } from '@/components/@common/organisms/TagTextInput';
 
-const FollowerUserList = () => {
+export default function FollowerUserList() {
     const { keyword, enabled } = useTagSearch();
     const { handleSelectTag } = useTagHandler();
 
@@ -19,6 +21,7 @@ const FollowerUserList = () => {
     });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
+    console.log(newData);
     const keyExtractor = useCallback((item: FetchFollowerSearchResponse) => item.user.id, []);
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<FetchFollowerSearchResponse>) => {
@@ -48,7 +51,6 @@ const FollowerUserList = () => {
             condition={enabled}
             trueContent={
                 <View style={styles.container}>
-                    <Typo variant="title5">팔로우한 사람</Typo>
                     <FlashList
                         data={newData}
                         keyExtractor={keyExtractor}
@@ -62,7 +64,7 @@ const FollowerUserList = () => {
             falseContent={null}
         />
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -77,5 +79,3 @@ const styles = StyleSheet.create({
         gap: 12,
     },
 });
-
-export default FollowerUserList;

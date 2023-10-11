@@ -2,11 +2,11 @@ import { Typo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-type SharePostWriteTitleProps = {
+type TitleProps = {
     title: string;
 };
 
-const SharePostWriteTitle = ({ title }: SharePostWriteTitleProps) => {
+export default function Title({ title }: TitleProps) {
     return (
         <View style={styles.container}>
             <Typo variant="heading3">
@@ -17,12 +17,10 @@ const SharePostWriteTitle = ({ title }: SharePostWriteTitleProps) => {
             </Typo>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
         marginBottom: 10,
     },
 });
-
-export default SharePostWriteTitle;
