@@ -31,8 +31,6 @@ export const getDetailUserPosts = async ({ pageParam = 0, nickname }: FetchDetai
     });
     const response = await clientFetch(`api/share/posts/list/users/${nickname}?${queryString}`);
 
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
     return response.json();
 };
 
