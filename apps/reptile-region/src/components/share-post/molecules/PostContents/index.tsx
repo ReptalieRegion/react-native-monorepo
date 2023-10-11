@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
-import TaggedContents from '@/components/share/molecules/TaggedContents';
+import TaggedContents from '@/components/share-post/molecules/TaggedContents';
 
 type PostContentsState = {
     post: {

@@ -13,7 +13,7 @@ import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFol
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { BaseHeader } from '@/components/@common/molecules';
-import Follow from '@/components/share/atoms/Follow';
+import Follow from '@/components/share-post/atoms/Follow';
 
 type SharePostListPageScreen = CompositeScreenProps<
     NativeStackScreenProps<SharePostModalParamList, 'list/user'>,

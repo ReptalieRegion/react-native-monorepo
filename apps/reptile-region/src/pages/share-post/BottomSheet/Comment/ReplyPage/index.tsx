@@ -8,7 +8,7 @@ import CommentReplySkeleton from './loading';
 import type { SharePostCommentParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
 import { FollowerUserList, FollowerUserListSkeleton } from '@/components/@common/organisms/TagTextInput';
-import Comment, { CommentReplyList, CommentReplyTextEditor } from '@/components/share/organisms/Comment';
+import Comment, { CommentReplyList, CommentReplyTextEditor } from '@/components/share-post/organisms/Comment';
 
 type CommentScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostCommentParamList, 'reply'>,

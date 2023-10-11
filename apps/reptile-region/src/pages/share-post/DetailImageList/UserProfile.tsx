@@ -9,12 +9,12 @@ import type { ImageType } from '<image>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { Avatar } from '@/components/@common/atoms';
-import Follow from '@/components/share/atoms/Follow';
-import UserActivitySummaryItem from '@/components/share/molecules/UserActivitySummaryItem';
+import Follow from '@/components/share-post/atoms/Follow';
+import UserActivitySummaryItem from '@/components/share-post/molecules/UserActivitySummaryItem';
 import type {
     ActivitySummaryItemActions,
     ActivitySummaryItemProps,
-} from '@/components/share/molecules/UserActivitySummaryItem';
+} from '@/components/share-post/molecules/UserActivitySummaryItem';
 
 type UserDetailPanelProps = {
     nickname: string;

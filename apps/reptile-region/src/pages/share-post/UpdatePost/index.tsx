@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 
 import { RootRoutesParamList } from '<routes/root>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import { Message, MessageType } from '@/components/share/organisms/PostUpdate/components/PostUpdateList';
-import PostUpdate from '@/components/share/organisms/PostUpdate/providers/PostUpdate';
+import { Message, MessageType } from '@/components/share-post/organisms/PostUpdate/components/PostUpdateList';
+import PostUpdate from '@/components/share-post/organisms/PostUpdate/providers/PostUpdate';
 
 type SharePostUpdateScreen = NativeStackScreenProps<RootRoutesParamList, 'share-post/post/update'>;
 

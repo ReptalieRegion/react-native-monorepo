@@ -11,9 +11,9 @@ import type { RootRoutesParamList } from '<routes/root>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
-import FloatingActionButtonGroup from '@/components/share/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
-import useFloatingHandler from '@/components/share/organisms/FloatingActionButtons/hooks/useFloatingHandler';
-import SharePostCard from '@/components/share/organisms/SharePostCard/SharePostCard';
+import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
+import useFloatingHandler from '@/components/share-post/organisms/FloatingActionButtons/hooks/useFloatingHandler';
+import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useFlashListScroll from '@/hooks/useFlashListScroll';
 import useSharePostActions from '@/hooks/useSharePostActions';
 

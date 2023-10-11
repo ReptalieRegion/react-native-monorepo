@@ -10,7 +10,7 @@ import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import usePhotoSelect from '@/components/@common/organisms/CameraAlbum/hooks/usePhotoSelect';
 import { FollowerUserList, FollowerUserListSkeleton, TagProvider, useTag } from '@/components/@common/organisms/TagTextInput';
-import { ContentsWriting, PhotoRegisterCarousel } from '@/components/share/organisms/Posting';
+import { ContentsWriting, PhotoRegisterCarousel } from '@/components/share-post/organisms/Posting';
 
 type WritePostScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostPostingParamList, 'write'>,

@@ -10,7 +10,7 @@ import Animated, {
 
 import useHeartAnimation from '../../hooks/useHeartAnimation';
 
-import LikeIcon from '@/components/share/atoms/Like';
+import LikeIcon from '@/components/share-post/atoms/Like';
 
 type InteractiveHeartState = {
     isLike: boolean | undefined;

@@ -8,7 +8,7 @@ import PostList from './page';
 
 import type { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
-import FloatingActionButtons from '@/components/share/organisms/FloatingActionButtons/providers/FloatingActionButtons';
+import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 
 type SharePostListPageScreen = CompositeScreenProps<
     NativeStackScreenProps<SharePostTabParamList, 'share-post/list'>,

@@ -12,7 +12,7 @@ import type { RootRoutesParamList, SharePostModalParamList } from '<routes/root>
 import { sharePostQueryKeys } from '@/apis/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';
-import SharePostCard from '@/components/share/organisms/SharePostCard/SharePostCard';
+import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useSharePostActions from '@/hooks/useSharePostActions';
 
 type SharePostListPageScreen = CompositeScreenProps<

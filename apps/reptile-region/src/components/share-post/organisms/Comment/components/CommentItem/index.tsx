@@ -8,7 +8,7 @@ import CommentActionButtons, { CommentActionButtonsAction } from '../ActionButto
 import type { FetchCommentResponse } from '<api/share/post/comment>';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { Avatar } from '@/components/@common/atoms';
-import TaggedContents from '@/components/share/molecules/TaggedContents';
+import TaggedContents from '@/components/share-post/molecules/TaggedContents';
 
 type CommentListProps = {
     item: FetchCommentResponse;

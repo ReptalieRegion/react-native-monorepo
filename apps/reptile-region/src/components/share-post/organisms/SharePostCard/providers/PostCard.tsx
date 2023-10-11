@@ -4,8 +4,8 @@ import { ImageHeart, Interactive, PostCardImageCarousel } from '../components';
 import { HeartAnimationActionsContext, HeartAnimationStateContext } from '../contexts/HeartAnimation';
 
 import { ImageCarousel, useImageCarouselHandler } from '@/components/@common/organisms/ImageCarousel';
-import PostContents from '@/components/share/molecules/PostContents';
-import PostHeader from '@/components/share/molecules/PostHeader';
+import PostContents from '@/components/share-post/molecules/PostContents';
+import PostHeader from '@/components/share-post/molecules/PostHeader';
 
 type PostCardProps = {
     uuid: string;
