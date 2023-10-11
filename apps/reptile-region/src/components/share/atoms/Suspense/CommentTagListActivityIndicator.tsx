@@ -1,7 +1,8 @@
 import { Typo, color } from 'design-system';
 import React from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { useTagSearch } from 'tag-text-input';
+
+import { useTagSearch } from '@/components/@common/organisms/TagTextInput';
 
 export default function CommentTagListActivityIndicator() {
     const { keyword } = useTagSearch();

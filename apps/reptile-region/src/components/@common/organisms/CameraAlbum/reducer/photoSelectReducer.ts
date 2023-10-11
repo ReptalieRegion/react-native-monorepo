@@ -48,6 +48,18 @@ const selectPhoto = (
     }
 };
 
+const deleteSelectedPhoto = (state: PhotoSelectState, uri: string): PhotoSelectState => {
+    const { selectedPhotos } = state;
+    if (selectedPhotos.length === 1) {
+        return state;
+    }
+
+    const filteredSelectedPhotos = selectedPhotos.filter(({ node }) => node.image.uri !== uri);
+    const newCurrentSelectedPhoto = filteredSelectedPhotos.at(-1) ?? null;
+
+    return { ...state, selectedPhotos: filteredSelectedPhotos, currentSelectedPhoto: newCurrentSelectedPhoto };
+};
+
 const photoSelectReducer = (state: PhotoSelectState, actions: PhotoSelectActions): PhotoSelectState => {
     switch (actions.type) {
         case 'SELECT_PHOTO':
@@ -58,6 +70,8 @@ const photoSelectReducer = (state: PhotoSelectState, actions: PhotoSelectActions
             });
         case 'INIT_CURRENT_PHOTO':
             return { ...state, currentSelectedPhoto: actions.photo };
+        case 'DELETE_SELECTED_PHOTO':
+            return deleteSelectedPhoto(state, actions.uri);
         default:
             return state;
     }

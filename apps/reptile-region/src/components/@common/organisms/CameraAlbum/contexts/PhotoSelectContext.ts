@@ -12,13 +12,17 @@ interface SelectPhoto {
     selectLimitCount: number;
     limitCallback(): void;
 }
+interface DeleteSelectedPhoto {
+    type: 'DELETE_SELECTED_PHOTO';
+    uri: string;
+}
 
 interface InitCurrentPhoto {
     type: 'INIT_CURRENT_PHOTO';
     photo: PhotoIdentifier | null;
 }
 
-export type PhotoSelectActions = SelectPhoto | InitCurrentPhoto;
+export type PhotoSelectActions = SelectPhoto | DeleteSelectedPhoto | InitCurrentPhoto;
 
 export const PhotoSelectStateContext = createContext<PhotoSelectState | null>(null);
 

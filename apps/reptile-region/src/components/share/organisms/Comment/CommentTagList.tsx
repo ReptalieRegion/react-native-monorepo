@@ -2,12 +2,12 @@ import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { Typo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useTagHandler, useTagSearch } from 'tag-text-input';
 
 import type { FetchFollowerSearchResponse } from '<api/share/post/user>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import { ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
 import { Avatar } from '@/components/@common/atoms';
+import { useTagHandler, useTagSearch } from '@/components/@common/organisms/TagTextInput';
 
 export default function CommentTagList() {
     const { keyword, enabled } = useTagSearch();

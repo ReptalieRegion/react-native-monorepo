@@ -1,6 +1,5 @@
-import { DEFAULT_SEARCH } from '../../constants/tag-search';
-import { TagContentsState } from '../../types/tag-contents';
-import { TagSearchActions, TagSearchState } from '../../types/tag-search';
+import { DEFAULT_SEARCH } from '../constants/tag-search';
+import type { TagContentsState, TagSearchActions, TagSearchState } from '../type';
 
 const extractTagFromIndex = (contentInfo: TagContentsState): TagSearchState => {
     const { selection, contents } = contentInfo;

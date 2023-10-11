@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { TagSearchActions, TagSearchState } from '../types/tag-search';
+import type { TagSearchActions, TagSearchState } from '../type';
 
 export const TagSearchStateContext = createContext<TagSearchState | null>(null);
 

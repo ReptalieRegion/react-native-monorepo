@@ -1,4 +1,4 @@
-import { TagContentsState } from '../types/tag-contents';
+import type { TagContentsState } from '../type';
 
 export const DEFAULT_CONTENT: TagContentsState = {
     contents: '',

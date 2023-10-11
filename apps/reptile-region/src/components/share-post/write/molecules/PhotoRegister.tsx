@@ -3,24 +3,19 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
-import { useTagSearch } from 'tag-text-input';
-import { shallow } from 'zustand/shallow';
 
 import SharePostWriteTitle from '../atoms/SharePostWriteTitle';
 
 import { CancelButton } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
-import usePhotoStore from '@/stores/share-post/usePhotoStore';
+import useCameraAlbumHandler from '@/components/@common/organisms/CameraAlbum/hooks/useCameraAlbumHandler';
+import usePhotoSelect from '@/components/@common/organisms/CameraAlbum/hooks/usePhotoSelect';
+import { useTagSearch } from '@/components/@common/organisms/TagTextInput';
 
 const PhotoRegister = () => {
     const { enabled } = useTagSearch();
-    const { selectedPhotos, deleteSelectedPhoto } = usePhotoStore(
-        (state) => ({
-            selectedPhotos: state.selectedPhotos,
-            deleteSelectedPhoto: state.deleteSelectedPhoto,
-        }),
-        shallow,
-    );
+    const { deleteSelectedPhoto } = useCameraAlbumHandler();
+    const { selectedPhotos } = usePhotoSelect();
 
     const handelCancelButtonClick = (index: number) => {
         if (selectedPhotos.length === 1) {

@@ -1,6 +1,7 @@
 import { TouchableTypo } from 'design-system';
 import React, { useEffect } from 'react';
-import { useTag } from 'tag-text-input';
+
+import { useTag } from '@/components/@common/organisms/TagTextInput';
 
 interface ChangeHeaderSubmitButtonActions {
     onSubmit(props: { contents: string }): void;

@@ -4,7 +4,6 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { SharePostPostingParamList } from '<routes/root>';
-import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import usePhotoSelect from '@/components/@common/organisms/CameraAlbum/hooks/usePhotoSelect';
 import CameraAlbum from '@/components/@common/organisms/CameraAlbum/providers/CameraAlbum';
@@ -19,23 +18,21 @@ const ChangeHeader = ({ navigation }: ChangeHeaderProps) => {
     const { selectedPhotos } = usePhotoSelect();
 
     useEffect(() => {
+        const isValidate = selectedPhotos.length === 0;
+
         const headerRight = () => {
             const handlePress = () => {
                 navigation.navigate('write');
             };
 
             return (
-                <ConditionalRenderer
-                    condition={selectedPhotos.length !== 0}
-                    trueContent={<TouchableTypo onPress={handlePress}>다음</TouchableTypo>}
-                    falseContent={null}
-                />
+                <TouchableTypo onPress={handlePress} color={isValidate ? 'placeholder' : 'default'} disabled={isValidate}>
+                    다음
+                </TouchableTypo>
             );
         };
 
-        navigation.setOptions({
-            headerRight,
-        });
+        navigation.setOptions({ headerRight });
     }, [navigation, selectedPhotos.length]);
 
     return null;
@@ -48,7 +45,7 @@ export const ImagePickerHeader = createNativeStackHeader({
 
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
     return (
-        <CameraAlbum>
+        <>
             <ChangeHeader navigation={navigation} />
             <CameraAlbum.PhotoEditor />
             <View style={styles.container}>
@@ -58,7 +55,7 @@ export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
                 </View>
             </View>
             <CameraAlbum.PhotoList numColumns={4} loadPhotoLimit={60} />
-        </CameraAlbum>
+        </>
     );
 }
 

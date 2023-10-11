@@ -2,13 +2,13 @@ import { TouchableTypo, color } from 'design-system';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, Alert, Dimensions, StyleSheet, View } from 'react-native';
 import { Keyboard } from 'react-native';
-import { TagTextInput, useTag, useTagHandler } from 'tag-text-input';
 
 import type { SubmitType } from '../../contexts/CommentContext';
 import useComment from '../../hooks/useComment';
 import useCommentActions from '../../hooks/useCommentActions';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
+import { TagTextInput, useTag, useTagHandler } from '@/components/@common/organisms/TagTextInput';
 
 export type CommentTextInputProps = {
     isLoadingSubmit: boolean;

@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { Keyboard } from 'react-native';
-import { useTagHandler } from 'tag-text-input';
 
 import TextInputEditor from './components/TextInputEditor';
 import type { CommentTextInputActions } from './components/TextInputEditor';
@@ -8,6 +7,7 @@ import useCommentActions from './hooks/useCommentActions';
 
 import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
 import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useUpdateCommentReply';
+import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
 
 export default function CommentReplyTextEditor() {
     const { changeText } = useTagHandler();

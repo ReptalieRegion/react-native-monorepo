@@ -1,9 +1,10 @@
 import { TouchableTypo } from 'design-system';
 import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { useTagHandler } from 'tag-text-input';
 
 import useCommentActions from '../../hooks/useCommentActions';
+
+import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
 
 type ActionButton = {
     label: string;

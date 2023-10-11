@@ -15,7 +15,6 @@ const config = {
         path.resolve(__dirname, '../../packages/overlay-manager'),
         path.resolve(__dirname, '../../packages/bottom-sheet'),
         path.resolve(__dirname, '../../packages/design-system'),
-        path.resolve(__dirname, '../../packages/tag-text-input'),
     ],
 };
 

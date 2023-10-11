@@ -1,9 +1,10 @@
 import React, { ReactNode, useReducer } from 'react';
-import { TagProvider } from 'tag-text-input';
 
 import CommentTextInputEditor from '../components/TextInputEditor';
 import { CommentActionContext, CommentDefaultIdState, CommentStateContext } from '../contexts/CommentContext';
 import commentReducer from '../reducer/comment-reducer';
+
+import { TagProvider } from '@/components/@common/organisms/TagTextInput';
 
 type CommentProps = {
     id: string;

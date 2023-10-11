@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { TagTextInputActions, TagTextInputState } from '../types/tag-text-input';
+import type { TagTextInputActions, TagTextInputState } from '../type';
 
 export const TagTextInputStateContext = createContext<TagTextInputState | null>(null);
 

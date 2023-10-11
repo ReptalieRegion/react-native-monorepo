@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { TagTextInput, useTag, useTagHandler } from 'tag-text-input';
+
+import { TagTextInput, useTag, useTagHandler } from '@/components/@common/organisms/TagTextInput';
 
 type TextEditorProps = {
     defaultValue: string;

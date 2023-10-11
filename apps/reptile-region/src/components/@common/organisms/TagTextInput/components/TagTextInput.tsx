@@ -5,7 +5,7 @@ import { TagTextInputStateContext } from '../contexts/TagTextInputContext';
 import useTag from '../hooks/useTag';
 import useTagHandler from '../hooks/useTagHandler';
 
-const TagTextInput = ({ onChangeText, onSelectionChange, ...props }: TextInputProps) => {
+export default function TagTextInput({ onChangeText, onSelectionChange, ...props }: TextInputProps) {
     const state = useContext(TagTextInputStateContext);
     const contentsInfo = useTag();
     const { changeSelection, changeText, searchTag } = useTagHandler();
@@ -28,6 +28,4 @@ const TagTextInput = ({ onChangeText, onSelectionChange, ...props }: TextInputPr
             {...props}
         />
     );
-};
-
-export default TagTextInput;
+}

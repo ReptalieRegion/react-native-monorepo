@@ -3,7 +3,7 @@ import { TextInput } from 'react-native';
 
 import { TagTextInputActionsContext, TagTextInputStateContext } from '../contexts/TagTextInputContext';
 
-const TagTextInputProvider = ({ children }: { children: ReactNode }) => {
+export default function TagTextInputProvider({ children }: { children: ReactNode }) {
     const textInputRef = useRef<TextInput>(null);
 
     const focus = useCallback(() => {
@@ -15,6 +15,4 @@ const TagTextInputProvider = ({ children }: { children: ReactNode }) => {
             <TagTextInputStateContext.Provider value={{ textInputRef }}>{children}</TagTextInputStateContext.Provider>
         </TagTextInputActionsContext.Provider>
     );
-};
-
-export default TagTextInputProvider;
+}

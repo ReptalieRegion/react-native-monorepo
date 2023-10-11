@@ -1,7 +1,8 @@
 import { Typo, color } from 'design-system';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TagTextInput, useTag } from 'tag-text-input';
+
+import { TagTextInput, useTag } from '@/components/@common/organisms/TagTextInput';
 
 const MAX_CHARACTER_COUNT = 500;
 

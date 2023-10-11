@@ -63,10 +63,18 @@ const useCameraAlbumHandler = () => {
         [photoSelectDispatch],
     );
 
+    const deleteSelectedPhoto = useCallback(
+        (uri: string) => {
+            photoSelectDispatch({ type: 'DELETE_SELECTED_PHOTO', uri });
+        },
+        [photoSelectDispatch],
+    );
+
     return {
         initPhotos,
         loadPhotos,
         selectPhoto,
+        deleteSelectedPhoto,
     };
 };
 

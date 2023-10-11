@@ -3,11 +3,11 @@ import { Typo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useTagHandler, useTagSearch } from 'tag-text-input';
 
 import type { FetchFollowerSearchResponse } from '<api/share/post/user>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import { Avatar, ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
+import { useTagHandler, useTagSearch } from '@/components/@common/organisms/TagTextInput';
 
 const FollowerUserList = () => {
     const { keyword, enabled } = useTagSearch();

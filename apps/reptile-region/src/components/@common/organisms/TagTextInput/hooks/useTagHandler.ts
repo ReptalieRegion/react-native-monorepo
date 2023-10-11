@@ -3,8 +3,7 @@ import { useCallback, useContext } from 'react';
 import { TagContentActionsContext } from '../contexts/TagContentContext';
 import { TagSearchActionsContext } from '../contexts/TagSearchContext';
 import { TagTextInputActionsContext } from '../contexts/TagTextInputContext';
-import { SelectionType } from '../types/tag';
-import { TagContentsState } from '../types/tag-contents';
+import type { SelectionType, TagContentsState } from '../type';
 
 const useTagHandler = () => {
     const textInputDispatch = useContext(TagTextInputActionsContext);

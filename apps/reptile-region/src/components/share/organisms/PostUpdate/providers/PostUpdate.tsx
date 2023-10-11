@@ -1,9 +1,10 @@
 import React, { ReactNode, useReducer } from 'react';
-import { TagProvider } from 'tag-text-input';
 
 import PostUpdateList from '../components/PostUpdateList';
 import { ImageActionsContext, ImageStateContext } from '../contexts/ImageContext';
 import imageReducer from '../reducer/image-reducer';
+
+import { TagProvider } from '@/components/@common/organisms/TagTextInput';
 
 type PostUpdateProps = {
     children: ReactNode;

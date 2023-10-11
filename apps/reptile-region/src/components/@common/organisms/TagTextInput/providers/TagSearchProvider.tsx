@@ -1,10 +1,11 @@
-import React, { ReactNode, useReducer } from 'react';
+import React, { useReducer } from 'react';
+import type { ReactNode } from 'react';
 
 import { DEFAULT_SEARCH } from '../constants/tag-search';
 import { TagSearchActionsContext, TagSearchStateContext } from '../contexts/TagSearchContext';
-import tagSearchReducer from '../reduce/tag-search/reducer';
+import tagSearchReducer from '../reducer/tag-search-reducer';
 
-const TagSearchProvider = ({ children }: { children: ReactNode }) => {
+export default function TagSearchProvider({ children }: { children: ReactNode }) {
     const [state, dispatch] = useReducer(tagSearchReducer, DEFAULT_SEARCH);
 
     return (
@@ -12,6 +13,4 @@ const TagSearchProvider = ({ children }: { children: ReactNode }) => {
             <TagSearchStateContext.Provider value={state}>{children}</TagSearchStateContext.Provider>
         </TagSearchActionsContext.Provider>
     );
-};
-
-export default TagSearchProvider;
+}

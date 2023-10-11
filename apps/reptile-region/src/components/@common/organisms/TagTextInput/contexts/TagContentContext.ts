@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { TagContentsActions, TagContentsState } from '../types/tag-contents';
+import type { TagContentsActions, TagContentsState } from '../type';
 
 export const TagContentStateContext = createContext<TagContentsState | null>(null);
 

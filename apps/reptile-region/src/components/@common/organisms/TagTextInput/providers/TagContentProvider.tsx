@@ -2,9 +2,9 @@ import React, { ReactNode, useReducer } from 'react';
 
 import { DEFAULT_CONTENT } from '../constants/tag-content';
 import { TagContentActionsContext, TagContentStateContext } from '../contexts/TagContentContext';
-import tagContentReducer from '../reduce/tag-content/reducer';
+import tagContentReducer from '../reducer/tag-content-reducer';
 
-const TagContentProvider = ({ children }: { children: ReactNode }) => {
+export default function TagContentProvider({ children }: { children: ReactNode }) {
     const [state, dispatch] = useReducer(tagContentReducer, DEFAULT_CONTENT);
 
     return (
@@ -12,6 +12,4 @@ const TagContentProvider = ({ children }: { children: ReactNode }) => {
             <TagContentStateContext.Provider value={state}>{children}</TagContentStateContext.Provider>
         </TagContentActionsContext.Provider>
     );
-};
-
-export default TagContentProvider;
+}
