@@ -3,7 +3,8 @@ import { useCallback, useContext, useRef } from 'react';
 
 import { PhotoActionsContext } from '../contexts/PhotoContext';
 import { PhotoSelectActionsContext } from '../contexts/PhotoSelectContext';
-import { FetchPhotosProps, fetchPhotos } from '../utils';
+import type { FetchPhotosProps } from '../types';
+import { fetchPhotos } from '../utils';
 
 const useCameraAlbumHandler = () => {
     const isLastPhoto = useRef(false);

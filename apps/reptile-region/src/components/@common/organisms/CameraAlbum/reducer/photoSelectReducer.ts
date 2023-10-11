@@ -1,6 +1,6 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 
-import { PhotoSelectActions, PhotoSelectState } from '../contexts/PhotoSelectContext';
+import type { PhotoSelectActions, PhotoSelectState } from '../types';
 
 const selectPhoto = (
     state: PhotoSelectState,

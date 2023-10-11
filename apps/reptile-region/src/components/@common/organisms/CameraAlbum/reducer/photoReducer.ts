@@ -1,6 +1,6 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 
-import type { PhotoActions, PhotoState } from '../contexts/PhotoContext';
+import type { PhotoActions, PhotoState } from '../types';
 
 const addPhotos = (state: PhotoState, photos: PhotoIdentifier[] | null): PhotoState => {
     const prevPhotos = state.photos !== null ? [...state.photos] : state.photos;

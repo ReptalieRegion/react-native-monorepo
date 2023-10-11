@@ -1,12 +1,8 @@
-import { AssetType, CameraRoll } from '@react-native-camera-roll/camera-roll';
+import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+
+import type { FetchPhotosProps } from '../types';
 
 import { photoPermissionCheck } from '@/utils/permissions/photo-permission';
-
-export type FetchPhotosProps = {
-    first: number;
-    after?: string | undefined;
-    assetType?: AssetType | undefined;
-};
 
 export const fetchPhotos = async ({ first, after, assetType = 'Photos' }: FetchPhotosProps) => {
     try {

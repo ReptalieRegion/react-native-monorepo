@@ -5,8 +5,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { SharePostPostingParamList } from '<routes/root>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import usePhotoSelect from '@/components/@common/organisms/CameraAlbum/hooks/usePhotoSelect';
-import CameraAlbum from '@/components/@common/organisms/CameraAlbum/providers/CameraAlbum';
+import { CameraAlbum, usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 
 type ImagePickScreenProp = NativeStackScreenProps<SharePostPostingParamList, 'image-crop'>;
 
