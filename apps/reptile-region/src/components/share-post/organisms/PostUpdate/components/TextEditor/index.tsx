@@ -1,19 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { TagTextInput, useTag, useTagHandler } from '@/components/@common/organisms/TagTextInput';
+import { TagTextInput, useTag } from '@/components/@common/organisms/TagTextInput';
 
-type TextEditorProps = {
-    defaultValue: string;
-};
-
-export default function TextEditor({ defaultValue }: TextEditorProps) {
+export default function TextEditor() {
     const { contents } = useTag();
-    const { changeText } = useTagHandler();
-
-    useEffect(() => {
-        changeText(defaultValue);
-    }, [changeText, defaultValue]);
 
     return <TagTextInput style={styles.textInput} value={contents} multiline autoFocus scrollEnabled={false} />;
 }

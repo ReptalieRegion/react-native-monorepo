@@ -1,13 +1,15 @@
 import { FlashList, ListRenderItem } from '@shopify/flash-list';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 
-import useEffectChangeHeaderRight from '../../hooks/useEffectChangeHeaderRight';
-import PostUpdateImageCarousel from '../PostUpdateImageCarousel';
+import usePostUpdateHandler from '../../hooks/usePostUpdateHandler';
+import usePostUpdateImages from '../../hooks/usePostUpdateImages';
+import { PostUpdateImageCarousel } from '../PostUpdateImageCarousel';
 import TextEditor from '../TextEditor';
 
 import type { ImageType } from '<image>';
+import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
 import useFlashListScroll from '@/hooks/useFlashListScroll';
 
 export enum MessageType {
@@ -28,21 +30,27 @@ interface ImageMessage {
 export type Message = ImageMessage | TextMessage;
 
 type PostUpdateListState = {
-    data: Message[];
+    images: ImageType[];
+    contents: string;
 };
 
-interface PostUpdateListActions {
-    onSubmit(props: { contents: string }): void;
-    onChangeHeaderRight(headerRight: () => React.JSX.Element): void;
-    onDeleteImage(src: string): void;
-}
+type PostUpdateListProps = PostUpdateListState;
 
-type PostUpdateListProps = PostUpdateListState & PostUpdateListActions;
-
-export default function PostUpdateList({ data, onChangeHeaderRight, onSubmit, onDeleteImage }: PostUpdateListProps) {
-    useEffectChangeHeaderRight({ onChangeHeaderRight, onSubmit });
-
+export default function PostUpdateList(props: PostUpdateListProps) {
     const { flashListRef, scrollIntoView } = useFlashListScroll<Message>();
+    const { registerImage } = usePostUpdateHandler();
+    const { changeText } = useTagHandler();
+    const { images } = usePostUpdateImages();
+
+    const data: Message[] = [
+        { images, type: MessageType.Images },
+        { text: props.contents, type: MessageType.Contents },
+    ];
+
+    useEffect(() => {
+        changeText(props.contents);
+        registerImage(props.images);
+    }, [props, registerImage, changeText]);
 
     const { height } = useAnimatedKeyboard();
     const animatedStyle = useAnimatedStyle(() => ({
@@ -52,9 +60,9 @@ export default function PostUpdateList({ data, onChangeHeaderRight, onSubmit, on
     const renderItem: ListRenderItem<Message> = (info) => {
         switch (info.item.type) {
             case MessageType.Contents:
-                return <TextEditor defaultValue={info.item.text} />;
+                return <TextEditor />;
             case MessageType.Images:
-                return <PostUpdateImageCarousel images={info.item.images} onDeleteImage={onDeleteImage} />;
+                return <PostUpdateImageCarousel />;
             default:
                 return null;
         }
