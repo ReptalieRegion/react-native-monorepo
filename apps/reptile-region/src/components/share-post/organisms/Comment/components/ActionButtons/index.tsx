@@ -33,7 +33,7 @@ export default function CommentActionButtons({
     onPressUpdateButton,
     onPressWriteButton,
 }: CommentActionButtonsProps & CommentActionButtonsAction) {
-    const { changeText, tagTextInputFocus } = useTagHandler();
+    const { registerText, tagTextInputFocus } = useTagHandler();
     const { changeCommentSubmitType } = useCommentActions();
     const actionButtons: ActionButton[] = useMemo(() => {
         if (comment.isMine) {
@@ -46,9 +46,9 @@ export default function CommentActionButtons({
                     label: '수정',
                     onPress: () => {
                         console.log('hi');
-                        changeText(comment.contents);
-                        tagTextInputFocus();
+                        registerText(comment.contents);
                         changeCommentSubmitType({ id: comment.id, submitType: 'UPDATE' });
+                        tagTextInputFocus();
                         onPressUpdateButton();
                     },
                 },
@@ -69,8 +69,8 @@ export default function CommentActionButtons({
         comment.id,
         comment.isMine,
         comment.contents,
+        registerText,
         changeCommentSubmitType,
-        changeText,
         onPressDeclarationButton,
         onPressDeleteButton,
         onPressUpdateButton,

@@ -1,7 +1,7 @@
 import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
 import { Typo } from 'design-system';
 import React, { useCallback, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useTagHandler from '../../hooks/useTagHandler';
@@ -11,7 +11,11 @@ import type { FetchFollowerSearchResponse } from '<api/share/post/user>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import { Avatar, ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
 
-export default function FollowerUserList() {
+type FollowerUserListProps = {
+    containerStyles?: ViewStyle;
+};
+
+export default function FollowerUserList({ containerStyles }: FollowerUserListProps) {
     const { keyword, enabled } = useTagSearch();
     const { handleSelectTag } = useTagHandler();
 
@@ -21,7 +25,6 @@ export default function FollowerUserList() {
     });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
-    console.log(newData);
     const keyExtractor = useCallback((item: FetchFollowerSearchResponse) => item.user.id, []);
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<FetchFollowerSearchResponse>) => {
@@ -48,17 +51,19 @@ export default function FollowerUserList() {
 
     return (
         <ConditionalRenderer
-            condition={enabled}
+            condition={enabled || (!!newData && newData?.length !== 0)}
             trueContent={
-                <View style={styles.container}>
-                    <FlashList
-                        data={newData}
-                        keyExtractor={keyExtractor}
-                        renderItem={renderItem}
-                        ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-                        onEndReached={onEndReached}
-                        estimatedItemSize={30}
-                    />
+                <View style={containerStyles}>
+                    <View style={styles.container}>
+                        <FlashList
+                            data={newData}
+                            keyExtractor={keyExtractor}
+                            renderItem={renderItem}
+                            ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+                            onEndReached={onEndReached}
+                            estimatedItemSize={30}
+                        />
+                    </View>
                 </View>
             }
             falseContent={null}

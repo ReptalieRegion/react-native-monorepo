@@ -14,6 +14,13 @@ const useTagHandler = () => {
         throw new Error('TagProvider를 감싸주세요');
     }
 
+    const registerText = useCallback(
+        (text: string) => {
+            contentDispatch({ type: 'REGISTER_TEXT', contents: text });
+        },
+        [contentDispatch],
+    );
+
     const changeText = useCallback(
         (text: string) => {
             contentDispatch({ type: 'CHANGE_TEXT', contents: text });
@@ -41,6 +48,7 @@ const useTagHandler = () => {
     };
 
     return {
+        registerText,
         changeText,
         changeSelection,
         searchTag,

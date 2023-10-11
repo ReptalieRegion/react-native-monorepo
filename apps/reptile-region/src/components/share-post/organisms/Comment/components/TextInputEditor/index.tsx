@@ -9,6 +9,7 @@ import useCommentActions from '../../hooks/useCommentActions';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { TagTextInput, useTag, useTagHandler } from '@/components/@common/organisms/TagTextInput';
+import { POST_MAX_CONTENT_LENGTH } from '@/env/constants';
 
 export type CommentTextInputProps = {
     isLoadingSubmit: boolean;
@@ -18,10 +19,9 @@ export interface CommentTextInputActions {
     onSubmit({ id, submitType, contents }: { id: string; submitType: SubmitType; contents: string }): void;
 }
 
-const MAX_CHARACTER_COUNT = 500;
-
 export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: CommentTextInputProps & CommentTextInputActions) {
-    const { contents } = useTag();
+    const { contents, selection } = useTag();
+    console.log(contents, selection);
     const { id, submitType } = useComment();
     const { tagTextInputFocus, changeText } = useTagHandler();
     const { setCreateCommentSubmitType } = useCommentActions();
@@ -62,9 +62,11 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
             <View style={styles.textInputContainer}>
                 <TagTextInput
                     value={contents}
+                    defaultValue={contents}
+                    selection={selection}
                     style={styles.textInput}
                     placeholder="댓글을 입력하세요..."
-                    maxLength={MAX_CHARACTER_COUNT}
+                    maxLength={POST_MAX_CONTENT_LENGTH}
                     multiline
                 />
                 <ConditionalRenderer

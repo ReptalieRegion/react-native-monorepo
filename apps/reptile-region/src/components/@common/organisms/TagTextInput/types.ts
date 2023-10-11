@@ -10,6 +10,11 @@ export type TagContentsState = {
     selection: SelectionType;
 };
 
+interface RegisterContents {
+    type: 'REGISTER_TEXT';
+    contents: string;
+}
+
 interface ChangeContentsContents {
     type: 'CHANGE_TEXT';
     contents: string;
@@ -25,7 +30,7 @@ interface UpdateContentSelectTag {
     tag: string;
 }
 
-export type TagContentsActions = ChangeContentsContents | ChangeContentsSelection | UpdateContentSelectTag;
+export type TagContentsActions = ChangeContentsContents | ChangeContentsSelection | UpdateContentSelectTag | RegisterContents;
 
 /** 현재 커서 위치에 있는 태그 정보 */
 export type TagSearchState = {

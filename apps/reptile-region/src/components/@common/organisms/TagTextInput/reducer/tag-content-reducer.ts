@@ -1,17 +1,20 @@
 import type { TagContentsActions, TagContentsState } from '../types';
 
-const tagContentReducer = (state: TagContentsState, action: TagContentsActions): TagContentsState => {
-    switch (action.type) {
+const tagContentReducer = (state: TagContentsState, actions: TagContentsActions): TagContentsState => {
+    switch (actions.type) {
+        case 'REGISTER_TEXT':
+            const contentsLength = actions.contents.length;
+            return { ...state, contents: actions.contents, selection: { start: contentsLength, end: contentsLength } };
         case 'CHANGE_TEXT':
-            return { ...state, contents: action.contents };
+            return { ...state, contents: actions.contents };
         case 'CHANGE_SELECTION':
-            return { ...state, selection: action.selection };
+            return { ...state, selection: actions.selection };
         case 'UPDATE_CONTENT_SELECT_TAG':
             const contents = state.contents;
             const selectionStart = state.selection.start;
             const prefix = contents.slice(0, selectionStart);
-            const suffix = contents.slice(selectionStart + action.tag.length, contents.length);
-            const newNickname = suffix.startsWith(' ') ? action.tag : action.tag + ' ';
+            const suffix = contents.slice(selectionStart + actions.tag.length, contents.length);
+            const newNickname = suffix.startsWith(' ') ? actions.tag : actions.tag + ' ';
             const newContents = prefix + newNickname + suffix;
 
             return { ...state, contents: newContents };

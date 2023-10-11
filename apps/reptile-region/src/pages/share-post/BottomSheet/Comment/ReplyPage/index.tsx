@@ -22,11 +22,9 @@ export default function CommentReplyPage(props: CommentScreenProps) {
                 <Suspense fallback={<CommentReplySkeleton />}>
                     <CommentReplyList {...props} />
                 </Suspense>
-                <View style={styles.followerUserListContainer}>
-                    <Suspense fallback={<FollowerUserListSkeleton />}>
-                        <FollowerUserList />
-                    </Suspense>
-                </View>
+                <Suspense fallback={<FollowerUserListSkeleton />}>
+                    <FollowerUserList containerStyles={styles.followerUserListContainer} />
+                </Suspense>
             </View>
             <CommentReplyTextEditor />
         </Comment>

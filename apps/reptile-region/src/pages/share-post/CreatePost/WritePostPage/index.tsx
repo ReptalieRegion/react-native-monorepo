@@ -82,9 +82,9 @@ export default function WritePostPage({ navigation }: WritePostScreenProps) {
             <ChangeHeader navigation={navigation} />
             <View style={styles.container}>
                 <ContentsWriting />
-                <View style={styles.followerUserListContainer}>
+                <View style={styles.relative}>
                     <Suspense fallback={<FollowerUserListSkeleton />}>
-                        <FollowerUserList />
+                        <FollowerUserList containerStyles={styles.followerUserListContainer} />
                     </Suspense>
                     <PhotoRegisterCarousel />
                 </View>
@@ -98,6 +98,10 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
         flex: 1,
         padding: 20,
+    },
+    relative: {
+        position: 'relative',
+        flex: 1,
     },
     followerUserListContainer: {
         flex: 1,
