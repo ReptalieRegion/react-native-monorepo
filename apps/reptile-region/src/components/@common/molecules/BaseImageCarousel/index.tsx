@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ImageType } from '<image>';
+import { imageUriParsing } from '@/utils/development';
 
 export type BaseImageCarouselProps = {
     images: ImageType[];
@@ -22,8 +23,6 @@ export type BaseImageCarouselProps = {
     | 'showsHorizontalScrollIndicator'
 >;
 
-const TEMP = 'https://reptalie-region.s3.ap-northeast-2.amazonaws.com/';
-
 export default React.forwardRef<FlashList<ImageType>, BaseImageCarouselProps>(function BaseImageCarousel(
     { images, width, height, ImageItemOverlay, ...rest },
     ref,
@@ -34,8 +33,7 @@ export default React.forwardRef<FlashList<ImageType>, BaseImageCarouselProps>(fu
         const isFirstImage = index === 0;
         const priority = isFirstImage ? 'high' : 'low';
         const recyclingKey = item.src;
-        const uri = item.src.replace(TEMP, '');
-        const newUri = uri.startsWith('https') ? uri : TEMP + uri;
+        const newUri = imageUriParsing(item.src);
 
         return (
             <View style={[styles.itemContainer, { width, height }]}>

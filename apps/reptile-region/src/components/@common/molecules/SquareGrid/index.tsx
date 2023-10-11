@@ -19,7 +19,7 @@ interface SquareGridActions {
     onPressImage?({ index, src }: { index: number; src: string }): void;
 }
 
-const DefaultPaddingBottom = 10;
+const DEFAULT_PADDING_BOTTOM = 10;
 
 export default function SquareGrid({
     data,
@@ -31,9 +31,9 @@ export default function SquareGrid({
     const { bottom } = useSafeAreaInsets();
     const contentContainerStyle: ContentStyle = {
         paddingBottom: Platform.select({
-            ios: bottom + DefaultPaddingBottom,
-            android: DefaultPaddingBottom,
-            default: DefaultPaddingBottom,
+            ios: bottom + DEFAULT_PADDING_BOTTOM,
+            android: DEFAULT_PADDING_BOTTOM,
+            default: DEFAULT_PADDING_BOTTOM,
         }),
     };
 

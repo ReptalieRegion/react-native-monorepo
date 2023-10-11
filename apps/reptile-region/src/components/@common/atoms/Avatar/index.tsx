@@ -3,6 +3,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { ImageType } from '<image>';
+import { imageUriParsing } from '@/utils/development';
 
 type AvatarProps = Omit<ImageProps, 'style' | 'source'> & {
     image: ImageType;
@@ -10,11 +11,8 @@ type AvatarProps = Omit<ImageProps, 'style' | 'source'> & {
     onPress?: () => void;
 };
 
-const TEMP = 'https://reptalie-region.s3.ap-northeast-2.amazonaws.com/';
-
 export default function Avatar({ size = 30, image, onPress, ...rest }: AvatarProps) {
-    const uri = image.src.replace(TEMP, '');
-    const newUri = uri.startsWith('https') ? uri : TEMP + uri;
+    const newUri = imageUriParsing(image.src);
     const sizeStyle = { width: size, height: size, borderRadius: 9999 };
 
     return (

@@ -5,8 +5,7 @@ import { View, StyleSheet } from 'react-native';
 import Title from '../Title';
 
 import { TagTextInput, useTag } from '@/components/@common/organisms/TagTextInput';
-
-const MAX_CHARACTER_COUNT = 500;
+import { POST_MAX_CONTENT_LENGTH } from '@/env/constants';
 
 export default function ContentsWriting() {
     const { contents } = useTag();
@@ -20,12 +19,12 @@ export default function ContentsWriting() {
                         value={contents}
                         style={styles.textarea}
                         placeholder="일상을 공유해 주세요."
-                        maxLength={MAX_CHARACTER_COUNT}
+                        maxLength={POST_MAX_CONTENT_LENGTH}
                         multiline
                     />
                 </View>
                 <View style={styles.characterCountContainer}>
-                    <Typo variant="body4" color="placeholder">{`${contents.length} / ${MAX_CHARACTER_COUNT}`}</Typo>
+                    <Typo variant="body4" color="placeholder">{`${contents.length} / ${POST_MAX_CONTENT_LENGTH}`}</Typo>
                 </View>
             </View>
         </View>

@@ -2,17 +2,15 @@ import { Image } from 'expo-image';
 import React from 'react';
 
 import type { ImageType } from '<image>';
+import { imageUriParsing } from '@/utils/development';
 
 type SquareImageProps = {
     image: ImageType;
     size: number;
 };
 
-const TEMP = 'https://reptalie-region.s3.ap-northeast-2.amazonaws.com/';
-
 export default function SquareImage({ image, size }: SquareImageProps) {
-    const uri = image.src.replace(TEMP, '');
-    const newUri = uri.startsWith('https') || uri.startsWith('ph') || uri.startsWith('file') ? uri : TEMP + uri;
+    const newUri = imageUriParsing(image.src);
 
     return (
         <Image

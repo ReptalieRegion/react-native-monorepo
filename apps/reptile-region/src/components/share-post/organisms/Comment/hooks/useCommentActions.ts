@@ -20,7 +20,6 @@ const useCommentActions = () => {
     };
 
     const setCreateCommentSubmitType = () => {
-        console.log(defaultId);
         dispatch({ type: 'SET_CREATE_SUBMIT_TYPE', id: defaultId });
     };
 
