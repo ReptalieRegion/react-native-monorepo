@@ -5,10 +5,10 @@ import usePostCardHandler from '../../hooks/usePostCardHandler';
 import ImageHeart from '../ImageHeart';
 
 import { DoubleTabView } from '@/components/@common/atoms';
-import { ImageCarouselProps } from '@/components/@common/organisms/ImageCarousel/components/ImageCarouselList';
-import ImageCarousel from '@/components/@common/organisms/ImageCarousel/providers/ImageCarousel';
+import { ImageCarousel } from '@/components/@common/organisms/ImageCarousel';
+import type { ImageCarouselListProps } from '@/components/@common/organisms/ImageCarousel';
 
-type PostCardImageCarouselState = Omit<ImageCarouselProps, 'width' | 'height' | 'onScroll' | 'scrollEventThrottle'>;
+type PostCardImageCarouselState = Omit<ImageCarouselListProps, 'width' | 'height' | 'onScroll' | 'scrollEventThrottle'>;
 
 interface PostCardImageCarouselActions {
     onDoublePress(): void;

@@ -3,8 +3,7 @@ import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import { ImageHeart, Interactive, PostCardImageCarousel } from '../components';
 import { HeartAnimationActionsContext, HeartAnimationStateContext } from '../contexts/HeartAnimation';
 
-import useImageCarouselHandler from '@/components/@common/organisms/ImageCarousel/hooks/useImageCarouselHandler';
-import ImageCarousel from '@/components/@common/organisms/ImageCarousel/providers/ImageCarousel';
+import { ImageCarousel, useImageCarouselHandler } from '@/components/@common/organisms/ImageCarousel';
 import PostContents from '@/components/share/molecules/PostContents';
 import PostHeader from '@/components/share/molecules/PostHeader';
 

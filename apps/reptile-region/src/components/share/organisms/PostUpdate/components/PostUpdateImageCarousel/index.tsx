@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { ImageType } from '<image>';
 import { Trash } from '@/assets/icons';
-import ImageCarousel from '@/components/@common/organisms/ImageCarousel/providers/ImageCarousel';
+import { ImageCarousel } from '@/components/@common/organisms/ImageCarousel';
 
 type ImageItemOverlayState = {
     image: ImageType;

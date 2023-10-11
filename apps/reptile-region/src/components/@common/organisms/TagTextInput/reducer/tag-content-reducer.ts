@@ -1,4 +1,4 @@
-import type { TagContentsActions, TagContentsState } from '../type';
+import type { TagContentsActions, TagContentsState } from '../types';
 
 const tagContentReducer = (state: TagContentsState, action: TagContentsActions): TagContentsState => {
     switch (action.type) {

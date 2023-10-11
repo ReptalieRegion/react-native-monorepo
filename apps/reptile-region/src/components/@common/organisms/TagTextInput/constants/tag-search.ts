@@ -1,4 +1,4 @@
-import type { TagSearchState } from '../type';
+import type { TagSearchState } from '../types';
 
 export const DEFAULT_SEARCH: TagSearchState = {
     keyword: '',

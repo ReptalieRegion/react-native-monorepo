@@ -6,7 +6,7 @@ import ImageIndicators from '../components/ImageIndicators';
 import { ImageCarouselRefContext, ImageIndicatorActionsContext, ImagesIndicatorStateContext } from '../contexts/ImageIndicator';
 import imageIndicatorReducer from '../reducer/image-indicator-reducer';
 
-import { ImageType } from '<image>';
+import type { ImageType } from '<image>';
 
 type ImageCarouselProps = {
     children: ReactNode;

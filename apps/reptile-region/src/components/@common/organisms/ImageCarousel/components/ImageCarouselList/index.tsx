@@ -6,6 +6,8 @@ import useImageCarouselRef from '../../hooks/useImageCarouselRef';
 
 import BaseImageCarousel, { BaseImageCarouselProps } from '@/components/@common/molecules/BaseImageCarousel';
 
+export type ImageCarouselListProps = BaseImageCarouselProps;
+
 export default function ImageCarouselList({
     images,
     width,
@@ -13,7 +15,7 @@ export default function ImageCarouselList({
     ImageItemOverlay,
     onScroll,
     ...rest
-}: BaseImageCarouselProps) {
+}: ImageCarouselListProps) {
     const { imageCarouselRef } = useImageCarouselRef();
     const { handleScrollCalcIndicator } = useImageCarouselHandler();
 

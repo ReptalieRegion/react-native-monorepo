@@ -1,4 +1,4 @@
-import type { ImagesIndicatorActions, ImagesIndicatorState } from '../contexts/ImageIndicator';
+import type { ImagesIndicatorActions, ImagesIndicatorState } from '../types';
 
 const imageIndicatorReducer = (state: ImagesIndicatorState, actions: ImagesIndicatorActions): ImagesIndicatorState => {
     switch (actions.type) {

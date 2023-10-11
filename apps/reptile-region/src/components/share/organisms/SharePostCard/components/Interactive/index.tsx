@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import InteractiveHeart from '../InteractiveHeart';
 
 import { Comment } from '@/assets/icons';
-import ImageCarousel from '@/components/@common/organisms/ImageCarousel/providers/ImageCarousel';
+import { ImageCarousel } from '@/components/@common/organisms/ImageCarousel';
 
 type InteractiveState = {
     isLike: boolean | undefined;
