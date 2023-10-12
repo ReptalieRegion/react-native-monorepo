@@ -19,11 +19,13 @@ export type PhotoActions = InitPhotos | AddPhotos;
 export type PhotoSelectState = {
     currentSelectedPhoto: PhotoIdentifier | null;
     selectedPhotos: PhotoIdentifier[];
+    isLimit: boolean;
 };
 
 interface SelectPhoto {
     type: 'SELECT_PHOTO';
     photo: PhotoIdentifier;
+    limit: number | undefined;
 }
 
 interface DeleteSelectedPhoto {

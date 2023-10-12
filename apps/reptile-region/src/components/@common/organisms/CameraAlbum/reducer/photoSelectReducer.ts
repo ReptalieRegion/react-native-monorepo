@@ -2,7 +2,10 @@ import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 
 import type { PhotoSelectActions, PhotoSelectState } from '../types';
 
-const selectPhoto = (state: PhotoSelectState, { photo }: { photo: PhotoIdentifier }): PhotoSelectState => {
+const selectPhoto = (
+    state: PhotoSelectState,
+    { photo, limit }: { photo: PhotoIdentifier; limit: number | undefined },
+): PhotoSelectState => {
     const { currentSelectedPhoto, selectedPhotos } = state;
 
     const actionType =
@@ -10,6 +13,8 @@ const selectPhoto = (state: PhotoSelectState, { photo }: { photo: PhotoIdentifie
             ? 'DELETE'
             : selectedPhotos.findIndex(({ node }) => node.image.uri === photo.node.image.uri) !== -1
             ? 'CHANGE_CURRENT_SELECTED_PHOTO'
+            : limit !== undefined && selectedPhotos.length >= limit
+            ? 'LIMIT'
             : 'ADD';
 
     switch (actionType) {
@@ -23,17 +28,22 @@ const selectPhoto = (state: PhotoSelectState, { photo }: { photo: PhotoIdentifie
                 ...state,
                 currentSelectedPhoto: newCurrentSelectedPhoto,
                 selectedPhotos: filteredSelectedPhotos,
+                isLimit: false,
             };
         case 'CHANGE_CURRENT_SELECTED_PHOTO':
             return {
                 ...state,
                 currentSelectedPhoto: photo,
+                isLimit: false,
             };
+        case 'LIMIT':
+            return { ...state, isLimit: true };
         case 'ADD':
             return {
                 ...state,
                 currentSelectedPhoto: photo,
                 selectedPhotos: [...state.selectedPhotos, photo],
+                isLimit: false,
             };
         default:
             return state;
@@ -55,7 +65,7 @@ const deleteSelectedPhoto = (state: PhotoSelectState, uri: string): PhotoSelectS
 const photoSelectReducer = (state: PhotoSelectState, actions: PhotoSelectActions): PhotoSelectState => {
     switch (actions.type) {
         case 'SELECT_PHOTO':
-            return selectPhoto(state, { photo: actions.photo });
+            return selectPhoto(state, { photo: actions.photo, limit: actions.limit });
         case 'INIT_CURRENT_PHOTO':
             return { ...state, currentSelectedPhoto: actions.photo };
         case 'DELETE_SELECTED_PHOTO':

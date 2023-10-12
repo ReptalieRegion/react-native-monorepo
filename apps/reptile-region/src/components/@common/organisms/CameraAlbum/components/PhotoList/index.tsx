@@ -1,21 +1,16 @@
 import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { FlashList, ListRenderItem } from '@shopify/flash-list';
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useCameraAlbumHandler from '../../hooks/useCameraAlbumHandler';
 import usePhoto from '../../hooks/usePhoto';
-import usePhotoSelect from '../../hooks/usePhotoSelect';
 import PhotoIndicators from '../PhotoIndicators';
 
 import SquareImage from '@/components/@common/atoms/SquareImage';
 import { MAX_PHOTO_COUNT } from '@/env/constants';
 import { useToast } from '@/overlay/Toast';
-
-type ExtraData = {
-    selectPhotoLength: number;
-};
 
 type PhotoListProps = {
     numColumns: number;
@@ -27,22 +22,26 @@ export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: Photo
     const imageWidth = width / numColumns - 2;
 
     const { photos } = usePhoto();
-    const { selectedPhotos } = usePhotoSelect();
-    const { selectPhoto, loadPhotos, initPhotos } = useCameraAlbumHandler();
     const { openToast } = useToast();
-    const newExtraData: ExtraData = {
-        selectPhotoLength: selectedPhotos.length,
+    const { selectPhoto, loadPhotos, initPhotos } = useCameraAlbumHandler({
+        limit: MAX_PHOTO_COUNT,
+        limitCallback: () => openToast({ contents: `이미지는 최대 ${MAX_PHOTO_COUNT}개 입니다.`, severity: 'warning' }),
+    });
+
+    useEffect(() => {
+        initPhotos({ first: loadPhotoLimit });
+    }, [initPhotos, loadPhotoLimit]);
+
+    const loadMorePhotos = async () => {
+        const lastPhoto = photos?.at(-1)?.node.image.uri;
+        await loadPhotos({ first: loadPhotoLimit, after: lastPhoto, assetType: 'Photos' });
     };
 
-    const renderItem: ListRenderItem<PhotoIdentifier> = ({ item, extraData }) => {
+    const renderItem: ListRenderItem<PhotoIdentifier> = ({ item }) => {
         const uri = item.node.image.uri;
-        const { selectPhotoLength } = extraData as ExtraData;
+
         const handlePressImage = () => {
-            if (selectPhotoLength < MAX_PHOTO_COUNT) {
-                selectPhoto({ photo: item });
-            } else {
-                openToast({ contents: `이미지는 최대 ${MAX_PHOTO_COUNT}개 입니다.`, severity: 'warning' });
-            }
+            selectPhoto({ photo: item });
         };
 
         return (
@@ -57,20 +56,10 @@ export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: Photo
         );
     };
 
-    useEffect(() => {
-        initPhotos({ first: loadPhotoLimit });
-    }, [initPhotos, loadPhotoLimit]);
-
-    const loadMorePhotos = useCallback(async () => {
-        const lastPhoto = photos?.at(-1)?.node.image.uri;
-        await loadPhotos({ first: loadPhotoLimit, after: lastPhoto, assetType: 'Photos' });
-    }, [loadPhotoLimit, loadPhotos, photos]);
-
     return (
         <View style={styles.container}>
             <FlashList
                 data={photos}
-                extraData={newExtraData}
                 numColumns={numColumns}
                 contentContainerStyle={styles.squareContainer}
                 keyExtractor={(item) => item.node.image.uri}

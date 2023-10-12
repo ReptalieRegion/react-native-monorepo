@@ -26,6 +26,7 @@ export default function ToastContainer() {
     }));
 
     useEffect(() => {
+        Haptic.trigger('impactLight');
         if (show) {
             translateY.value = withSpring(top, { duration: 1000 }, (firstFinished) => {
                 if (firstFinished) {
@@ -43,7 +44,6 @@ export default function ToastContainer() {
                 translateY.value = 0;
             };
         }
-        Haptic.trigger('impactLight');
     }, [closeToast, show, top, translateX, translateY, width]);
 
     return (
