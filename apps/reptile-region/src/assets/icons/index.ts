@@ -14,3 +14,7 @@ export { default as PostWriteIcon } from './PostWriteIcon';
 export { default as Share } from './Share';
 export { default as UpArrow } from './UpArrow';
 export { default as Trash } from './Trash';
+export { default as Error } from './Error';
+export { default as Warning } from './Warning';
+export { default as Info } from './Info';
+export { default as Success } from './Success';

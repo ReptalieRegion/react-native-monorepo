@@ -2,4 +2,6 @@ export const S3_IMAGE_PREFIX = 'https://reptalie-region.s3.ap-northeast-2.amazon
 
 export const AUTH_KEYS = ['access_token', 'refresh_token'];
 
+export const MAX_PHOTO_COUNT = 5;
+
 export const POST_MAX_CONTENT_LENGTH = 500;

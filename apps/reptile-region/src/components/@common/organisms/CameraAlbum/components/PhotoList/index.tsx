@@ -10,6 +10,7 @@ import usePhotoSelect from '../../hooks/usePhotoSelect';
 import PhotoIndicators from '../PhotoIndicators';
 
 import SquareImage from '@/components/@common/atoms/SquareImage';
+import { MAX_PHOTO_COUNT } from '@/env/constants';
 import { useToast } from '@/overlay/Toast';
 
 type ExtraData = {
@@ -37,10 +38,10 @@ export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: Photo
         const uri = item.node.image.uri;
         const { selectPhotoLength } = extraData as ExtraData;
         const handlePressImage = () => {
-            if (selectPhotoLength < 5) {
+            if (selectPhotoLength < MAX_PHOTO_COUNT) {
                 selectPhoto({ photo: item });
             } else {
-                openToast({ contents: '이미지 개수 초과', severity: 'error' });
+                openToast({ contents: `이미지는 최대 ${MAX_PHOTO_COUNT}개 입니다.`, severity: 'warning' });
             }
         };
 

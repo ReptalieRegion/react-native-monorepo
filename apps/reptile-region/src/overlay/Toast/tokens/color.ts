@@ -1,6 +1,6 @@
 import { color } from 'design-system';
 
-import { ToastSeverity } from '../types';
+import { Error, Info, Success, Warning } from '@/assets/icons';
 
 const TEXT_COLOR = {
     error: 'error-toast',
@@ -23,7 +23,7 @@ const BACKGROUND_COLOR = {
     success: color.Green[75].toString(),
 } as const;
 
-const TOAST_STYLES = {
+export const TOAST_STYLES = {
     error: {
         text: TEXT_COLOR.error,
         icon: ICON_COLOR.error,
@@ -46,12 +46,9 @@ const TOAST_STYLES = {
     },
 } as const;
 
-const createToastStyles = (severity: ToastSeverity | null) => {
-    if (severity === null) {
-        return TOAST_STYLES.error;
-    }
-
-    return TOAST_STYLES[severity];
-};
-
-export default createToastStyles;
+export const ICON_MAP = {
+    error: Error,
+    warning: Warning,
+    info: Info,
+    success: Success,
+} as const;
