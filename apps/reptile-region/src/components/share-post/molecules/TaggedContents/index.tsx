@@ -43,17 +43,15 @@ export default function TaggedContents({ uuid, contents, onPressTag }: TaggedCon
                 onTextLayout={onTextLayout}
             >
                 {contents?.split(' ').map((content, index) => {
-                    const key = content + index.toString();
                     const isTag = content.startsWith('@');
 
-                    if (isTag) {
-                        return <Tag contents={content} onPressTag={onPressTag} />;
-                    }
-
                     return (
-                        <Typo key={key} variant="body2">
-                            {content}
-                        </Typo>
+                        <ConditionalRenderer
+                            key={index}
+                            condition={isTag}
+                            trueContent={<Tag contents={content} onPressTag={onPressTag} />}
+                            falseContent={<Typo variant="body2">{content}</Typo>}
+                        />
                     );
                 })}
             </Typo>
