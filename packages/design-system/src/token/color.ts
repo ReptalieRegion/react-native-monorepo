@@ -3,6 +3,7 @@ import { makeColor } from '../utils/color-utils';
 const color = {
     Red: {
         50: makeColor('#FFEBEEFF'),
+        75: makeColor('#FDEDEDFF'),
         100: makeColor('#FFCDD2FF'),
         200: makeColor('#EF9A9AFF'),
         300: makeColor('#E57373FF'),
@@ -16,6 +17,7 @@ const color = {
         A200: makeColor('#FF5252FF'),
         A400: makeColor('#FF1744FF'),
         A700: makeColor('#D50000FF'),
+        A800: makeColor('#5F2120FF'),
     },
     Pink: {
         50: makeColor('#FCE4ECFF'),
@@ -83,6 +85,7 @@ const color = {
     },
     Blue: {
         50: makeColor('#E3F2FDFF'),
+        75: makeColor('#E5F6FDFF'),
         100: makeColor('#BBDEFbFF'),
         200: makeColor('#90CAF9FF'),
         300: makeColor('#64B5F6FF'),
@@ -96,6 +99,7 @@ const color = {
         A200: makeColor('#448AFFFF'),
         A400: makeColor('#2979FFFF'),
         A700: makeColor('#2962FFFF'),
+        A800: makeColor('#014361FF'),
     },
     LightBlue: {
         50: makeColor('#E1F5FEFF'),
@@ -151,6 +155,7 @@ const color = {
     },
     Green: {
         50: makeColor('#E8F5E9FF'),
+        75: makeColor('#EDF7EDFF'),
         100: makeColor('#C8E6C9FF'),
         200: makeColor('#A5D6A7FF'),
         300: makeColor('#81C784FF'),
@@ -165,6 +170,7 @@ const color = {
         A200: makeColor('#69F0AEFF'),
         A400: makeColor('#00E676FF'),
         A700: makeColor('#00C853FF'),
+        A800: makeColor('#1E4620FF'),
     },
     LightGreen: {
         50: makeColor('#F1F8E9FF'),
@@ -232,6 +238,7 @@ const color = {
     },
     Orange: {
         50: makeColor('#FFF3E0FF'),
+        75: makeColor('#FFF4E5FF'),
         100: makeColor('#FFE0B2FF'),
         200: makeColor('#FFCC80FF'),
         300: makeColor('#FFB74DFF'),
@@ -239,6 +246,7 @@ const color = {
         500: makeColor('#FF9800FF'),
         600: makeColor('#FB8C00FF'),
         700: makeColor('#F57C00FF'),
+        750: makeColor('#ED6C02FF'),
         800: makeColor('#EF6C00FF'),
         900: makeColor('#E65100FF'),
         A100: makeColor('#FFD180FF'),
@@ -277,6 +285,7 @@ const color = {
         A200: makeColor('#BCAAA4FF'),
         A400: makeColor('#8D6E63FF'),
         A700: makeColor('#5D4037FF'),
+        A800: makeColor('#663C00FF'),
     },
     Gray: {
         50: makeColor('#FAFAFAFF'),

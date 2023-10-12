@@ -96,4 +96,8 @@ export const textLightColor: TextLightColor = {
     require: color.Red[600].toString(),
     error: color.Red[500].toString(),
     default: color.Black.toString(),
+    'error-toast': color.Red.A800.toString(),
+    'warning-toast': color.Brown.A800.toString(),
+    'info-toast': color.Blue.A800.toString(),
+    'success-toast': color.Green.A800.toString(),
 } as const;

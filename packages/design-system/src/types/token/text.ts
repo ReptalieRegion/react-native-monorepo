@@ -28,7 +28,18 @@ export type Variant = {
     };
 };
 
-export type TextColorType = 'primary' | 'secondary' | 'placeholder' | 'error' | 'surface' | 'require' | 'default';
+export type TextColorType =
+    | 'primary'
+    | 'secondary'
+    | 'placeholder'
+    | 'error'
+    | 'surface'
+    | 'require'
+    | 'default'
+    | 'error-toast'
+    | 'warning-toast'
+    | 'info-toast'
+    | 'success-toast';
 export type TextLightColor = {
     [key in TextColorType]: ColorValue;
 };
