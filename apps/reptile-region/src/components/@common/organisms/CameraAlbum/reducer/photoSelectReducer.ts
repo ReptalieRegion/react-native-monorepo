@@ -2,10 +2,7 @@ import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 
 import type { PhotoSelectActions, PhotoSelectState } from '../types';
 
-const selectPhoto = (
-    state: PhotoSelectState,
-    { photo, limitCount, limitCallback }: { photo: PhotoIdentifier; limitCount: number; limitCallback(): void },
-): PhotoSelectState => {
+const selectPhoto = (state: PhotoSelectState, { photo }: { photo: PhotoIdentifier }): PhotoSelectState => {
     const { currentSelectedPhoto, selectedPhotos } = state;
 
     const actionType =
@@ -13,8 +10,6 @@ const selectPhoto = (
             ? 'DELETE'
             : selectedPhotos.findIndex(({ node }) => node.image.uri === photo.node.image.uri) !== -1
             ? 'CHANGE_CURRENT_SELECTED_PHOTO'
-            : selectedPhotos.length >= limitCount
-            ? 'LIMIT'
             : 'ADD';
 
     switch (actionType) {
@@ -40,9 +35,6 @@ const selectPhoto = (
                 currentSelectedPhoto: photo,
                 selectedPhotos: [...state.selectedPhotos, photo],
             };
-        case 'LIMIT':
-            limitCallback();
-            return state;
         default:
             return state;
     }
@@ -63,11 +55,7 @@ const deleteSelectedPhoto = (state: PhotoSelectState, uri: string): PhotoSelectS
 const photoSelectReducer = (state: PhotoSelectState, actions: PhotoSelectActions): PhotoSelectState => {
     switch (actions.type) {
         case 'SELECT_PHOTO':
-            return selectPhoto(state, {
-                photo: actions.photo,
-                limitCount: actions.selectLimitCount,
-                limitCallback: actions.limitCallback,
-            });
+            return selectPhoto(state, { photo: actions.photo });
         case 'INIT_CURRENT_PHOTO':
             return { ...state, currentSelectedPhoto: actions.photo };
         case 'DELETE_SELECTED_PHOTO':

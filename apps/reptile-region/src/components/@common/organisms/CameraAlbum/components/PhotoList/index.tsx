@@ -6,9 +6,15 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useCameraAlbumHandler from '../../hooks/useCameraAlbumHandler';
 import usePhoto from '../../hooks/usePhoto';
+import usePhotoSelect from '../../hooks/usePhotoSelect';
 import PhotoIndicators from '../PhotoIndicators';
 
 import SquareImage from '@/components/@common/atoms/SquareImage';
+import { useToast } from '@/overlay/Toast';
+
+type ExtraData = {
+    selectPhotoLength: number;
+};
 
 type PhotoListProps = {
     numColumns: number;
@@ -20,34 +26,35 @@ export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: Photo
     const imageWidth = width / numColumns - 2;
 
     const { photos } = usePhoto();
+    const { selectedPhotos } = usePhotoSelect();
     const { selectPhoto, loadPhotos, initPhotos } = useCameraAlbumHandler();
+    const { openToast } = useToast();
+    const newExtraData: ExtraData = {
+        selectPhotoLength: selectedPhotos.length,
+    };
 
-    const renderItem: ListRenderItem<PhotoIdentifier> = useCallback(
-        ({ item }) => {
-            const uri = item.node.image.uri;
-            const handlePressImage = () => {
-                selectPhoto({
-                    photo: item,
-                    selectLimitCount: 5,
-                    limitCallback: () => {
-                        console.log('이미지 개수 초과');
-                    },
-                });
-            };
+    const renderItem: ListRenderItem<PhotoIdentifier> = ({ item, extraData }) => {
+        const uri = item.node.image.uri;
+        const { selectPhotoLength } = extraData as ExtraData;
+        const handlePressImage = () => {
+            if (selectPhotoLength < 5) {
+                selectPhoto({ photo: item });
+            } else {
+                openToast({ contents: '이미지 개수 초과', severity: 'error' });
+            }
+        };
 
-            return (
-                <TouchableOpacity onPress={handlePressImage} activeOpacity={0.5}>
-                    <View style={[styles.photoItemContainer, { width: imageWidth, height: imageWidth }]}>
-                        <SquareImage image={{ src: uri }} size={imageWidth} />
-                        <View style={styles.photoIndicators}>
-                            <PhotoIndicators uri={uri} />
-                        </View>
+        return (
+            <TouchableOpacity onPress={handlePressImage} activeOpacity={0.5}>
+                <View style={[styles.photoItemContainer, { width: imageWidth, height: imageWidth }]}>
+                    <SquareImage image={{ src: uri }} size={imageWidth} />
+                    <View style={styles.photoIndicators}>
+                        <PhotoIndicators uri={uri} />
                     </View>
-                </TouchableOpacity>
-            );
-        },
-        [imageWidth, selectPhoto],
-    );
+                </View>
+            </TouchableOpacity>
+        );
+    };
 
     useEffect(() => {
         initPhotos({ first: loadPhotoLimit });
@@ -62,6 +69,7 @@ export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: Photo
         <View style={styles.container}>
             <FlashList
                 data={photos}
+                extraData={newExtraData}
                 numColumns={numColumns}
                 contentContainerStyle={styles.squareContainer}
                 keyExtractor={(item) => item.node.image.uri}

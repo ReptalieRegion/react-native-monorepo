@@ -50,16 +50,8 @@ const useCameraAlbumHandler = () => {
     );
 
     const selectPhoto = useCallback(
-        ({
-            photo,
-            selectLimitCount,
-            limitCallback,
-        }: {
-            photo: PhotoIdentifier;
-            selectLimitCount: number;
-            limitCallback: () => void;
-        }) => {
-            photoSelectDispatch({ type: 'SELECT_PHOTO', photo, selectLimitCount, limitCallback });
+        ({ photo }: { photo: PhotoIdentifier }) => {
+            photoSelectDispatch({ type: 'SELECT_PHOTO', photo });
         },
         [photoSelectDispatch],
     );

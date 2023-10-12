@@ -24,9 +24,8 @@ export type PhotoSelectState = {
 interface SelectPhoto {
     type: 'SELECT_PHOTO';
     photo: PhotoIdentifier;
-    selectLimitCount: number;
-    limitCallback(): void;
 }
+
 interface DeleteSelectedPhoto {
     type: 'DELETE_SELECTED_PHOTO';
     uri: string;
