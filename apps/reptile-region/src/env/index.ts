@@ -1,4 +1,5 @@
-import { END_POINT_URI, HOME_PAGE_URI, ModeType } from '@env';
+import { END_POINT_URI, HOME_PAGE_URI } from '@env';
+import type { ModeType } from '@env';
 
 import { CURRENT_IP, REACT_NATIVE_ENV } from './config';
 

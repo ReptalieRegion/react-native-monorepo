@@ -1,9 +1,10 @@
-import { FlashList, FlashListProps, ListRenderItemInfo } from '@shopify/flash-list';
+import { FlashList } from '@shopify/flash-list';
+import type { FlashListProps, ListRenderItemInfo } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { ImageType } from '<image>';
+import type { ImageType } from '<image>';
 import { imageUriParsing } from '@/utils/development';
 
 export type BaseImageCarouselProps = {

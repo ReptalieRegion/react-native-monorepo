@@ -1,4 +1,4 @@
-import { ColorValue, TextStyle } from 'react-native';
+import type { ColorValue, TextStyle } from 'react-native';
 
 export type FontWeightType = 'heavy' | 'bold' | 'semibold' | 'medium' | 'regular' | 'light' | 'thin';
 export type FontWeight = {

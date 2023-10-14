@@ -5,7 +5,7 @@ import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-re
 
 import useBottomSheetAnimatedAction from '../hooks/useBottomSheetAnimatedAction';
 import useBottomSheetAnimatedState from '../hooks/useBottomSheetAnimatedState';
-import { BackDropStyle } from '../types/bottom-sheet';
+import type { BackDropStyle } from '../types/bottom-sheet';
 
 export type BackDropProps = {
     style?: BackDropStyle;

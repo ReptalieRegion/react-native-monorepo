@@ -1,9 +1,11 @@
-import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
-import { NativeStackHeaderProps } from '@react-navigation/native-stack';
+import type { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
+import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import React from 'react';
 
-import BaseHeader, { HeaderProps } from '../BaseHeader';
-import BottomSheetHeader, { BottomSheetHeaderProps } from '../BottomSheetHeader';
+import BaseHeader from '../BaseHeader';
+import type { HeaderProps } from '../BaseHeader';
+import BottomSheetHeader from '../BottomSheetHeader';
+import type { BottomSheetHeaderProps } from '../BottomSheetHeader';
 
 export const createNativeStackHeader = (headerProps?: HeaderProps) => {
     return (props: NativeStackHeaderProps) => {

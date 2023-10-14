@@ -2,7 +2,7 @@ import { fakerKO } from '@faker-js/faker';
 
 import { createContents } from './createTagIdsAndContent';
 
-import { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
+import type { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
 
 export type CreateCommentReplyProps = {

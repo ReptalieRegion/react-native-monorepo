@@ -1,8 +1,8 @@
 import { fakerKO } from '@faker-js/faker';
 import { factory, oneOf, primaryKey } from '@mswjs/data';
-import { Entity } from '@mswjs/data/lib/glossary';
+import type { Entity } from '@mswjs/data/lib/glossary';
 import { PrimaryKey } from '@mswjs/data/lib/primaryKey';
-import { OneOf } from '@mswjs/data/lib/relations/Relation';
+import type { OneOf } from '@mswjs/data/lib/relations/Relation';
 
 export type DBType = 'user' | 'follow' | 'sharePost' | 'shareLike' | 'shareComment' | 'shareCommentReplies' | 'image';
 

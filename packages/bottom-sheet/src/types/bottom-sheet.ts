@@ -1,5 +1,5 @@
-import { Insets, ViewStyle } from 'react-native';
-import { SharedValue } from 'react-native-reanimated';
+import type { Insets, ViewStyle } from 'react-native';
+import type { SharedValue } from 'react-native-reanimated';
 
 export type BackDropStyle = Pick<ViewStyle, 'backgroundColor'>;
 

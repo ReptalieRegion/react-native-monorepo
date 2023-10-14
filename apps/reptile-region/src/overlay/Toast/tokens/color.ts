@@ -1,4 +1,4 @@
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 
 import { Error, Info, Success, Warning } from '@/assets/icons';
 

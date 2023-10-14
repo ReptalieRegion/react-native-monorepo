@@ -1,5 +1,5 @@
 import type { NativeStackHeaderProps, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 import React, { Suspense, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 

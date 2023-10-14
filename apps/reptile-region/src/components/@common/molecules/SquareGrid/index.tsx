@@ -1,4 +1,5 @@
-import { ContentStyle, FlashList, FlashListProps, ListRenderItemInfo } from '@shopify/flash-list';
+import { FlashList } from '@shopify/flash-list';
+import type { ContentStyle, FlashListProps, ListRenderItemInfo } from '@shopify/flash-list';
 import React, { useCallback } from 'react';
 import { Platform } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';

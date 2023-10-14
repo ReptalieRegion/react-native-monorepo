@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 
 import { OverlayActionContext } from '../contexts/overlay-context';
-import { OverlayProp, ParamListBase, ScreenComponentType } from '../types/overlay';
+import type { OverlayProp, ParamListBase, ScreenComponentType } from '../types/overlay';
 
 const useOverlay = <ParamList extends ParamListBase>(): OverlayProp<ParamList> => {
     const dispatch = useContext(OverlayActionContext);

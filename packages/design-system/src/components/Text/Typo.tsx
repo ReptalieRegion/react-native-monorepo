@@ -1,8 +1,9 @@
 import React from 'react';
-import { TextProps, Text } from 'react-native';
+import { Text } from 'react-native';
+import type { TextProps } from 'react-native';
 
 import { textLightColor, variantMap } from '../../token/text';
-import { TextAlign, TextColorType, VariantType, TextAlignVertical } from '../../types/token/text';
+import type { TextAlign, TextColorType, VariantType, TextAlignVertical } from '../../types/token/text';
 
 export interface TypoProps extends Omit<TextProps, 'style'> {
     variant?: VariantType;

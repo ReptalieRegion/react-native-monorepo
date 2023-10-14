@@ -1,6 +1,6 @@
 import FlashList from '@shopify/flash-list/dist/FlashList';
 
-import { ImageType } from '<image>';
+import type { ImageType } from '<image>';
 
 export type ImageCarouselRef = {
     imageCarouselRef: React.RefObject<FlashList<ImageType>>;

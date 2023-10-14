@@ -1,4 +1,4 @@
-import { AssetType, PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import type { AssetType, PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 
 export type PhotoState = {
     photos: PhotoIdentifier[] | null;

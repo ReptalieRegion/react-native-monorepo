@@ -1,10 +1,10 @@
-import { TouchableTypo } from 'design-system';
+import { TouchableTypo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Follow from '../../atoms/Follow';
 
-import { ImageType } from '<image>';
+import type { ImageType } from '<image>';
 import { KebabMenu } from '@/assets/icons';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 

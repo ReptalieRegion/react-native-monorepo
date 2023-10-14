@@ -1,4 +1,4 @@
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { Platform, StatusBar, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

@@ -1,4 +1,5 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 
 import { ImageHeart, Interactive, PostCardImageCarousel } from '../components';
 import { HeartAnimationActionsContext, HeartAnimationStateContext } from '../contexts/HeartAnimation';

@@ -1,6 +1,7 @@
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 import React from 'react';
-import { ColorValue, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import type { ColorValue } from 'react-native';
 
 import useImageIndicator from '../../hooks/useImageIndicator';
 

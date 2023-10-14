@@ -1,4 +1,5 @@
-import React, { ReactNode, useReducer } from 'react';
+import React, { useReducer } from 'react';
+import type { ReactNode } from 'react';
 
 import CommentTextInputEditor from '../components/TextInputEditor';
 import { CommentActionContext, CommentDefaultIdState, CommentStateContext } from '../contexts/CommentContext';

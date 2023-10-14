@@ -1,4 +1,4 @@
-import { GestureResponderEvent } from 'react-native';
+import type { GestureResponderEvent } from 'react-native';
 
 interface DoubleTabInfo {
     isDoubleTab: boolean;

@@ -1,7 +1,9 @@
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
-import { Typo } from 'design-system';
+import { Typo } from '@reptile-region/design-system';
+import { FlashList } from '@shopify/flash-list';
+import type { ListRenderItemInfo } from '@shopify/flash-list';
 import React, { useCallback, useMemo } from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import type { ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useTagHandler from '../../hooks/useTagHandler';

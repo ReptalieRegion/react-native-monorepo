@@ -67,3 +67,9 @@ yarn-error.log
 
 # .yarnrc.yml
 .yarnrc.yml
+
+# library build 폴더
+lib/
+
+# typescript
+*.tsbuildinfo

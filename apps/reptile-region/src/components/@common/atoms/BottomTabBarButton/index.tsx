@@ -1,14 +1,9 @@
-import { Typo, color } from 'design-system';
+import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import Animated, {
-    WithTimingConfig,
-    useAnimatedStyle,
-    useSharedValue,
-    withSequence,
-    withTiming,
-} from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
+import type { WithTimingConfig } from 'react-native-reanimated';
 
 import type { IconProps } from '<Icon>';
 

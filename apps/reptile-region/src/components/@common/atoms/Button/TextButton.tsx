@@ -1,8 +1,10 @@
-import { Typo, color, VariantType, TextAlign, TextAlignVertical, TextColorType } from 'design-system';
+import { Typo, color } from '@reptile-region/design-system';
+import type { VariantType, TextAlign, TextAlignVertical, TextColorType } from '@reptile-region/design-system';
 import React from 'react';
-import { StyleSheet, TextStyle, TouchableOpacityProps, View, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import type { TextStyle, TouchableOpacityProps, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { GenericTouchableProps } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
+import type { GenericTouchableProps } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
 
 type ButtonType = 'view' | 'text';
 

@@ -1,4 +1,4 @@
-import { ToastState } from '../types';
+import type { ToastState } from '../types';
 
 export const DEFAULT_TOAST_STATE: ToastState = {
     show: false,

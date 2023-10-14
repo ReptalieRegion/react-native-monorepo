@@ -1,10 +1,10 @@
+import { fakerKO } from '@faker-js/faker';
 import { rest } from 'msw';
 
 import createPostUserProfile from '../service/createPostUserProfile';
 import createSearchUser from '../service/createSearchUser';
 
 import ENV from '@/env';
-import users from '@/mocks/data/user.json';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
@@ -32,8 +32,8 @@ const userController = () => {
             const id = req.params.userId;
             return res(ctx.status(200), ctx.json({ user: { id } }));
         }),
-        rest.post(BASE_URI + 'sign-up', (req, res, ctx) => {
-            return res(ctx.status(200), ctx.json({ userId: users[Math.floor(Math.random() * users.length)]._id }));
+        rest.post(BASE_URI + 'sign-up', (_, res, ctx) => {
+            return res(ctx.status(200), ctx.json({ userId: fakerKO.string.uuid() }));
         }),
         /** PUT */
         rest.put(BASE_URI + 'users/:userId/follow', (req, res, ctx) => {

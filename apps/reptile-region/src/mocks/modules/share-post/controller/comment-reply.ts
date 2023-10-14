@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 
-import createCommentReply, { CreateCommentReplyProps } from '../service/createCommentReply';
+import createCommentReply from '../service/createCommentReply';
+import type { CreateCommentReplyProps } from '../service/createCommentReply';
 
 import type { UpdateCommentReplyResponse } from '<api/share/post/comment-reply>';
 import ENV from '@/env';

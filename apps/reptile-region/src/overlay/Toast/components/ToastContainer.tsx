@@ -1,4 +1,4 @@
-import { Typo } from 'design-system';
+import { Typo } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
@@ -44,6 +44,8 @@ export default function ToastContainer() {
                 translateY.value = 0;
             };
         }
+
+        return;
     }, [closeToast, show, top, translateX, translateY, width]);
 
     return (

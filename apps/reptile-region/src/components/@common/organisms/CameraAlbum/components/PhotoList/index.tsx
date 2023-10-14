@@ -1,5 +1,6 @@
-import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
-import { FlashList, ListRenderItem } from '@shopify/flash-list';
+import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { FlashList } from '@shopify/flash-list';
+import type { ListRenderItem } from '@shopify/flash-list';
 import React, { useEffect } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';

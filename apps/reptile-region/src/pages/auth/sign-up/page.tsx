@@ -1,4 +1,4 @@
-import { Typo, color } from 'design-system';
+import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
@@ -113,6 +113,8 @@ const SignUpPage = () => {
                                         </View>
                                     </View>
                                 );
+                            default:
+                                return null;
                         }
                     })}
                     <TextButton text="가입하기" textInfo={{ variant: 'body4' }} type="view" />

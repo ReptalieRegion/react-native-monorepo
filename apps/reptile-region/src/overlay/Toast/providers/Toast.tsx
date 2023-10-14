@@ -1,4 +1,5 @@
-import React, { ReactNode, useReducer } from 'react';
+import React, { useReducer } from 'react';
+import type { ReactNode } from 'react';
 
 import ToastContainer from '../components/ToastContainer';
 import { DEFAULT_TOAST_STATE } from '../constants/tost';

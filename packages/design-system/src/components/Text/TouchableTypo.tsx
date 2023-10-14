@@ -1,9 +1,9 @@
 import React from 'react';
-import { TextProps } from 'react-native';
+import type { TextProps } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
 import { textLightColor, variantMap } from '../../token/text';
-import { TextAlign, TextColorType, VariantType, TextAlignVertical } from '../../types/token/text';
+import type { TextAlign, TextColorType, VariantType, TextAlignVertical } from '../../types/token/text';
 
 export interface TouchableTextProps extends Omit<TextProps, 'style'> {
     variant?: VariantType;

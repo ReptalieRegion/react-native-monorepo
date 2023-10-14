@@ -1,5 +1,5 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackHeaderProps, NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { NativeStackHeaderProps, NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 import * as Haptic from 'react-native-haptic-feedback';
 

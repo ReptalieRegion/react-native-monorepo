@@ -1,6 +1,7 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ContentStyle, FlashList, ListRenderItem } from '@shopify/flash-list';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { FlashList } from '@shopify/flash-list';
+import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import React, { useCallback, useRef, useState } from 'react';
 import { RefreshControl } from 'react-native';
 

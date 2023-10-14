@@ -1,4 +1,4 @@
-import { FontWeight, TextLightColor, Variant } from '../types/token/text';
+import type { FontWeight, TextLightColor, Variant } from '../types/token/text';
 
 import color from './color';
 

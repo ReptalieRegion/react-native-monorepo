@@ -1,8 +1,10 @@
-import { Typo, color } from 'design-system';
+import { Typo, color } from '@reptile-region/design-system';
 import React, { useEffect, useRef } from 'react';
-import { ColorValue, DimensionValue, Platform, StyleSheet, TextInputProps, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
+import type { ColorValue, DimensionValue, TextInputProps } from 'react-native';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import Animated, { Easing, WithTimingConfig, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import type { WithTimingConfig } from 'react-native-reanimated';
 
 type FontSizes = 'small' | 'normal' | 'large';
 

@@ -1,12 +1,7 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Animated, {
-    WithTimingConfig,
-    useAnimatedStyle,
-    useSharedValue,
-    withSequence,
-    withTiming,
-} from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
+import type { WithTimingConfig } from 'react-native-reanimated';
 
 import useHeartAnimation from '../../hooks/useHeartAnimation';
 

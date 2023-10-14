@@ -1,4 +1,5 @@
-import React, { ReactNode, useMemo, useReducer } from 'react';
+import React, { useMemo, useReducer } from 'react';
+import type { ReactNode } from 'react';
 
 import { FloatingActionButtonActionsContext, FloatingActionButtonStateContext } from '../contexts/FloatingActionButtons';
 import floatingButtonAnimationReducer from '../reducer/FloatingButtonAnimation';

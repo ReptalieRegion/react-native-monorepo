@@ -3,12 +3,8 @@ import { rest } from 'msw';
 import createPostList from '../service/createPostList';
 import createUserPostImages from '../service/createUserPostImages';
 
-import { FetchPostResponse } from '<api/share/post>';
+import type { FetchPostResponse } from '<api/share/post>';
 import ENV from '@/env';
-import comments from '@/mocks/data/comment.json';
-import follows from '@/mocks/data/follow.json';
-import likes from '@/mocks/data/like.json';
-import posts from '@/mocks/data/post.json';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
@@ -18,29 +14,7 @@ const staticPostController = () => {
     return [
         /** GET */
         rest.get(BASE_URI + 'share/posts/list', async (req, res, ctx) => {
-            const cookies = req.cookies;
-
-            const cookie = cookies[''];
-            const pageParam = Number(req.url.searchParams.get('pageParam')) ?? 0;
-            const postsLength = posts.length;
-            const skip = pageParam * 10;
-            const newPost: FetchPostResponse[] = posts.slice(skip, Math.min(skip + 10, postsLength)).map((post) => ({
-                post: {
-                    id: post._id,
-                    contents: post.contents,
-                    images: post.images,
-                    user: {
-                        id: post.userId._id,
-                        isFollow: !!follows.find((follow) => follow._id === cookie),
-                        nickname: post.userId.nickname,
-                        profile: post.userId.profile,
-                    },
-                    isMine: true,
-                    isLike: true,
-                    commentCount: comments.map((comment) => comment.postId._id === post._id).length,
-                    likeCount: likes.map((like) => like.postId._id === post._id).length,
-                },
-            }));
+            const newPost = createEmptyArray(10).map(createPostList);
             const data = createInfinityData<FetchPostResponse[]>({ searchParams: req.url.searchParams, items: newPost });
 
             return res(ctx.status(200), ctx.json(data));

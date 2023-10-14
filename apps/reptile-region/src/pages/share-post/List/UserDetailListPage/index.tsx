@@ -1,5 +1,5 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackHeaderProps, NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { NativeStackHeaderProps, NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 import * as Haptic from 'react-native-haptic-feedback';
 
@@ -7,8 +7,8 @@ import SharePostListSkeleton from '../loading';
 
 import UserDetailListPage from './page';
 
-import { BottomTabNativeStackParamList, SharePostTabParamList, SharePostUserListProps } from '<routes/bottom-tab>';
-import { RootRoutesParamList } from '<routes/root>';
+import type { BottomTabNativeStackParamList, SharePostTabParamList, SharePostUserListProps } from '<routes/bottom-tab>';
+import type { RootRoutesParamList } from '<routes/root>';
 import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
 import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';

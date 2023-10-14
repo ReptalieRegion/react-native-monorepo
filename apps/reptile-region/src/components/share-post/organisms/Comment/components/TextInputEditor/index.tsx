@@ -1,4 +1,4 @@
-import { TouchableTypo, color } from 'design-system';
+import { TouchableTypo, color } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, Alert, Dimensions, StyleSheet, View } from 'react-native';
 import { Keyboard } from 'react-native';

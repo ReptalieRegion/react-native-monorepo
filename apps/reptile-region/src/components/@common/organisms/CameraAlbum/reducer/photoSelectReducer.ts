@@ -1,4 +1,4 @@
-import { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 
 import type { PhotoSelectActions, PhotoSelectState } from '../types';
 

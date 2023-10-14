@@ -1,8 +1,8 @@
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-import { IconProps } from '<Icon>';
+import type { IconProps } from '<Icon>';
 
 export default function Trash({ width = 24, height = 24, fill = color.Black.toString() }: IconProps) {
     return (
