@@ -8,5 +8,8 @@
 **/apps/reptile-region/index.js
 **/apps/reptile-region/react-native.config.js
 
+# node_modules
+node_modules/
+
 # library 빌드 폴더
 lib/
