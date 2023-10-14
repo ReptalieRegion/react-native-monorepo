@@ -1,4 +1,4 @@
 {
-    "**/*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --config ./.prettierrc --write -u"],
+    "**/*.{js,jsx,ts,tsx}": ["eslint --fix", "prettier --config ./.prettierrc.cjs --write -u"],
     "apps/reptile-region/src/*.{ts,tsx}": ["tsc -p apps/reptile-region/tsconfig.json --skipLibCheck --noEmit"]
 }

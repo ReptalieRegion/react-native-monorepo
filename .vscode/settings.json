@@ -2,14 +2,21 @@
     "search.exclude": {
         "**/.yarn": true
     },
+    /**
+     * TODO: https://github.com/prettier/prettier-vscode/issues/3007#issuecomment-1628836459
+     * 임시로 prettier 경로 지정
+     */
+    "prettier.prettierPath": "node_modules/prettier/index.cjs",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.organizeImports": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.rulers": [120],
+    "editor.formatOnSave": true,
     "eslint.probe": ["javascript", "javascriptreact", "typescript", "typescriptreact", "html", "vue", "markdown"],
     "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
-    "prettier.prettierPath": ".prettierrc.js",
-    "editor.formatOnSave": true,
-    "editor.rulers": [120],
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-    },
+    "eslint.enable": true,
     "material-icon-theme.folders.associations": {
         "dockers": "Docker",
         "stores": "Global"
