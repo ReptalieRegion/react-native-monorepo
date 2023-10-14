@@ -1,8 +1,9 @@
-import { Image, ImageProps } from 'expo-image';
+import { Image } from 'expo-image';
+import type { ImageProps } from 'expo-image';
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { ImageType } from '<image>';
+import type { ImageType } from '<image>';
 import { imageUriParsing } from '@/utils/development';
 
 type AvatarProps = Omit<ImageProps, 'style' | 'source'> & {

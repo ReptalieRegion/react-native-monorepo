@@ -1,5 +1,6 @@
-import { BottomTabNavigationEventMap, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { EventListenerCallback } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import type { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs';
+import type { EventListenerCallback } from '@react-navigation/native';
 import React from 'react';
 
 import HomeRoutes from './HomeRoutes';

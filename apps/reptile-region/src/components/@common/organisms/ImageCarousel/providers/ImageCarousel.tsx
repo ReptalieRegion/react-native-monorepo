@@ -1,5 +1,6 @@
 import { FlashList } from '@shopify/flash-list';
-import React, { ReactNode, useReducer, useRef } from 'react';
+import React, { useReducer, useRef } from 'react';
+import type { ReactNode } from 'react';
 
 import ImageCarouselList from '../components/ImageCarouselList';
 import ImageIndicators from '../components/ImageIndicators';

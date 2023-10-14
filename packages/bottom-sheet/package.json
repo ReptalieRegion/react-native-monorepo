@@ -1,26 +1,49 @@
 {
-    "name": "bottom-sheet",
+    "name": "@reptile-region/bottom-sheet",
     "version": "1.0.0",
     "packageManager": "yarn@3.6.0",
-    "main": "lib/index.js",
+    "main": "lib/commonjs/index.js",
+    "module": "lib/module/index.js",
+    "react-native": "src/index.ts",
+    "types": "lib/typescript/src/index.d.ts",
+    "source": "src/index.ts",
+    "files": [
+        "lib",
+        "src"
+    ],
     "scripts": {
-        "build": "rm -rf ./lib && tsc",
+        "build": "rm -rf ./lib && bob build",
         "watch": "tsc --watch",
         "typecheck": "tsc --noEmit",
-        "prepack": "yarn build",
-        "postinstall": "yarn build"
+        "prepack": "bob build",
+        "postinstall": "bob build"
     },
     "dependencies": {
-        "design-system": "1.0.0"
+        "@reptile-region/design-system": "workspace:^"
     },
     "devDependencies": {
+        "react-native-builder-bob": "^0.23.1",
         "typescript": "5.2.2"
     },
     "peerDependencies": {
-        "design-system": "1.0.0",
+        "@reptile-region/design-system": "1.0.0",
         "react": "*",
         "react-native": "*",
         "react-native-gesture-handler": ">=2.12.0",
         "react-native-reanimated": ">=3.4.2"
+    },
+    "react-native-builder-bob": {
+        "source": "src",
+        "output": "lib",
+        "targets": [
+            "commonjs",
+            "module",
+            [
+                "typescript",
+                {
+                    "project": "tsconfig.build.json"
+                }
+            ]
+        ]
     }
 }

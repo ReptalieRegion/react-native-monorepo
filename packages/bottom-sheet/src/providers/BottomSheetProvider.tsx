@@ -1,9 +1,11 @@
-import React, { PropsWithChildren, useCallback, useEffect } from 'react';
-import { Insets, useWindowDimensions } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import type { PropsWithChildren } from 'react';
+import { useWindowDimensions } from 'react-native';
+import type { Insets } from 'react-native';
 import { runOnJS, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { BottomSheetAnimationStateContext, BottomSheetAnimationActionContext } from '../contexts/BottomSheetAnimationContext';
-import { BottomSheetAnimationAction, BottomSheetAnimationState, SnapInfo } from '../types/bottom-sheet';
+import type { BottomSheetAnimationAction, BottomSheetAnimationState, SnapInfo } from '../types/bottom-sheet';
 import { getPixel } from '../utils/calc-pixel';
 
 type BottomSheetProviderProps = {

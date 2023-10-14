@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import { BottomSheetAnimationAction, BottomSheetAnimationState } from '../types/bottom-sheet';
+import type { BottomSheetAnimationAction, BottomSheetAnimationState } from '../types/bottom-sheet';
 
 export const BottomSheetAnimationStateContext = createContext<BottomSheetAnimationState | null>(null);
 

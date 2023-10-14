@@ -1,4 +1,4 @@
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';

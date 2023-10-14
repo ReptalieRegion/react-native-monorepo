@@ -1,15 +1,16 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FlashList, ListRenderItemInfo } from '@shopify/flash-list';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { color } from '@reptile-region/design-system';
+import { FlashList } from '@shopify/flash-list';
+import type { ListRenderItemInfo } from '@shopify/flash-list';
 import { useQueryClient } from '@tanstack/react-query';
-import { color } from 'design-system';
 import React, { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import type { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
-import { RootRoutesParamList } from '<routes/root>';
+import type { RootRoutesParamList } from '<routes/root>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';

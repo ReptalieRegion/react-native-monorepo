@@ -1,4 +1,4 @@
-import { TouchableTypo } from 'design-system';
+import { TouchableTypo } from '@reptile-region/design-system';
 import React from 'react';
 
 type TagProps = {

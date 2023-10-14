@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import type { ViewStyle } from 'react-native';
 
 export type DotMapType = 'leftTop' | 'top' | 'rightTop' | 'right' | 'rightBottom' | 'bottom' | 'leftBottom' | 'left';
 

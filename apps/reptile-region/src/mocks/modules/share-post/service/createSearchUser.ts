@@ -1,6 +1,6 @@
 import { fakerKO } from '@faker-js/faker';
 
-import { FetchFollowerSearchResponse } from '<api/share/post/user>';
+import type { FetchFollowerSearchResponse } from '<api/share/post/user>';
 
 const createSearchUser = (): FetchFollowerSearchResponse => {
     return {

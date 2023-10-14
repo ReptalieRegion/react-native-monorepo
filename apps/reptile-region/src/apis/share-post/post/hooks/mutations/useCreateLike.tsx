@@ -1,4 +1,5 @@
-import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import type { InfiniteData } from '@tanstack/react-query';
 
 import { createLike } from '../../repository';
 

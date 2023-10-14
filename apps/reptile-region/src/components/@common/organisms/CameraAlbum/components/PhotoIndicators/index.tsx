@@ -1,4 +1,4 @@
-import { Typo, color } from 'design-system';
+import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 

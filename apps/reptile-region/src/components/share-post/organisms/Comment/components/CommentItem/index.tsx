@@ -1,9 +1,10 @@
-import { TouchableTypo, Typo } from 'design-system';
+import { TouchableTypo, Typo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import CommentActionButtons, { CommentActionButtonsAction } from '../ActionButtons';
+import CommentActionButtons from '../ActionButtons';
+import type { CommentActionButtonsAction } from '../ActionButtons';
 
 import type { FetchCommentResponse } from '<api/share/post/comment>';
 import { ConditionalRenderer } from '@/components/@common/atoms';

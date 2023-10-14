@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import { TextInput, TextInputProps } from 'react-native';
+import { TextInput } from 'react-native';
+import type { TextInputProps } from 'react-native';
 
 import { TagTextInputStateContext } from '../../contexts/TagTextInputContext';
 import useTag from '../../hooks/useTag';

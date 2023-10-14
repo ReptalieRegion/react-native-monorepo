@@ -1,4 +1,4 @@
-import { TouchableTypo, Typo } from 'design-system';
+import { TouchableTypo, Typo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 

@@ -1,4 +1,5 @@
-import React, { ReactNode, useReducer } from 'react';
+import React, { useReducer } from 'react';
+import type { ReactNode } from 'react';
 
 import { DEFAULT_CONTENT } from '../constants/tag-content';
 import { TagContentActionsContext, TagContentStateContext } from '../contexts/TagContentContext';

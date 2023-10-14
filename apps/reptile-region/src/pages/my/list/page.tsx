@@ -1,6 +1,6 @@
-import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { TouchableTypo } from 'design-system';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { TouchableTypo } from '@reptile-region/design-system';
 import React from 'react';
 import { View } from 'react-native';
 

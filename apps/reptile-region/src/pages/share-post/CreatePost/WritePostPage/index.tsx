@@ -1,10 +1,10 @@
-import { CompositeNavigationProp, CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { TouchableTypo, color } from 'design-system';
+import type { CompositeNavigationProp, CompositeScreenProps } from '@react-navigation/native';
+import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { TouchableTypo, color } from '@reptile-region/design-system';
 import React, { Suspense, useEffect } from 'react';
 import { ActivityIndicator, Keyboard, StyleSheet, View } from 'react-native';
 
-import { RootRoutesParamList, SharePostPostingParamList } from '<routes/root>';
+import type { RootRoutesParamList, SharePostPostingParamList } from '<routes/root>';
 import useCreatePost from '@/apis/share-post/post/hooks/mutations/useCreatePost';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';

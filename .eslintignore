@@ -7,3 +7,6 @@
 # react native index 파일
 **/apps/reptile-region/index.js
 **/apps/reptile-region/react-native.config.js
+
+# library 빌드 폴더
+lib/

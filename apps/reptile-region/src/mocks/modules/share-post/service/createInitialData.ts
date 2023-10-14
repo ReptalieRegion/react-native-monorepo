@@ -1,6 +1,7 @@
 import { fakerKO } from '@faker-js/faker';
 
-import db, { DBResult } from '../../../db';
+import db from '../../../db';
+import type { DBResult } from '../../../db';
 
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
@@ -154,6 +155,7 @@ export const createFollows = ({ users }: { users: DBResult<'user'>[] }, count: n
                 followerNickname: follower.nickname,
             });
         }
+        return;
     });
 };
 

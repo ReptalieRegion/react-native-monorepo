@@ -1,6 +1,6 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { BottomSheet } from 'bottom-sheet';
-import { TouchableTypo } from 'design-system';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BottomSheet } from '@reptile-region/bottom-sheet';
+import { TouchableTypo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

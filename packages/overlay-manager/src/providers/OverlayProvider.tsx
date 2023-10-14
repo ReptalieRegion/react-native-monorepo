@@ -1,11 +1,12 @@
-import React, { ReactNode, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
+import type { ReactNode } from 'react';
 
 import OverlayHost from '../components/OverlayHost';
 import OverlayRegister from '../components/OverlayRegister';
 import { INITIAL_STATE } from '../constants/constants';
 import { OverlayStateContext, OverlayActionContext } from '../contexts/overlay-context';
 import reducer from '../reducer/reducer';
-import { OverlayComponents, ParamListBase } from '../types/overlay';
+import type { OverlayComponents, ParamListBase } from '../types/overlay';
 
 type OverlayProviderProps<ParamList extends ParamListBase, RouteName extends keyof ParamList> = {
     children: ReactNode;

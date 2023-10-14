@@ -1,8 +1,8 @@
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import { TouchableTypo } from 'design-system';
+import { TouchableTypo } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 
-import { SharePostUpdateNavigationProp } from './types';
+import type { SharePostUpdateNavigationProp } from './types';
 
 import useUpdatePost from '@/apis/share-post/post/hooks/mutations/useUpdatePost';
 import { createNativeStackHeader } from '@/components/@common/molecules';

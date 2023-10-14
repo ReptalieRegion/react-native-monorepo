@@ -1,4 +1,4 @@
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
@@ -6,7 +6,7 @@ import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSequence, with
 import useHeartAnimation from '../../hooks/useHeartAnimation';
 import usePostCardHandler from '../../hooks/usePostCardHandler';
 
-import { DotMapType, DotStyles, DotTranslateMap } from './type';
+import type { DotMapType, DotStyles, DotTranslateMap } from './type';
 
 import { DotIndicator, Like_55 as LikeIcon } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';

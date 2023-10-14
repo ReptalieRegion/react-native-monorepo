@@ -1,11 +1,11 @@
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import usePostUpdateHandler from '../../hooks/usePostUpdateHandler';
 
-import { ImageType } from '<image>';
+import type { ImageType } from '<image>';
 import { Trash } from '@/assets/icons';
 
 type ImageItemOverlayState = {

@@ -1,10 +1,11 @@
-import { color } from 'design-system';
-import React, { PropsWithChildren } from 'react';
-import { Insets } from 'react-native';
+import { color } from '@reptile-region/design-system';
+import React from 'react';
+import type { PropsWithChildren } from 'react';
+import type { Insets } from 'react-native';
 
 import BackDrop from '../components/BackDrop';
 import BottomSheetProvider from '../providers/BottomSheetProvider';
-import { BackDropStyle, ContainerStyle, SnapInfo } from '../types/bottom-sheet';
+import type { BackDropStyle, ContainerStyle, SnapInfo } from '../types/bottom-sheet';
 
 import BottomSheetContainer from './BottomSheetContainer';
 import BottomSheetHeader from './BottomSheetHeader';

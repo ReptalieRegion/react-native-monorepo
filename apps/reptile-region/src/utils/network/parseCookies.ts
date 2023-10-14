@@ -12,7 +12,7 @@ export const parseCookies = ({ setCookieHeader, findCookie }: ParseCookiesProps)
         .flatMap((cookie) => cookie);
 
     if (cookies === undefined) {
-        return;
+        return undefined;
     }
 
     if (isArray(findCookie)) {
@@ -36,4 +36,6 @@ export const parseCookies = ({ setCookieHeader, findCookie }: ParseCookiesProps)
             .replace(findKey, '');
         return newCookies ? { [findCookie]: newCookies } : undefined;
     }
+
+    return;
 };

@@ -1,5 +1,5 @@
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
@@ -7,7 +7,7 @@ import * as Haptic from 'react-native-haptic-feedback';
 import { BottomTabBarButton } from '../../atoms';
 
 import type { IconProps } from '<Icon>';
-import { BottomTabParamList } from '<routes/bottom-tab>';
+import type { BottomTabParamList } from '<routes/bottom-tab>';
 import {
     Cart as ShopIcon,
     Community as InfoIcon,

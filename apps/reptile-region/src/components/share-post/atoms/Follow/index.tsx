@@ -1,5 +1,5 @@
-import { TextColorType } from 'design-system';
-import { TouchableTypo } from 'design-system';
+import type { TextColorType } from '@reptile-region/design-system';
+import { TouchableTypo } from '@reptile-region/design-system';
 import React from 'react';
 
 type FollowState = {

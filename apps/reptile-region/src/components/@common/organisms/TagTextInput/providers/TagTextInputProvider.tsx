@@ -1,4 +1,5 @@
-import React, { ReactNode, useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
+import type { ReactNode } from 'react';
 import { TextInput } from 'react-native';
 
 import { TagTextInputActionsContext, TagTextInputStateContext } from '../contexts/TagTextInputContext';

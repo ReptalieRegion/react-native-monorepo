@@ -1,6 +1,6 @@
 import { fakerKO } from '@faker-js/faker';
 
-import { FetchDetailUserProfileResponse } from '<api/share/post/user>';
+import type { FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
 
 type CreatePostUserProfile = {

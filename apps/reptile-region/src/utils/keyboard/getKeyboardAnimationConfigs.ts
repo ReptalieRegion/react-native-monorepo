@@ -1,4 +1,5 @@
-import { KeyboardEventEasing, Platform } from 'react-native';
+import { Platform } from 'react-native';
+import type { KeyboardEventEasing } from 'react-native';
 import { Easing } from 'react-native-reanimated';
 
 const ANIMATION_CONFIGS_IOS = {

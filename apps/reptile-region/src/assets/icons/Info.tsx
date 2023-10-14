@@ -1,8 +1,8 @@
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-import { IconProps } from '<Icon>';
+import type { IconProps } from '<Icon>';
 
 export default function Info({ fill = color.Black.toString(), height = 24, width = 24 }: IconProps) {
     return (

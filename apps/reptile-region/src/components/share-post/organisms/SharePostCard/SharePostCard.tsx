@@ -1,9 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import type { ViewStyle } from 'react-native';
 
 import PostCard from './providers/PostCard';
 
-import { ImageType } from '<image>';
+import type { ImageType } from '<image>';
 
 type PostCardState = {
     post: {

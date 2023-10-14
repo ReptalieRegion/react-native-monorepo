@@ -2,7 +2,7 @@ import { useCallback, useContext } from 'react';
 
 import { ImageActionsContext } from '../contexts/ImageContext';
 
-import { ImageType } from '<image>';
+import type { ImageType } from '<image>';
 
 const usePostUpdateHandler = () => {
     const dispatch = useContext(ImageActionsContext);

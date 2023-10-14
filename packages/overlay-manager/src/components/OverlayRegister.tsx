@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 
 import { OverlayActionContext } from '../contexts/overlay-context';
-import { OverlayComponents, ParamListBase } from '../types/overlay';
+import type { OverlayComponents, ParamListBase } from '../types/overlay';
 
 type OverlayRegisterProps<ParamList extends ParamListBase, RouteName extends keyof ParamList> = {
     registerComponent: OverlayComponents<ParamList, RouteName>;

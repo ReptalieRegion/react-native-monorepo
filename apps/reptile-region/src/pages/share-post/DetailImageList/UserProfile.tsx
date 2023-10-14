@@ -1,6 +1,6 @@
+import { Typo } from '@reptile-region/design-system';
 import type { InfiniteData } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
-import { Typo } from 'design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 

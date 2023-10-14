@@ -1,4 +1,5 @@
-import React, { ReactNode, useReducer } from 'react';
+import React, { useReducer } from 'react';
+import type { ReactNode } from 'react';
 
 import PostUpdateList from '../components/PostUpdateList';
 import { ImageActionsContext, ImageStateContext } from '../contexts/ImageContext';

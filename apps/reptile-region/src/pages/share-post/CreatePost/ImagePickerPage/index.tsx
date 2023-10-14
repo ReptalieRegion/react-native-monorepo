@@ -1,9 +1,9 @@
-import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { TouchableTypo } from 'design-system';
+import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
+import { TouchableTypo } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { SharePostPostingParamList } from '<routes/root>';
+import type { SharePostPostingParamList } from '<routes/root>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { CameraAlbum, usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 

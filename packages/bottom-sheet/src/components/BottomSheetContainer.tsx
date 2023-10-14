@@ -1,6 +1,8 @@
-import { color } from 'design-system';
-import React, { PropsWithChildren } from 'react';
-import { StyleSheet, ViewStyle, useWindowDimensions } from 'react-native';
+import { color } from '@reptile-region/design-system';
+import React from 'react';
+import type { PropsWithChildren } from 'react';
+import { StyleSheet, useWindowDimensions } from 'react-native';
+import type { ViewStyle } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 
 import useBottomSheetAnimatedState from '../hooks/useBottomSheetAnimatedState';

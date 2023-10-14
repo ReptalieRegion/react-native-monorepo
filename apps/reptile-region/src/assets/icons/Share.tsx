@@ -1,4 +1,4 @@
-import { color } from 'design-system';
+import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { Circle, Path, Svg } from 'react-native-svg';
 

@@ -1,5 +1,7 @@
-import React, { PropsWithChildren } from 'react';
-import { GestureResponderEvent, View, ViewProps } from 'react-native';
+import React from 'react';
+import type { PropsWithChildren } from 'react';
+import { View } from 'react-native';
+import type { GestureResponderEvent, ViewProps } from 'react-native';
 
 import { customDoubleTab } from '@/utils/gesture';
 

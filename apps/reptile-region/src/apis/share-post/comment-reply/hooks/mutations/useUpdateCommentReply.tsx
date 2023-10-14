@@ -1,9 +1,10 @@
-import { InfiniteData, QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import type { InfiniteData } from '@tanstack/react-query';
 
 import { updateCommentReply } from '../../repository';
 
 import type { FetchCommentReply, UpdateCommentReply } from '<api/share/post/comment-reply>';
-import { OnSuccessParam } from '<api/utils>';
+import type { OnSuccessParam } from '<api/utils>';
 import { sharePostQueryKeys } from '@/apis/query-keys';
 
 /** 대댓글 리스트 무한스크롤 대댓글 수정 */

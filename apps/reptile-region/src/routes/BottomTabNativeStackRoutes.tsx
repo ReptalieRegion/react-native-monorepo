@@ -4,7 +4,7 @@ import React from 'react';
 import SharePostCommentRoutes from './bottom-sheet/SharePostCommentRoutes';
 import BottomTabRoutes from './bottom-tab';
 
-import { BottomTabNativeStackParamList } from '<routes/bottom-tab>';
+import type { BottomTabNativeStackParamList } from '<routes/bottom-tab>';
 
 const Stack = createNativeStackNavigator<BottomTabNativeStackParamList>();
 
