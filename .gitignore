@@ -65,9 +65,6 @@ yarn-error.log
 # testing
 /coverage
 
-# .yarnrc.yml
-.yarnrc.yml
-
 # library build 폴더
 lib/
 
