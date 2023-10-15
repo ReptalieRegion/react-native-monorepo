@@ -1,0 +1,42 @@
+{
+    "name": "@reptile-region/utils",
+    "version": "1.0.0",
+    "packageManager": "yarn@3.6.0",
+    "main": "lib/commonjs/index.js",
+    "module": "lib/module/index.js",
+    "react-native": "src/index.ts",
+    "types": "lib/typescript/src/index.d.ts",
+    "source": "src/index.ts",
+    "files": [
+        "lib",
+        "src"
+    ],
+    "scripts": {
+        "build": "rm -rf ./lib && bob build",
+        "watch": "tsc --watch",
+        "typecheck": "tsc --noEmit",
+        "prepack": "bob build",
+        "postinstall": "bob build"
+    },
+    "devDependencies": {
+        "react-native-builder-bob": "^0.23.1",
+        "typescript": "5.2.2"
+    },
+    "peerDependencies": {
+        "react": "*"
+    },
+    "react-native-builder-bob": {
+        "source": "src",
+        "output": "lib",
+        "targets": [
+            "commonjs",
+            "module",
+            [
+                "typescript",
+                {
+                    "project": "tsconfig.build.json"
+                }
+            ]
+        ]
+    }
+}
