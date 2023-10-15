@@ -1,3 +1,4 @@
+#!/bin/bash
 cat >./src/env/config.ts <<EOF
 import type { ModeType } from '@env';
 

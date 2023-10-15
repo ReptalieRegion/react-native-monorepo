@@ -3691,6 +3691,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@reptile-region/error-boundary@1.0.0, @reptile-region/error-boundary@workspace:packages/error-boundary":
+  version: 0.0.0-use.local
+  resolution: "@reptile-region/error-boundary@workspace:packages/error-boundary"
+  dependencies:
+    "@reptile-region/react-hooks": 1.0.0
+    "@reptile-region/utils": 1.0.0
+    react-native-builder-bob: ^0.23.1
+    typescript: 5.2.2
+  peerDependencies:
+    react: "*"
+  languageName: unknown
+  linkType: soft
+
 "@reptile-region/overlay-manager@1.0.0, @reptile-region/overlay-manager@workspace:packages/overlay-manager":
   version: 0.0.0-use.local
   resolution: "@reptile-region/overlay-manager@workspace:packages/overlay-manager"
@@ -3700,6 +3713,28 @@ __metadata:
   peerDependencies:
     react: "*"
     react-native: "*"
+  languageName: unknown
+  linkType: soft
+
+"@reptile-region/react-hooks@1.0.0, @reptile-region/react-hooks@workspace:packages/react-hooks":
+  version: 0.0.0-use.local
+  resolution: "@reptile-region/react-hooks@workspace:packages/react-hooks"
+  dependencies:
+    react-native-builder-bob: ^0.23.1
+    typescript: 5.2.2
+  peerDependencies:
+    react: "*"
+  languageName: unknown
+  linkType: soft
+
+"@reptile-region/utils@1.0.0, @reptile-region/utils@workspace:packages/utils":
+  version: 0.0.0-use.local
+  resolution: "@reptile-region/utils@workspace:packages/utils"
+  dependencies:
+    react-native-builder-bob: ^0.23.1
+    typescript: 5.2.2
+  peerDependencies:
+    react: "*"
   languageName: unknown
   linkType: soft
 
@@ -12514,6 +12549,7 @@ __metadata:
     "@react-navigation/stack": ^6.3.17
     "@reptile-region/bottom-sheet": 1.0.0
     "@reptile-region/design-system": 1.0.0
+    "@reptile-region/error-boundary": 1.0.0
     "@reptile-region/overlay-manager": 1.0.0
     "@shopify/flash-list": ^1.6.1
     "@tanstack/react-query": ^4.32.0

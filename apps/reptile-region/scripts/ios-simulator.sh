@@ -1,8 +1,9 @@
-version=$*
+#!/bin/bash
+VERSION=$*
 
-if [[ -z "$version" ]]
+if [[ -z "$VERSION" ]]
 then
     yarn react-native run-ios --simulator="iPhone SE"  
 else
-    yarn react-native run-ios --simulator="iPhone $version"
+    yarn react-native run-ios --simulator="iPhone $VERSION"
 fi

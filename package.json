@@ -7,6 +7,9 @@
         "packages/*"
     ],
     "scripts": {
+        "rr:start": "yarn workspace reptile-region start",
+        "rr:android": "yarn workspace reptile-region android",
+        "rr:ios": "yarn workspace reptile-region ios",
         "lint-front": "lint-staged",
         "postinstall": "husky install"
     },
