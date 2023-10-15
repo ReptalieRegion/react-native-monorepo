@@ -4,7 +4,6 @@ import { PhotoStateContext } from '../contexts/PhotoContext';
 
 const usePhoto = () => {
     const state = useContext(PhotoStateContext);
-    console.log('photo');
 
     if (state === null) {
         throw new Error('CameraAlbum Provider를 감싸주세요.');

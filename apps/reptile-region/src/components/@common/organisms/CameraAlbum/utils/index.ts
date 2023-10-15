@@ -11,9 +11,10 @@ export const fetchPhotos = async ({ first, after, assetType = 'Photos' }: FetchP
         if (hasPermission) {
             return await CameraRoll.getPhotos({ first, after, assetType });
         }
+
+        return undefined;
     } catch (error) {
         console.error(error);
-    } finally {
         return undefined;
     }
 };

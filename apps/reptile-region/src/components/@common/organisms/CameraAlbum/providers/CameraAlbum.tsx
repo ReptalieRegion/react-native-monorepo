@@ -1,5 +1,5 @@
-import React, { useReducer } from 'react';
 import type { ReactNode } from 'react';
+import React, { useReducer } from 'react';
 
 import PhotoEditor from '../components/PhotoEditor';
 import PhotoList from '../components/PhotoList';
@@ -13,7 +13,7 @@ type CameraAlbumProps = {
 };
 
 export default function CameraAlbum({ children }: CameraAlbumProps) {
-    const [photo, photoDispatch] = useReducer(photoReducer, { photos: [] });
+    const [photo, photoDispatch] = useReducer(photoReducer, { photos: null });
     const [photoSelect, photoSelectDispatch] = useReducer(photoSelectReducer, {
         currentSelectedPhoto: null,
         selectedPhotos: [],
