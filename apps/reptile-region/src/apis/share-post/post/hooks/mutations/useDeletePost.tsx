@@ -1,5 +1,5 @@
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { InfiniteData } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deletePost } from '../../repository';
 
@@ -45,7 +45,7 @@ const deleteDetailUserPostCache = ({ queryClient, data }: { queryClient: QueryCl
             const { items, nextPage } = page;
             return {
                 nextPage,
-                items: items.filter((item) => item.post.id === data.post.id),
+                items: items.filter((item) => item.post.id !== data.post.id),
             };
         });
 
