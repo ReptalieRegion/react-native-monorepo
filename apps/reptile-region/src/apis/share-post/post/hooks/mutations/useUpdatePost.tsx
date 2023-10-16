@@ -1,5 +1,5 @@
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { InfiniteData } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { updatePost } from '../../repository';
 
@@ -74,11 +74,16 @@ const updateSharePostDetailUserListCache = ({
     });
 };
 
-const useUpdatePost = () => {
+interface UseUpdatePost {
+    onSuccess(): void;
+}
+
+const useUpdatePost = ({ onSuccess }: UseUpdatePost) => {
     const queryClient = useQueryClient();
     return useMutation<UpdatePost['Response'], any, UpdatePost['Request']>({
         mutationFn: ({ postId, contents, files }) => updatePost({ postId, contents, files }),
         onSuccess: (data) => {
+            onSuccess();
             updateSharePostListCache({ queryClient, data });
             updateSharePostDetailUserListCache({ queryClient, data });
         },

@@ -41,7 +41,7 @@ export const createPost = async ({ contents, selectedPhotos }: CreatePostRequest
     const formData = new FormData();
     for (const photo of selectedPhotos) {
         const file = await uploadImage(photo);
-        formData.append('files', file);
+        formData.append('files', file as unknown as Blob);
     }
     formData.append('contents', contents);
 
@@ -76,16 +76,14 @@ export const createLike = async ({ postId }: CreateLikeRequest) => {
 /** PUT */
 // 특정 게시글 수정
 export const updatePost = async ({ postId, contents, files }: UpdatePostRequest) => {
-    const formData = new FormData();
-    formData.append('files', files);
-    formData.append('contents', contents);
+    const body = {
+        files: files.map((file) => file.src),
+        contents,
+    };
 
-    const response = await clientFetch(`api/share/post/${postId}`, {
+    const response = await clientFetch(`api/share/posts/${postId}`, {
         method: METHOD.PUT,
-        body: formData,
-        headers: {
-            'Content-Type': 'multipart/form-data',
-        },
+        body,
     });
 
     return response.json();

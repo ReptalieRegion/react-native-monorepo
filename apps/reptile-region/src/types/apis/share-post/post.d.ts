@@ -1,7 +1,7 @@
 declare module '<api/share/post>' {
     import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 
-    import type { ServerAPI, InfinitePageParam, InfiniteState } from '<api/utils>';
+    import type { InfinitePageParam, InfiniteState, ServerAPI } from '<api/utils>';
     import type { ImageType } from '<image>';
 
     /** GET 시작 */
@@ -64,8 +64,8 @@ declare module '<api/share/post>' {
             images: ImageType[];
             isMine: true;
             isLike: undefined;
-            likeCount: number = 0;
-            commentCount: number = 0;
+            likeCount: 0;
+            commentCount: 0;
             user: {
                 id: string;
                 nickname: string;

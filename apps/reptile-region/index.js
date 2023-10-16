@@ -2,14 +2,11 @@
  * @format
  */
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppRegistry } from 'react-native';
 
+import ENV from '@/env';
 import App from './App';
 import { name as appName } from './app.json';
-
-import ENV from '@/env';
-import { AUTH_KEYS } from '@/env/constants';
 
 if (__DEV__ && ENV.isDev) {
     import('react-native-url-polyfill/auto').then(() => {

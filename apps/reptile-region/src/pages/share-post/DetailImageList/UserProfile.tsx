@@ -1,20 +1,17 @@
 import { Typo } from '@reptile-region/design-system';
-import type { InfiniteData } from '@tanstack/react-query';
-import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { FetchDetailUserPost } from '<api/share/post>';
 import type { ImageType } from '<image>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { Avatar } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
-import UserActivitySummaryItem from '@/components/share-post/molecules/UserActivitySummaryItem';
 import type {
     ActivitySummaryItemActions,
     ActivitySummaryItemProps,
 } from '@/components/share-post/molecules/UserActivitySummaryItem';
+import UserActivitySummaryItem from '@/components/share-post/molecules/UserActivitySummaryItem';
 
 type UserDetailPanelProps = {
     nickname: string;
@@ -24,10 +21,7 @@ type UserDetailPanelProps = {
 
 export default function UserProfile({ nickname, profile, isFollow }: UserDetailPanelProps) {
     const { data } = useFetchUserProfile({ nickname });
-    const queryClient = useQueryClient();
-    const post = queryClient.getQueryData<InfiniteData<FetchDetailUserPost['Response']>>(
-        sharePostQueryKeys.detailUserPosts(nickname),
-    );
+    const { data: post } = useInfiniteUserPosts({ nickname, suspense: false });
 
     const defaultData = {
         user: {

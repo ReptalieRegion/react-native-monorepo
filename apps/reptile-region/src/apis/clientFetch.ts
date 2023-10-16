@@ -31,7 +31,7 @@ const clientFetch = async (input: RequestInfo, init?: IRequestInit): Promise<Res
     const newBody = init?.body ? (isFormData ? (init.body as FormData) : JSON.stringify(init.body)) : undefined;
     const authCookies = await AsyncStorage.multiGet(AUTH_KEYS);
     const authCookiesMap = authCookies ? Object.fromEntries(authCookies) : {};
-    const newHeaders = isFormData ? undefined : Object.assign({}, DEFAULT_HEADER, init?.headers, authCookiesMap);
+    const newHeaders = Object.assign({}, isFormData ? undefined : DEFAULT_HEADER, init?.headers, authCookiesMap);
     const newCredentials = init?.credentials ?? 'include';
     const newInit: RequestInit = {
         ...init,

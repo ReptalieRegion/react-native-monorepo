@@ -3,10 +3,11 @@
     "compilerOptions": {
         "paths": {
             "@/*": ["./src/*"]
-        },
+        }
     },
     "references": [
         { "path": "../../packages/bottom-sheet" },
         { "path": "../../packages/design-system" },
+        { "path": "../../packages/error-boundary" }
     ]
 }

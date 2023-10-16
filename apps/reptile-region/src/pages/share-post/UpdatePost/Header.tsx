@@ -18,7 +18,13 @@ export function SharePostUpdateHeader(props: NativeStackHeaderProps) {
 }
 
 export default function ChangeHeader({ postId, navigation }: ChangeHeaderProps) {
-    const { mutate } = useUpdatePost();
+    const { mutate } = useUpdatePost({
+        onSuccess: () => {
+            if (navigation.canGoBack()) {
+                navigation.goBack();
+            }
+        },
+    });
     const { contents, images } = usePostUpdate();
 
     useEffect(() => {
