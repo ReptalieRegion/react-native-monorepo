@@ -1,6 +1,7 @@
 import type {
     CreateFollowRequest,
     FetchDetailUserProfileRequest,
+    FetchFollowerListRequest,
     FetchFollowerSearchRequest,
     UpdateFollowRequest,
 } from '<api/share/post/user>';
@@ -17,13 +18,29 @@ export const getDetailUserProfile = async ({ nickname }: FetchDetailUserProfileR
     return response.json();
 };
 
-// 사용자의 팔로워 무한스크롤 리스트
+// 사용자의 팔로워 검색 무한스크롤 리스트
 export const getSearchFollowerUserNickname = async ({
     pageParam = 0,
     search,
 }: FetchFollowerSearchRequest & InfinitePageParam) => {
     const queryString = objectToQueryString({ pageParam, search });
     const response = await clientFetch(`api/users/follower/list?${queryString}`);
+
+    return response.json();
+};
+
+// 사용자의 팔로워 무한스크롤 리스트
+export const getFollowerList = async ({ pageParam = 0, userId }: FetchFollowerListRequest & InfinitePageParam) => {
+    const queryString = objectToQueryString({ pageParam });
+    const response = await clientFetch(`api/users/${userId}/follower/list?${queryString}`);
+
+    return response.json();
+};
+
+// 사용자의 팔로잉 무한스크롤 리스트
+export const getFollowingList = async ({ pageParam = 0, userId }: FetchFollowerListRequest & InfinitePageParam) => {
+    const queryString = objectToQueryString({ pageParam });
+    const response = await clientFetch(`api/users/${userId}/following/list?${queryString}`);
 
     return response.json();
 };
