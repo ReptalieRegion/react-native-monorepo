@@ -1,5 +1,5 @@
 declare module '<api/share/post/user>' {
-    import type { ServerAPI, InfiniteState } from '<api/utils>';
+    import type { InfiniteState, ServerAPI } from '<api/utils>';
     import type { ImageType } from '<image>';
 
     /** GET 시작 */
@@ -37,6 +37,40 @@ declare module '<api/share/post/user>' {
 
     type FetchFollowerSearch = ServerAPI<FetchFollowerSearchRequest, InfiniteState<FetchFollowerSearchResponse[]>>;
     /** 사용자의 팔로워 무한스크롤 리스트 끝 */
+
+    /** 특정 사용자의 팔로워 무한스크롤 리스트 시작 */
+    type FetchFollowerListRequest = {
+        userId: string;
+    };
+
+    type FetchFollowerListResponse = {
+        user: {
+            id: string;
+            profile: ImageType;
+            nickname: string;
+            isFollow: boolean | undefined;
+        };
+    };
+
+    type FetchFollowerList = ServerAPI<FetchFollowerListRequest, InfiniteState<FetchFollowerListResponse>>;
+    /** 특정 사용자의 팔로워 무한스크롤 리스트 끝 */
+
+    /** 특정 사용자의 팔로잉 무한스크롤 리스트 시작 */
+    type FetchFollowingListRequest = {
+        userId: string;
+    };
+
+    type FetchFollowingListResponse = {
+        user: {
+            id: string;
+            profile: ImageType;
+            nickname: string;
+            isFollow: boolean | undefined;
+        };
+    };
+
+    type FetchFollowingList = ServerAPI<FetchFollowerListRequest, InfiniteState<FetchFollowerListResponse>>;
+    /** 특정 사용자의 팔로잉 무한스크롤 리스트 끝 */
     /** GET 끝 */
 
     /** POST 시작 */
