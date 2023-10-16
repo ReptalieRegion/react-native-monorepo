@@ -1,13 +1,7 @@
-import { Typo } from '@reptile-region/design-system';
 import React from 'react';
-import { View } from 'react-native';
 
-const ShopListPage = () => {
-    return (
-        <View>
-            <Typo variant="body2">ShopListPage</Typo>
-        </View>
-    );
-};
+import { ComingSoonBanner } from '@/components/@common/atoms';
 
-export default ShopListPage;
+export default function ShopListPage() {
+    return <ComingSoonBanner />;
+}

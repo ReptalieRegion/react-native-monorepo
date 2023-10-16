@@ -19,6 +19,11 @@ export const variantMap: Variant = {
         lineHeight: 32,
         fontSize: 24,
     },
+    heading1Light: {
+        fontWeight: fontWeightMap.light,
+        lineHeight: 32,
+        fontSize: 24,
+    },
     heading2: {
         fontWeight: fontWeightMap.bold,
         lineHeight: 25,

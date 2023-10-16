@@ -1,13 +1,9 @@
-import { Typo } from '@reptile-region/design-system';
 import React from 'react';
-import { View } from 'react-native';
+
+import { ComingSoonBanner } from '@/components/@common/atoms';
 
 const HomeListPage = () => {
-    return (
-        <View>
-            <Typo variant="body2">HomeListPage</Typo>
-        </View>
-    );
+    return <ComingSoonBanner />;
 };
 
 export default HomeListPage;

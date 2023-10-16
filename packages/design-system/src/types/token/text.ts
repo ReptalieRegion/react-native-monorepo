@@ -7,6 +7,7 @@ export type FontWeight = {
 
 export type VariantType =
     | 'heading1'
+    | 'heading1Light'
     | 'heading2'
     | 'heading3'
     | 'heading4'
