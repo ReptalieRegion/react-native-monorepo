@@ -1,8 +1,8 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { color } from '@reptile-region/design-system';
-import { FlashList } from '@shopify/flash-list';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
+import { FlashList } from '@shopify/flash-list';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
@@ -49,6 +49,7 @@ export default function UserDetailListPage({
             const { id: postId, contents, images, isMine } = item.post;
             const post = {
                 ...item.post,
+                showFollowButton: false,
                 user: {
                     id: user.id,
                     nickname: user.nickname,
@@ -152,6 +153,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
         minHeight: 444,
-        maxHeight: 444,
+        height: 444,
     },
 });

@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 import type { ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import PostCard from './providers/PostCard';
 
@@ -12,6 +12,7 @@ type PostCardState = {
         contents: string;
         images: ImageType[];
         isMine: boolean;
+        showFollowButton?: boolean;
         isLike: boolean | undefined;
         likeCount: number;
         commentCount: number;
@@ -46,6 +47,7 @@ export default function SharePostCard({
         contents,
         likeCount,
         isMine,
+        showFollowButton = true,
         user: { isFollow, nickname, profile },
     },
     containerStyle,
@@ -64,7 +66,7 @@ export default function SharePostCard({
                     profileImage={profile}
                     isFollow={isFollow}
                     nickname={nickname}
-                    showFollowButton={!isMine}
+                    showFollowButton={!isMine && showFollowButton}
                     onPressFollow={onPressFollow}
                     onPressPostOptionsMenu={onPressPostOptionsMenu}
                     onPressProfile={onPressProfile}

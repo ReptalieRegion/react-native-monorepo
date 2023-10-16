@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
@@ -18,12 +18,8 @@ export default function PostImageList({ nickname, ListHeaderComponent, handleIma
     const itemWidth = width / NUM_COLUMNS - 2;
 
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteUserPosts({ nickname });
-    const newData = useMemo(() => data?.pages.flatMap((page) => page.items).map((item) => item.post.images[0]), [data?.pages]);
-
-    const onEndReached = useCallback(
-        () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
-        [fetchNextPage, hasNextPage, isFetchingNextPage],
-    );
+    const newData = data?.pages.flatMap((page) => page.items).map((item) => item.post.images[0]);
+    const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
 
     return (
         <View style={styles.container}>

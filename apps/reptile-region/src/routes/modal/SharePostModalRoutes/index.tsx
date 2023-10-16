@@ -5,9 +5,8 @@ import type { SharePostModalParamList } from '<routes/root>';
 import SharePostDetailImageListModalPage, {
     SharePostDetailImageListModalHeader,
 } from '@/pages/share-post/DetailImageList/DetailImageListModalPage';
-import SharePostUserDetailListModalPage, {
-    SharePostUserDetailListModalHeader,
-} from '@/pages/share-post/List/UserDetailListModalPage';
+import { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailList/Header';
+import SharePostUserDetailListModalPage from '@/pages/share-post/List/UserDetailList/UserDetailListModalPage';
 import SharePostCommentRoutes from '@/routes/bottom-sheet/SharePostCommentRoutes';
 
 const Stack = createNativeStackNavigator<SharePostModalParamList>();
@@ -23,7 +22,7 @@ export default function SharePostModalRoutes() {
             <Stack.Screen
                 name="list/user"
                 component={SharePostUserDetailListModalPage}
-                options={{ header: SharePostUserDetailListModalHeader }}
+                options={{ header: SharePostUserDetailListHeader }}
             />
             <Stack.Group
                 screenOptions={{

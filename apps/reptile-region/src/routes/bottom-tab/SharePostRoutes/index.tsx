@@ -7,7 +7,8 @@ import SharePostDetailImageListPage, {
     SharePostDetailImageListHeader,
 } from '@/pages/share-post/DetailImageList/DetailImageListPage';
 import SharePostListPage from '@/pages/share-post/List/ListPage';
-import SharePostUserDetailListPage, { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailListPage';
+import { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailList/Header';
+import SharePostUserDetailListPage from '@/pages/share-post/List/UserDetailList/UserDetailListPage';
 
 const Stack = createNativeStackNavigator<SharePostTabParamList>();
 
