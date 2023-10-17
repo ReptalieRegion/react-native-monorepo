@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import type { ImageType } from '<image>';
+import type { SharePostFollowProps } from '<routes/bottom-tab>';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { Avatar } from '@/components/@common/atoms';
@@ -13,13 +14,19 @@ import type {
 } from '@/components/share-post/molecules/UserActivitySummaryItem';
 import UserActivitySummaryItem from '@/components/share-post/molecules/UserActivitySummaryItem';
 
-type UserDetailPanelProps = {
+type UserDetailPanelState = {
     nickname: string;
     profile: ImageType;
     isFollow: boolean | undefined;
 };
 
-export default function UserProfile({ nickname, profile, isFollow }: UserDetailPanelProps) {
+interface UserDetailPanelActions {
+    navigateFollowPage(props: SharePostFollowProps): void;
+}
+
+type UserDetailPanelProps = UserDetailPanelState & UserDetailPanelActions;
+
+export default function UserProfile({ nickname, profile, isFollow, navigateFollowPage }: UserDetailPanelProps) {
     const { data } = useFetchUserProfile({ nickname });
     const { data: post } = useInfiniteUserPosts({ nickname, suspense: false });
 
@@ -31,34 +38,48 @@ export default function UserProfile({ nickname, profile, isFollow }: UserDetailP
             isFollow,
             followerCount: 0,
             followingCount: 0,
-            postCount: 0,
         },
+        postCount: 0,
     };
 
     const newData = {
         user: {
             ...defaultData.user,
             ...data?.user,
-            postCount: post?.pages.reduce((prev, page) => prev + page.items.length, 0) ?? 0,
         },
+        postCount: post?.pages.reduce((prev, page) => prev + page.items.length, 0) ?? 0,
     };
 
     // TODO 유저 프로필 액션
     const activitySummaryItems: Array<ActivitySummaryItemProps & ActivitySummaryItemActions> = [
         {
             label: '게시물',
-            count: newData.user.postCount,
+            count: newData.postCount,
             onPress: () => {},
         },
         {
             label: '팔로워',
             count: newData.user.followerCount,
-            onPress: () => {},
+            onPress: () =>
+                navigateFollowPage({
+                    initialRouteName: 'share-post/follower/list',
+                    userId: newData.user.id,
+                    followerCount: newData.user.followerCount,
+                    followingCount: newData.user.followingCount,
+                    nickname: newData.user.nickname,
+                }),
         },
         {
             label: '팔로잉',
             count: newData.user.followingCount,
-            onPress: () => {},
+            onPress: () =>
+                navigateFollowPage({
+                    initialRouteName: 'share-post/following/list',
+                    userId: newData.user.id,
+                    followerCount: newData.user.followerCount,
+                    followingCount: newData.user.followingCount,
+                    nickname: newData.user.nickname,
+                }),
         },
     ];
 

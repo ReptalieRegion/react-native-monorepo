@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { Typo, color } from '@reptile-region/design-system';
-import React from 'react';
 import type { ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
 import type { TextStyle, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import type { IconFunction } from '<Icon>';

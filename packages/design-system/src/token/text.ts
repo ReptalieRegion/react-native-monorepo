@@ -65,6 +65,11 @@ export const variantMap: Variant = {
         lineHeight: 22,
         fontSize: 14,
     },
+    title6: {
+        fontWeight: fontWeightMap.medium,
+        lineHeight: 20,
+        fontSize: 12,
+    },
     // body
     body1: {
         fontWeight: fontWeightMap.regular,

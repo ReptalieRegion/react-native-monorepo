@@ -2,6 +2,7 @@ declare module '<routes/bottom-tab>' {
     import { NavigatorScreenParams } from '@react-navigation/native';
 
     import { ImageType } from '<image>';
+    import { SharePostTopTabParamList } from '<routes/top-tab>';
 
     /** SharePost 시작 */
     /** 댓글 시작 */
@@ -67,10 +68,23 @@ declare module '<routes/bottom-tab>' {
         startIndex: number;
     };
 
+    type SharePostFollowListProps = {
+        userId: string;
+    };
+
+    type SharePostFollowProps = {
+        initialRouteName: keyof SharePostTopTabParamList;
+        userId: string;
+        nickname: string;
+        followerCount: number;
+        followingCount: number;
+    };
+
     type SharePostTabParamList = {
         'share-post/list': undefined;
         'share-post/detail': SharePostDetailProps;
         'share-post/list/user': SharePostUserListProps;
+        'share-post/list/follow': SharePostFollowProps;
     };
     /** SharePost 끝 */
 

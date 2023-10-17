@@ -33,7 +33,7 @@ const FOLLOW_INFO: FollowInfo = {
 };
 
 const makeFollowInfo = (isFollow: boolean | undefined) => {
-    const type: FollowType = isFollow ? 'follow' : 'following';
+    const type: FollowType = isFollow ? 'following' : 'follow';
     return FOLLOW_INFO[type];
 };
 

@@ -3,6 +3,7 @@ declare module '<routes/root>' {
 
     import { ImageType } from '<image>';
     import { BottomTabNativeStackParamList } from '<routes/bottom-tab>';
+    import { SharePostTopTabParamList } from '<routes/top-tab>';
 
     /** SharePost 시작 */
     /** SharePost 글쓰기 시작 */
@@ -96,11 +97,20 @@ declare module '<routes/root>' {
     };
     /** 게시물 수정 끝 */
 
+    type SharePostFollowProps = {
+        initialRouteName: keyof SharePostTopTabParamList;
+        userId: string;
+        nickname: string;
+        followerCount: number;
+        followingCount: number;
+    };
+
     type SharePostModalParamList = {
         detail: SharePostDetailProps;
         'list/user': SharePostUserListProps;
         'posting/update': SharePostPostingUpdateProps;
         'bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
+        'share-post/list/follow': SharePostFollowProps;
     };
 
     type RootRoutesParamList = {

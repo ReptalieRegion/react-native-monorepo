@@ -1,5 +1,5 @@
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { InfiniteData } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createFollow } from '../../repository';
 
@@ -25,7 +25,7 @@ const updateUserProfile = ({ queryClient, data }: SetQueryDataProps) => {
             user: {
                 ...prevUserProfile.user,
                 isFollow: true,
-                followingCount: prevUserProfile.user.followingCount + 1,
+                followerCount: prevUserProfile.user.followerCount + 1,
             },
         };
     });

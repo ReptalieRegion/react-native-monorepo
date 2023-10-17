@@ -3603,6 +3603,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-navigation/material-top-tabs@npm:^6.6.4":
+  version: 6.6.4
+  resolution: "@react-navigation/material-top-tabs@npm:6.6.4"
+  dependencies:
+    color: ^4.2.3
+    warn-once: ^0.1.0
+  peerDependencies:
+    "@react-navigation/native": ^6.0.0
+    react: "*"
+    react-native: "*"
+    react-native-pager-view: ">= 4.0.0"
+    react-native-tab-view: ">= 3.0.0"
+  checksum: 542bdba00c56a5c7f619c40235f1ca6c947ded6603949d5f07c18c073a876c166622a9a1d0683d904987e1a843925d85c987e3ff7d1952e68454b05d55bb0a8c
+  languageName: node
+  linkType: hard
+
 "@react-navigation/native-stack@npm:^6.9.12":
   version: 6.9.13
   resolution: "@react-navigation/native-stack@npm:6.9.13"
@@ -12164,6 +12180,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"react-native-pager-view@npm:^6.2.2":
+  version: 6.2.2
+  resolution: "react-native-pager-view@npm:6.2.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: ac563431c10e96ff28367e57310ebd6901e1ddd532430802cab03ed9a216f85cf9567e05aaf7fd58bb1a328ffac11e1f0f19907cf55103a487c103e2f6d2e390
+  languageName: node
+  linkType: hard
+
 "react-native-permissions@npm:^3.9.3":
   version: 3.9.3
   resolution: "react-native-permissions@npm:3.9.3"
@@ -12244,6 +12270,19 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 4668028563ae0ca669003cc29ff5f03fd5b13a61d53273f294f04a496cbc0af6003277025793d01fb9c3a53af4515839185578d59e9eecb072587178b751c234
+  languageName: node
+  linkType: hard
+
+"react-native-tab-view@npm:^3.5.2":
+  version: 3.5.2
+  resolution: "react-native-tab-view@npm:3.5.2"
+  dependencies:
+    use-latest-callback: ^0.1.5
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-pager-view: "*"
+  checksum: bd287e5543881aa662ee55418a3bd5dacb25033425a9fcb0fff21c3a3b96f956af1a77cd9bab4e7a8e94590080a5d8e3cb99cfa8613b19bf6da24bfc9b4942d4
   languageName: node
   linkType: hard
 
@@ -12540,6 +12579,7 @@ __metadata:
     "@react-native/metro-config": ^0.72.11
     "@react-navigation/bottom-tabs": ^6.5.8
     "@react-navigation/devtools": ^6.0.19
+    "@react-navigation/material-top-tabs": ^6.6.4
     "@react-navigation/native": ^6.1.6
     "@react-navigation/native-stack": ^6.9.12
     "@reptile-region/bottom-sheet": 1.0.0
@@ -12576,12 +12616,14 @@ __metadata:
     react-native-gesture-handler: ^2.13.1
     react-native-haptic-feedback: ^2.2.0
     react-native-linear-gradient: ^2.8.3
+    react-native-pager-view: ^6.2.2
     react-native-permissions: ^3.9.3
     react-native-reanimated: 3.5.4
     react-native-safe-area-context: ^4.7.2
     react-native-screens: ^3.22.1
     react-native-skeleton-placeholder: ^5.2.4
     react-native-svg: ^13.14.0
+    react-native-tab-view: ^3.5.2
     react-native-url-polyfill: ^2.0.0
     react-query-native-devtools: ^4.0.0
     react-test-renderer: 18.2.0
