@@ -1,12 +1,7 @@
 import React from 'react';
-import { Text, View } from 'react-native';
 
-const ShopListPage = () => {
-    return (
-        <View>
-            <Text>ShopListPage</Text>
-        </View>
-    );
-};
+import { ComingSoonBanner } from '@/components/@common/atoms';
 
-export default ShopListPage;
+export default function ShopListPage() {
+    return <ComingSoonBanner />;
+}

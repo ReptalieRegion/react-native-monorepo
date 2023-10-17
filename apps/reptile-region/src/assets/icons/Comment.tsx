@@ -1,8 +1,8 @@
+import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
 import type { IconProps } from '<Icon>';
-import { color } from '@/components/common/tokens/colors';
 
 const Comment = ({ stroke = color.Black.toString() }: IconProps) => {
     return (

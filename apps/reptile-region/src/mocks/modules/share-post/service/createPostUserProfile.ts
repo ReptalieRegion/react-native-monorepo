@@ -1,21 +1,23 @@
 import { fakerKO } from '@faker-js/faker';
 
-import { SharePostUserData } from '<SharePostUserAPI>';
+import type { FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
 
-const createPostUserProfile = (): SharePostUserData => {
+type CreatePostUserProfile = {
+    user?: Partial<FetchDetailUserProfileResponse['user']>;
+};
+
+const createPostUserProfile = ({ user }: CreatePostUserProfile): FetchDetailUserProfileResponse => {
     return {
         user: {
-            nickname: fakerKO.person.middleName(),
-            profile: {
+            id: user?.id ?? fakerKO.string.uuid(),
+            nickname: user?.nickname ?? fakerKO.person.middleName(),
+            profile: user?.profile ?? {
                 src: fakerKO.image.avatar(),
             },
-            isFollow: fakerBoolean(),
-            followerCount: fakerKO.number.int({ min: 0, max: 200 }),
-            followingCount: fakerKO.number.int({ min: 0, max: 200 }),
-        },
-        post: {
-            count: fakerKO.number.int({ min: 0, max: 200 }),
+            isFollow: user?.isFollow ?? fakerBoolean(),
+            followerCount: user?.followerCount ?? fakerKO.number.int({ min: 0, max: 200 }),
+            followingCount: user?.followingCount ?? fakerKO.number.int({ min: 0, max: 200 }),
         },
     };
 };

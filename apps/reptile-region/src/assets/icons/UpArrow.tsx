@@ -1,8 +1,8 @@
+import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
 import type { IconProps } from '<Icon>';
-import { color } from '@/components/common/tokens/colors';
 
 const UpArrow = ({ width = 31, height = 31, fill = color.Gray['900'].toString() }: IconProps) => {
     return (

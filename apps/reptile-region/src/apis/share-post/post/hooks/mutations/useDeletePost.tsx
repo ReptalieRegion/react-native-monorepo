@@ -1,13 +1,70 @@
-import { useMutation } from '@tanstack/react-query';
+import type { InfiniteData } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deletePost } from '../../repository';
 
-import type { DeletePostRequest } from '<SharePostAPI>';
+import type { DeletePost, FetchDetailUserPost, FetchPost } from '<api/share/post>';
+import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const useDeletePost = ({ postId }: DeletePostRequest) => {
-    return useMutation({
-        mutationKey: [''],
-        mutationFn: () => deletePost({ postId }),
+/** 일상공유 무한스크롤 조회 리스트 게시글 삭제 **/
+const deletePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeletePost['Response'] }) => {
+    const queryKey = sharePostQueryKeys.list;
+
+    queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevPostList) => {
+        if (prevPostList === undefined) {
+            return prevPostList;
+        }
+
+        const { pageParams, pages } = prevPostList;
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
+            return {
+                nextPage,
+                items: items.filter((item) => item.post.id !== data.post.id),
+            };
+        });
+
+        return {
+            pageParams,
+            pages: updatePages,
+        };
+    });
+};
+
+/** 특정 유저의 게시글 리스트 무한 스크롤 게시물 삭제 */
+const deleteDetailUserPostCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeletePost['Response'] }) => {
+    const queryKey = sharePostQueryKeys.detailUserPosts(data.post.user.nickname);
+
+    queryClient.setQueryData<InfiniteData<FetchDetailUserPost['Response']>>(queryKey, (prevDetailUserPostList) => {
+        if (prevDetailUserPostList === undefined) {
+            return prevDetailUserPostList;
+        }
+
+        const { pageParams, pages } = prevDetailUserPostList;
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
+            return {
+                nextPage,
+                items: items.filter((item) => item.post.id !== data.post.id),
+            };
+        });
+
+        return {
+            pageParams,
+            pages: updatePages,
+        };
+    });
+};
+
+const useDeletePost = () => {
+    const queryClient = useQueryClient();
+
+    return useMutation<DeletePost['Response'], any, DeletePost['Request']>({
+        mutationFn: ({ postId }) => deletePost({ postId }),
+        onSuccess: (data) => {
+            deletePostListCache({ queryClient, data });
+            deleteDetailUserPostCache({ queryClient, data });
+        },
     });
 };
 

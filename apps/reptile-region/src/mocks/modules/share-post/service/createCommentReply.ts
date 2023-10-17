@@ -1,35 +1,33 @@
 import { fakerKO } from '@faker-js/faker';
 
-import { createTagIdsAndContent } from './createTagIdsAndContent';
+import { createContents } from './createTagIdsAndContent';
 
-import type { SharePostCommentReplyData } from '<SharePostCommentReplyAPI>';
+import type { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
 
-type CreateCommentReplyProps = {
+export type CreateCommentReplyProps = {
     commentReplyId?: string;
     commentId?: string;
-    contents: string[];
-    tagIds: string[];
+    contents: string;
 };
 
-const createCommentReply = (props?: CreateCommentReplyProps): SharePostCommentReplyData => {
+const createCommentReply = (props?: CreateCommentReplyProps): FetchCommentReplyResponse => {
     const commentReplyId = props?.commentId ? props.commentId : fakerKO.string.uuid();
-    const { contents, tagIds } = createTagIdsAndContent();
+    const contents = createContents();
 
     return {
-        user: {
-            id: fakerKO.string.uuid(),
-            profile: {
-                src: fakerKO.image.avatar(),
-            },
-            nickname: fakerKO.person.middleName(),
-        },
-        comment: {
+        commentReply: {
             id: commentReplyId,
             contents,
-            tagIds,
             isMine: fakerBoolean(),
             isModified: fakerBoolean(),
+            user: {
+                id: fakerKO.string.uuid(),
+                profile: {
+                    src: fakerKO.image.avatar(),
+                },
+                nickname: fakerKO.person.middleName(),
+            },
         },
     };
 };

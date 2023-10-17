@@ -1,12 +1,9 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+
+import { ComingSoonBanner } from '@/components/@common/atoms';
 
 const HomeListPage = () => {
-    return (
-        <View>
-            <Text>HomeListPage</Text>
-        </View>
-    );
+    return <ComingSoonBanner />;
 };
 
 export default HomeListPage;

@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { color } from '@reptile-region/design-system';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Dimensions, StyleSheet, View } from 'react-native';
@@ -7,9 +8,9 @@ import { z } from 'zod';
 import type { RequestSignIn } from '<AuthRequest>';
 import type { UseFormDefaultValues } from '<HookForm>';
 import { useSignIn } from '@/apis/auth/hooks';
-import TextField, { TextFieldProps } from '@/components/common/element/text-input/TextField';
-import TextButton from '@/components/common/layouts/button/TextButton';
-import { color } from '@/components/common/tokens/colors';
+import { TextButton } from '@/components/@common/atoms';
+import TextField from '@/components/@common/atoms/TextField';
+import type { TextFieldProps } from '@/components/@common/atoms/TextField';
 
 type InputKey = 'EMAIL' | 'PASSWORD';
 
@@ -38,7 +39,7 @@ const signInSchema = z.object({
     PASSWORD: z.string().min(1, { message: '비밀번호를 입력해주세요.' }),
 });
 
-const TextInputFields = () => {
+export default function TextInputFields() {
     const {
         control,
         handleSubmit,
@@ -60,7 +61,7 @@ const TextInputFields = () => {
     const handleSignInSubmit = (data: UseFormDefaultValues<InputKey>) => {
         const { EMAIL, PASSWORD } = data;
         const requestData: RequestSignIn = {
-            email: EMAIL,
+            userId: EMAIL,
             password: PASSWORD,
         };
         mutate(requestData);
@@ -89,13 +90,19 @@ const TextInputFields = () => {
             ))}
             <TextButton
                 text="로그인"
-                onPress={handleSubmit(handleSignInSubmit)}
+                type="text"
+                textInfo={{
+                    color: 'surface',
+                    textAlign: 'center',
+                }}
+                touchableProps={{
+                    onPress: handleSubmit(handleSignInSubmit),
+                }}
                 containerStyle={styles.textView}
-                textStyle={styles.text}
             />
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -116,5 +123,3 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 });
-
-export default TextInputFields;

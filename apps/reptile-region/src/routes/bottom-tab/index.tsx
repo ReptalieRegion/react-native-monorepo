@@ -1,34 +1,36 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import type { BottomTabNavigationEventMap } from '@react-navigation/bottom-tabs';
+import type { EventListenerCallback } from '@react-navigation/native';
 import React from 'react';
 
-import HomeRoutes from './home/Home';
-import InfoRoutes from './info/Info';
-import MyRoutes from './my/My';
-import SharePostRoutes from './share-post/SharePost';
-import ShopRoutes from './shop/Shop';
+import HomeRoutes from './HomeRoutes';
+import InfoRoutes from './InfoRoutes';
+import MyRoutes from './MyRoutes';
+import SharePostRoutes from './SharePostRoutes';
+import ShopRoutes from './ShopRoutes';
 
-import type { BottomTabParamList } from '<BottomTabNavigationList>';
-import { MainBottomBar } from '@/components/common/layouts';
-import UIPromptsContextComponent from '@/contexts/ui-prompts/UIPrompts';
+import type { BottomTabParamList } from '<routes/bottom-tab>';
+import { MainBottomBar } from '@/components/@common/molecules';
 
-const BottomTabRoutes = () => {
-    const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+const BottomTab = createBottomTabNavigator<BottomTabParamList>();
+
+export default function BottomTabRoutes() {
+    const handleTabPress: EventListenerCallback<BottomTabNavigationEventMap, 'tabPress'> = (event) => {
+        event.preventDefault();
+    };
 
     return (
-        <UIPromptsContextComponent>
-            <BottomTab.Navigator
-                tabBar={MainBottomBar}
-                initialRouteName="bottom-tab/home/routes"
-                screenOptions={{ headerShown: false }}
-            >
-                <BottomTab.Screen name="bottom-tab/home/routes" component={HomeRoutes} />
-                <BottomTab.Screen name="bottom-tab/shop/routes" component={ShopRoutes} />
-                <BottomTab.Screen name="bottom-tab/share-post/routes" component={SharePostRoutes} />
-                <BottomTab.Screen name="bottom-tab/info/routes" component={InfoRoutes} />
-                <BottomTab.Screen name="bottom-tab/my/routes" component={MyRoutes} />
-            </BottomTab.Navigator>
-        </UIPromptsContextComponent>
+        <BottomTab.Navigator
+            initialRouteName="home/routes"
+            screenOptions={{ headerShown: false }}
+            tabBar={MainBottomBar}
+            screenListeners={{ tabPress: handleTabPress }}
+        >
+            <BottomTab.Screen name="home/routes" component={HomeRoutes} />
+            <BottomTab.Screen name="shop/routes" component={ShopRoutes} />
+            <BottomTab.Screen name="share-post/routes" component={SharePostRoutes} />
+            <BottomTab.Screen name="info/routes" component={InfoRoutes} />
+            <BottomTab.Screen name="my/routes" component={MyRoutes} />
+        </BottomTab.Navigator>
     );
-};
-
-export default BottomTabRoutes;
+}

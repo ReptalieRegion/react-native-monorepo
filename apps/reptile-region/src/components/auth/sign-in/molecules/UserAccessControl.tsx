@@ -1,12 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
+import type { NavigationProp } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { BottomTabLessAuthSignInNavigationProp } from '<BottomTabLessSlidFromBottomNavigationList>';
-import TextButton from '@/components/common/layouts/button/TextButton';
+import type { RootRoutesParamList } from '<routes/root>';
+import { TextButton } from '@/components/@common/atoms';
 
 const UserAccessControl = () => {
-    const navigation = useNavigation<BottomTabLessAuthSignInNavigationProp>();
+    const navigation = useNavigation<NavigationProp<RootRoutesParamList, 'sign-in'>>();
     const handleFindId = () => {
         return;
     };
@@ -16,15 +17,15 @@ const UserAccessControl = () => {
     };
 
     const handleSignUp = () => {
-        navigation.push('auth/sign-up');
+        navigation.navigate('sign-up');
         return;
     };
 
     return (
         <View style={styles.textButtons}>
-            <TextButton text="아이디 찾기" textStyle={styles.text} onPress={handleFindId} />
-            <TextButton text="비밀번호 찾기" textStyle={styles.text} onPress={handleFindPassword} />
-            <TextButton text="회원가입" textStyle={styles.text} onPress={handleSignUp} />
+            <TextButton text="아이디 찾기" type="text" touchableProps={{ onPress: handleFindId }} />
+            <TextButton text="비밀번호 찾기" type="text" touchableProps={{ onPress: handleFindPassword }} />
+            <TextButton text="회원가입" type="text" touchableProps={{ onPress: handleSignUp }} />
         </View>
     );
 };
@@ -32,10 +33,6 @@ const UserAccessControl = () => {
 const styles = StyleSheet.create({
     textButtons: {
         flexDirection: 'row',
-    },
-    text: {
-        fontSize: 14,
-        lineHeight: 20,
     },
 });
 

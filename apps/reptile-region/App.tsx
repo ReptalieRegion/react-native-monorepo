@@ -3,20 +3,21 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import ReactQueryContextComponent from '@/contexts/react-query/ReactQuery';
+import Toast from '@/overlay/Toast';
+import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
-
-import 'react-native-gesture-handler';
 
 export default function App() {
     return (
-        <ReactQueryContextComponent>
+        <ReactQueryProvider>
             <GestureHandlerRootView style={styles.gestureContainer}>
                 <SafeAreaProvider>
-                    <RootRoutes />
+                    <Toast>
+                        <RootRoutes />
+                    </Toast>
                 </SafeAreaProvider>
             </GestureHandlerRootView>
-        </ReactQueryContextComponent>
+        </ReactQueryProvider>
     );
 }
 

@@ -1,9 +1,9 @@
+import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, View } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
-import TextButton from '@/components/common/layouts/button/TextButton';
-import { color } from '@/components/common/tokens/colors';
+import { TextButton } from '@/components/@common/atoms';
 
 type MessageType = 'duplicateCheck' | 'address' | 'password' | 'input';
 
@@ -61,23 +61,33 @@ const SignUpPage = () => {
                             case 'duplicateCheck':
                                 return (
                                     <View key={item.label} style={styles.itemContainer}>
-                                        <Text style={styles.label}>
-                                            {item.label}
-                                            {item.require ? <Text style={styles.require}>{' *'}</Text> : null}
-                                        </Text>
+                                        <View style={styles.label}>
+                                            <Typo variant="title5">
+                                                {item.label}
+                                                {item.require ? (
+                                                    <Typo variant="title5" color="require">
+                                                        {' *'}
+                                                    </Typo>
+                                                ) : null}
+                                            </Typo>
+                                        </View>
                                         <View style={styles.item}>
                                             <TextInput placeholder={item.placeholder} style={styles.textInput} />
-                                            <TextButton text="중복 확인" textStyle={styles.buttonText} variant="filled" />
+                                            <TextButton text="중복 확인" type="view" />
                                         </View>
                                     </View>
                                 );
                             case 'password':
                                 return (
                                     <View key={item.label} style={styles.itemContainer}>
-                                        <Text style={styles.label}>
+                                        <Typo variant="title5">
                                             {item.label}
-                                            {item.require ? <Text style={styles.require}>{' *'}</Text> : null}
-                                        </Text>
+                                            {item.require ? (
+                                                <Typo variant="title5" color="require">
+                                                    {' *'}
+                                                </Typo>
+                                            ) : null}
+                                        </Typo>
                                         <View style={styles.item}>
                                             <TextInput
                                                 secureTextEntry
@@ -90,18 +100,24 @@ const SignUpPage = () => {
                             case 'input':
                                 return (
                                     <View key={item.label} style={styles.itemContainer}>
-                                        <Text style={styles.label}>
+                                        <Typo variant="title5">
                                             {item.label}
-                                            {item.require ? <Text style={styles.require}>{' *'}</Text> : null}
-                                        </Text>
+                                            {item.require ? (
+                                                <Typo variant="title5" color="require">
+                                                    {' *'}
+                                                </Typo>
+                                            ) : null}
+                                        </Typo>
                                         <View style={styles.item}>
                                             <TextInput placeholder={item.placeholder} style={styles.textInput} />
                                         </View>
                                     </View>
                                 );
+                            default:
+                                return null;
                         }
                     })}
-                    <TextButton text="가입하기" textStyle={styles.buttonText} variant="filled" />
+                    <TextButton text="가입하기" textInfo={{ variant: 'body4' }} type="view" />
                 </ScrollView>
             </KeyboardAvoidingView>
         </View>
@@ -139,11 +155,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
     },
     label: {
-        verticalAlign: 'middle',
-        fontSize: 14,
-        lineHeight: 20,
         marginBottom: 10,
-        fontWeight: '500',
     },
     textInput: {
         flex: 1,

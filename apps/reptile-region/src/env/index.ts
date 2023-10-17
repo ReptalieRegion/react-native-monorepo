@@ -1,11 +1,12 @@
-import { END_POINT_URI, HOME_PAGE_URI, ModeType } from '@env';
+import { END_POINT_URI, HOME_PAGE_URI } from '@env';
+import type { ModeType } from '@env';
 
 import { CURRENT_IP, REACT_NATIVE_ENV } from './config';
 
 const currentMode = (mode: ModeType) => REACT_NATIVE_ENV === mode;
 
 const defaultEnv = {
-    isLocal: currentMode('local'),
+    isLocal: currentMode('test'),
     isDev: currentMode('development'),
     isProd: currentMode('production'),
     END_POINT_URI,

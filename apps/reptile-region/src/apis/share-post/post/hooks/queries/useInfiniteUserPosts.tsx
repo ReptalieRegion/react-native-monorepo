@@ -2,14 +2,15 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getDetailUserPosts } from '../../repository';
 
-import type { GetDetailUserPostsRequest, SharePostListUserDetailInfiniteData } from '<SharePostAPI>';
-import { postQueryKeys } from '@/apis/share-post/query-keys';
+import type { FetchDetailUserPost } from '<api/share/post>';
+import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const useInfiniteUserPosts = ({ userId }: GetDetailUserPostsRequest) => {
-    return useInfiniteQuery<SharePostListUserDetailInfiniteData>({
-        queryKey: postQueryKeys.detailUserPosts(userId),
-        queryFn: ({ pageParam }) => getDetailUserPosts({ userId, pageParam }),
+const useInfiniteUserPosts = ({ nickname, suspense = true }: FetchDetailUserPost['Request'] & { suspense?: boolean }) => {
+    return useInfiniteQuery<FetchDetailUserPost['Response']>({
+        queryKey: sharePostQueryKeys.detailUserPosts(nickname),
+        queryFn: ({ pageParam }) => getDetailUserPosts({ nickname, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
+        suspense,
     });
 };
 

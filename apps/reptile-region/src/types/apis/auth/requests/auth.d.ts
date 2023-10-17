@@ -1,6 +1,6 @@
 declare module '<AuthRequest>' {
     type RequestSignIn = {
-        email: string;
+        userId: string;
         password: string;
     };
 }

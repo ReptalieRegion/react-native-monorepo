@@ -1,10 +1,11 @@
 import { rest } from 'msw';
 
 import createCommentReply from '../service/createCommentReply';
+import type { CreateCommentReplyProps } from '../service/createCommentReply';
 
-import type { CreateCommentReplyRequest, UpdateCommentReplyRequest } from '<SharePostCommentReplyAPI>';
+import type { UpdateCommentReplyResponse } from '<api/share/post/comment-reply>';
 import ENV from '@/env';
-import createInfinityData from '@/mocks/data/native/common/createInfinityData';
+import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const commentReplyController = () => {
@@ -12,15 +13,14 @@ const commentReplyController = () => {
 
     return [
         /** GET */
-        rest.get(BASE_URI + 'share/comment/:commentId/replies/list', (req, res, ctx) => {
+        rest.get(BASE_URI + 'share/comment/:commentId/replies/list', async (req, res, ctx) => {
             const commentReplies = createEmptyArray(10).map(() => createCommentReply());
             const data = createInfinityData({ searchParams: req.url.searchParams, items: commentReplies });
-
             return res(ctx.status(200), ctx.json(data));
         }),
         /** POST */
         rest.post(BASE_URI + 'share/comment-reply', async (req, res, ctx) => {
-            const body = (await req.json()) as CreateCommentReplyRequest;
+            const body = (await req.json()) as CreateCommentReplyProps;
             const data = createCommentReply(body);
 
             return res(ctx.status(200), ctx.json(data));
@@ -28,7 +28,7 @@ const commentReplyController = () => {
         /** PUT */
         rest.put(BASE_URI + 'share/comment-replies/:commentId', async (req, res, ctx) => {
             const commentId = req.params.commentId;
-            const body = (await req.json()) as UpdateCommentReplyRequest;
+            const body = (await req.json()) as UpdateCommentReplyResponse;
 
             return res(ctx.status(200), ctx.json({ id: commentId, ...body }));
         }),

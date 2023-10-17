@@ -2,13 +2,13 @@ import { useQuery } from '@tanstack/react-query';
 
 import { getDetailUserProfile } from '../../repository';
 
-import type { GetDetailUserProfileRequest, SharePostUserData } from '<SharePostUserAPI>';
-import { userQueryKeys } from '@/apis/share-post/query-keys';
+import type { FetchDetailUserProfile } from '<api/share/post/user>';
+import { sharePostQueryKeys } from '@/apis/query-keys';
 
-const useFetchUserProfile = ({ userId }: GetDetailUserProfileRequest) => {
-    return useQuery<SharePostUserData>({
-        queryKey: userQueryKeys.profile(userId),
-        queryFn: () => getDetailUserProfile({ userId }),
+const useFetchUserProfile = ({ nickname }: FetchDetailUserProfile['Request']) => {
+    return useQuery<FetchDetailUserProfile['Response']>({
+        queryKey: sharePostQueryKeys.profile(nickname),
+        queryFn: () => getDetailUserProfile({ nickname }),
     });
 };
 
