@@ -1,0 +1,35 @@
+name: Build and Deploy iOS Dev
+
+on:
+    push:
+        tags:
+            - reptile-region/*-ios
+jobs:
+    testFlight-build:
+        name: iOS-testFlight-build
+        runs-on: macos-latest
+        timeout-minutes: 25
+        strategy:
+            matrix:
+                node-version: [18.x]
+        steps:
+            - name: Install SSH key
+              uses: shimataro/ssh-key-action@v2
+              with:
+                  key: ${{ secrets.SSH_KEY }}
+                  known_hosts: ${{ secrets.KNOWN_HOSTS }}
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - name: Checkout to git repository
+              uses: actions/checkout@v4
+            - name: Install Dependencies
+              run: |
+                  yarn install
+            - name: Install Fastlane
+              run: |
+                  cd ./apps/reptile-region
+                  yarn set:env:dev
+                  cd ./ios
+                  bundle install
+                  bundle update fastlane
