@@ -9,7 +9,7 @@ export type ActivitySummaryItemProps = {
 };
 
 export interface ActivitySummaryItemActions {
-    onPress: () => void;
+    onPress?(): void;
 }
 
 export default function UserActivitySummaryItem({

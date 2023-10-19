@@ -7,6 +7,7 @@ import { StyleSheet, View } from 'react-native';
 import type { FetchLikeResponse } from '<api/share/post>';
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
 import useInfiniteFetchLikes from '@/apis/share-post/post/hooks/queries/useInfiniteFetchLikes';
+import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
 import { Avatar } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 
@@ -14,19 +15,24 @@ type FollowerPageScreenProps = MaterialTopTabScreenProps<SharePostTabParamList, 
 
 export default function LikeListPage({ route: { params } }: FollowerPageScreenProps) {
     const { data } = useInfiniteFetchLikes({ postId: params.postId });
+    const { mutateFollow } = useCreateOrUpdateFollow();
 
     const newData = data?.pages.flatMap((page) => page.items);
 
     const keyExtractor = (item: FetchLikeResponse) => item.user.id;
 
     const renderItem: ListRenderItem<FetchLikeResponse> = ({ item }) => {
+        const handlePressFollow = () => {
+            mutateFollow({ userId: item.user.id, isFollow: item.user.isFollow });
+        };
+
         return (
             <View style={styles.itemContainer}>
                 <View style={styles.testContainer}>
                     <Avatar image={item.user.profile} size={35} />
                     <Typo variant="body3">{item.user.nickname}</Typo>
                 </View>
-                <Follow isFollow={item.user.isFollow} onPress={() => {}} />
+                <Follow isFollow={item.user.isFollow} onPress={handlePressFollow} />
             </View>
         );
     };

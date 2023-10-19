@@ -5,6 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import type { ImageType } from '<image>';
 import type { SharePostFollowProps } from '<routes/bottom-tab>';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
+import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { Avatar } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
@@ -29,6 +30,7 @@ type UserDetailPanelProps = UserDetailPanelState & UserDetailPanelActions;
 export default function UserProfile({ nickname, profile, isFollow, navigateFollowPage }: UserDetailPanelProps) {
     const { data } = useFetchUserProfile({ nickname });
     const { data: post } = useInfiniteUserPosts({ nickname, suspense: false });
+    const { mutateFollow } = useCreateOrUpdateFollow();
 
     const defaultData = {
         user: {
@@ -50,12 +52,15 @@ export default function UserProfile({ nickname, profile, isFollow, navigateFollo
         postCount: post?.pages.reduce((prev, page) => prev + page.items.length, 0) ?? 0,
     };
 
+    const handlePressFollow = () => {
+        mutateFollow({ userId: newData.user.id, isFollow: newData.user.isFollow });
+    };
+
     // TODO 유저 프로필 액션
     const activitySummaryItems: Array<ActivitySummaryItemProps & ActivitySummaryItemActions> = [
         {
             label: '게시물',
             count: newData.postCount,
-            onPress: () => {},
         },
         {
             label: '팔로워',
@@ -94,7 +99,7 @@ export default function UserProfile({ nickname, profile, isFollow, navigateFollo
             </View>
             <View style={styles.textContainer}>
                 {/** TODO 팔로우 */}
-                <Follow isFollow={newData.user.isFollow} onPress={() => {}} />
+                <Follow isFollow={newData.user.isFollow} onPress={handlePressFollow} />
             </View>
         </View>
     );
