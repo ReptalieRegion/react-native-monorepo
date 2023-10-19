@@ -9,6 +9,8 @@ import SharePostDetailImageListPage, {
     SharePostDetailImageListHeader,
 } from '@/pages/share-post/DetailImageList/DetailImageListPage';
 import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
+import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
+import LikeListPage from '@/pages/share-post/LikeList/LikeListPage';
 import SharePostListPage from '@/pages/share-post/List/ListPage';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailList/Header';
 import SharePostUserDetailListPage from '@/pages/share-post/List/UserDetailList/UserDetailListPage';
@@ -39,6 +41,11 @@ const SharePostRoutes = () => {
                     name="share-post/list/follow"
                     component={FollowRoutes}
                     options={{ header: SharePostFollowHeader }}
+                />
+                <Stack.Screen
+                    name="share-post/list/like"
+                    component={LikeListPage}
+                    options={{ header: SharePostLikeListHeader }}
                 />
             </Stack.Group>
         </Stack.Navigator>

@@ -48,6 +48,23 @@ declare module '<api/share/post>' {
 
     type FetchDetailUserPost = ServerAPI<FetchDetailUserPostRequest, InfiniteState<FetchDetailUserPostResponse[]>>;
     /** 특정 유저의 게시글 리스트 무한 스크롤 끝 */
+
+    /** 특정 게시글 좋아요 리스트 무한 스크롤 시작 */
+    type FetchLikeRequest = {
+        postId: string;
+    };
+
+    type FetchLikeResponse = {
+        user: {
+            id: string;
+            profile: ImageType;
+            nickname: string;
+            isFollow: boolean | undefined;
+        };
+    };
+
+    type FetchLike = ServerAPI<FetchLikeRequest, InfiniteState<FetchLikeResponse[]>>;
+    /** 특정 게시글 좋아요 리스트 무한 스크롤 끝 */
     /** GET 끝 */
 
     /** POST 시작 */
@@ -100,7 +117,7 @@ declare module '<api/share/post>' {
     /** 사용자의 특정 게시물 수정 시작 */
     type UpdatePostRequest = {
         postId: string;
-        files: ImageType[];
+        remainingImages: string[];
         contents: string;
     };
 

@@ -3,14 +3,12 @@ import * as Haptic from 'react-native-haptic-feedback';
 
 import useCreateLike from '@/apis/share-post/post/hooks/mutations/useCreateLike';
 import useUpdateLike from '@/apis/share-post/post/hooks/mutations/useUpdateLike';
-import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
-import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
+import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
 
 const useSharePostActions = () => {
     const { mutate: createLikeMutate } = useCreateLike();
     const { mutate: updateLikeMutate } = useUpdateLike();
-    const { mutate: createFollowMutate } = useCreateFollow();
-    const { mutate: updateFollowMutate } = useUpdateFollow();
+    const { mutateFollow } = useCreateOrUpdateFollow();
 
     const handlePressHeart = useCallback(
         ({ isLike, postId }: { isLike: boolean | undefined; postId: string }) => {
@@ -36,22 +34,10 @@ const useSharePostActions = () => {
         [createLikeMutate, updateLikeMutate],
     );
 
-    const handlePressFollow = useCallback(
-        ({ userId, isFollow }: { userId: string; isFollow: boolean | undefined }) => {
-            if (isFollow === undefined) {
-                createFollowMutate({ userId });
-            } else {
-                updateFollowMutate({ userId });
-            }
-            Haptic.trigger('impactLight');
-        },
-        [createFollowMutate, updateFollowMutate],
-    );
-
     return {
         handlePressHeart,
         handleDoublePressImageCarousel,
-        handlePressFollow,
+        handlePressFollow: mutateFollow,
     };
 };
 

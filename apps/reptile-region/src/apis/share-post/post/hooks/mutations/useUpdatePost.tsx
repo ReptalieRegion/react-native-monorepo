@@ -81,7 +81,7 @@ interface UseUpdatePost {
 const useUpdatePost = ({ onSuccess }: UseUpdatePost) => {
     const queryClient = useQueryClient();
     return useMutation<UpdatePost['Response'], any, UpdatePost['Request']>({
-        mutationFn: ({ postId, contents, files }) => updatePost({ postId, contents, files }),
+        mutationFn: ({ postId, contents, remainingImages }) => updatePost({ postId, contents, remainingImages }),
         onSuccess: (data) => {
             onSuccess();
             updateSharePostListCache({ queryClient, data });

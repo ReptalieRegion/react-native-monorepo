@@ -6,27 +6,33 @@ import { StyleSheet, View } from 'react-native';
 
 import type { FetchFollowerListResponse } from '<api/share/post/user>';
 import type { SharePostTopTabParamList } from '<routes/top-tab>';
+import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
 import useInfiniteFollowingList from '@/apis/share-post/user/hooks/queries/useInfiniteFollowingList';
 import { Avatar } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 
-type FollowerPageScreenProps = MaterialTopTabScreenProps<SharePostTopTabParamList, 'share-post/following/list'>;
+type FollowingPageScreenProps = MaterialTopTabScreenProps<SharePostTopTabParamList, 'share-post/following/list'>;
 
-export default function FollowingPage({ route: { params } }: FollowerPageScreenProps) {
+export default function FollowingPage({ route: { params } }: FollowingPageScreenProps) {
     const { data } = useInfiniteFollowingList({ userId: params.userId });
+    const { mutateFollow } = useCreateOrUpdateFollow();
 
     const newData = data?.pages.flatMap((page) => page.items);
 
     const keyExtractor = (item: FetchFollowerListResponse) => item.user.id;
 
     const renderItem: ListRenderItem<FetchFollowerListResponse> = ({ item }) => {
+        const handlePressFollow = () => {
+            mutateFollow({ userId: item.user.id, isFollow: item.user.isFollow });
+        };
+
         return (
             <View style={styles.itemContainer}>
                 <View style={styles.testContainer}>
                     <Avatar image={item.user.profile} size={35} />
-                    <Typo variant="body4">{item.user.nickname}</Typo>
+                    <Typo variant="body3">{item.user.nickname}</Typo>
                 </View>
-                <Follow isFollow={item.user.isFollow} onPress={() => {}} />
+                <Follow isFollow={item.user.isFollow} onPress={handlePressFollow} />
             </View>
         );
     };

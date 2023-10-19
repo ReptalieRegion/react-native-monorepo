@@ -21,13 +21,17 @@ const useBottomSheetGestureAnimation = () => {
     const minSnapPoint = 0;
     const maxSnapPoint = pointsFromTop[snapPointsLastIndex];
 
+    const keyboardDismiss = () => {
+        Keyboard.dismiss();
+    };
+
     const panGesture = Gesture.Pan()
         .onStart(() => {
             startY.value = height.value;
         })
         .onChange((event) => {
             if (keyboard.state.value === 2) {
-                Keyboard.dismiss();
+                runOnJS(keyboardDismiss)();
                 return;
             }
 

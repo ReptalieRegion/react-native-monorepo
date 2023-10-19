@@ -105,12 +105,17 @@ declare module '<routes/root>' {
         followingCount: number;
     };
 
+    type SharePostLikeProps = {
+        postId: string;
+    };
+
     type SharePostModalParamList = {
         detail: SharePostDetailProps;
         'list/user': SharePostUserListProps;
         'posting/update': SharePostPostingUpdateProps;
         'bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
         'share-post/list/follow': SharePostFollowProps;
+        'share-post/list/like': SharePostLikeProps;
     };
 
     type RootRoutesParamList = {

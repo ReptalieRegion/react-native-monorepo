@@ -91,6 +91,10 @@ export default function UserDetailListPage({
                 navigation.push('share-post/detail', { isFollow: undefined, nickname: tag, profile: { src: '' } });
             };
 
+            const handlePressLikeContents = () => {
+                navigation.push('share-post/list/like', { postId });
+            };
+
             return (
                 <SharePostCard
                     containerStyle={styles.postCardContainer}
@@ -102,6 +106,7 @@ export default function UserDetailListPage({
                     onPressPostOptionsMenu={handlePressPostOptionsMenu}
                     onPressProfile={handlePressProfile}
                     onPressTag={handlePressTag}
+                    onPressLikeContents={handlePressLikeContents}
                 />
             );
         },

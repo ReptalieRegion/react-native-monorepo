@@ -8,5 +8,9 @@ export function SharePostFollowHeader(props: NativeStackHeaderProps) {
     return createNativeStackHeader({
         leftIcon: 'back',
         title: param.nickname,
+        containerStyle: {
+            borderBottomWidth: 0,
+            borderBottomColor: undefined,
+        },
     })(props);
 }

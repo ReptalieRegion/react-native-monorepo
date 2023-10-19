@@ -4,24 +4,24 @@ import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flas
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { FetchFollowerListResponse } from '<api/share/post/user>';
-import type { SharePostTopTabParamList } from '<routes/top-tab>';
+import type { FetchLikeResponse } from '<api/share/post>';
+import type { SharePostTabParamList } from '<routes/bottom-tab>';
+import useInfiniteFetchLikes from '@/apis/share-post/post/hooks/queries/useInfiniteFetchLikes';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
-import useInfiniteFollowerList from '@/apis/share-post/user/hooks/queries/useInfiniteFollowerList';
 import { Avatar } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 
-type FollowerPageScreenProps = MaterialTopTabScreenProps<SharePostTopTabParamList, 'share-post/follower/list'>;
+type FollowerPageScreenProps = MaterialTopTabScreenProps<SharePostTabParamList, 'share-post/list/like'>;
 
-export default function FollowerPage({ route: { params } }: FollowerPageScreenProps) {
-    const { data } = useInfiniteFollowerList({ userId: params.userId });
+export default function LikeListPage({ route: { params } }: FollowerPageScreenProps) {
+    const { data } = useInfiniteFetchLikes({ postId: params.postId });
     const { mutateFollow } = useCreateOrUpdateFollow();
 
     const newData = data?.pages.flatMap((page) => page.items);
 
-    const keyExtractor = (item: FetchFollowerListResponse) => item.user.id;
+    const keyExtractor = (item: FetchLikeResponse) => item.user.id;
 
-    const renderItem: ListRenderItem<FetchFollowerListResponse> = ({ item }) => {
+    const renderItem: ListRenderItem<FetchLikeResponse> = ({ item }) => {
         const handlePressFollow = () => {
             mutateFollow({ userId: item.user.id, isFollow: item.user.isFollow });
         };

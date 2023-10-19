@@ -41,12 +41,14 @@ export default function PostHeader({
                 </TouchableTypo>
             </View>
             <View style={styles.rightItemContainer}>
-                <ConditionalRenderer
-                    condition={showFollowButton}
-                    trueContent={<Follow isFollow={isFollow} onPress={onPressFollow} />}
-                    falseContent={null}
-                />
-                <TouchableOpacity onPress={onPressPostOptionsMenu}>
+                <View style={styles.paddingBottom}>
+                    <ConditionalRenderer
+                        condition={showFollowButton}
+                        trueContent={<Follow isFollow={isFollow} onPress={onPressFollow} />}
+                        falseContent={null}
+                    />
+                </View>
+                <TouchableOpacity onPress={onPressPostOptionsMenu} style={styles.paddingBottom}>
                     <KebabMenu />
                 </TouchableOpacity>
             </View>
@@ -59,15 +61,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 10,
     },
     leftItemContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,
+        paddingBottom: 10,
     },
     rightItemContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    paddingBottom: {
+        paddingBottom: 10,
     },
 });

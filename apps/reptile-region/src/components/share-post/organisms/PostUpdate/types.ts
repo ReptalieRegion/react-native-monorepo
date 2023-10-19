@@ -2,6 +2,7 @@ import type { ImageType } from '<image>';
 
 export type PostUpdateImageState = {
     images: ImageType[];
+    state: 'MIN_IMAGE' | '';
 };
 
 interface DeleteImage {
@@ -14,4 +15,8 @@ interface InitImage {
     images: ImageType[];
 }
 
-export type PostUpdateImageActions = DeleteImage | InitImage;
+interface ResetState {
+    type: 'RESET_STATE';
+}
+
+export type PostUpdateImageActions = DeleteImage | InitImage | ResetState;

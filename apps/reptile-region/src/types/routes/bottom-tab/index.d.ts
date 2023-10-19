@@ -80,10 +80,15 @@ declare module '<routes/bottom-tab>' {
         followingCount: number;
     };
 
+    type SharePostLikeProps = {
+        postId: string;
+    };
+
     type SharePostTabParamList = {
         'share-post/list': undefined;
         'share-post/detail': SharePostDetailProps;
         'share-post/list/user': SharePostUserListProps;
+        'share-post/list/like': SharePostLikeProps;
         'share-post/list/follow': SharePostFollowProps;
     };
     /** SharePost 끝 */
