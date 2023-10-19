@@ -75,9 +75,9 @@ export const createLike = async ({ postId }: CreateLikeRequest) => {
 
 /** PUT */
 // 특정 게시글 수정
-export const updatePost = async ({ postId, contents, files }: UpdatePostRequest) => {
+export const updatePost = async ({ postId, contents, remainingImages }: UpdatePostRequest) => {
     const body = {
-        files: files.map((file) => file.src),
+        remainingImages,
         contents,
     };
 
