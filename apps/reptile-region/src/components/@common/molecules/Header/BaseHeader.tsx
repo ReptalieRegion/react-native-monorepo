@@ -41,7 +41,10 @@ export default function BaseHeader({
 }: HeaderProps) {
     const navigation = useNavigation();
     const customStyles = StyleSheet.create({
-        container: containerStyle ?? {},
+        container: containerStyle ?? {
+            borderBottomWidth: 0.5,
+            borderBottomColor: color.Gray[250].toString(),
+        },
         title: titleStyle ?? {},
     });
     const Icon = LEFT_ICON[leftIcon];
@@ -79,8 +82,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        borderBottomWidth: 0.5,
-        borderBottomColor: color.Gray[250].toString(),
         backgroundColor: color.White.toString(),
     },
     left: {

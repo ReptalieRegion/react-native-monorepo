@@ -31,7 +31,7 @@ export default function FollowRoutes({
             initialLayout={{ width }}
             screenOptions={{
                 tabBarActiveTintColor: color.Black.toString(),
-                tabBarLabelStyle: { fontSize: 12 },
+                tabBarLabelStyle: { fontSize: 14 },
                 tabBarStyle: { height: 40, marginTop: 0, paddingTop: 0 },
                 tabBarItemStyle: { marginTop: 0, paddingTop: 0 },
                 tabBarIndicatorStyle: { height: 1, backgroundColor: color.Black.toString() },

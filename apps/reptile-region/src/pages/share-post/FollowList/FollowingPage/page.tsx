@@ -24,7 +24,7 @@ export default function FollowingPage({ route: { params } }: FollowerPageScreenP
             <View style={styles.itemContainer}>
                 <View style={styles.testContainer}>
                     <Avatar image={item.user.profile} size={35} />
-                    <Typo variant="body4">{item.user.nickname}</Typo>
+                    <Typo variant="body3">{item.user.nickname}</Typo>
                 </View>
                 <Follow isFollow={item.user.isFollow} onPress={() => {}} />
             </View>
