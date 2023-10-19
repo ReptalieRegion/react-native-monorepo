@@ -7,6 +7,7 @@
         "packages/*"
     ],
     "scripts": {
+        "rr:deploy": "yarn workspace reptile-region deploy",
         "rr:start": "yarn workspace reptile-region start",
         "rr:android": "yarn workspace reptile-region android",
         "rr:ios": "yarn workspace reptile-region ios",

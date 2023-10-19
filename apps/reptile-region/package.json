@@ -14,6 +14,7 @@
         "set:env:dev": "sh ./scripts/set-env.sh development",
         "set:env:prod": "sh ./scripts/set-env.sh production",
         "start": "sh ./scripts/start.sh",
+        "deploy": "sh ./scripts/deploy.sh",
         "test": "jest",
         "typecheck": "tsc --noEmit",
         "postinstall": "react-native setup-ios-permissions && pod-install"
