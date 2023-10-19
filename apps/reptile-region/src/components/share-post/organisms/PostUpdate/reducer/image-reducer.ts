@@ -1,7 +1,6 @@
 import type { PostUpdateImageActions, PostUpdateImageState } from '../types';
 
 const deleteImage = (state: PostUpdateImageState, targetUri: string): PostUpdateImageState => {
-    console.log(state);
     if (state.images.length === 1) {
         return { ...state, state: 'MIN_IMAGE' };
     }
