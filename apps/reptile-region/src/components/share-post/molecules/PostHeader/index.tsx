@@ -46,7 +46,7 @@ export default function PostHeader({
                     trueContent={<Follow isFollow={isFollow} onPress={onPressFollow} />}
                     falseContent={null}
                 />
-                <TouchableOpacity onPress={onPressPostOptionsMenu}>
+                <TouchableOpacity onPress={onPressPostOptionsMenu} style={styles.kebabMenu}>
                     <KebabMenu />
                 </TouchableOpacity>
             </View>
@@ -59,15 +59,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 10,
     },
     leftItemContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,
+        paddingBottom: 10,
     },
     rightItemContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    kebabMenu: {
+        paddingBottom: 10,
     },
 });
