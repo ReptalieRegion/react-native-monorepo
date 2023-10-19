@@ -2,7 +2,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BottomSheet } from '@reptile-region/bottom-sheet';
 import { TouchableTypo } from '@reptile-region/design-system';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { RootRoutesParamList } from '<routes/root>';
@@ -37,8 +37,20 @@ export default function PostOptionsMenu({ navigation, route: { params } }: PostO
     };
 
     const deletePost = () => {
-        mutate({ postId: post.id });
-        close();
+        Alert.alert('정말로 삭제 하시겠어요?', '', [
+            {
+                text: '취소',
+                style: 'cancel',
+                onPress: () => {},
+            },
+            {
+                text: '삭제',
+                onPress: () => {
+                    mutate({ postId: post.id });
+                    close();
+                },
+            },
+        ]);
     };
 
     const navigateUpdatePage = () => {

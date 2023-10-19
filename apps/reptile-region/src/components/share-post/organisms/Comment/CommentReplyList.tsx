@@ -1,10 +1,10 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { color } from '@reptile-region/design-system';
-import { FlashList } from '@shopify/flash-list';
 import type { ListRenderItem } from '@shopify/flash-list';
+import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useRef } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 
 import CommentReplyItem from './components/CommentReplyItem';
 
@@ -39,7 +39,17 @@ export default function CommentReplyList({ navigation, route: { params } }: Comm
             } = item;
 
             const handleDeleteButton = () => {
-                deleteMutate.mutate({ commentReplyId });
+                Alert.alert('정말로 삭제 하시겠어요?', '', [
+                    {
+                        text: '취소',
+                        style: 'cancel',
+                        onPress: () => {},
+                    },
+                    {
+                        text: '삭제',
+                        onPress: () => deleteMutate.mutate({ commentReplyId }),
+                    },
+                ]);
             };
 
             const handlePressDeclarationButton = () => {};
