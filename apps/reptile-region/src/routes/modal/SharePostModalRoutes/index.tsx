@@ -6,6 +6,8 @@ import SharePostDetailImageListModalPage, {
     SharePostDetailImageListModalHeader,
 } from '@/pages/share-post/DetailImageList/DetailImageListModalPage';
 import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
+import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
+import LikeListPage from '@/pages/share-post/LikeList/LikeListPage';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailList/Header';
 import SharePostUserDetailListModalPage from '@/pages/share-post/List/UserDetailList/UserDetailListModalPage';
 import SharePostCommentRoutes from '@/routes/bottom-sheet/SharePostCommentRoutes';
@@ -36,6 +38,7 @@ export default function SharePostModalRoutes() {
             >
                 <Stack.Screen name="bottom-sheet/comment" component={SharePostCommentRoutes} />
             </Stack.Group>
+            <Stack.Screen name="share-post/list/like" component={LikeListPage} options={{ header: SharePostLikeListHeader }} />
         </Stack.Navigator>
     );
 }

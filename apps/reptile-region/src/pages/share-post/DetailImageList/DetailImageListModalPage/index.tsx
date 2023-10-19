@@ -7,7 +7,7 @@ import SharePostsDetailListSkeleton from '../loading';
 import UserProfile from '../UserProfile';
 
 import type { SharePostDetailProps } from '<routes/bottom-tab>';
-import type { SharePostModalParamList } from '<routes/root>';
+import type { SharePostFollowProps, SharePostModalParamList } from '<routes/root>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 
 type SharePostModalDetailScreenNavigationProp = NativeStackScreenProps<SharePostModalParamList, 'detail'>;
@@ -24,8 +24,31 @@ export default function SharePostDetailImageListModalPage({
     route: { params },
 }: SharePostModalDetailScreenNavigationProp) {
     const ListHeaderComponent = useMemo(() => {
-        return <UserProfile nickname={params.nickname} profile={params.profile} isFollow={params.isFollow} />;
-    }, [params]);
+        const navigateFollowerPage = ({
+            initialRouteName,
+            userId,
+            followerCount,
+            followingCount,
+            nickname,
+        }: SharePostFollowProps) => {
+            navigation.push('share-post/list/follow', {
+                initialRouteName,
+                userId,
+                followerCount,
+                followingCount,
+                nickname,
+            });
+        };
+
+        return (
+            <UserProfile
+                navigateFollowPage={navigateFollowerPage}
+                nickname={params.nickname}
+                profile={params.profile}
+                isFollow={params.isFollow}
+            />
+        );
+    }, [navigation, params.isFollow, params.nickname, params.profile]);
 
     const handleImagePress = (index: number) => {
         navigation.push('list/user', { nickname: params.nickname, startIndex: index });

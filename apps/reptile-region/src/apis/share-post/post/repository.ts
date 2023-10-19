@@ -3,6 +3,7 @@ import type {
     CreatePostRequest,
     DeletePostRequest,
     FetchDetailUserPostRequest,
+    FetchLikeRequest,
     FetchPostRequest,
     UpdateLikeRequest,
     UpdatePostRequest,
@@ -31,6 +32,14 @@ export const getDetailUserPosts = async ({ pageParam = 0, nickname }: FetchDetai
     });
     const response = await clientFetch(`api/share/posts/list/users/${nickname}?${queryString}`);
 
+    return response.json();
+};
+
+export const getLikes = async ({ pageParam = 0, postId }: FetchLikeRequest & InfinitePageParam) => {
+    const queryString = objectToQueryString({
+        pageParam,
+    });
+    const response = await clientFetch(`api/share/posts/${postId}/like/list?${queryString}`);
     return response.json();
 };
 

@@ -1,8 +1,8 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { color } from '@reptile-region/design-system';
-import { FlashList } from '@shopify/flash-list';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
+import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
@@ -75,6 +75,10 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
                 navigation.push('share-post/detail', { isFollow: undefined, nickname: tag, profile: { src: '' } });
             };
 
+            const handlePressLikeContents = () => {
+                navigation.push('share-post/list/like', { postId });
+            };
+
             return (
                 <SharePostCard
                     post={item.post}
@@ -85,6 +89,7 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
                     onPressPostOptionsMenu={handlePressPostOptionsMenu}
                     onPressProfile={handlePressProfile}
                     onPressTag={handlePressTag}
+                    onPressLikeContents={handlePressLikeContents}
                 />
             );
         },

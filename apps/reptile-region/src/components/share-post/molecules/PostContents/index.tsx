@@ -1,4 +1,4 @@
-import { TouchableTypo, Typo } from '@reptile-region/design-system';
+import { TouchableTypo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -17,6 +17,7 @@ type PostContentsState = {
 interface PostContentsActions {
     onPressTag(tag: string): void;
     onPressComment(): void;
+    onPressLikeContents(): void;
 }
 
 type PostContentsProps = PostContentsState & PostContentsActions;
@@ -25,13 +26,18 @@ export default function PostContents({
     post: { id: postId, commentCount, contents, likeCount },
     onPressComment,
     onPressTag,
+    onPressLikeContents,
 }: PostContentsProps) {
     return (
         <View style={styles.container}>
             <ConditionalRenderer
                 condition={likeCount === 0}
                 trueContent={null}
-                falseContent={<Typo variant="heading3">{likeCount}명이 좋아합니다.</Typo>}
+                falseContent={
+                    <TouchableTypo variant="heading3" onPress={onPressLikeContents}>
+                        {likeCount}명이 좋아합니다.
+                    </TouchableTypo>
+                }
             />
             <TaggedContents uuid={postId} contents={contents} onPressTag={onPressTag} />
             <ConditionalRenderer

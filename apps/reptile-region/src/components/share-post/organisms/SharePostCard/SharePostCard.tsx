@@ -34,6 +34,7 @@ interface PostCardActions {
     onPressComment(): void;
     onPressHeart(): void;
     onPressTag(tag: string): void;
+    onPressLikeContents(): void;
 }
 
 type PostCardProps = PostCardState & PostCardActions;
@@ -58,6 +59,7 @@ export default function SharePostCard({
     onPressComment,
     onPressHeart,
     onPressTag,
+    onPressLikeContents,
 }: PostCardProps) {
     return (
         <View style={[styles.container, containerStyle]}>
@@ -82,6 +84,7 @@ export default function SharePostCard({
                     post={{ id: postId, commentCount, contents, likeCount }}
                     onPressComment={onPressComment}
                     onPressTag={onPressTag}
+                    onPressLikeContents={onPressLikeContents}
                 />
             </PostCard>
         </View>
