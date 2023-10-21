@@ -1,22 +1,31 @@
 import { color } from '@reptile-region/design-system';
 import React, { type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import Chevron from './Chevron';
 import EmphasisText from './EmphasisText';
 import Title from './Title';
 
-type ListProps = {
+type ListState = {
     leftChildren?: ReactNode;
     rightChildren?: ReactNode;
 };
 
-export default function ListItem({ leftChildren, rightChildren }: ListProps) {
+interface ListActions {
+    onPress?(): void;
+}
+
+type ListProps = ListState & ListActions;
+
+export default function ListItem({ leftChildren, rightChildren, onPress }: ListProps) {
     return (
-        <View style={styles.container}>
-            <View style={styles.rightContainer}>{leftChildren}</View>
-            <View style={styles.rightContainer}>{rightChildren}</View>
-        </View>
+        <TouchableOpacity onPress={onPress}>
+            <View style={styles.container}>
+                <View style={styles.rightContainer}>{leftChildren}</View>
+                <View style={styles.rightContainer}>{rightChildren}</View>
+            </View>
+        </TouchableOpacity>
     );
 }
 

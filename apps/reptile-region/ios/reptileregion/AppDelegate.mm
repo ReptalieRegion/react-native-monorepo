@@ -2,7 +2,17 @@
 
 #import <React/RCTBundleURLProvider.h>
 
+#import "RNKakaoAuth.h"
+
 @implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)app openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+  if([RNKakaoAuth isKakaoTalkLoginUrl:url]) {
+    return [RNKakaoAuth handleOpenUrl: url];
+  }
+  
+  return NO;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
