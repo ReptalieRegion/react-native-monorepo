@@ -8,18 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* reptileregionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* reptileregionTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-reptileregion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-reptileregion.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		68F5659F51FC455CA2CAA83E /* DancingScript-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7C9D90EDB784E0BA5BE940F /* DancingScript-Medium.ttf */; };
 		735A9B52A20DFF8ADD07BA15 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2A41D76F493F8C74CEA269 /* ExpoModulesProvider.swift */; };
-		7699B88040F8A987B510C191 /* libPods-reptileregion-reptileregionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-reptileregion-reptileregionTests.a */; };
 		7A3CDD09C479458C8A154DD1 /* DancingScript-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C0F66326FEDD4CCDB5F47713 /* DancingScript-SemiBold.ttf */; };
 		809814C96E59E2446C895362 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F82C229E43720ECD2959AA /* ExpoModulesProvider.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		954ECDD2A91740C49A11EB91 /* DancingScript-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 936D71159AF54565BF6DB472 /* DancingScript-Bold.ttf */; };
+		962B5D2AD02262F7310A9F4E /* libPods-reptileregion-reptileregionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2371788D3376C2B401EEAF11 /* libPods-reptileregion-reptileregionTests.a */; };
 		ACF8EB97CEA24D5DBAF263D1 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71C8BE5FCB534D3FB449D032 /* DancingScript-Regular.ttf */; };
+		E293BB693092A63C568DB352 /* libPods-reptileregion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C285F4203BC0BABB569CF452 /* libPods-reptileregion.a */; };
 		EEAD95152AE36A68005FEC8D /* RNKakaoAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */; };
 		EEAD95172AE36AD6005FEC8D /* RNKakaoAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */; };
 		EEE1138D2AE4E3AB00B1F55D /* RNKakaoAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */; };
@@ -46,25 +46,25 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = reptileregion/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = reptileregion/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = reptileregion/main.m; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-reptileregion-reptileregionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reptileregion-reptileregionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21F82C229E43720ECD2959AA /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-reptileregion-reptileregionTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-reptileregion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion.debug.xcconfig"; path = "Target Support Files/Pods-reptileregion/Pods-reptileregion.debug.xcconfig"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-reptileregion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion.release.xcconfig"; path = "Target Support Files/Pods-reptileregion/Pods-reptileregion.release.xcconfig"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-reptileregion-reptileregionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion-reptileregionTests.debug.xcconfig"; path = "Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-reptileregion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reptileregion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2371788D3376C2B401EEAF11 /* libPods-reptileregion-reptileregionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reptileregion-reptileregionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F7A568A21107BC4D709C22F /* Pods-reptileregion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion.release.xcconfig"; path = "Target Support Files/Pods-reptileregion/Pods-reptileregion.release.xcconfig"; sourceTree = "<group>"; };
+		5DF1973DA6947FEBB216737D /* Pods-reptileregion-reptileregionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion-reptileregionTests.release.xcconfig"; path = "Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests.release.xcconfig"; sourceTree = "<group>"; };
+		5F4E65BF21B95DDE15F50549 /* Pods-reptileregion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion.debug.xcconfig"; path = "Target Support Files/Pods-reptileregion/Pods-reptileregion.debug.xcconfig"; sourceTree = "<group>"; };
 		6C2A41D76F493F8C74CEA269 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-reptileregion/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		71C8BE5FCB534D3FB449D032 /* DancingScript-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Regular.ttf"; path = "../src/assets/fonts/DancingScript-Regular.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = reptileregion/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-reptileregion-reptileregionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion-reptileregionTests.release.xcconfig"; path = "Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests.release.xcconfig"; sourceTree = "<group>"; };
 		936D71159AF54565BF6DB472 /* DancingScript-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Bold.ttf"; path = "../src/assets/fonts/DancingScript-Bold.ttf"; sourceTree = "<group>"; };
 		B7C9D90EDB784E0BA5BE940F /* DancingScript-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Medium.ttf"; path = "../src/assets/fonts/DancingScript-Medium.ttf"; sourceTree = "<group>"; };
 		C0F66326FEDD4CCDB5F47713 /* DancingScript-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-SemiBold.ttf"; path = "../src/assets/fonts/DancingScript-SemiBold.ttf"; sourceTree = "<group>"; };
+		C285F4203BC0BABB569CF452 /* libPods-reptileregion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reptileregion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5B4C8C8A57E09424D19A47E /* Pods-reptileregion-reptileregionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion-reptileregionTests.debug.xcconfig"; path = "Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE24423B2AE17A3200F2ABB2 /* reptileregion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = reptileregion.entitlements; path = reptileregion/reptileregion.entitlements; sourceTree = "<group>"; };
 		EEAD95132AE36A68005FEC8D /* RNKakaoAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RNKakaoAuth.h; path = RNKakaoAuth/RNKakaoAuth.h; sourceTree = "<group>"; };
 		EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNKakaoAuth.m; path = RNKakaoAuth/RNKakaoAuth.m; sourceTree = "<group>"; };
 		EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RNKakaoAuth.swift; path = RNKakaoAuth/RNKakaoAuth.swift; sourceTree = "<group>"; };
-		EEAD95182AE36B11005FEC8D /* reptileregion-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "reptileregion-Bridging-Header.h"; sourceTree = "<group>"; };
+		EEAD95182AE36B11005FEC8D /* reptileregion-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = "reptileregion-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-reptileregion-reptileregionTests.a in Frameworks */,
+				962B5D2AD02262F7310A9F4E /* libPods-reptileregion-reptileregionTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-reptileregion.a in Frameworks */,
+				E293BB693092A63C568DB352 /* libPods-reptileregion.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,8 +135,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-reptileregion.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-reptileregion-reptileregionTests.a */,
+				C285F4203BC0BABB569CF452 /* libPods-reptileregion.a */,
+				2371788D3376C2B401EEAF11 /* libPods-reptileregion-reptileregionTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -193,10 +193,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-reptileregion.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-reptileregion.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-reptileregion-reptileregionTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-reptileregion-reptileregionTests.release.xcconfig */,
+				5F4E65BF21B95DDE15F50549 /* Pods-reptileregion.debug.xcconfig */,
+				4F7A568A21107BC4D709C22F /* Pods-reptileregion.release.xcconfig */,
+				E5B4C8C8A57E09424D19A47E /* Pods-reptileregion-reptileregionTests.debug.xcconfig */,
+				5DF1973DA6947FEBB216737D /* Pods-reptileregion-reptileregionTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -227,13 +227,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "reptileregionTests" */;
 			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				60B3A2E4C3578703D65220D1 /* [CP] Check Pods Manifest.lock */,
 				A7D5AFE4876C437719AE99D1 /* [Expo] Configure project */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				CDB5BB0F0494A8FFE397AA59 /* [CP] Embed Pods Frameworks */,
+				B1136AA334D56347037E5310 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -249,15 +249,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "reptileregion" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				DF15653CB93447E85CC9912B /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				109976C3AE9FF6FFFD630671 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				09339054D2220F0B29A454A0 /* [CP] Embed Pods Frameworks */,
+				502B851526214526EF1AE412 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -274,7 +274,8 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1210;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
@@ -287,11 +288,12 @@
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "reptileregion" */;
 			compatibilityVersion = "Xcode 12.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
@@ -344,7 +346,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios relative | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli')\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		09339054D2220F0B29A454A0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -380,7 +382,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-reptileregion/expo-configure-project.sh\"\n";
 		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
+		502B851526214526EF1AE412 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		60B3A2E4C3578703D65220D1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -421,7 +440,41 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-reptileregion-reptileregionTests/expo-configure-project.sh\"\n";
 		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		B1136AA334D56347037E5310 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CDB5BB0F0494A8FFE397AA59 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DF15653CB93447E85CC9912B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -441,57 +494,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -552,7 +554,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-reptileregion-reptileregionTests.debug.xcconfig */;
+			baseConfigurationReference = E5B4C8C8A57E09424D19A47E /* Pods-reptileregion-reptileregionTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -578,6 +580,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/reptileregion-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/reptileregion.app/reptileregion";
 			};
@@ -585,7 +589,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-reptileregion-reptileregionTests.release.xcconfig */;
+			baseConfigurationReference = 5DF1973DA6947FEBB216737D /* Pods-reptileregion-reptileregionTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -608,6 +612,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/reptileregion-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/reptileregion.app/reptileregion";
 			};
@@ -615,7 +621,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-reptileregion.debug.xcconfig */;
+			baseConfigurationReference = 5F4E65BF21B95DDE15F50549 /* Pods-reptileregion.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -623,7 +629,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y9TRXFZMR5;
 				ENABLE_BITCODE = NO;
@@ -644,8 +650,9 @@
 				PRODUCT_NAME = reptileregion;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development org.reactjs.native.test.reptileregion";
-				SWIFT_OBJC_BRIDGING_HEADER = "reptileregion-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/reptileregion-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -653,7 +660,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-reptileregion.release.xcconfig */;
+			baseConfigurationReference = 4F7A568A21107BC4D709C22F /* Pods-reptileregion.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -661,7 +668,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y9TRXFZMR5;
 				INFOPLIST_FILE = reptileregion/Info.plist;
@@ -681,7 +688,8 @@
 				PRODUCT_NAME = reptileregion;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development org.reactjs.native.test.reptileregion";
-				SWIFT_OBJC_BRIDGING_HEADER = "reptileregion-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/reptileregion-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -720,6 +728,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -765,6 +774,7 @@
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -802,6 +812,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -842,6 +853,8 @@
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
