@@ -21,16 +21,6 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
         navigation.navigate('sign-in');
     };
 
-    const handleKakaoLogin = async () => {
-        try {
-            await KakaoAuth.login();
-            const profile = await KakaoAuth.getProfile();
-            console.log('hi2', JSON.stringify(profile));
-        } catch (error) {
-            console.log('error', error);
-        }
-    };
-
     const handleKakaoLogout = async () => {
         try {
             await KakaoAuth.logout();
@@ -48,12 +38,6 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                     text="로그인/회원가입"
                     textInfo={{ color: 'surface', textAlign: 'center' }}
                     touchableProps={{ onPress: navigateSignIn }}
-                />
-                <TextButton
-                    type="view"
-                    text="카카오"
-                    textInfo={{ color: 'surface', textAlign: 'center' }}
-                    touchableProps={{ onPress: handleKakaoLogin }}
                 />
             </View>
             <ListItem leftChildren={<ListItem.Title text="내 프로필 설정" />} rightChildren={<ListItem.Chevron />} />
