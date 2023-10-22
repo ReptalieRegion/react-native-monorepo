@@ -20,6 +20,8 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		954ECDD2A91740C49A11EB91 /* DancingScript-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 936D71159AF54565BF6DB472 /* DancingScript-Bold.ttf */; };
 		ACF8EB97CEA24D5DBAF263D1 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71C8BE5FCB534D3FB449D032 /* DancingScript-Regular.ttf */; };
+		EEAD95152AE36A68005FEC8D /* RNKakaoAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */; };
+		EEAD95172AE36AD6005FEC8D /* RNKakaoAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,10 @@
 		C0F66326FEDD4CCDB5F47713 /* DancingScript-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-SemiBold.ttf"; path = "../src/assets/fonts/DancingScript-SemiBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE24423B2AE17A3200F2ABB2 /* reptileregion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = reptileregion.entitlements; path = reptileregion/reptileregion.entitlements; sourceTree = "<group>"; };
+		EEAD95132AE36A68005FEC8D /* RNKakaoAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RNKakaoAuth.h; path = RNKakaoAuth/RNKakaoAuth.h; sourceTree = "<group>"; };
+		EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNKakaoAuth.m; path = RNKakaoAuth/RNKakaoAuth.m; sourceTree = "<group>"; };
+		EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RNKakaoAuth.swift; path = RNKakaoAuth/RNKakaoAuth.swift; sourceTree = "<group>"; };
+		EEAD95182AE36B11005FEC8D /* reptileregion-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "reptileregion-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +116,7 @@
 		13B07FAE1A68108700A75B9A /* reptileregion */ = {
 			isa = PBXGroup;
 			children = (
+				EEAD95122AE36A41005FEC8D /* RNKakaoAuth */,
 				EE24423B2AE17A3200F2ABB2 /* reptileregion.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -117,6 +124,7 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				EEAD95182AE36B11005FEC8D /* reptileregion-Bridging-Header.h */,
 			);
 			name = reptileregion;
 			sourceTree = "<group>";
@@ -189,6 +197,16 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-reptileregion-reptileregionTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		EEAD95122AE36A41005FEC8D /* RNKakaoAuth */ = {
+			isa = PBXGroup;
+			children = (
+				EEAD95132AE36A68005FEC8D /* RNKakaoAuth.h */,
+				EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */,
+				EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */,
+			);
+			name = RNKakaoAuth;
 			sourceTree = "<group>";
 		};
 		FE1405BA7537701893C662F9 /* ExpoModulesProviders */ = {
@@ -510,8 +528,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				EEAD95152AE36A68005FEC8D /* RNKakaoAuth.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				735A9B52A20DFF8ADD07BA15 /* ExpoModulesProvider.swift in Sources */,
+				EEAD95172AE36AD6005FEC8D /* RNKakaoAuth.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -597,7 +617,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = reptileregion/reptileregion.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = "";
@@ -619,7 +639,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.test.reptileregion;
 				PRODUCT_NAME = reptileregion;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.reactjs.native.test.reptileregion";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development org.reactjs.native.test.reptileregion";
+				SWIFT_OBJC_BRIDGING_HEADER = "reptileregion-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -634,7 +655,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = reptileregion/reptileregion.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = "";
@@ -655,7 +676,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.test.reptileregion;
 				PRODUCT_NAME = reptileregion;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore org.reactjs.native.test.reptileregion";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match Development org.reactjs.native.test.reptileregion";
+				SWIFT_OBJC_BRIDGING_HEADER = "reptileregion-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

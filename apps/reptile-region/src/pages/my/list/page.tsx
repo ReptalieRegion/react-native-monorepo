@@ -9,6 +9,7 @@ import type { MyTabParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
 import { TextButton } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
+import KakaoAuth from '@/native-modules/kakao-auth/KakaoAuth';
 
 type MyListScreenProps = CompositeScreenProps<
     NativeStackScreenProps<MyTabParamList, 'my/list'>,
@@ -18,6 +19,15 @@ type MyListScreenProps = CompositeScreenProps<
 export default function MyListPage({ navigation }: MyListScreenProps) {
     const navigateSignIn = () => {
         navigation.navigate('sign-in');
+    };
+
+    const handleKakaoLogout = async () => {
+        try {
+            await KakaoAuth.logout();
+            console.log('success');
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -31,6 +41,11 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                 />
             </View>
             <ListItem leftChildren={<ListItem.Title text="내 프로필 설정" />} rightChildren={<ListItem.Chevron />} />
+            <ListItem
+                leftChildren={<ListItem.Title text="로그아웃" />}
+                rightChildren={<ListItem.Chevron />}
+                onPress={handleKakaoLogout}
+            />
         </ScrollView>
     );
 }
