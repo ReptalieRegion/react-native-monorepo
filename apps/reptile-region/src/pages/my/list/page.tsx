@@ -27,7 +27,7 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
             const profile = await KakaoAuth.getProfile();
             console.log('hi2', JSON.stringify(profile));
         } catch (error) {
-            console.log('error');
+            console.log('error', error);
         }
     };
 
