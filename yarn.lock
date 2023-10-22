@@ -2680,6 +2680,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@invertase/react-native-apple-authentication@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@invertase/react-native-apple-authentication@npm:2.2.2"
+  checksum: d51c121eba66721e914c16bfa352929b03bf8f6a38aae4b06157ee3399d0ecdc42bd53d5e655ae39b460ec7c759f87753d2c917bccedb3118e2c1bd75d6f874c
+  languageName: node
+  linkType: hard
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -12571,6 +12578,7 @@ __metadata:
     "@babel/runtime": ^7.20.0
     "@faker-js/faker": ^8.0.2
     "@hookform/resolvers": ^3.3.0
+    "@invertase/react-native-apple-authentication": ^2.2.2
     "@mswjs/data": ^0.13.0
     "@react-native-async-storage/async-storage": ^1.19.0
     "@react-native-camera-roll/camera-roll": ^5.6.0
