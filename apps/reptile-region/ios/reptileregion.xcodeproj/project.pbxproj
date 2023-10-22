@@ -22,6 +22,8 @@
 		ACF8EB97CEA24D5DBAF263D1 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71C8BE5FCB534D3FB449D032 /* DancingScript-Regular.ttf */; };
 		EEAD95152AE36A68005FEC8D /* RNKakaoAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */; };
 		EEAD95172AE36AD6005FEC8D /* RNKakaoAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */; };
+		EEE1138D2AE4E3AB00B1F55D /* RNKakaoAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */; };
+		EEE1138E2AE4E3AF00B1F55D /* RNKakaoAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -518,6 +520,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEE1138D2AE4E3AB00B1F55D /* RNKakaoAuth.m in Sources */,
+				EEE1138E2AE4E3AF00B1F55D /* RNKakaoAuth.swift in Sources */,
 				00E356F31AD99517003FC87E /* reptileregionTests.m in Sources */,
 				809814C96E59E2446C895362 /* ExpoModulesProvider.swift in Sources */,
 			);
@@ -619,7 +623,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y9TRXFZMR5;
 				ENABLE_BITCODE = NO;
@@ -657,7 +661,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y9TRXFZMR5;
 				INFOPLIST_FILE = reptileregion/Info.plist;
