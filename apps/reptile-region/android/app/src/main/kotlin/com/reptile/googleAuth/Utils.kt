@@ -3,6 +3,10 @@ package com.reptile.googleAuth
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableMap
 import com.google.android.gms.auth.api.identity.SignInCredential
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.CommonStatusCodes
+import com.google.android.gms.tasks.Task
+import java.lang.Exception
 
 
 class Utils {
@@ -19,5 +23,13 @@ class Utils {
         params.putMap("user", user)
         params.putString("idToken", signInCredential.googleIdToken)
        return params
+    }
+
+    fun getExceptionCode(task: Task<Void>): Int {
+        val e: Exception? = task.exception
+        if (e is ApiException) {
+            return e.statusCode
+        }
+        return CommonStatusCodes.INTERNAL_ERROR
     }
 }

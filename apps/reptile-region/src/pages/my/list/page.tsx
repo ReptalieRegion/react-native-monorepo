@@ -9,6 +9,7 @@ import type { MyTabParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
 import { TextButton } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
+import { GoogleAuth } from '@/native-modules/google-auth/RNGoogleAuthModule';
 import KakaoAuth from '@/native-modules/kakao-auth/KakaoAuth';
 
 type MyListScreenProps = CompositeScreenProps<
@@ -23,8 +24,8 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
 
     const handleKakaoLogout = async () => {
         try {
+            await GoogleAuth.logout();
             await KakaoAuth.logout();
-            console.log('success');
         } catch (error) {
             console.log(error);
         }
