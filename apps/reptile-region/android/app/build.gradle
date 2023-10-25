@@ -1,5 +1,9 @@
-apply plugin: "com.android.application"
-apply plugin: "com.facebook.react"
+plugins {
+    id "kotlin-android"
+    id "com.android.application"
+    id "com.facebook.react"
+    id 'com.google.gms.google-services'
+}
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -88,6 +92,11 @@ android {
         versionName "1.0"
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -109,6 +118,10 @@ android {
         }
     }
 
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+    }
+
 }
 
 dependencies {
@@ -121,6 +134,14 @@ dependencies {
             because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
         }
     }
+
+    // Kakao Modules
+    implementation "com.kakao.sdk:v2-user:2.5.0" // 카카오 로그인
+
+    // Google Modules
+    implementation platform('com.google.firebase:firebase-bom:32.4.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
 
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")

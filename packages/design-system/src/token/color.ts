@@ -296,6 +296,7 @@ const color = {
         350: makeColor('#D2D2D2FF'),
         400: makeColor('#BDBDBDFF'),
         500: makeColor('#9E9E9EFF'),
+        550: makeColor('#747775FF'),
         600: makeColor('#757575FF'),
         700: makeColor('#616161FF'),
         800: makeColor('#424242FF'),
