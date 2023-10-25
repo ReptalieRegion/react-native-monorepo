@@ -14,7 +14,7 @@ type KakaoButtonProps = {
     onError(error: unknown): void;
 };
 
-export default function KakaoButton({ height = 45, width = '80%', onSuccess, onError }: KakaoButtonProps) {
+export default function KakaoButton({ height = 44, width = '90%', onSuccess, onError }: KakaoButtonProps) {
     const handlePress = async () => {
         try {
             await KakaoAuth.login();

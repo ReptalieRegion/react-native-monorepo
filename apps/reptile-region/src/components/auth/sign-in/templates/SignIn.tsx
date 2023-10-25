@@ -1,8 +1,9 @@
 import { color } from '@reptile-region/design-system';
 import React from 'react';
-import { Keyboard, StyleSheet, TouchableNativeFeedback, View } from 'react-native';
+import { Keyboard, Platform, StyleSheet, TouchableNativeFeedback, View } from 'react-native';
 
 import { AppleButton, KakaoButton } from '@/components/@common/molecules/AuthButton';
+import GoogleButton from '@/components/@common/molecules/AuthButton/GoogleButton';
 import LogoAndTextPage from '@/components/auth/sign-in/atoms/LogoAndText';
 
 const SignIn = () => {
@@ -21,7 +22,11 @@ const SignIn = () => {
                             console.log(error);
                         }}
                     />
-                    <AppleButton onSuccess={() => {}} onError={() => {}} />
+                    {Platform.OS === 'ios' ? (
+                        <AppleButton onSuccess={() => {}} onError={() => {}} />
+                    ) : Platform.OS === 'android' ? (
+                        <GoogleButton onSuccess={() => {}} onError={() => {}} />
+                    ) : null}
                 </View>
             </View>
         </TouchableNativeFeedback>

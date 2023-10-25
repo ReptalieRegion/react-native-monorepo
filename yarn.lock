@@ -12594,6 +12594,7 @@ __metadata:
     "@reptile-region/design-system": 1.0.0
     "@reptile-region/error-boundary": 1.0.0
     "@reptile-region/overlay-manager": 1.0.0
+    "@reptile-region/react-hooks": 1.0.0
     "@shopify/flash-list": ^1.6.1
     "@tanstack/react-query": ^4.32.0
     "@tsconfig/react-native": ^3.0.0

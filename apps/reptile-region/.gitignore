@@ -89,3 +89,6 @@ web-build/
 **/fastlane/test_output
 
 *.dSYM.zip
+
+# google
+**/google-services.json

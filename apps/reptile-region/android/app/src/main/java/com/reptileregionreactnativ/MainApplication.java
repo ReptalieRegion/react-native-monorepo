@@ -1,5 +1,6 @@
 package com.reptileregionreactnativ;
 
+import com.reptile.googleAuth.RNGoogleAuthPackage;
 import com.reptile.kakaoauth.RNKakaoAuthPackage;
 
 import android.app.Application;
@@ -32,6 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           packages.add(new RNKakaoAuthPackage());
+          packages.add(new RNGoogleAuthPackage());
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;

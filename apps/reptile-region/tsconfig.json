@@ -8,6 +8,7 @@
     "references": [
         { "path": "../../packages/bottom-sheet" },
         { "path": "../../packages/design-system" },
-        { "path": "../../packages/error-boundary" }
+        { "path": "../../packages/error-boundary" },
+        { "path": "../../packages/react-hooks" }
     ]
 }

@@ -2,6 +2,7 @@ plugins {
     id "kotlin-android"
     id "com.android.application"
     id "com.facebook.react"
+    id 'com.google.gms.google-services'
 }
 
 /**
@@ -136,6 +137,11 @@ dependencies {
 
     // Kakao Modules
     implementation "com.kakao.sdk:v2-user:2.5.0" // 카카오 로그인
+
+    // Google Modules
+    implementation platform('com.google.firebase:firebase-bom:32.4.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
 
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
