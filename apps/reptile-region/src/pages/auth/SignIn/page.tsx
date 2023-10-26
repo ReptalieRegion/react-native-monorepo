@@ -1,12 +1,20 @@
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { Platform } from 'react-native';
 
+import type { RootRoutesParamList } from '<routes/root>';
 import SignInLogo from '@/components/auth/atoms/SignInLogo/SignInLogo';
 import SignInTemplates, { type SocialButtons } from '@/components/auth/templates/SignInTemplates';
 import { useToast } from '@/overlay/Toast';
 
-const SignInPage = () => {
+type SignInScreenProps = NativeStackScreenProps<RootRoutesParamList, 'sign-in'>;
+
+const SignInPage = ({ navigation }: SignInScreenProps) => {
     const { openToast } = useToast();
+
+    const navigateSignUpPage = () => {
+        navigation.navigate('sign-up', { screen: 'step1' });
+    };
 
     const handleErrorToast = () => {
         openToast({
@@ -22,6 +30,7 @@ const SignInPage = () => {
                       type: 'KAKAO',
                       onSuccess: (profile) => {
                           console.log(profile);
+                          navigateSignUpPage();
                       },
                       onError: () => {
                           handleErrorToast();
@@ -31,6 +40,7 @@ const SignInPage = () => {
                       type: 'APPLE',
                       onSuccess: () => {
                           console.log('apple');
+                          navigateSignUpPage();
                       },
                       onError: (error) => {
                           console.log(error);
@@ -42,6 +52,7 @@ const SignInPage = () => {
                       type: 'KAKAO',
                       onSuccess: (profile) => {
                           console.log(profile);
+                          navigateSignUpPage();
                       },
                       onError: (error: unknown) => {
                           console.log(error);
@@ -51,6 +62,7 @@ const SignInPage = () => {
                       type: 'GOOGLE',
                       onSuccess: () => {
                           console.log('GOOGLE');
+                          navigateSignUpPage();
                       },
                       onError: (error) => {
                           console.log(error);

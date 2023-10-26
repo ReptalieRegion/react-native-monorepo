@@ -3,6 +3,7 @@ declare module '<routes/root>' {
 
     import { ImageType } from '<image>';
     import { BottomTabNativeStackParamList } from '<routes/bottom-tab>';
+    import type { SignUpParamList } from '<routes/sign-up>';
     import { SharePostTopTabParamList } from '<routes/top-tab>';
 
     /** SharePost 시작 */
@@ -121,7 +122,7 @@ declare module '<routes/root>' {
     type RootRoutesParamList = {
         'bottom-tab/routes': NavigatorScreenParams<BottomTabNativeStackParamList>;
         'sign-in': undefined;
-        'sign-up': undefined;
+        'sign-up': NavigatorScreenParams<SignUpParamList>;
         'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
         'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
         'share-post/bottom-sheet/post-options-menu': SharePostOptionsMenuProps;

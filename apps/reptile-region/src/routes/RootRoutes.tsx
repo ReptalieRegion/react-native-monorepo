@@ -6,11 +6,13 @@ import React, { useEffect } from 'react';
 import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
 import SharePostModalRoutes from './modal/SharePostModalRoutes';
 import SharePostPostingRoutes from './modal/SharePostPostingRoutes';
+import SignUpRoutes from './SignUpRoutes';
 
 import type { RootRoutesParamList } from '<routes/root>';
 import { useSignIn } from '@/apis/auth';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
+import { SignUpHeader } from '@/pages/auth/SignUp/header';
 import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostUpdatePage, { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost';
 
@@ -40,16 +42,21 @@ const RootRoutes = () => {
                 {/** 바텀 탭 끝 */}
 
                 {/** 인증 시작 */}
-                <Stack.Group navigationKey="auth">
-                    <Stack.Screen
-                        name="sign-in"
-                        component={SignInPage}
-                        options={{
-                            header: SignInHeader,
-                            animation: 'slide_from_bottom',
-                        }}
-                    />
-                </Stack.Group>
+                <Stack.Screen
+                    name="sign-in"
+                    component={SignInPage}
+                    options={{
+                        header: SignInHeader,
+                        animation: 'slide_from_bottom',
+                    }}
+                />
+                <Stack.Screen
+                    name="sign-up"
+                    component={SignUpRoutes}
+                    options={{
+                        header: SignUpHeader,
+                    }}
+                />
                 {/** 인증 끝 */}
 
                 {/** 일상공유 시작 */}

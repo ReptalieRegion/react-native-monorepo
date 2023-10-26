@@ -1,6 +1,6 @@
 import { Typo } from '@reptile-region/design-system';
 import React from 'react';
-import { StyleSheet, type DimensionValue } from 'react-native';
+import { StyleSheet, View, type DimensionValue } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import KakaoSymbol from '@/assets/icons/KakaoSymbol';
@@ -31,20 +31,27 @@ export default function KakaoButton({ height = 44, width = '90%', onSuccess, onE
     };
 
     return (
-        <TouchableWithoutFeedback style={[styles.kakaoContainer]} containerStyle={{ width, height }} onPress={handlePress}>
-            <KakaoSymbol />
-            <Typo>카카오 로그인</Typo>
+        <TouchableWithoutFeedback style={styles.wrapper} containerStyle={styles.wrapperContainer} onPress={handlePress}>
+            <View style={[styles.kakaoContainer, { width, height }]}>
+                <KakaoSymbol />
+                <Typo>카카오로 계속하기</Typo>
+            </View>
         </TouchableWithoutFeedback>
     );
 }
 
 const styles = StyleSheet.create({
+    wrapper: {
+        alignItems: 'center',
+    },
+    wrapperContainer: {
+        width: '100%',
+    },
     kakaoContainer: {
         backgroundColor: '#FEE500',
         borderRadius: 12,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
-        padding: 10,
     },
 });
