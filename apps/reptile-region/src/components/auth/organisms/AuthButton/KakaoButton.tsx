@@ -7,12 +7,17 @@ import KakaoSymbol from '@/assets/icons/KakaoSymbol';
 import KakaoAuth from '@/native-modules/kakao-auth/KakaoAuth';
 import type { KakaoProfile } from '@/native-modules/kakao-auth/type';
 
-type KakaoButtonProps = {
+type KakaoButtonState = {
     height?: DimensionValue;
     width?: DimensionValue;
+};
+
+interface KakaoButtonActions {
     onSuccess(profile: KakaoProfile): void;
     onError(error: unknown): void;
-};
+}
+
+export type KakaoButtonProps = KakaoButtonState & KakaoButtonActions;
 
 export default function KakaoButton({ height = 44, width = '90%', onSuccess, onError }: KakaoButtonProps) {
     const handlePress = async () => {

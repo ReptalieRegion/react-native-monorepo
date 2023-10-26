@@ -2,12 +2,17 @@ import appleAuth, { AppleButton as RNAppleButton } from '@invertase/react-native
 import React from 'react';
 import { type DimensionValue } from 'react-native';
 
-type AppleButtonProps = {
+type AppleButtonState = {
     height?: DimensionValue;
     width?: DimensionValue;
+};
+
+interface AppleButtonActions {
     onSuccess(): void;
     onError(error: unknown): void;
-};
+}
+
+export type AppleButtonProps = AppleButtonState & AppleButtonActions;
 
 export default function AppleButton({ width = '90%', height = 44, onError }: AppleButtonProps) {
     const handlePress = async () => {

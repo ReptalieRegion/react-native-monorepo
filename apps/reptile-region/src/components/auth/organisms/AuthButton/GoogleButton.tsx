@@ -12,7 +12,7 @@ interface GoogleButtonActions {
     onError(error: unknown): void;
 }
 
-type GoogleButtonProps = GoogleButtonActions;
+export type GoogleButtonProps = GoogleButtonActions;
 
 export default function GoogleButton({ onSuccess, onError }: GoogleButtonProps) {
     const { loading, startLoading, endLoading } = useLoading();

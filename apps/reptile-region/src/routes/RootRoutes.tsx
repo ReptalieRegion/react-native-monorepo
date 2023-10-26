@@ -9,9 +9,8 @@ import SharePostPostingRoutes from './modal/SharePostPostingRoutes';
 
 import type { RootRoutesParamList } from '<routes/root>';
 import { useSignIn } from '@/apis/auth';
-import SignInHeader from '@/components/auth/sign-in/header';
-import SignInPage from '@/pages/auth/sign-in/page';
-import SignUpPage from '@/pages/auth/sign-up/page';
+import { SignInHeader } from '@/pages/auth/SignIn/header';
+import SignInPage from '@/pages/auth/SignIn/page';
 import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostUpdatePage, { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost';
 
@@ -48,13 +47,6 @@ const RootRoutes = () => {
                         options={{
                             header: SignInHeader,
                             animation: 'slide_from_bottom',
-                        }}
-                    />
-                    <Stack.Screen
-                        name="sign-up"
-                        component={SignUpPage}
-                        options={{
-                            header: SignInHeader,
                         }}
                     />
                 </Stack.Group>

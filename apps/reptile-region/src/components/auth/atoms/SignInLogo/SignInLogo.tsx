@@ -4,7 +4,7 @@ import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import { Logo } from '@/assets/icons';
 
-const LogoAndTextPage = () => {
+export default function SignInLogo() {
     const { width } = useWindowDimensions();
     const LogoSize = width * 0.3;
 
@@ -16,7 +16,7 @@ const LogoAndTextPage = () => {
             </Typo>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -26,5 +26,3 @@ const styles = StyleSheet.create({
         gap: 2,
     },
 });
-
-export default LogoAndTextPage;
