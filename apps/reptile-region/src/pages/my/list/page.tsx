@@ -1,6 +1,6 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { color } from '@reptile-region/design-system';
+import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -22,6 +22,10 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
         navigation.navigate('sign-in');
     };
 
+    const navigateLicense = () => {
+        navigation.navigate('my/license');
+    };
+
     const handleKakaoLogout = async () => {
         try {
             await GoogleAuth.logout();
@@ -41,7 +45,43 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                     touchableProps={{ onPress: navigateSignIn }}
                 />
             </View>
-            <ListItem leftChildren={<ListItem.Title text="내 프로필 설정" />} rightChildren={<ListItem.Chevron />} />
+            <View>
+                <ListItem leftChildren={<ListItem.Title text="앱푸시 알림 설정" />} rightChildren={<ListItem.Chevron />} />
+                <ListItem leftChildren={<ListItem.Title text="내 프로필 설정" />} rightChildren={<ListItem.Chevron />} />
+            </View>
+            <View>
+                <ListItem
+                    leftChildren={<ListItem.Title text="공지사항" />}
+                    rightChildren={<ListItem.Chevron />}
+                    onPress={handleKakaoLogout}
+                />
+                <ListItem
+                    leftChildren={<ListItem.Title text="이용약관" />}
+                    rightChildren={<ListItem.Chevron />}
+                    onPress={handleKakaoLogout}
+                />
+                <ListItem
+                    leftChildren={<ListItem.Title text="개인정보 취급방침" />}
+                    rightChildren={<ListItem.Chevron />}
+                    onPress={handleKakaoLogout}
+                />
+            </View>
+            <View>
+                <ListItem
+                    leftChildren={<ListItem.Title text="오픈소스 라이선스" />}
+                    rightChildren={<ListItem.Chevron />}
+                    onPress={navigateLicense}
+                />
+                <ListItem
+                    leftChildren={<ListItem.Title text="버전정보" />}
+                    rightChildren={
+                        <View style={styles.marginRight}>
+                            <Typo color="placeholder">1.0.0</Typo>
+                        </View>
+                    }
+                    onPress={handleKakaoLogout}
+                />
+            </View>
             <ListItem
                 leftChildren={<ListItem.Title text="로그아웃" />}
                 rightChildren={<ListItem.Chevron />}
@@ -62,5 +102,8 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingLeft: 20,
         paddingRight: 20,
+    },
+    marginRight: {
+        marginRight: 10,
     },
 });

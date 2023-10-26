@@ -118,10 +118,25 @@ declare module '<routes/root>' {
         'share-post/list/like': SharePostLikeProps;
     };
 
+    type LicenseContentsProps = {
+        libraryName: string;
+        description?: string;
+        licenseType: string;
+        licenseContent: string;
+        homepage?: string;
+    };
+
     type RootRoutesParamList = {
         'bottom-tab/routes': NavigatorScreenParams<BottomTabNativeStackParamList>;
+        /** auth 시작 */
         'sign-in': undefined;
         'sign-up': undefined;
+        /** auth 끝 */
+
+        /** my 시작 */
+        'my/license': undefined;
+        'my/license/contents': LicenseContentsProps;
+        /** my 끝 */
         'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
         'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
         'share-post/bottom-sheet/post-options-menu': SharePostOptionsMenuProps;

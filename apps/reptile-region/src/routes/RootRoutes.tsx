@@ -12,6 +12,10 @@ import { useSignIn } from '@/apis/auth';
 import SignInHeader from '@/components/auth/sign-in/header';
 import SignInPage from '@/pages/auth/sign-in/page';
 import SignUpPage from '@/pages/auth/sign-up/page';
+import { LicenseContentsHeader } from '@/pages/my/License/ContentsPage/header';
+import LicenseContentsPage from '@/pages/my/License/ContentsPage/page';
+import { LicenseListHeader } from '@/pages/my/License/ListPage/header';
+import LicenseListPage from '@/pages/my/License/ListPage/page';
 import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostUpdatePage, { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost';
 
@@ -59,6 +63,17 @@ const RootRoutes = () => {
                     />
                 </Stack.Group>
                 {/** 인증 끝 */}
+
+                {/** 내 정보 시작 */}
+                <Stack.Group>
+                    <Stack.Screen name="my/license" component={LicenseListPage} options={{ header: LicenseListHeader }} />
+                    <Stack.Screen
+                        name="my/license/contents"
+                        component={LicenseContentsPage}
+                        options={{ header: LicenseContentsHeader }}
+                    />
+                </Stack.Group>
+                {/** 내 정보 끝 */}
 
                 {/** 일상공유 시작 */}
                 <Stack.Group screenOptions={{ headerShown: false }}>
