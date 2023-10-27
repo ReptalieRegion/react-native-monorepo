@@ -19,7 +19,6 @@ export default function AppleButton({ width = '90%', height = 44, onError }: App
         try {
             const responseObject = await appleAuth.performRequest({
                 requestedOperation: appleAuth.Operation.LOGIN,
-                requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
             });
 
             const credentialState = await appleAuth.getCredentialStateForUser(responseObject.user);
