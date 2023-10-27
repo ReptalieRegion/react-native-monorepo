@@ -11,6 +11,7 @@ import { TextButton } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { GoogleAuth } from '@/native-modules/google-auth/RNGoogleAuthModule';
 import KakaoAuth from '@/native-modules/kakao-auth/KakaoAuth';
+import VersionCheck from '@/native-modules/version-check/VersionCheck';
 
 type MyListScreenProps = CompositeScreenProps<
     NativeStackScreenProps<MyTabParamList, 'my/list'>,
@@ -34,6 +35,8 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
             console.log(error);
         }
     };
+
+    console.log(VersionCheck.getVersion());
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -76,7 +79,7 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                     leftChildren={<ListItem.Title text="버전정보" />}
                     rightChildren={
                         <View style={styles.marginRight}>
-                            <Typo color="placeholder">1.0.0</Typo>
+                            <Typo color="placeholder">{VersionCheck.getVersion()}</Typo>
                         </View>
                     }
                     onPress={handleKakaoLogout}
