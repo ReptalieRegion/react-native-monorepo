@@ -27,6 +27,14 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
         navigation.navigate('my/license');
     };
 
+    const navigateTermsOfUse = () => {
+        navigation.navigate('my/terms-of-use');
+    };
+
+    const navigatePrivacyPolicy = () => {
+        navigation.navigate('my/terms-privacy-policy');
+    };
+
     const handleKakaoLogout = async () => {
         try {
             await GoogleAuth.logout();
@@ -61,12 +69,12 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                 <ListItem
                     leftChildren={<ListItem.Title text="이용약관" />}
                     rightChildren={<ListItem.Chevron />}
-                    onPress={handleKakaoLogout}
+                    onPress={navigateTermsOfUse}
                 />
                 <ListItem
                     leftChildren={<ListItem.Title text="개인정보 취급방침" />}
                     rightChildren={<ListItem.Chevron />}
-                    onPress={handleKakaoLogout}
+                    onPress={navigatePrivacyPolicy}
                 />
             </View>
             <View>
@@ -82,7 +90,6 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                             <Typo color="placeholder">{VersionCheck.getVersion()}</Typo>
                         </View>
                     }
-                    onPress={handleKakaoLogout}
                 />
             </View>
             <ListItem

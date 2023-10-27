@@ -16,6 +16,10 @@ import { LicenseContentsHeader } from '@/pages/my/License/ContentsPage/header';
 import LicenseContentsPage from '@/pages/my/License/ContentsPage/page';
 import { LicenseListHeader } from '@/pages/my/License/ListPage/header';
 import LicenseListPage from '@/pages/my/License/ListPage/page';
+import { PrivacyPolicyHeader } from '@/pages/my/Terms/PrivacyPolicy/header';
+import PrivacyPolicyPage from '@/pages/my/Terms/PrivacyPolicy/page';
+import { TermsOfUseHeader } from '@/pages/my/Terms/TermsOfUse/header';
+import TermsOfUsePage from '@/pages/my/Terms/TermsOfUse/page';
 import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostUpdatePage, { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost';
 
@@ -71,6 +75,12 @@ const RootRoutes = () => {
                         name="my/license/contents"
                         component={LicenseContentsPage}
                         options={{ header: LicenseContentsHeader }}
+                    />
+                    <Stack.Screen name="my/terms-of-use" component={TermsOfUsePage} options={{ header: TermsOfUseHeader }} />
+                    <Stack.Screen
+                        name="my/terms-privacy-policy"
+                        component={PrivacyPolicyPage}
+                        options={{ header: PrivacyPolicyHeader }}
                     />
                 </Stack.Group>
                 {/** 내 정보 끝 */}
