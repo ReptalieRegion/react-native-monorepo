@@ -1,4 +1,3 @@
-import { useFlipper } from '@react-navigation/devtools';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
@@ -23,7 +22,6 @@ const Stack = createNativeStackNavigator<RootRoutesParamList>();
 
 const RootRoutes = () => {
     const navigationRef = useNavigationContainerRef();
-    useFlipper(navigationRef);
 
     const { mutate } = useSignIn();
 

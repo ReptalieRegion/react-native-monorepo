@@ -136,6 +136,7 @@ declare module '<routes/root>' {
         /** my 시작 */
         'my/license': undefined;
         'my/license/contents': LicenseContentsProps;
+        'my/notification': undefined;
         /** my 끝 */
         'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
         'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
