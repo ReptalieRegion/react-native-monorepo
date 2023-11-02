@@ -16,6 +16,7 @@ export const getAuthTokenAndPublicKey = async () => {
 
     return response.json();
 };
+
 // 토큰 재발급
 export const refreshToken = async () => {
     const refreshTokenValue = await getRefreshToken();

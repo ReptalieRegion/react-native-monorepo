@@ -2,10 +2,11 @@ import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
+import HTTPError from '@/apis/@utils/error/HTTPError';
 import { Error } from '@/assets/icons';
 
 type GlobalErrorState = {
-    error: Error;
+    error: Error | HTTPError;
 };
 
 interface GlobalErrorActions {
@@ -14,8 +15,7 @@ interface GlobalErrorActions {
 
 type GlobalErrorProps = GlobalErrorState & GlobalErrorActions;
 
-export default function GlobalError({ error, reset }: GlobalErrorProps) {
-    console.log(error);
+export default function GlobalError({ reset }: GlobalErrorProps) {
     return (
         <View style={styles.container}>
             <Error width={50} height={50} fill={color.Red.A700.toString()} />

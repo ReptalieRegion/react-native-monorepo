@@ -53,7 +53,8 @@ class Fetcher {
             if (response.status === 401) {
                 return this.refreshTokenAndRetry(fetchInfo);
             }
-            throw new HTTPError(response.status, response.statusText);
+            const error = await response.json();
+            throw new HTTPError(response.status, error.message);
         }
 
         return response;
@@ -83,7 +84,8 @@ class Fetcher {
 
             if (!response.ok) {
                 this.resetRefreshQueue();
-                throw new HTTPError(response.status, response.statusText);
+                const error = await response.json();
+                throw new HTTPError(response.status, error.message);
             }
 
             const tokens = (await response.json()) as RefreshToken['Response'];
