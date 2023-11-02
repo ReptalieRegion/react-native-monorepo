@@ -1,6 +1,7 @@
 import { ErrorBoundary } from '@reptile-region/error-boundary';
 import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
+import BootSplash from 'react-native-bootsplash';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -13,7 +14,9 @@ import RootRoutes from '@/routes/RootRoutes';
 
 export default function App() {
     useEffect(() => {
-        refreshToken();
+        refreshToken().finally(async () => {
+            await BootSplash.hide({ fade: true });
+        });
     }, []);
 
     return (
