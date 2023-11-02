@@ -4,10 +4,20 @@ import HTTPError from '../@utils/error/HTTPError';
 
 import { getRefreshToken } from './utils/secure-storage-token';
 
-import type { PostKakaoAuth, RefreshToken } from '<api/auth>';
+import type { NicknameDuplicateCheck, PostKakaoAuth, RefreshToken } from '<api/auth>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 
-/** Post */
+/** GET */
+// 닉네임 중복 체크
+export const nicknameDuplicateCheck = async ({ nickname }: NicknameDuplicateCheck['Request']) => {
+    const response = await clientFetch(`api/users/duplicate/nickname/${nickname}`, {
+        method: METHOD.GET,
+    });
+
+    return response.json();
+};
+
+/** POST */
 // 인증 토큰 및 공개 키 발급
 export const getAuthTokenAndPublicKey = async () => {
     const response = await clientFetch('api/auth/social/token', {

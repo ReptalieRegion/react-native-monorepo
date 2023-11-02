@@ -20,6 +20,18 @@ declare module '<api/auth>' {
           };
 
     /** GET 시작 */
+    type NicknameDuplicateCheckRequest = {
+        nickname: string;
+    };
+
+    type NicknameDuplicateCheckResponse = {
+        isDuplicate: boolean;
+    };
+
+    type NicknameDuplicateCheck = ServerAPI<NicknameDuplicateCheckRequest, NicknameDuplicateCheckResponse>;
+    /** GET 끝 */
+
+    /** Post 시작 */
     /** 공개키 발급 시작 */
     type FetchAuthTokenAndPublicKeyResponse = {
         publicKey: string;
@@ -28,9 +40,6 @@ declare module '<api/auth>' {
 
     type FetchAuthTokenAndPublicKey = ServerAPI<undefined, FetchAuthTokenAndPublicKeyResponse>;
     /** 공개키 발급 끝 */
-    /** GET 끝 */
-
-    /** Post 시작 */
     /** 카카오 로그인 시작 */
     type PostKakaoAuthRequest = {
         socialId: string;

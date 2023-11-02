@@ -1,6 +1,7 @@
 /** Auth */
 export const authQueryKeys = {
     auth: ['user/auth'],
+    duplicateNickname: (nickname: string) => ['user/duplicate/nickname/', nickname],
 } as const;
 
 /** SharePost */
