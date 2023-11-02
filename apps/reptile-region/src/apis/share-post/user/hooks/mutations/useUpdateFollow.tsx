@@ -1,11 +1,11 @@
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { InfiniteData } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { updateFollow } from '../../repository';
 
 import type { FetchDetailUserProfile, UpdateFollow } from '<api/share/post/user>';
 import type { FetchPost } from '<api/share/post>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 type SetQueryDataProps = {
     queryClient: QueryClient;

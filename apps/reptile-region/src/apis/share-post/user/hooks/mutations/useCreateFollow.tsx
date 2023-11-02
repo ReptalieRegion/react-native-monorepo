@@ -5,7 +5,7 @@ import { createFollow } from '../../repository';
 
 import type { CreateFollow, FetchDetailUserProfile } from '<api/share/post/user>';
 import type { FetchPost } from '<api/share/post>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 type SetQueryDataProps = {
     queryClient: QueryClient;

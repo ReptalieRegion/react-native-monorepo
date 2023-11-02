@@ -1,11 +1,11 @@
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { InfiniteData } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deleteCommentReply } from '../../repository';
 
 import type { DeleteCommentReply, FetchCommentReply } from '<api/share/post/comment-reply>';
 import type { FetchComment } from '<api/share/post/comment>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 감소 */
 const updateCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteCommentReply['Response'] }) => {

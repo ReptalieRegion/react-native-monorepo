@@ -5,12 +5,12 @@ import type {
     UpdateCommentReplyRequest,
 } from '<api/share/post/comment-reply>';
 import type { InfinitePageParam } from '<api/utils>';
-import clientFetch, { METHOD } from '@/apis/clientFetch';
+import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 대댓글 리스트 무한스크롤
-export const getCommentReplies = async ({ pageParam = 0, commentId }: FetchCommentReplyRequest & InfinitePageParam) => {
+export const getCommentReplies = async ({ pageParam, commentId }: FetchCommentReplyRequest & InfinitePageParam) => {
     const queryString = objectToQueryString({ pageParam });
     const response = await clientFetch(`api/share/comments/${commentId}/replies/list?${queryString}`, {
         method: METHOD.GET,

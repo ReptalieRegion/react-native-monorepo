@@ -5,12 +5,12 @@ import type {
     UpdateCommentRequest,
 } from '<api/share/post/comment>';
 import type { InfinitePageParam } from '<api/utils>';
-import clientFetch, { METHOD } from '@/apis/clientFetch';
+import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 특정 게시글 댓글 패치
-export const getComments = async ({ pageParam = 0, postId }: FetchCommentRequest & InfinitePageParam) => {
+export const getComments = async ({ pageParam, postId }: FetchCommentRequest & InfinitePageParam) => {
     const queryString = objectToQueryString({
         pageParam,
     });

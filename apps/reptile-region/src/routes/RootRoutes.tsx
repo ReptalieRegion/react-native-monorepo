@@ -1,7 +1,7 @@
 import { useFlipper } from '@react-navigation/devtools';
 import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
 import SharePostModalRoutes from './modal/SharePostModalRoutes';
@@ -9,7 +9,6 @@ import SharePostPostingRoutes from './modal/SharePostPostingRoutes';
 import SignUpRoutes from './SignUpRoutes';
 
 import type { RootRoutesParamList } from '<routes/root>';
-import { useSignIn } from '@/apis/auth';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
@@ -21,12 +20,6 @@ const Stack = createNativeStackNavigator<RootRoutesParamList>();
 const RootRoutes = () => {
     const navigationRef = useNavigationContainerRef();
     useFlipper(navigationRef);
-
-    const { mutate } = useSignIn();
-
-    useEffect(() => {
-        mutate({ userId: '3de3fm3cw3fl3i4.3d73ft3hk@gmail.com', password: '123123' });
-    }, [mutate]);
 
     return (
         <NavigationContainer ref={navigationRef}>

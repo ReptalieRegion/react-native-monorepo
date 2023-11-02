@@ -4,7 +4,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createPost } from '../../repository';
 
 import type { CreatePost, FetchDetailUserPost, FetchPost } from '<api/share/post>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 type UseCreatePostProps = {
     onSuccess: () => void;

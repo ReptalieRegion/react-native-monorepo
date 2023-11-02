@@ -27,7 +27,7 @@ type ChangeHeaderProps = {
 const ChangeHeader = ({ navigation }: ChangeHeaderProps) => {
     const { selectedPhotos } = usePhotoSelect();
     const { contents } = useTag();
-    const { isLoading, mutate } = useCreatePost({
+    const { isPending, mutate } = useCreatePost({
         onSuccess: () => {
             navigation.navigate('bottom-tab/routes', {
                 screen: 'tab',
@@ -54,10 +54,10 @@ const ChangeHeader = ({ navigation }: ChangeHeaderProps) => {
 
             return (
                 <ConditionalRenderer
-                    condition={isLoading}
+                    condition={isPending}
                     trueContent={<ActivityIndicator />}
                     falseContent={
-                        <TouchableTypo onPress={handleSubmitSharePost} disabled={isLoading}>
+                        <TouchableTypo onPress={handleSubmitSharePost} disabled={isPending}>
                             등록
                         </TouchableTypo>
                     }
@@ -66,7 +66,7 @@ const ChangeHeader = ({ navigation }: ChangeHeaderProps) => {
         };
 
         navigation.setOptions({ headerRight });
-    }, [navigation, contents, isLoading, selectedPhotos, mutate]);
+    }, [navigation, contents, isPending, selectedPhotos, mutate]);
 
     return null;
 };

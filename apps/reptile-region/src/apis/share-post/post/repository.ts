@@ -9,13 +9,13 @@ import type {
     UpdatePostRequest,
 } from '<api/share/post>';
 import type { InfinitePageParam } from '<api/utils>';
-import clientFetch, { METHOD } from '@/apis/clientFetch';
+import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { uploadImage } from '@/utils/camera-roll/camera-roll';
 import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 게시물 패치
-export const getPosts = async ({ pageParam = 0 }: FetchPostRequest) => {
+export const getPosts = async ({ pageParam }: FetchPostRequest) => {
     const queryString = objectToQueryString({
         pageParam,
     });
@@ -26,7 +26,7 @@ export const getPosts = async ({ pageParam = 0 }: FetchPostRequest) => {
 };
 
 // 특정 유저 게시글 패치
-export const getDetailUserPosts = async ({ pageParam = 0, nickname }: FetchDetailUserPostRequest & InfinitePageParam) => {
+export const getDetailUserPosts = async ({ pageParam, nickname }: FetchDetailUserPostRequest & InfinitePageParam) => {
     const queryString = objectToQueryString({
         pageParam,
     });
@@ -35,7 +35,7 @@ export const getDetailUserPosts = async ({ pageParam = 0, nickname }: FetchDetai
     return response.json();
 };
 
-export const getLikes = async ({ pageParam = 0, postId }: FetchLikeRequest & InfinitePageParam) => {
+export const getLikes = async ({ pageParam, postId }: FetchLikeRequest & InfinitePageParam) => {
     const queryString = objectToQueryString({
         pageParam,
     });
@@ -59,11 +59,6 @@ export const createPost = async ({ contents, selectedPhotos }: CreatePostRequest
         body: formData,
         isFormData: true,
     });
-
-    if (!response.ok) {
-        const message = await response.json();
-        throw new Error(JSON.stringify(message));
-    }
 
     return response.json();
 };

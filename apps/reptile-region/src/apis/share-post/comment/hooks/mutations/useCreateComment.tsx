@@ -1,12 +1,12 @@
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { InfiniteData } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createComment } from '../../repository';
 
 import type { CreateComment, FetchComment } from '<api/share/post/comment>';
 import type { FetchPost } from '<api/share/post>';
 import type { OnSuccessParam } from '<api/utils>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 댓글 추가 */
 const updateShareCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateComment['Response'] }) => {

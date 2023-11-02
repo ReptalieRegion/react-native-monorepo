@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { Keyboard } from 'react-native';
 
-import TextInputEditor from './components/TextInputEditor';
 import type { CommentTextInputActions } from './components/TextInputEditor';
+import TextInputEditor from './components/TextInputEditor';
 import useCommentActions from './hooks/useCommentActions';
 
 import useCreateComment from '@/apis/share-post/comment/hooks/mutations/useCreateComment';
@@ -38,5 +38,5 @@ export default function CommentTextEditor() {
         [createMutate, updateMutate],
     );
 
-    return <TextInputEditor onSubmit={handleSubmit} isLoadingSubmit={createMutate.isLoading || updateMutate.isLoading} />;
+    return <TextInputEditor onSubmit={handleSubmit} isLoadingSubmit={createMutate.isPending || updateMutate.isPending} />;
 }

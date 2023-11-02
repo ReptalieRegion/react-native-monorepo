@@ -4,7 +4,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { deletePost } from '../../repository';
 
 import type { DeletePost, FetchDetailUserPost, FetchPost } from '<api/share/post>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 일상공유 무한스크롤 조회 리스트 게시글 삭제 **/
 const deletePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeletePost['Response'] }) => {
