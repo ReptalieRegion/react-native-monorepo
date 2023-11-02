@@ -20,8 +20,8 @@ export default function App() {
     }, []);
 
     return (
-        <ErrorBoundary renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}>
-            <ReactQueryProvider>
+        <ReactQueryProvider>
+            <ErrorBoundary renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}>
                 <GestureHandlerRootView style={styles.gestureContainer}>
                     <SafeAreaProvider>
                         <Toast>
@@ -29,8 +29,8 @@ export default function App() {
                         </Toast>
                     </SafeAreaProvider>
                 </GestureHandlerRootView>
-            </ReactQueryProvider>
-        </ErrorBoundary>
+            </ErrorBoundary>
+        </ReactQueryProvider>
     );
 }
 

@@ -1,4 +1,5 @@
 import { Typo, color } from '@reptile-region/design-system';
+import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -15,7 +16,23 @@ interface GlobalErrorActions {
 
 type GlobalErrorProps = GlobalErrorState & GlobalErrorActions;
 
-export default function GlobalError({ reset }: GlobalErrorProps) {
+export default function GlobalError({ error, reset }: GlobalErrorProps) {
+    console.log(error.message);
+    const queryClient = useQueryClient();
+
+    const handleReset = () => {
+        const errorKeys = queryClient
+            .getQueryCache()
+            .getAll()
+            .filter((q) => q.state.status === 'error')
+            .map((e) => e.queryKey);
+
+        errorKeys.forEach((errorKey) => {
+            queryClient.invalidateQueries({ queryKey: errorKey });
+        });
+        reset();
+    };
+
     return (
         <View style={styles.container}>
             <Error width={50} height={50} fill={color.Red.A700.toString()} />
@@ -27,7 +44,7 @@ export default function GlobalError({ reset }: GlobalErrorProps) {
                     </Typo>
                 </View>
             </View>
-            <TouchableOpacity style={styles.button} onPress={reset}>
+            <TouchableOpacity style={styles.button} onPress={handleReset}>
                 <Typo variant="body2" color="surface">
                     새로고침
                 </Typo>
