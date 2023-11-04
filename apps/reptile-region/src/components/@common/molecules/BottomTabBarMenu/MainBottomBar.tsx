@@ -9,11 +9,11 @@ import { BottomTabBarButton } from '../../atoms';
 import type { IconProps } from '<Icon>';
 import type { BottomTabParamList } from '<routes/bottom-tab>';
 import {
-    Cart as ShopIcon,
-    Community as InfoIcon,
     Home as HomeIcon,
+    Community as InfoIcon,
     My as MyIcon,
     Share as SharePostIcon,
+    Cart as ShopIcon,
 } from '@/assets/icons';
 
 type MenusType = {

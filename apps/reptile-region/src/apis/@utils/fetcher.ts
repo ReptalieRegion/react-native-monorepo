@@ -138,12 +138,12 @@ class Fetcher {
             const newHeaders = Object.assign(
                 {},
                 isFormData ? undefined : defaultInit.headers,
-                headers,
                 this.accessToken === null
                     ? {}
                     : {
                           Authorization: `Bearer ${this.accessToken}`,
                       },
+                headers,
             );
 
             return {

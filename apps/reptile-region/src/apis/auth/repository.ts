@@ -1,10 +1,8 @@
 import { encryptionRSA } from '@reptile-region/utils';
 
-import HTTPError from '../@utils/error/HTTPError';
-
 import { getRefreshToken } from './utils/secure-storage-token';
 
-import type { JoinProgress, NicknameDuplicateCheck, PostKakaoAuth, RefreshToken } from '<api/auth>';
+import type { JoinProgress, NicknameDuplicateCheck, PostKakaoAuth } from '<api/auth>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 
 /** GET */
@@ -34,20 +32,14 @@ export const refreshToken = async () => {
         return;
     }
 
-    const response = await fetch('api/auth/refresh', {
+    const response = await clientFetch('api/auth/refresh', {
         method: METHOD.POST,
         headers: {
             Authorization: `Bearer ${refreshTokenValue}`,
         },
     });
 
-    if (!response.ok) {
-        throw new HTTPError(response.status, response.statusText);
-    }
-
-    const data = (await response.json()) as RefreshToken['Response'];
-
-    return data;
+    return await response.json();
 };
 
 // 카카오 로그인
@@ -98,6 +90,15 @@ export const joinProgress = async (data: JoinProgress['Request']) => {
             Authorization: `Bearer ${data.authToken}`,
         },
         body,
+    });
+
+    return response.json();
+};
+
+/** DELETE */
+export const signOut = async () => {
+    const response = await clientFetch('api/auth/sign-out', {
+        method: METHOD.DELETE,
     });
 
     return response.json();

@@ -54,7 +54,7 @@ declare module '<api/auth>' {
     /** 카카오 로그인 끝 */
 
     /** 리프레시 토큰 요청 시작 */
-    type RefreshToken = ServerAPI<undefined, AuthTokens>;
+    type RefreshToken = ServerAPI<void, AuthTokens>;
     /** 리프레시 토큰 요청 끝 */
 
     /** 회원가입 절차 시작 */
@@ -78,4 +78,14 @@ declare module '<api/auth>' {
     type JoinProgress = Register0;
     /** 회원가입 절차 끝 */
     /** Post 끝 */
+
+    /** DELETE 시작 */
+    /** 로그아웃 시작 */
+    type SignOutResponse = {
+        message: 'Success';
+    };
+
+    type SignOut = ServerAPI<void, SignInResponse>;
+    /** 로그아웃 시작 */
+    /** DELETE 끝 */
 }

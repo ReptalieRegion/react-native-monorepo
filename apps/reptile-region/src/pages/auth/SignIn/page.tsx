@@ -5,6 +5,7 @@ import { Platform } from 'react-native';
 import type { PostKakaoAuth, SignUpRegister0 } from '<api/auth>';
 import type { RootRoutesParamList } from '<routes/root>';
 import SignInLogo from '@/components/auth/atoms/SignInLogo/SignInLogo';
+import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import SignInTemplates, { type SocialButtons } from '@/components/auth/templates/SignInTemplates';
 import { useToast } from '@/overlay/Toast';
 
@@ -12,6 +13,7 @@ type SignInScreenProps = NativeStackScreenProps<RootRoutesParamList, 'sign-in'>;
 
 const SignInPage = ({ navigation }: SignInScreenProps) => {
     const { openToast } = useToast();
+    const { signIn } = useAuth();
 
     const navigateSignUpPage = (data: Omit<SignUpRegister0, 'type'>) => {
         switch (data.joinProgress) {
@@ -31,11 +33,21 @@ const SignInPage = ({ navigation }: SignInScreenProps) => {
     const handleSuccessKakao = (data: PostKakaoAuth['Response']) => {
         switch (data.type) {
             case 'SIGN_IN':
+                signIn({ accessToken: data.accessToken, refreshToken: data.refreshToken });
+                navigation.navigate('bottom-tab/routes', {
+                    screen: 'tab',
+                    params: {
+                        screen: 'my/routes',
+                        params: {
+                            screen: 'my/list',
+                        },
+                    },
+                });
                 return;
             case 'SIGN_UP':
                 navigateSignUpPage({
                     joinProgress: data.joinProgress,
-                    nickname: data.nickname ?? '테스트',
+                    nickname: data.nickname,
                     userId: data.userId,
                 });
                 return;

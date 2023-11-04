@@ -3,27 +3,28 @@ import BootSplash from 'react-native-bootsplash';
 
 import { useAuth } from '../../hooks/useAuth';
 
-import { refreshToken } from '@/apis/auth/repository';
+import useRefresh from '@/apis/auth/hooks/mutations/useRefresh';
+import { useToast } from '@/overlay/Toast';
 
 export default function InitialAuth() {
+    const { mutateAsync } = useRefresh();
     const { signIn } = useAuth();
+    const { openToast } = useToast();
 
     useEffect(() => {
         const initSignIn = async () => {
             try {
-                const tokens = await refreshToken();
-                if (tokens?.accessToken && tokens?.refreshToken) {
-                    signIn(tokens);
-                }
+                const tokens = await mutateAsync();
+                signIn(tokens);
             } catch (error) {
-                console.log(error);
+                openToast({ severity: 'error', contents: '로그인 실패' });
             } finally {
                 await BootSplash.hide({ fade: true });
             }
         };
 
         initSignIn();
-    }, [signIn]);
+    }, [mutateAsync, openToast, signIn]);
 
     return null;
 }

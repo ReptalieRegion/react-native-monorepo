@@ -54,6 +54,7 @@ export default function SignUpStep1({
                 nickname,
                 userId,
             });
+
             await signIn({ accessToken, refreshToken });
             navigation.popToTop();
         } catch (error) {

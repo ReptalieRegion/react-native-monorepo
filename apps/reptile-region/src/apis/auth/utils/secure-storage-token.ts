@@ -16,6 +16,7 @@ export const registerAuthTokens = async ({ accessToken, refreshToken }: Register
             SecureStore.setItemAsync(SECURE_STORE_KEYS.ACCESS_TOKEN, accessToken),
             SecureStore.setItemAsync(SECURE_STORE_KEYS.REFRESH_TOKEN, refreshToken),
         ]);
+        return;
     }
 
     throw new Error('[registerAuthTokens]: accessToken과 refreshToken이 없습니다.');
