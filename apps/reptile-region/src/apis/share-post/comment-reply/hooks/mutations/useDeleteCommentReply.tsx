@@ -5,6 +5,7 @@ import { deleteCommentReply } from '../../repository';
 
 import type { DeleteCommentReply, FetchCommentReply } from '<api/share/post/comment-reply>';
 import type { FetchComment } from '<api/share/post/comment>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 감소 */
@@ -72,7 +73,7 @@ const deleteCommentReplyListCache = ({
 const useDeleteCommentReply = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<DeleteCommentReply['Response'], any, DeleteCommentReply['Request']>({
+    return useMutation<DeleteCommentReply['Response'], HTTPError, DeleteCommentReply['Request']>({
         mutationFn: ({ commentReplyId }) => deleteCommentReply({ commentReplyId }),
         onSuccess: (data) => {
             updateCommentListCache({ queryClient, data });

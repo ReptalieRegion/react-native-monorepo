@@ -4,6 +4,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { updateLike } from '../../repository';
 
 import type { FetchDetailUserPost, FetchPost, UpdateLike } from '<api/share/post>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 일상공유 무한스크롤 조회 리스트 좋아요 수정 */
@@ -69,7 +70,7 @@ const updateSharePostUserDetailCache = ({ queryClient, data }: { queryClient: Qu
 const useUpdateLike = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<UpdateLike['Response'], any, UpdateLike['Request']>({
+    return useMutation<UpdateLike['Response'], HTTPError, UpdateLike['Request']>({
         mutationFn: ({ postId }) => updateLike({ postId }),
         onSuccess: (data) => {
             updateSharePostListCache({ queryClient, data });

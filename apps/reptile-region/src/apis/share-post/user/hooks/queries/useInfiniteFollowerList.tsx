@@ -3,12 +3,13 @@ import { useSuspenseInfiniteQuery, type InfiniteData } from '@tanstack/react-que
 import { getFollowerList } from '../../repository';
 
 import type { FetchFollowerList } from '<api/share/post/user>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 const useInfiniteFollowerList = ({ userId }: FetchFollowerList['Request']) => {
     return useSuspenseInfiniteQuery<
         FetchFollowerList['Response'],
-        any,
+        HTTPError,
         InfiniteData<FetchFollowerList['Response']>,
         readonly string[],
         number

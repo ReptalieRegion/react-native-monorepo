@@ -3,12 +3,13 @@ import { useSuspenseInfiniteQuery, type InfiniteData } from '@tanstack/react-que
 import { getComments } from '../../repository';
 
 import type { FetchComment } from '<api/share/post/comment>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 const useInfiniteComment = ({ postId }: FetchComment['Request']) => {
     return useSuspenseInfiniteQuery<
         FetchComment['Response'],
-        any,
+        HTTPError,
         InfiniteData<FetchComment['Response']>,
         readonly string[],
         number

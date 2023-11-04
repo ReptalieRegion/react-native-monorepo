@@ -3,12 +3,13 @@ import { useSuspenseInfiniteQuery, type InfiniteData } from '@tanstack/react-que
 import { getSearchFollowerUserNickname } from '../../repository';
 
 import type { FetchFollowerSearch } from '<api/share/post/user>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 const useInfiniteSearchFollowerUser = ({ search }: FetchFollowerSearch['Request']) => {
     return useSuspenseInfiniteQuery<
         FetchFollowerSearch['Response'],
-        any,
+        HTTPError,
         InfiniteData<FetchFollowerSearch['Response']>,
         readonly string[],
         number

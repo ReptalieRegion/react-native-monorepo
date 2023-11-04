@@ -5,6 +5,7 @@ import { deleteComment } from '../../repository';
 
 import type { DeleteComment, FetchComment } from '<api/share/post/comment>';
 import type { FetchPost } from '<api/share/post>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 일상공유 무한스크롤 조회 리스트 댓글 개수 감소 **/
@@ -65,7 +66,7 @@ const deleteCommentCache = ({ queryClient, data }: { queryClient: QueryClient; d
 
 const useDeleteComment = () => {
     const queryClient = useQueryClient();
-    return useMutation<DeleteComment['Response'], any, DeleteComment['Request']>({
+    return useMutation<DeleteComment['Response'], HTTPError, DeleteComment['Request']>({
         mutationFn: ({ commentId }) => deleteComment({ commentId }),
         onSuccess: (data) => {
             deleteCommentCache({ queryClient, data });

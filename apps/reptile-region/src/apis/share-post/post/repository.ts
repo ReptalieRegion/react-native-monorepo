@@ -1,21 +1,21 @@
 import type {
-    CreateLikeRequest,
-    CreatePostRequest,
-    DeletePostRequest,
-    FetchDetailUserPostRequest,
-    FetchLikeRequest,
-    FetchPostRequest,
-    UpdateLikeRequest,
-    UpdatePostRequest,
+    CreateLike,
+    CreatePost,
+    DeletePost,
+    FetchDetailUserPost,
+    FetchLike,
+    FetchPost,
+    UpdateLike,
+    UpdatePost,
 } from '<api/share/post>';
-import type { InfinitePageParam } from '<api/utils>';
+import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { uploadImage } from '@/utils/camera-roll/camera-roll';
 import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 게시물 패치
-export const getPosts = async ({ pageParam }: FetchPostRequest) => {
+export const getPosts = async ({ pageParam }: WithInfinitePageParam<FetchPost['Request']>) => {
     const queryString = objectToQueryString({
         pageParam,
     });
@@ -26,7 +26,7 @@ export const getPosts = async ({ pageParam }: FetchPostRequest) => {
 };
 
 // 특정 유저 게시글 패치
-export const getDetailUserPosts = async ({ pageParam, nickname }: FetchDetailUserPostRequest & InfinitePageParam) => {
+export const getDetailUserPosts = async ({ pageParam, nickname }: WithInfinitePageParam<FetchDetailUserPost['Request']>) => {
     const queryString = objectToQueryString({
         pageParam,
     });
@@ -35,18 +35,19 @@ export const getDetailUserPosts = async ({ pageParam, nickname }: FetchDetailUse
     return response.json();
 };
 
-export const getLikes = async ({ pageParam, postId }: FetchLikeRequest & InfinitePageParam) => {
+export const getLikes = async ({ pageParam, postId }: WithInfinitePageParam<FetchLike['Request']>) => {
     const queryString = objectToQueryString({
         pageParam,
     });
     const response = await clientFetch(`api/share/posts/${postId}/like/list?${queryString}`);
+
     return response.json();
 };
 
 /** POST */
 // 게시글 생성
 // TODO Fetch로 이미지 업로드가 안됨
-export const createPost = async ({ contents, selectedPhotos }: CreatePostRequest) => {
+export const createPost = async ({ contents, selectedPhotos }: CreatePost['Request']) => {
     const formData = new FormData();
     for (const photo of selectedPhotos) {
         const file = await uploadImage(photo);
@@ -64,7 +65,7 @@ export const createPost = async ({ contents, selectedPhotos }: CreatePostRequest
 };
 
 // 좋아요 생성
-export const createLike = async ({ postId }: CreateLikeRequest) => {
+export const createLike = async ({ postId }: CreateLike['Request']) => {
     const response = await clientFetch(`api/share/posts/${postId}/like`, {
         method: METHOD.POST,
     });
@@ -79,7 +80,7 @@ export const createLike = async ({ postId }: CreateLikeRequest) => {
 
 /** PUT */
 // 특정 게시글 수정
-export const updatePost = async ({ postId, contents, remainingImages }: UpdatePostRequest) => {
+export const updatePost = async ({ postId, contents, remainingImages }: UpdatePost['Request']) => {
     const body = {
         remainingImages,
         contents,
@@ -94,7 +95,7 @@ export const updatePost = async ({ postId, contents, remainingImages }: UpdatePo
 };
 
 // 특정 게시글 좋아요 토글
-export const updateLike = async ({ postId }: UpdateLikeRequest) => {
+export const updateLike = async ({ postId }: UpdateLike['Request']) => {
     const response = await clientFetch(`api/share/posts/${postId}/like`, {
         method: METHOD.PUT,
     });
@@ -104,7 +105,7 @@ export const updateLike = async ({ postId }: UpdateLikeRequest) => {
 
 /** DELETE */
 // 특정 게시글 삭제
-export const deletePost = async ({ postId }: DeletePostRequest) => {
+export const deletePost = async ({ postId }: DeletePost['Request']) => {
     const response = await clientFetch(`api/share/posts/${postId}`, {
         method: METHOD.DELETE,
     });

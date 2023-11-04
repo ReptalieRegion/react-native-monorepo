@@ -3,12 +3,13 @@ import { useSuspenseInfiniteQuery, type InfiniteData } from '@tanstack/react-que
 import { getDetailUserPosts } from '../../repository';
 
 import type { FetchDetailUserPost } from '<api/share/post>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 const useInfiniteUserPosts = ({ nickname }: FetchDetailUserPost['Request'] & { suspense?: boolean }) => {
     return useSuspenseInfiniteQuery<
         FetchDetailUserPost['Response'],
-        any,
+        HTTPError,
         InfiniteData<FetchDetailUserPost['Response']>,
         readonly string[],
         number

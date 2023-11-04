@@ -5,6 +5,7 @@ import { updateFollow } from '../../repository';
 
 import type { FetchDetailUserProfile, UpdateFollow } from '<api/share/post/user>';
 import type { FetchPost } from '<api/share/post>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 type SetQueryDataProps = {
@@ -69,7 +70,7 @@ const updateSharePostList = ({ queryClient, data }: SetQueryDataProps) => {
 const useUpdateFollow = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<UpdateFollow['Response'], any, UpdateFollow['Request']>({
+    return useMutation<UpdateFollow['Response'], HTTPError, UpdateFollow['Request']>({
         mutationFn: ({ userId }) => updateFollow({ userId }),
         onSuccess: (data) => {
             updateUserProfile({ queryClient, data });

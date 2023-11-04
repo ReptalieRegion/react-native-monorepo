@@ -1,17 +1,17 @@
 import type {
-    CreateFollowRequest,
-    FetchDetailUserProfileRequest,
-    FetchFollowerListRequest,
-    FetchFollowerSearchRequest,
-    UpdateFollowRequest,
+    CreateFollow,
+    FetchDetailUserProfile,
+    FetchFollowerList,
+    FetchFollowerSearch,
+    UpdateFollow,
 } from '<api/share/post/user>';
-import type { InfinitePageParam } from '<api/utils>';
+import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 특정 유저의 프로필
-export const getDetailUserProfile = async ({ nickname }: FetchDetailUserProfileRequest) => {
+export const getDetailUserProfile = async ({ nickname }: FetchDetailUserProfile['Request']) => {
     const queryString = objectToQueryString({ nickname });
     const response = await clientFetch(`api/users/profile?${queryString}`);
 
@@ -19,7 +19,10 @@ export const getDetailUserProfile = async ({ nickname }: FetchDetailUserProfileR
 };
 
 // 사용자의 팔로워 검색 무한스크롤 리스트
-export const getSearchFollowerUserNickname = async ({ pageParam, search }: FetchFollowerSearchRequest & InfinitePageParam) => {
+export const getSearchFollowerUserNickname = async ({
+    pageParam,
+    search,
+}: WithInfinitePageParam<FetchFollowerSearch['Request']>) => {
     const queryString = objectToQueryString({ pageParam, search });
     const response = await clientFetch(`api/users/follower/list?${queryString}`);
 
@@ -27,7 +30,7 @@ export const getSearchFollowerUserNickname = async ({ pageParam, search }: Fetch
 };
 
 // 사용자의 팔로워 무한스크롤 리스트
-export const getFollowerList = async ({ pageParam, userId }: FetchFollowerListRequest & InfinitePageParam) => {
+export const getFollowerList = async ({ pageParam, userId }: WithInfinitePageParam<FetchFollowerList['Request']>) => {
     const queryString = objectToQueryString({ pageParam });
     const response = await clientFetch(`api/users/${userId}/follower/list?${queryString}`);
 
@@ -35,7 +38,7 @@ export const getFollowerList = async ({ pageParam, userId }: FetchFollowerListRe
 };
 
 // 사용자의 팔로잉 무한스크롤 리스트
-export const getFollowingList = async ({ pageParam, userId }: FetchFollowerListRequest & InfinitePageParam) => {
+export const getFollowingList = async ({ pageParam, userId }: WithInfinitePageParam<FetchFollowerList['Request']>) => {
     const queryString = objectToQueryString({ pageParam });
     const response = await clientFetch(`api/users/${userId}/following/list?${queryString}`);
 
@@ -44,7 +47,7 @@ export const getFollowingList = async ({ pageParam, userId }: FetchFollowerListR
 
 /** POST */
 // 사용자가 특정 유저를 팔로우 생성
-export const createFollow = async ({ userId }: CreateFollowRequest) => {
+export const createFollow = async ({ userId }: CreateFollow['Request']) => {
     const response = await clientFetch(`api/users/${userId}/follow`, {
         method: METHOD.POST,
     });
@@ -54,7 +57,7 @@ export const createFollow = async ({ userId }: CreateFollowRequest) => {
 
 /** PUT */
 // 사용자가 특정 유저 팔로우 토글
-export const updateFollow = async ({ userId }: UpdateFollowRequest) => {
+export const updateFollow = async ({ userId }: UpdateFollow['Request']) => {
     const response = await clientFetch(`api/users/${userId}/follow`, {
         method: METHOD.PUT,
     });

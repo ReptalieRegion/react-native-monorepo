@@ -5,9 +5,13 @@ declare module '<api/utils>' {
         nextPage: number | undefined;
     }
 
-    type InfinitePageParam = {
-        pageParam: number;
-    };
+    type WithInfinitePageParam<Data> = Data extends void
+        ? {
+              pageParam: number;
+          }
+        : {
+              pageParam: number;
+          } & Data;
     /** Infinite 관련 끝 */
 
     /** react query option 관련 시작 */

@@ -4,6 +4,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { updatePost } from '../../repository';
 
 import type { FetchDetailUserPost, FetchPost, UpdatePost } from '<api/share/post>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 일상공유 무한스크롤 조회 리스트 게시물 수정 */
@@ -80,7 +81,7 @@ interface UseUpdatePost {
 
 const useUpdatePost = ({ onSuccess }: UseUpdatePost) => {
     const queryClient = useQueryClient();
-    return useMutation<UpdatePost['Response'], any, UpdatePost['Request']>({
+    return useMutation<UpdatePost['Response'], HTTPError, UpdatePost['Request']>({
         mutationFn: ({ postId, contents, remainingImages }) => updatePost({ postId, contents, remainingImages }),
         onSuccess: (data) => {
             onSuccess();

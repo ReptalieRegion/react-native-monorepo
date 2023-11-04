@@ -5,6 +5,7 @@ import { updateComment } from '../../repository';
 
 import type { FetchComment, UpdateComment } from '<api/share/post/comment>';
 import type { OnSuccessParam } from '<api/utils>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 댓글 수정 */
@@ -39,7 +40,7 @@ const updateShareCommentListCache = ({ queryClient, data }: { queryClient: Query
 const useUpdateComment = ({ onSuccess }: OnSuccessParam) => {
     const queryClient = useQueryClient();
 
-    return useMutation<UpdateComment['Response'], any, UpdateComment['Request']>({
+    return useMutation<UpdateComment['Response'], HTTPError, UpdateComment['Request']>({
         mutationFn: ({ commentId, contents }) => updateComment({ commentId, contents }),
         onSuccess: (data) => {
             onSuccess();

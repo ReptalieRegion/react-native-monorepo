@@ -5,6 +5,7 @@ import { updateCommentReply } from '../../repository';
 
 import type { FetchCommentReply, UpdateCommentReply } from '<api/share/post/comment-reply>';
 import type { OnSuccessParam } from '<api/utils>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 대댓글 리스트 무한스크롤 대댓글 수정 */
@@ -46,7 +47,7 @@ const updateCommentReplyListCache = ({
 const useUpdateCommentReply = ({ onSuccess }: OnSuccessParam) => {
     const queryClient = useQueryClient();
 
-    return useMutation<UpdateCommentReply['Response'], any, UpdateCommentReply['Request']>({
+    return useMutation<UpdateCommentReply['Response'], HTTPError, UpdateCommentReply['Request']>({
         mutationFn: ({ commentReplyId, contents }) => updateCommentReply({ commentReplyId, contents }),
         onSuccess: (data) => {
             onSuccess();

@@ -4,6 +4,11 @@ export const authQueryKeys = {
     duplicateNickname: (nickname: string) => ['user/duplicate/nickname/', nickname],
 } as const;
 
+/** My */
+export const myQueryKeys = {
+    profile: ['me/profile'],
+};
+
 /** SharePost */
 export const sharePostQueryKeys = {
     // 게시물

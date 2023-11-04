@@ -3,17 +3,22 @@ import { useSuspenseInfiniteQuery, type InfiniteData } from '@tanstack/react-que
 import { getLikes } from '../../repository';
 
 import type { FetchLike } from '<api/share/post>';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 const useInfiniteFetchLikes = ({ postId }: FetchLike['Request']) => {
-    return useSuspenseInfiniteQuery<FetchLike['Response'], any, InfiniteData<FetchLike['Response']>, readonly string[], number>(
-        {
-            queryKey: sharePostQueryKeys.likeList(postId),
-            initialPageParam: 0,
-            queryFn: ({ pageParam }) => getLikes({ postId, pageParam }),
-            getNextPageParam: (lastPage) => lastPage.nextPage,
-        },
-    );
+    return useSuspenseInfiniteQuery<
+        FetchLike['Response'],
+        HTTPError,
+        InfiniteData<FetchLike['Response']>,
+        readonly string[],
+        number
+    >({
+        queryKey: sharePostQueryKeys.likeList(postId),
+        initialPageParam: 0,
+        queryFn: ({ pageParam }) => getLikes({ postId, pageParam }),
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+    });
 };
 
 export default useInfiniteFetchLikes;
