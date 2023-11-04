@@ -4,7 +4,7 @@ import HTTPError from '../@utils/error/HTTPError';
 
 import { getRefreshToken } from './utils/secure-storage-token';
 
-import type { NicknameDuplicateCheck, PostKakaoAuth, RefreshToken } from '<api/auth>';
+import type { JoinProgress, NicknameDuplicateCheck, PostKakaoAuth, RefreshToken } from '<api/auth>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 
 /** GET */
@@ -52,14 +52,15 @@ export const refreshToken = async () => {
 
 // 카카오 로그인
 export const kakaoAuthLogin = async ({ authToken, publicKey, socialId }: PostKakaoAuth['Request']) => {
-    const encryptedSocial = encryptionRSA(publicKey, socialId);
+    const encryptedData = encryptionRSA(publicKey, socialId);
+
     const response = await clientFetch('api/auth/social/kakao', {
         method: METHOD.POST,
         headers: {
             Authorization: `Bearer ${authToken}`,
         },
         body: {
-            encryptedSocial,
+            encryptedData,
         },
     });
 
@@ -74,4 +75,30 @@ export const googleAuthLogin = async () => {
 // 애플 로그인
 export const appleAuthLogin = async () => {
     return;
+};
+
+const _joinProgressBodyGenerator = (data: JoinProgress['Request']) => {
+    switch (data.joinProgress) {
+        case 'REGISTER0':
+            return {
+                userId: data.userId,
+                joinProgress: data.joinProgress,
+                nickname: data.nickname,
+            };
+        default:
+            throw new Error('[Join Progress]: 잘못된 JoinProgress 입니다.');
+    }
+};
+
+export const joinProgress = async (data: JoinProgress['Request']) => {
+    const body = _joinProgressBodyGenerator(data);
+    const response = await clientFetch('api/auth/social/join-progress', {
+        method: METHOD.POST,
+        headers: {
+            Authorization: `Bearer ${data.authToken}`,
+        },
+        body,
+    });
+
+    return response.json();
 };

@@ -34,12 +34,7 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.signContainer}>
-                <TextButton
-                    type="view"
-                    text="로그인/회원가입"
-                    textInfo={{ color: 'surface', textAlign: 'center' }}
-                    touchableProps={{ onPress: navigateSignIn }}
-                />
+                <TextButton text="로그인/회원가입" type="view" color="surface" onPress={navigateSignIn} />
             </View>
             <ListItem leftChildren={<ListItem.Title text="내 프로필 설정" />} rightChildren={<ListItem.Chevron />} />
             <ListItem

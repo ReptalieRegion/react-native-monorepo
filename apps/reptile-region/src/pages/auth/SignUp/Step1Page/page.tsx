@@ -1,31 +1,68 @@
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { color } from '@reptile-region/design-system';
-import { useDebounce } from '@reptile-region/react-hooks';
+import { useDebounce, useLoading } from '@reptile-region/react-hooks';
 import React, { useState } from 'react';
 import { Keyboard, StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
+import type { SignUpParamList } from '<routes/sign-up>';
+import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
+import useSignUpStep1 from '@/apis/auth/hooks/mutations/useSignUpStep1';
 import useNicknameDuplicateCheck from '@/apis/auth/hooks/queries/useNicknameDuplicateCheck';
 import { TextButton } from '@/components/@common/atoms';
 import { SignUpTextField, SignUpTitle } from '@/components/auth/molecules';
+import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 
-function NicknameTextField() {
-    const [nickname, setNickname] = useState('');
-    const debouncedNickname = useDebounce(nickname);
-    const { data, isLoading } = useNicknameDuplicateCheck({ nickname: debouncedNickname });
+type SignUpStep1ScreenProps = NativeStackScreenProps<SignUpParamList, 'step1'>;
 
-    return (
-        <SignUpTextField
-            label="닉네임"
-            onChangeText={(text) => {
-                setNickname(text);
-            }}
-            errorMessage={data?.isDuplicate ? '닉네임이 중복되었어요.' : ''}
-            isLoading={isLoading}
-        />
-    );
-}
+export default function SignUpStep1({
+    navigation,
+    route: {
+        params: { recommendNickname, userId },
+    },
+}: SignUpStep1ScreenProps) {
+    const [nickname, setNickname] = useState(recommendNickname);
+    const { loading, startLoading, endLoading } = useLoading();
+    const { signIn } = useAuth();
+    const debouncedNickname = useDebounce(nickname, 500, endLoading);
+    const { data, isLoading } = useNicknameDuplicateCheck({
+        nickname: debouncedNickname,
+        enabled: debouncedNickname !== recommendNickname && debouncedNickname !== '',
+    });
 
-export default function SignUpStep1() {
+    const { mutateAsync: authTokenAndPublicKeyMutateAsync } = useAuthTokenAndPublicKey();
+    const { mutateAsync: signUpSte1MutateAsync } = useSignUpStep1();
+
+    const errorMessage = nickname === '' ? '닉네임은 필수로 입력해주세요.' : data?.isDuplicate ? '닉네임이 중복되었어요.' : '';
+    const disabled = nickname === '' || !!errorMessage;
+
+    const handleChangeText = (text: string) => {
+        startLoading();
+        setNickname(text);
+    };
+
+    const handlePressCancel = () => {
+        setNickname('');
+    };
+
+    const handleNextButton = async () => {
+        try {
+            const { authToken } = await authTokenAndPublicKeyMutateAsync();
+            const { accessToken, refreshToken } = await signUpSte1MutateAsync({
+                authToken,
+                joinProgress: 'REGISTER0',
+                nickname,
+                userId,
+            });
+            await signIn({ accessToken, refreshToken });
+            navigation.popToTop();
+        } catch (error) {
+            throw error;
+        } finally {
+            console.log('hi');
+        }
+    };
+
     return (
         <TouchableWithoutFeedback style={styles.wrapper} containerStyle={styles.wrapper} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -34,9 +71,23 @@ export default function SignUpStep1() {
                     description="닉네임을 추가해주세요. 한 번 설정한 닉네임은 변경이 불가 합니다."
                 />
                 <View style={styles.textFiledContainer}>
-                    <NicknameTextField />
+                    <SignUpTextField
+                        label="닉네임"
+                        value={nickname}
+                        errorMessage={errorMessage}
+                        isLoading={isLoading || loading}
+                        onChangeText={handleChangeText}
+                        onPressCancel={handlePressCancel}
+                    />
                 </View>
-                <TextButton text="다음" type="view" border="OVAL" textInfo={{ textAlign: 'center', color: 'surface' }} />
+                <TextButton
+                    text="다음"
+                    type="view"
+                    border="OVAL"
+                    color="surface"
+                    onPress={handleNextButton}
+                    disabled={disabled}
+                />
             </View>
         </TouchableWithoutFeedback>
     );
@@ -55,6 +106,7 @@ const styles = StyleSheet.create({
         gap: 20,
     },
     textFiledContainer: {
-        marginBottom: 20,
+        height: 70,
+        marginBottom: 10,
     },
 });

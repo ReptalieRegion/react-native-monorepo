@@ -130,25 +130,31 @@ class Fetcher {
 
         if (init) {
             const { method, ignorePrefix, isFormData, body, headers, credentials, ...rest } = init;
+            const newMethod = method ? method : defaultInit.method;
             const url = ignorePrefix ? input : ENV.END_POINT_URI + input;
-            const newBody = body ? (isFormData ? (body as unknown as FormData) : JSON.stringify(body)) : undefined;
-            const newHeader =
+            const newCredentials = credentials ? credentials : defaultInit.credentials;
+            const newBody = body ? (isFormData ? (body as FormData) : JSON.stringify(body)) : undefined;
+
+            const newHeaders = Object.assign(
+                {},
+                isFormData ? undefined : defaultInit.headers,
+                headers,
                 this.accessToken === null
-                    ? headers
+                    ? {}
                     : {
-                          ...headers,
                           Authorization: `Bearer ${this.accessToken}`,
-                      };
+                      },
+            );
 
             return {
                 input: url,
                 init: {
                     ...defaultInit,
                     ...rest,
-                    method,
+                    method: newMethod,
                     body: newBody,
-                    headers: newHeader,
-                    credentials,
+                    headers: newHeaders,
+                    credentials: newCredentials,
                 },
             };
         }
@@ -163,6 +169,9 @@ class Fetcher {
 const fetcher = new Fetcher({
     method: METHOD.GET,
     credentials: 'include',
+    headers: {
+        'Content-Type': 'application/json',
+    },
 });
 
 export default fetcher.clientFetch;

@@ -11,10 +11,14 @@ const SECURE_STORE_KEYS = {
 } as const;
 
 export const registerAuthTokens = async ({ accessToken, refreshToken }: RegisterTokenProps) => {
-    await Promise.all([
-        SecureStore.setItemAsync(SECURE_STORE_KEYS.ACCESS_TOKEN, accessToken),
-        SecureStore.setItemAsync(SECURE_STORE_KEYS.REFRESH_TOKEN, refreshToken),
-    ]);
+    if (!!accessToken && !!refreshToken) {
+        await Promise.all([
+            SecureStore.setItemAsync(SECURE_STORE_KEYS.ACCESS_TOKEN, accessToken),
+            SecureStore.setItemAsync(SECURE_STORE_KEYS.REFRESH_TOKEN, refreshToken),
+        ]);
+    }
+
+    throw new Error('[registerAuthTokens]: accessToken과 refreshToken이 없습니다.');
 };
 
 export const deleteAuthTokens = async () => {

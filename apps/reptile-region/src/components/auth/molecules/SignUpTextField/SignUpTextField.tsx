@@ -1,12 +1,13 @@
 import { Typo, color, type TextColorType } from '@reptile-region/design-system';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { ActivityIndicator, StyleSheet, TextInput, View } from 'react-native';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import { CancelButton, Success } from '@/assets/icons';
+import { CancelButton, Error, Success } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 
 type SignUpTextFieldState = {
+    value: string;
     label: string;
     isLoading: boolean;
     errorMessage?: string | undefined;
@@ -44,24 +45,18 @@ const makeTextInputStyles = (isError: boolean) => {
     return TEXT_INPUT_STYLES[type];
 };
 
-export default function SignUpTextField({ label, errorMessage = 'afsadds', isLoading, onChangeText }: SignUpTextFieldProps) {
+export default function SignUpTextField({
+    label,
+    value,
+    errorMessage,
+    isLoading,
+    onChangeText,
+    onPressCancel,
+}: SignUpTextFieldProps) {
     const textInputRef = useRef<TextInput>(null);
-    const [currentText, setCurrentText] = useState('');
-
-    useEffect(() => {
-        onChangeText(currentText);
-    }, [currentText, onChangeText]);
 
     const handleFocus = () => {
         textInputRef.current?.focus();
-    };
-
-    const handleChangeText = (text: string) => {
-        setCurrentText(text);
-    };
-
-    const handlePressCancel = () => {
-        setCurrentText('');
     };
 
     const style = makeTextInputStyles(!!errorMessage);
@@ -73,33 +68,33 @@ export default function SignUpTextField({ label, errorMessage = 'afsadds', isLoa
                     <Typo variant="body4" color={style.textColor}>
                         {label}
                     </Typo>
-                    <TextInput ref={textInputRef} value={currentText} onChangeText={handleChangeText} />
+                    <TextInput ref={textInputRef} value={value} onChangeText={onChangeText} />
                 </View>
-                <ConditionalRenderer
-                    condition={isLoading}
-                    trueContent={<ActivityIndicator size={'small'} />}
-                    falseContent={
-                        <View style={styles.successIconContainer}>
+                <View style={styles.successIconContainer}>
+                    <ConditionalRenderer
+                        condition={!!errorMessage}
+                        trueContent={
                             <ConditionalRenderer
-                                condition={!!errorMessage}
-                                trueContent={
-                                    <TouchableOpacity onPress={handlePressCancel}>
+                                condition={value === ''}
+                                trueContent={<Error fill={style.borderColor} />}
+                                falseContent={
+                                    <TouchableOpacity onPress={onPressCancel}>
                                         <CancelButton width={24} height={24} />
                                     </TouchableOpacity>
                                 }
-                                falseContent={
-                                    <ConditionalRenderer
-                                        condition={currentText === ''}
-                                        trueContent={null}
-                                        falseContent={<Success fill={color.Green[800].toString()} />}
-                                    />
-                                }
                             />
-                        </View>
-                    }
-                />
+                        }
+                        falseContent={
+                            <ConditionalRenderer
+                                condition={isLoading}
+                                trueContent={<ActivityIndicator size={'small'} />}
+                                falseContent={<Success fill={color.Green[800].toString()} />}
+                            />
+                        }
+                    />
+                </View>
             </View>
-            <Typo variant="body5" color="error">
+            <Typo variant="body4" color="error">
                 {errorMessage}
             </Typo>
         </TouchableWithoutFeedback>
@@ -114,7 +109,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         flexDirection: 'row',
         alignContent: 'center',
-        marginBottom: 5,
+        marginBottom: 10,
         gap: 20,
     },
     textFieldContainer: {

@@ -4,6 +4,7 @@ import { StyleSheet, View, type DimensionValue } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import type { PostKakaoAuth } from '<api/auth>';
+import HTTPError from '@/apis/@utils/error/HTTPError';
 import { useKakaoAuth } from '@/apis/auth';
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
 import KakaoSymbol from '@/assets/icons/KakaoSymbol';
@@ -33,6 +34,9 @@ export default function KakaoButton({ height = 44, width = '90%', onSuccess, onE
             const data = await kakaoAuthMutateAsync({ socialId: profile.id, authToken, publicKey });
             onSuccess(data);
         } catch (error) {
+            if (error instanceof HTTPError) {
+                console.log(error.statusCode, error.message);
+            }
             onError(error);
         }
     };
