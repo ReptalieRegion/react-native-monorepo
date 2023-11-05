@@ -9,7 +9,7 @@ type TitleProps = TitleState;
 
 export default function Title({ text }: TitleProps) {
     return (
-        <Typo variant={'body2'} textAlign="left">
+        <Typo variant={'title4'} textAlign="left">
             {text}
         </Typo>
     );

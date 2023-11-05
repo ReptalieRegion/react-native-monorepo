@@ -1,8 +1,6 @@
 import { encryptionRSA } from '@reptile-region/utils';
 
-import { getRefreshToken } from './utils/secure-storage-token';
-
-import type { JoinProgress, NicknameDuplicateCheck, PostKakaoAuth } from '<api/auth>';
+import type { JoinProgress, NicknameDuplicateCheck, PostKakaoAuth, RefreshToken } from '<api/auth>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 
 /** GET */
@@ -26,16 +24,11 @@ export const getAuthTokenAndPublicKey = async () => {
 };
 
 // 토큰 재발급
-export const refreshToken = async () => {
-    const refreshTokenValue = await getRefreshToken();
-    if (refreshTokenValue === null) {
-        return;
-    }
-
+export const refreshTokenIssued = async ({ refreshToken }: RefreshToken['Request']) => {
     const response = await clientFetch('api/auth/refresh', {
         method: METHOD.POST,
         headers: {
-            Authorization: `Bearer ${refreshTokenValue}`,
+            Authorization: `Bearer ${refreshToken}`,
         },
     });
 

@@ -2,26 +2,29 @@ import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 import type { WithTimingConfig } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
-import type { IconProps } from '<Icon>';
+import type { IconFunction } from '<Icon>';
+
+type BottomTabBarButtonState = {
+    isFocused: boolean;
+    name: string;
+};
+
+interface BottomTabBarButtonActions {
+    onPress(): void;
+    onLongPress(): void;
+    Icon: IconFunction;
+}
+
+type BottomTabBarButtonProps = BottomTabBarButtonState & BottomTabBarButtonActions;
 
 const userConfig: WithTimingConfig = {
     duration: 200,
 };
 
-export default function BottomTabBarButton({
-    isFocused,
-    onPress,
-    Icon,
-    name,
-}: {
-    isFocused: boolean;
-    onPress: () => void;
-    Icon: (props: IconProps) => React.JSX.Element;
-    name: string;
-}) {
+export default function BottomTabBarButton({ isFocused, name, onPress, onLongPress, Icon }: BottomTabBarButtonProps) {
     const scaleX = useSharedValue(1);
     const scaleY = useSharedValue(1);
     const scale = useSharedValue(1);
@@ -58,7 +61,7 @@ export default function BottomTabBarButton({
         <View style={styles.iconContainer}>
             <TouchableWithoutFeedback
                 onPress={onPress}
-                onLongPress={onPress}
+                onLongPress={onLongPress}
                 onPressIn={handlePressInIcon}
                 onPressOut={handlePressOutIcon}
                 containerStyle={styles.touchContainer}

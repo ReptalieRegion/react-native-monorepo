@@ -34,6 +34,7 @@ export type TextColorType =
     | 'primary'
     | 'secondary'
     | 'placeholder'
+    | 'sub-placeholder'
     | 'error'
     | 'surface'
     | 'require'

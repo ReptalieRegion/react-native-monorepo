@@ -12,6 +12,7 @@ const useFetchMeProfile = () => {
         queryFn: fetchMeProfile,
         staleTime: Infinity,
         gcTime: Infinity,
+        refetchOnWindowFocus: 'always',
     });
 };
 

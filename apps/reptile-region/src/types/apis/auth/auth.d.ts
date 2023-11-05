@@ -54,7 +54,11 @@ declare module '<api/auth>' {
     /** 카카오 로그인 끝 */
 
     /** 리프레시 토큰 요청 시작 */
-    type RefreshToken = ServerAPI<void, AuthTokens>;
+    type RefreshTokenRequest = {
+        refreshToken: string;
+    };
+
+    type RefreshToken = ServerAPI<RefreshTokenRequest, AuthTokens>;
     /** 리프레시 토큰 요청 끝 */
 
     /** 회원가입 절차 시작 */

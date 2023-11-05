@@ -1,9 +1,11 @@
 export { default as BackButton } from './BackButton';
+export { default as Camera } from './Camera';
 export { default as CancelButton } from './CancelButton';
 export { default as Cart } from './Cart';
 export { default as ChevronRight } from './ChevronRight';
 export { default as Comment } from './Comment';
 export { default as Community } from './Community';
+export { default as Diary } from './Diary';
 export { default as DotIndicator } from './DotIndicator';
 export { default as Error } from './Error';
 export { default as Home } from './Home';
