@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { Article, NumberArticle, Title } from '../../atoms';
 
-import { TERMS_TYPE, type Terms } from '@/pages/my/Terms/type';
+import { TERMS_TYPE, type Terms } from '@/pages/me/Terms/type';
 
 type TermsListProps = {
     data: Terms[];

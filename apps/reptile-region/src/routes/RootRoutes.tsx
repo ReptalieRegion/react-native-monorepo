@@ -17,10 +17,10 @@ import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
 import LicenseContentsPage from '@/pages/me/License/ContentsPage/page';
 import { LicenseListHeader } from '@/pages/me/License/ListPage/header';
 import LicenseListPage from '@/pages/me/License/ListPage/page';
-import { PrivacyPolicyHeader } from '@/pages/my/Terms/PrivacyPolicy/header';
-import PrivacyPolicyPage from '@/pages/my/Terms/PrivacyPolicy/page';
-import { TermsOfUseHeader } from '@/pages/my/Terms/TermsOfUse/header';
-import TermsOfUsePage from '@/pages/my/Terms/TermsOfUse/page';
+import { PrivacyPolicyHeader } from '@/pages/me/Terms/PrivacyPolicy/header';
+import PrivacyPolicyPage from '@/pages/me/Terms/PrivacyPolicy/page';
+import { TermsOfUseHeader } from '@/pages/me/Terms/TermsOfUse/header';
+import TermsOfUsePage from '@/pages/me/Terms/TermsOfUse/page';
 import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostUpdatePage, { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost';
 
