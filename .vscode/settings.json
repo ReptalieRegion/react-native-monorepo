@@ -19,7 +19,9 @@
     "eslint.enable": true,
     "material-icon-theme.folders.associations": {
         "dockers": "Docker",
-        "stores": "Global"
+        "stores": "Global",
+        "@utils": "Utils",
+        "@common": "Shared"
     },
     "cSpell.words": ["hookform", "Kakao", "mswjs", "Roboto", "tanstack", "typecheck", "yunchanpark", "zustand"]
 }
