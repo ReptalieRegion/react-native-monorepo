@@ -32,6 +32,10 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
         navigation.navigate('my/profile');
     };
 
+    const navigateLicense = () => {
+        navigation.navigate('my/license');
+    };
+
     const handleKakaoLogout = async () => {
         try {
             await signOutMutateAsync();
@@ -108,7 +112,11 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                         정보
                     </Typo>
                 </View>
-                <ListItem leftChildren={<ListItem.Title text="오픈소스" />} rightChildren={<ListItem.Chevron />} />
+                <ListItem
+                    leftChildren={<ListItem.Title text="오픈소스" />}
+                    rightChildren={<ListItem.Chevron />}
+                    onPress={navigateLicense}
+                />
                 <ListItem
                     leftChildren={<ListItem.Title text="앱 버전" />}
                     rightChildren={
