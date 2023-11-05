@@ -28,6 +28,14 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
     const { data } = useFetchMeProfile();
     const { openToast } = useToast();
 
+    const navigateTermsOfUse = () => {
+        navigation.navigate('my/terms-of-use');
+    };
+
+    const navigatePrivacyPolicy = () => {
+        navigation.navigate('my/terms-privacy-policy');
+    };
+
     const navigateProfileSetting = () => {
         navigation.navigate('my/profile');
     };
@@ -102,8 +110,16 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                     </Typo>
                 </View>
                 <ListItem leftChildren={<ListItem.Title text="공지사항" />} rightChildren={<ListItem.Chevron />} />
-                <ListItem leftChildren={<ListItem.Title text="이용약관" />} rightChildren={<ListItem.Chevron />} />
-                <ListItem leftChildren={<ListItem.Title text="개인정보처리" />} rightChildren={<ListItem.Chevron />} />
+                <ListItem
+                    leftChildren={<ListItem.Title text="이용약관" />}
+                    rightChildren={<ListItem.Chevron />}
+                    onPress={navigateTermsOfUse}
+                />
+                <ListItem
+                    leftChildren={<ListItem.Title text="개인정보처리" />}
+                    rightChildren={<ListItem.Chevron />}
+                    onPress={navigatePrivacyPolicy}
+                />
             </View>
 
             <View style={styles.listContainer}>
