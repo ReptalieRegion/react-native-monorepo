@@ -6,7 +6,7 @@ import type { FetchDetailUserPost } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
-const useInfiniteUserPosts = ({ nickname }: FetchDetailUserPost['Request'] & { suspense?: boolean }) => {
+const useInfiniteUserPosts = ({ nickname }: FetchDetailUserPost['Request']) => {
     return useSuspenseInfiniteQuery<
         FetchDetailUserPost['Response'],
         HTTPError,

@@ -4,6 +4,7 @@ declare module '<api/my/profile>' {
 
     /** GET 시작 */
     type FetchMeProfileResponse = {
+        id: string;
         profile: ImageType;
         nickname: string;
     };

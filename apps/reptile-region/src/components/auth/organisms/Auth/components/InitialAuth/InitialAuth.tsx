@@ -15,7 +15,8 @@ export default function InitialAuth() {
         const initSignIn = async () => {
             try {
                 const tokens = await mutateAsync();
-                signIn(tokens);
+                console.log(tokens.accessToken);
+                await signIn(tokens);
             } catch (error) {
                 openToast({ severity: 'error', contents: '로그인 실패' });
             } finally {

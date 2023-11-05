@@ -37,16 +37,12 @@ class RefreshItem {
 class Fetcher {
     constructor(
         private init: RequestInit,
-        private accessToken: string | null = null,
-        private refreshToken: string | null = null,
         private isRefresh: boolean = false,
         private refreshQueue: RefreshItem[] = [],
-    ) {
-        this.initializeToken();
-    }
+    ) {}
 
     clientFetch = async (input: RequestInfo, init?: CustomRequestInit): Promise<Response> => {
-        const fetchInfo = this.generatorFetchInfo(input, init);
+        const fetchInfo = await this.generatorFetchInfo(input, init);
         const response = await fetch(fetchInfo.input, fetchInfo.init);
 
         if (!response.ok) {
@@ -60,11 +56,6 @@ class Fetcher {
         return response;
     };
 
-    private initializeToken = async () => {
-        this.accessToken = await getAccessToken();
-        this.refreshToken = await getRefreshToken();
-    };
-
     private refreshTokenAndRetry = async (fetchInfo: FetchInfo): Promise<Response> => {
         const isRefresh = this.isRefresh;
         const promise = new Promise<Response>((resolve, reject) => {
@@ -74,11 +65,12 @@ class Fetcher {
 
         if (!isRefresh) {
             this.isRefresh = true;
+            const refreshToken = await getRefreshToken();
             const response = await fetch('api/auth/refresh', {
                 ...this.init,
                 headers: {
                     ...this.init.headers,
-                    Authorization: `Bearer ${this.refreshToken}`,
+                    Authorization: `Bearer ${refreshToken}`,
                 },
             });
 
@@ -89,15 +81,15 @@ class Fetcher {
             }
 
             const tokens = (await response.json()) as RefreshToken['Response'];
-            await this.setToken(tokens);
-            this.refetch();
+            await registerAuthTokens(tokens);
+            this.refetch(tokens.accessToken);
             this.isRefresh = false;
         }
 
         return promise;
     };
 
-    private refetch = () => {
+    private refetch = (accessToken: string) => {
         const refreshQueue = this.refreshQueue;
         refreshQueue.forEach(({ getItem }) => {
             const { fetchInfo, reject, resolve } = getItem();
@@ -106,7 +98,7 @@ class Fetcher {
                 ...init,
                 headers: {
                     ...init.headers,
-                    Authorization: `Bearer ${this.accessToken}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
             })
                 .then((response) => resolve(response.json()))
@@ -119,14 +111,15 @@ class Fetcher {
         this.refreshQueue = [];
     };
 
-    private setToken = async (tokens: RefreshToken['Response']) => {
-        this.accessToken = tokens.accessToken;
-        this.refreshToken = tokens.refreshToken;
-        await registerAuthTokens(tokens);
-    };
-
-    private generatorFetchInfo = (input: RequestInfo, init?: CustomRequestInit): FetchInfo => {
+    private generatorFetchInfo = async (input: RequestInfo, init?: CustomRequestInit): Promise<FetchInfo> => {
         const defaultInit = this.init;
+        const accessToken = await getAccessToken();
+        const accessTokenHeader =
+            accessToken === null
+                ? {}
+                : {
+                      Authorization: `Bearer ${accessToken}`,
+                  };
 
         if (init) {
             const { method, ignorePrefix, isFormData, body, headers, credentials, ...rest } = init;
@@ -134,17 +127,7 @@ class Fetcher {
             const url = ignorePrefix ? input : ENV.END_POINT_URI + input;
             const newCredentials = credentials ? credentials : defaultInit.credentials;
             const newBody = body ? (isFormData ? (body as FormData) : JSON.stringify(body)) : undefined;
-
-            const newHeaders = Object.assign(
-                {},
-                isFormData ? undefined : defaultInit.headers,
-                this.accessToken === null
-                    ? {}
-                    : {
-                          Authorization: `Bearer ${this.accessToken}`,
-                      },
-                headers,
-            );
+            const newHeaders = Object.assign({}, isFormData ? undefined : defaultInit.headers, accessTokenHeader, headers);
 
             return {
                 input: url,
@@ -161,7 +144,10 @@ class Fetcher {
 
         return {
             input: ENV.END_POINT_URI + input,
-            init: defaultInit,
+            init: {
+                ...defaultInit,
+                headers: Object.assign({}, defaultInit.headers, accessTokenHeader),
+            },
         };
     };
 }

@@ -60,7 +60,6 @@ export default function SignUpStep1({
         } catch (error) {
             throw error;
         } finally {
-            console.log('hi');
         }
     };
 

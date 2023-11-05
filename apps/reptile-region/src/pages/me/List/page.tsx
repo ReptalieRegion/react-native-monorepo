@@ -8,9 +8,11 @@ import { ScrollView } from 'react-native-gesture-handler';
 import type { MyTabParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
 import useSignOut from '@/apis/auth/hooks/mutations/useSignOut';
+import { useFetchMeProfile } from '@/apis/me/profile/hooks';
 import { ConditionalRenderer, TextButton } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
+import { Profile } from '@/components/me/molecules/Profile';
 
 type MyListScreenProps = CompositeScreenProps<
     NativeStackScreenProps<MyTabParamList, 'my/list'>,
@@ -20,6 +22,7 @@ type MyListScreenProps = CompositeScreenProps<
 export default function MyListPage({ navigation }: MyListScreenProps) {
     const { isSignIn, signOut } = useAuth();
     const { mutateAsync: signOutMutateAsync } = useSignOut();
+    const { data } = useFetchMeProfile();
 
     const navigateSignIn = () => {
         navigation.navigate('sign-in');
@@ -39,7 +42,7 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
             <View style={styles.signContainer}>
                 <ConditionalRenderer
                     condition={isSignIn}
-                    trueContent={null}
+                    trueContent={<Profile user={data} />}
                     falseContent={<TextButton text="로그인/회원가입" type="view" color="surface" onPress={navigateSignIn} />}
                 />
             </View>

@@ -3,7 +3,7 @@ import React from 'react';
 
 import type { MyTabParamList } from '<routes/bottom-tab>';
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
-import MyListPage from '@/pages/my/List/page';
+import MyListPage from '@/pages/me/List/page';
 
 const Stack = createNativeStackNavigator<MyTabParamList>();
 

@@ -61,6 +61,7 @@ export default function SharePostCard({
     onPressTag,
     onPressLikeContents,
 }: PostCardProps) {
+    console.log('\nisMine:', isMine, '\nisFollow:', isFollow);
     return (
         <View style={[styles.container, containerStyle]}>
             <PostCard uuid={postId}>

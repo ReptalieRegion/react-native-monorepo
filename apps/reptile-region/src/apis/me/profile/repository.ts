@@ -8,3 +8,13 @@ export const fetchMeProfile = async () => {
 
     return response.json();
 };
+
+/** PUT */
+export const updateMeProfile = async () => {
+    const response = await clientFetch('api/users/me/profile', {
+        method: METHOD.PUT,
+        body: {},
+    });
+
+    return response.json();
+};

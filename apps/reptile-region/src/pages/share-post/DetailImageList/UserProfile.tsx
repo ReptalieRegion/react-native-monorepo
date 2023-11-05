@@ -1,13 +1,15 @@
 import { Typo } from '@reptile-region/design-system';
+import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import type { FetchDetailUserPost } from '<api/share/post>';
 import type { ImageType } from '<image>';
 import type { SharePostFollowProps } from '<routes/bottom-tab>';
-import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
-import { Avatar } from '@/components/@common/atoms';
+import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 import type {
     ActivitySummaryItemActions,
@@ -29,7 +31,11 @@ type UserDetailPanelProps = UserDetailPanelState & UserDetailPanelActions;
 
 export default function UserProfile({ nickname, profile, isFollow, navigateFollowPage }: UserDetailPanelProps) {
     const { data } = useFetchUserProfile({ nickname });
-    const { data: post } = useInfiniteUserPosts({ nickname, suspense: false });
+    const queryClient = useQueryClient();
+    const post = queryClient.getQueryData<InfiniteData<FetchDetailUserPost['Response']>>(
+        sharePostQueryKeys.detailUserPosts(nickname),
+    );
+
     const { mutateFollow } = useCreateOrUpdateFollow();
 
     const defaultData = {
@@ -99,7 +105,11 @@ export default function UserProfile({ nickname, profile, isFollow, navigateFollo
             </View>
             <View style={styles.textContainer}>
                 {/** TODO 팔로우 */}
-                <Follow isFollow={newData.user.isFollow} onPress={handlePressFollow} />
+                <ConditionalRenderer
+                    condition={data?.user.isMine === false}
+                    trueContent={<Follow isFollow={newData.user.isFollow} onPress={handlePressFollow} />}
+                    falseContent={null}
+                />
             </View>
         </View>
     );

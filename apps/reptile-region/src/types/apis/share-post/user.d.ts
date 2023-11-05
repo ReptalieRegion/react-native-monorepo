@@ -11,6 +11,7 @@ declare module '<api/share/post/user>' {
     type FetchDetailUserProfileResponse = {
         user: {
             id: string;
+            isMine: boolean;
             nickname: string;
             profile: ImageType;
             isFollow: boolean | undefined;
