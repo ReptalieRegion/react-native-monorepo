@@ -10,8 +10,8 @@ import usePhoto from '../../hooks/usePhoto';
 import PhotoIndicators from '../PhotoIndicators';
 
 import SquareImage from '@/components/@common/atoms/SquareImage';
+import { useToast } from '@/components/@common/organisms/Toast';
 import { MAX_PHOTO_COUNT } from '@/env/constants';
-import { useToast } from '@/overlay/Toast';
 
 type PhotoListProps = {
     numColumns: number;

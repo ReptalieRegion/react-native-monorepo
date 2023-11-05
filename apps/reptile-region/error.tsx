@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import HTTPError from '@/apis/@utils/error/HTTPError';
 import { Error } from '@/assets/icons';
-import { useToast } from '@/overlay/Toast';
+import { useToast } from '@/components/@common/organisms/Toast';
 
 type GlobalErrorState = {
     error: Error | HTTPError;

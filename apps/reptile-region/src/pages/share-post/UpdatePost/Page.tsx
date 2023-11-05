@@ -3,8 +3,8 @@ import React from 'react';
 import ChangeHeader from './Header';
 import type { SharePostUpdateScreen } from './types';
 
+import { useToast } from '@/components/@common/organisms/Toast';
 import PostUpdate from '@/components/share-post/organisms/PostUpdate/providers/PostUpdate';
-import { useToast } from '@/overlay/Toast';
 
 export default function SharePostUpdatePage({
     navigation,

@@ -6,7 +6,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import GlobalError from './error';
 
-import Toast from '@/overlay/Toast';
+import Toast from '@/components/@common/organisms/Toast';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 

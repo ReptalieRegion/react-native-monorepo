@@ -6,7 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 import useRefresh from '@/apis/auth/hooks/mutations/useRefresh';
 import { deleteAuthTokens, getRefreshToken } from '@/apis/auth/utils/secure-storage-token';
 import { useFetchMeProfile } from '@/apis/me/profile/hooks';
-import { useToast } from '@/overlay/Toast';
+import { useToast } from '@/components/@common/organisms/Toast';
 
 export default function InitialAuth() {
     const { isSuccess, mutateAsync: refreshMutateAsync } = useRefresh();
