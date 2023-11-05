@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "link:assets": "react-native-asset",
+        "extract": "node ./scripts/extract-licenses/index.js",
         "android": "react-native run-android",
         "build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
         "ios": "sh ./scripts/ios-simulator.sh",
@@ -20,7 +21,6 @@
         "postinstall": "react-native setup-ios-permissions && pod-install"
     },
     "dependencies": {
-        "@hookform/resolvers": "^3.3.0",
         "@invertase/react-native-apple-authentication": "^2.2.2",
         "@react-native-async-storage/async-storage": "^1.19.0",
         "@react-native-camera-roll/camera-roll": "^5.6.0",
@@ -46,7 +46,6 @@
         "pod-install": "^0.1.38",
         "postinstall": "^0.8.0",
         "react": "18.2.0",
-        "react-hook-form": "^7.45.4",
         "react-native": "0.72.6",
         "react-native-bootsplash": "^5.0.4",
         "react-native-dotenv": "^3.4.9",
@@ -61,8 +60,7 @@
         "react-native-skeleton-placeholder": "^5.2.4",
         "react-native-svg": "^13.14.0",
         "react-native-tab-view": "^3.5.2",
-        "zod": "^3.22.4",
-        "zustand": "^4.4.3"
+        "zod": "^3.22.4"
     },
     "devDependencies": {
         "@babel/core": "^7.23.2",

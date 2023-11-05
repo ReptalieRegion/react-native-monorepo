@@ -10,10 +10,11 @@ import useSignOut from '@/apis/auth/hooks/mutations/useSignOut';
 import { useFetchMeProfile } from '@/apis/me/profile/hooks';
 import { Share } from '@/assets/icons';
 import Diary from '@/assets/icons/Diary';
-import { ConditionalRenderer, TextButton } from '@/components/@common/atoms';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import { Profile } from '@/components/me/molecules/Profile';
+import VersionCheck from '@/native-modules/version-check/VersionCheck';
 import { useToast } from '@/overlay/Toast';
 
 type MyListScreenProps = CompositeScreenProps<
@@ -26,10 +27,6 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
     const { mutateAsync: signOutMutateAsync } = useSignOut();
     const { data } = useFetchMeProfile();
     const { openToast } = useToast();
-
-    const navigateSignIn = () => {
-        navigation.navigate('sign-in');
-    };
 
     const navigateProfileSetting = () => {
         navigation.navigate('my/profile');
@@ -57,15 +54,11 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.signContainer}>
-                <ConditionalRenderer
-                    condition={isSignIn}
-                    trueContent={<Profile user={data} />}
-                    falseContent={<TextButton text="로그인/회원가입" type="view" color="surface" onPress={navigateSignIn} />}
-                />
+                <Profile user={data} />
             </View>
 
             <View style={styles.activeContainer}>
-                <Typo variant="heading2" color="placeholder">
+                <Typo variant="title3" color="placeholder">
                     활동
                 </Typo>
                 <View style={styles.testWrapper}>
@@ -84,17 +77,13 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                 </View>
             </View>
 
-            <View>
+            <View style={styles.listContainer}>
                 <View style={styles.listTitle}>
-                    <Typo variant="heading2" color="placeholder">
+                    <Typo variant="title3" color="placeholder">
                         설정
                     </Typo>
                 </View>
-                <ListItem
-                    leftChildren={<ListItem.Title text="푸시 알림 설정" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={navigateProfileSetting}
-                />
+                <ListItem leftChildren={<ListItem.Title text="푸시 알림 설정" />} rightChildren={<ListItem.Chevron />} />
                 <ListItem
                     leftChildren={<ListItem.Title text="내 프로필 설정" />}
                     rightChildren={<ListItem.Chevron />}
@@ -102,50 +91,37 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                 />
             </View>
 
-            <View>
+            <View style={styles.listContainer}>
                 <View style={styles.listTitle}>
-                    <Typo variant="heading2" color="placeholder">
+                    <Typo variant="title3" color="placeholder">
                         약관
                     </Typo>
                 </View>
-                <ListItem
-                    leftChildren={<ListItem.Title text="공지사항" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={navigateProfileSetting}
-                />
-                <ListItem
-                    leftChildren={<ListItem.Title text="이용약관" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={navigateProfileSetting}
-                />
-                <ListItem
-                    leftChildren={<ListItem.Title text="개인정보처리" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={navigateProfileSetting}
-                />
+                <ListItem leftChildren={<ListItem.Title text="공지사항" />} rightChildren={<ListItem.Chevron />} />
+                <ListItem leftChildren={<ListItem.Title text="이용약관" />} rightChildren={<ListItem.Chevron />} />
+                <ListItem leftChildren={<ListItem.Title text="개인정보처리" />} rightChildren={<ListItem.Chevron />} />
             </View>
 
-            <View>
+            <View style={styles.listContainer}>
                 <View style={styles.listTitle}>
-                    <Typo variant="heading2" color="placeholder">
+                    <Typo variant="title3" color="placeholder">
                         정보
                     </Typo>
                 </View>
-                <ListItem
-                    leftChildren={<ListItem.Title text="오픈소스" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={handleKakaoLogout}
-                />
+                <ListItem leftChildren={<ListItem.Title text="오픈소스" />} rightChildren={<ListItem.Chevron />} />
                 <ListItem
                     leftChildren={<ListItem.Title text="앱 버전" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={handleKakaoLogout}
+                    rightChildren={
+                        <View style={styles.marginRight}>
+                            <Typo color="placeholder">{VersionCheck.getVersion()}</Typo>
+                        </View>
+                    }
                 />
             </View>
 
-            <View>
+            <View style={styles.listContainer}>
                 <View style={styles.listTitle}>
-                    <Typo variant="heading2" color="placeholder">
+                    <Typo variant="title3" color="placeholder">
                         계정
                     </Typo>
                 </View>
@@ -173,7 +149,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     scrollViewContainer: {
-        gap: 20,
+        gap: 5,
         flexGrow: 1,
         paddingBottom: 20,
     },
@@ -184,12 +160,18 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 20,
     },
+    listContainer: {
+        paddingTop: 10,
+        backgroundColor: color.White.toString(),
+    },
     listTitle: {
         marginLeft: 20,
     },
     activeContainer: {
         gap: 5,
         paddingHorizontal: 20,
+        backgroundColor: color.White.toString(),
+        paddingVertical: 10,
     },
     testWrapper: {
         flexDirection: 'row',
@@ -205,5 +187,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingVertical: 10,
         gap: 10,
+    },
+    marginRight: {
+        marginRight: 10,
     },
 });

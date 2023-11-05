@@ -19,6 +19,8 @@
 		962B5D2AD02262F7310A9F4E /* libPods-reptileregion-reptileregionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2371788D3376C2B401EEAF11 /* libPods-reptileregion-reptileregionTests.a */; };
 		ACF8EB97CEA24D5DBAF263D1 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71C8BE5FCB534D3FB449D032 /* DancingScript-Regular.ttf */; };
 		E293BB693092A63C568DB352 /* libPods-reptileregion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C285F4203BC0BABB569CF452 /* libPods-reptileregion.a */; };
+		EE6DD0602AEAF3360096030E /* RNVersionCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DD05F2AEAF3360096030E /* RNVersionCheck.m */; };
+		EE6DD0612AEAF3360096030E /* RNVersionCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DD05F2AEAF3360096030E /* RNVersionCheck.m */; };
 		EEAD95152AE36A68005FEC8D /* RNKakaoAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */; };
 		EEAD95172AE36AD6005FEC8D /* RNKakaoAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */; };
 		EEC28BE52AF3D79200B74530 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEC28BE42AF3D79200B74530 /* BootSplash.storyboard */; };
@@ -61,6 +63,8 @@
 		E5B4C8C8A57E09424D19A47E /* Pods-reptileregion-reptileregionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion-reptileregionTests.debug.xcconfig"; path = "Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE24423B2AE17A3200F2ABB2 /* reptileregion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = reptileregion.entitlements; path = reptileregion/reptileregion.entitlements; sourceTree = "<group>"; };
+		EE6DD05E2AEAF3360096030E /* RNVersionCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RNVersionCheck.h; path = RNVersionCheck/RNVersionCheck.h; sourceTree = "<group>"; };
+		EE6DD05F2AEAF3360096030E /* RNVersionCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNVersionCheck.m; path = RNVersionCheck/RNVersionCheck.m; sourceTree = "<group>"; };
 		EEAD95132AE36A68005FEC8D /* RNKakaoAuth.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RNKakaoAuth.h; path = RNKakaoAuth/RNKakaoAuth.h; sourceTree = "<group>"; };
 		EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNKakaoAuth.m; path = RNKakaoAuth/RNKakaoAuth.m; sourceTree = "<group>"; };
 		EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RNKakaoAuth.swift; path = RNKakaoAuth/RNKakaoAuth.swift; sourceTree = "<group>"; };
@@ -119,6 +123,7 @@
 		13B07FAE1A68108700A75B9A /* reptileregion */ = {
 			isa = PBXGroup;
 			children = (
+				EE6DD05D2AEAF2F40096030E /* RNVersionCheck */,
 				EEAD95122AE36A41005FEC8D /* RNKakaoAuth */,
 				EE24423B2AE17A3200F2ABB2 /* reptileregion.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -200,6 +205,15 @@
 				5DF1973DA6947FEBB216737D /* Pods-reptileregion-reptileregionTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		EE6DD05D2AEAF2F40096030E /* RNVersionCheck */ = {
+			isa = PBXGroup;
+			children = (
+				EE6DD05E2AEAF3360096030E /* RNVersionCheck.h */,
+				EE6DD05F2AEAF3360096030E /* RNVersionCheck.m */,
+			);
+			name = RNVersionCheck;
 			sourceTree = "<group>";
 		};
 		EEAD95122AE36A41005FEC8D /* RNKakaoAuth */ = {
@@ -525,6 +539,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEE1138D2AE4E3AB00B1F55D /* RNKakaoAuth.m in Sources */,
+				EE6DD0612AEAF3360096030E /* RNVersionCheck.m in Sources */,
 				EEE1138E2AE4E3AF00B1F55D /* RNKakaoAuth.swift in Sources */,
 				00E356F31AD99517003FC87E /* reptileregionTests.m in Sources */,
 				809814C96E59E2446C895362 /* ExpoModulesProvider.swift in Sources */,
@@ -536,6 +551,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				EE6DD0602AEAF3360096030E /* RNVersionCheck.m in Sources */,
 				EEAD95152AE36A68005FEC8D /* RNKakaoAuth.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				735A9B52A20DFF8ADD07BA15 /* ExpoModulesProvider.swift in Sources */,

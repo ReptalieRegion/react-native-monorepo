@@ -1,8 +1,8 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Typo } from '@reptile-region/design-system';
 import { ErrorBoundary } from '@reptile-region/error-boundary';
 import React, { Suspense } from 'react';
-import { Text } from 'react-native';
 
 import SharePostListSkeleton from '../loading';
 
@@ -20,7 +20,7 @@ type SharePostListPageScreen = CompositeScreenProps<
 export default function SharePostListPage(props: SharePostListPageScreen) {
     return (
         <Suspense fallback={<SharePostListSkeleton />}>
-            <ErrorBoundary renderFallback={({ error }) => <Text>{error.message}</Text>}>
+            <ErrorBoundary renderFallback={({ error }) => <Typo>{error.message}</Typo>}>
                 <FloatingActionButtons>
                     <PostList {...props} />
                 </FloatingActionButtons>

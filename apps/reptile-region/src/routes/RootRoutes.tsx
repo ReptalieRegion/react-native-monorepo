@@ -13,6 +13,10 @@ import { Auth } from '@/components/auth/organisms/Auth';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
+import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
+import LicenseContentsPage from '@/pages/me/License/ContentsPage/page';
+import { LicenseListHeader } from '@/pages/me/License/ListPage/header';
+import LicenseListPage from '@/pages/me/License/ListPage/page';
 import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostUpdatePage, { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost';
 
@@ -71,13 +75,22 @@ const RootRoutes = () => {
                                 animation: 'none',
                             }}
                         />
+                        <Stack.Screen
+                            name="share-post/post/update"
+                            component={SharePostUpdatePage}
+                            options={{ header: SharePostUpdateHeader, animation: 'slide_from_bottom' }}
+                        />
                     </Stack.Group>
-                    <Stack.Screen
-                        name="share-post/post/update"
-                        component={SharePostUpdatePage}
-                        options={{ header: SharePostUpdateHeader, animation: 'slide_from_bottom' }}
-                    />
-                    {/** 일상공유 끝 */}
+                    {/** 내 정보 시작 */}
+                    <Stack.Group>
+                        <Stack.Screen name="my/license" component={LicenseListPage} options={{ header: LicenseListHeader }} />
+                        <Stack.Screen
+                            name="my/license/contents"
+                            component={LicenseContentsPage}
+                            options={{ header: LicenseContentsHeader }}
+                        />
+                    </Stack.Group>
+                    {/** 내 정보 끝 */}
                 </Stack.Navigator>
             </NavigationContainer>
         </Auth>

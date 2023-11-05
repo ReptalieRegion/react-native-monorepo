@@ -26,4 +26,6 @@ export const createBottomSheetNativeStackHeader = (headerProps: BottomSheetHeade
 
 export const NativeStackDefaultHeader = createNativeStackHeader();
 
+export const NativeStackDefaultBackHeader = createNativeStackHeader({ leftIcon: 'back' });
+
 export const BottomTabDefaultHeader = createBottomTabHeader();

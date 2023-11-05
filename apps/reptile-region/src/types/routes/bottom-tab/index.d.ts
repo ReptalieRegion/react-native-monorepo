@@ -54,6 +54,7 @@ declare module '<routes/bottom-tab>' {
     type MyTabParamList = {
         'my/list': undefined;
         'my/profile': undefined;
+        'my/license': undefined;
     };
     /** MY 끝 */
 
