@@ -23,7 +23,6 @@ export default function AppleButton({ width = '90%', height = 44, onError }: App
 
             const credentialState = await appleAuth.getCredentialStateForUser(responseObject.user);
             if (credentialState === appleAuth.State.AUTHORIZED) {
-                console.log('user is authenticated');
             }
         } catch (error) {
             onError(error);

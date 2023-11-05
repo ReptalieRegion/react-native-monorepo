@@ -1,10 +1,11 @@
 import { Typo, color } from '@reptile-region/design-system';
 import { useQueryClient } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import HTTPError from '@/apis/@utils/error/HTTPError';
 import { Error } from '@/assets/icons';
+import { useToast } from '@/overlay/Toast';
 
 type GlobalErrorState = {
     error: Error | HTTPError;
@@ -17,8 +18,14 @@ interface GlobalErrorActions {
 type GlobalErrorProps = GlobalErrorState & GlobalErrorActions;
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
-    console.log(error.message);
     const queryClient = useQueryClient();
+    const { openToast } = useToast();
+
+    useEffect(() => {
+        if (__DEV__) {
+            openToast({ contents: error.message, severity: 'error' });
+        }
+    }, [error.message, openToast]);
 
     const handleReset = () => {
         const errorKeys = queryClient

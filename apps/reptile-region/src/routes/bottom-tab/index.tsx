@@ -27,10 +27,8 @@ export default function BottomTabRoutes({ navigation }: BottomTabScreenProps) {
 
     const handleTabPressNavigate: MainBottomBarActions['onPressNavigate'] = ({ navigation: tabNavigation, routeName }) => {
         if (!isSignIn && routeName === 'my/routes') {
-            console.log('hi');
             navigation.navigate('sign-in');
         } else {
-            console.log('hi2');
             tabNavigation.navigate(routeName);
         }
     };

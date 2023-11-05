@@ -10,9 +10,7 @@ import { Avatar, TextButton } from '@/components/@common/atoms';
 export default function ProfileSetting() {
     const { data } = useFetchMeProfile();
 
-    const handlePressProfileImage = () => {
-        console.log('hi');
-    };
+    const handlePressProfileImage = () => {};
 
     return (
         <View style={styles.container}>

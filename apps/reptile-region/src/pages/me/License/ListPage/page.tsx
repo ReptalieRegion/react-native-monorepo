@@ -26,9 +26,6 @@ const ItemSeparatorComponent = () => {
 
 export default function LicenseListPage({ navigation }: LicenseListScreenProps) {
     const data = licenseList as License[];
-    console.log(data.length);
-    console.log(data.filter((a) => a.homepage).length);
-    console.log(data.filter((a) => a.licenseContent).length);
 
     const navigateLicenseContents = (props: License) => {
         navigation.navigate('my/license/contents', props);
