@@ -1,7 +1,7 @@
 import type { CreateComment, DeleteComment, FetchComment, UpdateComment } from '<api/share/post/comment>';
 import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
-import { objectToQueryString } from '@/utils/network/query-string';
+import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 
 /** GET */
 // 특정 게시글 댓글 패치

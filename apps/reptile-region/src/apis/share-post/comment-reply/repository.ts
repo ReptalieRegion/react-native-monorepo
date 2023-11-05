@@ -6,7 +6,7 @@ import type {
 } from '<api/share/post/comment-reply>';
 import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
-import { objectToQueryString } from '@/utils/network/query-string';
+import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 
 /** GET */
 // 대댓글 리스트 무한스크롤

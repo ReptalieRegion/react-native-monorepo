@@ -7,7 +7,7 @@ import type {
 } from '<api/share/post/user>';
 import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
-import { objectToQueryString } from '@/utils/network/query-string';
+import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 
 /** GET */
 // 특정 유저의 프로필

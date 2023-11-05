@@ -10,8 +10,8 @@ import type {
 } from '<api/share/post>';
 import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
+import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 import { uploadImage } from '@/utils/camera-roll/camera-roll';
-import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 게시물 패치
