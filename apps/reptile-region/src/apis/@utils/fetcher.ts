@@ -1,5 +1,5 @@
 import ENV from '../../env';
-import { getAccessToken, getRefreshToken, registerAuthTokens } from '../auth/utils/secure-storage-token';
+import { deleteAuthTokens, getAccessToken, getRefreshToken, registerAuthTokens } from '../auth/utils/secure-storage-token';
 
 import HTTPError from './error/HTTPError';
 
@@ -21,17 +21,10 @@ interface CustomRequestInit extends Omit<RequestInit, 'method' | 'body'> {
 
 type FetchInfo = { input: RequestInfo; init: RequestInit };
 
-class RefreshItem {
-    constructor(
-        private resolve: (value: Response | PromiseLike<Response>) => void,
-        private reject: (reason?: any) => void,
-        private fetchInfo: FetchInfo,
-    ) {}
-
-    getItem() {
-        const { reject, resolve, fetchInfo } = this;
-        return { reject, resolve, fetchInfo };
-    }
+interface RefreshItem {
+    resolve: (value: Response | PromiseLike<Response>) => void;
+    reject: (reason?: any) => void;
+    fetchInfo: FetchInfo;
 }
 
 class Fetcher {
@@ -45,10 +38,11 @@ class Fetcher {
         const fetchInfo = await this.generatorFetchInfo(input, init);
         const response = await fetch(fetchInfo.input, fetchInfo.init);
 
+        if (response.status === 401) {
+            return this.refreshTokenAndRetry(fetchInfo);
+        }
+
         if (!response.ok) {
-            if (response.status === 401) {
-                return this.refreshTokenAndRetry(fetchInfo);
-            }
             const error = await response.json();
             throw new HTTPError(response.status, error.message);
         }
@@ -57,53 +51,66 @@ class Fetcher {
     };
 
     private refreshTokenAndRetry = async (fetchInfo: FetchInfo): Promise<Response> => {
-        const isRefresh = this.isRefresh;
+        const refreshToken = await getRefreshToken();
         const promise = new Promise<Response>((resolve, reject) => {
-            const refreshItem = new RefreshItem(resolve, reject, fetchInfo);
-            this.refreshQueue.push(refreshItem);
+            this.refreshQueue.push({ resolve, reject, fetchInfo });
         });
 
-        if (!isRefresh) {
+        if (!this.isRefresh) {
             this.isRefresh = true;
-            const refreshToken = await getRefreshToken();
-            const response = await fetch('api/auth/refresh', {
-                ...this.init,
+            const input = 'api/auth/refresh';
+            const init: CustomRequestInit = {
+                method: METHOD.POST,
                 headers: {
-                    ...this.init.headers,
                     Authorization: `Bearer ${refreshToken}`,
                 },
-            });
+            };
+            const refreshFetchInfo = await this.generatorFetchInfo(input, init);
+            const response = await fetch(refreshFetchInfo.input, refreshFetchInfo.init);
 
             if (!response.ok) {
-                this.resetRefreshQueue();
-                const error = await response.json();
-                throw new HTTPError(response.status, error.message);
+                const data = await response.json();
+                await deleteAuthTokens();
+                await this.rejectRefreshQueue(new HTTPError(response.status, data.message));
+            } else {
+                const tokens = (await response.json()) as RefreshToken['Response'];
+                await registerAuthTokens(tokens);
+                await this.refetch(tokens.accessToken);
             }
-
-            const tokens = (await response.json()) as RefreshToken['Response'];
-            await registerAuthTokens(tokens);
-            this.refetch(tokens.accessToken);
             this.isRefresh = false;
         }
 
         return promise;
     };
 
-    private refetch = (accessToken: string) => {
+    private refetch = async (accessToken: string) => {
         const refreshQueue = this.refreshQueue;
-        refreshQueue.forEach(({ getItem }) => {
-            const { fetchInfo, reject, resolve } = getItem();
-            const { input, init } = fetchInfo;
-            fetch(input, {
-                ...init,
-                headers: {
-                    ...init.headers,
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            })
-                .then((response) => resolve(response.json()))
-                .catch((error) => reject(error));
+        const refetchFunction = refreshQueue.map(async ({ fetchInfo, reject, resolve }) => {
+            try {
+                const { input, init } = fetchInfo;
+                const response = await fetch(input, {
+                    ...init,
+                    headers: { ...init.headers, Authorization: `Bearer ${accessToken}` },
+                });
+
+                if (!response.ok) {
+                    const data = await response.json();
+                    reject(new HTTPError(response.status, data.message));
+                }
+
+                resolve(response);
+            } catch (error) {
+                reject(new Error('네트워크 에러'));
+            }
         });
+        await Promise.all(refetchFunction);
+        this.resetRefreshQueue();
+    };
+
+    private rejectRefreshQueue = async (error: HTTPError) => {
+        const refreshQueue = this.refreshQueue;
+        const rejectFunction = refreshQueue.map(({ reject }) => reject(error));
+        await Promise.all(rejectFunction);
         this.resetRefreshQueue();
     };
 

@@ -6,13 +6,19 @@ import type { FetchMeProfile } from '<api/my/profile>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { myQueryKeys } from '@/apis/@utils/query-keys';
 
-const useFetchMeProfile = () => {
+type UseFetchMeProfileState = {
+    enabled?: boolean;
+};
+
+type UseFetchMeProfileProps = UseFetchMeProfileState;
+
+const useFetchMeProfile = (props?: UseFetchMeProfileProps) => {
     return useQuery<FetchMeProfile['Response'], HTTPError, FetchMeProfile['Response'], readonly string[]>({
         queryKey: myQueryKeys.profile,
         queryFn: fetchMeProfile,
         staleTime: Infinity,
         gcTime: Infinity,
-        refetchOnWindowFocus: 'always',
+        enabled: props?.enabled,
     });
 };
 

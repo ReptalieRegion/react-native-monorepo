@@ -4,11 +4,14 @@ import BootSplash from 'react-native-bootsplash';
 import { useAuth } from '../../hooks/useAuth';
 
 import useRefresh from '@/apis/auth/hooks/mutations/useRefresh';
-import { getRefreshToken } from '@/apis/auth/utils/secure-storage-token';
+import { deleteAuthTokens, getRefreshToken } from '@/apis/auth/utils/secure-storage-token';
+import { useFetchMeProfile } from '@/apis/me/profile/hooks';
 import { useToast } from '@/overlay/Toast';
 
 export default function InitialAuth() {
-    const { mutateAsync } = useRefresh();
+    const { isSuccess, mutateAsync: refreshMutateAsync } = useRefresh();
+    useFetchMeProfile({ enabled: isSuccess });
+
     const { signIn } = useAuth();
     const { openToast } = useToast();
 
@@ -20,17 +23,18 @@ export default function InitialAuth() {
                     return;
                 }
 
-                const tokens = await mutateAsync({ refreshToken });
+                const tokens = await refreshMutateAsync({ refreshToken });
                 await signIn(tokens);
             } catch (error) {
                 openToast({ severity: 'error', contents: '로그인 실패' });
+                await deleteAuthTokens();
             } finally {
                 await BootSplash.hide({ fade: true });
             }
         };
 
         initSignIn();
-    }, [mutateAsync, openToast, signIn]);
+    }, [refreshMutateAsync, openToast, signIn]);
 
     return null;
 }

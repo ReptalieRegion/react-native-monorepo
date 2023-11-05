@@ -2,10 +2,22 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
 
+import HTTPError from '@/apis/@utils/error/HTTPError';
+
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            retry: 3,
+            retry: (failureCount, error) => {
+                if (failureCount > 2) {
+                    return false;
+                }
+
+                if (error instanceof HTTPError && error.statusCode === 401) {
+                    return false;
+                }
+
+                return true;
+            },
         },
     },
 });
