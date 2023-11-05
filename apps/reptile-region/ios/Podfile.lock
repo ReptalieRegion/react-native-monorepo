@@ -11,7 +11,7 @@ PODS:
     - ExpoModulesCore
   - Expo (49.0.16):
     - ExpoModulesCore
-  - ExpoImage (1.6.0):
+  - ExpoImage (1.7.0):
     - ExpoModulesCore
     - SDWebImage (~> 5.17.0)
     - SDWebImageAVIFCoder (~> 0.10.1)
@@ -23,6 +23,8 @@ PODS:
     - React-NativeModulesApple
     - React-RCTAppDelegate
     - ReactCommon/turbomodule/core
+  - ExpoSecureStore (12.3.1):
+    - ExpoModulesCore
   - FBLazyVector (0.72.6)
   - FBReactNativeSpec (0.72.6):
     - RCT-Folly (= 2021.07.22.00)
@@ -546,9 +548,11 @@ PODS:
     - React-jsi (= 0.72.6)
     - React-logger (= 0.72.6)
     - React-perflogger (= 0.72.6)
-  - RNAppleAuthentication (2.2.2):
+  - RNAppleAuthentication (2.3.0):
     - React-Core
-  - RNCAsyncStorage (1.19.3):
+  - RNBootSplash (5.0.4):
+    - React-Core
+  - RNCAsyncStorage (1.19.4):
     - React-Core
   - RNCMaskedView (0.2.9):
     - React-Core
@@ -620,6 +624,7 @@ DEPENDENCIES:
   - Expo (from `../../../node_modules/expo`)
   - ExpoImage (from `../../../node_modules/expo-image/ios`)
   - ExpoModulesCore (from `../../../node_modules/expo-modules-core`)
+  - ExpoSecureStore (from `../../../node_modules/expo-secure-store/ios`)
   - FBLazyVector (from `../../../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../../../node_modules/react-native/React/FBReactNativeSpec`)
   - Flipper (= 0.182.0)
@@ -688,6 +693,7 @@ DEPENDENCIES:
   - React-utils (from `../../../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../../../node_modules/react-native/ReactCommon`)
   - "RNAppleAuthentication (from `../../../node_modules/@invertase/react-native-apple-authentication`)"
+  - RNBootSplash (from `../../../node_modules/react-native-bootsplash`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../../../node_modules/@react-native-masked-view/masked-view`)"
   - "RNFlashList (from `../../../node_modules/@shopify/flash-list`)"
@@ -745,6 +751,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-image/ios"
   ExpoModulesCore:
     :path: "../../../node_modules/expo-modules-core"
+  ExpoSecureStore:
+    :path: "../../../node_modules/expo-secure-store/ios"
   FBLazyVector:
     :path: "../../../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -828,6 +836,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/ReactCommon"
   RNAppleAuthentication:
     :path: "../../../node_modules/@invertase/react-native-apple-authentication"
+  RNBootSplash:
+    :path: "../../../node_modules/react-native-bootsplash"
   RNCAsyncStorage:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
   RNCMaskedView:
@@ -858,8 +868,9 @@ SPEC CHECKSUMS:
   EXConstants: ce5bbea779da8031ac818c36bea41b10e14d04e1
   EXFileSystem: 2b826a3bf1071a4b80a8457e97124783d1ac860e
   Expo: fcfd60c1ed6806dee5103b210335ae0c72f675ed
-  ExpoImage: 64cd716d10414edf59342de32043857a58e9a2a3
+  ExpoImage: d765c73f5373f52f2c96bdd4a664c80d827446c0
   ExpoModulesCore: 51cb2e7ab4c8da14be3f40b66d54c1781002e99d
+  ExpoSecureStore: 57db3b6da8b59046e2057e95bf7738a8027b47c3
   FBLazyVector: 748c0ef74f2bf4b36cfcccf37916806940a64c32
   FBReactNativeSpec: 6e13505336a6708553d9655731cfa60423aaa1e3
   Flipper: 6edb735e6c3e332975d1b17956bcc584eccf5818
@@ -918,8 +929,9 @@ SPEC CHECKSUMS:
   React-runtimescheduler: f23e337008403341177fc52ee4ca94e442c17ede
   React-utils: fa59c9a3375fb6f4aeb66714fd3f7f76b43a9f16
   ReactCommon: dd03c17275c200496f346af93a7b94c53f3093a4
-  RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
-  RNCAsyncStorage: c913ede1fa163a71cea118ed4670bbaaa4b511bb
+  RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
+  RNBootSplash: 334668c563e44287ca39d03aa3f738a3c35a74a6
+  RNCAsyncStorage: 3a8f7145d17cdd9f88e7b77666c94a09e4f759c8
   RNCMaskedView: 949696f25ec596bfc697fc88e6f95cf0c79669b6
   RNFlashList: 1983f915ae34e9253e413f31387959590d102f5e
   RNGestureHandler: 6e46dde1f87e5f018a54fe5d40cd0e0b942b49ee

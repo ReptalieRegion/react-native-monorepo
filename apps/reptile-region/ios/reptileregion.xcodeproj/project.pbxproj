@@ -15,7 +15,6 @@
 		735A9B52A20DFF8ADD07BA15 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2A41D76F493F8C74CEA269 /* ExpoModulesProvider.swift */; };
 		7A3CDD09C479458C8A154DD1 /* DancingScript-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C0F66326FEDD4CCDB5F47713 /* DancingScript-SemiBold.ttf */; };
 		809814C96E59E2446C895362 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F82C229E43720ECD2959AA /* ExpoModulesProvider.swift */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		954ECDD2A91740C49A11EB91 /* DancingScript-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 936D71159AF54565BF6DB472 /* DancingScript-Bold.ttf */; };
 		962B5D2AD02262F7310A9F4E /* libPods-reptileregion-reptileregionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2371788D3376C2B401EEAF11 /* libPods-reptileregion-reptileregionTests.a */; };
 		ACF8EB97CEA24D5DBAF263D1 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71C8BE5FCB534D3FB449D032 /* DancingScript-Regular.ttf */; };
@@ -24,6 +23,8 @@
 		EE6DD0612AEAF3360096030E /* RNVersionCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DD05F2AEAF3360096030E /* RNVersionCheck.m */; };
 		EEAD95152AE36A68005FEC8D /* RNKakaoAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */; };
 		EEAD95172AE36AD6005FEC8D /* RNKakaoAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */; };
+		EEC28BE52AF3D79200B74530 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEC28BE42AF3D79200B74530 /* BootSplash.storyboard */; };
+		EEC28BE62AF3D79200B74530 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEC28BE42AF3D79200B74530 /* BootSplash.storyboard */; };
 		EEE1138D2AE4E3AB00B1F55D /* RNKakaoAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */; };
 		EEE1138E2AE4E3AF00B1F55D /* RNKakaoAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */; };
 /* End PBXBuildFile section */
@@ -55,7 +56,6 @@
 		5F4E65BF21B95DDE15F50549 /* Pods-reptileregion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion.debug.xcconfig"; path = "Target Support Files/Pods-reptileregion/Pods-reptileregion.debug.xcconfig"; sourceTree = "<group>"; };
 		6C2A41D76F493F8C74CEA269 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-reptileregion/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		71C8BE5FCB534D3FB449D032 /* DancingScript-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Regular.ttf"; path = "../src/assets/fonts/DancingScript-Regular.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = reptileregion/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		936D71159AF54565BF6DB472 /* DancingScript-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Bold.ttf"; path = "../src/assets/fonts/DancingScript-Bold.ttf"; sourceTree = "<group>"; };
 		B7C9D90EDB784E0BA5BE940F /* DancingScript-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Medium.ttf"; path = "../src/assets/fonts/DancingScript-Medium.ttf"; sourceTree = "<group>"; };
 		C0F66326FEDD4CCDB5F47713 /* DancingScript-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-SemiBold.ttf"; path = "../src/assets/fonts/DancingScript-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -69,6 +69,7 @@
 		EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNKakaoAuth.m; path = RNKakaoAuth/RNKakaoAuth.m; sourceTree = "<group>"; };
 		EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RNKakaoAuth.swift; path = RNKakaoAuth/RNKakaoAuth.swift; sourceTree = "<group>"; };
 		EEAD95182AE36B11005FEC8D /* reptileregion-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = "reptileregion-Bridging-Header.h"; sourceTree = "<group>"; };
+		EEC28BE42AF3D79200B74530 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = reptileregion/BootSplash.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,9 +128,9 @@
 				EE24423B2AE17A3200F2ABB2 /* reptileregion.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
+				EEC28BE42AF3D79200B74530 /* BootSplash.storyboard */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				EEAD95182AE36B11005FEC8D /* reptileregion-Bridging-Header.h */,
 			);
@@ -325,6 +326,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEC28BE62AF3D79200B74530 /* BootSplash.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,10 +334,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				954ECDD2A91740C49A11EB91 /* DancingScript-Bold.ttf in Resources */,
 				68F5659F51FC455CA2CAA83E /* DancingScript-Medium.ttf in Resources */,
+				EEC28BE52AF3D79200B74530 /* BootSplash.storyboard in Resources */,
 				ACF8EB97CEA24D5DBAF263D1 /* DancingScript-Regular.ttf in Resources */,
 				7A3CDD09C479458C8A154DD1 /* DancingScript-SemiBold.ttf in Resources */,
 			);
@@ -640,12 +642,13 @@
 			baseConfigurationReference = 5F4E65BF21B95DDE15F50549 /* Pods-reptileregion.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = reptileregion/reptileregion.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y9TRXFZMR5;
 				ENABLE_BITCODE = NO;
@@ -679,12 +682,13 @@
 			baseConfigurationReference = 4F7A568A21107BC4D709C22F /* Pods-reptileregion.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = reptileregion/reptileregion.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y9TRXFZMR5;
 				INFOPLIST_FILE = reptileregion/Info.plist;

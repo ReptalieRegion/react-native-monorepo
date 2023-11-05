@@ -1,18 +1,23 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useSuspenseInfiniteQuery, type InfiniteData } from '@tanstack/react-query';
 
 import { getSearchFollowerUserNickname } from '../../repository';
 
 import type { FetchFollowerSearch } from '<api/share/post/user>';
-import type { EnableParam } from '<api/utils>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
-const useInfiniteSearchFollowerUser = ({ search, enabled = false }: FetchFollowerSearch['Request'] & EnableParam) => {
-    return useInfiniteQuery<FetchFollowerSearch['Response']>({
+const useInfiniteSearchFollowerUser = ({ search }: FetchFollowerSearch['Request']) => {
+    return useSuspenseInfiniteQuery<
+        FetchFollowerSearch['Response'],
+        HTTPError,
+        InfiniteData<FetchFollowerSearch['Response']>,
+        readonly string[],
+        number
+    >({
         queryKey: sharePostQueryKeys.searchUser(search),
+        initialPageParam: 0,
         queryFn: ({ pageParam }) => getSearchFollowerUserNickname({ search, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
-        suspense: true,
-        enabled,
     });
 };
 

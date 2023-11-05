@@ -11,7 +11,7 @@ import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '<ap
 import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import type { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';

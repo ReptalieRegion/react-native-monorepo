@@ -1,12 +1,11 @@
 declare module '<api/share/post>' {
     import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 
-    import type { InfinitePageParam, InfiniteState, ServerAPI } from '<api/utils>';
+    import type { InfiniteState, ServerAPI } from '<api/utils>';
     import type { ImageType } from '<image>';
 
     /** GET 시작 */
     /** 일상공유 무한스크롤 조회 리스트 시작 */
-    type FetchPostRequest = InfinitePageParam;
 
     type FetchPostResponse = {
         post: {
@@ -26,7 +25,7 @@ declare module '<api/share/post>' {
         };
     };
 
-    type FetchPost = ServerAPI<FetchPostRequest, InfiniteState<FetchPostResponse[]>>;
+    type FetchPost = ServerAPI<void, InfiniteState<FetchPostResponse[]>>;
     /** 일상공유 무한스크롤 조회 리스트 끝 */
 
     /** 특정 유저의 게시글 리스트 무한 스크롤 시작 */

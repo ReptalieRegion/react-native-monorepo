@@ -9,12 +9,19 @@ import { BottomTabBarButton } from '../../atoms';
 import type { IconProps } from '<Icon>';
 import type { BottomTabParamList } from '<routes/bottom-tab>';
 import {
-    Cart as ShopIcon,
-    Community as InfoIcon,
     Home as HomeIcon,
+    Community as InfoIcon,
     My as MyIcon,
     Share as SharePostIcon,
+    Cart as ShopIcon,
 } from '@/assets/icons';
+
+export interface MainBottomBarActions {
+    onPressNavigate({
+        routeName,
+        navigation,
+    }: Pick<BottomTabBarProps, 'navigation'> & { routeName: keyof BottomTabParamList }): void;
+}
 
 type MenusType = {
     [key in keyof BottomTabParamList]?: {
@@ -46,7 +53,12 @@ const MENUS: MenusType = {
     },
 };
 
-export default function MainBottomBar({ state, navigation, insets }: BottomTabBarProps) {
+export default function MainBottomBar({
+    state,
+    navigation,
+    insets,
+    onPressNavigate,
+}: BottomTabBarProps & MainBottomBarActions) {
     return (
         <View style={styles.bgWhite}>
             <View style={[styles.container, { paddingBottom: insets.bottom }]}>
@@ -60,15 +72,36 @@ export default function MainBottomBar({ state, navigation, insets }: BottomTabBa
 
                     const { Icon, name } = item;
                     const isFocused = state.index === index;
-                    const onPress = () => {
-                        Haptic.trigger('impactLight');
-                        if (!isFocused) {
-                            navigation.navigate(route.name);
+
+                    const handlePress = () => {
+                        const event = navigation.emit({
+                            type: 'tabPress',
+                            target: route.key,
+                            canPreventDefault: true,
+                        });
+
+                        if (!isFocused && !event.defaultPrevented) {
+                            Haptic.trigger('impactLight');
+                            onPressNavigate({ routeName, navigation });
                         }
                     };
 
+                    const handleLongPress = () => {
+                        navigation.emit({
+                            type: 'tabLongPress',
+                            target: route.key,
+                        });
+                    };
+
                     return (
-                        <BottomTabBarButton key={route.name} isFocused={isFocused} onPress={onPress} Icon={Icon} name={name} />
+                        <BottomTabBarButton
+                            key={route.name}
+                            isFocused={isFocused}
+                            name={name}
+                            onPress={handlePress}
+                            onLongPress={handleLongPress}
+                            Icon={Icon}
+                        />
                     );
                 })}
             </View>
