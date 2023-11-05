@@ -1,10 +1,10 @@
 import { fakerKO } from '@faker-js/faker';
+import { range } from '@reptile-region/utils';
 
 import { createContents } from './createTagIdsAndContent';
 
 import type { FetchPostResponse } from '<api/share/post>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
-import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const createPostList = (): FetchPostResponse => {
     const contents = createContents();
@@ -13,7 +13,7 @@ const createPostList = (): FetchPostResponse => {
         post: {
             id: fakerKO.string.uuid(),
             contents,
-            images: createEmptyArray(fakerKO.number.int({ min: 1, max: 5 })).map(() => {
+            images: range(fakerKO.number.int({ min: 1, max: 5 })).map(() => {
                 return { src: fakerKO.image.url() };
             }),
             isLike: fakerBoolean(),

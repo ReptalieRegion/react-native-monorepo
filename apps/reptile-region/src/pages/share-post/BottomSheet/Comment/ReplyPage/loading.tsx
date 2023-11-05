@@ -1,9 +1,8 @@
 import { color } from '@reptile-region/design-system';
+import { range } from '@reptile-region/utils';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-
-import createEmptyArray from '@/utils/array/createEmptyArray';
 
 export default function CommentReplySkeleton() {
     const { width } = useWindowDimensions();
@@ -21,7 +20,7 @@ export default function CommentReplySkeleton() {
                     </View>
                 </View>
             </SkeletonPlaceholder>
-            {createEmptyArray(10).map((_, index) => (
+            {range(10).map((_, index) => (
                 <SkeletonPlaceholder key={index} direction="right">
                     <View style={[styles.viewContainer, styles.replyComment]}>
                         <View style={styles.circle} />

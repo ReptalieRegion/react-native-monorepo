@@ -1,16 +1,15 @@
 import { color } from '@reptile-region/design-system';
+import { range } from '@reptile-region/utils';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-
-import createEmptyArray from '@/utils/array/createEmptyArray';
 
 export default function SharePostListSkeleton() {
     const { width } = useWindowDimensions();
 
     return (
         <View style={styles.container}>
-            {createEmptyArray(4)
+            {range(4)
                 .fill('')
                 .map((_, index) => (
                     <SkeletonPlaceholder key={index} direction="right">

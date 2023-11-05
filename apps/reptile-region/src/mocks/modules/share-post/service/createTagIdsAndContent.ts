@@ -1,15 +1,14 @@
 import { fakerKO } from '@faker-js/faker';
-
-import createEmptyArray from '@/utils/array/createEmptyArray';
+import { range } from '@reptile-region/utils';
 
 export const createContents = () => {
     const tagIdsCount = fakerKO.number.int({ min: 0, max: 3 });
-    const tags = createEmptyArray(tagIdsCount).map(() => ({
+    const tags = range(tagIdsCount).map(() => ({
         id: fakerKO.string.uuid(),
         nickname: '@' + fakerKO.person.middleName(),
     }));
     const contentCount = fakerKO.number.int({ min: 1, max: 6 });
-    const contents = createEmptyArray(contentCount).map(() => fakerKO.lorem.sentence());
+    const contents = range(contentCount).map(() => fakerKO.lorem.sentence());
 
     tags.forEach((tag) => {
         const insertionPoint = fakerKO.number.int({ min: 0, max: contentCount });

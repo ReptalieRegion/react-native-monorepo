@@ -1,12 +1,12 @@
 import { color } from '@reptile-region/design-system';
+import { range } from '@reptile-region/utils';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 import type { ColorValue } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import useImageIndicator from '../../hooks/useImageIndicator';
 
 import { DotIndicator } from '@/assets/icons';
-import createEmptyArray from '@/utils/array/createEmptyArray';
 
 type ImageIndicatorsProps = {
     imageCount: number;
@@ -42,7 +42,7 @@ export default function ImageIndicators({ imageCount }: ImageIndicatorsProps) {
 
     return (
         <View style={styles.container}>
-            {createEmptyArray(imageCount).map((_, index) => {
+            {range(imageCount).map((_, index) => {
                 const indicatorsStyle = makeIndicatorsStyles(index === indicatorIndex);
 
                 return (

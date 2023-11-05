@@ -1,3 +1,4 @@
+import { range } from '@reptile-region/utils';
 import { rest } from 'msw';
 
 import createPostList from '../service/createPostList';
@@ -6,7 +7,6 @@ import createUserPostImages from '../service/createUserPostImages';
 import type { FetchPostResponse } from '<api/share/post>';
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
-import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const staticPostController = () => {
     const BASE_URI = ENV.END_POINT_URI + 'api/';
@@ -14,19 +14,19 @@ const staticPostController = () => {
     return [
         /** GET */
         rest.get(BASE_URI + 'share/posts/list', async (req, res, ctx) => {
-            const newPost = createEmptyArray(10).map(createPostList);
+            const newPost = range(10).map(createPostList);
             const data = createInfinityData<FetchPostResponse[]>({ searchParams: req.url.searchParams, items: newPost });
 
             return res(ctx.status(200), ctx.json(data));
         }),
         rest.get(BASE_URI + 'share/posts/images', (req, res, ctx) => {
-            const postImages = createEmptyArray(20).map(() => createUserPostImages());
+            const postImages = range(20).map(() => createUserPostImages());
             const data = createInfinityData({ searchParams: req.url.searchParams, items: postImages });
 
             return res(ctx.status(200), ctx.json(data));
         }),
         rest.get(BASE_URI + 'share/posts/list/users/:userId', async (req, res, ctx) => {
-            const postImages = createEmptyArray(12).map(() => createPostList());
+            const postImages = range(12).map(() => createPostList());
             const data = createInfinityData({ searchParams: req.url.searchParams, items: postImages });
 
             return res(ctx.status(200), ctx.json(data));

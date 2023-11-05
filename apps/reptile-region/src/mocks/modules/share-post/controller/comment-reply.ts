@@ -1,12 +1,12 @@
+import { range } from '@reptile-region/utils';
 import { rest } from 'msw';
 
-import createCommentReply from '../service/createCommentReply';
 import type { CreateCommentReplyProps } from '../service/createCommentReply';
+import createCommentReply from '../service/createCommentReply';
 
 import type { UpdateCommentReplyResponse } from '<api/share/post/comment-reply>';
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
-import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const commentReplyController = () => {
     const BASE_URI = ENV.END_POINT_URI + 'api/';
@@ -14,7 +14,7 @@ const commentReplyController = () => {
     return [
         /** GET */
         rest.get(BASE_URI + 'share/comment/:commentId/replies/list', async (req, res, ctx) => {
-            const commentReplies = createEmptyArray(10).map(() => createCommentReply());
+            const commentReplies = range(10).map(() => createCommentReply());
             const data = createInfinityData({ searchParams: req.url.searchParams, items: commentReplies });
             return res(ctx.status(200), ctx.json(data));
         }),

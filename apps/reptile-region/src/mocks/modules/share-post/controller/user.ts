@@ -1,4 +1,5 @@
 import { fakerKO } from '@faker-js/faker';
+import { range } from '@reptile-region/utils';
 import { rest } from 'msw';
 
 import createPostUserProfile from '../service/createPostUserProfile';
@@ -6,7 +7,6 @@ import createSearchUser from '../service/createSearchUser';
 
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
-import createEmptyArray from '@/utils/array/createEmptyArray';
 
 const userController = () => {
     const BASE_URI = ENV.END_POINT_URI + 'api/';
@@ -22,7 +22,7 @@ const userController = () => {
         rest.get(BASE_URI + 'users/follower/list', async (req, res, ctx) => {
             const data = createInfinityData({
                 searchParams: req.url.searchParams,
-                items: createEmptyArray(20).map(() => createSearchUser()),
+                items: range(20).map(() => createSearchUser()),
             });
 
             return res(ctx.status(200), ctx.json(data));
