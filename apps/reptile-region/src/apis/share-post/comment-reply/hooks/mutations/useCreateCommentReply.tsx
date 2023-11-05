@@ -1,12 +1,13 @@
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 import type { InfiniteData } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createCommentReply } from '../../repository';
 
 import type { CreateCommentReply, FetchCommentReply } from '<api/share/post/comment-reply>';
 import type { FetchComment } from '<api/share/post/comment>';
 import type { OnSuccessParam } from '<api/utils>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 수정 */
 const updateCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateCommentReply['Response'] }) => {
@@ -75,7 +76,7 @@ const updateCommentReplyListCache = ({
 
 const useCreateCommentReply = ({ onSuccess }: OnSuccessParam) => {
     const queryClient = useQueryClient();
-    return useMutation<CreateCommentReply['Response'], any, CreateCommentReply['Request']>({
+    return useMutation<CreateCommentReply['Response'], HTTPError, CreateCommentReply['Request']>({
         mutationFn: ({ commentId, contents }) => createCommentReply({ commentId, contents }),
         onSuccess: (data) => {
             onSuccess();

@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { Keyboard } from 'react-native';
 
-import TextInputEditor from './components/TextInputEditor';
 import type { CommentTextInputActions } from './components/TextInputEditor';
+import TextInputEditor from './components/TextInputEditor';
 import useCommentActions from './hooks/useCommentActions';
 
 import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
@@ -41,7 +41,7 @@ export default function CommentReplyTextEditor() {
     return (
         <TextInputEditor
             onSubmit={handleSubmit}
-            isLoadingSubmit={createCommentReply.isLoading || updateCommentReply.isLoading}
+            isLoadingSubmit={createCommentReply.isPending || updateCommentReply.isPending}
         />
     );
 }

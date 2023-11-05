@@ -1,16 +1,11 @@
-import type {
-    CreateCommentRequest,
-    DeleteCommentRequest,
-    FetchCommentRequest,
-    UpdateCommentRequest,
-} from '<api/share/post/comment>';
-import type { InfinitePageParam } from '<api/utils>';
-import clientFetch, { METHOD } from '@/apis/clientFetch';
+import type { CreateComment, DeleteComment, FetchComment, UpdateComment } from '<api/share/post/comment>';
+import type { WithInfinitePageParam } from '<api/utils>';
+import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/utils/network/query-string';
 
 /** GET */
 // 특정 게시글 댓글 패치
-export const getComments = async ({ pageParam = 0, postId }: FetchCommentRequest & InfinitePageParam) => {
+export const getComments = async ({ pageParam, postId }: WithInfinitePageParam<FetchComment['Request']>) => {
     const queryString = objectToQueryString({
         pageParam,
     });
@@ -23,7 +18,7 @@ export const getComments = async ({ pageParam = 0, postId }: FetchCommentRequest
 
 /** POST */
 // 특정 게시글 댓글 생성
-export const createComment = async (body: CreateCommentRequest) => {
+export const createComment = async (body: CreateComment['Request']) => {
     const response = await clientFetch('api/share/comment', {
         method: METHOD.POST,
         body,
@@ -34,7 +29,7 @@ export const createComment = async (body: CreateCommentRequest) => {
 
 /** PUT */
 // 특정 댓글 수정
-export const updateComment = async ({ commentId, contents }: UpdateCommentRequest) => {
+export const updateComment = async ({ commentId, contents }: UpdateComment['Request']) => {
     const response = await clientFetch(`api/share/comments/${commentId}`, {
         method: METHOD.PUT,
         body: {
@@ -47,7 +42,7 @@ export const updateComment = async ({ commentId, contents }: UpdateCommentReques
 
 /** DELETE */
 // 댓글 삭제
-export const deleteComment = async ({ commentId }: DeleteCommentRequest) => {
+export const deleteComment = async ({ commentId }: DeleteComment['Request']) => {
     const response = await clientFetch(`api/share/comments/${commentId}`, {
         method: METHOD.DELETE,
     });

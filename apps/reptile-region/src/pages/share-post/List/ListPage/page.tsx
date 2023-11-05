@@ -14,6 +14,7 @@ import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import useFloatingHandler from '@/components/share-post/organisms/FloatingActionButtons/hooks/useFloatingHandler';
+import { ListEmptyComponent } from '@/components/share-post/organisms/SharePostCard/components';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useFlashListScroll from '@/hooks/useFlashListScroll';
 import useSharePostActions from '@/hooks/useSharePostActions';
@@ -128,6 +129,7 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
                 onEndReached={handleEndReached}
                 CellRendererComponent={FadeInCellRenderComponent}
+                ListEmptyComponent={ListEmptyComponent}
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 scrollEventThrottle={16}
                 onScroll={determineScrollDirection}

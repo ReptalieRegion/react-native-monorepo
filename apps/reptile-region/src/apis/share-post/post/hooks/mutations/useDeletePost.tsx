@@ -4,7 +4,8 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { deletePost } from '../../repository';
 
 import type { DeletePost, FetchDetailUserPost, FetchPost } from '<api/share/post>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 /** 일상공유 무한스크롤 조회 리스트 게시글 삭제 **/
 const deletePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeletePost['Response'] }) => {
@@ -59,7 +60,7 @@ const deleteDetailUserPostCache = ({ queryClient, data }: { queryClient: QueryCl
 const useDeletePost = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<DeletePost['Response'], any, DeletePost['Request']>({
+    return useMutation<DeletePost['Response'], HTTPError, DeletePost['Request']>({
         mutationFn: ({ postId }) => deletePost({ postId }),
         onSuccess: (data) => {
             deletePostListCache({ queryClient, data });

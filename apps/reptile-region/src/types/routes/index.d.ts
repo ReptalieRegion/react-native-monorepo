@@ -3,6 +3,7 @@ declare module '<routes/root>' {
 
     import { ImageType } from '<image>';
     import { BottomTabNativeStackParamList } from '<routes/bottom-tab>';
+    import type { SignUpParamList } from '<routes/sign-up>';
     import { SharePostTopTabParamList } from '<routes/top-tab>';
 
     /** SharePost 시작 */
@@ -130,7 +131,7 @@ declare module '<routes/root>' {
         'bottom-tab/routes': NavigatorScreenParams<BottomTabNativeStackParamList>;
         /** auth 시작 */
         'sign-in': undefined;
-        'sign-up': undefined;
+        'sign-up': NavigatorScreenParams<SignUpParamList>;
         /** auth 끝 */
 
         /** my 시작 */

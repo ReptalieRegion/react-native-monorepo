@@ -4,7 +4,8 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createPost } from '../../repository';
 
 import type { CreatePost, FetchDetailUserPost, FetchPost } from '<api/share/post>';
-import { sharePostQueryKeys } from '@/apis/query-keys';
+import type HTTPError from '@/apis/@utils/error/HTTPError';
+import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
 
 type UseCreatePostProps = {
     onSuccess: () => void;
@@ -64,7 +65,7 @@ const updateSharePostDetailUserListCache = ({
 const useCreatePost = ({ onSuccess }: UseCreatePostProps) => {
     const queryClient = useQueryClient();
 
-    return useMutation<CreatePost['Response'], any, CreatePost['Request']>({
+    return useMutation<CreatePost['Response'], HTTPError, CreatePost['Request']>({
         mutationFn: ({ contents, selectedPhotos }) => createPost({ contents, selectedPhotos }),
         onSuccess: (data) => {
             updateSharePostListCache({ queryClient, data });
