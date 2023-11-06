@@ -12088,6 +12088,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-image-crop-picker@npm:^0.40.1":
+  version: 0.40.1
+  resolution: "react-native-image-crop-picker@npm:0.40.1"
+  peerDependencies:
+    react-native: ">=0.40.0"
+  checksum: 77554e9a6d58326ca9732c4f66b7c8e62c2fc39d1ce80532e545a8a9681078d76922aeee2819c1342a3ca8b493286926f8305aa371a87a1b17c22cacf848f565
+  languageName: node
+  linkType: hard
+
 "react-native-image-picker@npm:^7.0.2":
   version: 7.0.2
   resolution: "react-native-image-picker@npm:7.0.2"
@@ -12590,6 +12599,7 @@ __metadata:
     react-native-flipper: ^0.182.0
     react-native-gesture-handler: ^2.13.1
     react-native-haptic-feedback: ^2.2.0
+    react-native-image-crop-picker: ^0.40.1
     react-native-image-picker: ^7.0.2
     react-native-linear-gradient: ^2.8.3
     react-native-pager-view: ^6.2.2
