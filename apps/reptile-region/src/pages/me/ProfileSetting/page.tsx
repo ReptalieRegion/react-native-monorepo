@@ -30,7 +30,7 @@ export default function ProfileSetting() {
 
     const handleOpenCamera = async () => {
         const hasPermission = await requestIOSPermissions<['camera']>(['camera']);
-        if (hasPermission) {
+        if (!hasPermission) {
             return;
         }
         openCamera({
