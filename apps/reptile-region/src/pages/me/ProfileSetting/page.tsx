@@ -1,16 +1,62 @@
 import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 import { useFetchMeProfile } from '@/apis/me/profile/hooks';
 import { Camera } from '@/assets/icons';
 import { Avatar, TextButton } from '@/components/@common/atoms';
+import { photoPermissionCheck } from '@/utils/permissions/photo-permission';
 
 export default function ProfileSetting() {
     const { data } = useFetchMeProfile();
 
-    const handlePressProfileImage = () => {};
+    const handlePressProfileImage = async () => {
+        const hasPermission = await photoPermissionCheck();
+        if (hasPermission) {
+            Alert.alert(
+                '뭘로 올릴래?',
+                '선택해',
+                [
+                    {
+                        text: '카메라로 찍기',
+                        onPress: async () => {
+                            const result = await launchCamera({
+                                mediaType: 'photo',
+                                cameraType: 'back',
+                            });
+
+                            if (result.didCancel) {
+                                return null;
+                            }
+
+                            const localUri = result.assets?.[0].uri;
+                            const uriPath = localUri?.split('//').pop();
+                            const imageName = localUri?.split('/').pop();
+                            console.log(uriPath, imageName);
+                            return;
+                        },
+                    },
+                    {
+                        text: '앨범에서 선택',
+                        onPress: async () => {
+                            const result = await launchImageLibrary({ mediaType: 'photo' });
+                            if (result.didCancel) {
+                                return null;
+                            }
+                            const localUri = result?.assets?.[0].uri;
+                            const uriPath = localUri?.split('//').pop();
+                            const imageName = localUri?.split('/').pop();
+                            console.log(uriPath, imageName);
+                            return;
+                        },
+                    },
+                ],
+                { cancelable: false },
+            );
+        }
+    };
 
     return (
         <View style={styles.container}>
