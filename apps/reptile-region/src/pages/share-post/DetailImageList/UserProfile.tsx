@@ -54,6 +54,7 @@ export default function UserProfile({ nickname, profile, isFollow, navigateFollo
         user: {
             ...defaultData.user,
             ...data?.user,
+            isFollow: data?.user.isFollow,
         },
         postCount: post?.pages.reduce((prev, page) => prev + page.items.length, 0) ?? 0,
     };

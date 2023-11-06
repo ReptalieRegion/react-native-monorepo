@@ -3173,6 +3173,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/image-editor@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@react-native-community/image-editor@npm:2.3.0"
+  peerDependencies:
+    react: ^16.0
+    react-native: ">=0.57 <0.62"
+  checksum: 081b435d00f273d650957dbd7b719c6540a57d70a15958969bdcb96a7a85bfac8bd11a77391d94d961ca24fd91b277920518dac7b0231c55c66474ea2c1f9063
+  languageName: node
+  linkType: hard
+
 "@react-native-masked-view/masked-view@npm:^0.2.9":
   version: 0.2.9
   resolution: "@react-native-masked-view/masked-view@npm:0.2.9"
@@ -12078,6 +12088,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-image-crop-picker@npm:^0.40.1":
+  version: 0.40.1
+  resolution: "react-native-image-crop-picker@npm:0.40.1"
+  peerDependencies:
+    react-native: ">=0.40.0"
+  checksum: 77554e9a6d58326ca9732c4f66b7c8e62c2fc39d1ce80532e545a8a9681078d76922aeee2819c1342a3ca8b493286926f8305aa371a87a1b17c22cacf848f565
+  languageName: node
+  linkType: hard
+
 "react-native-linear-gradient@npm:^2.8.3":
   version: 2.8.3
   resolution: "react-native-linear-gradient@npm:2.8.3"
@@ -12525,6 +12544,7 @@ __metadata:
     "@mswjs/data": ^0.13.0
     "@react-native-async-storage/async-storage": ^1.19.0
     "@react-native-camera-roll/camera-roll": ^5.6.0
+    "@react-native-community/image-editor": ^2.3.0
     "@react-native-masked-view/masked-view": ^0.2.9
     "@react-native/eslint-config": ^0.72.2
     "@react-native/metro-config": ^0.72.11
@@ -12569,6 +12589,7 @@ __metadata:
     react-native-flipper: ^0.182.0
     react-native-gesture-handler: ^2.13.1
     react-native-haptic-feedback: ^2.2.0
+    react-native-image-crop-picker: ^0.40.1
     react-native-linear-gradient: ^2.8.3
     react-native-pager-view: ^6.2.2
     react-native-permissions: ^3.9.3

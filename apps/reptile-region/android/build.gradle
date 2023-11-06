@@ -35,5 +35,9 @@ allprojects {
         google()
         jcenter()
         maven { url 'https://devrepo.kakao.com/nexus/content/groups/public/'}
+        
+        // React Native Crop Picker
+        maven { url 'https://maven.google.com' }
+        maven { url "https://www.jitpack.io" }
     }
 }
