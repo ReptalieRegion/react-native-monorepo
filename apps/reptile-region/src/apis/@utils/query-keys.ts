@@ -1,16 +1,16 @@
 /** Auth */
-export const authQueryKeys = {
+export const AUTH_QUERY_KEYS = {
     auth: ['user/auth'],
     duplicateNickname: (nickname: string) => ['user/duplicate/nickname/', nickname],
 } as const;
 
 /** My */
-export const myQueryKeys = {
+export const MY_QUERY_KEYS = {
     profile: ['me/profile'],
-};
+} as const;
 
 /** SharePost */
-export const sharePostQueryKeys = {
+export const SHARE_POST_QUERY_KEYS = {
     // 게시물
     list: ['share-post/list'],
     detailUserPosts: (nickname: string) => ['share-post/detail/user-post/', nickname],

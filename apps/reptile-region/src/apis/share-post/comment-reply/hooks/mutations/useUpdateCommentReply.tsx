@@ -6,7 +6,7 @@ import { updateCommentReply } from '../../repository';
 import type { FetchCommentReply, UpdateCommentReply } from '<api/share/post/comment-reply>';
 import type { OnSuccessParam } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 /** 대댓글 리스트 무한스크롤 대댓글 수정 */
 const updateCommentReplyListCache = ({
@@ -16,7 +16,7 @@ const updateCommentReplyListCache = ({
     queryClient: QueryClient;
     data: UpdateCommentReply['Response'];
 }) => {
-    const queryKey = sharePostQueryKeys.commentReply(data.comment.id);
+    const queryKey = SHARE_POST_QUERY_KEYS.commentReply(data.comment.id);
 
     queryClient.setQueryData<InfiniteData<FetchCommentReply['Response']>>(queryKey, (prevCommentReplyList) => {
         if (prevCommentReplyList === undefined) {

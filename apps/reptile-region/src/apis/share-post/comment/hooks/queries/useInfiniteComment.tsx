@@ -4,7 +4,7 @@ import { getComments } from '../../repository';
 
 import type { FetchComment } from '<api/share/post/comment>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 const useInfiniteComment = ({ postId }: FetchComment['Request']) => {
     return useSuspenseInfiniteQuery<
@@ -14,7 +14,7 @@ const useInfiniteComment = ({ postId }: FetchComment['Request']) => {
         readonly string[],
         number
     >({
-        queryKey: sharePostQueryKeys.comment(postId),
+        queryKey: SHARE_POST_QUERY_KEYS.comment(postId),
         initialPageParam: 0,
         staleTime: 1 * 60 * 1000,
         gcTime: 5 * 60 * 1000,

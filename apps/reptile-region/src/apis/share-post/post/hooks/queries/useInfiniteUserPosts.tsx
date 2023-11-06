@@ -4,7 +4,7 @@ import { getDetailUserPosts } from '../../repository';
 
 import type { FetchDetailUserPost } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 const useInfiniteUserPosts = ({ nickname }: FetchDetailUserPost['Request']) => {
     return useSuspenseInfiniteQuery<
@@ -14,7 +14,7 @@ const useInfiniteUserPosts = ({ nickname }: FetchDetailUserPost['Request']) => {
         readonly string[],
         number
     >({
-        queryKey: sharePostQueryKeys.detailUserPosts(nickname),
+        queryKey: SHARE_POST_QUERY_KEYS.detailUserPosts(nickname),
         initialPageParam: 0,
         queryFn: ({ pageParam }) => getDetailUserPosts({ nickname, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,

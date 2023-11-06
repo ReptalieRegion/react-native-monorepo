@@ -5,11 +5,11 @@ import { deletePost } from '../../repository';
 
 import type { DeletePost, FetchDetailUserPost, FetchPost } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 /** 일상공유 무한스크롤 조회 리스트 게시글 삭제 **/
 const deletePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeletePost['Response'] }) => {
-    const queryKey = sharePostQueryKeys.list;
+    const queryKey = SHARE_POST_QUERY_KEYS.list;
 
     queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevPostList) => {
         if (prevPostList === undefined) {
@@ -34,7 +34,7 @@ const deletePostListCache = ({ queryClient, data }: { queryClient: QueryClient; 
 
 /** 특정 유저의 게시글 리스트 무한 스크롤 게시물 삭제 */
 const deleteDetailUserPostCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeletePost['Response'] }) => {
-    const queryKey = sharePostQueryKeys.detailUserPosts(data.post.user.nickname);
+    const queryKey = SHARE_POST_QUERY_KEYS.detailUserPosts(data.post.user.nickname);
 
     queryClient.setQueryData<InfiniteData<FetchDetailUserPost['Response']>>(queryKey, (prevDetailUserPostList) => {
         if (prevDetailUserPostList === undefined) {

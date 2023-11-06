@@ -6,11 +6,11 @@ import { updateComment } from '../../repository';
 import type { FetchComment, UpdateComment } from '<api/share/post/comment>';
 import type { OnSuccessParam } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 댓글 수정 */
 const updateShareCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: UpdateComment['Response'] }) => {
-    const queryKey = sharePostQueryKeys.comment(data.post.id);
+    const queryKey = SHARE_POST_QUERY_KEYS.comment(data.post.id);
 
     queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
         if (prevCommentList === undefined) {

@@ -4,7 +4,7 @@ import { getLikes } from '../../repository';
 
 import type { FetchLike } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 const useInfiniteFetchLikes = ({ postId }: FetchLike['Request']) => {
     return useSuspenseInfiniteQuery<
@@ -14,7 +14,7 @@ const useInfiniteFetchLikes = ({ postId }: FetchLike['Request']) => {
         readonly string[],
         number
     >({
-        queryKey: sharePostQueryKeys.likeList(postId),
+        queryKey: SHARE_POST_QUERY_KEYS.likeList(postId),
         initialPageParam: 0,
         queryFn: ({ pageParam }) => getLikes({ postId, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,

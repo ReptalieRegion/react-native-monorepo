@@ -4,7 +4,7 @@ import { getSearchFollowerUserNickname } from '../../repository';
 
 import type { FetchFollowerSearch } from '<api/share/post/user>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 const useInfiniteSearchFollowerUser = ({ search }: FetchFollowerSearch['Request']) => {
     return useSuspenseInfiniteQuery<
@@ -14,7 +14,7 @@ const useInfiniteSearchFollowerUser = ({ search }: FetchFollowerSearch['Request'
         readonly string[],
         number
     >({
-        queryKey: sharePostQueryKeys.searchUser(search),
+        queryKey: SHARE_POST_QUERY_KEYS.searchUser(search),
         initialPageParam: 0,
         queryFn: ({ pageParam }) => getSearchFollowerUserNickname({ search, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,

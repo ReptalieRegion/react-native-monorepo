@@ -7,11 +7,11 @@ import type { CreateComment, FetchComment } from '<api/share/post/comment>';
 import type { FetchPost } from '<api/share/post>';
 import type { OnSuccessParam } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 댓글 추가 */
 const updateShareCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateComment['Response'] }) => {
-    const queryKey = sharePostQueryKeys.comment(data.post.id);
+    const queryKey = SHARE_POST_QUERY_KEYS.comment(data.post.id);
 
     queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
         if (prevCommentList === undefined) {
@@ -34,7 +34,7 @@ const updateShareCommentListCache = ({ queryClient, data }: { queryClient: Query
 
 /** 일상공유 무한스크롤 조회 리스트 댓글 개수 증가 */
 const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateComment['Response'] }) => {
-    const queryKey = sharePostQueryKeys.list;
+    const queryKey = SHARE_POST_QUERY_KEYS.list;
 
     queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevPostList) => {
         if (prevPostList === undefined) {

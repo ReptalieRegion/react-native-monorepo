@@ -6,11 +6,11 @@ import { deleteComment } from '../../repository';
 import type { DeleteComment, FetchComment } from '<api/share/post/comment>';
 import type { FetchPost } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 /** 일상공유 무한스크롤 조회 리스트 댓글 개수 감소 **/
 const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteComment['Response'] }) => {
-    const queryKey = sharePostQueryKeys.list;
+    const queryKey = SHARE_POST_QUERY_KEYS.list;
 
     queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevSharePostList) => {
         if (prevSharePostList === undefined) {
@@ -39,7 +39,7 @@ const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryCli
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 댓글 삭제 */
 const deleteCommentCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteComment['Response'] }) => {
-    const queryKey = sharePostQueryKeys.comment(data.post.id);
+    const queryKey = SHARE_POST_QUERY_KEYS.comment(data.post.id);
 
     queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
         if (prevCommentList === undefined) {

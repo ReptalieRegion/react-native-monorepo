@@ -5,7 +5,7 @@ import { updateMeProfile } from '../../repository';
 import type { FetchMeProfile, UpdateProfileImage } from '<api/my/profile>';
 import type { ImageType } from '<image>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { myQueryKeys } from '@/apis/@utils/query-keys';
+import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 type UseUpdateProfileContext = {
     previousMeProfile: FetchMeProfile['Response'];
@@ -17,9 +17,9 @@ const useUpdateProfile = () => {
     return useMutation<UpdateProfileImage['Response'], HTTPError, UpdateProfileImage['Request'], UseUpdateProfileContext>({
         mutationFn: updateMeProfile,
         onMutate: async ({ uri }) => {
-            await queryClient.cancelQueries({ queryKey: myQueryKeys.profile });
-            const previousMeProfile = queryClient.getQueryData<FetchMeProfile['Response']>(myQueryKeys.profile);
-            queryClient.setQueryData<FetchMeProfile['Response']>(myQueryKeys.profile, (prevProfile) => {
+            await queryClient.cancelQueries({ queryKey: MY_QUERY_KEYS.profile });
+            const previousMeProfile = queryClient.getQueryData<FetchMeProfile['Response']>(MY_QUERY_KEYS.profile);
+            queryClient.setQueryData<FetchMeProfile['Response']>(MY_QUERY_KEYS.profile, (prevProfile) => {
                 if (prevProfile === undefined) {
                     return prevProfile;
                 }
@@ -38,11 +38,11 @@ const useUpdateProfile = () => {
         },
         onError: (_error, _variables, context) => {
             if (context !== undefined) {
-                queryClient.setQueryData(myQueryKeys.profile, context?.previousMeProfile);
+                queryClient.setQueryData(MY_QUERY_KEYS.profile, context?.previousMeProfile);
             }
         },
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: myQueryKeys.profile });
+            queryClient.invalidateQueries({ queryKey: MY_QUERY_KEYS.profile });
         },
     });
 };

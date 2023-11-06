@@ -4,7 +4,7 @@ import { getFollowerList } from '../../repository';
 
 import type { FetchFollowerList } from '<api/share/post/user>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 const useInfiniteFollowerList = ({ userId }: FetchFollowerList['Request']) => {
     return useSuspenseInfiniteQuery<
@@ -14,7 +14,7 @@ const useInfiniteFollowerList = ({ userId }: FetchFollowerList['Request']) => {
         readonly string[],
         number
     >({
-        queryKey: sharePostQueryKeys.followerList(userId),
+        queryKey: SHARE_POST_QUERY_KEYS.followerList(userId),
         initialPageParam: 0,
         queryFn: ({ pageParam }) => getFollowerList({ userId, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,

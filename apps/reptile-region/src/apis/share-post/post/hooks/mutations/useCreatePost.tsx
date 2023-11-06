@@ -5,7 +5,7 @@ import { createPost } from '../../repository';
 
 import type { CreatePost, FetchDetailUserPost, FetchPost } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 type UseCreatePostProps = {
     onSuccess: () => void;
@@ -13,7 +13,7 @@ type UseCreatePostProps = {
 
 /** 일상공유 무한스크롤 조회 리스트 게시물 추가 */
 const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreatePost['Response'] }) => {
-    const queryKey = sharePostQueryKeys.list;
+    const queryKey = SHARE_POST_QUERY_KEYS.list;
     queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevPostList) => {
         if (prevPostList === undefined) {
             return prevPostList;
@@ -42,7 +42,7 @@ const updateSharePostDetailUserListCache = ({
     queryClient: QueryClient;
     data: CreatePost['Response'];
 }) => {
-    const queryKey = sharePostQueryKeys.detailUserPosts(data.post.user.nickname);
+    const queryKey = SHARE_POST_QUERY_KEYS.detailUserPosts(data.post.user.nickname);
     queryClient.setQueryData<InfiniteData<FetchDetailUserPost['Response']>>(queryKey, (prevDetailUserPostList) => {
         if (prevDetailUserPostList === undefined) {
             return prevDetailUserPostList;

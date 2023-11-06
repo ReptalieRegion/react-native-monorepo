@@ -5,11 +5,11 @@ import { createLike } from '../../repository';
 
 import type { CreateLike, FetchDetailUserPost, FetchPost } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 /** 일상공유 무한스크롤 조회 리스트 좋아요 생성 */
 const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateLike['Response'] }) => {
-    const queryKey = sharePostQueryKeys.list;
+    const queryKey = SHARE_POST_QUERY_KEYS.list;
 
     queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevPostList) => {
         if (prevPostList === undefined) {
@@ -38,7 +38,7 @@ const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryCli
 
 /** 특정 유저의 게시글 리스트 무한 스크롤 좋아요 생성 */
 const updateSharePostUserDetailCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateLike['Response'] }) => {
-    const queryKey = sharePostQueryKeys.detailUserPosts(data.post.user.nickname);
+    const queryKey = SHARE_POST_QUERY_KEYS.detailUserPosts(data.post.user.nickname);
 
     queryClient.setQueryData<InfiniteData<FetchDetailUserPost['Response']>>(queryKey, (prevPostDetailList) => {
         if (prevPostDetailList === undefined) {

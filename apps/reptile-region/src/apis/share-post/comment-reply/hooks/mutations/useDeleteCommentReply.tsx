@@ -6,11 +6,11 @@ import { deleteCommentReply } from '../../repository';
 import type { DeleteCommentReply, FetchCommentReply } from '<api/share/post/comment-reply>';
 import type { FetchComment } from '<api/share/post/comment>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 /** 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 감소 */
 const updateCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteCommentReply['Response'] }) => {
-    const queryKey = sharePostQueryKeys.comment(data.post.id);
+    const queryKey = SHARE_POST_QUERY_KEYS.comment(data.post.id);
     queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
         if (prevCommentList === undefined) {
             return undefined;
@@ -45,7 +45,7 @@ const deleteCommentReplyListCache = ({
 }) => {
     const queryKey = data.post.comment.id;
     queryClient.setQueryData<InfiniteData<FetchCommentReply['Response']>>(
-        sharePostQueryKeys.commentReply(queryKey),
+        SHARE_POST_QUERY_KEYS.commentReply(queryKey),
         (prevCommentReplyList) => {
             if (prevCommentReplyList === undefined) {
                 return prevCommentReplyList;

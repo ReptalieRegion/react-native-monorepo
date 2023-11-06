@@ -4,7 +4,7 @@ import { getPosts } from '../../repository';
 
 import type { FetchPost } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 const useInfiniteFetchPosts = () => {
     return useSuspenseInfiniteQuery<
@@ -14,7 +14,7 @@ const useInfiniteFetchPosts = () => {
         readonly string[],
         number
     >({
-        queryKey: sharePostQueryKeys.list,
+        queryKey: SHARE_POST_QUERY_KEYS.list,
         initialPageParam: 0,
         queryFn: ({ pageParam }) => getPosts({ pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,

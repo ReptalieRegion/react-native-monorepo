@@ -10,7 +10,7 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import type { RootRoutesParamList, SharePostModalParamList } from '<routes/root>';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
@@ -33,7 +33,7 @@ export default function UserDetailListModalPage({
 
     /** Data 시작 */
     const queryClient = useQueryClient();
-    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(sharePostQueryKeys.profile(nickname));
+    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(SHARE_POST_QUERY_KEYS.profile(nickname));
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({ nickname });
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
 

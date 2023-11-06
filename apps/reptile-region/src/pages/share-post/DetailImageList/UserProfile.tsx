@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import type { FetchDetailUserPost } from '<api/share/post>';
 import type { ImageType } from '<image>';
 import type { SharePostFollowProps } from '<routes/bottom-tab>';
-import { sharePostQueryKeys } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
@@ -33,7 +33,7 @@ export default function UserProfile({ nickname, profile, isFollow, navigateFollo
     const { data } = useFetchUserProfile({ nickname });
     const queryClient = useQueryClient();
     const post = queryClient.getQueryData<InfiniteData<FetchDetailUserPost['Response']>>(
-        sharePostQueryKeys.detailUserPosts(nickname),
+        SHARE_POST_QUERY_KEYS.detailUserPosts(nickname),
     );
 
     const { mutateFollow } = useCreateOrUpdateFollow();
