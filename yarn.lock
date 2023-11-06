@@ -12097,16 +12097,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-image-picker@npm:^7.0.2":
-  version: 7.0.2
-  resolution: "react-native-image-picker@npm:7.0.2"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: f2965bd84338f0d901afa8f8c2ff804b70c2f45cb46a5b1d241e12f357a19bf831410b427bad8a25834d7aafdb1f586c2cd893bd822e1d1bb6408129db6ca544
-  languageName: node
-  linkType: hard
-
 "react-native-linear-gradient@npm:^2.8.3":
   version: 2.8.3
   resolution: "react-native-linear-gradient@npm:2.8.3"
@@ -12600,7 +12590,6 @@ __metadata:
     react-native-gesture-handler: ^2.13.1
     react-native-haptic-feedback: ^2.2.0
     react-native-image-crop-picker: ^0.40.1
-    react-native-image-picker: ^7.0.2
     react-native-linear-gradient: ^2.8.3
     react-native-pager-view: ^6.2.2
     react-native-permissions: ^3.9.3

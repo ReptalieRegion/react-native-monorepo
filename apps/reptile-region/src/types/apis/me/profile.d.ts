@@ -11,4 +11,18 @@ declare module '<api/my/profile>' {
 
     type FetchMeProfile = ServerAPI<void, FetchMeProfileResponse>;
     /** GET 끝 */
+
+    /** POST 시작 */
+    type UpdateProfileImageRequest = {
+        uri: string;
+        name: string;
+        type: string;
+    };
+
+    type UpdateProfileImageResponse = {
+        profile: ImageType;
+    };
+
+    type UpdateProfileImage = ServerAPI<UpdateProfileImageRequest, UpdateProfileImageResponse>;
+    /** POST 끝 */
 }

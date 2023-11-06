@@ -17,6 +17,8 @@ import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
 import LicenseContentsPage from '@/pages/me/License/ContentsPage/page';
 import { LicenseListHeader } from '@/pages/me/License/ListPage/header';
 import LicenseListPage from '@/pages/me/License/ListPage/page';
+import { ProfileSettingHeader } from '@/pages/me/ProfileSetting/header';
+import ProfileSetting from '@/pages/me/ProfileSetting/page';
 import { PrivacyPolicyHeader } from '@/pages/me/Terms/PrivacyPolicy/header';
 import PrivacyPolicyPage from '@/pages/me/Terms/PrivacyPolicy/page';
 import { TermsOfUseHeader } from '@/pages/me/Terms/TermsOfUse/header';
@@ -103,6 +105,7 @@ const RootRoutes = () => {
                             component={PrivacyPolicyPage}
                             options={{ header: PrivacyPolicyHeader }}
                         />
+                        <Stack.Screen name="my/profile" component={ProfileSetting} options={{ header: ProfileSettingHeader }} />
                     </Stack.Group>
                     {/** 내 정보 끝 */}
                 </Stack.Navigator>

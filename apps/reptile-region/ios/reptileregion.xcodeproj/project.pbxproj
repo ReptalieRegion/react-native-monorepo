@@ -11,14 +11,14 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		3554CADB4A57236E5F51F608 /* libPods-reptileregion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F32218E0C611C4BA65B9C0FA /* libPods-reptileregion.a */; };
+		5CD77FBB1947DD3408C2CCA0 /* libPods-reptileregion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDB2F8D4FB21B7A24FFA344 /* libPods-reptileregion.a */; };
 		68F5659F51FC455CA2CAA83E /* DancingScript-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B7C9D90EDB784E0BA5BE940F /* DancingScript-Medium.ttf */; };
 		735A9B52A20DFF8ADD07BA15 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2A41D76F493F8C74CEA269 /* ExpoModulesProvider.swift */; };
 		7A3CDD09C479458C8A154DD1 /* DancingScript-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C0F66326FEDD4CCDB5F47713 /* DancingScript-SemiBold.ttf */; };
 		809814C96E59E2446C895362 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F82C229E43720ECD2959AA /* ExpoModulesProvider.swift */; };
 		954ECDD2A91740C49A11EB91 /* DancingScript-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 936D71159AF54565BF6DB472 /* DancingScript-Bold.ttf */; };
-		9FBEE08B54CE79063224271A /* libPods-reptileregion-reptileregionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ECF85DE8D7D318F90F9D14C3 /* libPods-reptileregion-reptileregionTests.a */; };
 		ACF8EB97CEA24D5DBAF263D1 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71C8BE5FCB534D3FB449D032 /* DancingScript-Regular.ttf */; };
+		E7E15EE659471FC95D54E347 /* libPods-reptileregion-reptileregionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AD8B11BA657E94D9B4E791 /* libPods-reptileregion-reptileregionTests.a */; };
 		EE6DD0602AEAF3360096030E /* RNVersionCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DD05F2AEAF3360096030E /* RNVersionCheck.m */; };
 		EE6DD0612AEAF3360096030E /* RNVersionCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DD05F2AEAF3360096030E /* RNVersionCheck.m */; };
 		EEAD95152AE36A68005FEC8D /* RNKakaoAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */; };
@@ -50,15 +50,17 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = reptileregion/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = reptileregion/main.m; sourceTree = "<group>"; };
 		21F82C229E43720ECD2959AA /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-reptileregion-reptileregionTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		5BF121E0E3D4D8668E5EEF08 /* Pods-reptileregion-reptileregionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion-reptileregionTests.debug.xcconfig"; path = "Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests.debug.xcconfig"; sourceTree = "<group>"; };
+		24AD8B11BA657E94D9B4E791 /* libPods-reptileregion-reptileregionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reptileregion-reptileregionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42A18B8F95AEC29E64BDCD5F /* Pods-reptileregion-reptileregionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion-reptileregionTests.debug.xcconfig"; path = "Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4A692778961E998CF70C59A7 /* Pods-reptileregion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion.debug.xcconfig"; path = "Target Support Files/Pods-reptileregion/Pods-reptileregion.debug.xcconfig"; sourceTree = "<group>"; };
 		6C2A41D76F493F8C74CEA269 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-reptileregion/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		6D0DC165AE05A364657E4EDC /* Pods-reptileregion-reptileregionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion-reptileregionTests.release.xcconfig"; path = "Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests.release.xcconfig"; sourceTree = "<group>"; };
 		71C8BE5FCB534D3FB449D032 /* DancingScript-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Regular.ttf"; path = "../src/assets/fonts/DancingScript-Regular.ttf"; sourceTree = "<group>"; };
-		8E9354EC56524CE80504790C /* Pods-reptileregion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion.release.xcconfig"; path = "Target Support Files/Pods-reptileregion/Pods-reptileregion.release.xcconfig"; sourceTree = "<group>"; };
+		8816EBB0C8D6E1F4F0A0F5D2 /* Pods-reptileregion.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion.release.xcconfig"; path = "Target Support Files/Pods-reptileregion/Pods-reptileregion.release.xcconfig"; sourceTree = "<group>"; };
 		936D71159AF54565BF6DB472 /* DancingScript-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Bold.ttf"; path = "../src/assets/fonts/DancingScript-Bold.ttf"; sourceTree = "<group>"; };
 		B7C9D90EDB784E0BA5BE940F /* DancingScript-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-Medium.ttf"; path = "../src/assets/fonts/DancingScript-Medium.ttf"; sourceTree = "<group>"; };
 		C0F66326FEDD4CCDB5F47713 /* DancingScript-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-SemiBold.ttf"; path = "../src/assets/fonts/DancingScript-SemiBold.ttf"; sourceTree = "<group>"; };
-		CAD6456BD0FBE2DE958C1E2C /* Pods-reptileregion.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion.debug.xcconfig"; path = "Target Support Files/Pods-reptileregion/Pods-reptileregion.debug.xcconfig"; sourceTree = "<group>"; };
-		ECF85DE8D7D318F90F9D14C3 /* libPods-reptileregion-reptileregionTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reptileregion-reptileregionTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDDB2F8D4FB21B7A24FFA344 /* libPods-reptileregion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reptileregion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EE24423B2AE17A3200F2ABB2 /* reptileregion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = reptileregion.entitlements; path = reptileregion/reptileregion.entitlements; sourceTree = "<group>"; };
 		EE6DD05E2AEAF3360096030E /* RNVersionCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RNVersionCheck.h; path = RNVersionCheck/RNVersionCheck.h; sourceTree = "<group>"; };
@@ -68,8 +70,6 @@
 		EEAD95162AE36AD6005FEC8D /* RNKakaoAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RNKakaoAuth.swift; path = RNKakaoAuth/RNKakaoAuth.swift; sourceTree = "<group>"; };
 		EEAD95182AE36B11005FEC8D /* reptileregion-Bridging-Header.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; path = "reptileregion-Bridging-Header.h"; sourceTree = "<group>"; };
 		EEC28BE42AF3D79200B74530 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = reptileregion/BootSplash.storyboard; sourceTree = "<group>"; };
-		F32218E0C611C4BA65B9C0FA /* libPods-reptileregion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reptileregion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		F863E11019FBE0044E619B88 /* Pods-reptileregion-reptileregionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reptileregion-reptileregionTests.release.xcconfig"; path = "Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9FBEE08B54CE79063224271A /* libPods-reptileregion-reptileregionTests.a in Frameworks */,
+				E7E15EE659471FC95D54E347 /* libPods-reptileregion-reptileregionTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,7 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3554CADB4A57236E5F51F608 /* libPods-reptileregion.a in Frameworks */,
+				5CD77FBB1947DD3408C2CCA0 /* libPods-reptileregion.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,8 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				F32218E0C611C4BA65B9C0FA /* libPods-reptileregion.a */,
-				ECF85DE8D7D318F90F9D14C3 /* libPods-reptileregion-reptileregionTests.a */,
+				CDDB2F8D4FB21B7A24FFA344 /* libPods-reptileregion.a */,
+				24AD8B11BA657E94D9B4E791 /* libPods-reptileregion-reptileregionTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -199,10 +199,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				CAD6456BD0FBE2DE958C1E2C /* Pods-reptileregion.debug.xcconfig */,
-				8E9354EC56524CE80504790C /* Pods-reptileregion.release.xcconfig */,
-				5BF121E0E3D4D8668E5EEF08 /* Pods-reptileregion-reptileregionTests.debug.xcconfig */,
-				F863E11019FBE0044E619B88 /* Pods-reptileregion-reptileregionTests.release.xcconfig */,
+				4A692778961E998CF70C59A7 /* Pods-reptileregion.debug.xcconfig */,
+				8816EBB0C8D6E1F4F0A0F5D2 /* Pods-reptileregion.release.xcconfig */,
+				42A18B8F95AEC29E64BDCD5F /* Pods-reptileregion-reptileregionTests.debug.xcconfig */,
+				6D0DC165AE05A364657E4EDC /* Pods-reptileregion-reptileregionTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -242,13 +242,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "reptileregionTests" */;
 			buildPhases = (
-				7D3E0CCFEB80E3DDF0CF398A /* [CP] Check Pods Manifest.lock */,
+				8E2CF774865AD14EF0EEE1ED /* [CP] Check Pods Manifest.lock */,
 				A7D5AFE4876C437719AE99D1 /* [Expo] Configure project */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				6D71F67A9A0888F5A244B78B /* [CP] Embed Pods Frameworks */,
-				7B4B5990ED108786C538E412 /* [CP] Copy Pods Resources */,
+				36A8F669722992C4B391DA20 /* [CP] Embed Pods Frameworks */,
+				8C94E6AF48033F67E63BA15D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -264,15 +264,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "reptileregion" */;
 			buildPhases = (
-				0F8103646E191EE06760AEAE /* [CP] Check Pods Manifest.lock */,
+				255BFC7CA040FACFF1EFE041 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				109976C3AE9FF6FFFD630671 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				5CD4C08371E189570A781C79 /* [CP] Embed Pods Frameworks */,
-				CD54A34D667954771788695F /* [CP] Copy Pods Resources */,
+				55062D20A758F837772601E6 /* [CP] Embed Pods Frameworks */,
+				0A019718283F6589C8EB135D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -362,26 +362,21 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios relative | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli')\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n";
 		};
-		0F8103646E191EE06760AEAE /* [CP] Check Pods Manifest.lock */ = {
+		0A019718283F6589C8EB135D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-reptileregion-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		109976C3AE9FF6FFFD630671 /* [Expo] Configure project */ = {
@@ -403,24 +398,29 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-reptileregion/expo-configure-project.sh\"\n";
 		};
-		5CD4C08371E189570A781C79 /* [CP] Embed Pods Frameworks */ = {
+		255BFC7CA040FACFF1EFE041 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-reptileregion-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6D71F67A9A0888F5A244B78B /* [CP] Embed Pods Frameworks */ = {
+		36A8F669722992C4B391DA20 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -437,7 +437,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7B4B5990ED108786C538E412 /* [CP] Copy Pods Resources */ = {
+		55062D20A758F837772601E6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8C94E6AF48033F67E63BA15D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -454,7 +471,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion-reptileregionTests/Pods-reptileregion-reptileregionTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7D3E0CCFEB80E3DDF0CF398A /* [CP] Check Pods Manifest.lock */ = {
+		8E2CF774865AD14EF0EEE1ED /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -494,23 +511,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-reptileregion-reptileregionTests/expo-configure-project.sh\"\n";
-		};
-		CD54A34D667954771788695F /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-reptileregion/Pods-reptileregion-resources.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -572,7 +572,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5BF121E0E3D4D8668E5EEF08 /* Pods-reptileregion-reptileregionTests.debug.xcconfig */;
+			baseConfigurationReference = 42A18B8F95AEC29E64BDCD5F /* Pods-reptileregion-reptileregionTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -607,7 +607,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F863E11019FBE0044E619B88 /* Pods-reptileregion-reptileregionTests.release.xcconfig */;
+			baseConfigurationReference = 6D0DC165AE05A364657E4EDC /* Pods-reptileregion-reptileregionTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -639,7 +639,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CAD6456BD0FBE2DE958C1E2C /* Pods-reptileregion.debug.xcconfig */;
+			baseConfigurationReference = 4A692778961E998CF70C59A7 /* Pods-reptileregion.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -679,7 +679,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8E9354EC56524CE80504790C /* Pods-reptileregion.release.xcconfig */;
+			baseConfigurationReference = 8816EBB0C8D6E1F4F0A0F5D2 /* Pods-reptileregion.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
