@@ -73,7 +73,6 @@ export const googleAuthLogin = async ({ idToken }: PostGoogleAuth['Request']) =>
 
 // 애플 로그인
 export const appleAuthLogin = async ({ authToken, publicKey, socialId }: PostAppleAuth['Request']) => {
-    console.log(socialId);
     const encryptedData = encryptionRSA(publicKey, socialId);
 
     const response = await clientFetch('api/auth/social/apple', {
