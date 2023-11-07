@@ -23,15 +23,14 @@ export type KakaoButtonProps = KakaoButtonState & KakaoButtonActions;
 
 export default function KakaoButton({ height = 44, width = '90%', onSuccess, onError }: KakaoButtonProps) {
     const { mutateAsync: AuthTokenAndPublicKeyMutateAsync } = useAuthTokenAndPublicKey();
-    const { mutateAsync: kakaoAuthMutateAsync } = useKakaoAuth({ onSuccess, onError });
+    const { mutate: kakaoAuthMutate } = useKakaoAuth({ onSuccess, onError });
 
     const handlePress = async () => {
         try {
             await KakaoAuth.login();
             const profile = await KakaoAuth.getProfile();
             const { authToken, publicKey } = await AuthTokenAndPublicKeyMutateAsync();
-            const data = await kakaoAuthMutateAsync({ socialId: profile.id, authToken, publicKey });
-            onSuccess(data);
+            kakaoAuthMutate({ socialId: profile.id, authToken, publicKey });
         } catch (error) {
             onError(error);
         }

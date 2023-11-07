@@ -1,5 +1,5 @@
-import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { Platform } from 'react-native';
 
 const IOSUploadImage = async (uri: string) => {

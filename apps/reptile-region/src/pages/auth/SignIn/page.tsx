@@ -2,7 +2,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import type { PostKakaoAuth, SignUpRegister0 } from '<api/auth>';
+import type { PostAppleAuth, PostKakaoAuth, SignUpRegister0 } from '<api/auth>';
 import type { RootRoutesParamList } from '<routes/root>';
 import { useToast } from '@/components/@common/organisms/Toast';
 import SignInLogo from '@/components/auth/atoms/SignInLogo/SignInLogo';
@@ -30,7 +30,7 @@ const SignInPage = ({ navigation }: SignInScreenProps) => {
     };
 
     /** 카카로 로그인 시작 */
-    const handleSuccessKakao = (data: PostKakaoAuth['Response']) => {
+    const handleSuccessAuth = (data: PostKakaoAuth['Response'] | PostAppleAuth['Response']) => {
         switch (data.type) {
             case 'SIGN_IN':
                 signIn({ accessToken: data.accessToken, refreshToken: data.refreshToken });
@@ -64,36 +64,43 @@ const SignInPage = ({ navigation }: SignInScreenProps) => {
     /** 구글 로그인 끝 */
 
     /** 애플 로그인 시작 */
-    const handleSuccessApple = () => {};
+
     const handleErrorApple = () => {};
     /** 애플 로그인 끝 */
 
-    const buttons: SocialButtons =
-        Platform.OS === 'ios'
-            ? [
-                  {
-                      type: 'KAKAO',
-                      onSuccess: handleSuccessKakao,
-                      onError: handleErrorKakao,
-                  },
-                  {
-                      type: 'APPLE',
-                      onSuccess: handleSuccessApple,
-                      onError: handleErrorApple,
-                  },
-              ]
-            : [
-                  {
-                      type: 'KAKAO',
-                      onSuccess: handleSuccessKakao,
-                      onError: handleErrorKakao,
-                  },
-                  {
-                      type: 'GOOGLE',
-                      onSuccess: handleSuccessGoogle,
-                      onError: handleErrorGoogle,
-                  },
-              ];
+    const buttons: SocialButtons = Platform.select({
+        ios: [
+            {
+                type: 'KAKAO',
+                onSuccess: handleSuccessAuth,
+                onError: handleErrorKakao,
+            },
+            {
+                type: 'APPLE',
+                onSuccess: handleSuccessAuth,
+                onError: handleErrorApple,
+            },
+        ],
+        android: [
+            {
+                type: 'KAKAO',
+                onSuccess: handleSuccessAuth,
+                onError: handleErrorKakao,
+            },
+            {
+                type: 'GOOGLE',
+                onSuccess: handleSuccessGoogle,
+                onError: handleErrorGoogle,
+            },
+        ],
+        default: [
+            {
+                type: 'KAKAO',
+                onSuccess: handleSuccessAuth,
+                onError: handleErrorKakao,
+            },
+        ],
+    });
 
     return <SignInTemplates logo={<SignInLogo />} buttons={buttons} />;
 };

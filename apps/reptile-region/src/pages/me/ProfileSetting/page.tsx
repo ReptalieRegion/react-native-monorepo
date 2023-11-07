@@ -92,11 +92,12 @@ export default function ProfileSetting() {
     };
 
     const handlePressProfileImage = async () => {
-        if (Platform.OS === 'ios') {
-            handleIosPress();
-        } else if (Platform.OS === 'android') {
-            handleAndroidPress();
-        }
+        const handlePress = Platform.select({
+            ios: handleIosPress,
+            android: handleAndroidPress,
+            default: handleAndroidPress,
+        });
+        handlePress();
     };
 
     return (

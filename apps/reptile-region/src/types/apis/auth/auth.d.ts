@@ -6,6 +6,12 @@ declare module '<api/auth>' {
         refreshToken: string;
     };
 
+    type AuthRequest = {
+        socialId: string;
+        publicKey: string;
+        authToken: string;
+    };
+
     interface SignInResponse {
         type: 'SIGN_IN';
         accessToken: string;
@@ -50,8 +56,12 @@ declare module '<api/auth>' {
         authToken: string;
     };
 
-    type PostKakaoAuth = ServerAPI<PostKakaoAuthRequest, AuthResponse>;
+    type PostKakaoAuth = ServerAPI<AuthRequest, AuthResponse>;
     /** 카카오 로그인 끝 */
+
+    /** 애플 로그인 시작 */
+    type PostAppleAuth = ServerAPI<AuthRequest, AuthResponse>;
+    /** 애플 로그인 끝 */
 
     /** 리프레시 토큰 요청 시작 */
     type RefreshTokenRequest = {

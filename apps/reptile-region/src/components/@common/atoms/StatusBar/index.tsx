@@ -15,16 +15,12 @@ const backgroundColor = ENV.isProd
 
 export default function MainStatusBar() {
     const { top } = useSafeAreaInsets();
-    const isIOS = Platform.OS === 'ios';
-    const isAndroid = Platform.OS === 'android';
 
-    if (isIOS) {
-        return <View style={[{ paddingTop: top, backgroundColor }]} />;
-    }
+    const CustomStatusBar = Platform.select({
+        ios: <View style={[{ paddingTop: top, backgroundColor }]} />,
+        android: <StatusBar barStyle={'light-content'} backgroundColor={backgroundColor} />,
+        default: null,
+    });
 
-    if (isAndroid) {
-        return <StatusBar barStyle={'light-content'} backgroundColor={backgroundColor} />;
-    }
-
-    return null;
+    return CustomStatusBar;
 }

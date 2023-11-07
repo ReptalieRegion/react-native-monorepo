@@ -1,6 +1,6 @@
 import { encryptionRSA } from '@reptile-region/utils';
 
-import type { JoinProgress, NicknameDuplicateCheck, PostKakaoAuth, RefreshToken } from '<api/auth>';
+import type { JoinProgress, NicknameDuplicateCheck, PostAppleAuth, PostKakaoAuth, RefreshToken } from '<api/auth>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 
 /** GET */
@@ -58,8 +58,21 @@ export const googleAuthLogin = async () => {
 };
 
 // 애플 로그인
-export const appleAuthLogin = async () => {
-    return;
+export const appleAuthLogin = async ({ authToken, publicKey, socialId }: PostAppleAuth['Request']) => {
+    console.log(socialId);
+    const encryptedData = encryptionRSA(publicKey, socialId);
+
+    const response = await clientFetch('api/auth/social/apple', {
+        method: METHOD.POST,
+        headers: {
+            Authorization: `Bearer ${authToken}`,
+        },
+        body: {
+            encryptedData,
+        },
+    });
+
+    return response.json();
 };
 
 const _joinProgressBodyGenerator = (data: JoinProgress['Request']) => {

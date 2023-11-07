@@ -1,10 +1,10 @@
 import { Typo, color } from '@reptile-region/design-system';
 import React, { useEffect, useRef } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
 import type { ColorValue, DimensionValue, TextInputProps } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import type { WithTimingConfig } from 'react-native-reanimated';
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 type FontSizes = 'small' | 'normal' | 'large';
 
@@ -132,7 +132,11 @@ export default function TextField({
     const handleTextInputFocus = () => {
         fieldColor.value = focusColor;
         labelFontSize.value = withTiming(LABEL_FONT_SIZE[size].focus, userConfig);
-        const newTop = Platform.OS === 'android' ? -(LABEL_FONT_SIZE[size].blur / 2) : -(LABEL_FONT_SIZE[size].focus / 2);
+        const newTop = Platform.select({
+            ios: -(LABEL_FONT_SIZE[size].focus / 2),
+            android: -(LABEL_FONT_SIZE[size].blur / 2),
+            default: -(LABEL_FONT_SIZE[size].focus / 2),
+        });
         top.value = withTiming(newTop, userConfig);
     };
 
