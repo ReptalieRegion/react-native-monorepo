@@ -29,7 +29,6 @@ const SignInPage = ({ navigation }: SignInScreenProps) => {
         }
     };
 
-    /** 카카로 로그인 시작 */
     const handleSuccessAuth = (data: PostKakaoAuth['Response'] | PostAppleAuth['Response']) => {
         switch (data.type) {
             case 'SIGN_IN':
@@ -53,51 +52,41 @@ const SignInPage = ({ navigation }: SignInScreenProps) => {
                 return;
         }
     };
-    const handleErrorKakao = () => {
+
+    const handleError = () => {
         openToast({ severity: 'error', contents: '알 수 없는 에러가 발생했습니다.' });
     };
-    /** 카카로 로그인 끝 */
-
-    /** 구글 로그인 시작 */
-    const handleSuccessGoogle = () => {};
-    const handleErrorGoogle = () => {};
-    /** 구글 로그인 끝 */
-
-    /** 애플 로그인 시작 */
-
-    const handleErrorApple = () => {};
-    /** 애플 로그인 끝 */
 
     const buttons: SocialButtons = Platform.select({
         ios: [
             {
                 type: 'KAKAO',
                 onSuccess: handleSuccessAuth,
-                onError: handleErrorKakao,
+                onError: handleError,
             },
             {
                 type: 'APPLE',
                 onSuccess: handleSuccessAuth,
-                onError: handleErrorApple,
+                onError: handleError,
             },
         ],
         android: [
             {
                 type: 'KAKAO',
                 onSuccess: handleSuccessAuth,
-                onError: handleErrorKakao,
+                onError: handleError,
             },
             {
                 type: 'GOOGLE',
-                onSuccess: handleSuccessGoogle,
-                onError: handleErrorGoogle,
+                onSuccess: handleSuccessAuth,
+                onError: handleError,
             },
         ],
         default: [
             {
                 type: 'KAKAO',
                 onSuccess: handleSuccessAuth,
-                onError: handleErrorKakao,
+                onError: handleError,
             },
         ],
     });

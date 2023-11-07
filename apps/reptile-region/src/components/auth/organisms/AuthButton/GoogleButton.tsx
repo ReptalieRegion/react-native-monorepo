@@ -27,7 +27,6 @@ export default function GoogleButton({ onSuccess, onError }: GoogleButtonProps) 
             if (result.idToken === null) {
                 throw new Error('[Google Auth]: no idToken');
             }
-            console.log(result.idToken);
             mutate({ idToken: result.idToken });
         } catch (error) {
             onError(error);
