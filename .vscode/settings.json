@@ -23,5 +23,16 @@
         "@utils": "Utils",
         "@common": "Shared"
     },
-    "cSpell.words": ["hookform", "Kakao", "mswjs", "Roboto", "tanstack", "typecheck", "yunchanpark", "zustand"]
+    "cSpell.words": [
+        "bootsplash",
+        "hookform",
+        "jsbundle",
+        "Kakao",
+        "mswjs",
+        "Roboto",
+        "tanstack",
+        "typecheck",
+        "yunchanpark",
+        "zustand"
+    ]
 }

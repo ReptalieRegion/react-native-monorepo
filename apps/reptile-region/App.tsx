@@ -13,15 +13,15 @@ import RootRoutes from '@/routes/RootRoutes';
 export default function App() {
     return (
         <ReactQueryProvider>
-            <ErrorBoundary renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}>
-                <GestureHandlerRootView style={styles.gestureContainer}>
-                    <SafeAreaProvider>
-                        <Toast>
+            <GestureHandlerRootView style={styles.gestureContainer}>
+                <SafeAreaProvider>
+                    <Toast>
+                        <ErrorBoundary renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}>
                             <RootRoutes />
-                        </Toast>
-                    </SafeAreaProvider>
-                </GestureHandlerRootView>
-            </ErrorBoundary>
+                        </ErrorBoundary>
+                    </Toast>
+                </SafeAreaProvider>
+            </GestureHandlerRootView>
         </ReactQueryProvider>
     );
 }
