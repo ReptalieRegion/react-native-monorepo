@@ -14,6 +14,7 @@ import type { RootRoutesParamList } from '<routes/root>';
 import useDeleteCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useDeleteCommentReply';
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
+import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
 
 type CommentScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostCommentParamList, 'reply'>,
@@ -26,6 +27,7 @@ export default function CommentReplyList({ navigation, route: { params } }: Comm
         commentId: params.comment.id,
     });
     const deleteMutate = useDeleteCommentReply();
+    const { changeText, tagTextInputFocus } = useTagHandler();
 
     const keyExtractor = useCallback((item: FetchCommentReplyResponse) => item.commentReply.id, []);
 
@@ -56,28 +58,24 @@ export default function CommentReplyList({ navigation, route: { params } }: Comm
 
             const handlePressUpdateButton = () => {};
 
-            const handlePressNickname = () => {
+            const navigateDetailPage = () => {
                 navigation.push('share-post/modal', {
                     screen: 'detail',
                     params: { nickname, profile, isFollow: false },
                 });
             };
 
-            const handlePressTag = () => {
-                navigation.push('share-post/modal', {
-                    screen: 'detail',
-                    params: { nickname, profile, isFollow: false },
-                });
+            const handlePressWriteButton = () => {
+                changeText(`@${nickname} `);
+                tagTextInputFocus();
             };
-
-            const handlePressWriteButton = () => {};
 
             return (
                 <View style={styles.renderItemContainer}>
                     <CommentReplyItem
                         item={item}
-                        onPressNickname={handlePressNickname}
-                        onPressTag={handlePressTag}
+                        onPressNickname={navigateDetailPage}
+                        onPressTag={navigateDetailPage}
                         onPressDeclarationButton={handlePressDeclarationButton}
                         onPressDeleteButton={handleDeleteButton}
                         onPressUpdateButton={handlePressUpdateButton}
@@ -86,7 +84,7 @@ export default function CommentReplyList({ navigation, route: { params } }: Comm
                 </View>
             );
         },
-        [deleteMutate, navigation],
+        [deleteMutate, navigation, changeText, tagTextInputFocus],
     );
 
     // TODO
@@ -103,14 +101,21 @@ export default function CommentReplyList({ navigation, route: { params } }: Comm
                     },
                 }}
                 onPressDeclarationButton={() => {}}
-                onPressDeleteButton={() => {}}
+                onPressDeleteButton={tagTextInputFocus}
                 onPressNickname={() => {}}
                 onPressTag={() => {}}
                 onPressUpdateButton={() => {}}
                 onPressWriteButton={() => {}}
             />
         );
-    }, [params]);
+    }, [
+        params.comment.contents,
+        params.comment.id,
+        params.comment.isMine,
+        params.comment.isModified,
+        params.comment.user,
+        tagTextInputFocus,
+    ]);
 
     const onEndReached = useCallback(
         () => hasNextPage && !isFetchingNextPage && fetchNextPage(),

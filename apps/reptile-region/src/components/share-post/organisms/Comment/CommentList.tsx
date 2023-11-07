@@ -57,21 +57,14 @@ export default function CommentList({ navigation, route: { params } }: CommentSc
             // TODO 수정하기
             const handlePressUpdateButton = () => {};
 
-            const handlePressNickname = () => {
+            const navigateDetailPage = () => {
                 navigation.push('share-post/modal', {
                     screen: 'detail',
                     params: { nickname, profile, isFollow: false },
                 });
             };
 
-            const handlePressTag = () => {
-                navigation.push('share-post/modal', {
-                    screen: 'detail',
-                    params: { nickname, profile, isFollow: false },
-                });
-            };
-
-            const handlePressWriteButton = () => {
+            const navigateCommentReplyPage = () => {
                 navigation.push('reply', {
                     comment: {
                         id: commentId,
@@ -84,29 +77,16 @@ export default function CommentList({ navigation, route: { params } }: CommentSc
                 });
             };
 
-            const handlePressShowCommentReplyButton = () => {
-                navigation.push('reply', {
-                    comment: {
-                        id: commentId,
-                        contents,
-                        isMine,
-                        isModified,
-                        user: { id: userId, profile, nickname },
-                    },
-                    isFocus: true,
-                });
-            };
-
             return (
                 <CommentItem
                     item={item}
-                    onPressNickname={handlePressNickname}
-                    onPressTag={handlePressTag}
+                    onPressNickname={navigateDetailPage}
+                    onPressTag={navigateDetailPage}
                     onPressDeclarationButton={handlePressDeclarationButton}
                     onPressDeleteButton={handleDeleteButton}
                     onPressUpdateButton={handlePressUpdateButton}
-                    onPressWriteButton={handlePressWriteButton}
-                    onPressShowCommentReplyButton={handlePressShowCommentReplyButton}
+                    onPressWriteButton={navigateCommentReplyPage}
+                    onPressShowCommentReplyButton={navigateCommentReplyPage}
                 />
             );
         },
