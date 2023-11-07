@@ -63,6 +63,14 @@ declare module '<api/auth>' {
     type PostAppleAuth = ServerAPI<AuthRequest, AuthResponse>;
     /** 애플 로그인 끝 */
 
+    /** 구글 로그인 시작 */
+    type PostGoogleRequest = {
+        idToken: string;
+    };
+
+    type PostGoogleAuth = ServerAPI<PostGoogleRequest, AuthResponse>;
+    /** 구글 로그인 끝 */
+
     /** 리프레시 토큰 요청 시작 */
     type RefreshTokenRequest = {
         refreshToken: string;

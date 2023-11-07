@@ -1,7 +1,9 @@
 import { NativeModules } from 'react-native';
 
+import type { GoogleResult } from './types';
+
 interface GoogleAuth {
-    login(): Promise<void>;
+    login(): Promise<GoogleResult>;
     logout(): Promise<void>;
 }
 

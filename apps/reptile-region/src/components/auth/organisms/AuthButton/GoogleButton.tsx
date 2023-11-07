@@ -4,11 +4,13 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
+import type { PostGoogleAuth } from '<api/auth>';
+import { useGoogleAuth } from '@/apis/auth';
 import GoogleSymbol from '@/assets/icons/GoogleSymbol';
 import { GoogleAuth } from '@/native-modules/google-auth/RNGoogleAuthModule';
 
 interface GoogleButtonActions {
-    onSuccess(): void;
+    onSuccess(props: PostGoogleAuth['Response']): void;
     onError(error: unknown): void;
 }
 
@@ -16,12 +18,17 @@ export type GoogleButtonProps = GoogleButtonActions;
 
 export default function GoogleButton({ onSuccess, onError }: GoogleButtonProps) {
     const { loading, startLoading, endLoading } = useLoading();
+    const { mutate } = useGoogleAuth({ onSuccess, onError });
 
     const handlePress = async () => {
         try {
             startLoading();
-            await GoogleAuth.login();
-            onSuccess();
+            const result = await GoogleAuth.login();
+            if (result.idToken === null) {
+                throw new Error('[Google Auth]: no idToken');
+            }
+
+            mutate({ idToken: result.idToken });
         } catch (error) {
             onError(error);
         } finally {

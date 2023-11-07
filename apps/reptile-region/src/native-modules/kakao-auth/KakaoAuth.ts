@@ -1,6 +1,6 @@
 import { NativeModules } from 'react-native';
 
-import type { KakaoOAuthToken, KakaoProfile } from './type';
+import type { KakaoOAuthToken, KakaoProfile } from './types';
 
 const LINKING_ERROR = "The Native Module RNKakaoAuth doesn't seem to be link";
 

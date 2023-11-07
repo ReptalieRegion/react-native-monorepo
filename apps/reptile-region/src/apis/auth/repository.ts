@@ -1,6 +1,13 @@
 import { encryptionRSA } from '@reptile-region/utils';
 
-import type { JoinProgress, NicknameDuplicateCheck, PostAppleAuth, PostKakaoAuth, RefreshToken } from '<api/auth>';
+import type {
+    JoinProgress,
+    NicknameDuplicateCheck,
+    PostAppleAuth,
+    PostGoogleAuth,
+    PostKakaoAuth,
+    RefreshToken,
+} from '<api/auth>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 
 /** GET */
@@ -53,8 +60,15 @@ export const kakaoAuthLogin = async ({ authToken, publicKey, socialId }: PostKak
 };
 
 // 구글 로그인
-export const googleAuthLogin = async () => {
-    return;
+export const googleAuthLogin = async ({ idToken }: PostGoogleAuth['Request']) => {
+    const response = await clientFetch('api/auth/social/google', {
+        method: METHOD.POST,
+        headers: {
+            Authorization: `Bearer ${idToken}`,
+        },
+    });
+
+    return response.json();
 };
 
 // 애플 로그인

@@ -19,6 +19,7 @@
 		954ECDD2A91740C49A11EB91 /* DancingScript-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 936D71159AF54565BF6DB472 /* DancingScript-Bold.ttf */; };
 		ACF8EB97CEA24D5DBAF263D1 /* DancingScript-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71C8BE5FCB534D3FB449D032 /* DancingScript-Regular.ttf */; };
 		E7E15EE659471FC95D54E347 /* libPods-reptileregion-reptileregionTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24AD8B11BA657E94D9B4E791 /* libPods-reptileregion-reptileregionTests.a */; };
+		EE128EBE2AFA1C0D0055DACB /* google-services.json in Resources */ = {isa = PBXBuildFile; fileRef = EE128EBD2AFA1C0D0055DACB /* google-services.json */; };
 		EE6DD0602AEAF3360096030E /* RNVersionCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DD05F2AEAF3360096030E /* RNVersionCheck.m */; };
 		EE6DD0612AEAF3360096030E /* RNVersionCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DD05F2AEAF3360096030E /* RNVersionCheck.m */; };
 		EEAD95152AE36A68005FEC8D /* RNKakaoAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAD95142AE36A68005FEC8D /* RNKakaoAuth.m */; };
@@ -62,6 +63,7 @@
 		C0F66326FEDD4CCDB5F47713 /* DancingScript-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DancingScript-SemiBold.ttf"; path = "../src/assets/fonts/DancingScript-SemiBold.ttf"; sourceTree = "<group>"; };
 		CDDB2F8D4FB21B7A24FFA344 /* libPods-reptileregion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reptileregion.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EE128EBD2AFA1C0D0055DACB /* google-services.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "google-services.json"; path = "../../../../../Downloads/google-services.json"; sourceTree = "<group>"; };
 		EE24423B2AE17A3200F2ABB2 /* reptileregion.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = reptileregion.entitlements; path = reptileregion/reptileregion.entitlements; sourceTree = "<group>"; };
 		EE6DD05E2AEAF3360096030E /* RNVersionCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RNVersionCheck.h; path = RNVersionCheck/RNVersionCheck.h; sourceTree = "<group>"; };
 		EE6DD05F2AEAF3360096030E /* RNVersionCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RNVersionCheck.m; path = RNVersionCheck/RNVersionCheck.m; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				EEC28BE42AF3D79200B74530 /* BootSplash.storyboard */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				EE128EBD2AFA1C0D0055DACB /* google-services.json */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				EEAD95182AE36B11005FEC8D /* reptileregion-Bridging-Header.h */,
@@ -338,6 +341,7 @@
 				954ECDD2A91740C49A11EB91 /* DancingScript-Bold.ttf in Resources */,
 				68F5659F51FC455CA2CAA83E /* DancingScript-Medium.ttf in Resources */,
 				EEC28BE52AF3D79200B74530 /* BootSplash.storyboard in Resources */,
+				EE128EBE2AFA1C0D0055DACB /* google-services.json in Resources */,
 				ACF8EB97CEA24D5DBAF263D1 /* DancingScript-Regular.ttf in Resources */,
 				7A3CDD09C479458C8A154DD1 /* DancingScript-SemiBold.ttf in Resources */,
 			);

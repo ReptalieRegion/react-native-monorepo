@@ -5,12 +5,12 @@ import { appleAuthLogin } from '../../repository';
 import type { PostAppleAuth } from '<api/auth>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 
-interface UseKakaoAuth {
+interface UseAppleAuth {
     onSuccess(data: PostAppleAuth['Response']): void;
     onError(error: unknown): void;
 }
 
-const useAppleAuth = ({ onSuccess, onError }: UseKakaoAuth) => {
+const useAppleAuth = ({ onSuccess, onError }: UseAppleAuth) => {
     return useMutation<PostAppleAuth['Response'], HTTPError, PostAppleAuth['Request'], unknown>({
         mutationFn: appleAuthLogin,
         onSuccess: (data) => {

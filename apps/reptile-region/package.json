@@ -86,7 +86,6 @@
         "metro-react-native-babel-preset": "0.76.8",
         "msw": "^1.2.3",
         "react-native-asset": "^2.1.1",
-        "react-native-flipper": "^0.182.0",
         "react-native-url-polyfill": "^2.0.0",
         "react-query-native-devtools": "^4.0.0",
         "react-test-renderer": "18.2.0",
