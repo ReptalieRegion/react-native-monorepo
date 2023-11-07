@@ -3,16 +3,16 @@ import BootSplash from 'react-native-bootsplash';
 
 import { useAuth } from '../../hooks/useAuth';
 
+import useAuthCacheInvalidateQueries from '@/apis/@utils/react-query-cache/useAuthCacheInvalidateQueries';
 import useRefresh from '@/apis/auth/hooks/mutations/useRefresh';
 import { deleteAuthTokens, getRefreshToken } from '@/apis/auth/utils/secure-storage-token';
-import { useFetchMeProfile } from '@/apis/me/profile/hooks';
 import { useToast } from '@/components/@common/organisms/Toast';
 
 export default function InitialAuth() {
-    const { isSuccess, mutateAsync: refreshMutateAsync } = useRefresh();
-    useFetchMeProfile({ enabled: isSuccess });
+    const { mutateAsync: refreshMutateAsync } = useRefresh();
+    const { invalidateAuthQueries } = useAuthCacheInvalidateQueries();
 
-    const { signIn } = useAuth();
+    const { isSignIn, signIn } = useAuth();
     const { openToast } = useToast();
 
     useEffect(() => {
@@ -35,6 +35,10 @@ export default function InitialAuth() {
 
         initSignIn();
     }, [refreshMutateAsync, openToast, signIn]);
+
+    useEffect(() => {
+        invalidateAuthQueries();
+    }, [isSignIn, invalidateAuthQueries]);
 
     return null;
 }
