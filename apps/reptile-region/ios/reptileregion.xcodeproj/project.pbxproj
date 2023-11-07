@@ -653,7 +653,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y9TRXFZMR5;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = reptileregion/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = RR;
+				INFOPLIST_KEY_CFBundleDisplayName = "크롤";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -692,7 +692,7 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = Y9TRXFZMR5;
 				INFOPLIST_FILE = reptileregion/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = RR;
+				INFOPLIST_KEY_CFBundleDisplayName = "크롤";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
