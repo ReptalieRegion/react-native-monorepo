@@ -35,7 +35,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
             .map((e) => e.queryKey);
 
         errorKeys.forEach((errorKey) => {
-            queryClient.invalidateQueries({ queryKey: errorKey });
+            queryClient.removeQueries({ queryKey: errorKey });
         });
         reset();
     };

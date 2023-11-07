@@ -14,7 +14,6 @@ export const fetchPhotos = async ({ first, after, assetType = 'Photos' }: FetchP
 
         return undefined;
     } catch (error) {
-        console.error(error);
         return undefined;
     }
 };
