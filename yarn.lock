@@ -12053,7 +12053,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-flipper@npm:0.182.0, react-native-flipper@npm:^0.182.0":
+"react-native-flipper@npm:0.182.0":
   version: 0.182.0
   resolution: "react-native-flipper@npm:0.182.0"
   peerDependencies:
@@ -12586,7 +12586,6 @@ __metadata:
     react-native-asset: ^2.1.1
     react-native-bootsplash: ^5.0.4
     react-native-dotenv: ^3.4.9
-    react-native-flipper: ^0.182.0
     react-native-gesture-handler: ^2.13.1
     react-native-haptic-feedback: ^2.2.0
     react-native-image-crop-picker: ^0.40.1

@@ -432,8 +432,6 @@ PODS:
     - glog
   - react-native-cameraroll (5.10.0):
     - React-Core
-  - react-native-flipper (0.182.0):
-    - React-Core
   - react-native-image-editor (2.3.0):
     - React
     - React-RCTImage
@@ -685,7 +683,6 @@ DEPENDENCIES:
   - React-jsinspector (from `../../../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../../../node_modules/react-native/ReactCommon/logger`)
   - "react-native-cameraroll (from `../../../node_modules/@react-native-camera-roll/camera-roll`)"
-  - react-native-flipper (from `../../../node_modules/react-native-flipper`)
   - "react-native-image-editor (from `../../../node_modules/@react-native-community/image-editor`)"
   - react-native-pager-view (from `../../../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
@@ -810,8 +807,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/ReactCommon/logger"
   react-native-cameraroll:
     :path: "../../../node_modules/@react-native-camera-roll/camera-roll"
-  react-native-flipper:
-    :path: "../../../node_modules/react-native-flipper"
   react-native-image-editor:
     :path: "../../../node_modules/@react-native-community/image-editor"
   react-native-pager-view:
@@ -929,7 +924,6 @@ SPEC CHECKSUMS:
   React-jsinspector: 194e32c6aab382d88713ad3dd0025c5f5c4ee072
   React-logger: cebf22b6cf43434e471dc561e5911b40ac01d289
   react-native-cameraroll: 4701ae7c3dbcd3f5e9e150ca17f250a276154b35
-  react-native-flipper: 6e4e344a0104a34a4e189a9ef2b3b5634b516dc8
   react-native-image-editor: 9361a215c3991cafbe5e7f28cbbad6e72c9c2705
   react-native-pager-view: 02a5c4962530f7efc10dd51ee9cdabeff5e6c631
   react-native-safe-area-context: 2cd91d532de12acdb0a9cbc8d43ac72a8e4c897c
