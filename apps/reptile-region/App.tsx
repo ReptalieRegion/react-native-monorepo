@@ -22,13 +22,6 @@ const onMessageReceived = async (message: FirebaseMessagingTypes.RemoteMessage) 
         notifee.displayNotification({
             title: message.notification?.title,
             body: message.notification?.body,
-            ios: {
-                attachments: [
-                    {
-                        url: 'https://reptalie-region.s3.ap-northeast-2.amazonaws.com/406ba4f8-0f39-489a-908b-20f9536a42e1.jpeg',
-                    },
-                ],
-            },
         });
     }
 };
