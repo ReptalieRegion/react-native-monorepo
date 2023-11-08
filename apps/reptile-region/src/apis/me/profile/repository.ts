@@ -1,3 +1,4 @@
+import type { UpdateFCMToken } from '<api/my/metadata>';
 import type { UpdateProfileImage } from '<api/my/profile>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 
@@ -19,6 +20,15 @@ export const updateMeProfile = async ({ name, type, uri }: UpdateProfileImage['R
         method: METHOD.PUT,
         body: formData,
         isFormData: true,
+    });
+
+    return response.json();
+};
+
+export const updateFCMToken = async ({ fcmToken }: UpdateFCMToken['Request']) => {
+    const response = await clientFetch('api/users/fcm-token', {
+        method: METHOD.PUT,
+        body: { fcmToken },
     });
 
     return response.json();

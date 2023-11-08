@@ -4,9 +4,13 @@ declare module '<api/my/profile>' {
 
     /** GET 시작 */
     type FetchMeProfileResponse = {
-        id: string;
-        profile: ImageType;
-        nickname: string;
+        user: {
+            id: string;
+            profile: ImageType;
+            nickname: string;
+            followerCount: number;
+            followingCount: number;
+        };
     };
 
     type FetchMeProfile = ServerAPI<void, FetchMeProfileResponse>;

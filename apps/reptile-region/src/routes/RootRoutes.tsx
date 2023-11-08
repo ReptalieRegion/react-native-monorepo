@@ -8,7 +8,6 @@ import SharePostPostingRoutes from './modal/SharePostPostingRoutes';
 import SignUpRoutes from './SignUpRoutes';
 
 import type { RootRoutesParamList } from '<routes/root>';
-import { Auth } from '@/components/auth/organisms/Auth';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
@@ -31,84 +30,78 @@ const RootRoutes = () => {
     const navigationRef = useNavigationContainerRef();
 
     return (
-        <Auth>
-            <NavigationContainer ref={navigationRef}>
-                <Stack.Navigator initialRouteName="bottom-tab/routes">
-                    {/** 바텀 탭 시작 */}
-                    <Stack.Screen
-                        name="bottom-tab/routes"
-                        component={BottomTabNativeStackRoutes}
-                        options={{
-                            headerShown: false,
-                        }}
-                    />
-                    {/** 바텀 탭 끝 */}
+        <NavigationContainer ref={navigationRef}>
+            <Stack.Navigator initialRouteName="bottom-tab/routes">
+                {/** 바텀 탭 시작 */}
+                <Stack.Screen
+                    name="bottom-tab/routes"
+                    component={BottomTabNativeStackRoutes}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+                {/** 바텀 탭 끝 */}
 
-                    {/** 인증 시작 */}
+                {/** 인증 시작 */}
+                <Stack.Screen
+                    name="sign-in"
+                    component={SignInPage}
+                    options={{
+                        header: SignInHeader,
+                        animation: 'slide_from_bottom',
+                    }}
+                />
+                <Stack.Screen
+                    name="sign-up"
+                    component={SignUpRoutes}
+                    options={{
+                        header: SignUpHeader,
+                    }}
+                />
+                {/** 인증 끝 */}
+
+                {/** 일상공유 시작 */}
+                <Stack.Group screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="share-post/modal" component={SharePostModalRoutes} />
                     <Stack.Screen
-                        name="sign-in"
-                        component={SignInPage}
+                        name="share-post/modal/posting"
+                        component={SharePostPostingRoutes}
+                        options={{ animation: 'slide_from_bottom' }}
+                    />
+                    <Stack.Screen
+                        name="share-post/bottom-sheet/post-options-menu"
+                        component={PostOptionsMenu}
                         options={{
                             header: SignInHeader,
-                            animation: 'slide_from_bottom',
+                            presentation: 'containedTransparentModal',
+                            animation: 'none',
                         }}
                     />
                     <Stack.Screen
-                        name="sign-up"
-                        component={SignUpRoutes}
-                        options={{
-                            header: SignUpHeader,
-                        }}
+                        name="share-post/post/update"
+                        component={SharePostUpdatePage}
+                        options={{ header: SharePostUpdateHeader, animation: 'slide_from_bottom' }}
                     />
-                    {/** 인증 끝 */}
-
-                    {/** 일상공유 시작 */}
-                    <Stack.Group screenOptions={{ headerShown: false }}>
-                        <Stack.Screen name="share-post/modal" component={SharePostModalRoutes} />
-                        <Stack.Screen
-                            name="share-post/modal/posting"
-                            component={SharePostPostingRoutes}
-                            options={{ animation: 'slide_from_bottom' }}
-                        />
-                        <Stack.Screen
-                            name="share-post/bottom-sheet/post-options-menu"
-                            component={PostOptionsMenu}
-                            options={{
-                                header: SignInHeader,
-                                presentation: 'containedTransparentModal',
-                                animation: 'none',
-                            }}
-                        />
-                        <Stack.Screen
-                            name="share-post/post/update"
-                            component={SharePostUpdatePage}
-                            options={{ header: SharePostUpdateHeader, animation: 'slide_from_bottom' }}
-                        />
-                    </Stack.Group>
-                    {/** 내 정보 시작 */}
-                    <Stack.Group>
-                        <Stack.Screen name="my/license" component={LicenseListPage} options={{ header: LicenseListHeader }} />
-                        <Stack.Screen
-                            name="my/license/contents"
-                            component={LicenseContentsPage}
-                            options={{ header: LicenseContentsHeader }}
-                        />
-                        <Stack.Screen
-                            name="my/terms-of-use"
-                            component={TermsOfUsePage}
-                            options={{ header: TermsOfUseHeader }}
-                        />
-                        <Stack.Screen
-                            name="my/terms-privacy-policy"
-                            component={PrivacyPolicyPage}
-                            options={{ header: PrivacyPolicyHeader }}
-                        />
-                        <Stack.Screen name="my/profile" component={ProfileSetting} options={{ header: ProfileSettingHeader }} />
-                    </Stack.Group>
-                    {/** 내 정보 끝 */}
-                </Stack.Navigator>
-            </NavigationContainer>
-        </Auth>
+                </Stack.Group>
+                {/** 내 정보 시작 */}
+                <Stack.Group>
+                    <Stack.Screen name="my/license" component={LicenseListPage} options={{ header: LicenseListHeader }} />
+                    <Stack.Screen
+                        name="my/license/contents"
+                        component={LicenseContentsPage}
+                        options={{ header: LicenseContentsHeader }}
+                    />
+                    <Stack.Screen name="my/terms-of-use" component={TermsOfUsePage} options={{ header: TermsOfUseHeader }} />
+                    <Stack.Screen
+                        name="my/terms-privacy-policy"
+                        component={PrivacyPolicyPage}
+                        options={{ header: PrivacyPolicyHeader }}
+                    />
+                    <Stack.Screen name="my/profile" component={ProfileSetting} options={{ header: ProfileSettingHeader }} />
+                </Stack.Group>
+                {/** 내 정보 끝 */}
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 };
 

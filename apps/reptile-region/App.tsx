@@ -1,4 +1,4 @@
-import notifee, { AuthorizationStatus, EventType } from '@notifee/react-native';
+import notifee, { EventType } from '@notifee/react-native';
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import { ErrorBoundary } from '@reptile-region/error-boundary';
 import React, { useEffect } from 'react';
@@ -9,34 +9,32 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import GlobalError from './error';
 
 import Toast from '@/components/@common/organisms/Toast';
+import { Auth } from '@/components/auth/organisms/Auth';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 
-const onAppBootstrap = async () => {
-    const settings = await notifee.requestPermission();
-
-    if (settings.authorizationStatus >= AuthorizationStatus.AUTHORIZED) {
-        const token = await messaging().getToken();
-        console.log(token);
-    }
-};
-
 const onMessageReceived = async (message: FirebaseMessagingTypes.RemoteMessage) => {
-    const data = message.data;
-    if (data && typeof data === 'string') {
-        const newData = JSON.parse(data) as { notifee: Notification };
-        notifee.displayNotification(newData.notifee);
+    const notifeeData = message.data?.notifee;
+    if (notifeeData && typeof notifeeData === 'string') {
+        const newData = JSON.parse(notifeeData);
+        notifee.displayNotification(newData);
     } else {
         notifee.displayNotification({
             title: message.notification?.title,
             body: message.notification?.body,
+            ios: {
+                attachments: [
+                    {
+                        url: 'https://reptalie-region.s3.ap-northeast-2.amazonaws.com/406ba4f8-0f39-489a-908b-20f9536a42e1.jpeg',
+                    },
+                ],
+            },
         });
     }
 };
 
 export default function App() {
     useEffect(() => {
-        onAppBootstrap();
         const unsubMessaging = messaging().onMessage(onMessageReceived);
 
         return () => {
@@ -46,7 +44,6 @@ export default function App() {
 
     useEffect(() => {
         const notification = notifee.onForegroundEvent(({ type, detail }) => {
-            console.log('Remote notification info: ', detail.notification?.remote);
             switch (type) {
                 case EventType.DISMISSED:
                     console.log('User dismissed notification', detail.notification);
@@ -58,7 +55,7 @@ export default function App() {
         });
 
         return () => {
-            notification;
+            notification();
         };
     }, []);
 
@@ -67,9 +64,11 @@ export default function App() {
             <GestureHandlerRootView style={styles.gestureContainer}>
                 <SafeAreaProvider>
                     <Toast>
-                        <ErrorBoundary renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}>
-                            <RootRoutes />
-                        </ErrorBoundary>
+                        <Auth>
+                            <ErrorBoundary renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}>
+                                <RootRoutes />
+                            </ErrorBoundary>
+                        </Auth>
                     </Toast>
                 </SafeAreaProvider>
             </GestureHandlerRootView>

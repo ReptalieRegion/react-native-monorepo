@@ -25,8 +25,10 @@ type MyListScreenProps = CompositeScreenProps<
 export default function MyListPage({ navigation }: MyListScreenProps) {
     const { isSignIn, signOut } = useAuth();
     const { mutateAsync: signOutMutateAsync } = useSignOut();
-    const { data } = useFetchMeProfile();
+    const { data, isLoading } = useFetchMeProfile();
     const { openToast } = useToast();
+
+    console.log(data, isLoading);
 
     const navigateTermsOfUse = () => {
         navigation.navigate('my/terms-of-use');
@@ -66,7 +68,7 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.signContainer}>
-                <Profile user={data} />
+                <Profile user={data?.user} />
             </View>
 
             <View style={styles.activeContainer}>
@@ -183,6 +185,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingLeft: 20,
         paddingRight: 20,
+        height: 150,
     },
     listContainer: {
         paddingTop: 10,

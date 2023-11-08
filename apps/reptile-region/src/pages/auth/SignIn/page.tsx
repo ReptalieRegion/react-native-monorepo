@@ -30,10 +30,10 @@ const SignInPage = ({ navigation }: SignInScreenProps) => {
     };
 
     /** 카카로 로그인 시작 */
-    const handleSuccessAuth = (data: PostKakaoAuth['Response'] | PostAppleAuth['Response']) => {
+    const handleSuccessAuth = async (data: PostKakaoAuth['Response'] | PostAppleAuth['Response']) => {
         switch (data.type) {
             case 'SIGN_IN':
-                signIn({ accessToken: data.accessToken, refreshToken: data.refreshToken });
+                await signIn({ accessToken: data.accessToken, refreshToken: data.refreshToken });
                 navigation.navigate('bottom-tab/routes', {
                     screen: 'tab',
                     params: {

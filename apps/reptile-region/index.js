@@ -22,6 +22,7 @@ if (__DEV__ && ENV.isDev) {
 }
 
 const onMessageReceived = async (message) => {
+    console.log('back\n', message);
     const data = message.data;
     if (data && typeof data === 'string') {
         const newData = JSON.parse(data);

@@ -7,8 +7,10 @@ import useAuthCacheInvalidateQueries from '@/apis/@utils/react-query-cache/useAu
 import useRefresh from '@/apis/auth/hooks/mutations/useRefresh';
 import { deleteAuthTokens, getRefreshToken } from '@/apis/auth/utils/secure-storage-token';
 import { useToast } from '@/components/@common/organisms/Toast';
+import useFCM from '@/hooks/useFCM';
 
 export default function InitialAuth() {
+    const { initializeFCM } = useFCM();
     const { mutateAsync: refreshMutateAsync } = useRefresh();
     const { invalidateAuthQueries } = useAuthCacheInvalidateQueries();
 
@@ -35,6 +37,12 @@ export default function InitialAuth() {
 
         initSignIn();
     }, [refreshMutateAsync, openToast, signIn]);
+
+    useEffect(() => {
+        if (isSignIn) {
+            initializeFCM();
+        }
+    }, [initializeFCM, isSignIn]);
 
     useEffect(() => {
         invalidateAuthQueries();
