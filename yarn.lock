@@ -2869,6 +2869,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@notifee/react-native@npm:^7.8.0":
+  version: 7.8.0
+  resolution: "@notifee/react-native@npm:7.8.0"
+  peerDependencies:
+    react-native: "*"
+  checksum: 800233c9505195046e918ee42a4b11d8e84cf1846ea4a0b52599e1a40181b2bbfcab09c64b445b5a7eed98c38556c97550bce32ed24a51ce05ccd8b65047548d
+  languageName: node
+  linkType: hard
+
 "@npmcli/agent@npm:^2.0.0":
   version: 2.2.0
   resolution: "@npmcli/agent@npm:2.2.0"
@@ -12636,6 +12645,7 @@ __metadata:
     "@faker-js/faker": ^8.0.2
     "@invertase/react-native-apple-authentication": ^2.2.2
     "@mswjs/data": ^0.13.0
+    "@notifee/react-native": ^7.8.0
     "@react-native-async-storage/async-storage": ^1.19.0
     "@react-native-camera-roll/camera-roll": ^5.6.0
     "@react-native-community/image-editor": ^2.3.0

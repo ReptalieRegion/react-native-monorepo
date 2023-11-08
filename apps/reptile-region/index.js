@@ -5,6 +5,8 @@
 import { AppRegistry } from 'react-native';
 
 import ENV from '@/env';
+import notifee from '@notifee/react-native';
+import messaging from '@react-native-firebase/messaging';
 import App from './App';
 import { name as appName } from './app.json';
 
@@ -18,5 +20,24 @@ if (__DEV__ && ENV.isDev) {
         });
     });
 }
+
+const onMessageReceived = async (message) => {
+    const data = message.data;
+    if (data && typeof data === 'string') {
+        const newData = JSON.parse(data);
+        notifee.displayNotification(newData.notifee);
+    } else {
+        notifee.displayNotification({
+            title: message.notification?.title,
+            body: message.notification?.body,
+        });
+    }
+};
+
+messaging().setBackgroundMessageHandler(onMessageReceived);
+
+notifee.onBackgroundEvent(async (notification) => {
+    console.log(notification);
+});
 
 AppRegistry.registerComponent(appName, () => App);
