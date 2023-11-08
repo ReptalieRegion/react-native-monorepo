@@ -59,9 +59,11 @@ export default function MainBottomBar({
     insets,
     onPressNavigate,
 }: BottomTabBarProps & MainBottomBarActions) {
+    const paddingBottom = insets.bottom === 0 ? 10 : insets.bottom;
+
     return (
         <View style={styles.bgWhite}>
-            <View style={[styles.container, { paddingBottom: insets.bottom }]}>
+            <View style={[styles.container, { paddingBottom }]}>
                 {state.routes.map((route, index) => {
                     const routeName = route.name as keyof BottomTabParamList;
                     const item = MENUS[routeName];

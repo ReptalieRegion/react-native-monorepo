@@ -31,6 +31,7 @@ export default function Profile({ user }: ProfileProps) {
 
 const styles = StyleSheet.create({
     container: {
+        height: 140,
         alignItems: 'center',
         justifyContent: 'center',
         gap: 20,

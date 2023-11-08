@@ -1,7 +1,6 @@
 import { TouchableTypo, color } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Alert, Dimensions, StyleSheet, View } from 'react-native';
-import { Keyboard } from 'react-native';
+import { ActivityIndicator, Alert, Keyboard, StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import type { SubmitType } from '../../contexts/CommentContext';
 import useComment from '../../hooks/useComment';
@@ -20,6 +19,7 @@ export interface CommentTextInputActions {
 }
 
 export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: CommentTextInputProps & CommentTextInputActions) {
+    const { width } = useWindowDimensions();
     const { contents, selection } = useTag();
     const { id, submitType } = useComment();
     const { tagTextInputFocus, changeText } = useTagHandler();
@@ -57,8 +57,8 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
     };
 
     return (
-        <View style={[styles.bottom]}>
-            <View style={styles.textInputContainer}>
+        <View style={[styles.bottom, { width }]}>
+            <View style={[styles.textInputContainer, { width: (width - 30 - 20) * 0.85 }]}>
                 <TagTextInput
                     value={contents}
                     defaultValue={contents}
@@ -90,8 +90,6 @@ const styles = StyleSheet.create({
         padding: 8,
         borderTopColor: color.Gray[250].toString(),
         borderTopWidth: 0.5,
-        width: Dimensions.get('screen').width,
-
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -102,7 +100,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: 8,
         paddingHorizontal: 10,
-        width: (Dimensions.get('screen').width - 30 - 20) * 0.85,
         borderColor: color.Gray[250].toString(),
         borderWidth: 0.5,
         borderRadius: 12,
@@ -110,7 +107,7 @@ const styles = StyleSheet.create({
     },
     textInput: {
         flex: 1,
-        paddingTop: 0,
+        padding: 0,
         fontSize: 14,
         maxHeight: 84,
     },
