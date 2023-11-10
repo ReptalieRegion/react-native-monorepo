@@ -25,10 +25,8 @@ type MyListScreenProps = CompositeScreenProps<
 export default function MyListPage({ navigation }: MyListScreenProps) {
     const { isSignIn, signOut } = useAuth();
     const { mutateAsync: signOutMutateAsync } = useSignOut();
-    const { data, isLoading } = useFetchMeProfile();
+    const { data } = useFetchMeProfile();
     const { openToast } = useToast();
-
-    console.log(data, isLoading);
 
     const navigateTermsOfUse = () => {
         navigation.navigate('my/terms-of-use');

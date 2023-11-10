@@ -37,7 +37,6 @@ class Fetcher {
     clientFetch = async (input: RequestInfo, init?: CustomRequestInit): Promise<Response> => {
         const fetchInfo = await this.generatorFetchInfo(input, init);
         const response = await fetch(fetchInfo.input, fetchInfo.init);
-        console.log(fetchInfo.input, response.status);
 
         if (response.status === 401) {
             return this.refreshTokenAndRetry(fetchInfo);
