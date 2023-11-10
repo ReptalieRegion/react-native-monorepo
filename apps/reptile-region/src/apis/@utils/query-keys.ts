@@ -5,7 +5,7 @@ export const AUTH_QUERY_KEYS = {
 
 /** My */
 export const MY_QUERY_KEYS = {
-    profile: ['me/profile'],
+    profile: ['me', 'profile'],
 } as const;
 
 /** SharePost */
