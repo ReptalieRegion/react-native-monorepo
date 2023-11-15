@@ -140,6 +140,7 @@ declare module '<routes/root>' {
         'my/terms-privacy-policy': undefined;
         'my/license/contents': LicenseContentsProps;
         'my/profile': undefined;
+        'my/notification-setting': undefined;
         /** my 끝 */
         'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
         'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;

@@ -44,6 +44,10 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
         navigation.navigate('my/license');
     };
 
+    const navigateNotificationSetting = () => {
+        navigation.navigate('my/notification-setting');
+    };
+
     const handleKakaoLogout = async () => {
         try {
             await signOutMutateAsync();
@@ -95,7 +99,11 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                         설정
                     </Typo>
                 </View>
-                <ListItem leftChildren={<ListItem.Title text="푸시 알림 설정" />} rightChildren={<ListItem.Chevron />} />
+                <ListItem
+                    leftChildren={<ListItem.Title text="푸시 알림 설정" />}
+                    rightChildren={<ListItem.Chevron />}
+                    onPress={navigateNotificationSetting}
+                />
                 <ListItem
                     leftChildren={<ListItem.Title text="내 프로필 설정" />}
                     rightChildren={<ListItem.Chevron />}
