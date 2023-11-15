@@ -10,6 +10,7 @@ const useFCM = () => {
             const setting = await messaging().requestPermission();
             if (setting === messaging.AuthorizationStatus.AUTHORIZED || setting === messaging.AuthorizationStatus.PROVISIONAL) {
                 const fcmToken = await messaging().getToken();
+                console.log(fcmToken);
                 mutate({ fcmToken });
             }
         } catch (error) {

@@ -1,8 +1,7 @@
-import notifee, { EventType } from '@notifee/react-native';
-import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 import { ErrorBoundary } from '@reptile-region/error-boundary';
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -12,43 +11,27 @@ import Toast from '@/components/@common/organisms/Toast';
 import { Auth } from '@/components/auth/organisms/Auth';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
-
-const onMessageReceived = async (message: FirebaseMessagingTypes.RemoteMessage) => {
-    const notifeeData = message.data?.notifee;
-    if (notifeeData && typeof notifeeData === 'string') {
-        const newData = JSON.parse(notifeeData);
-        notifee.displayNotification(newData);
-    } else {
-        notifee.displayNotification({
-            title: message.notification?.title,
-            body: message.notification?.body,
-        });
-    }
-};
+import {
+    notifeeAndroidGetInitialNotification,
+    notifeeForegroundEvent,
+    notifeeForegroundMessageReceived,
+} from '@/utils/notification/notifee';
 
 export default function App() {
     useEffect(() => {
-        const unsubMessaging = messaging().onMessage(onMessageReceived);
+        if (Platform.OS === 'android') {
+            notifeeAndroidGetInitialNotification();
+        }
 
-        return () => {
-            unsubMessaging();
-        };
-    }, []);
-
-    useEffect(() => {
-        const notification = notifee.onForegroundEvent(({ type, detail }) => {
-            switch (type) {
-                case EventType.DISMISSED:
-                    console.log('User dismissed notification', detail.notification);
-                    break;
-                case EventType.PRESS:
-                    console.log('User pressed notification', detail.notification);
-                    break;
-            }
+        const unMessage = messaging().onMessage(notifeeForegroundMessageReceived);
+        const unSubMessaging = Platform.select({
+            ios: notifeeForegroundEvent,
+            default: () => {},
         });
 
         return () => {
-            notification();
+            unMessage();
+            unSubMessaging();
         };
     }, []);
 

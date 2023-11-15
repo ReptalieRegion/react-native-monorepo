@@ -591,9 +591,10 @@ PODS:
     - TOCropViewController
   - RNNotifee (7.8.0):
     - React-Core
-    - RNNotifee/NotifeeCore (= 7.8.0)
-  - RNNotifee/NotifeeCore (7.8.0):
-    - React-Core
+    - RNNotifeeCore
+  - RNNotifeeCore (7.8.0):
+    - RNNotifeeCore/NotifeeCore (= 7.8.0)
+  - RNNotifeeCore/NotifeeCore (7.8.0)
   - RNPermissions (3.10.1):
     - React-Core
   - RNReactNativeHapticFeedback (2.2.0):
@@ -714,6 +715,7 @@ DEPENDENCIES:
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
   - RNImageCropPicker (from `../../../node_modules/react-native-image-crop-picker`)
   - "RNNotifee (from `../../../node_modules/@notifee/react-native`)"
+  - "RNNotifeeCore (from `../../../node_modules/@notifee/react-native/RNNotifeeCore.podspec`)"
   - RNPermissions (from `../../../node_modules/react-native-permissions`)
   - RNReactNativeHapticFeedback (from `../../../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../../../node_modules/react-native-reanimated`)
@@ -870,6 +872,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-image-crop-picker"
   RNNotifee:
     :path: "../../../node_modules/@notifee/react-native"
+  RNNotifeeCore:
+    :path: "../../../node_modules/@notifee/react-native/RNNotifeeCore.podspec"
   RNPermissions:
     :path: "../../../node_modules/react-native-permissions"
   RNReactNativeHapticFeedback:
@@ -962,7 +966,8 @@ SPEC CHECKSUMS:
   RNFlashList: 1983f915ae34e9253e413f31387959590d102f5e
   RNGestureHandler: 6e46dde1f87e5f018a54fe5d40cd0e0b942b49ee
   RNImageCropPicker: 521d8ef2dcf0549f141dbf82d086c75e3a9fbe65
-  RNNotifee: f3c01b391dd8e98e67f539f9a35a9cbcd3bae744
+  RNNotifee: 115a0bd237f4c1ffdbcafc0e1cccece60c3300b7
+  RNNotifeeCore: 9b5f576cdaa4fb7199d35d0651eb4f3ca0f5bcd3
   RNPermissions: 4a7a6498c1b47f6781a34cc690e59bbb8e964f21
   RNReactNativeHapticFeedback: ec56a5f81c3941206fd85625fa669ffc7b4545f9
   RNReanimated: 9633f8c2e214b721e35e371b473fbf3a1522948d
@@ -976,6 +981,6 @@ SPEC CHECKSUMS:
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: b76f1acfda8212aa16b7e26bcce3983230c82603
 
-PODFILE CHECKSUM: fbdf0a7c81e6e41578d4926fc9bfe15867af1e95
+PODFILE CHECKSUM: 87fc90a0d50e372875a0e80aac22e75b1f0fbd93
 
 COCOAPODS: 1.13.0
