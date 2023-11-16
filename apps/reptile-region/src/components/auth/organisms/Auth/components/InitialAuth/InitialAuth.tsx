@@ -6,12 +6,15 @@ import { useAuth } from '../../hooks/useAuth';
 import useAuthCacheInvalidateQueries from '@/apis/@utils/react-query-cache/useAuthCacheInvalidateQueries';
 import useRefresh from '@/apis/auth/hooks/mutations/useRefresh';
 import { deleteAuthTokens, getRefreshToken } from '@/apis/auth/utils/secure-storage-token';
+import { useFetchMeProfile } from '@/apis/me/profile/hooks';
 import { useToast } from '@/components/@common/organisms/Toast';
 import useFCM from '@/hooks/useFCM';
 
 export default function InitialAuth() {
     const { initializeFCM } = useFCM();
-    const { mutateAsync: refreshMutateAsync } = useRefresh();
+    const { mutateAsync: refreshMutateAsync, isSuccess } = useRefresh();
+    useFetchMeProfile({ enabled: isSuccess });
+
     const { invalidateAuthQueries } = useAuthCacheInvalidateQueries();
 
     const { isSignIn, signIn } = useAuth();
@@ -28,7 +31,7 @@ export default function InitialAuth() {
                 const tokens = await refreshMutateAsync({ refreshToken });
                 await signIn(tokens);
             } catch (error) {
-                openToast({ severity: 'error', contents: '로그인 실패' });
+                openToast({ severity: 'error', contents: '자동 로그인 실패' });
                 await deleteAuthTokens();
             } finally {
                 await BootSplash.hide({ fade: true });
