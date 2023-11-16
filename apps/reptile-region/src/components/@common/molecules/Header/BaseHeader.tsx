@@ -77,7 +77,7 @@ export default function BaseHeader({
 
 const styles = StyleSheet.create({
     container: {
-        height: 50,
+        height: 60,
         position: 'relative',
         flexDirection: 'row',
         justifyContent: 'center',

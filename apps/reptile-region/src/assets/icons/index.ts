@@ -15,6 +15,7 @@ export { default as Like_40 } from './Like_40';
 export { default as Like_55 } from './Like_55';
 export { default as Logo } from './Logo';
 export { default as My } from './My';
+export { default as NotificationIcon } from './Notification';
 export { default as PostWriteIcon } from './PostWriteIcon';
 export { default as Share } from './Share';
 export { default as Success } from './Success';

@@ -10,7 +10,7 @@ import BottomSheetHeader from '../BottomSheetHeader';
 export const createNativeStackHeader = (headerProps?: HeaderProps) => {
     return (props: NativeStackHeaderProps) => {
         const headerTitle = headerProps?.title === '' ? (props.options.headerTitle as string) : headerProps?.title;
-        const HeaderRight = props.options.headerRight?.({ canGoBack: props.navigation.canGoBack() });
+        const HeaderRight = props.options.headerRight?.({ canGoBack: props.navigation.canGoBack() }) ?? headerProps?.right;
 
         return <BaseHeader {...headerProps} title={headerTitle} right={HeaderRight} />;
     };
