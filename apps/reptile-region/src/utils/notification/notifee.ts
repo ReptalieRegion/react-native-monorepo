@@ -1,7 +1,7 @@
 import notifee, { EventType, type NotificationIOS } from '@notifee/react-native';
 import type { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 
-import { createNotificationPushLog } from '@/apis/notification/log/repository';
+import { createNotificationPushLog } from '@/apis/notification/push/repository';
 
 type NotifeeOptions = {
     ios: NotificationIOS;

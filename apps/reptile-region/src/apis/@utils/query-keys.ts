@@ -8,6 +8,10 @@ export const MY_QUERY_KEYS = {
     profile: ['me', 'profile'],
 } as const;
 
+export const NOTIFICATION_QUERY_KEYS = {
+    pushAgree: ['notification', 'pushAgree'],
+} as const;
+
 /** SharePost */
 export const SHARE_POST_QUERY_KEYS = {
     // 게시물

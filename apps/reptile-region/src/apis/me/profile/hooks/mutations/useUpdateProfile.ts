@@ -38,7 +38,7 @@ const useUpdateProfile = () => {
         },
         onError: (_error, _variables, context) => {
             if (context !== undefined) {
-                queryClient.setQueryData(MY_QUERY_KEYS.profile, context?.previousMeProfile);
+                queryClient.setQueryData(MY_QUERY_KEYS.profile, context.previousMeProfile);
             }
         },
         onSettled: () => {

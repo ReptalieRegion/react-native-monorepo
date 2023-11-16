@@ -1,18 +1,67 @@
 import messaging from '@react-native-firebase/messaging';
 import { Typo, color } from '@reptile-region/design-system';
-import { useToggle } from '@reptile-region/react-hooks';
 import React, { useEffect, useState } from 'react';
 import { AppState, Linking, StyleSheet, View } from 'react-native';
 import { Switch } from 'react-native-gesture-handler';
 
+import type { FetchPushAgree, PushAgreeType, UpdatePushAgree } from '<api/my/notification>';
+import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useUpdatePushAgree';
+import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 
+type ListType = {
+    title: string;
+    listItem: ListItemType[];
+};
+
+type ListItemType = {
+    type: PushAgreeType;
+    label: string;
+    dataTarget: keyof FetchPushAgree['Response'];
+};
+
+const PUSH_AGREE_LIST: ListType[] = [
+    {
+        title: '일상공유',
+        listItem: [
+            {
+                type: '좋아요',
+                label: '게시물 좋아요 알림',
+                dataTarget: 'isAgreePostLike',
+            },
+            {
+                type: '댓글',
+                label: '댓글 알림',
+                dataTarget: 'isAgreeComment',
+            },
+        ],
+    },
+    {
+        title: '회원',
+        listItem: [
+            {
+                type: '팔로우',
+                label: '팔로우 알림',
+                dataTarget: 'isAgreeFollow',
+            },
+        ],
+    },
+    {
+        title: '서비스',
+        listItem: [
+            {
+                type: '공지사항',
+                label: '공지사항 알림',
+                dataTarget: 'isAgreeService',
+            },
+        ],
+    },
+];
+
 export default function NotificationSetting() {
-    const [isEnabledPost, postToggle] = useToggle();
-    const [isEnabledComment, commentToggle] = useToggle();
-    const [isEnabledFollow, followToggle] = useToggle();
-    const [isEnabledAnnouncement, announcementToggle] = useToggle();
+    const { data } = useFetchPushAgree();
+    const { mutate } = useUpdatePushAgree();
     const [notNotificationPermission, setNotNotificationPermission] = useState(true);
 
     useEffect(() => {
@@ -33,6 +82,11 @@ export default function NotificationSetting() {
         };
     }, []);
 
+    const updatePushNotification = ({ type, isAgree }: UpdatePushAgree['Request']) => {
+        console.log('hi');
+        mutate({ type, isAgree });
+    };
+
     return (
         <View style={styles.container}>
             <ConditionalRenderer
@@ -40,6 +94,7 @@ export default function NotificationSetting() {
                 trueContent={
                     <View style={styles.list}>
                         <ListItem
+                            style={listStyles}
                             leftChildren={<ListItem.Title text="기기 알림이 꺼져있어요." />}
                             rightChildren={<ListItem.Chevron />}
                             onPress={Linking.openSettings}
@@ -48,67 +103,45 @@ export default function NotificationSetting() {
                 }
                 falseContent={null}
             />
-            <View style={styles.list}>
-                <Typo variant="title3">일상공유</Typo>
-                <View style={styles.switchContainer}>
-                    <Typo variant="body2">게시물 알림</Typo>
-                    <Switch
-                        value={isEnabledPost}
-                        onValueChange={postToggle}
-                        trackColor={{ true: color.Teal[150].toString() }}
-                    />
+
+            {PUSH_AGREE_LIST.map(({ title, listItem }, index) => (
+                <View style={[styles.list, index === PUSH_AGREE_LIST.length - 1 ? styles.lastList : undefined]} key={title}>
+                    <Typo variant="title3">{title}</Typo>
+                    {listItem.map(({ label, type, dataTarget }) => (
+                        <ListItem
+                            key={type}
+                            style={listStyles}
+                            leftChildren={<ListItem.Title text={label} disabled={notNotificationPermission} />}
+                            rightChildren={
+                                <Switch
+                                    value={data?.[dataTarget]}
+                                    onValueChange={(isAgree) => updatePushNotification({ type, isAgree })}
+                                    trackColor={{ true: color.Teal[150].toString() }}
+                                    disabled={notNotificationPermission}
+                                />
+                            }
+                        />
+                    ))}
                 </View>
-                <View style={styles.switchContainer}>
-                    <Typo variant="body2">댓글 알림</Typo>
-                    <Switch
-                        value={isEnabledComment}
-                        onValueChange={commentToggle}
-                        trackColor={{ true: color.Teal[150].toString() }}
-                    />
-                </View>
-            </View>
-            <View style={styles.list}>
-                <Typo variant="title3">회원</Typo>
-                <View style={styles.switchContainer}>
-                    <Typo variant="body2">팔로우 알림</Typo>
-                    <Switch
-                        value={isEnabledFollow}
-                        onValueChange={followToggle}
-                        trackColor={{ true: color.Teal[150].toString() }}
-                    />
-                </View>
-            </View>
-            <View style={[styles.list, styles.lastList]}>
-                <Typo variant="title3">서비스</Typo>
-                <View style={styles.switchContainer}>
-                    <Typo variant="body2">공지사항 알림</Typo>
-                    <Switch
-                        value={isEnabledAnnouncement}
-                        onValueChange={announcementToggle}
-                        trackColor={{ true: color.Teal[150].toString() }}
-                    />
-                </View>
-            </View>
+            ))}
         </View>
     );
 }
+
+const listStyles = {
+    paddingLeft: 0,
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
     list: {
-        gap: 15,
         marginBottom: 10,
         backgroundColor: color.White.toString(),
         padding: 20,
     },
     lastList: {
         flex: 1,
-    },
-    switchContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
     },
 });
