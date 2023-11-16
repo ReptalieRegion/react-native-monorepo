@@ -9,7 +9,8 @@ export const MY_QUERY_KEYS = {
 } as const;
 
 export const NOTIFICATION_QUERY_KEYS = {
-    pushAgree: ['notification', 'pushAgree'],
+    pushLog: ['notification', 'push', 'log'],
+    pushAgree: ['notification', 'push', 'agree'],
 } as const;
 
 /** SharePost */

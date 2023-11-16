@@ -1,7 +1,19 @@
 declare module '<api/my/notification>' {
-    import { ServerAPI } from '<api/utils>';
+    import type { InfiniteState, ServerAPI } from '<api/utils>';
 
     /** GET 시작 */
+    type FetchPushLogResponse = {
+        messageId: string;
+        contents: {
+            title: string;
+            article: string;
+            image?: string;
+        };
+        isRead: boolean;
+    };
+
+    type FetchPushLog = ServerAPI<void, InfiniteState<FetchPushLogResponse>>;
+
     type FetchPushAgreeResponse = {
         isAgreeComment: boolean;
         isAgreePostLike: boolean;

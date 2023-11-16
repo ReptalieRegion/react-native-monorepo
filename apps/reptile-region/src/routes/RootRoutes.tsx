@@ -23,6 +23,8 @@ import { PrivacyPolicyHeader } from '@/pages/me/Terms/PrivacyPolicy/header';
 import PrivacyPolicyPage from '@/pages/me/Terms/PrivacyPolicy/page';
 import { TermsOfUseHeader } from '@/pages/me/Terms/TermsOfUse/header';
 import TermsOfUsePage from '@/pages/me/Terms/TermsOfUse/page';
+import { pushLogListHeader } from '@/pages/notification/PushLogList/header';
+import PushLogList from '@/pages/notification/PushLogList/page';
 import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostUpdatePage, { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost';
 
@@ -105,6 +107,7 @@ const RootRoutes = () => {
                         component={NotificationSetting}
                         options={{ header: NotificationSettingHeader }}
                     />
+                    <Stack.Screen name="my/notification-log" component={PushLogList} options={{ header: pushLogListHeader }} />
                 </Stack.Group>
                 {/** 내 정보 끝 */}
             </Stack.Navigator>
