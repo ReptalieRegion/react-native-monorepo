@@ -12,7 +12,7 @@ import Title from './Title';
 type ListState = {
     leftChildren?: ReactNode;
     rightChildren?: ReactNode;
-    style?: Pick<ViewStyle, 'paddingLeft' | 'paddingRight'>;
+    style?: Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingBottom' | 'paddingTop'>;
 };
 
 interface ListActions {
@@ -33,7 +33,7 @@ function ListItemView({ leftChildren, rightChildren, style }: ListState) {
 export default function ListItem({
     leftChildren,
     rightChildren,
-    style = { paddingLeft: 20, paddingRight: 15 },
+    style = { paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 15 },
     onPress,
 }: ListProps) {
     return (
@@ -58,8 +58,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingTop: 10,
-        paddingBottom: 10,
         backgroundColor: color.White.toString(),
     },
     leftContainer: {

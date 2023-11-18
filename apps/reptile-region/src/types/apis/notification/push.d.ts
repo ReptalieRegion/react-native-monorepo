@@ -24,7 +24,15 @@ declare module '<api/my/notification>' {
     type FetchPushAgree = ServerAPI<void, FetchPushAgreeResponse>;
     /** GET 끝 */
 
-    /** PUSH 시작 */
+    /** POST 시작 */
+    type CreatePushAgreeRequest = {
+        isAgree: boolean;
+    };
+
+    type CreatePushAgree = ServerAPI<CreatePushAgreeRequest, void>;
+    /** POST 끝 */
+
+    /** PUT 시작 */
     type PushAgreeType = '댓글' | '좋아요' | '팔로우' | '공지사항';
 
     type UpdatePushAgreeRequest = {
@@ -32,10 +40,6 @@ declare module '<api/my/notification>' {
         isAgree: boolean;
     };
 
-    type UpdatePushAgreeResponse = {
-        profile: ImageType;
-    };
-
-    type UpdatePushAgree = ServerAPI<UpdatePushAgreeRequest, UpdatePushAgreeResponse>;
-    /** PUSH 끝 */
+    type UpdatePushAgree = ServerAPI<UpdatePushAgreeRequest, unknown>;
+    /** PUT 끝 */
 }

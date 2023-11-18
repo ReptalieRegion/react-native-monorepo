@@ -8,6 +8,7 @@ import type { MyTabParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
 import useSignOut from '@/apis/auth/hooks/mutations/useSignOut';
 import { useFetchMeProfile } from '@/apis/me/profile/hooks';
+import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { Share } from '@/assets/icons';
 import Diary from '@/assets/icons/Diary';
 import { ConditionalRenderer } from '@/components/@common/atoms';
@@ -26,6 +27,7 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
     const { isSignIn, signOut } = useAuth();
     const { mutateAsync: signOutMutateAsync } = useSignOut();
     const { data } = useFetchMeProfile();
+    useFetchPushAgree();
     const { openToast } = useToast();
 
     const navigateTermsOfUse = () => {

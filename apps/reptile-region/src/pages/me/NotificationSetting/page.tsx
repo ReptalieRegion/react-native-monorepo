@@ -83,7 +83,6 @@ export default function NotificationSetting() {
     }, []);
 
     const updatePushNotification = ({ type, isAgree }: UpdatePushAgree['Request']) => {
-        console.log('hi');
         mutate({ type, isAgree });
     };
 
@@ -130,6 +129,8 @@ export default function NotificationSetting() {
 
 const listStyles = {
     paddingLeft: 0,
+    paddingTop: 5,
+    paddingBottom: 5,
 };
 
 const styles = StyleSheet.create({

@@ -6,14 +6,14 @@ import type { FetchPushAgree, UpdatePushAgree } from '<api/my/notification>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { NOTIFICATION_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
-type UseUpdateProfileContext = {
+type UseUpdatePushAgreeContext = {
     previousPushAgree: FetchPushAgree['Response'];
 };
 
 const useUpdatePushAgree = () => {
     const queryClient = useQueryClient();
 
-    return useMutation<UpdatePushAgree['Response'], HTTPError, UpdatePushAgree['Request'], UseUpdateProfileContext>({
+    return useMutation<UpdatePushAgree['Response'], HTTPError, UpdatePushAgree['Request'], UseUpdatePushAgreeContext>({
         mutationFn: updateNotificationPushAgree,
         onMutate: async ({ type, isAgree }) => {
             await queryClient.cancelQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree });
@@ -35,7 +35,7 @@ const useUpdatePushAgree = () => {
                 }
             });
 
-            return { previousPushAgree } as UseUpdateProfileContext;
+            return { previousPushAgree } as UseUpdatePushAgreeContext;
         },
         onError: (_error, _variables, context) => {
             if (context !== undefined) {
@@ -43,7 +43,7 @@ const useUpdatePushAgree = () => {
             }
         },
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree });
+            setTimeout(() => queryClient.invalidateQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree }), 100);
         },
     });
 };

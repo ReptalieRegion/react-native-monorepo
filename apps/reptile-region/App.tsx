@@ -1,7 +1,6 @@
-import messaging from '@react-native-firebase/messaging';
 import { ErrorBoundary } from '@reptile-region/error-boundary';
-import React, { useEffect } from 'react';
-import { Platform, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -9,31 +8,12 @@ import GlobalError from './error';
 
 import Toast from '@/components/@common/organisms/Toast';
 import { Auth } from '@/components/auth/organisms/Auth';
+import useEffectNotifee from '@/hooks/useEffectNotifee';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
-import {
-    notifeeAndroidGetInitialNotification,
-    notifeeForegroundEvent,
-    notifeeForegroundMessageReceived,
-} from '@/utils/notification/notifee';
 
 export default function App() {
-    useEffect(() => {
-        if (Platform.OS === 'android') {
-            notifeeAndroidGetInitialNotification();
-        }
-
-        const unMessage = messaging().onMessage(notifeeForegroundMessageReceived);
-        const unSubMessaging = Platform.select({
-            ios: notifeeForegroundEvent,
-            default: () => {},
-        });
-
-        return () => {
-            unMessage();
-            unSubMessaging();
-        };
-    }, []);
+    useEffectNotifee();
 
     return (
         <ReactQueryProvider>

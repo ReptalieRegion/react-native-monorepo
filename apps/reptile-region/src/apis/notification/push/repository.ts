@@ -1,4 +1,4 @@
-import type { FetchPushLog, UpdatePushAgree } from '<api/my/notification>';
+import type { CreatePushAgree, FetchPushLog, UpdatePushAgree } from '<api/my/notification>';
 import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
@@ -22,6 +22,17 @@ export const fetchNotificationLog = async ({ pageParam }: WithInfinitePageParam<
 };
 
 /** POST */
+export const createNotificationPushAgree = async ({ isAgree }: CreatePushAgree['Request']) => {
+    const response = await clientFetch('api/notification/push/agree', {
+        method: METHOD.POST,
+        body: {
+            isAgree,
+        },
+    });
+
+    return response.json();
+};
+
 export const createNotificationPushLog = async () => {
     const response = await clientFetch('api/notification/log', {
         method: METHOD.POST,
@@ -33,12 +44,10 @@ export const createNotificationPushLog = async () => {
 /** PUT */
 export const updateNotificationPushAgree = async ({ type, isAgree }: UpdatePushAgree['Request']) => {
     const queryString = objectToQueryString({ type });
-    const response = await clientFetch(`api/notification/push/agree?${queryString}`, {
+    clientFetch(`api/notification/push/agree?${queryString}`, {
         method: METHOD.PUT,
         body: { isAgree },
     });
-
-    return response.json();
 };
 
 export const readNotificationPushLog = async () => {
