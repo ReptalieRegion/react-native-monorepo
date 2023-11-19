@@ -106,21 +106,23 @@ export default function NotificationSetting() {
             {PUSH_AGREE_LIST.map(({ title, listItem }, index) => (
                 <View style={[styles.list, index === PUSH_AGREE_LIST.length - 1 ? styles.lastList : undefined]} key={title}>
                     <Typo variant="title3">{title}</Typo>
-                    {listItem.map(({ label, type, dataTarget }) => (
-                        <ListItem
-                            key={type}
-                            style={listStyles}
-                            leftChildren={<ListItem.Title text={label} disabled={notNotificationPermission} />}
-                            rightChildren={
-                                <Switch
-                                    value={data?.[dataTarget]}
-                                    onValueChange={(isAgree) => updatePushNotification({ type, isAgree })}
-                                    trackColor={{ true: color.Teal[150].toString() }}
-                                    disabled={notNotificationPermission}
-                                />
-                            }
-                        />
-                    ))}
+                    <View>
+                        {listItem.map(({ label, type, dataTarget }) => (
+                            <ListItem
+                                key={type}
+                                style={listStyles}
+                                leftChildren={<ListItem.Title text={label} disabled={notNotificationPermission} />}
+                                rightChildren={
+                                    <Switch
+                                        value={data?.[dataTarget]}
+                                        onValueChange={(isAgree) => updatePushNotification({ type, isAgree })}
+                                        trackColor={{ true: color.Teal[150].toString() }}
+                                        disabled={notNotificationPermission}
+                                    />
+                                }
+                            />
+                        ))}
+                    </View>
                 </View>
             ))}
         </View>
@@ -129,8 +131,8 @@ export default function NotificationSetting() {
 
 const listStyles = {
     paddingLeft: 0,
-    paddingTop: 5,
-    paddingBottom: 5,
+    paddingTop: 4,
+    paddingBottom: 4,
 };
 
 const styles = StyleSheet.create({
@@ -141,6 +143,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         backgroundColor: color.White.toString(),
         padding: 20,
+        gap: 10,
     },
     lastList: {
         flex: 1,
