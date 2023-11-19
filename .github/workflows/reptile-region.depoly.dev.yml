@@ -36,7 +36,6 @@ jobs:
             - name: Build and Upload to TestFlight (Beta)
               run: |
                   cd ./apps/reptile-region/ios
-                  fastlane env
                   bundle exec fastlane beta:1.0.25
                   env:
                     FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
