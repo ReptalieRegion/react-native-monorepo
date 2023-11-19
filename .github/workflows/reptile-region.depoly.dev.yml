@@ -33,3 +33,14 @@ jobs:
                   cd ./ios
                   bundle install
                   bundle update fastlane
+            - name: Build and Upload to TestFlight (Beta)
+              run: |
+                  cd ./apps/reptile-region/ios
+                  fastlane env
+                  bundle exec fastlane beta:1.0.2
+                  env:
+                    MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
+                    MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
+                    MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+                    GIT_URL: ${{ secrets.GIT_URL }}
+                    FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
