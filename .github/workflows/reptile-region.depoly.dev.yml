@@ -39,8 +39,16 @@ jobs:
                   fastlane env
                   bundle exec fastlane beta:1.0.25
                   env:
+                    FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+                    APP_IDENTIFIER: ${{ secrets.APP_IDENTIFIER }}
+                    APPLE_ID: ${{ secrets.APPLE_ID }}
+                    ITC_TEAM_ID: ${{ secrets.ITC_TEAM_ID }}
+                    TEAM_ID: ${{ secrets.TEAM_ID }}
+                    GIT_URL: ${{ secrets.GIT_URL }}
+                    STORAGE_MODE: ${{ secrets.STORAGE_MODE }}
+                    XCODEPROJ: ${{ secrets.XCODEPROJ }}
+                    WORKSPACE: ${{ secrets.WORKSPACE }}
+                    SCHEME: ${{ secrets.SCHEME }}
                     MATCH_KEYCHAIN_NAME: ${{ secrets.MATCH_KEYCHAIN_NAME }}
                     MATCH_KEYCHAIN_PASSWORD: ${{ secrets.MATCH_KEYCHAIN_PASSWORD }}
                     MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-                    GIT_URL: ${{ secrets.GIT_URL }}
-                    FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
