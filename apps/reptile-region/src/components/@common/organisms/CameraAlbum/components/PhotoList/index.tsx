@@ -1,4 +1,4 @@
-import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { type PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import type { ListRenderItem } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
 import React, { useEffect } from 'react';
@@ -18,24 +18,24 @@ type PhotoListProps = {
     loadPhotoLimit: number;
 };
 
-export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: PhotoListProps) {
+export default function PhotoList({ numColumns = 4, loadPhotoLimit = 4000 }: PhotoListProps) {
     const { width } = useWindowDimensions();
     const imageWidth = width / numColumns - 2;
 
     const { photos } = usePhoto();
     const { openToast } = useToast();
-    const { selectPhoto, loadPhotos, initPhotos } = useCameraAlbumHandler({
+    const { selectPhoto, fetchPhotos } = useCameraAlbumHandler({
         limit: MAX_PHOTO_COUNT,
         limitCallback: () => openToast({ contents: `이미지는 최대 ${MAX_PHOTO_COUNT}개 입니다.`, severity: 'warning' }),
     });
 
     useEffect(() => {
-        initPhotos({ first: loadPhotoLimit });
-    }, [initPhotos, loadPhotoLimit]);
+        fetchPhotos({ first: loadPhotoLimit, isInit: true });
+    }, [fetchPhotos, loadPhotoLimit]);
 
     const loadMorePhotos = async () => {
         const lastPhoto = photos?.at(-1)?.node.image.uri;
-        await loadPhotos({ first: loadPhotoLimit, after: lastPhoto, assetType: 'Photos' });
+        await fetchPhotos({ first: loadPhotoLimit, after: lastPhoto, assetType: 'Photos' });
     };
 
     const renderItem: ListRenderItem<PhotoIdentifier> = ({ item }) => {

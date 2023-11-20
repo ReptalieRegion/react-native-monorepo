@@ -5,7 +5,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import ENV from '@/env';
 
-const backgroundColor = ENV.isProd ? undefined : ENV.isDev ? 'red' : ENV.isLocal ? undefined : color.Black.toString();
+const backgroundColor = ENV.isProd
+    ? undefined
+    : ENV.isDev
+    ? 'red'
+    : ENV.isLocal
+    ? color.White.toString()
+    : color.Black.toString();
 
 export default function MainStatusBar() {
     const { top } = useSafeAreaInsets();

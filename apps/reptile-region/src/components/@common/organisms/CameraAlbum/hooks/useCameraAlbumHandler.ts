@@ -1,10 +1,9 @@
-import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { useCameraRoll, type PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 
 import { PhotoActionsContext } from '../contexts/PhotoContext';
 import { PhotoSelectActionsContext } from '../contexts/PhotoSelectContext';
 import type { FetchPhotosProps } from '../types';
-import { fetchPhotos } from '../utils';
 
 import usePhotoSelect from './usePhotoSelect';
 
@@ -19,6 +18,8 @@ interface UseCameraAlbumHandlerActions {
 type UseCameraAlbumHandlerProps = UseCameraAlbumHandlerState & UseCameraAlbumHandlerActions;
 
 const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
+    const [photos, getPhotos] = useCameraRoll();
+    const isInitPhoto = useRef<boolean | undefined>();
     const isLastPhoto = useRef(false);
     const isLoadingFetchPhoto = useRef(false);
 
@@ -36,36 +37,30 @@ const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
         }
     }, [props, isLimit]);
 
-    const initPhotos = useCallback(
-        async ({ first, after, assetType }: FetchPhotosProps) => {
+    useEffect(() => {
+        if (!photos) {
+            return;
+        }
+
+        if (isInitPhoto.current) {
+            photoSelectDispatch({ type: 'INIT_CURRENT_PHOTO', photo: photos.edges[0] });
+        }
+
+        photoDispatch({ type: 'ADD_PHOTOS', photos: photos.edges });
+    }, [photoDispatch, photoSelectDispatch, photos]);
+
+    const fetchPhotos = useCallback(
+        async ({ first, after, assetType, isInit }: FetchPhotosProps) => {
             if (isLoadingFetchPhoto.current || isLastPhoto.current) {
                 return;
             }
 
             isLoadingFetchPhoto.current = true;
-            const result = await fetchPhotos({ first, after, assetType });
-            const photos = result ? result.edges : null;
-            photoDispatch({ type: 'INIT_PHOTOS', photos });
-            photoSelectDispatch({ type: 'INIT_CURRENT_PHOTO', photo: photos !== null ? photos[0] : null });
+            isInitPhoto.current = isInit;
+            getPhotos({ first, after, assetType });
             isLoadingFetchPhoto.current = false;
         },
-        [photoDispatch, photoSelectDispatch],
-    );
-
-    const loadPhotos = useCallback(
-        async ({ first, after, assetType }: FetchPhotosProps) => {
-            if (isLoadingFetchPhoto.current || isLastPhoto.current) {
-                return;
-            }
-
-            isLoadingFetchPhoto.current = true;
-            const result = await fetchPhotos({ first, after, assetType });
-            isLastPhoto.current = result?.edges.length === 0;
-            const photos = result ? result.edges : null;
-            photoDispatch({ type: 'ADD_PHOTOS', photos });
-            isLoadingFetchPhoto.current = false;
-        },
-        [photoDispatch],
+        [getPhotos],
     );
 
     const selectPhoto = useCallback(
@@ -83,8 +78,7 @@ const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
     );
 
     return {
-        initPhotos,
-        loadPhotos,
+        fetchPhotos,
         selectPhoto,
         deleteSelectedPhoto,
     };

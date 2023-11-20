@@ -43,7 +43,7 @@ const useUpdatePushAgree = () => {
             }
         },
         onSettled: () => {
-            setTimeout(() => queryClient.invalidateQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree }), 100);
+            setTimeout(() => queryClient.invalidateQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree }), 1 * 60 * 1000);
         },
     });
 };
