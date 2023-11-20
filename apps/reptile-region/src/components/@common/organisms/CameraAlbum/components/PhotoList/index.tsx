@@ -1,7 +1,7 @@
 import { type PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import type { ListRenderItem } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -13,12 +13,14 @@ import SquareImage from '@/components/@common/atoms/SquareImage';
 import { useToast } from '@/components/@common/organisms/Toast';
 import { MAX_PHOTO_COUNT } from '@/env/constants';
 
-type PhotoListProps = {
+type PhotoListState = {
     numColumns: number;
     loadPhotoLimit: number;
 };
 
-export default function PhotoList({ numColumns = 4, loadPhotoLimit = 4000 }: PhotoListProps) {
+type PhotoListProps = PhotoListState;
+
+export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: PhotoListProps) {
     const { width } = useWindowDimensions();
     const imageWidth = width / numColumns - 2;
 
@@ -28,14 +30,17 @@ export default function PhotoList({ numColumns = 4, loadPhotoLimit = 4000 }: Pho
         limit: MAX_PHOTO_COUNT,
         limitCallback: () => openToast({ contents: `이미지는 최대 ${MAX_PHOTO_COUNT}개 입니다.`, severity: 'warning' }),
     });
+    const isScrolling = useRef(false);
 
     useEffect(() => {
         fetchPhotos({ first: loadPhotoLimit, isInit: true });
     }, [fetchPhotos, loadPhotoLimit]);
 
-    const loadMorePhotos = async () => {
-        const lastPhoto = photos?.at(-1)?.node.image.uri;
-        await fetchPhotos({ first: loadPhotoLimit, after: lastPhoto, assetType: 'Photos' });
+    const loadMorePhotos = () => {
+        if (isScrolling.current) {
+            const lastPhoto = photos?.at(-1)?.node.image.uri;
+            fetchPhotos({ first: loadPhotoLimit, after: lastPhoto, assetType: 'Photos' });
+        }
     };
 
     const renderItem: ListRenderItem<PhotoIdentifier> = ({ item }) => {
@@ -58,17 +63,17 @@ export default function PhotoList({ numColumns = 4, loadPhotoLimit = 4000 }: Pho
     };
 
     return (
-        <View style={styles.container}>
-            <FlashList
-                data={photos}
-                numColumns={numColumns}
-                contentContainerStyle={styles.squareContainer}
-                keyExtractor={(item) => item.node.image.uri}
-                onEndReached={loadMorePhotos}
-                renderItem={renderItem}
-                estimatedItemSize={imageWidth}
-            />
-        </View>
+        <FlashList
+            data={photos}
+            numColumns={numColumns}
+            contentContainerStyle={styles.squareContainer}
+            keyExtractor={(item) => item.node.image.uri}
+            onEndReached={loadMorePhotos}
+            renderItem={renderItem}
+            estimatedItemSize={imageWidth}
+            onMomentumScrollBegin={() => (isScrolling.current = true)}
+            onMomentumScrollEnd={() => (isScrolling.current = false)}
+        />
     );
 }
 

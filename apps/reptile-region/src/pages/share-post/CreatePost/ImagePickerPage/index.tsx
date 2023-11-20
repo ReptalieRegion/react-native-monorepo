@@ -1,7 +1,7 @@
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TouchableTypo } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import type { SharePostPostingParamList } from '<routes/root>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
@@ -43,17 +43,27 @@ export const ImagePickerHeader = createNativeStackHeader({
 });
 
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
+    const { width, height } = useWindowDimensions();
+    const headerHeight = 60;
+    const textHeight = 48;
+    const photoEditorHeight = height / 2 - headerHeight;
+    const photoListHeight = height - photoEditorHeight;
+
     return (
         <>
             <ChangeHeader navigation={navigation} />
-            <CameraAlbum.PhotoEditor />
-            <View style={styles.container}>
-                <TouchableTypo>최근항목</TouchableTypo>
-                <View style={styles.view}>
-                    <TouchableTypo>카메라</TouchableTypo>
+            <View style={{ width, height: photoEditorHeight }}>
+                <CameraAlbum.PhotoEditor width={width} height={photoEditorHeight - textHeight} />
+                <View style={[styles.container, { height: textHeight }]}>
+                    <TouchableTypo>최근항목</TouchableTypo>
+                    <View style={styles.view}>
+                        <TouchableTypo>카메라</TouchableTypo>
+                    </View>
                 </View>
             </View>
-            <CameraAlbum.PhotoList numColumns={4} loadPhotoLimit={60} />
+            <View style={{ height: photoListHeight }}>
+                <CameraAlbum.PhotoList numColumns={4} loadPhotoLimit={60} />
+            </View>
         </>
     );
 }

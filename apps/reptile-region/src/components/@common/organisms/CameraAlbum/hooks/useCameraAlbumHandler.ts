@@ -20,7 +20,6 @@ type UseCameraAlbumHandlerProps = UseCameraAlbumHandlerState & UseCameraAlbumHan
 const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
     const [photos, getPhotos] = useCameraRoll();
     const isInitPhoto = useRef<boolean | undefined>();
-    const isLastPhoto = useRef(false);
     const isLoadingFetchPhoto = useRef(false);
 
     const { isLimit } = usePhotoSelect();
@@ -51,7 +50,7 @@ const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
 
     const fetchPhotos = useCallback(
         async ({ first, after, assetType, isInit }: FetchPhotosProps) => {
-            if (isLoadingFetchPhoto.current || isLastPhoto.current) {
+            if (isLoadingFetchPhoto.current) {
                 return;
             }
 
