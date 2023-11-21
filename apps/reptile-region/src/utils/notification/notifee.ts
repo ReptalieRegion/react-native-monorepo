@@ -1,6 +1,9 @@
 import notifee, { AndroidImportance, AndroidVisibility, EventType, type NotificationIOS } from '@notifee/react-native';
 import type { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
+import type { NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { Platform } from 'react-native';
+
+import type { RootRoutesParamList } from '<routes/root>';
 
 type NotifeeOptions = {
     ios: NotificationIOS;
@@ -10,113 +13,130 @@ type DisplayNotification = {
     title: string;
     body: string;
     image?: string;
+    link?: string;
     message: FirebaseMessagingTypes.RemoteMessage;
 };
 
-type NotifeeData = {
+type NotificationData = {
     title: string;
     body: string;
-    imageUrl: string;
+    link: string;
 };
 
-export class Notifee {
+const routes = {
+    'notification/detail': 'posts/:postId/detail/:type',
+    detail: 'users/:nickname',
+} as const;
+
+type Route = keyof typeof routes;
+
+class NotifeeManger {
+    private deepLink: string | undefined;
+
     constructor() {}
 
-    notifeeDeleteDefaultChannel = async () => {
+    deleteDefaultChannel = async () => {
         await notifee.deleteChannel('fcm_fallback_notification_channel');
     };
 
-    notifeeForegroundMessageReceived = async (message: FirebaseMessagingTypes.RemoteMessage) => {
-        console.log('===notifeeForegroundMessageReceived===');
-        console.log(JSON.stringify(message));
-        console.log('===notifeeForegroundMessageReceived===');
-        const { title, body } = this._dataParse(message);
-        const displayNotification = Platform.select({
-            ios: this._displayNotificationIOS,
-            android: this._displayNotificationAndroid,
-        });
-        displayNotification?.({ title, body, message });
-    };
-
-    notifeeBackgroundMessageReceived = async (message: FirebaseMessagingTypes.RemoteMessage) => {
-        console.log('===notifeeBackgroundMessageReceived===start');
-        console.log(message);
+    messageReceived = async (message: FirebaseMessagingTypes.RemoteMessage) => {
+        this.deepLink = undefined;
         const data = this._dataParse(message);
+        if (data === undefined) {
+            return;
+        }
+
+        const { title, body, link } = data;
         const displayNotification = Platform.select({
             ios: this._displayNotificationIOS,
             android: this._displayNotificationAndroid,
         });
-        displayNotification?.({ title: data.title, body: data.body, message });
-        console.log('===notifeeBackgroundMessageReceived===');
+        displayNotification?.({ title, body, message, link });
     };
 
-    notifeeForegroundEvent = () => {
+    foregroundEvent = (navigationRef: NavigationContainerRefWithCurrent<RootRoutesParamList>) => {
         return notifee.onForegroundEvent(async ({ type, detail }) => {
-            console.log('===onForegroundEvent===');
-            console.log(type, detail);
-            console.log('===onForegroundEvent===');
             const { notification } = detail;
+            const link = detail.notification?.data?.link;
 
-            if (notification && type === EventType.PRESS && notification.id) {
+            if (type === EventType.PRESS && notification?.id && typeof link === 'string') {
+                const route = this._findMatchingRoute(link);
+                switch (route?.screen) {
+                    case 'notification/detail':
+                        navigationRef.navigate('share-post/modal', {
+                            screen: route.screen,
+                            params: {
+                                postId: route.params?.postId ?? '',
+                                type: (route.params?.type as 'like' | 'comment') ?? 'like',
+                            },
+                        });
+                        break;
+                    case 'detail':
+                        navigationRef.navigate('share-post/modal', {
+                            screen: route.screen,
+                            params: {
+                                isFollow: false,
+                                nickname: route.params?.nickname ?? '',
+                                profile: {
+                                    src: '',
+                                },
+                            },
+                        });
+                        break;
+                    default:
+                        break;
+                }
+
                 await notifee.cancelNotification(notification?.id);
             }
         });
     };
 
-    notifeeBackgroundEvent = () => {
+    backgroundEvent = () => {
         return notifee.onBackgroundEvent(async ({ type, detail }) => {
-            console.log('===onBackgroundEvent===');
-            console.log(type, detail);
-            console.log('===onBackgroundEvent===');
             const { notification } = detail;
-
-            if (Platform.OS === 'android' && notification?.id) {
-                await notifee.cancelNotification(notification.id);
-            }
 
             if (type === EventType.PRESS && notification?.id) {
-                await notifee.cancelNotification(notification?.id);
+                const link = detail.notification?.data?.link;
+                const isExistLink = link && typeof link === 'string';
+                this.deepLink = isExistLink ? link : undefined;
+                await notifee.cancelNotification(notification.id);
             }
         });
     };
 
-    notifeeGetInitialNotification = async () => {
-        const initialNotification = await notifee.getInitialNotification();
-        console.log('===notifeeGetInitialNotification===');
-        console.log(initialNotification);
-        console.log('===notifeeGetInitialNotification===');
+    getInitialNotification = () => {
+        return notifee.getInitialNotification();
+    };
+
+    getDeepLink = () => {
+        return this.deepLink;
     };
 
     private _dataParse = (message: FirebaseMessagingTypes.RemoteMessage) => {
-        const notifeeDataString = message.data?.notifee;
-        if (notifeeDataString && typeof notifeeDataString === 'string') {
-            const notifeeData = JSON.parse(notifeeDataString) as NotifeeData;
-
-            return {
-                title: notifeeData.title,
-                body: notifeeData.body,
-                imageUrl: notifeeData.imageUrl,
-            };
-        }
-
-        return {
-            title: '크롤',
-            body: '새로운 메시지가 도착했어요.',
-        };
+        const data = message.data as NotificationData;
+        return data
+            ? {
+                  title: data.title,
+                  body: data.body,
+                  link: data.link,
+              }
+            : undefined;
     };
 
-    private _displayNotificationIOS = ({ title, body, message }: DisplayNotification) => {
+    private _displayNotificationIOS = ({ title, body, message, link }: DisplayNotification) => {
         const notifeeOptions = message.data?.notifee_options;
         const ios = (notifeeOptions as NotifeeOptions).ios;
-        notifee.displayNotification({ title, body, ios });
+        const data = link ? { link } : undefined;
+
+        notifee.displayNotification({ title, body, ios, data });
     };
 
-    private _displayNotificationAndroid = async ({ title, body, message }: DisplayNotification) => {
+    private _displayNotificationAndroid = async ({ title, body, message, link }: DisplayNotification) => {
         const android = message.notification?.android;
+        const data = link ? { link } : undefined;
+
         if (android) {
-            console.log(title);
-            console.log(body);
-            console.log(android);
             const channelId = await notifee.createChannel({
                 id: 'important',
                 name: 'Important Notifications',
@@ -135,7 +155,61 @@ export class Notifee {
                         id: 'default',
                     },
                 },
+                data,
             });
         }
     };
+
+    private _extractParams(pattern: string, route: string) {
+        const patternParts = pattern.split('/');
+        const routeParts = route.split('/');
+
+        const params: { [key in string]: string } = {};
+
+        routeParts.forEach((routePart, index) => {
+            const isParam = routePart.startsWith(':');
+            if (!isParam) {
+                return;
+            }
+
+            const paramName = routePart.substring(1);
+            const paramValue = patternParts[index];
+            params[paramName] = paramValue;
+        });
+
+        return params;
+    }
+
+    private _findMatchingRoute(pattern: string) {
+        const newPattern = pattern.replace('sharePost://', '');
+        const routesArray = Object.entries(routes);
+
+        for (const routeInfo of routesArray) {
+            const [screen, route] = routeInfo as [Route, string];
+            if (!this._isPatternMatch(newPattern, route)) {
+                continue;
+            }
+
+            const params = this._extractParams(newPattern, route);
+            const isNotExistParams = Object.keys(params).length === 0;
+            if (isNotExistParams) {
+                continue;
+            }
+
+            return { screen, params };
+        }
+
+        return null;
+    }
+
+    private _isPatternMatch(pattern: string, route: string) {
+        const regexPattern = route.replace(/:\w+/g, '([^\\/]+)?');
+        const regex = new RegExp(`^${regexPattern}$`);
+
+        return regex.test(pattern);
+    }
 }
+
+const Notifee = new NotifeeManger();
+
+export default Notifee;

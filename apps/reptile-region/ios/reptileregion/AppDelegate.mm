@@ -2,15 +2,21 @@
 #import "AppDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
+#import <React/RCTLinkingManager.h>
 
 #import "RNKakaoAuth.h"
 #import "RNBootSplash.h"
 
+
 @implementation AppDelegate
 
-- (BOOL)application:(UIApplication *)app openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+- (BOOL)application:(UIApplication *)application openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
   if([RNKakaoAuth isKakaoTalkLoginUrl:url]) {
     return [RNKakaoAuth handleOpenUrl: url];
+  }
+  
+  if ([RCTLinkingManager application:application openURL:url options:options]) {
+    return YES;
   }
   
   return NO;

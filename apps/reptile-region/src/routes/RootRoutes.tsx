@@ -1,6 +1,8 @@
-import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
+import messaging from '@react-native-firebase/messaging';
+import { NavigationContainer, type LinkingOptions, type NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { Linking } from 'react-native';
 
 import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
 import SharePostModalRoutes from './modal/SharePostModalRoutes';
@@ -27,14 +29,59 @@ import { pushLogListHeader } from '@/pages/notification/PushLogList/header';
 import PushLogList from '@/pages/notification/PushLogList/page';
 import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
 import SharePostUpdatePage, { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost';
+import Notifee from '@/utils/notification/notifee';
+
+const linking: LinkingOptions<RootRoutesParamList> = {
+    prefixes: ['sharePost://'],
+    config: {
+        screens: {
+            'share-post/modal': {
+                screens: {
+                    'notification/detail': 'posts/:postId/detail/:type',
+                },
+            },
+        },
+    },
+    async getInitialURL() {
+        const url = await Linking.getInitialURL();
+
+        if (url != null) {
+            return url;
+        }
+
+        const deepLink = Notifee.getDeepLink();
+
+        return deepLink;
+    },
+    subscribe(listener) {
+        const onReceiveURL = ({ url }: { url: string }) => listener(url);
+
+        const subscription = Linking.addEventListener('url', onReceiveURL);
+
+        const unsubscribeNotification = messaging().onNotificationOpenedApp((message) => {
+            const url = message.data?.link as string;
+
+            if (url) {
+                listener(url);
+            }
+        });
+
+        return () => {
+            subscription.remove();
+            unsubscribeNotification();
+        };
+    },
+};
+
+type RootRoutesProps = {
+    navigationRef: NavigationContainerRefWithCurrent<RootRoutesParamList>;
+};
 
 const Stack = createNativeStackNavigator<RootRoutesParamList>();
 
-const RootRoutes = () => {
-    const navigationRef = useNavigationContainerRef();
-
+export default function RootRoutes({ navigationRef }: RootRoutesProps) {
     return (
-        <NavigationContainer ref={navigationRef}>
+        <NavigationContainer<RootRoutesParamList> ref={navigationRef} linking={linking}>
             <Stack.Navigator initialRouteName="bottom-tab/routes">
                 {/** 바텀 탭 시작 */}
                 <Stack.Screen
@@ -87,6 +134,7 @@ const RootRoutes = () => {
                         options={{ header: SharePostUpdateHeader, animation: 'slide_from_bottom' }}
                     />
                 </Stack.Group>
+
                 {/** 내 정보 시작 */}
                 <Stack.Group>
                     <Stack.Screen name="my/license" component={LicenseListPage} options={{ header: LicenseListHeader }} />
@@ -113,6 +161,4 @@ const RootRoutes = () => {
             </Stack.Navigator>
         </NavigationContainer>
     );
-};
-
-export default RootRoutes;
+}

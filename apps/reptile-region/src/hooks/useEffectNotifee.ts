@@ -1,24 +1,31 @@
 import messaging from '@react-native-firebase/messaging';
+import type { NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 
-import { Notifee } from '@/utils/notification/notifee';
+import type { RootRoutesParamList } from '<routes/root>';
+import Notifee from '@/utils/notification/notifee';
 
-const useEffectNotifee = () => {
+const useEffectNotifee = (navigationRef: NavigationContainerRefWithCurrent<RootRoutesParamList>) => {
     useEffect(() => {
-        const notifee = new Notifee();
         if (Platform.OS === 'android') {
-            notifee.notifeeGetInitialNotification();
+            Notifee.getInitialNotification();
         }
 
-        const unMessage = messaging().onMessage(notifee.notifeeForegroundMessageReceived);
-        const unSubMessaging = notifee.notifeeForegroundEvent();
+        const unSubOpened = messaging().onNotificationOpenedApp((message) => {
+            console.log('===onNotificationOpenedApp===');
+            console.log(message);
+            console.log('===onNotificationOpenedApp===');
+        });
+        const unMessage = messaging().onMessage(Notifee.messageReceived);
+        const unSubMessaging = Notifee.foregroundEvent(navigationRef);
 
         return () => {
+            unSubOpened();
             unMessage();
             unSubMessaging();
         };
-    }, []);
+    }, [navigationRef]);
 };
 
 export default useEffectNotifee;

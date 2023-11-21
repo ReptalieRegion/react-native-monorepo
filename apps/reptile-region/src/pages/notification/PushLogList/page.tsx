@@ -10,6 +10,7 @@ type PushLogListProps = {};
 
 export default function PushLogList({}: PushLogListProps) {
     const { data } = useInfinitePushLog();
+    console.log(data);
     const { mutate } = useReadPushLog();
 
     useEffect(() => {

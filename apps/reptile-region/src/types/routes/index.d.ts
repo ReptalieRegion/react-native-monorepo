@@ -110,7 +110,13 @@ declare module '<routes/root>' {
         postId: string;
     };
 
+    type DetailPostProps = {
+        postId: string;
+        type: 'comment' | 'like';
+    };
+
     type SharePostModalParamList = {
+        'notification/detail': DetailPostProps;
         detail: SharePostDetailProps;
         'list/user': SharePostUserListProps;
         'posting/update': SharePostPostingUpdateProps;
@@ -143,9 +149,12 @@ declare module '<routes/root>' {
         'my/notification-setting': undefined;
         'my/notification-log': undefined;
         /** my 끝 */
+
+        /** share post 시작 */
         'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
         'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
         'share-post/bottom-sheet/post-options-menu': SharePostOptionsMenuProps;
         'share-post/post/update': SharePostUpdatePost;
+        /** share post 끝 */
     };
 }
