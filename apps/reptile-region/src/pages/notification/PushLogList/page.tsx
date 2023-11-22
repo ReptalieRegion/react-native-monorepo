@@ -11,6 +11,7 @@ import type { PushLogListScreenProp } from './type';
 import useReadPushLog from '@/apis/notification/push/hooks/mutations/useReadPushLog';
 import useInfinitePushLog from '@/apis/notification/push/hooks/queries/useInfinitePushLog';
 import { Avatar } from '@/components/@common/atoms';
+import { Divider } from '@/components/@common/atoms/Divider';
 import { ContentType, type FetchPushLogResponse } from '@/types/apis/notification/push';
 import { navigateLinking } from '@/utils/navigation/linking';
 
@@ -82,6 +83,15 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                 renderItem={renderItem}
                 onEndReached={handleFetchNextPage}
                 getItemType={(item) => item.contents.type}
+                ListFooterComponent={
+                    <View style={styles.footer}>
+                        <Divider />
+                        <Typo variant="body3" color="placeholder">
+                            최대 2주 전까지의 알림을 확인할 수 있어요
+                        </Typo>
+                        <Divider />
+                    </View>
+                }
                 estimatedItemSize={50}
             />
         </View>
@@ -107,5 +117,13 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         marginLeft: 'auto',
+    },
+    footer: {
+        marginTop: 15,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 10,
+        marginHorizontal: 20,
     },
 });
