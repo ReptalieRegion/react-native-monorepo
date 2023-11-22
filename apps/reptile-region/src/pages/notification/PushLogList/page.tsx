@@ -10,7 +10,7 @@ import type { PushLogListScreenProp } from './type';
 
 import useReadPushLog from '@/apis/notification/push/hooks/mutations/useReadPushLog';
 import useInfinitePushLog from '@/apis/notification/push/hooks/queries/useInfinitePushLog';
-import { Avatar } from '@/components/@common/atoms';
+import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';
 import { ContentType, type FetchPushLogResponse } from '@/types/apis/notification/push';
 import { navigateLinking } from '@/utils/navigation/linking';
@@ -83,6 +83,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                 renderItem={renderItem}
                 onEndReached={handleFetchNextPage}
                 getItemType={(item) => item.contents.type}
+                CellRendererComponent={FadeInCellRenderComponent}
                 ListFooterComponent={
                     <View style={styles.footer}>
                         <Divider />

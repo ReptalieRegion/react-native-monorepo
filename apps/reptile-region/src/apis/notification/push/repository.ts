@@ -1,7 +1,6 @@
 import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
-import { wait } from '@/mocks/utils/helpers';
 import type { CreatePushAgree, FetchPushLog, UpdatePushAgree, UpdatePushClickedRequest } from '@/types/apis/notification/push';
 
 /** GET */
@@ -18,8 +17,6 @@ export const fetchNotificationLog = async ({ pageParam }: WithInfinitePageParam<
     const response = await clientFetch(`api/notification/push/log?${queryString}`, {
         method: METHOD.GET,
     });
-
-    await wait(10000);
 
     return response.json();
 };
