@@ -1,17 +1,15 @@
-import type { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import { Typo, color } from '@reptile-region/design-system';
-import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
+import { Typo } from '@reptile-region/design-system';
+import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
+
+import { FollowerPageScreenProps, contentContainerStyle, styles } from './page';
 
 import type { FetchFollowerListResponse } from '<api/share/post/user>';
-import type { SharePostTopTabParamList } from '<routes/top-tab>';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
 import useInfiniteFollowerList from '@/apis/share-post/user/hooks/queries/useInfiniteFollowerList';
-import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
+import { Avatar } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
-
-type FollowerPageScreenProps = MaterialTopTabScreenProps<SharePostTopTabParamList, 'share-post/follower/list'>;
 
 export default function FollowerPage({ route: { params } }: FollowerPageScreenProps) {
     const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteFollowerList({ userId: params.userId });
@@ -51,25 +49,3 @@ export default function FollowerPage({ route: { params } }: FollowerPageScreenPr
         </View>
     );
 }
-
-const contentContainerStyle: ContentStyle = {
-    padding: 15,
-};
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White.toString(),
-    },
-    itemContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 15,
-    },
-    testContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-    },
-});
