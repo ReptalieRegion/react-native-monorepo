@@ -11,20 +11,24 @@ import SignInTemplates, { type SocialButtons } from '@/components/auth/templates
 
 type SignInScreenProps = NativeStackScreenProps<RootRoutesParamList, 'sign-in'>;
 
-const SignInPage = ({ navigation }: SignInScreenProps) => {
+const SignInPage = ({ navigation, route: { params } }: SignInScreenProps) => {
     const { openToast } = useToast();
     const { signIn } = useAuth();
 
     const navigateSignUpPage = (data: Omit<SignUpRegister0, 'type'>) => {
         switch (data.joinProgress) {
             case 'REGISTER0':
-                navigation.navigate('sign-up', {
-                    screen: 'step1',
-                    params: {
-                        recommendNickname: data.nickname,
-                        userId: data.userId,
-                    },
-                });
+                if (params?.isGoBack) {
+                    navigation.goBack();
+                } else {
+                    navigation.navigate('sign-up', {
+                        screen: 'step1',
+                        params: {
+                            recommendNickname: data.nickname,
+                            userId: data.userId,
+                        },
+                    });
+                }
                 return;
         }
     };

@@ -8,6 +8,7 @@ import type { MyTabParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
 import useSignOut from '@/apis/auth/hooks/mutations/useSignOut';
 import { useFetchMeProfile } from '@/apis/me/profile/hooks';
+import useDeleteFCMToken from '@/apis/me/profile/hooks/mutations/useDeleteFCMToken';
 import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { Share } from '@/assets/icons';
 import Diary from '@/assets/icons/Diary';
@@ -26,6 +27,7 @@ type MyListScreenProps = CompositeScreenProps<
 export default function MyListPage({ navigation }: MyListScreenProps) {
     const { isSignIn, signOut } = useAuth();
     const { mutateAsync: signOutMutateAsync } = useSignOut();
+    const { mutateAsync: deleteFCMTokenMutateAsync } = useDeleteFCMToken();
     const { data } = useFetchMeProfile();
     useFetchPushAgree();
     const { openToast } = useToast();
@@ -52,6 +54,7 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
 
     const handleKakaoLogout = async () => {
         try {
+            await deleteFCMTokenMutateAsync();
             await signOutMutateAsync();
             await signOut();
             navigation.navigate('bottom-tab/routes', {

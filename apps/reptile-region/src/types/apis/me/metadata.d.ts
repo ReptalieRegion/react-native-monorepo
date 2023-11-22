@@ -8,4 +8,8 @@ declare module '<api/my/metadata>' {
 
     type UpdateFCMToken = ServerAPI<UpdateFCMTokenRequest, void>;
     /** PUT 끝 */
+
+    /** DELETE 시작 */
+    type DeleteFCMToken = ServerAPI<void, void>;
+    /** DELETE 끝 */
 }

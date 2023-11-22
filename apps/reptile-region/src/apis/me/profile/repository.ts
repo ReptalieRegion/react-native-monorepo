@@ -31,3 +31,10 @@ export const updateFCMToken = async ({ fcmToken }: UpdateFCMToken['Request']) =>
         body: { fcmToken },
     });
 };
+
+/** DELETE */
+export const deleteFCMToken = async () => {
+    clientFetch('api/users/fcm-token', {
+        method: METHOD.DELETE,
+    });
+};
