@@ -6,6 +6,31 @@ declare module '<api/share/post>' {
 
     /** GET 시작 */
     /** 일상공유 무한스크롤 조회 리스트 시작 */
+    type FetchPostsResponse = {
+        post: {
+            id: string;
+            contents: string;
+            images: ImageType[];
+            isMine: boolean;
+            isLike: boolean | undefined;
+            likeCount: number;
+            commentCount: number;
+            user: {
+                id: string;
+                nickname: string;
+                profile: ImageType;
+                isFollow: boolean | undefined;
+            };
+        };
+    };
+
+    type FetchPosts = ServerAPI<void, InfiniteState<FetchPostsResponse[]>>;
+    /** 일상공유 무한스크롤 조회 리스트 끝 */
+
+    /** 일상공유 게시글 조회 시작 */
+    type FetchPostRequest = {
+        postId: string;
+    };
 
     type FetchPostResponse = {
         post: {
@@ -25,8 +50,8 @@ declare module '<api/share/post>' {
         };
     };
 
-    type FetchPost = ServerAPI<void, InfiniteState<FetchPostResponse[]>>;
-    /** 일상공유 무한스크롤 조회 리스트 끝 */
+    type FetchPost = ServerAPI<FetchPostRequest, FetchPostResponse>;
+    /** 일상공유 게시글 조회 끝 */
 
     /** 특정 유저의 게시글 리스트 무한 스크롤 시작 */
     type FetchDetailUserPostRequest = {

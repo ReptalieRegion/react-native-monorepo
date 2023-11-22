@@ -2,15 +2,15 @@ import { useSuspenseInfiniteQuery, type InfiniteData } from '@tanstack/react-que
 
 import { getPosts } from '../../repository';
 
-import type { FetchPost } from '<api/share/post>';
+import type { FetchPosts } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
 const useInfiniteFetchPosts = () => {
     return useSuspenseInfiniteQuery<
-        FetchPost['Response'],
+        FetchPosts['Response'],
         HTTPError,
-        InfiniteData<FetchPost['Response']>,
+        InfiniteData<FetchPosts['Response']>,
         readonly string[],
         number
     >({

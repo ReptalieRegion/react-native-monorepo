@@ -4,7 +4,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createComment } from '../../repository';
 
 import type { CreateComment, FetchComment } from '<api/share/post/comment>';
-import type { FetchPost } from '<api/share/post>';
+import type { FetchPosts } from '<api/share/post>';
 import type { OnSuccessParam } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
@@ -36,7 +36,7 @@ const updateShareCommentListCache = ({ queryClient, data }: { queryClient: Query
 const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateComment['Response'] }) => {
     const queryKey = SHARE_POST_QUERY_KEYS.list;
 
-    queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevPostList) => {
+    queryClient.setQueryData<InfiniteData<FetchPosts['Response']>>(queryKey, (prevPostList) => {
         if (prevPostList === undefined) {
             return prevPostList;
         }

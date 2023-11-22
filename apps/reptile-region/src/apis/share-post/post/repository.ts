@@ -5,6 +5,7 @@ import type {
     FetchDetailUserPost,
     FetchLike,
     FetchPost,
+    FetchPosts,
     UpdateLike,
     UpdatePost,
 } from '<api/share/post>';
@@ -15,12 +16,22 @@ import { uploadImage } from '@/utils/camera-roll/camera-roll';
 
 /** GET */
 // 게시물 패치
-export const getPosts = async ({ pageParam }: WithInfinitePageParam<FetchPost['Request']>) => {
+export const getPosts = async ({ pageParam }: WithInfinitePageParam<FetchPosts['Request']>) => {
     const queryString = objectToQueryString({
         pageParam,
     });
 
     const response = await clientFetch(`api/share/posts/list?${queryString}`);
+
+    return response.json();
+};
+
+// TODO
+// 특정 게시물 패치
+export const getPost = async ({ postId }: FetchPost['Request']) => {
+    const response = await clientFetch(`api/share/posts:${postId}`, {
+        method: METHOD.GET,
+    });
 
     return response.json();
 };

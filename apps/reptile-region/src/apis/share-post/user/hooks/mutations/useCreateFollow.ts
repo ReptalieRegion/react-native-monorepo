@@ -4,7 +4,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { createFollow } from '../../repository';
 
 import type { CreateFollow, FetchDetailUserProfile } from '<api/share/post/user>';
-import type { FetchPost } from '<api/share/post>';
+import type { FetchPosts } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
@@ -35,7 +35,7 @@ const updateUserProfile = ({ queryClient, data }: SetQueryDataProps) => {
 /** 일상공유 무한스크롤 조회 리스트 팔로우 생성 */
 const updateSharePostList = ({ queryClient, data }: SetQueryDataProps) => {
     const queryKey = SHARE_POST_QUERY_KEYS.list;
-    queryClient.setQueryData<InfiniteData<FetchPost['Response']>>(queryKey, (prevPostList) => {
+    queryClient.setQueryData<InfiniteData<FetchPosts['Response']>>(queryKey, (prevPostList) => {
         if (prevPostList === undefined) {
             return prevPostList;
         }

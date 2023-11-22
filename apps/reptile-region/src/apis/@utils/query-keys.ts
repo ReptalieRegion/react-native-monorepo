@@ -18,6 +18,7 @@ export const NOTIFICATION_QUERY_KEYS = {
 export const SHARE_POST_QUERY_KEYS = {
     // 게시물
     list: ['share-post'],
+    post: (postId: string) => ['share-post', postId],
     detailUserPosts: (nickname: string) => ['share-post', 'detail', nickname],
     likeList: (postId: string) => ['share-post', 'like', postId],
     // 유저

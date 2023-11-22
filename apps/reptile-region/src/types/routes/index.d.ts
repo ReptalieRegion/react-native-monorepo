@@ -134,13 +134,13 @@ declare module '<routes/root>' {
     };
 
     type SignInProps = {
-        isGoBack?: boolean;
+        isGoBack: boolean;
     };
 
     type RootRoutesParamList = {
         'bottom-tab/routes': NavigatorScreenParams<BottomTabNativeStackParamList>;
         /** auth 시작 */
-        'sign-in': SignInProps;
+        'sign-in'?: SignInProps;
         'sign-up': NavigatorScreenParams<SignUpParamList>;
         /** auth 끝 */
 
