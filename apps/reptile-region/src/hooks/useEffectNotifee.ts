@@ -12,16 +12,10 @@ const useEffectNotifee = (navigationRef: NavigationContainerRefWithCurrent<RootR
             Notifee.getInitialNotification();
         }
 
-        const unSubOpened = messaging().onNotificationOpenedApp((message) => {
-            console.log('===onNotificationOpenedApp===');
-            console.log(message);
-            console.log('===onNotificationOpenedApp===');
-        });
         const unMessage = messaging().onMessage(Notifee.messageReceived);
         const unSubMessaging = Notifee.foregroundEvent(navigationRef);
 
         return () => {
-            unSubOpened();
             unMessage();
             unSubMessaging();
         };

@@ -8,7 +8,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import GlobalError from './error';
 
 import type { RootRoutesParamList } from '<routes/root>';
-import { getAccessToken } from '@/apis/auth/utils/secure-storage-token';
 import Toast from '@/components/@common/organisms/Toast';
 import { Auth } from '@/components/auth/organisms/Auth';
 import useEffectNotifee from '@/hooks/useEffectNotifee';
@@ -18,10 +17,6 @@ import RootRoutes from '@/routes/RootRoutes';
 export default function App() {
     const navigationRef = useNavigationContainerRef<RootRoutesParamList>();
     useEffectNotifee(navigationRef);
-
-    getAccessToken().then((accessToken) => {
-        console.log(accessToken);
-    });
 
     return (
         <ReactQueryProvider>

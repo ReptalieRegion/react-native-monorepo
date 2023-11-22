@@ -38,6 +38,7 @@ const linking: LinkingOptions<RootRoutesParamList> = {
             'share-post/modal': {
                 screens: {
                     'notification/detail': 'posts/:postId/detail/:type',
+                    detail: 'users/:nickname',
                 },
             },
         },

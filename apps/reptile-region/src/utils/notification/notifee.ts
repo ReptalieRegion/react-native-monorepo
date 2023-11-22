@@ -3,6 +3,8 @@ import type { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import type { NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { Platform } from 'react-native';
 
+import { navigateLinking } from '../navigation/linking';
+
 import type { RootRoutesParamList } from '<routes/root>';
 
 type NotifeeOptions = {
@@ -23,17 +25,8 @@ type NotificationData = {
     link: string;
 };
 
-const routes = {
-    'notification/detail': 'posts/:postId/detail/:type',
-    detail: 'users/:nickname',
-} as const;
-
-type Route = keyof typeof routes;
-
 class NotifeeManger {
-    private deepLink: string | undefined;
-
-    constructor() {}
+    constructor(private deepLink?: string | undefined) {}
 
     deleteDefaultChannel = async () => {
         await notifee.deleteChannel('fcm_fallback_notification_channel');
@@ -60,33 +53,7 @@ class NotifeeManger {
             const link = detail.notification?.data?.link;
 
             if (type === EventType.PRESS && notification?.id && typeof link === 'string') {
-                const route = this._findMatchingRoute(link);
-                switch (route?.screen) {
-                    case 'notification/detail':
-                        navigationRef.navigate('share-post/modal', {
-                            screen: route.screen,
-                            params: {
-                                postId: route.params?.postId ?? '',
-                                type: (route.params?.type as 'like' | 'comment') ?? 'like',
-                            },
-                        });
-                        break;
-                    case 'detail':
-                        navigationRef.navigate('share-post/modal', {
-                            screen: route.screen,
-                            params: {
-                                isFollow: false,
-                                nickname: route.params?.nickname ?? '',
-                                profile: {
-                                    src: '',
-                                },
-                            },
-                        });
-                        break;
-                    default:
-                        break;
-                }
-
+                navigateLinking(navigationRef, link);
                 await notifee.cancelNotification(notification?.id);
             }
         });
@@ -159,55 +126,6 @@ class NotifeeManger {
             });
         }
     };
-
-    private _extractParams(pattern: string, route: string) {
-        const patternParts = pattern.split('/');
-        const routeParts = route.split('/');
-
-        const params: { [key in string]: string } = {};
-
-        routeParts.forEach((routePart, index) => {
-            const isParam = routePart.startsWith(':');
-            if (!isParam) {
-                return;
-            }
-
-            const paramName = routePart.substring(1);
-            const paramValue = patternParts[index];
-            params[paramName] = paramValue;
-        });
-
-        return params;
-    }
-
-    private _findMatchingRoute(pattern: string) {
-        const newPattern = pattern.replace('sharePost://', '');
-        const routesArray = Object.entries(routes);
-
-        for (const routeInfo of routesArray) {
-            const [screen, route] = routeInfo as [Route, string];
-            if (!this._isPatternMatch(newPattern, route)) {
-                continue;
-            }
-
-            const params = this._extractParams(newPattern, route);
-            const isNotExistParams = Object.keys(params).length === 0;
-            if (isNotExistParams) {
-                continue;
-            }
-
-            return { screen, params };
-        }
-
-        return null;
-    }
-
-    private _isPatternMatch(pattern: string, route: string) {
-        const regexPattern = route.replace(/:\w+/g, '([^\\/]+)?');
-        const regex = new RegExp(`^${regexPattern}$`);
-
-        return regex.test(pattern);
-    }
 }
 
 const Notifee = new NotifeeManger();
