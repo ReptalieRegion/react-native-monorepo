@@ -6,10 +6,6 @@ declare module '<api/my/metadata>' {
         fcmToken: string;
     };
 
-    type UpdateFCMTokenResponse = {
-        message: string;
-    };
-
-    type UpdateFCMToken = ServerAPI<UpdateFCMTokenRequest, UpdateFCMTokenResponse>;
+    type UpdateFCMToken = ServerAPI<UpdateFCMTokenRequest, void>;
     /** PUT 끝 */
 }

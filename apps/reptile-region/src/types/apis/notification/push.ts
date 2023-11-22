@@ -77,7 +77,11 @@ type UpdatePushAgreeRequest = {
 };
 
 type UpdatePushAgree = ServerAPI<UpdatePushAgreeRequest, unknown>;
+
+type UpdatePushClickedRequest = {
+    messageId: string;
+};
 /** PUT 끝 */
 
 export { ContentType, PushAgreeType, TemplateTitleType };
-export type { CreatePushAgree, FetchPushAgree, FetchPushLog, FetchPushLogResponse, UpdatePushAgree };
+export type { CreatePushAgree, FetchPushAgree, FetchPushLog, FetchPushLogResponse, UpdatePushAgree, UpdatePushClickedRequest };

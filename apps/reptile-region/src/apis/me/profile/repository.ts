@@ -26,10 +26,8 @@ export const updateMeProfile = async ({ name, type, uri }: UpdateProfileImage['R
 };
 
 export const updateFCMToken = async ({ fcmToken }: UpdateFCMToken['Request']) => {
-    const response = await clientFetch('api/users/fcm-token', {
+    clientFetch('api/users/fcm-token', {
         method: METHOD.PUT,
         body: { fcmToken },
     });
-
-    return response.json();
 };

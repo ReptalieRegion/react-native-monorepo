@@ -1,7 +1,7 @@
 import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
-import type { CreatePushAgree, FetchPushLog, UpdatePushAgree } from '@/types/apis/notification/push';
+import type { CreatePushAgree, FetchPushLog, UpdatePushAgree, UpdatePushClickedRequest } from '@/types/apis/notification/push';
 
 /** GET */
 export const fetchNotificationPushAgree = async () => {
@@ -42,6 +42,13 @@ export const createNotificationPushLog = async () => {
 };
 
 /** PUT */
+export const updateNotificationPushClicked = async ({ messageId }: UpdatePushClickedRequest) => {
+    clientFetch('api/notification/push/click', {
+        method: METHOD.PUT,
+        body: { messageId },
+    });
+};
+
 export const updateNotificationPushAgree = async ({ type, isAgree }: UpdatePushAgree['Request']) => {
     const queryString = objectToQueryString({ type });
     clientFetch(`api/notification/push/agree?${queryString}`, {
