@@ -1,7 +1,7 @@
-import type { CreatePushAgree, FetchPushLog, UpdatePushAgree } from '<api/my/notification>';
 import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
+import type { CreatePushAgree, FetchPushLog, UpdatePushAgree } from '@/types/apis/notification/push';
 
 /** GET */
 export const fetchNotificationPushAgree = async () => {

@@ -2,9 +2,9 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 
 import { fetchNotificationLog } from '../../repository';
 
-import type { FetchPushLog, FetchPushLogResponse } from '<api/my/notification>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { NOTIFICATION_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchPushLog, FetchPushLogResponse } from '@/types/apis/notification/push';
 
 const useInfinitePushLog = () => {
     return useSuspenseInfiniteQuery<FetchPushLog['Response'], HTTPError, FetchPushLogResponse[], readonly string[], number>({

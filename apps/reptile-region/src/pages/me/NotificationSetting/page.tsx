@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { AppState, Linking, StyleSheet, View } from 'react-native';
 import { Switch } from 'react-native-gesture-handler';
 
-import type { FetchPushAgree, PushAgreeType, UpdatePushAgree } from '<api/my/notification>';
 import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useUpdatePushAgree';
 import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
+import { PushAgreeType, type FetchPushAgree, type UpdatePushAgree } from '@/types/apis/notification/push';
 
 type ListType = {
     title: string;
@@ -26,12 +26,12 @@ const PUSH_AGREE_LIST: ListType[] = [
         title: '일상공유',
         listItem: [
             {
-                type: '좋아요',
+                type: PushAgreeType.Like,
                 label: '게시물 좋아요 알림',
                 dataTarget: 'isAgreePostLike',
             },
             {
-                type: '댓글',
+                type: PushAgreeType.Comment,
                 label: '댓글 알림',
                 dataTarget: 'isAgreeComment',
             },
@@ -41,7 +41,7 @@ const PUSH_AGREE_LIST: ListType[] = [
         title: '회원',
         listItem: [
             {
-                type: '팔로우',
+                type: PushAgreeType.Follow,
                 label: '팔로우 알림',
                 dataTarget: 'isAgreeFollow',
             },
@@ -51,7 +51,7 @@ const PUSH_AGREE_LIST: ListType[] = [
         title: '서비스',
         listItem: [
             {
-                type: '공지사항',
+                type: PushAgreeType.Notice,
                 label: '공지사항 알림',
                 dataTarget: 'isAgreeService',
             },

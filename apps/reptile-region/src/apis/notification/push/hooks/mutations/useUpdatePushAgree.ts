@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { updateNotificationPushAgree } from '../../repository';
 
-import type { FetchPushAgree, UpdatePushAgree } from '<api/my/notification>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { NOTIFICATION_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { PushAgreeType, type FetchPushAgree, type UpdatePushAgree } from '@/types/apis/notification/push';
 
 type UseUpdatePushAgreeContext = {
     previousPushAgree: FetchPushAgree['Response'];
@@ -24,13 +24,13 @@ const useUpdatePushAgree = () => {
                 }
 
                 switch (type) {
-                    case '댓글':
+                    case PushAgreeType.Comment:
                         return { ...prevPushAgree, isAgreeComment: isAgree };
-                    case '좋아요':
+                    case PushAgreeType.Like:
                         return { ...prevPushAgree, isAgreePostLike: isAgree };
-                    case '팔로우':
+                    case PushAgreeType.Follow:
                         return { ...prevPushAgree, isAgreeFollow: isAgree };
-                    case '공지사항':
+                    case PushAgreeType.Notice:
                         return { ...prevPushAgree, isAgreeService: isAgree };
                 }
             });

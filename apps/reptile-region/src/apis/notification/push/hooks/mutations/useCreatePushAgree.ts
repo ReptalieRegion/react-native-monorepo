@@ -2,9 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createNotificationPushAgree } from '../../repository';
 
-import type { CreatePushAgree, FetchPushAgree } from '<api/my/notification>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { NOTIFICATION_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { CreatePushAgree, FetchPushAgree } from '@/types/apis/notification/push';
 
 type UseCreatePushAgreeContext = {
     previousPushAgree: FetchPushAgree['Response'];
