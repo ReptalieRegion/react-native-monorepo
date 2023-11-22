@@ -21,6 +21,14 @@ export const fetchNotificationLog = async ({ pageParam }: WithInfinitePageParam<
     return response.json();
 };
 
+export const fetchNotificationPushReadCheck = async () => {
+    const response = await clientFetch('api/notification/push/read-check', {
+        method: METHOD.GET,
+    });
+
+    return response.json();
+};
+
 /** POST */
 export const createNotificationPushAgree = async ({ isAgree }: CreatePushAgree['Request']) => {
     const response = await clientFetch('api/notification/push/agree', {

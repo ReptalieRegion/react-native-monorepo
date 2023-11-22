@@ -11,6 +11,7 @@ export const MY_QUERY_KEYS = {
 export const NOTIFICATION_QUERY_KEYS = {
     pushLog: ['notification', 'push', 'log'],
     pushAgree: ['notification', 'push', 'agree'],
+    pushReadCheck: ['notification', 'push', 'read-check'],
 } as const;
 
 /** SharePost */

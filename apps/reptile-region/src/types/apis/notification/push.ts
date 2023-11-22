@@ -41,6 +41,7 @@ type FetchPushLogResponse = {
     messageId: string;
     contents: PushLogContents;
     isRead: boolean;
+    createdAt: string;
 };
 
 type FetchPushLog = ServerAPI<void, InfiniteState<FetchPushLogResponse>>;
@@ -53,6 +54,12 @@ type FetchPushAgreeResponse = {
 };
 
 type FetchPushAgree = ServerAPI<void, FetchPushAgreeResponse>;
+
+type FetchPushReadCheckResponse = {
+    isReadAllLog: boolean;
+};
+
+type FetchPushReadCheck = ServerAPI<void, FetchPushReadCheckResponse>;
 /** GET 끝 */
 
 /** POST 시작 */
@@ -84,4 +91,12 @@ type UpdatePushClickedRequest = {
 /** PUT 끝 */
 
 export { ContentType, PushAgreeType, TemplateTitleType };
-export type { CreatePushAgree, FetchPushAgree, FetchPushLog, FetchPushLogResponse, UpdatePushAgree, UpdatePushClickedRequest };
+export type {
+    CreatePushAgree,
+    FetchPushAgree,
+    FetchPushLog,
+    FetchPushLogResponse,
+    FetchPushReadCheck,
+    UpdatePushAgree,
+    UpdatePushClickedRequest,
+};

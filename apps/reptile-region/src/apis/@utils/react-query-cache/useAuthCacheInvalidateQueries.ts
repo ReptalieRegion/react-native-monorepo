@@ -12,6 +12,15 @@ const useAuthCacheInvalidateQueries = () => {
                 return;
             }
 
+            if (
+                queryKey.length > 2 &&
+                queryKey[0] === 'notification' &&
+                queryKey[1] === 'push' &&
+                queryKey[2] === 'read-check'
+            ) {
+                return;
+            }
+
             if (queryKey === SHARE_POST_QUERY_KEYS.list) {
                 queryClient.invalidateQueries({ queryKey, exact: false });
             } else if (queryKey.length > 1 && queryKey[0] === 'user' && queryKey[1] === 'profile') {
