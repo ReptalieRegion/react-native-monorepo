@@ -1,4 +1,5 @@
 import type { NavigationContainerRefWithCurrent } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import type { RootRoutesParamList } from '<routes/root>';
 
@@ -7,7 +8,12 @@ const routes = {
     detail: 'users/:nickname',
 } as const;
 
-export function navigateLinking(navigation: NavigationContainerRefWithCurrent<RootRoutesParamList>, link: string) {
+export function navigateLinking(
+    navigation:
+        | NavigationContainerRefWithCurrent<RootRoutesParamList>
+        | NativeStackNavigationProp<RootRoutesParamList, 'my/notification-log'>,
+    link: string,
+) {
     const route = _findMatchingRoute(link);
     if (route === null) {
         return;
