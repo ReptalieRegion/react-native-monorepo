@@ -30,7 +30,7 @@ export default function PostOptionsMenu({ navigation, route: { params } }: PostO
     const { bottom } = useSafeAreaInsets();
     const { mutate } = useDeletePost();
 
-    const close = () => {
+    const closeMenu = () => {
         if (navigation.canGoBack()) {
             navigation.goBack();
         }
@@ -47,7 +47,7 @@ export default function PostOptionsMenu({ navigation, route: { params } }: PostO
                 text: '삭제',
                 onPress: () => {
                     mutate({ postId: post.id });
-                    close();
+                    closeMenu();
                 },
             },
         ]);
