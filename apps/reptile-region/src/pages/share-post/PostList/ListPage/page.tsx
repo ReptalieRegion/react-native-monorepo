@@ -14,9 +14,9 @@ import FloatingActionButtonGroup from '@/components/share-post/organisms/Floatin
 import useFloatingHandler from '@/components/share-post/organisms/FloatingActionButtons/hooks/useFloatingHandler';
 import { ListEmptyComponent } from '@/components/share-post/organisms/SharePostCard/components';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
+import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
 import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
-import useFlashListScroll from '@/hooks/useFlashListScroll';
 
 export default function PostList({ navigation }: SharePostListPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);

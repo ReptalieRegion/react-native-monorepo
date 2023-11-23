@@ -8,7 +8,7 @@ import useRefresh from '@/apis/auth/hooks/mutations/useRefresh';
 import { deleteAuthTokens, getRefreshToken } from '@/apis/auth/utils/secure-storage-token';
 import { useFetchMeProfile } from '@/apis/me/profile/hooks';
 import { useToast } from '@/components/@common/organisms/Toast';
-import useFCM from '@/hooks/useFCM';
+import useFCM from '@/components/auth/organisms/Auth/hooks/useFCM';
 
 export default function InitialAuth() {
     const { initializeFCM } = useFCM();

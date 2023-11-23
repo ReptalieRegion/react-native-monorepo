@@ -11,7 +11,7 @@ import TextEditor from '../TextEditor';
 
 import type { ImageType } from '<image>';
 import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
-import useFlashListScroll from '@/hooks/useFlashListScroll';
+import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
 
 export enum MessageType {
     Contents,

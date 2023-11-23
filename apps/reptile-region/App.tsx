@@ -10,7 +10,7 @@ import GlobalError from './error';
 import type { RootRoutesParamList } from '<routes/root>';
 import Toast from '@/components/@common/organisms/Toast';
 import { Auth } from '@/components/auth/organisms/Auth';
-import useEffectNotifee from '@/hooks/useEffectNotifee';
+import useEffectNotifee from '@/hooks/notification/useEffectNotifee';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 
