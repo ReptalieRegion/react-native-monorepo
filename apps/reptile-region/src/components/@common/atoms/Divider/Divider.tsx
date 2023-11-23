@@ -7,8 +7,8 @@ type DividerProps = {
     dividerColor?: string;
 };
 
-export default function Divider({ height = 1, dividerColor = color.Gray[350].toString() }: DividerProps) {
-    return <View style={[{ backgroundColor: dividerColor, height: height }, styles.container]} />;
+export default function Divider({ height = 1, dividerColor = color.Gray[200].toString() }: DividerProps) {
+    return <View style={[{ backgroundColor: dividerColor, height: height, maxHeight: height }, styles.container]} />;
 }
 const styles = StyleSheet.create({
     container: {

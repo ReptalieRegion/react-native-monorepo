@@ -8,10 +8,10 @@ import SharePostDetailImageListModalPage, {
 import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
 import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
 import LikeListPage from '@/pages/share-post/LikeList/LikeListPage';
-import { SharePostDetailModalHeader } from '@/pages/share-post/List/PostDetailModalList/header';
-import SharePostDetailModalPage from '@/pages/share-post/List/PostDetailModalList/page';
-import { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailList/Header';
-import SharePostUserDetailListModalPage from '@/pages/share-post/List/UserDetailList/UserDetailListModalPage';
+import { SharePostDetailModalHeader } from '@/pages/share-post/PostList/PostDetailModalList/header';
+import SharePostDetailModalPage from '@/pages/share-post/PostList/PostDetailModalList/page';
+import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
+import SharePostUserDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/UserDetailListModalPage';
 import SharePostCommentRoutes from '@/routes/bottom-sheet/SharePostCommentRoutes';
 import FollowRoutes from '@/routes/bottom-tab/SharePostRoutes/FollowRoutes';
 

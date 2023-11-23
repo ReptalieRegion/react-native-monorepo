@@ -1,49 +1,45 @@
-import type { CompositeScreenProps } from '@react-navigation/native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { color } from '@reptile-region/design-system';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
 import { useQueryClient } from '@tanstack/react-query';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
+
+import type { SharePostListPageScreen } from './type';
 
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import type { FetchDetailUserPostResponse } from '<api/share/post>';
-import type { RootRoutesParamList, SharePostModalParamList } from '<routes/root>';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
-import useSharePostActions from '@/hooks/useSharePostActions';
+import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
+import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostModalNavigation';
 
-type SharePostListPageScreen = CompositeScreenProps<
-    NativeStackScreenProps<SharePostModalParamList, 'list/user'>,
-    NativeStackScreenProps<RootRoutesParamList>
->;
-
-export function UserDetailListModalHeader() {}
-
-export default function UserDetailListModalPage({
-    navigation,
-    route: {
-        params: { nickname, startIndex },
-    },
-}: SharePostListPageScreen) {
+export default function UserDetailListPage({ route: { params } }: SharePostListPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);
-
-    /** Data 시작 */
     const queryClient = useQueryClient();
-    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(SHARE_POST_QUERY_KEYS.profile(nickname));
-    const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({ nickname });
+    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(
+        SHARE_POST_QUERY_KEYS.profile(params.nickname),
+    );
+    const {
+        data: userPost,
+        hasNextPage,
+        isFetchingNextPage,
+        fetchNextPage,
+        refetch,
+    } = useInfiniteUserPosts({ nickname: params.nickname });
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
-
-    const newData = useMemo(() => userPost?.pages.flatMap((page) => page.items), [userPost]);
+    const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
+        useSharePostNavigation();
 
     const keyExtractor = useCallback((item: FetchDetailUserPostResponse) => item.post.id, []);
 
     const renderItem = useCallback(
         ({ item, extraData }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
-            const { user } = (extraData as FetchDetailUserProfileResponse | undefined) ?? {
+            const {
+                user: { id: userId, nickname, profile, isFollow },
+            } = (extraData as FetchDetailUserProfileResponse | undefined) ?? {
                 user: { id: '', nickname: '', profile: { src: '' }, isFollow: undefined },
             };
 
@@ -52,48 +48,11 @@ export default function UserDetailListModalPage({
                 ...item.post,
                 showFollowButton: false,
                 user: {
-                    id: user.id,
-                    nickname: user.nickname,
-                    profile: user.profile,
-                    isFollow: user.isFollow,
+                    id: userId,
+                    nickname,
+                    profile,
+                    isFollow,
                 },
-            };
-
-            const handlePressComment = () => {
-                navigation.push('bottom-sheet/comment', {
-                    screen: 'main',
-                    params: {
-                        post: { id: post.id },
-                    },
-                });
-            };
-
-            const handlePressPostOptionsMenu = () => {
-                navigation.push('share-post/bottom-sheet/post-options-menu', {
-                    post: {
-                        id: postId,
-                        images,
-                        contents,
-                        isMine,
-                        user: { id: user.id },
-                    },
-                });
-            };
-
-            const handlePressProfile = () => {
-                navigation.push('detail', {
-                    isFollow: user.isFollow,
-                    nickname: user.nickname,
-                    profile: user.profile,
-                });
-            };
-
-            const handlePressTag = (tag: string) => {
-                navigation.push('detail', { isFollow: undefined, nickname: tag, profile: { src: '' } });
-            };
-
-            const handlePressLikeContents = () => {
-                navigation.push('share-post/list/like', { postId });
             };
 
             return (
@@ -103,15 +62,26 @@ export default function UserDetailListModalPage({
                     onPressHeart={() => handlePressHeart({ postId: post.id, isLike: post.isLike })}
                     onDoublePressImageCarousel={() => handleDoublePressImageCarousel({ postId: post.id, isLike: post.isLike })}
                     onPressFollow={() => handlePressFollow({ userId: post.user.id, isFollow: post.user.isFollow })}
-                    onPressComment={handlePressComment}
-                    onPressPostOptionsMenu={handlePressPostOptionsMenu}
-                    onPressProfile={handlePressProfile}
+                    onPressComment={() => handlePressComment({ post: { id: postId } })}
+                    onPressPostOptionsMenu={() =>
+                        handlePressPostOptionsMenu({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
+                    }
+                    onPressProfile={() => handlePressProfile({ isFollow, nickname, profile })}
+                    onPressLikeContents={() => handlePressLikeContents({ postId })}
                     onPressTag={handlePressTag}
-                    onPressLikeContents={handlePressLikeContents}
                 />
             );
         },
-        [handleDoublePressImageCarousel, handlePressFollow, handlePressHeart, navigation],
+        [
+            handleDoublePressImageCarousel,
+            handlePressComment,
+            handlePressFollow,
+            handlePressHeart,
+            handlePressLikeContents,
+            handlePressPostOptionsMenu,
+            handlePressProfile,
+            handlePressTag,
+        ],
     );
 
     const asyncOnRefresh = useCallback(async () => {
@@ -120,17 +90,13 @@ export default function UserDetailListModalPage({
         setRefreshing(false);
     }, [refetch]);
 
-    const onEndReached = useCallback(
-        () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
-        [fetchNextPage, hasNextPage, isFetchingNextPage],
-    );
-    /** Data 시작 */
+    const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
 
     return (
         <View style={styles.container}>
             <FlashList
                 contentContainerStyle={styles.listContainer}
-                data={newData}
+                data={userPost}
                 extraData={userProfile}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
@@ -139,7 +105,7 @@ export default function UserDetailListModalPage({
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 scrollEventThrottle={16}
                 estimatedItemSize={484}
-                initialScrollIndex={startIndex}
+                initialScrollIndex={params.startIndex}
             />
         </View>
     );

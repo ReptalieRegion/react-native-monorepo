@@ -1,6 +1,7 @@
 import { TouchableTypo, color } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Alert, Keyboard, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Alert, Keyboard, Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 
 import type { SubmitType } from '../../contexts/CommentContext';
 import useComment from '../../hooks/useComment';
@@ -20,6 +21,10 @@ export interface CommentTextInputActions {
 
 export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: CommentTextInputProps & CommentTextInputActions) {
     const { width } = useWindowDimensions();
+    const paddingBottom = useSharedValue(0);
+    const animated = useAnimatedStyle(() => ({
+        paddingBottom: paddingBottom.value,
+    }));
     const { contents, selection } = useTag();
     const { id, submitType } = useComment();
     const { tagTextInputFocus, changeText } = useTagHandler();
@@ -30,6 +35,15 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
             changeText('');
             setCreateCommentSubmitType();
         };
+
+        const keyboardShow = Platform.select({
+            ios: Keyboard.addListener('keyboardWillShow', () => {
+                paddingBottom.value = withSpring(8);
+            }),
+            android: Keyboard.addListener('keyboardDidShow', () => {
+                paddingBottom.value = withTiming(8);
+            }),
+        });
 
         const keyboard = Keyboard.addListener('keyboardDidHide', () => {
             if (submitType === 'UPDATE') {
@@ -49,15 +63,16 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
 
         return () => {
             keyboard.remove();
+            keyboardShow?.remove();
         };
-    }, [submitType, setCreateCommentSubmitType, tagTextInputFocus, changeText]);
+    }, [submitType, paddingBottom, setCreateCommentSubmitType, tagTextInputFocus, changeText]);
 
     const handleSubmit = () => {
         onSubmit({ id, submitType, contents });
     };
 
     return (
-        <View style={[styles.bottom, { width }]}>
+        <Animated.View style={[styles.bottom, { width }, animated]}>
             <View style={[styles.textInputContainer, { width: (width - 30 - 20) * 0.85 }]}>
                 <TagTextInput
                     value={contents}
@@ -80,14 +95,15 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
                     />
                 </View>
             </View>
-        </View>
+        </Animated.View>
     );
 }
 
 const styles = StyleSheet.create({
     bottom: {
         backgroundColor: color.White.toString(),
-        padding: 8,
+        paddingTop: 8,
+        paddingHorizontal: 8,
         borderTopColor: color.Gray[250].toString(),
         borderTopWidth: 0.5,
         flexDirection: 'row',

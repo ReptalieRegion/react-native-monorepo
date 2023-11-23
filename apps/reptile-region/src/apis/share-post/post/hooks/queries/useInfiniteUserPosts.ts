@@ -1,8 +1,10 @@
 import { useSuspenseInfiniteQuery, type InfiniteData } from '@tanstack/react-query';
+import { useCallback } from 'react';
 
 import { getDetailUserPosts } from '../../repository';
 
-import type { FetchDetailUserPost } from '<api/share/post>';
+import type { FetchDetailUserPost, FetchDetailUserPostResponse } from '<api/share/post>';
+import type { InfiniteState } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
@@ -10,7 +12,7 @@ const useInfiniteUserPosts = ({ nickname }: FetchDetailUserPost['Request']) => {
     return useSuspenseInfiniteQuery<
         FetchDetailUserPost['Response'],
         HTTPError,
-        InfiniteData<FetchDetailUserPost['Response']>,
+        FetchDetailUserPostResponse[],
         readonly string[],
         number
     >({
@@ -18,6 +20,11 @@ const useInfiniteUserPosts = ({ nickname }: FetchDetailUserPost['Request']) => {
         initialPageParam: 0,
         queryFn: ({ pageParam }) => getDetailUserPosts({ nickname, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
+        select: useCallback(
+            (data: InfiniteData<InfiniteState<FetchDetailUserPostResponse[]>, number>) =>
+                data.pages.flatMap((page) => page.items),
+            [],
+        ),
     });
 };
 

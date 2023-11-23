@@ -110,7 +110,7 @@ export default function CommentList({ navigation, route: { params } }: CommentSc
         <FlashList
             ref={flashListRef}
             contentContainerStyle={contentContainerStyle}
-            data={data?.pages.flatMap((page) => page.items)}
+            data={data}
             refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
             renderItem={renderItem}
             estimatedItemSize={100}

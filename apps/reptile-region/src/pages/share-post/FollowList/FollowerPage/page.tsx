@@ -14,7 +14,7 @@ import Follow from '@/components/share-post/atoms/Follow';
 type FollowerPageScreenProps = MaterialTopTabScreenProps<SharePostTopTabParamList, 'share-post/follower/list'>;
 
 export default function FollowerPage({ route: { params } }: FollowerPageScreenProps) {
-    const { data, isFetching, hasNextPage, fetchNextPage } = useInfiniteFollowerList({ userId: params.userId });
+    const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowerList({ userId: params.userId });
     const { mutateFollow } = useCreateOrUpdateFollow();
 
     const keyExtractor = (item: FetchFollowerListResponse) => item.user.id;
@@ -35,7 +35,7 @@ export default function FollowerPage({ route: { params } }: FollowerPageScreenPr
         );
     };
 
-    const handleFetchNextPage = () => !isFetching && hasNextPage && fetchNextPage();
+    const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
 
     return (
         <View style={styles.container}>

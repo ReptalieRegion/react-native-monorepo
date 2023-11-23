@@ -1,14 +1,12 @@
-import type { CompositeScreenProps } from '@react-navigation/native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { color } from '@reptile-region/design-system';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
+import type { SharePostListPageScreen } from './type';
+
 import type { FetchPostResponse } from '<api/share/post>';
-import type { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
-import type { RootRoutesParamList } from '<routes/root>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
@@ -16,13 +14,9 @@ import FloatingActionButtonGroup from '@/components/share-post/organisms/Floatin
 import useFloatingHandler from '@/components/share-post/organisms/FloatingActionButtons/hooks/useFloatingHandler';
 import { ListEmptyComponent } from '@/components/share-post/organisms/SharePostCard/components';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
+import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
+import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostModalNavigation';
 import useFlashListScroll from '@/hooks/useFlashListScroll';
-import useSharePostActions from '@/hooks/useSharePostActions';
-
-type SharePostListPageScreen = CompositeScreenProps<
-    NativeStackScreenProps<SharePostTabParamList, 'share-post/list'>,
-    CompositeScreenProps<NativeStackScreenProps<BottomTabNativeStackParamList>, NativeStackScreenProps<RootRoutesParamList>>
->;
 
 export default function PostList({ navigation }: SharePostListPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -33,6 +27,8 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
     });
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
+    const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
+        useSharePostNavigation();
 
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<FetchPostResponse>) => {
@@ -47,65 +43,41 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
                 },
             } = item;
 
-            const handlePressComment = () => {
-                navigation.push('bottom-sheet/comment', {
-                    screen: 'main',
-                    params: {
-                        post: { id: postId },
-                    },
-                });
-            };
-
-            const handlePressPostOptionsMenu = () => {
-                navigation.push('share-post/bottom-sheet/post-options-menu', {
-                    post: {
-                        id: postId,
-                        images,
-                        contents,
-                        isMine,
-                        user: { id: userId },
-                    },
-                });
-            };
-
-            const handlePressProfile = () => {
-                navigation.push('share-post/detail', { isFollow, nickname, profile });
-            };
-
-            const handlePressTag = (tag: string) => {
-                navigation.push('share-post/detail', { isFollow: undefined, nickname: tag, profile: { src: '' } });
-            };
-
-            const handlePressLikeContents = () => {
-                navigation.push('share-post/list/like', { postId });
-            };
-
             return (
                 <SharePostCard
                     post={item.post}
                     onPressHeart={() => handlePressHeart({ postId, isLike })}
                     onDoublePressImageCarousel={() => handleDoublePressImageCarousel({ postId, isLike })}
                     onPressFollow={() => handlePressFollow({ userId, isFollow })}
-                    onPressComment={handlePressComment}
-                    onPressPostOptionsMenu={handlePressPostOptionsMenu}
-                    onPressProfile={handlePressProfile}
+                    onPressComment={() => handlePressComment({ post: { id: postId } })}
+                    onPressPostOptionsMenu={() =>
+                        handlePressPostOptionsMenu({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
+                    }
+                    onPressProfile={() => handlePressProfile({ isFollow, nickname, profile })}
                     onPressTag={handlePressTag}
-                    onPressLikeContents={handlePressLikeContents}
+                    onPressLikeContents={() => handlePressLikeContents({ postId })}
                 />
             );
         },
-        [handleDoublePressImageCarousel, handlePressFollow, handlePressHeart, navigation],
+        [
+            handleDoublePressImageCarousel,
+            handlePressComment,
+            handlePressFollow,
+            handlePressHeart,
+            handlePressLikeContents,
+            handlePressPostOptionsMenu,
+            handlePressProfile,
+            handlePressTag,
+        ],
     );
 
-    const asyncOnRefresh = useCallback(async () => {
+    const asyncOnRefresh = async () => {
         setRefreshing(true);
         await refetch();
         setRefreshing(false);
-    }, [refetch]);
-
-    const handleEndReached = () => {
-        hasNextPage && !isFetchingNextPage && fetchNextPage();
     };
+
+    const handleEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
 
     const handlePressPrimaryFloatingButton = useCallback(() => {
         navigation.navigate('share-post/modal/posting', {

@@ -17,7 +17,7 @@ import { navigateLinking } from '@/utils/navigation/linking';
 
 export default function PushLogList({ navigation }: PushLogListScreenProp) {
     const { bottom } = useSafeAreaInsets();
-    const { data, isFetching, hasNextPage, fetchNextPage } = useInfinitePushLog();
+    const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfinitePushLog();
     const { mutate } = useReadPushLog();
 
     useEffect(mutate, [mutate]);
@@ -73,7 +73,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
         }
     };
 
-    const handleFetchNextPage = () => !isFetching && hasNextPage && fetchNextPage();
+    const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
 
     return (
         <View style={styles.container}>
