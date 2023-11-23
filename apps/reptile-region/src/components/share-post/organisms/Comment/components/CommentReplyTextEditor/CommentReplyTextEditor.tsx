@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { Keyboard } from 'react-native';
 
-import type { CommentTextInputActions } from './components/TextInputEditor';
-import TextInputEditor from './components/TextInputEditor';
-import useCommentActions from './hooks/useCommentActions';
+import useCommentActions from '../../hooks/useCommentActions';
+import type { CommentTextInputActions } from '../TextInputEditor';
+import TextInputEditor from '../TextInputEditor';
 
 import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
 import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useUpdateCommentReply';

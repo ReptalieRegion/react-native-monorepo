@@ -1,32 +1,26 @@
-import type { CompositeScreenProps } from '@react-navigation/native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import CommentReplySkeleton from './loading';
+import CommentSkeleton from './loading';
+import type { CommentScreenProps } from './type';
 
-import type { SharePostCommentParamList } from '<routes/bottom-tab>';
-import type { RootRoutesParamList } from '<routes/root>';
 import { FollowerUserList, FollowerUserListSkeleton } from '@/components/@common/organisms/TagTextInput';
-import Comment, { CommentReplyList, CommentReplyTextEditor } from '@/components/share-post/organisms/Comment';
+import Comment, { CommentTextEditor } from '@/components/share-post/organisms/Comment';
 
-type CommentScreenProps = CompositeScreenProps<
-    NativeStackScreenProps<SharePostCommentParamList, 'reply'>,
-    NativeStackScreenProps<RootRoutesParamList>
->;
+const CommentList = React.lazy(() => import('./page'));
 
-export default function CommentReplyPage(props: CommentScreenProps) {
+export default function CommentPage(props: CommentScreenProps) {
     return (
-        <Comment id={props.route.params.comment.id}>
+        <Comment id={props.route.params.post.id}>
             <View style={styles.container}>
-                <Suspense fallback={<CommentReplySkeleton />}>
-                    <CommentReplyList {...props} />
+                <Suspense fallback={<CommentSkeleton />}>
+                    <CommentList {...props} />
                 </Suspense>
                 <Suspense fallback={<FollowerUserListSkeleton />}>
                     <FollowerUserList containerStyles={styles.followerUserListContainer} />
                 </Suspense>
             </View>
-            <CommentReplyTextEditor />
+            <CommentTextEditor />
         </Comment>
     );
 }

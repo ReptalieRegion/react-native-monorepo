@@ -7,8 +7,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { SharePostCommentParamList } from '<routes/bottom-tab>';
 import { BottomSheetHeader } from '@/components/@common/molecules';
-import CommentPage from '@/pages/share-post/BottomSheet/Comment/MainPage';
-import CommentReplyPage from '@/pages/share-post/BottomSheet/Comment/ReplyPage';
+import CommentPage from '@/pages/share-post/CommentList/MainPage';
+import CommentReplyPage from '@/pages/share-post/CommentList/ReplyPage';
 
 const Stack = createNativeStackNavigator<SharePostCommentParamList>();
 

@@ -12,7 +12,7 @@ const useInfiniteComment = ({ postId }: FetchComment['Request']) => {
     return useSuspenseInfiniteQuery<FetchComment['Response'], HTTPError, FetchCommentResponse[], readonly string[], number>({
         queryKey: SHARE_POST_QUERY_KEYS.comment(postId),
         initialPageParam: 0,
-        staleTime: 1 * 60 * 1000,
+        staleTime: 4 * 60 * 1000,
         gcTime: 5 * 60 * 1000,
         queryFn: ({ pageParam }) => getComments({ pageParam, postId }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
