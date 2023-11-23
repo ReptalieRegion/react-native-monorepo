@@ -1,5 +1,5 @@
-import { Typo, color } from '@reptile-region/design-system';
-import { FlashList, type ListRenderItem } from '@shopify/flash-list';
+import { color } from '@reptile-region/design-system';
+import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
@@ -11,9 +11,12 @@ import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfin
 import { ListFooterLoading } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';
 import Comment, { CommentReplyTextEditor } from '@/components/share-post/organisms/Comment';
+import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
 import SharePostCardNotification from '@/components/share-post/organisms/SharePostCard/SharePostCardNotification';
+import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
-import useSharePostModalNavigation from '@/hooks/share-post/navigation/useSharePostModalNavigation';
+import useCommentNavigation from '@/hooks/share-post/navigation/useCommentNavigation';
+import useSharePostModalNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 
 const data: FetchPost['Response'] = {
     post: {
@@ -53,11 +56,42 @@ export default function SharePostDetailModalPage() {
             paddingBottom: Math.max(height.value, bottom),
         };
     });
+    const { handleDeleteButton, handlePressDeclarationButton, handlePressUpdateButton } = useCommentActions();
+    const { navigateCommentReplyPage, navigateDetailPage } = useCommentNavigation();
 
     const renderItem: ListRenderItem<FetchCommentResponse> = ({ item }) => {
+        const {
+            comment: {
+                id: commentId,
+                contents,
+                isMine,
+                isModified,
+                user: { id: userId, nickname, profile },
+            },
+        } = item;
+        const handleNavigateCommentReplyPage = () => {
+            navigateCommentReplyPage({
+                comment: { contents, id: commentId, isMine, isModified, user: { id: userId, nickname, profile } },
+                isFocus: false,
+            });
+        };
+
+        const handleNavigateDetailPage = () => {
+            navigateDetailPage({ isFollow: false, nickname, profile });
+        };
+
         return (
-            <View style={styles.item}>
-                <Typo>{item.comment.contents}</Typo>
+            <View style={styles.commentContainer}>
+                <CommentItem
+                    item={item}
+                    onPressNickname={handleNavigateDetailPage}
+                    onPressTag={handleNavigateDetailPage}
+                    onPressShowCommentReplyButton={handleNavigateCommentReplyPage}
+                    onPressUpdateButton={handlePressUpdateButton}
+                    onPressDeleteButton={() => handleDeleteButton(commentId)}
+                    onPressWriteButton={handleNavigateCommentReplyPage}
+                    onPressDeclarationButton={handlePressDeclarationButton}
+                />
             </View>
         );
     };
@@ -117,7 +151,7 @@ function SharePostDetailListHeader() {
     );
 }
 
-const contentContainerStyle = {
+const contentContainerStyle: ContentStyle = {
     paddingTop: 10,
     paddingBottom: 20,
 };
@@ -128,7 +162,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     paddingView: {
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
     },
     indicatorsContainer: {
         marginTop: 10,
@@ -140,8 +174,11 @@ const styles = StyleSheet.create({
     },
     item: {
         flexDirection: 'row',
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
         paddingVertical: 10,
         alignItems: 'center',
+    },
+    commentContainer: {
+        paddingHorizontal: 15,
     },
 });

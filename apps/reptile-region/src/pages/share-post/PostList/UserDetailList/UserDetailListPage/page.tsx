@@ -14,7 +14,7 @@ import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfini
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
-import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostModalNavigation';
+import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 
 export default function UserDetailListPage({ route: { params } }: SharePostListPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);

@@ -78,7 +78,7 @@ export default function PostOptionsMenu({ navigation, route: { params } }: PostO
           ];
 
     return (
-        <BottomSheet onClose={close} snapInfo={{ startIndex: 0, pointsFromTop: [59 + 38 * listItem.length] }}>
+        <BottomSheet onClose={closeMenu} snapInfo={{ startIndex: 0, pointsFromTop: [59 + 38 * listItem.length] }}>
             <View style={[styles.content, { paddingBottom: bottom }]}>
                 {listItem.map(({ text, onPress }) => (
                     <ListItem key={text} text={text} onPress={onPress} />

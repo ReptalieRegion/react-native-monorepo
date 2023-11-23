@@ -2,19 +2,26 @@ import { useNavigation, type CompositeNavigationProp } from '@react-navigation/n
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
 
 import type { ImageType } from '<image>';
-import type { RootRoutesParamList, SharePostModalParamList } from '<routes/root>';
+import type { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
+import type { RootRoutesParamList } from '<routes/root>';
 
 type NavigationProp =
     | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostModalParamList, 'list/user'>,
-          NativeStackNavigationProp<RootRoutesParamList>
+          NativeStackNavigationProp<SharePostTabParamList, 'share-post/list/user'>,
+          CompositeNavigationProp<
+              NativeStackNavigationProp<BottomTabNativeStackParamList>,
+              NativeStackNavigationProp<RootRoutesParamList>
+          >
       >
     | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostModalParamList, 'notification/detail'>,
-          NativeStackNavigationProp<RootRoutesParamList>
+          NativeStackNavigationProp<SharePostTabParamList, 'share-post/list'>,
+          CompositeNavigationProp<
+              NativeStackNavigationProp<BottomTabNativeStackParamList>,
+              NativeStackNavigationProp<RootRoutesParamList>
+          >
       >;
 
-const useSharePostModalNavigation = () => {
+const useSharePostNavigation = () => {
     const navigation = useNavigation<NavigationProp>();
 
     const handlePressComment = (params: { post: { id: string } }) => {
@@ -37,11 +44,11 @@ const useSharePostModalNavigation = () => {
     };
 
     const handlePressProfile = (params: { isFollow: boolean | undefined; nickname: string; profile: ImageType }) => {
-        navigation.push('detail', params);
+        navigation.push('share-post/detail', params);
     };
 
     const handlePressTag = (tag: string) => {
-        navigation.push('detail', { isFollow: undefined, nickname: tag, profile: { src: '' } });
+        navigation.push('share-post/detail', { isFollow: undefined, nickname: tag, profile: { src: '' } });
     };
 
     const handlePressLikeContents = (params: { postId: string }) => {
@@ -57,4 +64,4 @@ const useSharePostModalNavigation = () => {
     };
 };
 
-export default useSharePostModalNavigation;
+export default useSharePostNavigation;

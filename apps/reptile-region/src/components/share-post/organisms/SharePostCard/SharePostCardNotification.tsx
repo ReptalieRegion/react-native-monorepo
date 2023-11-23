@@ -105,6 +105,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     paddingView: {
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
     },
 });
