@@ -1,46 +1,14 @@
-import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TouchableTypo } from '@reptile-region/design-system';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
+import ChangeHeader from './header';
+
 import type { SharePostPostingParamList } from '<routes/root>';
-import { createNativeStackHeader } from '@/components/@common/molecules';
-import { CameraAlbum, usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
+import { CameraAlbum } from '@/components/@common/organisms/CameraAlbum';
 
 type ImagePickScreenProp = NativeStackScreenProps<SharePostPostingParamList, 'image-crop'>;
-
-type ChangeHeaderProps = {
-    navigation: NativeStackNavigationProp<SharePostPostingParamList, 'image-crop'>;
-};
-
-const ChangeHeader = ({ navigation }: ChangeHeaderProps) => {
-    const { selectedPhotos } = usePhotoSelect();
-
-    useEffect(() => {
-        const isValidate = selectedPhotos.length === 0;
-
-        const headerRight = () => {
-            const handlePress = () => {
-                navigation.navigate('write');
-            };
-
-            return (
-                <TouchableTypo onPress={handlePress} color={isValidate ? 'placeholder' : 'default'} disabled={isValidate}>
-                    다음
-                </TouchableTypo>
-            );
-        };
-
-        navigation.setOptions({ headerRight });
-    }, [navigation, selectedPhotos.length]);
-
-    return null;
-};
-
-export const ImagePickerHeader = createNativeStackHeader({
-    leftIcon: 'cancel',
-    title: '사진 등록',
-});
 
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
     const { width, height } = useWindowDimensions();

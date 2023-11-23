@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ChangeHeader from './Header';
+import ChangeHeader from './header';
 import type { SharePostUpdateScreen } from './types';
 
 import { useToast } from '@/components/@common/organisms/Toast';

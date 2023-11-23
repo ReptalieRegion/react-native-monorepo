@@ -17,8 +17,6 @@ export default function LikeListPage({ route: { params } }: FollowerPageScreenPr
     const { data } = useInfiniteFetchLikes({ postId: params.postId });
     const { mutateFollow } = useCreateOrUpdateFollow();
 
-    const newData = data?.pages.flatMap((page) => page.items);
-
     const keyExtractor = (item: FetchLikeResponse) => item.user.id;
 
     const renderItem: ListRenderItem<FetchLikeResponse> = ({ item }) => {
@@ -40,7 +38,7 @@ export default function LikeListPage({ route: { params } }: FollowerPageScreenPr
     return (
         <View style={styles.container}>
             <FlashList
-                data={newData}
+                data={data}
                 contentContainerStyle={contentContainerStyle}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}

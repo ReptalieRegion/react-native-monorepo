@@ -7,7 +7,7 @@ import SharePostDetailImageListModalPage, {
 } from '@/pages/share-post/DetailImageList/DetailImageListModalPage';
 import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
 import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
-import LikeListPage from '@/pages/share-post/LikeList/LikeListPage';
+import LikeListPage from '@/pages/share-post/LikeList/page';
 import { SharePostDetailModalHeader } from '@/pages/share-post/PostList/PostDetailModalList/header';
 import SharePostDetailModalPage from '@/pages/share-post/PostList/PostDetailModalList/page';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
