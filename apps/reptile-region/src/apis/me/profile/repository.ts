@@ -11,6 +11,14 @@ export const fetchMeProfile = async () => {
     return response.json();
 };
 
+export const fetchMePostList = async () => {
+    const response = await clientFetch('api/share/posts/list/me', {
+        method: METHOD.GET,
+    });
+
+    return response.json();
+};
+
 /** PUT */
 export const updateMeProfile = async ({ name, type, uri }: UpdateProfileImage['Request']) => {
     const formData = new FormData();

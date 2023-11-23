@@ -6,6 +6,7 @@ export const AUTH_QUERY_KEYS = {
 /** My */
 export const MY_QUERY_KEYS = {
     profile: ['me', 'profile'],
+    post: ['me', 'post'],
 } as const;
 
 export const NOTIFICATION_QUERY_KEYS = {

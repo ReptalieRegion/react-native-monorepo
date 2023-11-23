@@ -14,6 +14,19 @@ declare module '<api/my/profile>' {
     };
 
     type FetchMeProfile = ServerAPI<void, FetchMeProfileResponse>;
+
+    type FetchMePostListResponse = {
+        post: {
+            id: string;
+            contents: string;
+            images: ImageType[];
+            isLike: boolean | undefined;
+            likenCount: number;
+            commentCount: number;
+        };
+    };
+
+    type FetchMePostList = ServerAPI<void, FetchMePostListResponse>;
     /** GET 끝 */
 
     /** POST 시작 */
