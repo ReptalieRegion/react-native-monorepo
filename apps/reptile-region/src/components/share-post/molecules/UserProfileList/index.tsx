@@ -1,20 +1,34 @@
-import type { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { Typo, color } from '@reptile-region/design-system';
 import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { SharePostTopTabParamList } from '<routes/top-tab>';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
-import useInfiniteFollowingList from '@/apis/share-post/user/hooks/queries/useInfiniteFollowingList';
 import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 import type { FetchFollowerListResponse } from '@/types/apis/share-post/user';
+import type { ImageType } from '@/types/global/image';
 
-type FollowingPageScreenProps = MaterialTopTabScreenProps<SharePostTopTabParamList, 'share-post/following/list'>;
+type User = {
+    user: {
+        id: string;
+        profile: ImageType;
+        nickname: string;
+        isFollow: boolean | undefined;
+    };
+};
 
-export default function FollowingPage({ route: { params } }: FollowingPageScreenProps) {
-    const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowingList({ userId: params.userId });
+type UserProfileListState = {
+    data: User[];
+};
+
+interface UserProfileListActions {
+    onEndReached(): void;
+}
+
+type UserProfileListProps = UserProfileListState & UserProfileListActions;
+
+export default function UserProfileList({ data, onEndReached }: UserProfileListProps) {
     const { mutateFollow } = useCreateOrUpdateFollow();
 
     const keyExtractor = (item: FetchFollowerListResponse) => item.user.id;
@@ -35,15 +49,13 @@ export default function FollowingPage({ route: { params } }: FollowingPageScreen
         );
     };
 
-    const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
-
     return (
         <View style={styles.container}>
             <FlashList
                 data={data}
                 contentContainerStyle={contentContainerStyle}
                 CellRendererComponent={FadeInCellRenderComponent}
-                onEndReached={handleFetchNextPage}
+                onEndReached={onEndReached}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
                 estimatedItemSize={55}

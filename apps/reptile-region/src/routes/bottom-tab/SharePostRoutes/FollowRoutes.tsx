@@ -6,8 +6,8 @@ import { useWindowDimensions } from 'react-native';
 
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
 import type { SharePostTopTabParamList } from '<routes/top-tab>';
-import FollowerPage from '@/pages/share-post/FollowList/FollowerPage/page';
-import FollowingPage from '@/pages/share-post/FollowList/FollowingPage/page';
+import FollowerPage from '@/pages/share-post/UserProfileList/FollowList/FollowerPage/page';
+import FollowingPage from '@/pages/share-post/UserProfileList/FollowList/FollowingPage/page';
 
 type FollowRoutesScreenProps = NativeStackScreenProps<SharePostTabParamList, 'share-post/list/follow'>;
 

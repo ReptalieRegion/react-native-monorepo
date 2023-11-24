@@ -27,7 +27,7 @@ import { TermsOfUseHeader } from '@/pages/me/Terms/TermsOfUse/header';
 import TermsOfUsePage from '@/pages/me/Terms/TermsOfUse/page';
 import PushLogList from '@/pages/notification/PushLogList';
 import { pushLogListHeader } from '@/pages/notification/PushLogList/header';
-import PostOptionsMenu from '@/pages/share-post/BottomSheet/PostOptionsMenu';
+import PostOptionsMenu from '@/pages/share-post/PostList/BottomSheet/PostOptionsMenu';
 import { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost/header';
 import SharePostUpdatePage from '@/pages/share-post/UpdatePost/page';
 import Notifee from '@/utils/notification/notifee';

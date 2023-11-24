@@ -5,13 +5,13 @@ import FollowRoutes from './FollowRoutes';
 
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
-import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/DetailImageList/OtherUser';
-import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
-import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
-import LikeListPage from '@/pages/share-post/LikeList/page';
+import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser';
 import SharePostListPage from '@/pages/share-post/PostList/ListPage';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
 import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser/UserDetailListPage';
+import { SharePostFollowHeader } from '@/pages/share-post/UserProfileList/FollowList/header';
+import { SharePostLikeListHeader } from '@/pages/share-post/UserProfileList/LikeList/header';
+import LikeListPage from '@/pages/share-post/UserProfileList/LikeList/page';
 
 const Stack = createNativeStackNavigator<SharePostTabParamList>();
 
