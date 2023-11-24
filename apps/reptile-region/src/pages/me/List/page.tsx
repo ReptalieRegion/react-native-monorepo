@@ -3,6 +3,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import type { MyTabParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
@@ -31,6 +32,12 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
     const { data } = useFetchMeProfile();
     useFetchPushAgree();
     const { openToast } = useToast();
+
+    const navigateSharePostMe = () => {
+        navigation.navigate('share-post/modal', {
+            screen: 'detail/me',
+        });
+    };
 
     const navigateTermsOfUse = () => {
         navigation.navigate('my/terms-of-use');
@@ -83,18 +90,22 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                     활동
                 </Typo>
                 <View style={styles.testWrapper}>
-                    <View style={styles.testContainer}>
-                        <Share fill={color.Teal[150].toString()} />
-                        <Typo textAlign="center" variant="heading3">
-                            일상공유
-                        </Typo>
-                    </View>
-                    <View style={styles.testContainer}>
-                        <Diary />
-                        <Typo textAlign="center" variant="heading3">
-                            다이어리
-                        </Typo>
-                    </View>
+                    <TouchableOpacity containerStyle={styles.testContainer} onPress={navigateSharePostMe}>
+                        <View style={styles.testContainerAlign}>
+                            <Share fill={color.Teal[150].toString()} />
+                            <Typo textAlign="center" variant="heading3">
+                                일상공유
+                            </Typo>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity containerStyle={styles.testContainer} onPress={navigateSharePostMe}>
+                        <View style={styles.testContainerAlign}>
+                            <Diary />
+                            <Typo textAlign="center" variant="heading3">
+                                다이어리
+                            </Typo>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -219,11 +230,13 @@ const styles = StyleSheet.create({
     },
     testContainer: {
         backgroundColor: color.BlueGray[50].toString(),
-        alignItems: 'center',
-        justifyContent: 'center',
         flex: 1,
         borderRadius: 5,
         paddingVertical: 10,
+    },
+    testContainerAlign: {
+        alignItems: 'center',
+        justifyContent: 'center',
         gap: 10,
     },
     marginRight: {
