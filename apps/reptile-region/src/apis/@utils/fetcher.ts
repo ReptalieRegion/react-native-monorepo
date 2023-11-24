@@ -3,7 +3,7 @@ import { deleteAuthTokens, getAccessToken, getRefreshToken, registerAuthTokens }
 
 import HTTPError from './error/HTTPError';
 
-import type { RefreshToken } from '@/types/apis/auth/auth';
+import type { RefreshToken } from '@/types/apis/auth';
 
 export const METHOD = {
     GET: 'GET',

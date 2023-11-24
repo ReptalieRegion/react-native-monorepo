@@ -7,7 +7,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import useGoogleAuth from '@/apis/auth/hooks/mutations/useGoogleAuth';
 import GoogleSymbol from '@/assets/icons/GoogleSymbol';
 import { GoogleAuth } from '@/native-modules/google-auth/RNGoogleAuthModule';
-import type { PostGoogleAuth } from '@/types/apis/auth/auth';
+import type { PostGoogleAuth } from '@/types/apis/auth';
 
 interface GoogleButtonActions {
     onSuccess(props: PostGoogleAuth['Response']): void;

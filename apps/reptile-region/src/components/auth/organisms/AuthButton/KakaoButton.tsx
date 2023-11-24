@@ -7,7 +7,7 @@ import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAn
 import useKakaoAuth from '@/apis/auth/hooks/mutations/useKakaoAuth';
 import KakaoSymbol from '@/assets/icons/KakaoSymbol';
 import KakaoAuth from '@/native-modules/kakao-auth/KakaoAuth';
-import type { PostKakaoAuth } from '@/types/apis/auth/auth';
+import type { PostKakaoAuth } from '@/types/apis/auth';
 
 type KakaoButtonState = {
     height?: DimensionValue;

@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { googleAuthLogin } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import type { PostGoogleAuth } from '@/types/apis/auth/auth';
+import type { PostGoogleAuth } from '@/types/apis/auth';
 
 // 구글 로그인
 interface UseGoogleAuth {
@@ -11,7 +11,7 @@ interface UseGoogleAuth {
     onError(error: unknown): void;
 }
 
-const useGoogleAuth = ({ onSuccess, onError }: UseGoogleAuth) => {
+export default function useGoogleAuth({ onSuccess, onError }: UseGoogleAuth) {
     return useMutation<PostGoogleAuth['Response'], HTTPError, PostGoogleAuth['Request'], unknown>({
         mutationFn: googleAuthLogin,
         onSuccess: (data) => {
@@ -21,6 +21,4 @@ const useGoogleAuth = ({ onSuccess, onError }: UseGoogleAuth) => {
             onError(error);
         },
     });
-};
-
-export default useGoogleAuth;
+}

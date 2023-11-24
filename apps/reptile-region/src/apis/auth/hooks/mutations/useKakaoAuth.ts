@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { kakaoAuthLogin } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import type { PostKakaoAuth } from '@/types/apis/auth/auth';
+import type { PostKakaoAuth } from '@/types/apis/auth';
 
 // 카카오 로그인
 interface UseKakaoAuth {
@@ -11,7 +11,7 @@ interface UseKakaoAuth {
     onError(error: unknown): void;
 }
 
-const useKakaoAuth = ({ onSuccess, onError }: UseKakaoAuth) => {
+export default function useKakaoAuth({ onSuccess, onError }: UseKakaoAuth) {
     return useMutation<PostKakaoAuth['Response'], HTTPError, PostKakaoAuth['Request'], unknown>({
         mutationFn: kakaoAuthLogin,
         onSuccess: (data) => {
@@ -21,6 +21,4 @@ const useKakaoAuth = ({ onSuccess, onError }: UseKakaoAuth) => {
             onError(error);
         },
     });
-};
-
-export default useKakaoAuth;
+}

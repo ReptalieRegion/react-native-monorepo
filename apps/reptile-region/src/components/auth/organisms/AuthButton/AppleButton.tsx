@@ -4,7 +4,7 @@ import { type DimensionValue } from 'react-native';
 
 import useAppleAuth from '@/apis/auth/hooks/mutations/useAppleAuth';
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
-import type { PostAppleAuth } from '@/types/apis/auth/auth';
+import type { PostAppleAuth } from '@/types/apis/auth';
 
 type AppleButtonState = {
     height?: DimensionValue;

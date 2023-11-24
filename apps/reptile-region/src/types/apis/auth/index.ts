@@ -8,11 +8,6 @@ type AuthTokens = {
     refreshToken: string;
 };
 
-type AuthTokens = {
-    accessToken: string;
-    refreshToken: string;
-};
-
 type AuthRequest = {
     socialId: string;
     publicKey: string;
@@ -116,3 +111,21 @@ type SignOutResponse = {
 };
 
 type SignOut = ServerAPI<void, SignInResponse>;
+
+export type {
+    AuthResponse,
+    AuthTokens,
+    FetchAuthTokenAndPublicKey,
+    JoinProgress,
+    NicknameDuplicateCheck,
+    PostAppleAuth,
+    PostGoogleAuth,
+    PostKakaoAuth,
+    PostKakaoAuthRequest,
+    RefreshToken,
+    Register0,
+    SignInResponse,
+    SignOut,
+    SignOutResponse,
+    SignUpRegister0,
+};

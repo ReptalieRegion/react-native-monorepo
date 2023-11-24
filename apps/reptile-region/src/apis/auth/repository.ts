@@ -8,7 +8,7 @@ import type {
     PostGoogleAuth,
     PostKakaoAuth,
     RefreshToken,
-} from '@/types/apis/auth/auth';
+} from '@/types/apis/auth';
 
 /** GET */
 // 닉네임 중복 체크

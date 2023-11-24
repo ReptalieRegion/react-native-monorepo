@@ -7,7 +7,7 @@ import { useToast } from '@/components/@common/organisms/Toast';
 import SignInLogo from '@/components/auth/atoms/SignInLogo/SignInLogo';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import SignInTemplates, { type SocialButtons } from '@/components/auth/templates/SignInTemplates';
-import type { PostAppleAuth, PostKakaoAuth, SignUpRegister0 } from '@/types/apis/auth/auth';
+import type { PostAppleAuth, PostKakaoAuth, SignUpRegister0 } from '@/types/apis/auth';
 
 type SignInScreenProps = NativeStackScreenProps<RootRoutesParamList, 'sign-in'>;
 

@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { appleAuthLogin } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import type { PostAppleAuth } from '@/types/apis/auth/auth';
+import type { PostAppleAuth } from '@/types/apis/auth';
 
 // 애플 로그인
 interface UseAppleAuth {
@@ -11,7 +11,7 @@ interface UseAppleAuth {
     onError(error: unknown): void;
 }
 
-const useAppleAuth = ({ onSuccess, onError }: UseAppleAuth) => {
+export default function useAppleAuth({ onSuccess, onError }: UseAppleAuth) {
     return useMutation<PostAppleAuth['Response'], HTTPError, PostAppleAuth['Request'], unknown>({
         mutationFn: appleAuthLogin,
         onSuccess: (data) => {
@@ -21,6 +21,4 @@ const useAppleAuth = ({ onSuccess, onError }: UseAppleAuth) => {
             onError(error);
         },
     });
-};
-
-export default useAppleAuth;
+}
