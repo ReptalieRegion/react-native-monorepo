@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import type { ImageType } from '<image>';
 import type { SharePostFollowProps } from '<routes/bottom-tab>';
-import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
+import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 import type {

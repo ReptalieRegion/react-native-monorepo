@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 
 import type { FetchFollowerListResponse } from '<api/share/post/user>';
 import type { SharePostTopTabParamList } from '<routes/top-tab>';
-import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
+import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import useInfiniteFollowingList from '@/apis/share-post/user/hooks/queries/useInfiniteFollowingList';
 import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';

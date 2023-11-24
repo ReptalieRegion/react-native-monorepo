@@ -3,7 +3,7 @@ import * as Haptic from 'react-native-haptic-feedback';
 
 import useCreateLike from '@/apis/share-post/post/hooks/mutations/useCreateLike';
 import useUpdateLike from '@/apis/share-post/post/hooks/mutations/useUpdateLike';
-import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
+import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 
 const useSharePostActions = () => {
     const { mutate: createLikeMutate } = useCreateLike();

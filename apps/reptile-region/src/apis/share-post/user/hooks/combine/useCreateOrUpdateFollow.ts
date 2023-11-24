@@ -1,7 +1,7 @@
 import * as Haptic from 'react-native-haptic-feedback';
 
-import useCreateFollow from './useCreateFollow';
-import useUpdateFollow from './useUpdateFollow';
+import useCreateFollow from '../mutations/useCreateFollow';
+import useUpdateFollow from '../mutations/useUpdateFollow';
 
 const useCreateOrUpdateFollow = () => {
     const { mutate: createFollowMutate } = useCreateFollow();

@@ -7,7 +7,7 @@ import { StyleSheet, View } from 'react-native';
 import type { FetchLikeResponse } from '<api/share/post>';
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
 import useInfiniteFetchLikes from '@/apis/share-post/post/hooks/queries/useInfiniteFetchLikes';
-import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
+import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import { Avatar } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 
