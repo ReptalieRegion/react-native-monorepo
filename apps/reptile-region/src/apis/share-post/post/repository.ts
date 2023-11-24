@@ -29,7 +29,7 @@ export const getPosts = async ({ pageParam }: WithInfinitePageParam<FetchPosts['
 // TODO
 // 특정 게시물 패치
 export const getPost = async ({ postId }: FetchPost['Request']) => {
-    const response = await clientFetch(`api/share/posts:${postId}`, {
+    const response = await clientFetch(`api/share/posts/${postId}`, {
         method: METHOD.GET,
     });
 

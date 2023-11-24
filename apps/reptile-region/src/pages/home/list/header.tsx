@@ -39,7 +39,7 @@ export default function ChangeHeader({ navigation }: HomeListPageScreenProp) {
 
             return (
                 <ConditionalRenderer
-                    condition={isSignIn && !data?.isReadAllLog}
+                    condition={isSignIn && data?.isReadAllLog !== undefined && !data.isReadAllLog}
                     trueContent={
                         <TouchableOpacity onPress={handlePressNotification}>
                             <View style={styles.container}>

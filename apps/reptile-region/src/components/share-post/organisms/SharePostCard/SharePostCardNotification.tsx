@@ -2,6 +2,10 @@ import React from 'react';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
+import NotificationPostContents from '../../molecules/NotificationPostContents';
+import PostHeader from '../../molecules/PostHeader';
+
+import { Interactive, PostCardImageCarousel } from './components';
 import PostCard from './providers/PostCard';
 
 import type { ImageType } from '<image>';
@@ -44,7 +48,6 @@ export default function SharePostCardNotification({
         id: postId,
         images,
         isLike,
-        commentCount,
         contents,
         likeCount,
         isMine,
@@ -70,7 +73,7 @@ export default function SharePostCardNotification({
         <View style={[styles.container, containerStyle]}>
             <PostCard uuid={postId}>
                 <View style={styles.paddingView}>
-                    <PostCard.Header
+                    <PostHeader
                         profileImage={profile}
                         isFollow={isFollow}
                         nickname={nickname}
@@ -80,17 +83,16 @@ export default function SharePostCardNotification({
                         onPressProfile={onPressProfile}
                     />
                 </View>
-                <PostCard.ImageCarousel images={images} style={imageStyle} onDoublePress={onDoublePressImageCarousel} />
+                <PostCardImageCarousel images={images} style={imageStyle} onDoublePress={onDoublePressImageCarousel} />
                 <View style={styles.paddingView}>
-                    <PostCard.Interactive
+                    <Interactive
                         imageCount={images.length}
                         isLike={isLike}
                         onPressComment={onPressComment}
                         onPressHeart={onPressHeart}
                     />
-                    <PostCard.Contents
-                        post={{ id: postId, commentCount, contents, likeCount }}
-                        onPressComment={onPressComment}
+                    <NotificationPostContents
+                        post={{ id: postId, contents, likeCount }}
                         onPressTag={onPressTag}
                         onPressLikeContents={onPressLikeContents}
                     />

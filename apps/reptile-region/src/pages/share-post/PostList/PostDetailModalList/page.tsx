@@ -5,9 +5,11 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import type { PostDetailModalListScreenProps } from './type';
+
 import type { FetchCommentResponse } from '<api/share/post/comment>';
-import type { FetchPost } from '<api/share/post>';
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
+import useFetchPost from '@/apis/share-post/post/hooks/queries/useFetchPost';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';
 import Comment, { CommentReplyTextEditor } from '@/components/share-post/organisms/Comment';
@@ -18,37 +20,12 @@ import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions'
 import usePostDetailNavigation from '@/hooks/share-post/navigation/usePostDetailNavigation';
 import useSharePostModalNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 
-const data: FetchPost['Response'] = {
-    post: {
-        commentCount: 0,
-        contents: 'hi\nsdf\ndsffdsfsdf',
-        id: '1',
-        images: [
-            {
-                src: 'https://reptalie-region.s3.ap-northeast-2.amazonaws.com/c925604c-9369-4e00-8e0b-c563e2ce7578.jpeg',
-            },
-        ],
-        isLike: true,
-        isMine: true,
-        likeCount: 1,
-        user: {
-            id: '1',
-            isFollow: false,
-            nickname: '홍길동',
-            profile: {
-                src: 'https://reptalie-region.s3.ap-northeast-2.amazonaws.com/c925604c-9369-4e00-8e0b-c563e2ce7578.jpeg',
-            },
-        },
+export default function SharePostDetailModalPage({
+    route: {
+        params: { postId },
     },
-};
-
-export default function SharePostDetailModalPage() {
-    const {
-        data: comments,
-        isFetchingNextPage,
-        hasNextPage,
-        fetchNextPage,
-    } = useInfiniteComment({ postId: '655605b2ed1dd81a8868254c' });
+}: PostDetailModalListScreenProps) {
+    const { data: comments, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteComment({ postId });
     const { bottom } = useSafeAreaInsets();
     const { height } = useAnimatedKeyboard();
     const animatedKeyboard = useAnimatedStyle(() => {
@@ -69,6 +46,7 @@ export default function SharePostDetailModalPage() {
                 user: { id: userId, nickname, profile },
             },
         } = item;
+
         const handleNavigateCommentReplyPage = () => {
             navigateCommentReplyPage({
                 comment: { contents, id: commentId, isMine, isModified, user: { id: userId, nickname, profile } },
@@ -99,12 +77,12 @@ export default function SharePostDetailModalPage() {
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
 
     return (
-        <Comment id={data.post.id}>
+        <Comment id={postId}>
             <Animated.View style={[styles.container, animatedKeyboard]}>
                 <FlashList
                     data={comments}
                     contentContainerStyle={contentContainerStyle}
-                    ListHeaderComponent={<SharePostDetailListHeader />}
+                    ListHeaderComponent={<SharePostDetailListHeader postId={postId} />}
                     renderItem={renderItem}
                     estimatedItemSize={150}
                     onEndReached={handleFetchNextPage}
@@ -116,10 +94,10 @@ export default function SharePostDetailModalPage() {
     );
 }
 
-function SharePostDetailListHeader() {
+function SharePostDetailListHeader({ postId }: { postId: string }) {
+    const { data } = useFetchPost({ postId });
     const {
         post: {
-            id: postId,
             contents,
             images,
             isLike,
