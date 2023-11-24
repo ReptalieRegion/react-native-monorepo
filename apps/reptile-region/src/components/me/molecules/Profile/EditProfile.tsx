@@ -3,9 +3,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import type { ImageType } from '<image>';
 import { Camera } from '@/assets/icons';
 import { Avatar } from '@/components/@common/atoms';
+import type { ImageType } from '@/types/global/image';
 
 type EditProfileState = {
     profile: ImageType | undefined;

@@ -5,7 +5,7 @@
 
 import type { InfiniteState, ServerAPI } from '../utils';
 
-import type { ImageType } from '<image>';
+import type { ImageType } from '@/types/global/image';
 
 // 댓글 무한스크롤 조회
 type FetchCommentRequest = {

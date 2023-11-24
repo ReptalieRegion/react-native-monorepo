@@ -2,7 +2,7 @@ import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 
 import type { InfiniteState, ServerAPI } from '../utils';
 
-import type { ImageType } from '<image>';
+import type { ImageType } from '@/types/global/image';
 
 /**
  *

@@ -1,8 +1,8 @@
 import { useNavigation, type CompositeNavigationProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
 
-import type { ImageType } from '<image>';
 import type { RootRoutesParamList, SharePostDetailProps, SharePostModalParamList } from '<routes/root>';
+import type { ImageType } from '@/types/global/image';
 
 type NavigationProp =
     | CompositeNavigationProp<

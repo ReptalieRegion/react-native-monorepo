@@ -4,9 +4,9 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import Follow from '../../atoms/Follow';
 
-import type { ImageType } from '<image>';
 import { KebabMenu } from '@/assets/icons';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
+import type { ImageType } from '@/types/global/image';
 
 type PostHeaderState = {
     profileImage: ImageType;

@@ -1,9 +1,9 @@
 import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 
-import type { ImageType } from '<image>';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import type { FetchDetailUserPost } from '@/types/apis/share-post/post';
+import type { ImageType } from '@/types/global/image';
 
 type UseUserProfileAndPostCountProps = {
     nickname: string;

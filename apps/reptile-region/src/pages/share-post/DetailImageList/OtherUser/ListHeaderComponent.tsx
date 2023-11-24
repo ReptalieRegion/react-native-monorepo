@@ -1,9 +1,9 @@
 import React from 'react';
 
-import type { ImageType } from '<image>';
 import type { SharePostFollowProps } from '<routes/root>';
 import useUserProfileAndPostCount from '@/apis/share-post/post/hooks/combine/useUserProfileAndPostCount';
 import UserProfile from '@/components/share-post/molecules/UserProfile/UserProfile';
+import type { ImageType } from '@/types/global/image';
 
 type ListHeaderComponentState = {
     isFollow: boolean | undefined;

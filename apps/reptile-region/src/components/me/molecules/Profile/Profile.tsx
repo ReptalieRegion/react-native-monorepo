@@ -2,8 +2,8 @@ import { Typo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { ImageType } from '<image>';
 import { Avatar } from '@/components/@common/atoms';
+import type { ImageType } from '@/types/global/image';
 
 type ProfileState = {
     user:

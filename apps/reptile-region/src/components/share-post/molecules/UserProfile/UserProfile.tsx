@@ -2,7 +2,6 @@ import { Typo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { ImageType } from '<image>';
 import type { SharePostFollowProps } from '<routes/bottom-tab>';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
@@ -12,6 +11,7 @@ import type {
     ActivitySummaryItemProps,
 } from '@/components/share-post/molecules/UserActivitySummaryItem';
 import UserActivitySummaryItem from '@/components/share-post/molecules/UserActivitySummaryItem';
+import type { ImageType } from '@/types/global/image';
 
 type UserDetailPanelState = {
     user: {

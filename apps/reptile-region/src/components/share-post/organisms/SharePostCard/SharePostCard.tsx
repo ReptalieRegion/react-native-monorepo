@@ -8,7 +8,7 @@ import PostHeader from '../../molecules/PostHeader';
 import { Interactive, PostCardImageCarousel } from './components';
 import PostCard from './providers/PostCard';
 
-import type { ImageType } from '<image>';
+import type { ImageType } from '@/types/global/image';
 
 type PostCardState = {
     post: {
