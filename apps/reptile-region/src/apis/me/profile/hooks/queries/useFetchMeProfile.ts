@@ -2,9 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 
 import { fetchMeProfile } from '../../repository';
 
-import type { FetchMeProfile } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchMeProfile } from '@/types/apis/share-post/post';
 
 // 사용자 프로필 조회
 type UseFetchMeProfileState = {

@@ -1,7 +1,7 @@
-import type { WithInfinitePageParam } from '<api/utils>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 import type { CreatePushAgree, FetchPushLog, UpdatePushAgree, UpdatePushClickedRequest } from '@/types/apis/notification';
+import type { WithInfinitePageParam } from '@/types/apis/utils';
 
 /**
  *

@@ -3,12 +3,12 @@ import { useCallback } from 'react';
 
 import { getCommentReplies } from '../../repository';
 
-import type { FetchCommentReply, FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
-import type { InfiniteState } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchCommentReply, FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
+import type { InfiniteState } from '@/types/apis/utils';
 
-const useInfiniteCommentReply = ({ commentId }: FetchCommentReply['Request']) => {
+export default function useInfiniteCommentReply({ commentId }: FetchCommentReply['Request']) {
     return useSuspenseInfiniteQuery<
         FetchCommentReply['Response'],
         HTTPError,
@@ -26,6 +26,4 @@ const useInfiniteCommentReply = ({ commentId }: FetchCommentReply['Request']) =>
             [],
         ),
     });
-};
-
-export default useInfiniteCommentReply;
+}

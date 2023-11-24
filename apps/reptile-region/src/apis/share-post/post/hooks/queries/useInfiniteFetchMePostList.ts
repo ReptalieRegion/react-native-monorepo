@@ -3,12 +3,12 @@ import { useCallback } from 'react';
 
 import { fetchMePostList } from '../../repository';
 
-import type { FetchMePostList, FetchMePostListResponse } from '<api/share/post>';
-import type { InfiniteState } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchMePostList, FetchMePostListResponse } from '@/types/apis/share-post/post';
+import type { InfiniteState } from '@/types/apis/utils';
 
-const useInfiniteFetchMePostList = () => {
+export default function useInfiniteFetchMePostList() {
     return useSuspenseInfiniteQuery<
         FetchMePostList['Response'],
         HTTPError,
@@ -25,6 +25,4 @@ const useInfiniteFetchMePostList = () => {
             [],
         ),
     });
-};
-
-export default useInfiniteFetchMePostList;
+}

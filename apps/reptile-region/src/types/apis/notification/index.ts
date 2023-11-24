@@ -1,4 +1,4 @@
-import type { InfiniteState, ServerAPI } from '<api/utils>';
+import type { InfiniteState, ServerAPI } from '../utils';
 
 /**
  * 공통 타입

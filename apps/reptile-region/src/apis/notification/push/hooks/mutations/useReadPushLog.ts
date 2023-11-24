@@ -10,7 +10,7 @@ type UseUpdateProfileContext = {
     previousReadCheck: FetchPushReadCheck['Response'];
 };
 
-const useReadPushLog = () => {
+export default function useReadPushLog() {
     const queryClient = useQueryClient();
     const queryKey = NOTIFICATION_QUERY_KEYS.pushReadCheck;
 
@@ -40,6 +40,4 @@ const useReadPushLog = () => {
             queryClient.invalidateQueries({ queryKey });
         },
     });
-};
-
-export default useReadPushLog;
+}

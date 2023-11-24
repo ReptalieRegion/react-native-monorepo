@@ -3,14 +3,33 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { createComment } from '../../repository';
 
-import type { CreateComment, FetchComment } from '<api/share/post/comment>';
-import type { FetchPosts } from '<api/share/post>';
-import type { OnSuccessParam } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { CreateComment, FetchComment } from '@/types/apis/share-post/comment';
+import type { FetchPosts } from '@/types/apis/share-post/post';
 
-/** 특정 게시글 댓글 리스트 무한 스크롤 댓글 추가 */
-const updateShareCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateComment['Response'] }) => {
+// TODO 낙관적 업데이트로 변경
+// 댓글 생성
+interface UseCreateCommentActions {
+    onSuccess(): void;
+}
+
+type UseCreateCommentProps = UseCreateCommentActions;
+
+export default function useCreateComment({ onSuccess }: UseCreateCommentProps) {
+    const queryClient = useQueryClient();
+    return useMutation<CreateComment['Response'], HTTPError, CreateComment['Request']>({
+        mutationFn: ({ postId, contents }) => createComment({ postId, contents }),
+        onSuccess: (data) => {
+            onSuccess();
+            updateShareCommentListCache({ queryClient, data });
+            updateSharePostListCache({ queryClient, data });
+        },
+    });
+}
+
+// 특정 게시글 댓글 리스트 무한 스크롤 댓글 추가
+function updateShareCommentListCache({ queryClient, data }: { queryClient: QueryClient; data: CreateComment['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.comment(data.post.id);
 
     queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
@@ -30,10 +49,10 @@ const updateShareCommentListCache = ({ queryClient, data }: { queryClient: Query
             pages: updatePages,
         };
     });
-};
+}
 
-/** 일상공유 무한스크롤 조회 리스트 댓글 개수 증가 */
-const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateComment['Response'] }) => {
+// 일상공유 무한스크롤 조회 리스트 댓글 개수 증가
+function updateSharePostListCache({ queryClient, data }: { queryClient: QueryClient; data: CreateComment['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.list;
 
     queryClient.setQueryData<InfiniteData<FetchPosts['Response']>>(queryKey, (prevPostList) => {
@@ -59,18 +78,4 @@ const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryCli
             pages: updatePages,
         };
     });
-};
-
-const useCreateComment = ({ onSuccess }: OnSuccessParam) => {
-    const queryClient = useQueryClient();
-    return useMutation<CreateComment['Response'], HTTPError, CreateComment['Request']>({
-        mutationFn: ({ postId, contents }) => createComment({ postId, contents }),
-        onSuccess: (data) => {
-            onSuccess();
-            updateShareCommentListCache({ queryClient, data });
-            updateSharePostListCache({ queryClient, data });
-        },
-    });
-};
-
-export default useCreateComment;
+}

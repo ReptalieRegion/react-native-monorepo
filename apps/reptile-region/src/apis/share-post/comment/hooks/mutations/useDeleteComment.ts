@@ -3,13 +3,26 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { deleteComment } from '../../repository';
 
-import type { DeleteComment, FetchComment } from '<api/share/post/comment>';
-import type { FetchPosts } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { DeleteComment, FetchComment } from '@/types/apis/share-post/comment';
+import type { FetchPosts } from '@/types/apis/share-post/post';
 
-/** 일상공유 무한스크롤 조회 리스트 댓글 개수 감소 **/
-const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteComment['Response'] }) => {
+// 댓글 삭제
+export default function useDeleteComment() {
+    const queryClient = useQueryClient();
+
+    return useMutation<DeleteComment['Response'], HTTPError, DeleteComment['Request']>({
+        mutationFn: ({ commentId }) => deleteComment({ commentId }),
+        onSuccess: (data) => {
+            deleteCommentCache({ queryClient, data });
+            updateSharePostListCache({ queryClient, data });
+        },
+    });
+}
+
+// 일상공유 무한스크롤 조회 리스트 댓글 개수 감소
+function updateSharePostListCache({ queryClient, data }: { queryClient: QueryClient; data: DeleteComment['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.list;
 
     queryClient.setQueryData<InfiniteData<FetchPosts['Response']>>(queryKey, (prevSharePostList) => {
@@ -35,10 +48,10 @@ const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryCli
             pages: updatePages,
         };
     });
-};
+}
 
-/** 특정 게시글 댓글 리스트 무한 스크롤 댓글 삭제 */
-const deleteCommentCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteComment['Response'] }) => {
+// 특정 게시글 댓글 리스트 무한 스크롤 댓글 삭제
+function deleteCommentCache({ queryClient, data }: { queryClient: QueryClient; data: DeleteComment['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.comment(data.post.id);
 
     queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
@@ -62,17 +75,4 @@ const deleteCommentCache = ({ queryClient, data }: { queryClient: QueryClient; d
             pages: updatePages,
         };
     });
-};
-
-const useDeleteComment = () => {
-    const queryClient = useQueryClient();
-    return useMutation<DeleteComment['Response'], HTTPError, DeleteComment['Request']>({
-        mutationFn: ({ commentId }) => deleteComment({ commentId }),
-        onSuccess: (data) => {
-            deleteCommentCache({ queryClient, data });
-            updateSharePostListCache({ queryClient, data });
-        },
-    });
-};
-
-export default useDeleteComment;
+}

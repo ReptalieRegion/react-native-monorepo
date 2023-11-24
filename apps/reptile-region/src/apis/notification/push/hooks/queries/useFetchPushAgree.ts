@@ -7,11 +7,9 @@ import { NOTIFICATION_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchPushAgree } from '@/types/apis/notification';
 
 // 푸시알림 동의 조회
-const useFetchPushAgree = () => {
+export default function useFetchPushAgree() {
     return useQuery<FetchPushAgree['Response'], HTTPError, FetchPushAgree['Response'], readonly string[]>({
         queryKey: NOTIFICATION_QUERY_KEYS.pushAgree,
         queryFn: fetchNotificationPushAgree,
     });
-};
-
-export default useFetchPushAgree;
+}

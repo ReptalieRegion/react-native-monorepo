@@ -6,13 +6,13 @@ import { StyleSheet, View } from 'react-native';
 
 import type { CommentReplyScreenProps } from './type';
 
-import type { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import CommentReplyItem from '@/components/share-post/organisms/Comment/components/CommentReplyItem';
 import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
 import useCommentReplyActions from '@/hooks/share-post/actions/useCommentReplyActions';
 import useCommentNavigation from '@/hooks/share-post/navigation/useCommentNavigation';
+import type { FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
 
 export default function CommentReplyList({ route: { params } }: CommentReplyScreenProps) {
     const flashListRef = useRef<FlashList<FetchCommentReplyResponse>>(null);

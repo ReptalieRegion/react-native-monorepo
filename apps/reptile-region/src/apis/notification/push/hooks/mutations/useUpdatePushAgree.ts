@@ -11,7 +11,7 @@ type UseUpdatePushAgreeContext = {
     previousPushAgree: FetchPushAgree['Response'];
 };
 
-const useUpdatePushAgree = () => {
+export default function useUpdatePushAgree() {
     const queryClient = useQueryClient();
 
     return useMutation<UpdatePushAgree['Response'], HTTPError, UpdatePushAgree['Request'], UseUpdatePushAgreeContext>({
@@ -47,6 +47,4 @@ const useUpdatePushAgree = () => {
             setTimeout(() => queryClient.invalidateQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree }), 1 * 60 * 1000);
         },
     });
-};
-
-export default useUpdatePushAgree;
+}

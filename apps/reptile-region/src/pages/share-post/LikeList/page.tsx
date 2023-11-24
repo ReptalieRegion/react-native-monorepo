@@ -4,12 +4,12 @@ import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flas
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { FetchLikeResponse } from '<api/share/post>';
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
 import useInfiniteFetchLikes from '@/apis/share-post/post/hooks/queries/useInfiniteFetchLikes';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import { Avatar } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
+import type { FetchLikeResponse } from '@/types/apis/share-post/post';
 
 type FollowerPageScreenProps = MaterialTopTabScreenProps<SharePostTabParamList, 'share-post/list/like'>;
 

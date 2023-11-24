@@ -2,8 +2,8 @@ import { fakerKO } from '@faker-js/faker';
 
 import { createContents } from './createTagIdsAndContent';
 
-import type { FetchCommentReplyResponse } from '<api/share/post/comment-reply>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
+import type { FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
 
 export type CreateCommentReplyProps = {
     commentReplyId?: string;

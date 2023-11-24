@@ -1,3 +1,5 @@
+import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
+import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 import type {
     CreateLike,
     CreatePost,
@@ -8,13 +10,14 @@ import type {
     FetchPosts,
     UpdateLike,
     UpdatePost,
-} from '<api/share/post>';
-import type { WithInfinitePageParam } from '<api/utils>';
-import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
-import { objectToQueryString } from '@/apis/@utils/parser/query-string';
+} from '@/types/apis/share-post/post';
+import type { WithInfinitePageParam } from '@/types/apis/utils';
 import { uploadImage } from '@/utils/camera-roll/camera-roll';
 
-/** GET */
+/**
+ *
+ * GET
+ */
 // 게시물 패치
 export const getPosts = async ({ pageParam }: WithInfinitePageParam<FetchPosts['Request']>) => {
     const queryString = objectToQueryString({
@@ -28,7 +31,6 @@ export const getPosts = async ({ pageParam }: WithInfinitePageParam<FetchPosts['
     return response.json();
 };
 
-// TODO
 // 특정 게시물 패치
 export const getPost = async ({ postId }: FetchPost['Request']) => {
     const response = await clientFetch(`api/share/posts/${postId}`, {
@@ -70,9 +72,11 @@ export const getLikes = async ({ pageParam, postId }: WithInfinitePageParam<Fetc
     return response.json();
 };
 
-/** POST */
+/**
+ *
+ * POST
+ */
 // 게시글 생성
-// TODO Fetch로 이미지 업로드가 안됨
 export const createPost = async ({ contents, selectedPhotos }: CreatePost['Request']) => {
     const formData = new FormData();
     for (const photo of selectedPhotos) {
@@ -104,7 +108,10 @@ export const createLike = async ({ postId }: CreateLike['Request']) => {
     return response.json();
 };
 
-/** PUT */
+/**
+ *
+ * PUT
+ */
 // 특정 게시글 수정
 export const updatePost = async ({ postId, contents, remainingImages }: UpdatePost['Request']) => {
     const body = {
@@ -129,7 +136,10 @@ export const updateLike = async ({ postId }: UpdateLike['Request']) => {
     return response.json();
 };
 
-/** DELETE */
+/**
+ *
+ * DELETE
+ */
 // 특정 게시글 삭제
 export const deletePost = async ({ postId }: DeletePost['Request']) => {
     const response = await clientFetch(`api/share/posts/${postId}`, {

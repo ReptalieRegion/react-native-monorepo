@@ -5,12 +5,12 @@ import { RefreshControl } from 'react-native';
 
 import type { CommentScreenProps } from './type';
 
-import type { FetchCommentResponse } from '<api/share/post/comment>';
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
 import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
 import useCommentNavigation from '@/hooks/share-post/navigation/useCommentNavigation';
+import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 
 export default function CommentList({ route: { params } }: CommentScreenProps) {
     const flashListRef = useRef<FlashList<FetchCommentResponse>>(null);

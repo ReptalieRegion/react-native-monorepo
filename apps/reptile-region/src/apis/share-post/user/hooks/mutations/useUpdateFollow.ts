@@ -3,17 +3,29 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { updateFollow } from '../../repository';
 
-import type { FetchDetailUserProfile, UpdateFollow } from '<api/share/post/user>';
-import type { FetchPosts } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchPosts } from '@/types/apis/share-post/post';
+import type { FetchDetailUserProfile, UpdateFollow } from '@/types/apis/share-post/user';
 
 type SetQueryDataProps = {
     queryClient: QueryClient;
     data: UpdateFollow['Response'];
 };
 
-/** 특정 유저의 프로필 팔로우 수정 */
+export default function useUpdateFollow() {
+    const queryClient = useQueryClient();
+
+    return useMutation<UpdateFollow['Response'], HTTPError, UpdateFollow['Request']>({
+        mutationFn: ({ userId }) => updateFollow({ userId }),
+        onSuccess: (data) => {
+            updateUserProfile({ queryClient, data });
+            updateSharePostList({ queryClient, data });
+        },
+    });
+}
+
+// 특정 유저의 프로필 팔로우 수정
 const updateUserProfile = ({ queryClient, data }: SetQueryDataProps) => {
     const queryKey = SHARE_POST_QUERY_KEYS.profile(data.user.nickname);
 
@@ -37,7 +49,7 @@ const updateUserProfile = ({ queryClient, data }: SetQueryDataProps) => {
     });
 };
 
-/** 일상공유 무한스크롤 조회 리스트 팔로우 수정 */
+// 일상공유 무한스크롤 조회 리스트 팔로우 수정
 const updateSharePostList = ({ queryClient, data }: SetQueryDataProps) => {
     const queryKey = SHARE_POST_QUERY_KEYS.list;
     queryClient.setQueryData<InfiniteData<FetchPosts['Response']>>(queryKey, (prevPostList) => {
@@ -66,17 +78,3 @@ const updateSharePostList = ({ queryClient, data }: SetQueryDataProps) => {
         };
     });
 };
-
-const useUpdateFollow = () => {
-    const queryClient = useQueryClient();
-
-    return useMutation<UpdateFollow['Response'], HTTPError, UpdateFollow['Request']>({
-        mutationFn: ({ userId }) => updateFollow({ userId }),
-        onSuccess: (data) => {
-            updateUserProfile({ queryClient, data });
-            updateSharePostList({ queryClient, data });
-        },
-    });
-};
-
-export default useUpdateFollow;

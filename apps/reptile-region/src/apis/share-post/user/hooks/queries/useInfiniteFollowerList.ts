@@ -3,12 +3,13 @@ import { useCallback } from 'react';
 
 import { getFollowerList } from '../../repository';
 
-import type { FetchFollowerList, FetchFollowerListResponse } from '<api/share/post/user>';
-import type { InfiniteState } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchFollowerList, FetchFollowerListResponse } from '@/types/apis/share-post/user';
+import type { InfiniteState } from '@/types/apis/utils';
 
-const useInfiniteFollowerList = ({ userId }: FetchFollowerList['Request']) => {
+// 사용자 팔로워 리스트 무한스크롤 조회
+export default function useInfiniteFollowerList({ userId }: FetchFollowerList['Request']) {
     return useSuspenseInfiniteQuery<
         FetchFollowerList['Response'],
         HTTPError,
@@ -25,6 +26,4 @@ const useInfiniteFollowerList = ({ userId }: FetchFollowerList['Request']) => {
             [],
         ),
     });
-};
-
-export default useInfiniteFollowerList;
+}

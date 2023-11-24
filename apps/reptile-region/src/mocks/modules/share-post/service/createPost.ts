@@ -3,8 +3,8 @@ import { range } from '@reptile-region/utils';
 
 import { createContents } from './createTagIdsAndContent';
 
-import type { FetchDetailUserPostResponse } from '<api/share/post>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
+import type { FetchDetailUserPostResponse } from '@/types/apis/share-post/post';
 
 const createPost = (): FetchDetailUserPostResponse => {
     const contents = createContents();

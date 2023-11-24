@@ -2,11 +2,11 @@ import { useSuspenseInfiniteQuery, type InfiniteData } from '@tanstack/react-que
 
 import { getPosts } from '../../repository';
 
-import type { FetchPosts } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchPosts } from '@/types/apis/share-post/post';
 
-const useInfiniteFetchPosts = () => {
+export default function useInfiniteFetchPosts() {
     return useSuspenseInfiniteQuery<
         FetchPosts['Response'],
         HTTPError,
@@ -19,6 +19,4 @@ const useInfiniteFetchPosts = () => {
         queryFn: ({ pageParam }) => getPosts({ pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
     });
-};
-
-export default useInfiniteFetchPosts;
+}

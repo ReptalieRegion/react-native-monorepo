@@ -9,9 +9,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import useTagHandler from '../../hooks/useTagHandler';
 import useTagSearch from '../../hooks/useTagSearch';
 
-import type { FetchFollowerSearchResponse } from '<api/share/post/user>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import { Avatar, ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
+import type { FetchFollowerSearchResponse } from '@/types/apis/share-post/user';
 
 type FollowerUserListConditionRenderState = {
     containerStyles?: ViewStyle;

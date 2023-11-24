@@ -3,19 +3,37 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { updateCommentReply } from '../../repository';
 
-import type { FetchCommentReply, UpdateCommentReply } from '<api/share/post/comment-reply>';
-import type { OnSuccessParam } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchCommentReply, UpdateCommentReply } from '@/types/apis/share-post/comment-reply';
 
-/** 대댓글 리스트 무한스크롤 대댓글 수정 */
-const updateCommentReplyListCache = ({
+// 대댓글 수정
+interface UseUpdateCommentReplyActions {
+    onSuccess(): void;
+}
+
+type UseUpdateCommentReplyProps = UseUpdateCommentReplyActions;
+
+export default function useUpdateCommentReply({ onSuccess }: UseUpdateCommentReplyProps) {
+    const queryClient = useQueryClient();
+
+    return useMutation<UpdateCommentReply['Response'], HTTPError, UpdateCommentReply['Request']>({
+        mutationFn: ({ commentReplyId, contents }) => updateCommentReply({ commentReplyId, contents }),
+        onSuccess: (data) => {
+            onSuccess();
+            updateCommentReplyListCache({ queryClient, data });
+        },
+    });
+}
+
+// 대댓글 리스트 무한스크롤 대댓글 수정
+function updateCommentReplyListCache({
     queryClient,
     data,
 }: {
     queryClient: QueryClient;
     data: UpdateCommentReply['Response'];
-}) => {
+}) {
     const queryKey = SHARE_POST_QUERY_KEYS.commentReply(data.comment.id);
 
     queryClient.setQueryData<InfiniteData<FetchCommentReply['Response']>>(queryKey, (prevCommentReplyList) => {
@@ -42,18 +60,4 @@ const updateCommentReplyListCache = ({
             pages: updatePages,
         };
     });
-};
-
-const useUpdateCommentReply = ({ onSuccess }: OnSuccessParam) => {
-    const queryClient = useQueryClient();
-
-    return useMutation<UpdateCommentReply['Response'], HTTPError, UpdateCommentReply['Request']>({
-        mutationFn: ({ commentReplyId, contents }) => updateCommentReply({ commentReplyId, contents }),
-        onSuccess: (data) => {
-            onSuccess();
-            updateCommentReplyListCache({ queryClient, data });
-        },
-    });
-};
-
-export default useUpdateCommentReply;
+}

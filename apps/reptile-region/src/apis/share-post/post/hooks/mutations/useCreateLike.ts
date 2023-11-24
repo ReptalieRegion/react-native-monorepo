@@ -3,12 +3,25 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { createLike } from '../../repository';
 
-import type { CreateLike, FetchDetailUserPost, FetchPosts } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { CreateLike, FetchDetailUserPost, FetchPosts } from '@/types/apis/share-post/post';
 
-/** 일상공유 무한스크롤 조회 리스트 좋아요 생성 */
-const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateLike['Response'] }) => {
+// 좋아요 생성
+export default function useCreateLike() {
+    const queryClient = useQueryClient();
+
+    return useMutation<CreateLike['Response'], HTTPError, CreateLike['Request']>({
+        mutationFn: ({ postId }) => createLike({ postId }),
+        onSuccess: (data) => {
+            updateSharePostListCache({ queryClient, data });
+            updateSharePostUserDetailCache({ queryClient, data });
+        },
+    });
+}
+
+// 일상공유 무한스크롤 조회 리스트 좋아요 생성
+function updateSharePostListCache({ queryClient, data }: { queryClient: QueryClient; data: CreateLike['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.list;
 
     queryClient.setQueryData<InfiniteData<FetchPosts['Response']>>(queryKey, (prevPostList) => {
@@ -34,10 +47,10 @@ const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryCli
             pages: updatePages,
         };
     });
-};
+}
 
-/** 특정 유저의 게시글 리스트 무한 스크롤 좋아요 생성 */
-const updateSharePostUserDetailCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateLike['Response'] }) => {
+// 특정 유저의 게시글 리스트 무한 스크롤 좋아요 생성
+function updateSharePostUserDetailCache({ queryClient, data }: { queryClient: QueryClient; data: CreateLike['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.detailUserPosts(data.post.user.nickname);
 
     queryClient.setQueryData<InfiniteData<FetchDetailUserPost['Response']>>(queryKey, (prevPostDetailList) => {
@@ -63,18 +76,4 @@ const updateSharePostUserDetailCache = ({ queryClient, data }: { queryClient: Qu
             pages: updatePages,
         };
     });
-};
-
-const useCreateLike = () => {
-    const queryClient = useQueryClient();
-
-    return useMutation<CreateLike['Response'], HTTPError, CreateLike['Request']>({
-        mutationFn: ({ postId }) => createLike({ postId }),
-        onSuccess: (data) => {
-            updateSharePostListCache({ queryClient, data });
-            updateSharePostUserDetailCache({ queryClient, data });
-        },
-    });
-};
-
-export default useCreateLike;
+}

@@ -7,14 +7,14 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import type { SharePostListMeModalPageScreen } from '../../type';
 
-import type { FetchDetailUserProfileResponse } from '<api/share/post/user>';
-import type { FetchMePostListResponse, FetchMeProfile } from '<api/share/post>';
 import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteFetchMePostList from '@/apis/share-post/post/hooks/queries/useInfiniteFetchMePostList';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
 import useSharePostModalNavigation from '@/hooks/share-post/navigation/useSharePostModalNavigation';
+import type { FetchMePostListResponse, FetchMeProfile } from '@/types/apis/share-post/post';
+import type { FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
 
 export default function MeDetailListModalPage({ route: { params } }: SharePostListMeModalPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);

@@ -3,13 +3,26 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { deleteCommentReply } from '../../repository';
 
-import type { DeleteCommentReply, FetchCommentReply } from '<api/share/post/comment-reply>';
-import type { FetchComment } from '<api/share/post/comment>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchComment } from '@/types/apis/share-post/comment';
+import type { DeleteCommentReply, FetchCommentReply } from '@/types/apis/share-post/comment-reply';
 
-/** 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 감소 */
-const updateCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: DeleteCommentReply['Response'] }) => {
+// 대댓글 삭제
+export default function useDeleteCommentReply() {
+    const queryClient = useQueryClient();
+
+    return useMutation<DeleteCommentReply['Response'], HTTPError, DeleteCommentReply['Request']>({
+        mutationFn: ({ commentReplyId }) => deleteCommentReply({ commentReplyId }),
+        onSuccess: (data) => {
+            updateCommentListCache({ queryClient, data });
+            deleteCommentReplyListCache({ queryClient, data });
+        },
+    });
+}
+
+// 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 감소
+function updateCommentListCache({ queryClient, data }: { queryClient: QueryClient; data: DeleteCommentReply['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.comment(data.post.id);
     queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
         if (prevCommentList === undefined) {
@@ -33,16 +46,16 @@ const updateCommentListCache = ({ queryClient, data }: { queryClient: QueryClien
             pages: updatePages,
         };
     });
-};
+}
 
-/** 대댓글 리스트 무한스크롤 대댓글 삭제 */
-const deleteCommentReplyListCache = ({
+// 대댓글 리스트 무한스크롤 대댓글 삭제
+function deleteCommentReplyListCache({
     queryClient,
     data,
 }: {
     queryClient: QueryClient;
     data: DeleteCommentReply['Response'];
-}) => {
+}) {
     const queryKey = data.post.comment.id;
     queryClient.setQueryData<InfiniteData<FetchCommentReply['Response']>>(
         SHARE_POST_QUERY_KEYS.commentReply(queryKey),
@@ -68,18 +81,4 @@ const deleteCommentReplyListCache = ({
             };
         },
     );
-};
-
-const useDeleteCommentReply = () => {
-    const queryClient = useQueryClient();
-
-    return useMutation<DeleteCommentReply['Response'], HTTPError, DeleteCommentReply['Request']>({
-        mutationFn: ({ commentReplyId }) => deleteCommentReply({ commentReplyId }),
-        onSuccess: (data) => {
-            updateCommentListCache({ queryClient, data });
-            deleteCommentReplyListCache({ queryClient, data });
-        },
-    });
-};
-
-export default useDeleteCommentReply;
+}

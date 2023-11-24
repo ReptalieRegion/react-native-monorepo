@@ -1,4 +1,5 @@
-import type { ServerAPI } from '<api/utils>';
+import type { ServerAPI } from '../utils';
+
 import type { ImageType } from '<image>';
 
 /**

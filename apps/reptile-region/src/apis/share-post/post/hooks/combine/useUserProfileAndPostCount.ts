@@ -1,9 +1,9 @@
 import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 
-import type { FetchDetailUserPost } from '<api/share/post>';
 import type { ImageType } from '<image>';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
+import type { FetchDetailUserPost } from '@/types/apis/share-post/post';
 
 type UseUserProfileAndPostCountProps = {
     nickname: string;
@@ -11,7 +11,7 @@ type UseUserProfileAndPostCountProps = {
     isFollow: boolean | undefined;
 };
 
-const useUserProfileAndPostCount = ({ nickname, isFollow, profile }: UseUserProfileAndPostCountProps) => {
+export default function useUserProfileAndPostCount({ nickname, isFollow, profile }: UseUserProfileAndPostCountProps) {
     const profileQuery = useFetchUserProfile({ nickname });
     const queryClient = useQueryClient();
     const post = queryClient.getQueryData<InfiniteData<FetchDetailUserPost['Response']>>(
@@ -32,6 +32,4 @@ const useUserProfileAndPostCount = ({ nickname, isFollow, profile }: UseUserProf
     };
 
     return { ...profileQuery, data };
-};
-
-export default useUserProfileAndPostCount;
+}

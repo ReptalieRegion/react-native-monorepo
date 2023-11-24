@@ -3,12 +3,30 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { updatePost } from '../../repository';
 
-import type { FetchDetailUserPost, FetchPosts, UpdatePost } from '<api/share/post>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchDetailUserPost, FetchPosts, UpdatePost } from '@/types/apis/share-post/post';
 
-/** 일상공유 무한스크롤 조회 리스트 게시물 수정 */
-const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryClient; data: UpdatePost['Response'] }) => {
+interface UseUpdatePostActions {
+    onSuccess(): void;
+}
+
+type UseUpdatePostProps = UseUpdatePostActions;
+
+export default function useUpdatePost({ onSuccess }: UseUpdatePostProps) {
+    const queryClient = useQueryClient();
+    return useMutation<UpdatePost['Response'], HTTPError, UpdatePost['Request']>({
+        mutationFn: ({ postId, contents, remainingImages }) => updatePost({ postId, contents, remainingImages }),
+        onSuccess: (data) => {
+            onSuccess();
+            updateSharePostListCache({ queryClient, data });
+            updateSharePostDetailUserListCache({ queryClient, data });
+        },
+    });
+}
+
+// 일상공유 무한스크롤 조회 리스트 게시물 수정
+function updateSharePostListCache({ queryClient, data }: { queryClient: QueryClient; data: UpdatePost['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.list;
 
     queryClient.setQueryData<InfiniteData<FetchPosts['Response']>>(queryKey, (prevPostList) => {
@@ -36,16 +54,10 @@ const updateSharePostListCache = ({ queryClient, data }: { queryClient: QueryCli
             pages: updatePages,
         };
     });
-};
+}
 
-/** 특정 유저의 게시글 리스트 무한 스크롤 게시물 수정 */
-const updateSharePostDetailUserListCache = ({
-    queryClient,
-    data,
-}: {
-    queryClient: QueryClient;
-    data: UpdatePost['Response'];
-}) => {
+// 특정 유저의 게시글 리스트 무한 스크롤 게시물 수정
+function updateSharePostDetailUserListCache({ queryClient, data }: { queryClient: QueryClient; data: UpdatePost['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.detailUserPosts(data.post.user.nickname);
 
     queryClient.setQueryData<InfiniteData<FetchDetailUserPost['Response']>>(queryKey, (prevDetailUserPostList) => {
@@ -73,22 +85,4 @@ const updateSharePostDetailUserListCache = ({
             pages: updatePages,
         };
     });
-};
-
-interface UseUpdatePost {
-    onSuccess(): void;
 }
-
-const useUpdatePost = ({ onSuccess }: UseUpdatePost) => {
-    const queryClient = useQueryClient();
-    return useMutation<UpdatePost['Response'], HTTPError, UpdatePost['Request']>({
-        mutationFn: ({ postId, contents, remainingImages }) => updatePost({ postId, contents, remainingImages }),
-        onSuccess: (data) => {
-            onSuccess();
-            updateSharePostListCache({ queryClient, data });
-            updateSharePostDetailUserListCache({ queryClient, data });
-        },
-    });
-};
-
-export default useUpdatePost;

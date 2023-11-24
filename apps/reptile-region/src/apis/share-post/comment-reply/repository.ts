@@ -1,12 +1,12 @@
+import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
+import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 import type {
     CreateCommentReply,
     DeleteCommentReply,
     FetchCommentReply,
     UpdateCommentReply,
-} from '<api/share/post/comment-reply>';
-import type { WithInfinitePageParam } from '<api/utils>';
-import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
-import { objectToQueryString } from '@/apis/@utils/parser/query-string';
+} from '@/types/apis/share-post/comment-reply';
+import type { WithInfinitePageParam } from '@/types/apis/utils';
 
 /** GET */
 // 대댓글 리스트 무한스크롤

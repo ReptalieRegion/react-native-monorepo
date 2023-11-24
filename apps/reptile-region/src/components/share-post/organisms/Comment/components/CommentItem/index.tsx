@@ -3,13 +3,12 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import CommentActionButtons from '../ActionButtons';
 import type { CommentActionButtonsAction } from '../ActionButtons';
+import CommentActionButtons from '../ActionButtons';
 
-import type { FetchCommentResponse } from '<api/share/post/comment>';
-import { ConditionalRenderer } from '@/components/@common/atoms';
-import { Avatar } from '@/components/@common/atoms';
+import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import TaggedContents from '@/components/share-post/molecules/TaggedContents';
+import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 
 type CommentListProps = {
     item: FetchCommentResponse;

@@ -1,15 +1,18 @@
+import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
+import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 import type {
     CreateFollow,
     FetchDetailUserProfile,
     FetchFollowerList,
     FetchFollowerSearch,
     UpdateFollow,
-} from '<api/share/post/user>';
-import type { WithInfinitePageParam } from '<api/utils>';
-import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
-import { objectToQueryString } from '@/apis/@utils/parser/query-string';
+} from '@/types/apis/share-post/user';
+import type { WithInfinitePageParam } from '@/types/apis/utils';
 
-/** GET */
+/**
+ *
+ * GET
+ */
 // 특정 유저의 프로필
 export const getDetailUserProfile = async ({ nickname }: FetchDetailUserProfile['Request']) => {
     const queryString = objectToQueryString({ nickname });
@@ -45,7 +48,10 @@ export const getFollowingList = async ({ pageParam, userId }: WithInfinitePagePa
     return response.json();
 };
 
-/** POST */
+/**
+ *
+ * POST
+ */
 // 사용자가 특정 유저를 팔로우 생성
 export const createFollow = async ({ userId }: CreateFollow['Request']) => {
     const response = await clientFetch(`api/users/${userId}/follow`, {
@@ -55,7 +61,10 @@ export const createFollow = async ({ userId }: CreateFollow['Request']) => {
     return response.json();
 };
 
-/** PUT */
+/**
+ *
+ * PUT
+ */
 // 사용자가 특정 유저 팔로우 토글
 export const updateFollow = async ({ userId }: UpdateFollow['Request']) => {
     const response = await clientFetch(`api/users/${userId}/follow`, {

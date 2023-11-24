@@ -7,13 +7,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import type { PostDetailModalListScreenProps } from '../type';
 
-import type { FetchCommentResponse } from '<api/share/post/comment>';
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import Comment, { CommentReplyTextEditor } from '@/components/share-post/organisms/Comment';
 import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
 import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
 import usePostDetailNavigation from '@/hooks/share-post/navigation/usePostDetailNavigation';
+import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 
 type SharePostDetailModalPageState = PostDetailModalListScreenProps & {
     ListHeaderComponent: React.JSX.Element;

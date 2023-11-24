@@ -3,14 +3,32 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { createCommentReply } from '../../repository';
 
-import type { CreateCommentReply, FetchCommentReply } from '<api/share/post/comment-reply>';
-import type { FetchComment } from '<api/share/post/comment>';
-import type { OnSuccessParam } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchComment } from '@/types/apis/share-post/comment';
+import type { CreateCommentReply, FetchCommentReply } from '@/types/apis/share-post/comment-reply';
 
-/** 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 수정 */
-const updateCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: CreateCommentReply['Response'] }) => {
+// 대댓글 생성
+interface UseCreateCommentReplyActions {
+    onSuccess(): void;
+}
+
+type UseCreateCommentReplyProps = UseCreateCommentReplyActions;
+
+export default function useCreateCommentReply({ onSuccess }: UseCreateCommentReplyProps) {
+    const queryClient = useQueryClient();
+    return useMutation<CreateCommentReply['Response'], HTTPError, CreateCommentReply['Request']>({
+        mutationFn: ({ commentId, contents }) => createCommentReply({ commentId, contents }),
+        onSuccess: (data) => {
+            onSuccess();
+            updateCommentListCache({ queryClient, data });
+            updateCommentReplyListCache({ queryClient, data });
+        },
+    });
+}
+
+// 특정 게시글 댓글 리스트 무한 스크롤 대댓글 개수 수정
+function updateCommentListCache({ queryClient, data }: { queryClient: QueryClient; data: CreateCommentReply['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.comment(data.post.id);
 
     queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
@@ -43,16 +61,16 @@ const updateCommentListCache = ({ queryClient, data }: { queryClient: QueryClien
             }),
         };
     });
-};
+}
 
-/** 대댓글 리스트 무한스크롤 대댓글 추가 */
-const updateCommentReplyListCache = ({
+// 대댓글 리스트 무한스크롤 대댓글 추가
+function updateCommentReplyListCache({
     queryClient,
     data,
 }: {
     queryClient: QueryClient;
     data: CreateCommentReply['Response'];
-}) => {
+}) {
     const queryKey = SHARE_POST_QUERY_KEYS.commentReply(data.post.comment.id);
 
     queryClient.setQueryData<InfiniteData<FetchCommentReply['Response']>>(queryKey, (prevCommentReplyData) => {
@@ -72,18 +90,4 @@ const updateCommentReplyListCache = ({
             pages: updatePages,
         };
     });
-};
-
-const useCreateCommentReply = ({ onSuccess }: OnSuccessParam) => {
-    const queryClient = useQueryClient();
-    return useMutation<CreateCommentReply['Response'], HTTPError, CreateCommentReply['Request']>({
-        mutationFn: ({ commentId, contents }) => createCommentReply({ commentId, contents }),
-        onSuccess: (data) => {
-            onSuccess();
-            updateCommentListCache({ queryClient, data });
-            updateCommentReplyListCache({ queryClient, data });
-        },
-    });
-};
-
-export default useCreateCommentReply;
+}

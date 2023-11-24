@@ -3,12 +3,13 @@ import { useCallback } from 'react';
 
 import { getFollowingList } from '../../repository';
 
-import type { FetchFollowerListResponse, FetchFollowingList, FetchFollowingListResponse } from '<api/share/post/user>';
-import type { InfiniteState } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchFollowingList, FetchFollowingListResponse } from '@/types/apis/share-post/user';
+import type { InfiniteState } from '@/types/apis/utils';
 
-const useInfiniteFollowingList = ({ userId }: FetchFollowingList['Request']) => {
+// 사용자 팔로잉 리스트 무한스크롤 조회
+export default function useInfiniteFollowingList({ userId }: FetchFollowingList['Request']) {
     return useSuspenseInfiniteQuery<
         FetchFollowingList['Response'],
         HTTPError,
@@ -21,10 +22,9 @@ const useInfiniteFollowingList = ({ userId }: FetchFollowingList['Request']) => 
         queryFn: ({ pageParam }) => getFollowingList({ userId, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
         select: useCallback(
-            (data: InfiniteData<InfiniteState<FetchFollowerListResponse>, number>) => data?.pages.flatMap((page) => page.items),
+            (data: InfiniteData<InfiniteState<FetchFollowingListResponse>, number>) =>
+                data?.pages.flatMap((page) => page.items),
             [],
         ),
     });
-};
-
-export default useInfiniteFollowingList;
+}

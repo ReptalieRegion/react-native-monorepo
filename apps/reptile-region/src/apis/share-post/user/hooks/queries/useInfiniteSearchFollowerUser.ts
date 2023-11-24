@@ -2,11 +2,12 @@ import { useSuspenseInfiniteQuery, type InfiniteData } from '@tanstack/react-que
 
 import { getSearchFollowerUserNickname } from '../../repository';
 
-import type { FetchFollowerSearch } from '<api/share/post/user>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchFollowerSearch } from '@/types/apis/share-post/user';
 
-const useInfiniteSearchFollowerUser = ({ search }: FetchFollowerSearch['Request']) => {
+// 사용자 팔로워 무한스크롤 조회
+export default function useInfiniteSearchFollowerUser({ search }: FetchFollowerSearch['Request']) {
     return useSuspenseInfiniteQuery<
         FetchFollowerSearch['Response'],
         HTTPError,
@@ -19,6 +20,4 @@ const useInfiniteSearchFollowerUser = ({ search }: FetchFollowerSearch['Request'
         queryFn: ({ pageParam }) => getSearchFollowerUserNickname({ search, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
     });
-};
-
-export default useInfiniteSearchFollowerUser;
+}

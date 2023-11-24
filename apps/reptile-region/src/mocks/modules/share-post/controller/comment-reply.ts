@@ -4,9 +4,9 @@ import { rest } from 'msw';
 import type { CreateCommentReplyProps } from '../service/createCommentReply';
 import createCommentReply from '../service/createCommentReply';
 
-import type { UpdateCommentReplyResponse } from '<api/share/post/comment-reply>';
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
+import type { UpdateCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
 
 const commentReplyController = () => {
     const BASE_URI = ENV.END_POINT_URI + 'api/';

@@ -11,7 +11,7 @@ type UseCreatePushAgreeContext = {
     previousPushAgree: FetchPushAgree['Response'];
 };
 
-const useCreatePushAgree = () => {
+export default function useCreatePushAgree() {
     const queryClient = useQueryClient();
 
     return useMutation<CreatePushAgree['Response'], HTTPError, CreatePushAgree['Request'], UseCreatePushAgreeContext>({
@@ -38,6 +38,4 @@ const useCreatePushAgree = () => {
             queryClient.invalidateQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree });
         },
     });
-};
-
-export default useCreatePushAgree;
+}

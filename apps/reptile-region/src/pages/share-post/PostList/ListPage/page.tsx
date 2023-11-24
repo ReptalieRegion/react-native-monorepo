@@ -6,7 +6,6 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import type { SharePostListPageScreen } from './type';
 
-import type { FetchPostResponse } from '<api/share/post>';
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
@@ -17,6 +16,7 @@ import SharePostCard from '@/components/share-post/organisms/SharePostCard/Share
 import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
 import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
+import type { FetchPostResponse } from '@/types/apis/share-post/post';
 
 export default function PostList({ navigation }: SharePostListPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);

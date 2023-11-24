@@ -3,12 +3,12 @@ import { useCallback } from 'react';
 
 import { getDetailUserPosts } from '../../repository';
 
-import type { FetchDetailUserPost, FetchDetailUserPostResponse } from '<api/share/post>';
-import type { InfiniteState } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchDetailUserPost, FetchDetailUserPostResponse } from '@/types/apis/share-post/post';
+import type { InfiniteState } from '@/types/apis/utils';
 
-const useInfiniteUserPosts = ({ nickname }: FetchDetailUserPost['Request']) => {
+export default function useInfiniteUserPosts({ nickname }: FetchDetailUserPost['Request']) {
     return useSuspenseInfiniteQuery<
         FetchDetailUserPost['Response'],
         HTTPError,
@@ -26,6 +26,4 @@ const useInfiniteUserPosts = ({ nickname }: FetchDetailUserPost['Request']) => {
             [],
         ),
     });
-};
-
-export default useInfiniteUserPosts;
+}

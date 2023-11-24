@@ -3,13 +3,30 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { updateComment } from '../../repository';
 
-import type { FetchComment, UpdateComment } from '<api/share/post/comment>';
-import type { OnSuccessParam } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchComment, UpdateComment } from '@/types/apis/share-post/comment';
 
-/** 특정 게시글 댓글 리스트 무한 스크롤 댓글 수정 */
-const updateShareCommentListCache = ({ queryClient, data }: { queryClient: QueryClient; data: UpdateComment['Response'] }) => {
+interface UseUpdateCommentActions {
+    onSuccess(): void;
+}
+
+type UseUpdateCommentProps = UseUpdateCommentActions;
+
+export default function useUpdateComment({ onSuccess }: UseUpdateCommentProps) {
+    const queryClient = useQueryClient();
+
+    return useMutation<UpdateComment['Response'], HTTPError, UpdateComment['Request']>({
+        mutationFn: ({ commentId, contents }) => updateComment({ commentId, contents }),
+        onSuccess: (data) => {
+            onSuccess();
+            updateShareCommentListCache({ queryClient, data });
+        },
+    });
+}
+
+// 특정 게시글 댓글 리스트 무한 스크롤 댓글 수정
+function updateShareCommentListCache({ queryClient, data }: { queryClient: QueryClient; data: UpdateComment['Response'] }) {
     const queryKey = SHARE_POST_QUERY_KEYS.comment(data.post.id);
 
     queryClient.setQueryData<InfiniteData<FetchComment['Response']>>(queryKey, (prevCommentList) => {
@@ -35,18 +52,4 @@ const updateShareCommentListCache = ({ queryClient, data }: { queryClient: Query
             pages: updatePages,
         };
     });
-};
-
-const useUpdateComment = ({ onSuccess }: OnSuccessParam) => {
-    const queryClient = useQueryClient();
-
-    return useMutation<UpdateComment['Response'], HTTPError, UpdateComment['Request']>({
-        mutationFn: ({ commentId, contents }) => updateComment({ commentId, contents }),
-        onSuccess: (data) => {
-            onSuccess();
-            updateShareCommentListCache({ queryClient, data });
-        },
-    });
-};
-
-export default useUpdateComment;
+}

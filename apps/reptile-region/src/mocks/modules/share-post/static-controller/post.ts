@@ -4,9 +4,9 @@ import { rest } from 'msw';
 import createPostList from '../service/createPostList';
 import createUserPostImages from '../service/createUserPostImages';
 
-import type { FetchPostResponse } from '<api/share/post>';
 import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
+import type { FetchPostResponse } from '@/types/apis/share-post/post';
 
 const staticPostController = () => {
     const BASE_URI = ENV.END_POINT_URI + 'api/';
