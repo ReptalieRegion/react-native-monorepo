@@ -7,7 +7,7 @@ import UserProfileList from '@/components/share-post/molecules/UserProfileList';
 
 type FollowingPageScreenProps = MaterialTopTabScreenProps<SharePostTopTabParamList, 'share-post/following/list'>;
 
-export default function FollowingPage({ route: { params } }: FollowingPageScreenProps) {
+export default function FollowingList({ route: { params } }: FollowingPageScreenProps) {
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowingList({ userId: params.userId });
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
 

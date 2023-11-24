@@ -10,8 +10,8 @@ import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserD
 import MeDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/Me/page';
 import SharePostUserDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/OtherUser/UserDetailListModalPage';
 import { SharePostFollowHeader } from '@/pages/share-post/UserProfileList/FollowList/header';
+import LikeListPage from '@/pages/share-post/UserProfileList/LikeList';
 import { SharePostLikeListHeader } from '@/pages/share-post/UserProfileList/LikeList/header';
-import LikeListPage from '@/pages/share-post/UserProfileList/LikeList/page';
 import SharePostCommentRoutes from '@/routes/bottom-sheet/SharePostCommentRoutes';
 import FollowRoutes from '@/routes/bottom-tab/SharePostRoutes/FollowRoutes';
 
