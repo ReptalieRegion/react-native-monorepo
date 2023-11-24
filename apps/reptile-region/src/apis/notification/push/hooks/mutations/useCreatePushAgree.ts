@@ -4,8 +4,9 @@ import { createNotificationPushAgree } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { NOTIFICATION_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import type { CreatePushAgree, FetchPushAgree } from '@/types/apis/notification/push';
+import type { CreatePushAgree, FetchPushAgree } from '@/types/apis/notification';
 
+// 푸시알림 동의 생성
 type UseCreatePushAgreeContext = {
     previousPushAgree: FetchPushAgree['Response'];
 };

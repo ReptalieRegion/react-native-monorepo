@@ -3,8 +3,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { readNotificationPushLog } from '../../repository';
 
 import { NOTIFICATION_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import type { FetchPushReadCheck } from '@/types/apis/notification/push';
+import type { FetchPushReadCheck } from '@/types/apis/notification';
 
+// 푸시알림 읽음 처리
 type UseUpdateProfileContext = {
     previousReadCheck: FetchPushReadCheck['Response'];
 };

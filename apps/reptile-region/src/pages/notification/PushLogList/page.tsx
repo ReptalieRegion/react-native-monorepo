@@ -12,7 +12,7 @@ import useReadPushLog from '@/apis/notification/push/hooks/mutations/useReadPush
 import useInfinitePushLog from '@/apis/notification/push/hooks/queries/useInfinitePushLog';
 import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';
-import { ContentType, type FetchPushLogResponse } from '@/types/apis/notification/push';
+import { ContentType, type FetchPushLogResponse } from '@/types/apis/notification';
 import { navigateLinking } from '@/utils/navigation/linking';
 
 export default function PushLogList({ navigation }: PushLogListScreenProp) {

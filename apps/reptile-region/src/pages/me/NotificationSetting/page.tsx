@@ -8,7 +8,7 @@ import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useUpda
 import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
-import { PushAgreeType, type FetchPushAgree, type UpdatePushAgree } from '@/types/apis/notification/push';
+import { PushAgreeType, type FetchPushAgree, type UpdatePushAgree } from '@/types/apis/notification';
 
 type ListType = {
     title: string;
