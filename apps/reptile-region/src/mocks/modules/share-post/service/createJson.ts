@@ -1,6 +1,5 @@
 import { fakerKO } from '@faker-js/faker';
-
-import createEmptyArray from '@/utils/array/createEmptyArray';
+import { range } from '@reptile-region/utils';
 
 interface TimeStamp {
     createdAt: Date;
@@ -30,7 +29,7 @@ const createUser = (): User => {
 };
 
 export const createJson = () => {
-    createEmptyArray(50).reduce<User[]>((prev) => {
+    range(50).reduce<User[]>((prev) => {
         const user = createUser();
         const newUser = prev.filter((prevUser) => prevUser?.nickname !== user.nickname || prevUser?.userId !== user.userId);
         newUser.push(user);

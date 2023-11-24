@@ -1,7 +1,7 @@
 import { Image } from 'expo-image';
 import React from 'react';
 
-import type { ImageType } from '<image>';
+import type { ImageType } from '@/types/global/image';
 import { imageUriParsing } from '@/utils/development';
 
 type SquareImageProps = {

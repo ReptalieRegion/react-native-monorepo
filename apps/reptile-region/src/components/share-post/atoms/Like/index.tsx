@@ -1,8 +1,8 @@
 import { color } from '@reptile-region/design-system';
 import React from 'react';
 
-import type { IconProps } from '<Icon>';
 import { Like_40 as Like } from '@/assets/icons';
+import type { IconProps } from '@/types/global/icons';
 
 type LikeProps = {
     isLike: boolean | undefined;

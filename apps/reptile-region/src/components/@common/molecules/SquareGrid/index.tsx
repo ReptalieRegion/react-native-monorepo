@@ -1,5 +1,5 @@
-import { FlashList } from '@shopify/flash-list';
 import type { ContentStyle, FlashListProps, ListRenderItemInfo } from '@shopify/flash-list';
+import { FlashList } from '@shopify/flash-list';
 import React, { useCallback } from 'react';
 import { Platform } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import SquareImage from '../../atoms/SquareImage';
 
-import type { ImageType } from '<image>';
+import type { ImageType } from '@/types/global/image';
 
 type SquareGridProps = {
     data: ImageType[] | undefined;

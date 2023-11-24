@@ -6,9 +6,9 @@ import type { TextStyle, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import type { IconFunction } from '<Icon>';
 import { BackButton, CancelButton, Logo } from '@/assets/icons';
 import MainStatusBar from '@/components/@common/atoms/StatusBar';
+import type { IconFunction } from '@/types/global/icons';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
 
@@ -77,7 +77,7 @@ export default function BaseHeader({
 
 const styles = StyleSheet.create({
     container: {
-        height: 50,
+        height: 60,
         position: 'relative',
         flexDirection: 'row',
         justifyContent: 'center',

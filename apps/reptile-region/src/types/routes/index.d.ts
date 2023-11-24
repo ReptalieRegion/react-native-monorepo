@@ -3,6 +3,8 @@ declare module '<routes/root>' {
 
     import { ImageType } from '<image>';
     import { BottomTabNativeStackParamList } from '<routes/bottom-tab>';
+    import type { PageState } from '<routes/enum>';
+    import type { SignUpParamList } from '<routes/sign-up>';
     import { SharePostTopTabParamList } from '<routes/top-tab>';
 
     /** SharePost 시작 */
@@ -17,6 +19,7 @@ declare module '<routes/root>' {
         nickname: string;
         profile: ImageType;
         isFollow: boolean | undefined;
+        pageState: PageState;
     };
 
     type SharePostUserListProps = {
@@ -109,22 +112,61 @@ declare module '<routes/root>' {
         postId: string;
     };
 
+    type DetailPostProps = {
+        postId: string;
+        type: 'comment' | 'like';
+    };
+
+    type DetailListMeProps = {
+        startIndex: number;
+    };
+
     type SharePostModalParamList = {
+        'notification/detail': DetailPostProps;
         detail: SharePostDetailProps;
+        'detail/me': undefined;
+        'list/me': DetailListMeProps;
         'list/user': SharePostUserListProps;
         'posting/update': SharePostPostingUpdateProps;
-        'bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
+        comment: NavigatorScreenParams<SharePostCommentParamList>;
         'share-post/list/follow': SharePostFollowProps;
-        'share-post/list/like': SharePostLikeProps;
+        'list/like': SharePostLikeProps;
+    };
+
+    type LicenseContentsProps = {
+        libraryName: string;
+        description?: string;
+        licenseType: string;
+        licenseContent: string;
+        homepage?: string;
+    };
+
+    type SignInProps = {
+        isGoBack: boolean;
     };
 
     type RootRoutesParamList = {
         'bottom-tab/routes': NavigatorScreenParams<BottomTabNativeStackParamList>;
-        'sign-in': undefined;
-        'sign-up': undefined;
+        /** auth 시작 */
+        'sign-in'?: SignInProps;
+        'sign-up': NavigatorScreenParams<SignUpParamList>;
+        /** auth 끝 */
+
+        /** my 시작 */
+        'my/license': undefined;
+        'my/terms-of-use': undefined;
+        'my/terms-privacy-policy': undefined;
+        'my/license/contents': LicenseContentsProps;
+        'my/profile': undefined;
+        'my/notification-setting': undefined;
+        'my/notification-log': undefined;
+        /** my 끝 */
+
+        /** share post 시작 */
         'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
         'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
         'share-post/bottom-sheet/post-options-menu': SharePostOptionsMenuProps;
         'share-post/post/update': SharePostUpdatePost;
+        /** share post 끝 */
     };
 }

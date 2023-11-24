@@ -1,29 +1,43 @@
 import { Typo } from '@reptile-region/design-system';
-import { FlashList } from '@shopify/flash-list';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
+import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
 import type { ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useTagHandler from '../../hooks/useTagHandler';
 import useTagSearch from '../../hooks/useTagSearch';
 
-import type { FetchFollowerSearchResponse } from '<api/share/post/user>';
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import { Avatar, ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
+import type { FetchFollowerSearchResponse } from '@/types/apis/share-post/user';
 
-type FollowerUserListProps = {
+type FollowerUserListConditionRenderState = {
     containerStyles?: ViewStyle;
 };
 
-export default function FollowerUserList({ containerStyles }: FollowerUserListProps) {
+type FollowerUserListState = {
+    keyword: string;
+} & FollowerUserListConditionRenderState;
+
+export default function FollowerUserListConditionRender({ containerStyles }: FollowerUserListConditionRenderState) {
     const { keyword, enabled } = useTagSearch();
+
+    return (
+        <ConditionalRenderer
+            condition={enabled}
+            trueContent={<FollowerUserList keyword={keyword} containerStyles={containerStyles} />}
+            falseContent={null}
+        />
+    );
+}
+
+function FollowerUserList({ keyword, containerStyles }: FollowerUserListState) {
     const { handleSelectTag } = useTagHandler();
 
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
         search: keyword,
-        enabled,
     });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
@@ -53,7 +67,7 @@ export default function FollowerUserList({ containerStyles }: FollowerUserListPr
 
     return (
         <ConditionalRenderer
-            condition={enabled || (!!newData && newData?.length !== 0)}
+            condition={!!newData && newData?.length !== 0}
             trueContent={
                 <View style={containerStyles}>
                     <View style={styles.container}>

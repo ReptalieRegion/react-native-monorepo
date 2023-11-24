@@ -44,4 +44,5 @@ export type FetchPhotosProps = {
     first: number;
     after?: string | undefined;
     assetType?: AssetType | undefined;
+    isInit?: boolean;
 };

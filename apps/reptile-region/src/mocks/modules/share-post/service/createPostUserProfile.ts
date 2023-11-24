@@ -1,7 +1,7 @@
 import { fakerKO } from '@faker-js/faker';
 
-import type { FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import { fakerBoolean } from '@/mocks/utils/customFaker';
+import type { FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
 
 type CreatePostUserProfile = {
     user?: Partial<FetchDetailUserProfileResponse['user']>;
@@ -18,6 +18,7 @@ const createPostUserProfile = ({ user }: CreatePostUserProfile): FetchDetailUser
             isFollow: user?.isFollow ?? fakerBoolean(),
             followerCount: user?.followerCount ?? fakerKO.number.int({ min: 0, max: 200 }),
             followingCount: user?.followingCount ?? fakerKO.number.int({ min: 0, max: 200 }),
+            isMine: true,
         },
     };
 };

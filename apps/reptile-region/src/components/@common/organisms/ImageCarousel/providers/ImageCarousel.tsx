@@ -1,13 +1,13 @@
 import { FlashList } from '@shopify/flash-list';
-import React, { useReducer, useRef } from 'react';
 import type { ReactNode } from 'react';
+import React, { useReducer, useRef } from 'react';
 
 import ImageCarouselList from '../components/ImageCarouselList';
 import ImageIndicators from '../components/ImageIndicators';
 import { ImageCarouselRefContext, ImageIndicatorActionsContext, ImagesIndicatorStateContext } from '../contexts/ImageIndicator';
 import imageIndicatorReducer from '../reducer/image-indicator-reducer';
 
-import type { ImageType } from '<image>';
+import type { ImageType } from '@/types/global/image';
 
 type ImageCarouselProps = {
     children: ReactNode;

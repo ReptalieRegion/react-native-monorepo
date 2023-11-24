@@ -5,15 +5,13 @@ import FollowRoutes from './FollowRoutes';
 
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
-import SharePostDetailImageListPage, {
-    SharePostDetailImageListHeader,
-} from '@/pages/share-post/DetailImageList/DetailImageListPage';
-import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
-import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
-import LikeListPage from '@/pages/share-post/LikeList/LikeListPage';
-import SharePostListPage from '@/pages/share-post/List/ListPage';
-import { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailList/Header';
-import SharePostUserDetailListPage from '@/pages/share-post/List/UserDetailList/UserDetailListPage';
+import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser';
+import SharePostListPage from '@/pages/share-post/PostList/ListPage';
+import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
+import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser';
+import { SharePostFollowHeader } from '@/pages/share-post/UserProfileList/FollowList/header';
+import LikeListPage from '@/pages/share-post/UserProfileList/LikeList';
+import { SharePostLikeListHeader } from '@/pages/share-post/UserProfileList/LikeList/header';
 
 const Stack = createNativeStackNavigator<SharePostTabParamList>();
 

@@ -2,17 +2,21 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
 
-if (__DEV__) {
-    import('react-query-native-devtools').then(({ addPlugin }) => {
-        addPlugin({ queryClient });
-    });
-}
+import HTTPError from '@/apis/@utils/error/HTTPError';
 
 const queryClient = new QueryClient({
     defaultOptions: {
-        mutations: {
-            onError: (error) => {
-                console.log(error);
+        queries: {
+            retry: (failureCount, error) => {
+                if (failureCount > 2) {
+                    return false;
+                }
+
+                if (error instanceof HTTPError && error.statusCode === 401) {
+                    return false;
+                }
+
+                return true;
             },
         },
     },

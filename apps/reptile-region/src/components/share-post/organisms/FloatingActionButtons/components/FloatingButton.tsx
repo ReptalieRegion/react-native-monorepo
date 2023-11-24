@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 import type { ColorValue } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import type { IconFunction } from '<Icon>';
+import type { IconFunction } from '@/types/global/icons';
 
 type FloatingButtonState = {
     Icon: IconFunction;

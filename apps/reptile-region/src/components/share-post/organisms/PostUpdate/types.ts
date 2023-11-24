@@ -1,4 +1,4 @@
-import type { ImageType } from '<image>';
+import type { ImageType } from '@/types/global/image';
 
 export type PostUpdateImageState = {
     images: ImageType[];

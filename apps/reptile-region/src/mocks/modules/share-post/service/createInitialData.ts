@@ -1,9 +1,8 @@
 import { fakerKO } from '@faker-js/faker';
+import { range } from '@reptile-region/utils';
 
-import db from '../../../db';
 import type { DBResult } from '../../../db';
-
-import createEmptyArray from '@/utils/array/createEmptyArray';
+import db from '../../../db';
 
 type PrintDBInfo = {
     [key: string]:
@@ -55,7 +54,7 @@ const findComment = (comments: DBResult<'shareComment'>[]) => {
 // 태그가 있는 contents 만들기
 const createContents = (users: DBResult<'user'>[]) => {
     const tagIdsCount = fakerKO.number.int({ min: 0, max: 3 });
-    const tags = createEmptyArray(tagIdsCount).map(() => {
+    const tags = range(tagIdsCount).map(() => {
         const user = findRandomUser(users);
         if (user === undefined) {
             return {
@@ -70,7 +69,7 @@ const createContents = (users: DBResult<'user'>[]) => {
         };
     });
     const contentCount = fakerKO.number.int({ min: 1, max: 4 });
-    const contents = createEmptyArray(contentCount).map(() => fakerKO.lorem.sentence());
+    const contents = range(contentCount).map(() => fakerKO.lorem.sentence());
 
     tags.forEach((tag) => {
         const insertionPoint = fakerKO.number.int({ min: 0, max: contentCount });
@@ -81,14 +80,14 @@ const createContents = (users: DBResult<'user'>[]) => {
 };
 
 const createImage = ({ type, typeId }: { type: 'profile' | 'share'; typeId: string }, count: number = 1) => {
-    return createEmptyArray(count).map(() => {
+    return range(count).map(() => {
         return db.image.create({ imageKey: fakerKO.image.avatar(), type, typeId });
     });
 };
 
 // 유저 생성
 const createUsers = (count: number = 50) => {
-    return createEmptyArray(count).map(() => {
+    return range(count).map(() => {
         const userId = fakerKO.internet.email();
         const nickname = fakerKO.person.middleName();
 
@@ -126,7 +125,7 @@ const createUsers = (count: number = 50) => {
 export const createFollows = ({ users }: { users: DBResult<'user'>[] }, count: number = 50) => {
     const followCache = new Map<string, string[]>();
 
-    return createEmptyArray(count).map(() => {
+    return range(count).map(() => {
         for (let i = 0; i < 10; i++) {
             const following = findRandomUser(users);
             const follower = findRandomUser(users);
@@ -161,7 +160,7 @@ export const createFollows = ({ users }: { users: DBResult<'user'>[] }, count: n
 
 // 일상공유 게시물 생성
 const createSharePosts = ({ users }: { users: DBResult<'user'>[] }, count: number = 50) => {
-    return createEmptyArray(count).map(() => {
+    return range(count).map(() => {
         const user = findRandomUser(users);
         if (user === undefined) {
             return;
@@ -185,7 +184,7 @@ const createShareLikes = (
         }
 
         const likeUserCount = fakerKO.number.int({ min: 0, max: count });
-        return createEmptyArray(likeUserCount).map(() => {
+        return range(likeUserCount).map(() => {
             const user = findRandomUser(users);
             if (user === undefined) {
                 return;
@@ -207,7 +206,7 @@ const createShareComments = (
         }
 
         const commentCount = fakerKO.number.int({ min: 0, max: count });
-        return createEmptyArray(commentCount).map(() => {
+        return range(commentCount).map(() => {
             const user = findRandomUser(users);
             if (user === undefined) {
                 return;
@@ -229,7 +228,7 @@ const createShareCommentReplies = (
     },
     count: number = 100,
 ) => {
-    const commentReplies = createEmptyArray(count).map(() => {
+    const commentReplies = range(count).map(() => {
         const user = findRandomUser(users);
         const comment = findComment(comments);
 

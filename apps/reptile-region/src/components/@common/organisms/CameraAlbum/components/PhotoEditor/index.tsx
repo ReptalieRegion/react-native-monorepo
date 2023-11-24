@@ -1,20 +1,36 @@
-import { Image } from 'expo-image';
 import React from 'react';
-import { useWindowDimensions } from 'react-native';
+import { View } from 'react-native';
 
+import ImageCrop from '../../../ImageCrop';
 import usePhotoSelect from '../../hooks/usePhotoSelect';
 
-export default function PhotoEditor() {
-    const { width, height } = useWindowDimensions();
+type PhotoEditorState = {
+    width: number;
+    height: number;
+};
+
+type PhotoEditorProps = PhotoEditorState;
+
+export default function PhotoEditor({ width, height }: PhotoEditorProps) {
     const { currentSelectedPhoto } = usePhotoSelect();
 
+    if (currentSelectedPhoto === null) {
+        return <View style={{ width, height }} />;
+    }
+
     return (
-        <Image
-            style={{ width, height: height / 2 - 60 }}
-            source={{ uri: currentSelectedPhoto?.node.image.uri }}
-            contentFit="cover"
-            placeholderContentFit="cover"
-            placeholder={require('@/assets/images/default_image.png')}
+        <ImageCrop
+            image={{
+                uri: currentSelectedPhoto?.node.image.uri,
+                width: currentSelectedPhoto?.node.image.width,
+                height: currentSelectedPhoto?.node.image.height,
+            }}
+            width={width}
+            height={height}
+            maxScale={3}
+            onCropped={({ croppedUri, originalUri }) => {
+                console.log(croppedUri, originalUri);
+            }}
         />
     );
 }

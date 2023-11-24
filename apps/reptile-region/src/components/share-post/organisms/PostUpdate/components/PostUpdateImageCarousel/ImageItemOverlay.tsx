@@ -5,8 +5,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import usePostUpdateHandler from '../../hooks/usePostUpdateHandler';
 
-import type { ImageType } from '<image>';
 import { Trash } from '@/assets/icons';
+import type { ImageType } from '@/types/global/image';
 
 type ImageItemOverlayState = {
     image: ImageType;

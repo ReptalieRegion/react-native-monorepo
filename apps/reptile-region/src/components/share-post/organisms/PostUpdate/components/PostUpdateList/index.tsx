@@ -9,9 +9,9 @@ import usePostUpdateImages from '../../hooks/usePostUpdateImages';
 import { PostUpdateImageCarousel } from '../PostUpdateImageCarousel';
 import TextEditor from '../TextEditor';
 
-import type { ImageType } from '<image>';
 import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
-import useFlashListScroll from '@/hooks/useFlashListScroll';
+import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
+import type { ImageType } from '@/types/global/image';
 
 export enum MessageType {
     Contents,

@@ -2,7 +2,7 @@ import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { ClipPath, Defs, G, Path, Rect, Svg } from 'react-native-svg';
 
-import type { IconProps } from '<Icon>';
+import type { IconProps } from '@/types/global/icons';
 
 const Home = ({ fill = color.Gray['500'].toString(), height = '24', width = '24' }: IconProps) => {
     return (

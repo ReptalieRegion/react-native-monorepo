@@ -1,12 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { ImageHeart, Interactive, PostCardImageCarousel } from '../components';
 import { HeartAnimationActionsContext, HeartAnimationStateContext } from '../contexts/HeartAnimation';
 
 import { ImageCarousel, useImageCarouselHandler } from '@/components/@common/organisms/ImageCarousel';
-import PostContents from '@/components/share-post/molecules/PostContents';
-import PostHeader from '@/components/share-post/molecules/PostHeader';
 
 type PostCardProps = {
     uuid: string;
@@ -50,13 +47,3 @@ export default function PostCard({ children, uuid }: PostCardProps) {
         </ImageCarousel>
     );
 }
-
-PostCard.Header = PostHeader;
-
-PostCard.ImageCarousel = PostCardImageCarousel;
-
-PostCard.ImageHeart = ImageHeart;
-
-PostCard.Interactive = Interactive;
-
-PostCard.Contents = PostContents;

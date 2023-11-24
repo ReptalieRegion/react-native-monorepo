@@ -1,11 +1,11 @@
 import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
+import { POST_MAX_CONTENT_LENGTH } from '../../constants/post';
 import Title from '../Title';
 
 import { TagTextInput, useTag } from '@/components/@common/organisms/TagTextInput';
-import { POST_MAX_CONTENT_LENGTH } from '@/env/constants';
 
 export default function ContentsWriting() {
     const { contents } = useTag();

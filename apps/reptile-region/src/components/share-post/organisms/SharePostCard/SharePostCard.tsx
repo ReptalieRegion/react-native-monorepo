@@ -2,9 +2,13 @@ import React from 'react';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 
+import PostContents from '../../molecules/PostContents';
+import PostHeader from '../../molecules/PostHeader';
+
+import { Interactive, PostCardImageCarousel } from './components';
 import PostCard from './providers/PostCard';
 
-import type { ImageType } from '<image>';
+import type { ImageType } from '@/types/global/image';
 
 type PostCardState = {
     post: {
@@ -64,7 +68,7 @@ export default function SharePostCard({
     return (
         <View style={[styles.container, containerStyle]}>
             <PostCard uuid={postId}>
-                <PostCard.Header
+                <PostHeader
                     profileImage={profile}
                     isFollow={isFollow}
                     nickname={nickname}
@@ -73,14 +77,14 @@ export default function SharePostCard({
                     onPressPostOptionsMenu={onPressPostOptionsMenu}
                     onPressProfile={onPressProfile}
                 />
-                <PostCard.ImageCarousel images={images} onDoublePress={onDoublePressImageCarousel} />
-                <PostCard.Interactive
+                <PostCardImageCarousel images={images} onDoublePress={onDoublePressImageCarousel} />
+                <Interactive
                     imageCount={images.length}
                     isLike={isLike}
                     onPressComment={onPressComment}
                     onPressHeart={onPressHeart}
                 />
-                <PostCard.Contents
+                <PostContents
                     post={{ id: postId, commentCount, contents, likeCount }}
                     onPressComment={onPressComment}
                     onPressTag={onPressTag}

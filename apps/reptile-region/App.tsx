@@ -1,19 +1,33 @@
+import { useNavigationContainerRef } from '@react-navigation/native';
+import { ErrorBoundary } from '@reptile-region/error-boundary';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import Toast from '@/overlay/Toast';
+import GlobalError from './error';
+
+import type { RootRoutesParamList } from '<routes/root>';
+import Toast from '@/components/@common/organisms/Toast';
+import { Auth } from '@/components/auth/organisms/Auth';
+import useEffectNotifee from '@/hooks/notification/useEffectNotifee';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 
 export default function App() {
+    const navigationRef = useNavigationContainerRef<RootRoutesParamList>();
+    useEffectNotifee(navigationRef);
+
     return (
         <ReactQueryProvider>
             <GestureHandlerRootView style={styles.gestureContainer}>
                 <SafeAreaProvider>
                     <Toast>
-                        <RootRoutes />
+                        <Auth>
+                            <ErrorBoundary renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}>
+                                <RootRoutes navigationRef={navigationRef} />
+                            </ErrorBoundary>
+                        </Auth>
                     </Toast>
                 </SafeAreaProvider>
             </GestureHandlerRootView>

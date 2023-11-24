@@ -1,7 +1,7 @@
 import { TouchableTypo, color } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Alert, Dimensions, StyleSheet, View } from 'react-native';
-import { Keyboard } from 'react-native';
+import { ActivityIndicator, Alert, Keyboard, Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 
 import type { SubmitType } from '../../contexts/CommentContext';
 import useComment from '../../hooks/useComment';
@@ -9,9 +9,9 @@ import useCommentActions from '../../hooks/useCommentActions';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { TagTextInput, useTag, useTagHandler } from '@/components/@common/organisms/TagTextInput';
-import { POST_MAX_CONTENT_LENGTH } from '@/env/constants';
 
 export type CommentTextInputProps = {
+    maxLength: number;
     isLoadingSubmit: boolean;
 };
 
@@ -19,7 +19,16 @@ export interface CommentTextInputActions {
     onSubmit({ id, submitType, contents }: { id: string; submitType: SubmitType; contents: string }): void;
 }
 
-export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: CommentTextInputProps & CommentTextInputActions) {
+export default function CommentTextInputEditor({
+    maxLength = 500,
+    isLoadingSubmit,
+    onSubmit,
+}: CommentTextInputProps & CommentTextInputActions) {
+    const { width } = useWindowDimensions();
+    const paddingBottom = useSharedValue(0);
+    const animated = useAnimatedStyle(() => ({
+        paddingBottom: paddingBottom.value,
+    }));
     const { contents, selection } = useTag();
     const { id, submitType } = useComment();
     const { tagTextInputFocus, changeText } = useTagHandler();
@@ -30,6 +39,15 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
             changeText('');
             setCreateCommentSubmitType();
         };
+
+        const keyboardShow = Platform.select({
+            ios: Keyboard.addListener('keyboardWillShow', () => {
+                paddingBottom.value = withSpring(8);
+            }),
+            android: Keyboard.addListener('keyboardDidShow', () => {
+                paddingBottom.value = withTiming(8);
+            }),
+        });
 
         const keyboard = Keyboard.addListener('keyboardDidHide', () => {
             if (submitType === 'UPDATE') {
@@ -49,23 +67,24 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
 
         return () => {
             keyboard.remove();
+            keyboardShow?.remove();
         };
-    }, [submitType, setCreateCommentSubmitType, tagTextInputFocus, changeText]);
+    }, [submitType, paddingBottom, setCreateCommentSubmitType, tagTextInputFocus, changeText]);
 
     const handleSubmit = () => {
         onSubmit({ id, submitType, contents });
     };
 
     return (
-        <View style={[styles.bottom]}>
-            <View style={styles.textInputContainer}>
+        <Animated.View style={[styles.bottom, { width }, animated]}>
+            <View style={[styles.textInputContainer, { width: (width - 30 - 20) * 0.85 }]}>
                 <TagTextInput
                     value={contents}
                     defaultValue={contents}
                     selection={selection}
                     style={styles.textInput}
                     placeholder="댓글을 입력하세요..."
-                    maxLength={POST_MAX_CONTENT_LENGTH}
+                    maxLength={maxLength}
                     multiline
                 />
                 <View style={styles.submitButtonContainer}>
@@ -80,18 +99,17 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
                     />
                 </View>
             </View>
-        </View>
+        </Animated.View>
     );
 }
 
 const styles = StyleSheet.create({
     bottom: {
         backgroundColor: color.White.toString(),
-        padding: 8,
+        paddingTop: 8,
+        paddingHorizontal: 8,
         borderTopColor: color.Gray[250].toString(),
         borderTopWidth: 0.5,
-        width: Dimensions.get('screen').width,
-
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -102,7 +120,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: 8,
         paddingHorizontal: 10,
-        width: (Dimensions.get('screen').width - 30 - 20) * 0.85,
         borderColor: color.Gray[250].toString(),
         borderWidth: 0.5,
         borderRadius: 12,
@@ -110,7 +127,7 @@ const styles = StyleSheet.create({
     },
     textInput: {
         flex: 1,
-        paddingTop: 0,
+        padding: 0,
         fontSize: 14,
         maxHeight: 84,
     },
