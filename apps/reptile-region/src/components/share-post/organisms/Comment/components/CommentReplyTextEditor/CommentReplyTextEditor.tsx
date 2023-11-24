@@ -40,6 +40,7 @@ export default function CommentReplyTextEditor() {
 
     return (
         <TextInputEditor
+            maxLength={500}
             onSubmit={handleSubmit}
             isLoadingSubmit={createCommentReply.isPending || updateCommentReply.isPending}
         />

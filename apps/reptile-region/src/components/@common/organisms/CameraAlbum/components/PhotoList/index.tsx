@@ -5,13 +5,13 @@ import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { MAX_PHOTO_COUNT } from '../../constants/photo';
 import useCameraAlbumHandler from '../../hooks/useCameraAlbumHandler';
 import usePhoto from '../../hooks/usePhoto';
 import PhotoIndicators from '../PhotoIndicators';
 
 import SquareImage from '@/components/@common/atoms/SquareImage';
 import { useToast } from '@/components/@common/organisms/Toast';
-import { MAX_PHOTO_COUNT } from '@/env/constants';
 
 type PhotoListState = {
     numColumns: number;

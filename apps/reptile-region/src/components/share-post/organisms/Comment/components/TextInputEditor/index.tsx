@@ -9,9 +9,9 @@ import useCommentActions from '../../hooks/useCommentActions';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { TagTextInput, useTag, useTagHandler } from '@/components/@common/organisms/TagTextInput';
-import { POST_MAX_CONTENT_LENGTH } from '@/env/constants';
 
 export type CommentTextInputProps = {
+    maxLength: number;
     isLoadingSubmit: boolean;
 };
 
@@ -19,7 +19,11 @@ export interface CommentTextInputActions {
     onSubmit({ id, submitType, contents }: { id: string; submitType: SubmitType; contents: string }): void;
 }
 
-export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: CommentTextInputProps & CommentTextInputActions) {
+export default function CommentTextInputEditor({
+    maxLength = 500,
+    isLoadingSubmit,
+    onSubmit,
+}: CommentTextInputProps & CommentTextInputActions) {
     const { width } = useWindowDimensions();
     const paddingBottom = useSharedValue(0);
     const animated = useAnimatedStyle(() => ({
@@ -80,7 +84,7 @@ export default function CommentTextInputEditor({ isLoadingSubmit, onSubmit }: Co
                     selection={selection}
                     style={styles.textInput}
                     placeholder="댓글을 입력하세요..."
-                    maxLength={POST_MAX_CONTENT_LENGTH}
+                    maxLength={maxLength}
                     multiline
                 />
                 <View style={styles.submitButtonContainer}>

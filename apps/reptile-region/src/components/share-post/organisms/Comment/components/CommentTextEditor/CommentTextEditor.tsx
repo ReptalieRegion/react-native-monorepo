@@ -38,5 +38,11 @@ export default function CommentTextEditor() {
         [createMutate, updateMutate],
     );
 
-    return <TextInputEditor onSubmit={handleSubmit} isLoadingSubmit={createMutate.isPending || updateMutate.isPending} />;
+    return (
+        <TextInputEditor
+            maxLength={500}
+            onSubmit={handleSubmit}
+            isLoadingSubmit={createMutate.isPending || updateMutate.isPending}
+        />
+    );
 }
