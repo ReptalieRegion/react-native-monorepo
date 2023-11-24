@@ -7,9 +7,11 @@ import SharePostDetailImageListModalPage, {
 } from '@/pages/share-post/DetailImageList/DetailImageListModalPage';
 import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
 import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
-import LikeListPage from '@/pages/share-post/LikeList/LikeListPage';
-import { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailList/Header';
-import SharePostUserDetailListModalPage from '@/pages/share-post/List/UserDetailList/UserDetailListModalPage';
+import LikeListPage from '@/pages/share-post/LikeList/page';
+import { SharePostDetailModalHeader } from '@/pages/share-post/PostList/PostDetailModalList/header';
+import SharePostDetailModalPage from '@/pages/share-post/PostList/PostDetailModalList/page';
+import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
+import SharePostUserDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/UserDetailListModalPage';
 import SharePostCommentRoutes from '@/routes/bottom-sheet/SharePostCommentRoutes';
 import FollowRoutes from '@/routes/bottom-tab/SharePostRoutes/FollowRoutes';
 
@@ -18,6 +20,11 @@ const Stack = createNativeStackNavigator<SharePostModalParamList>();
 export default function SharePostModalRoutes() {
     return (
         <Stack.Navigator>
+            <Stack.Screen
+                name="notification/detail"
+                component={SharePostDetailModalPage}
+                options={{ header: SharePostDetailModalHeader }}
+            />
             <Stack.Screen
                 name="detail"
                 component={SharePostDetailImageListModalPage}

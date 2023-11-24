@@ -18,7 +18,7 @@ export default function PostImageList({ nickname, ListHeaderComponent, handleIma
     const itemWidth = width / NUM_COLUMNS - 2;
 
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteUserPosts({ nickname });
-    const newData = data?.pages.flatMap((page) => page.items).map((item) => item.post.images[0]);
+    const newData = data.map((item) => item.post.images[0]);
     const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
 
     return (

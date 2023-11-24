@@ -5,10 +5,15 @@ import usePostCardHandler from '../../hooks/usePostCardHandler';
 import ImageHeart from '../ImageHeart';
 
 import { DoubleTabView } from '@/components/@common/atoms';
-import { ImageCarousel } from '@/components/@common/organisms/ImageCarousel';
 import type { ImageCarouselListProps } from '@/components/@common/organisms/ImageCarousel';
+import { ImageCarousel } from '@/components/@common/organisms/ImageCarousel';
 
-type PostCardImageCarouselState = Omit<ImageCarouselListProps, 'width' | 'height' | 'onScroll' | 'scrollEventThrottle'>;
+type PostCardImageCarouselState = Omit<ImageCarouselListProps, 'width' | 'height' | 'onScroll' | 'scrollEventThrottle'> & {
+    style?: {
+        width?: number;
+        borderRadius?: number;
+    };
+};
 
 interface PostCardImageCarouselActions {
     onDoublePress(): void;
@@ -16,10 +21,10 @@ interface PostCardImageCarouselActions {
 
 type PostCardImageCarouselProps = PostCardImageCarouselState & PostCardImageCarouselActions;
 
-export default function PostCardImageCarousel({ onDoublePress, ...rest }: PostCardImageCarouselProps) {
+export default function PostCardImageCarousel({ onDoublePress, style, ...rest }: PostCardImageCarouselProps) {
     const { startHeartAnimation } = usePostCardHandler();
     const { width } = useWindowDimensions();
-    const imageWidth = width - 40;
+    const imageWidth = style?.width ? style.width : width - 40;
 
     const handleDoublePressImageCarousel = () => {
         onDoublePress();
@@ -28,7 +33,7 @@ export default function PostCardImageCarousel({ onDoublePress, ...rest }: PostCa
 
     return (
         <DoubleTabView onDoubleTab={handleDoublePressImageCarousel} style={styles.container}>
-            <View style={styles.imageCarouselContainer}>
+            <View style={[styles.imageCarouselContainer, { borderRadius: style?.borderRadius ?? 6 }]}>
                 <ImageCarousel.List {...rest} width={imageWidth} height={300} scrollEventThrottle={16} />
             </View>
             <ImageHeart />
@@ -41,7 +46,6 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     imageCarouselContainer: {
-        borderRadius: 6,
         overflow: 'hidden',
     },
     image: {

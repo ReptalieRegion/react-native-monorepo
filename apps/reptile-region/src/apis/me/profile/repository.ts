@@ -1,9 +1,18 @@
+import type { UpdateFCMToken } from '<api/my/metadata>';
 import type { UpdateProfileImage } from '<api/my/profile>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 
 /** GET */
 export const fetchMeProfile = async () => {
     const response = await clientFetch('api/users/me/profile', {
+        method: METHOD.GET,
+    });
+
+    return response.json();
+};
+
+export const fetchMePostList = async () => {
+    const response = await clientFetch('api/share/posts/list/me', {
         method: METHOD.GET,
     });
 
@@ -22,4 +31,18 @@ export const updateMeProfile = async ({ name, type, uri }: UpdateProfileImage['R
     });
 
     return response.json();
+};
+
+export const updateFCMToken = async ({ fcmToken }: UpdateFCMToken['Request']) => {
+    clientFetch('api/users/fcm-token', {
+        method: METHOD.PUT,
+        body: { fcmToken },
+    });
+};
+
+/** DELETE */
+export const deleteFCMToken = async () => {
+    clientFetch('api/users/fcm-token', {
+        method: METHOD.DELETE,
+    });
 };

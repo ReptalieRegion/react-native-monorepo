@@ -1,7 +1,7 @@
-import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { type PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import type { ListRenderItem } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -13,10 +13,12 @@ import SquareImage from '@/components/@common/atoms/SquareImage';
 import { useToast } from '@/components/@common/organisms/Toast';
 import { MAX_PHOTO_COUNT } from '@/env/constants';
 
-type PhotoListProps = {
+type PhotoListState = {
     numColumns: number;
     loadPhotoLimit: number;
 };
+
+type PhotoListProps = PhotoListState;
 
 export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: PhotoListProps) {
     const { width } = useWindowDimensions();
@@ -24,18 +26,21 @@ export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: Photo
 
     const { photos } = usePhoto();
     const { openToast } = useToast();
-    const { selectPhoto, loadPhotos, initPhotos } = useCameraAlbumHandler({
+    const { selectPhoto, fetchPhotos } = useCameraAlbumHandler({
         limit: MAX_PHOTO_COUNT,
         limitCallback: () => openToast({ contents: `이미지는 최대 ${MAX_PHOTO_COUNT}개 입니다.`, severity: 'warning' }),
     });
+    const isScrolling = useRef(false);
 
     useEffect(() => {
-        initPhotos({ first: loadPhotoLimit });
-    }, [initPhotos, loadPhotoLimit]);
+        fetchPhotos({ first: loadPhotoLimit, isInit: true });
+    }, [fetchPhotos, loadPhotoLimit]);
 
-    const loadMorePhotos = async () => {
-        const lastPhoto = photos?.at(-1)?.node.image.uri;
-        await loadPhotos({ first: loadPhotoLimit, after: lastPhoto, assetType: 'Photos' });
+    const loadMorePhotos = () => {
+        if (isScrolling.current) {
+            const lastPhoto = photos?.at(-1)?.node.image.uri;
+            fetchPhotos({ first: loadPhotoLimit, after: lastPhoto, assetType: 'Photos' });
+        }
     };
 
     const renderItem: ListRenderItem<PhotoIdentifier> = ({ item }) => {
@@ -58,17 +63,17 @@ export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: Photo
     };
 
     return (
-        <View style={styles.container}>
-            <FlashList
-                data={photos}
-                numColumns={numColumns}
-                contentContainerStyle={styles.squareContainer}
-                keyExtractor={(item) => item.node.image.uri}
-                onEndReached={loadMorePhotos}
-                renderItem={renderItem}
-                estimatedItemSize={imageWidth}
-            />
-        </View>
+        <FlashList
+            data={photos}
+            numColumns={numColumns}
+            contentContainerStyle={styles.squareContainer}
+            keyExtractor={(item) => item.node.image.uri}
+            onEndReached={loadMorePhotos}
+            renderItem={renderItem}
+            estimatedItemSize={imageWidth}
+            onMomentumScrollBegin={() => (isScrolling.current = true)}
+            onMomentumScrollEnd={() => (isScrolling.current = false)}
+        />
     );
 }
 

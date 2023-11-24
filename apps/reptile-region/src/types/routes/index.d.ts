@@ -110,7 +110,13 @@ declare module '<routes/root>' {
         postId: string;
     };
 
+    type DetailPostProps = {
+        postId: string;
+        type: 'comment' | 'like';
+    };
+
     type SharePostModalParamList = {
+        'notification/detail': DetailPostProps;
         detail: SharePostDetailProps;
         'list/user': SharePostUserListProps;
         'posting/update': SharePostPostingUpdateProps;
@@ -127,10 +133,14 @@ declare module '<routes/root>' {
         homepage?: string;
     };
 
+    type SignInProps = {
+        isGoBack: boolean;
+    };
+
     type RootRoutesParamList = {
         'bottom-tab/routes': NavigatorScreenParams<BottomTabNativeStackParamList>;
         /** auth 시작 */
-        'sign-in': undefined;
+        'sign-in'?: SignInProps;
         'sign-up': NavigatorScreenParams<SignUpParamList>;
         /** auth 끝 */
 
@@ -140,10 +150,15 @@ declare module '<routes/root>' {
         'my/terms-privacy-policy': undefined;
         'my/license/contents': LicenseContentsProps;
         'my/profile': undefined;
+        'my/notification-setting': undefined;
+        'my/notification-log': undefined;
         /** my 끝 */
+
+        /** share post 시작 */
         'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
         'share-post/modal/posting': NavigatorScreenParams<SharePostPostingParamList>;
         'share-post/bottom-sheet/post-options-menu': SharePostOptionsMenuProps;
         'share-post/post/update': SharePostUpdatePost;
+        /** share post 끝 */
     };
 }

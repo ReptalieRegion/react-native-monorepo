@@ -10,10 +10,10 @@ import SharePostDetailImageListPage, {
 } from '@/pages/share-post/DetailImageList/DetailImageListPage';
 import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
 import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
-import LikeListPage from '@/pages/share-post/LikeList/LikeListPage';
-import SharePostListPage from '@/pages/share-post/List/ListPage';
-import { SharePostUserDetailListHeader } from '@/pages/share-post/List/UserDetailList/Header';
-import SharePostUserDetailListPage from '@/pages/share-post/List/UserDetailList/UserDetailListPage';
+import LikeListPage from '@/pages/share-post/LikeList/page';
+import SharePostListPage from '@/pages/share-post/PostList/ListPage';
+import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
+import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/UserDetailListPage';
 
 const Stack = createNativeStackNavigator<SharePostTabParamList>();
 

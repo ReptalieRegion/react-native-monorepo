@@ -8,16 +8,14 @@ import type { FetchFollowerListResponse } from '<api/share/post/user>';
 import type { SharePostTopTabParamList } from '<routes/top-tab>';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
 import useInfiniteFollowerList from '@/apis/share-post/user/hooks/queries/useInfiniteFollowerList';
-import { Avatar } from '@/components/@common/atoms';
+import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 
 type FollowerPageScreenProps = MaterialTopTabScreenProps<SharePostTopTabParamList, 'share-post/follower/list'>;
 
 export default function FollowerPage({ route: { params } }: FollowerPageScreenProps) {
-    const { data } = useInfiniteFollowerList({ userId: params.userId });
+    const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowerList({ userId: params.userId });
     const { mutateFollow } = useCreateOrUpdateFollow();
-
-    const newData = data?.pages.flatMap((page) => page.items);
 
     const keyExtractor = (item: FetchFollowerListResponse) => item.user.id;
 
@@ -37,11 +35,15 @@ export default function FollowerPage({ route: { params } }: FollowerPageScreenPr
         );
     };
 
+    const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
+
     return (
         <View style={styles.container}>
             <FlashList
-                data={newData}
+                data={data}
                 contentContainerStyle={contentContainerStyle}
+                CellRendererComponent={FadeInCellRenderComponent}
+                onEndReached={handleFetchNextPage}
                 keyExtractor={keyExtractor}
                 renderItem={renderItem}
                 estimatedItemSize={55}

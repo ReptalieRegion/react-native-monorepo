@@ -8,6 +8,8 @@ import type { MyTabParamList } from '<routes/bottom-tab>';
 import type { RootRoutesParamList } from '<routes/root>';
 import useSignOut from '@/apis/auth/hooks/mutations/useSignOut';
 import { useFetchMeProfile } from '@/apis/me/profile/hooks';
+import useDeleteFCMToken from '@/apis/me/profile/hooks/mutations/useDeleteFCMToken';
+import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { Share } from '@/assets/icons';
 import Diary from '@/assets/icons/Diary';
 import { ConditionalRenderer } from '@/components/@common/atoms';
@@ -25,7 +27,9 @@ type MyListScreenProps = CompositeScreenProps<
 export default function MyListPage({ navigation }: MyListScreenProps) {
     const { isSignIn, signOut } = useAuth();
     const { mutateAsync: signOutMutateAsync } = useSignOut();
+    const { mutateAsync: deleteFCMTokenMutateAsync } = useDeleteFCMToken();
     const { data } = useFetchMeProfile();
+    useFetchPushAgree();
     const { openToast } = useToast();
 
     const navigateTermsOfUse = () => {
@@ -44,8 +48,13 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
         navigation.navigate('my/license');
     };
 
+    const navigateNotificationSetting = () => {
+        navigation.navigate('my/notification-setting');
+    };
+
     const handleKakaoLogout = async () => {
         try {
+            await deleteFCMTokenMutateAsync();
             await signOutMutateAsync();
             await signOut();
             navigation.navigate('bottom-tab/routes', {
@@ -66,7 +75,7 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.signContainer}>
-                <Profile user={data} />
+                <Profile user={data?.user} />
             </View>
 
             <View style={styles.activeContainer}>
@@ -95,7 +104,11 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                         설정
                     </Typo>
                 </View>
-                <ListItem leftChildren={<ListItem.Title text="푸시 알림 설정" />} rightChildren={<ListItem.Chevron />} />
+                <ListItem
+                    leftChildren={<ListItem.Title text="푸시 알림 설정" />}
+                    rightChildren={<ListItem.Chevron />}
+                    onPress={navigateNotificationSetting}
+                />
                 <ListItem
                     leftChildren={<ListItem.Title text="내 프로필 설정" />}
                     rightChildren={<ListItem.Chevron />}
@@ -183,6 +196,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingLeft: 20,
         paddingRight: 20,
+        height: 150,
     },
     listContainer: {
         paddingTop: 10,

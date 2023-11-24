@@ -5,13 +5,21 @@ export const AUTH_QUERY_KEYS = {
 
 /** My */
 export const MY_QUERY_KEYS = {
-    profile: ['me/profile'],
+    profile: ['me', 'profile'],
+    post: ['me', 'post'],
+} as const;
+
+export const NOTIFICATION_QUERY_KEYS = {
+    pushLog: ['notification', 'push', 'log'],
+    pushAgree: ['notification', 'push', 'agree'],
+    pushReadCheck: ['notification', 'push', 'read-check'],
 } as const;
 
 /** SharePost */
 export const SHARE_POST_QUERY_KEYS = {
     // 게시물
     list: ['share-post'],
+    post: (postId: string) => ['share-post', postId],
     detailUserPosts: (nickname: string) => ['share-post', 'detail', nickname],
     likeList: (postId: string) => ['share-post', 'like', postId],
     // 유저

@@ -103,14 +103,14 @@ export default function ProfileSetting() {
     return (
         <View style={styles.container}>
             <View style={styles.profileWrapper}>
-                <EditProfile profile={data?.profile} onPress={handlePressProfileImage} />
+                <EditProfile profile={data?.user.profile} onPress={handlePressProfileImage} />
             </View>
             <View style={styles.itemWrapper}>
                 <View style={styles.itemContainer}>
                     <Typo variant="heading2">닉네임</Typo>
                     <View>
                         <Typo variant="body2" color="placeholder">
-                            {data?.nickname}
+                            {data?.user.nickname}
                         </Typo>
                     </View>
                 </View>

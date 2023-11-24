@@ -11,28 +11,33 @@ import SignInTemplates, { type SocialButtons } from '@/components/auth/templates
 
 type SignInScreenProps = NativeStackScreenProps<RootRoutesParamList, 'sign-in'>;
 
-const SignInPage = ({ navigation }: SignInScreenProps) => {
+const SignInPage = ({ navigation, route: { params } }: SignInScreenProps) => {
     const { openToast } = useToast();
     const { signIn } = useAuth();
 
     const navigateSignUpPage = (data: Omit<SignUpRegister0, 'type'>) => {
         switch (data.joinProgress) {
             case 'REGISTER0':
-                navigation.navigate('sign-up', {
-                    screen: 'step1',
-                    params: {
-                        recommendNickname: data.nickname,
-                        userId: data.userId,
-                    },
-                });
+                if (params?.isGoBack) {
+                    navigation.goBack();
+                } else {
+                    navigation.navigate('sign-up', {
+                        screen: 'step1',
+                        params: {
+                            recommendNickname: data.nickname,
+                            userId: data.userId,
+                        },
+                    });
+                }
                 return;
         }
     };
 
-    const handleSuccessAuth = (data: PostKakaoAuth['Response'] | PostAppleAuth['Response']) => {
+    /** 카카로 로그인 시작 */
+    const handleSuccessAuth = async (data: PostKakaoAuth['Response'] | PostAppleAuth['Response']) => {
         switch (data.type) {
             case 'SIGN_IN':
-                signIn({ accessToken: data.accessToken, refreshToken: data.refreshToken });
+                await signIn({ accessToken: data.accessToken, refreshToken: data.refreshToken });
                 navigation.navigate('bottom-tab/routes', {
                     screen: 'tab',
                     params: {

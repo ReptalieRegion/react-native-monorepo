@@ -9,6 +9,8 @@ import useToastHandler from '../hooks/useToastHandler';
 import useToastState from '../hooks/useToastState';
 import { createIcon, createToastStyles } from '../utils/toast-utils';
 
+import { ConditionalRenderer } from '@/components/@common/atoms';
+
 export default function ToastContainer() {
     const { width } = useWindowDimensions();
     const toastWidth = width * 0.95;
@@ -49,26 +51,30 @@ export default function ToastContainer() {
     }, [closeToast, show, top, translateX, translateY, width]);
 
     return (
-        show && (
-            <View style={styles.container}>
-                <Animated.View
-                    style={[
-                        styles.toastContainer,
-                        {
-                            backgroundColor: toastStyles.background,
-                            width: toastWidth,
-                        },
-                        animatedStyle,
-                    ]}
-                >
-                    <Icon fill={toastStyles.icon} />
-                    <Typo variant={'body2'} color={toastStyles.text}>
-                        {title}
-                        {contents}
-                    </Typo>
-                </Animated.View>
-            </View>
-        )
+        <ConditionalRenderer
+            condition={show}
+            trueContent={
+                <View style={styles.container}>
+                    <Animated.View
+                        style={[
+                            styles.toastContainer,
+                            {
+                                backgroundColor: toastStyles.background,
+                                width: toastWidth,
+                            },
+                            animatedStyle,
+                        ]}
+                    >
+                        <Icon fill={toastStyles.icon} />
+                        <Typo variant={'body2'} color={toastStyles.text}>
+                            {title}
+                            {contents}
+                        </Typo>
+                    </Animated.View>
+                </View>
+            }
+            falseContent={null}
+        />
     );
 }
 

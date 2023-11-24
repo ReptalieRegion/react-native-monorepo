@@ -1,80 +1,19 @@
-import type { CompositeNavigationProp, CompositeScreenProps } from '@react-navigation/native';
-import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
-import { TouchableTypo, color } from '@reptile-region/design-system';
-import React, { Suspense, useEffect } from 'react';
-import { ActivityIndicator, Keyboard, StyleSheet, View } from 'react-native';
+import type { CompositeScreenProps } from '@react-navigation/native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { color } from '@reptile-region/design-system';
+import React, { Suspense } from 'react';
+import { StyleSheet, View } from 'react-native';
+
+import ChangeHeader from './header';
 
 import type { RootRoutesParamList, SharePostPostingParamList } from '<routes/root>';
-import useCreatePost from '@/apis/share-post/post/hooks/mutations/useCreatePost';
-import { ConditionalRenderer } from '@/components/@common/atoms';
-import { createNativeStackHeader } from '@/components/@common/molecules';
-import usePhotoSelect from '@/components/@common/organisms/CameraAlbum/hooks/usePhotoSelect';
-import { FollowerUserList, FollowerUserListSkeleton, TagProvider, useTag } from '@/components/@common/organisms/TagTextInput';
+import { FollowerUserList, FollowerUserListSkeleton, TagProvider } from '@/components/@common/organisms/TagTextInput';
 import { ContentsWriting, PhotoRegisterCarousel } from '@/components/share-post/organisms/Posting';
 
 type WritePostScreenProps = CompositeScreenProps<
     NativeStackScreenProps<SharePostPostingParamList, 'write'>,
     NativeStackScreenProps<RootRoutesParamList>
 >;
-
-type ChangeHeaderProps = {
-    navigation: CompositeNavigationProp<
-        NativeStackNavigationProp<SharePostPostingParamList, 'write'>,
-        NativeStackNavigationProp<RootRoutesParamList>
-    >;
-};
-
-const ChangeHeader = ({ navigation }: ChangeHeaderProps) => {
-    const { selectedPhotos } = usePhotoSelect();
-    const { contents } = useTag();
-    const { isPending, mutate } = useCreatePost({
-        onSuccess: () => {
-            navigation.navigate('bottom-tab/routes', {
-                screen: 'tab',
-                params: {
-                    screen: 'share-post/routes',
-                    params: {
-                        screen: 'share-post/list',
-                    },
-                },
-            });
-        },
-    });
-
-    useEffect(() => {
-        const headerRight = () => {
-            const handleSubmitSharePost = () => {
-                if (selectedPhotos.length === 0 || contents.length === 0) {
-                    return;
-                }
-
-                Keyboard.dismiss();
-                mutate({ contents, selectedPhotos });
-            };
-
-            return (
-                <ConditionalRenderer
-                    condition={isPending}
-                    trueContent={<ActivityIndicator />}
-                    falseContent={
-                        <TouchableTypo onPress={handleSubmitSharePost} disabled={isPending}>
-                            등록
-                        </TouchableTypo>
-                    }
-                />
-            );
-        };
-
-        navigation.setOptions({ headerRight });
-    }, [navigation, contents, isPending, selectedPhotos, mutate]);
-
-    return null;
-};
-
-export const WritePostHeader = createNativeStackHeader({
-    leftIcon: 'back',
-    title: '일상공유 등록',
-});
 
 export default function WritePostPage({ navigation }: WritePostScreenProps) {
     return (

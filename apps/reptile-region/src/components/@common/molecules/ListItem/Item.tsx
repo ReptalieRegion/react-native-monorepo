@@ -1,7 +1,9 @@
 import { color } from '@reptile-region/design-system';
 import React, { type ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import { ConditionalRenderer } from '../../atoms';
 
 import Chevron from './Chevron';
 import EmphasisText from './EmphasisText';
@@ -10,6 +12,7 @@ import Title from './Title';
 type ListState = {
     leftChildren?: ReactNode;
     rightChildren?: ReactNode;
+    style?: Pick<ViewStyle, 'paddingLeft' | 'paddingRight' | 'paddingBottom' | 'paddingTop'>;
 };
 
 interface ListActions {
@@ -18,14 +21,31 @@ interface ListActions {
 
 type ListProps = ListState & ListActions;
 
-export default function ListItem({ leftChildren, rightChildren, onPress }: ListProps) {
+function ListItemView({ leftChildren, rightChildren, style }: ListState) {
     return (
-        <TouchableOpacity onPress={onPress}>
-            <View style={styles.container}>
-                <View style={styles.rightContainer}>{leftChildren}</View>
-                <View style={styles.rightContainer}>{rightChildren}</View>
-            </View>
-        </TouchableOpacity>
+        <View style={[styles.container, StyleSheet.flatten(style)]}>
+            <View style={styles.rightContainer}>{leftChildren}</View>
+            <View style={styles.rightContainer}>{rightChildren}</View>
+        </View>
+    );
+}
+
+export default function ListItem({
+    leftChildren,
+    rightChildren,
+    style = { paddingTop: 10, paddingBottom: 10, paddingLeft: 20, paddingRight: 15 },
+    onPress,
+}: ListProps) {
+    return (
+        <ConditionalRenderer
+            condition={!!onPress}
+            trueContent={
+                <TouchableOpacity onPress={onPress}>
+                    <ListItemView leftChildren={leftChildren} rightChildren={rightChildren} style={style} />
+                </TouchableOpacity>
+            }
+            falseContent={<ListItemView leftChildren={leftChildren} rightChildren={rightChildren} style={style} />}
+        />
     );
 }
 
@@ -38,10 +58,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingLeft: 20,
-        paddingRight: 15,
-        paddingTop: 10,
-        paddingBottom: 10,
         backgroundColor: color.White.toString(),
     },
     leftContainer: {

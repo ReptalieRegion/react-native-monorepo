@@ -3,8 +3,10 @@ import React from 'react';
 
 import type { SharePostPostingParamList } from '<routes/root>';
 import { CameraAlbum } from '@/components/@common/organisms/CameraAlbum';
-import ImagePickerPage, { ImagePickerHeader } from '@/pages/share-post/CreatePost/ImagePickerPage';
-import WritePostPage, { WritePostHeader } from '@/pages/share-post/CreatePost/WritePostPage';
+import ImagePickerPage from '@/pages/share-post/CreatePost/ImagePickerPage';
+import { ImagePickerHeader } from '@/pages/share-post/CreatePost/ImagePickerPage/header';
+import WritePostPage from '@/pages/share-post/CreatePost/WritePostPage';
+import { WritePostHeader } from '@/pages/share-post/CreatePost/WritePostPage/header';
 
 const Stack = createNativeStackNavigator<SharePostPostingParamList>();
 

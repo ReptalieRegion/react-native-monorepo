@@ -39,6 +39,12 @@ target 'reptileregion' do
   # Flags change depending on the env values.
   flags = get_default_flags()
 
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'KakaoSDKCommon'
+  pod 'KakaoSDKAuth'
+  pod 'KakaoSDKUser'
+
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
@@ -48,7 +54,7 @@ target 'reptileregion' do
     #
     # Note that if you have use_frameworks! enabled, Flipper will not work and
     # you should disable the next line.
-    :flipper_configuration => flipper_config = FlipperConfiguration.enabled(["Release","Debug"]),
+    # :flipper_configuration => flipper_config = FlipperConfiguration.enabled(["Release","Debug"]),
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
@@ -57,10 +63,6 @@ target 'reptileregion' do
     inherit! :complete
     # Pods for testing
   end
-
-  pod 'KakaoSDKCommon'
-  pod 'KakaoSDKAuth'
-  pod 'KakaoSDKUser'
 
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
@@ -71,4 +73,10 @@ target 'reptileregion' do
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
+end
+
+$NotifeeExtension = true
+
+target 'NotifeeNotificationService' do
+  pod 'RNNotifeeCore', :path => '../../../node_modules/@notifee/react-native/RNNotifeeCore.podspec'
 end

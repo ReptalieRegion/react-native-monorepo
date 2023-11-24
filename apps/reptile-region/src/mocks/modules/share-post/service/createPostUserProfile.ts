@@ -18,6 +18,7 @@ const createPostUserProfile = ({ user }: CreatePostUserProfile): FetchDetailUser
             isFollow: user?.isFollow ?? fakerBoolean(),
             followerCount: user?.followerCount ?? fakerKO.number.int({ min: 0, max: 200 }),
             followingCount: user?.followingCount ?? fakerKO.number.int({ min: 0, max: 200 }),
+            isMine: true,
         },
     };
 };
