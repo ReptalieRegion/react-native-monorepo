@@ -2,8 +2,8 @@ import { useCallback, useContext } from 'react';
 
 import { AuthActionsContext, AuthStateContext } from '../contexts/AuthContext';
 
-import type { AuthTokens } from '<api/auth>';
 import { deleteAuthTokens, registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
+import type { AuthTokens } from '@/types/apis/auth/auth';
 
 export const useAuth = () => {
     const state = useContext(AuthStateContext);

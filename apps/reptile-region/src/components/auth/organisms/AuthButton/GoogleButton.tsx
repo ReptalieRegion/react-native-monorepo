@@ -4,10 +4,10 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import type { PostGoogleAuth } from '<api/auth>';
-import { useGoogleAuth } from '@/apis/auth';
+import useGoogleAuth from '@/apis/auth/hooks/mutations/useGoogleAuth';
 import GoogleSymbol from '@/assets/icons/GoogleSymbol';
 import { GoogleAuth } from '@/native-modules/google-auth/RNGoogleAuthModule';
+import type { PostGoogleAuth } from '@/types/apis/auth/auth';
 
 interface GoogleButtonActions {
     onSuccess(props: PostGoogleAuth['Response']): void;

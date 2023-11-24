@@ -2,9 +2,9 @@ import appleAuth, { AppleError, AppleButton as RNAppleButton } from '@invertase/
 import React from 'react';
 import { type DimensionValue } from 'react-native';
 
-import type { PostAppleAuth } from '<api/auth>';
-import { useAppleAuth } from '@/apis/auth';
+import useAppleAuth from '@/apis/auth/hooks/mutations/useAppleAuth';
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
+import type { PostAppleAuth } from '@/types/apis/auth/auth';
 
 type AppleButtonState = {
     height?: DimensionValue;

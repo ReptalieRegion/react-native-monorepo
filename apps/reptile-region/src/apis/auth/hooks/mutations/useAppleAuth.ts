@@ -2,9 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 
 import { appleAuthLogin } from '../../repository';
 
-import type { PostAppleAuth } from '<api/auth>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
+import type { PostAppleAuth } from '@/types/apis/auth/auth';
 
+// 애플 로그인
 interface UseAppleAuth {
     onSuccess(data: PostAppleAuth['Response']): void;
     onError(error: unknown): void;

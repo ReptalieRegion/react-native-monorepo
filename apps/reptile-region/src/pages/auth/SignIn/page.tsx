@@ -2,12 +2,12 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import type { PostAppleAuth, PostKakaoAuth, SignUpRegister0 } from '<api/auth>';
 import type { RootRoutesParamList } from '<routes/root>';
 import { useToast } from '@/components/@common/organisms/Toast';
 import SignInLogo from '@/components/auth/atoms/SignInLogo/SignInLogo';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import SignInTemplates, { type SocialButtons } from '@/components/auth/templates/SignInTemplates';
+import type { PostAppleAuth, PostKakaoAuth, SignUpRegister0 } from '@/types/apis/auth/auth';
 
 type SignInScreenProps = NativeStackScreenProps<RootRoutesParamList, 'sign-in'>;
 

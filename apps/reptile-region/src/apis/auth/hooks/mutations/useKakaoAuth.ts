@@ -2,9 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 
 import { kakaoAuthLogin } from '../../repository';
 
-import type { PostKakaoAuth } from '<api/auth>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
+import type { PostKakaoAuth } from '@/types/apis/auth/auth';
 
+// 카카오 로그인
 interface UseKakaoAuth {
     onSuccess(data: PostKakaoAuth['Response']): void;
     onError(error: unknown): void;

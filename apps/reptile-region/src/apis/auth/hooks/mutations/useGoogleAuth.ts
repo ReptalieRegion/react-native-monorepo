@@ -2,9 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 
 import { googleAuthLogin } from '../../repository';
 
-import type { PostGoogleAuth } from '<api/auth>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
+import type { PostGoogleAuth } from '@/types/apis/auth/auth';
 
+// 구글 로그인
 interface UseGoogleAuth {
     onSuccess(data: PostGoogleAuth['Response']): void;
     onError(error: unknown): void;

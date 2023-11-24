@@ -3,11 +3,11 @@ import React from 'react';
 import { StyleSheet, View, type DimensionValue } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import type { PostKakaoAuth } from '<api/auth>';
-import { useKakaoAuth } from '@/apis/auth';
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
+import useKakaoAuth from '@/apis/auth/hooks/mutations/useKakaoAuth';
 import KakaoSymbol from '@/assets/icons/KakaoSymbol';
 import KakaoAuth from '@/native-modules/kakao-auth/KakaoAuth';
+import type { PostKakaoAuth } from '@/types/apis/auth/auth';
 
 type KakaoButtonState = {
     height?: DimensionValue;
