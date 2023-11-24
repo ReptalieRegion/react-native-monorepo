@@ -15,7 +15,7 @@ import CommentItem from '@/components/share-post/organisms/Comment/components/Co
 import SharePostCardNotification from '@/components/share-post/organisms/SharePostCard/SharePostCardNotification';
 import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
-import useCommentNavigation from '@/hooks/share-post/navigation/useCommentNavigation';
+import usePostDetailNavigation from '@/hooks/share-post/navigation/usePostDetailNavigation';
 import useSharePostModalNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 
 const data: FetchPost['Response'] = {
@@ -57,7 +57,7 @@ export default function SharePostDetailModalPage() {
         };
     });
     const { handleDeleteButton, handlePressDeclarationButton, handlePressUpdateButton } = useCommentActions();
-    const { navigateCommentReplyPage, navigateDetailPage } = useCommentNavigation();
+    const { navigateCommentReplyPage, navigateDetailPage } = usePostDetailNavigation();
 
     const renderItem: ListRenderItem<FetchCommentResponse> = ({ item }) => {
         const {
