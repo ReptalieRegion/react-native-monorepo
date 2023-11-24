@@ -2,7 +2,7 @@ import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
-import type { IconProps } from '<Icon>';
+import type { IconProps } from '@/types/global/icons';
 
 const BackButton = ({ width = 15, height = 15, fill = color.Black.toString() }: IconProps) => {
     return (

@@ -1,7 +1,7 @@
 import React from 'react';
 
-import type { IconProps } from '<Icon>';
 import { ChevronRight } from '@/assets/icons';
+import type { IconProps } from '@/types/global/icons';
 
 export default function Chevron(props: IconProps) {
     return <ChevronRight {...props} />;

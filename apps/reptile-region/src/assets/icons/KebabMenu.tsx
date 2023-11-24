@@ -2,7 +2,7 @@ import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { Circle, Svg } from 'react-native-svg';
 
-import type { IconProps } from '<Icon>';
+import type { IconProps } from '@/types/global/icons';
 
 const KebabMenu = ({ width = '24', height = '24', fill = color.Gray[900].toString() }: IconProps) => {
     return (

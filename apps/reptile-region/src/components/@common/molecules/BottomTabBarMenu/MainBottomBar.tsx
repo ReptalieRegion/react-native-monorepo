@@ -6,7 +6,6 @@ import * as Haptic from 'react-native-haptic-feedback';
 
 import { BottomTabBarButton } from '../../atoms';
 
-import type { IconProps } from '<Icon>';
 import type { BottomTabParamList } from '<routes/bottom-tab>';
 import {
     Home as HomeIcon,
@@ -15,6 +14,7 @@ import {
     Share as SharePostIcon,
     Cart as ShopIcon,
 } from '@/assets/icons';
+import type { IconProps } from '@/types/global/icons';
 
 export interface MainBottomBarActions {
     onPressNavigate({

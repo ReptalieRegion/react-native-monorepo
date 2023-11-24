@@ -5,7 +5,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import type { WithTimingConfig } from 'react-native-reanimated';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
-import type { IconFunction } from '<Icon>';
+import type { IconFunction } from '@/types/global/icons';
 
 type BottomTabBarButtonState = {
     isFocused: boolean;
