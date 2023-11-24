@@ -27,7 +27,7 @@ const usePostDetailNavigation = () => {
     };
 
     const navigateCommentReplyPage = (params: SharePostCommentReplyProps) => {
-        navigation.push('bottom-sheet/comment', {
+        navigation.push('comment', {
             screen: 'reply',
             params,
         });

@@ -12,7 +12,7 @@ import useInfiniteFetchMePostList from '@/apis/share-post/post/hooks/queries/use
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
-import useSharePostModalNavigation from '@/hooks/share-post/navigation/useSharePostModalNavigation';
+import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 import type { FetchMePostListResponse, FetchMeProfile } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
 
@@ -25,7 +25,7 @@ export default function MeDetailListModalPage({ route: { params } }: SharePostLi
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchMePostList();
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
-        useSharePostModalNavigation();
+        useSharePostNavigation('MODAL');
 
     const keyExtractor = (item: FetchMePostListResponse) => item.post.id;
 

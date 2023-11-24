@@ -128,9 +128,9 @@ declare module '<routes/root>' {
         'list/me': DetailListMeProps;
         'list/user': SharePostUserListProps;
         'posting/update': SharePostPostingUpdateProps;
-        'bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
+        comment: NavigatorScreenParams<SharePostCommentParamList>;
         'share-post/list/follow': SharePostFollowProps;
-        'share-post/list/like': SharePostLikeProps;
+        'list/like': SharePostLikeProps;
     };
 
     type LicenseContentsProps = {

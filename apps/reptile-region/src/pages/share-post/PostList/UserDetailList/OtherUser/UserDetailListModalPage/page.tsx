@@ -12,7 +12,7 @@ import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfini
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
-import useSharePostModalNavigation from '@/hooks/share-post/navigation/useSharePostModalNavigation';
+import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 import type { FetchDetailUserPostResponse } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
 
@@ -33,7 +33,7 @@ export default function UserDetailListModalPage({ route: { params } }: SharePost
     } = useInfiniteUserPosts({ nickname: params.nickname });
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
-        useSharePostModalNavigation();
+        useSharePostNavigation('MODAL');
 
     const keyExtractor = (item: FetchDetailUserPostResponse) => item.post.id;
 

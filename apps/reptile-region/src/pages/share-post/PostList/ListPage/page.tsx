@@ -28,7 +28,7 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
-        useSharePostNavigation();
+        useSharePostNavigation('BOTTOM_TAB');
 
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<FetchPostResponse>) => {

@@ -4,8 +4,8 @@ import React from 'react';
 import type { SharePostModalParamList } from '<routes/root>';
 import SharePostMeDetailImageListPage, { SharePostMeDetailImageListHeader } from '@/pages/share-post/ImageThumbnailList/Me';
 import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser';
-import { SharePostDetailModalHeader } from '@/pages/share-post/PostList/PostDetailModalList/header';
-import PostDetailModalListPage from '@/pages/share-post/PostList/PostDetailModalList/page';
+import { SharePostDetailModalHeader } from '@/pages/share-post/PostList/PostDetailList/header';
+import PostDetailModalListPage from '@/pages/share-post/PostList/PostDetailList/page';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
 import MeDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/Me/page';
 import SharePostUserDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/OtherUser/UserDetailListModalPage';
@@ -53,9 +53,9 @@ export default function SharePostModalRoutes() {
                     animation: 'none',
                 }}
             >
-                <Stack.Screen name="bottom-sheet/comment" component={SharePostCommentRoutes} />
+                <Stack.Screen name="comment" component={SharePostCommentRoutes} />
             </Stack.Group>
-            <Stack.Screen name="share-post/list/like" component={LikeListPage} options={{ header: SharePostLikeListHeader }} />
+            <Stack.Screen name="list/like" component={LikeListPage} options={{ header: SharePostLikeListHeader }} />
         </Stack.Navigator>
     );
 }

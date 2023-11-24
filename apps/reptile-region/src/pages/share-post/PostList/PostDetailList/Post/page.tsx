@@ -4,7 +4,7 @@ import useFetchPost from '@/apis/share-post/post/hooks/queries/useFetchPost';
 import { Divider } from '@/components/@common/atoms/Divider';
 import SharePostCardNotification from '@/components/share-post/organisms/SharePostCard/SharePostCardNotification';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
-import useSharePostModalNavigation from '@/hooks/share-post/navigation/useSharePostModalNavigation';
+import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 
 export function Post({ postId }: { postId: string }) {
     const { data } = useFetchPost({ postId });
@@ -19,7 +19,7 @@ export function Post({ postId }: { postId: string }) {
     } = data;
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
-        useSharePostModalNavigation();
+        useSharePostNavigation('MODAL');
 
     return (
         <>

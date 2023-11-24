@@ -4,8 +4,11 @@ import React, { Suspense } from 'react';
 import UserProfileListSkeleton from '../loading';
 
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
+import type { SharePostModalParamList } from '<routes/root>';
 
-type LikeListPageScreenProps = NativeStackScreenProps<SharePostTabParamList, 'share-post/list/like'>;
+type LikeListPageScreenProps =
+    | NativeStackScreenProps<SharePostTabParamList, 'share-post/list/like'>
+    | NativeStackScreenProps<SharePostModalParamList, 'list/like'>;
 
 const LikeList = React.lazy(() => import('./page'));
 

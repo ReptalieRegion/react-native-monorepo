@@ -31,7 +31,7 @@ export default function UserDetailListPage({ route: { params } }: SharePostListP
     } = useInfiniteUserPosts({ nickname: params.nickname });
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
-        useSharePostNavigation();
+        useSharePostNavigation('BOTTOM_TAB');
 
     const keyExtractor = useCallback((item: FetchDetailUserPostResponse) => item.post.id, []);
 
