@@ -2,9 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import type { SharePostModalParamList } from '<routes/root>';
-import SharePostDetailImageListModalPage, {
-    SharePostDetailImageListModalHeader,
-} from '@/pages/share-post/DetailImageList/DetailImageListModalPage';
+import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/DetailImageList/OtherUser';
 import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
 import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
 import LikeListPage from '@/pages/share-post/LikeList/page';
@@ -27,8 +25,8 @@ export default function SharePostModalRoutes() {
             />
             <Stack.Screen
                 name="detail"
-                component={SharePostDetailImageListModalPage}
-                options={{ header: SharePostDetailImageListModalHeader }}
+                component={SharePostDetailImageListPage}
+                options={{ header: SharePostDetailImageListHeader }}
             />
             <Stack.Screen
                 name="list/user"

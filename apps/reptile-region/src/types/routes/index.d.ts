@@ -3,6 +3,7 @@ declare module '<routes/root>' {
 
     import { ImageType } from '<image>';
     import { BottomTabNativeStackParamList } from '<routes/bottom-tab>';
+    import type { PageState } from '<routes/enum>';
     import type { SignUpParamList } from '<routes/sign-up>';
     import { SharePostTopTabParamList } from '<routes/top-tab>';
 
@@ -18,6 +19,7 @@ declare module '<routes/root>' {
         nickname: string;
         profile: ImageType;
         isFollow: boolean | undefined;
+        pageState: PageState;
     };
 
     type SharePostUserListProps = {
@@ -119,6 +121,7 @@ declare module '<routes/root>' {
         'notification/detail': DetailPostProps;
         detail: SharePostDetailProps;
         'list/user': SharePostUserListProps;
+        'list/me': undefined;
         'posting/update': SharePostPostingUpdateProps;
         'bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
         'share-post/list/follow': SharePostFollowProps;

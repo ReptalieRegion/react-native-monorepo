@@ -5,15 +5,20 @@ import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfini
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SquareGrid from '@/components/@common/molecules/SquareGrid';
 
-type SharePostDetailProps = {
+type PostImageListState = {
     nickname: string;
     ListHeaderComponent: React.JSX.Element;
-    handleImagePress: (index: number) => void;
 };
+
+interface PostImageListActions {
+    handleImagePress: (index: number) => void;
+}
+
+type PostImageListProps = PostImageListState & PostImageListActions;
 
 const NUM_COLUMNS = 3;
 
-export default function PostImageList({ nickname, ListHeaderComponent, handleImagePress }: SharePostDetailProps) {
+export default function PostImageList({ nickname, ListHeaderComponent, handleImagePress }: PostImageListProps) {
     const { width } = useWindowDimensions();
     const itemWidth = width / NUM_COLUMNS - 2;
 

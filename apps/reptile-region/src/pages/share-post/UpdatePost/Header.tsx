@@ -1,4 +1,3 @@
-import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { TouchableTypo } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 
@@ -13,9 +12,10 @@ type ChangeHeaderProps = {
     navigation: SharePostUpdateNavigationProp;
 };
 
-export function SharePostUpdateHeader(props: NativeStackHeaderProps) {
-    return createNativeStackHeader({ leftIcon: 'cancel', title: '정보 수정' })(props);
-}
+export const SharePostUpdateHeader = createNativeStackHeader({
+    leftIcon: 'cancel',
+    title: '정보 수정',
+});
 
 export default function ChangeHeader({ postId, navigation }: ChangeHeaderProps) {
     const { mutate } = useUpdatePost({
@@ -29,6 +29,7 @@ export default function ChangeHeader({ postId, navigation }: ChangeHeaderProps) 
 
     useEffect(() => {
         const headerRight = () => {
+            console.log('hi');
             const handleSubmitUpdatePost = () => {
                 mutate({ postId, contents, remainingImages: images.map((image) => image.src) });
             };

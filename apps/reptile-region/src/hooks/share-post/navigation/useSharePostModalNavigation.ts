@@ -12,6 +12,10 @@ type NavigationProp =
     | CompositeNavigationProp<
           NativeStackNavigationProp<SharePostModalParamList, 'notification/detail'>,
           NativeStackNavigationProp<RootRoutesParamList>
+      >
+    | CompositeNavigationProp<
+          NativeStackNavigationProp<SharePostModalParamList, 'list/me'>,
+          NativeStackNavigationProp<RootRoutesParamList>
       >;
 
 const useSharePostModalNavigation = () => {
@@ -37,11 +41,11 @@ const useSharePostModalNavigation = () => {
     };
 
     const handlePressProfile = (params: { isFollow: boolean | undefined; nickname: string; profile: ImageType }) => {
-        navigation.push('detail', params);
+        navigation.push('detail', { ...params, pageState: 'MODAL' });
     };
 
     const handlePressTag = (tag: string) => {
-        navigation.push('detail', { isFollow: undefined, nickname: tag, profile: { src: '' } });
+        navigation.push('detail', { isFollow: undefined, nickname: tag, profile: { src: '' }, pageState: 'MODAL' });
     };
 
     const handlePressLikeContents = (params: { postId: string }) => {

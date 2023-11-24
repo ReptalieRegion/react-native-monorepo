@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { updateMeProfile } from '../../repository';
 
-import type { FetchMeProfile, UpdateProfileImage } from '<api/my/profile>';
+import type { UpdateProfileImage } from '<api/my/profile>';
+import type { FetchMeProfile } from '<api/share/post>';
 import type { ImageType } from '<image>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';

@@ -1,14 +1,10 @@
 import { Typo } from '@reptile-region/design-system';
-import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { FetchDetailUserPost } from '<api/share/post>';
 import type { ImageType } from '<image>';
 import type { SharePostFollowProps } from '<routes/bottom-tab>';
-import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/mutations/useCreateOrUpdateFollow';
-import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 import type {
@@ -18,9 +14,16 @@ import type {
 import UserActivitySummaryItem from '@/components/share-post/molecules/UserActivitySummaryItem';
 
 type UserDetailPanelState = {
-    nickname: string;
-    profile: ImageType;
-    isFollow: boolean | undefined;
+    user: {
+        id: string;
+        nickname: string;
+        profile: ImageType;
+        isFollow?: boolean | undefined;
+        isMine?: boolean;
+        followerCount: number;
+        followingCount: number;
+    };
+    postCount: number;
 };
 
 interface UserDetailPanelActions {
@@ -29,34 +32,14 @@ interface UserDetailPanelActions {
 
 type UserDetailPanelProps = UserDetailPanelState & UserDetailPanelActions;
 
-export default function UserProfile({ nickname, profile, isFollow, navigateFollowPage }: UserDetailPanelProps) {
-    const { data } = useFetchUserProfile({ nickname });
-    const queryClient = useQueryClient();
-    const post = queryClient.getQueryData<InfiniteData<FetchDetailUserPost['Response']>>(
-        SHARE_POST_QUERY_KEYS.detailUserPosts(nickname),
-    );
-
+export default function UserProfile({ user, postCount, navigateFollowPage }: UserDetailPanelProps) {
     const { mutateFollow } = useCreateOrUpdateFollow();
-
-    const defaultData = {
-        user: {
-            id: '',
-            nickname,
-            profile,
-            isFollow,
-            followerCount: 0,
-            followingCount: 0,
-        },
-        postCount: 0,
-    };
-
     const newData = {
         user: {
-            ...defaultData.user,
-            ...data?.user,
-            isFollow: data?.user.isFollow,
+            ...user,
+            isFollow: user?.isFollow,
         },
-        postCount: post?.pages.reduce((prev, page) => prev + page.items.length, 0) ?? 0,
+        postCount,
     };
 
     const handlePressFollow = () => {
@@ -67,7 +50,7 @@ export default function UserProfile({ nickname, profile, isFollow, navigateFollo
     const activitySummaryItems: Array<ActivitySummaryItemProps & ActivitySummaryItemActions> = [
         {
             label: '게시물',
-            count: newData.postCount,
+            count: postCount,
         },
         {
             label: '팔로워',
@@ -75,22 +58,22 @@ export default function UserProfile({ nickname, profile, isFollow, navigateFollo
             onPress: () =>
                 navigateFollowPage({
                     initialRouteName: 'share-post/follower/list',
-                    userId: newData.user.id,
-                    followerCount: newData.user.followerCount,
-                    followingCount: newData.user.followingCount,
-                    nickname: newData.user.nickname,
+                    userId: user.id,
+                    followerCount: user.followerCount,
+                    followingCount: user.followingCount,
+                    nickname: user.nickname,
                 }),
         },
         {
             label: '팔로잉',
-            count: newData.user.followingCount,
+            count: user.followingCount,
             onPress: () =>
                 navigateFollowPage({
                     initialRouteName: 'share-post/following/list',
-                    userId: newData.user.id,
-                    followerCount: newData.user.followerCount,
-                    followingCount: newData.user.followingCount,
-                    nickname: newData.user.nickname,
+                    userId: user.id,
+                    followerCount: user.followerCount,
+                    followingCount: user.followingCount,
+                    nickname: user.nickname,
                 }),
         },
     ];
@@ -107,7 +90,7 @@ export default function UserProfile({ nickname, profile, isFollow, navigateFollo
             <View style={styles.textContainer}>
                 {/** TODO 팔로우 */}
                 <ConditionalRenderer
-                    condition={data?.user.isMine === false}
+                    condition={user.isMine === false}
                     trueContent={<Follow isFollow={newData.user.isFollow} onPress={handlePressFollow} />}
                     falseContent={null}
                 />

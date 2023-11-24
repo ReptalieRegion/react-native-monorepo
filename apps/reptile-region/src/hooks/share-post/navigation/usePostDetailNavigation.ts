@@ -16,10 +16,13 @@ type PostDetailNavigation = CompositeNavigationProp<
 const usePostDetailNavigation = () => {
     const navigation = useNavigation<PostDetailNavigation>();
 
-    const navigateDetailPage = (params: SharePostDetailProps) => {
+    const navigateDetailPage = (params: Omit<SharePostDetailProps, 'pageState'>) => {
         navigation.push('share-post/modal', {
             screen: 'detail',
-            params,
+            params: {
+                ...params,
+                pageState: 'MODAL',
+            },
         });
     };
 

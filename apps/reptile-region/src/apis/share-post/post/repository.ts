@@ -21,7 +21,9 @@ export const getPosts = async ({ pageParam }: WithInfinitePageParam<FetchPosts['
         pageParam,
     });
 
-    const response = await clientFetch(`api/share/posts/list?${queryString}`);
+    const response = await clientFetch(`api/share/posts/list?${queryString}`, {
+        method: METHOD.GET,
+    });
 
     return response.json();
 };
@@ -36,12 +38,25 @@ export const getPost = async ({ postId }: FetchPost['Request']) => {
     return response.json();
 };
 
+export const fetchMePostList = async ({ pageParam }: WithInfinitePageParam<void>) => {
+    const queryString = objectToQueryString({
+        pageParam,
+    });
+    const response = await clientFetch(`api/share/posts/list/me?${queryString}`, {
+        method: METHOD.GET,
+    });
+
+    return response.json();
+};
+
 // 특정 유저 게시글 패치
 export const getDetailUserPosts = async ({ pageParam, nickname }: WithInfinitePageParam<FetchDetailUserPost['Request']>) => {
     const queryString = objectToQueryString({
         pageParam,
     });
-    const response = await clientFetch(`api/share/posts/list/users/${nickname}?${queryString}`);
+    const response = await clientFetch(`api/share/posts/list/users/${nickname}?${queryString}`, {
+        method: METHOD.GET,
+    });
 
     return response.json();
 };

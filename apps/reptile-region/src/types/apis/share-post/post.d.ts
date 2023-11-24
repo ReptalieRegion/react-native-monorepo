@@ -27,6 +27,31 @@ declare module '<api/share/post>' {
     type FetchPosts = ServerAPI<void, InfiniteState<FetchPostsResponse[]>>;
     /** 일상공유 무한스크롤 조회 리스트 끝 */
 
+    type FetchMeProfileResponse = {
+        user: {
+            id: string;
+            profile: ImageType;
+            nickname: string;
+            followerCount: number;
+            followingCount: number;
+        };
+    };
+
+    type FetchMeProfile = ServerAPI<void, FetchMeProfileResponse>;
+
+    type FetchMePostListResponse = {
+        post: {
+            id: string;
+            contents: string;
+            images: ImageType[];
+            isLike: boolean | undefined;
+            likenCount: number;
+            commentCount: number;
+        };
+    };
+
+    type FetchMePostList = ServerAPI<void, InfiniteState<FetchMePostListResponse[]>>;
+
     /** 일상공유 게시글 조회 시작 */
     type FetchPostRequest = {
         postId: string;

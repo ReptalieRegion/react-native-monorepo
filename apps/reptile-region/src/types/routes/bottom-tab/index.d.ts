@@ -2,6 +2,7 @@ declare module '<routes/bottom-tab>' {
     import { NavigatorScreenParams } from '@react-navigation/native';
 
     import { ImageType } from '<image>';
+    import { PageState } from '<routes/enum>';
     import { SharePostTopTabParamList } from '<routes/top-tab>';
 
     /** SharePost 시작 */
@@ -61,6 +62,7 @@ declare module '<routes/bottom-tab>' {
         nickname: string;
         profile: ImageType;
         isFollow: boolean | undefined;
+        pageState: PageState;
     };
 
     type SharePostUserListProps = {

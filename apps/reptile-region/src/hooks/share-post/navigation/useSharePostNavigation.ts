@@ -44,11 +44,16 @@ const useSharePostNavigation = () => {
     };
 
     const handlePressProfile = (params: { isFollow: boolean | undefined; nickname: string; profile: ImageType }) => {
-        navigation.push('share-post/detail', params);
+        navigation.push('share-post/detail', { ...params, pageState: 'BOTTOM_TAB' });
     };
 
     const handlePressTag = (tag: string) => {
-        navigation.push('share-post/detail', { isFollow: undefined, nickname: tag, profile: { src: '' } });
+        navigation.push('share-post/detail', {
+            isFollow: undefined,
+            nickname: tag,
+            profile: { src: '' },
+            pageState: 'BOTTOM_TAB',
+        });
     };
 
     const handlePressLikeContents = (params: { postId: string }) => {

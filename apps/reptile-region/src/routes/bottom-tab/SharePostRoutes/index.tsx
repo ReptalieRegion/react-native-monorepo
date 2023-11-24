@@ -5,9 +5,7 @@ import FollowRoutes from './FollowRoutes';
 
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
-import SharePostDetailImageListPage, {
-    SharePostDetailImageListHeader,
-} from '@/pages/share-post/DetailImageList/DetailImageListPage';
+import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/DetailImageList/OtherUser';
 import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
 import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
 import LikeListPage from '@/pages/share-post/LikeList/page';

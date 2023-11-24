@@ -21,10 +21,10 @@ type CommentNavigation =
 const useCommentNavigation = () => {
     const navigation = useNavigation<CommentNavigation>();
 
-    const navigateDetailPage = (params: SharePostDetailProps) => {
+    const navigateDetailPage = (params: Omit<SharePostDetailProps, 'pageState'>) => {
         navigation.push('share-post/modal', {
             screen: 'detail',
-            params,
+            params: { ...params, pageState: 'MODAL' },
         });
     };
 

@@ -114,28 +114,27 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 {/** 인증 끝 */}
 
                 {/** 일상공유 시작 */}
-                <Stack.Group screenOptions={{ headerShown: false }}>
-                    <Stack.Screen name="share-post/modal" component={SharePostModalRoutes} />
-                    <Stack.Screen
-                        name="share-post/modal/posting"
-                        component={SharePostPostingRoutes}
-                        options={{ animation: 'slide_from_bottom' }}
-                    />
-                    <Stack.Screen
-                        name="share-post/bottom-sheet/post-options-menu"
-                        component={PostOptionsMenu}
-                        options={{
-                            header: SignInHeader,
-                            presentation: 'containedTransparentModal',
-                            animation: 'none',
-                        }}
-                    />
-                    <Stack.Screen
-                        name="share-post/post/update"
-                        component={SharePostUpdatePage}
-                        options={{ header: SharePostUpdateHeader, animation: 'slide_from_bottom' }}
-                    />
-                </Stack.Group>
+                <Stack.Screen name="share-post/modal" component={SharePostModalRoutes} options={{ headerShown: false }} />
+                <Stack.Screen
+                    name="share-post/modal/posting"
+                    component={SharePostPostingRoutes}
+                    options={{ animation: 'slide_from_bottom', headerShown: false }}
+                />
+                <Stack.Screen
+                    name="share-post/bottom-sheet/post-options-menu"
+                    component={PostOptionsMenu}
+                    options={{
+                        header: SignInHeader,
+                        presentation: 'containedTransparentModal',
+                        animation: 'none',
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="share-post/post/update"
+                    component={SharePostUpdatePage}
+                    options={{ header: SharePostUpdateHeader, animation: 'slide_from_bottom' }}
+                />
 
                 {/** 내 정보 시작 */}
                 <Stack.Group>

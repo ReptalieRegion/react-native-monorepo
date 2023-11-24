@@ -38,6 +38,7 @@ export function navigateLinking(
                     profile: {
                         src: '',
                     },
+                    pageState: 'MODAL',
                 },
             });
             break;
