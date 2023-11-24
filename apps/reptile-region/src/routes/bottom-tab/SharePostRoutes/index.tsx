@@ -8,7 +8,7 @@ import { NativeStackDefaultHeader } from '@/components/@common/molecules';
 import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser';
 import SharePostListPage from '@/pages/share-post/PostList/ListPage';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
-import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser/UserDetailListPage';
+import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser';
 import { SharePostFollowHeader } from '@/pages/share-post/UserProfileList/FollowList/header';
 import LikeListPage from '@/pages/share-post/UserProfileList/LikeList';
 import { SharePostLikeListHeader } from '@/pages/share-post/UserProfileList/LikeList/header';

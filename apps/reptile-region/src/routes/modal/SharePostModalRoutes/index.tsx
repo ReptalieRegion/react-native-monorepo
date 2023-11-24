@@ -8,7 +8,7 @@ import { SharePostDetailModalHeader } from '@/pages/share-post/PostList/PostDeta
 import PostDetailModalListPage from '@/pages/share-post/PostList/PostDetailList/page';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
 import MeDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/Me/page';
-import SharePostUserDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/OtherUser/UserDetailListModalPage';
+import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser';
 import { SharePostFollowHeader } from '@/pages/share-post/UserProfileList/FollowList/header';
 import LikeListPage from '@/pages/share-post/UserProfileList/LikeList';
 import { SharePostLikeListHeader } from '@/pages/share-post/UserProfileList/LikeList/header';
@@ -37,7 +37,7 @@ export default function SharePostModalRoutes() {
             />
             <Stack.Screen
                 name="list/user"
-                component={SharePostUserDetailListModalPage}
+                component={SharePostUserDetailListPage}
                 options={{ header: SharePostUserDetailListHeader }}
             />
             <Stack.Screen
