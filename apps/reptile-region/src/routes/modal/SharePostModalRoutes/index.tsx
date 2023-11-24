@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import type { SharePostModalParamList } from '<routes/root>';
+import SharePostMeDetailImageListPage, { SharePostMeDetailImageListHeader } from '@/pages/share-post/DetailImageList/Me';
 import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/DetailImageList/OtherUser';
 import { SharePostFollowHeader } from '@/pages/share-post/FollowList/header';
 import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
@@ -9,7 +10,8 @@ import LikeListPage from '@/pages/share-post/LikeList/page';
 import { SharePostDetailModalHeader } from '@/pages/share-post/PostList/PostDetailModalList/header';
 import SharePostDetailModalPage from '@/pages/share-post/PostList/PostDetailModalList/page';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
-import SharePostUserDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/UserDetailListModalPage';
+import MeDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/Me/page';
+import SharePostUserDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/OtherUser/UserDetailListModalPage';
 import SharePostCommentRoutes from '@/routes/bottom-sheet/SharePostCommentRoutes';
 import FollowRoutes from '@/routes/bottom-tab/SharePostRoutes/FollowRoutes';
 
@@ -29,8 +31,18 @@ export default function SharePostModalRoutes() {
                 options={{ header: SharePostDetailImageListHeader }}
             />
             <Stack.Screen
+                name="detail/me"
+                component={SharePostMeDetailImageListPage}
+                options={{ header: SharePostMeDetailImageListHeader }}
+            />
+            <Stack.Screen
                 name="list/user"
                 component={SharePostUserDetailListModalPage}
+                options={{ header: SharePostUserDetailListHeader }}
+            />
+            <Stack.Screen
+                name="list/me"
+                component={MeDetailListModalPage}
                 options={{ header: SharePostUserDetailListHeader }}
             />
             <Stack.Screen name="share-post/list/follow" component={FollowRoutes} options={{ header: SharePostFollowHeader }} />

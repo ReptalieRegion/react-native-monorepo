@@ -117,11 +117,16 @@ declare module '<routes/root>' {
         type: 'comment' | 'like';
     };
 
+    type DetailListMeProps = {
+        startIndex: number;
+    };
+
     type SharePostModalParamList = {
         'notification/detail': DetailPostProps;
         detail: SharePostDetailProps;
+        'detail/me': undefined;
+        'list/me': DetailListMeProps;
         'list/user': SharePostUserListProps;
-        'list/me': undefined;
         'posting/update': SharePostPostingUpdateProps;
         'bottom-sheet/comment': NavigatorScreenParams<SharePostCommentParamList>;
         'share-post/list/follow': SharePostFollowProps;

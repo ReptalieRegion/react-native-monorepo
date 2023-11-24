@@ -13,10 +13,10 @@ type UseFetchMeProfileState = {
 const useFetchMeProfile = (props?: UseFetchMeProfileState) => {
     return useQuery<FetchMeProfile['Response'], HTTPError, FetchMeProfile['Response'], readonly string[]>({
         queryKey: MY_QUERY_KEYS.profile,
-        queryFn: fetchMeProfile,
         staleTime: Infinity,
         gcTime: Infinity,
         enabled: props?.enabled,
+        queryFn: fetchMeProfile,
     });
 };
 

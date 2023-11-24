@@ -4,9 +4,9 @@ import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import SharePostsDetailListSkeleton from '../loading';
+import type { SharePostDetailProfileScreenNavigationProp, SharePostModalDetailScreenNavigationProp } from '../type';
 
-import UserProfile from './ListHeaderComponent';
-import type { SharePostDetailProfileScreenNavigationProp, SharePostModalDetailScreenNavigationProp } from './type';
+import ListHeaderComponent from './ListHeaderComponent';
 
 import type { SharePostDetailProps } from '<routes/bottom-tab>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
@@ -26,10 +26,6 @@ export default function SharePostDetailImageListPage({
 }: SharePostDetailProfileScreenNavigationProp | SharePostModalDetailScreenNavigationProp) {
     const { navigateFollowerPage, navigateListUser } = useImageThumbnailNavigation(pageState);
 
-    const ListHeaderComponent = (
-        <UserProfile isFollow={isFollow} nickname={nickname} profile={profile} navigateFollowerPage={navigateFollowerPage} />
-    );
-
     const handleImagePress = (index: number) => {
         navigateListUser({ nickname, startIndex: index });
     };
@@ -39,14 +35,28 @@ export default function SharePostDetailImageListPage({
             <Suspense
                 fallback={
                     <>
-                        {ListHeaderComponent}
+                        {
+                            <ListHeaderComponent
+                                isFollow={isFollow}
+                                nickname={nickname}
+                                profile={profile}
+                                navigateFollowerPage={navigateFollowerPage}
+                            />
+                        }
                         <SharePostsDetailListSkeleton />
                     </>
                 }
             >
                 <PostImageList
                     nickname={nickname}
-                    ListHeaderComponent={ListHeaderComponent}
+                    ListHeaderComponent={
+                        <ListHeaderComponent
+                            isFollow={isFollow}
+                            nickname={nickname}
+                            profile={profile}
+                            navigateFollowerPage={navigateFollowerPage}
+                        />
+                    }
                     handleImagePress={handleImagePress}
                 />
             </Suspense>

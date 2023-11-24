@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
-import type { SharePostListPageScreen } from './type';
+import type { SharePostListModalPageScreen } from '../../../type';
 
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '<api/share/post/user>';
 import type { FetchDetailUserPostResponse } from '<api/share/post>';
@@ -14,10 +14,12 @@ import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfini
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
-import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
+import useSharePostModalNavigation from '@/hooks/share-post/navigation/useSharePostModalNavigation';
 
-export default function UserDetailListPage({ route: { params } }: SharePostListPageScreen) {
+export default function UserDetailListModalPage({ route: { params } }: SharePostListModalPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);
+
+    /** Data 시작 */
     const queryClient = useQueryClient();
     const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(
         SHARE_POST_QUERY_KEYS.profile(params.nickname),
@@ -31,9 +33,9 @@ export default function UserDetailListPage({ route: { params } }: SharePostListP
     } = useInfiniteUserPosts({ nickname: params.nickname });
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
-        useSharePostNavigation();
+        useSharePostModalNavigation();
 
-    const keyExtractor = useCallback((item: FetchDetailUserPostResponse) => item.post.id, []);
+    const keyExtractor = (item: FetchDetailUserPostResponse) => item.post.id;
 
     const renderItem = useCallback(
         ({ item, extraData }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
@@ -91,6 +93,7 @@ export default function UserDetailListPage({ route: { params } }: SharePostListP
     }, [refetch]);
 
     const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
+    /** Data 시작 */
 
     return (
         <View style={styles.container}>

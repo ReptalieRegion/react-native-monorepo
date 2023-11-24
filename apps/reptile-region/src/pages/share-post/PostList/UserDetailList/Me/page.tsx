@@ -5,40 +5,32 @@ import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
-import type { SharePostListPageScreen } from './type';
+import type { SharePostListMeModalPageScreen } from '../../type';
 
-import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '<api/share/post/user>';
-import type { FetchDetailUserPostResponse } from '<api/share/post>';
-import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
+import type { FetchDetailUserProfileResponse } from '<api/share/post/user>';
+import type { FetchMePostListResponse, FetchMeProfile } from '<api/share/post>';
+import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import useInfiniteFetchMePostList from '@/apis/share-post/post/hooks/queries/useInfiniteFetchMePostList';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
 import useSharePostModalNavigation from '@/hooks/share-post/navigation/useSharePostModalNavigation';
 
-export default function UserDetailListModalPage({ route: { params } }: SharePostListPageScreen) {
+export default function MeDetailListModalPage({ route: { params } }: SharePostListMeModalPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
     /** Data 시작 */
     const queryClient = useQueryClient();
-    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(
-        SHARE_POST_QUERY_KEYS.profile(params.nickname),
-    );
-    const {
-        data: userPost,
-        hasNextPage,
-        isFetchingNextPage,
-        fetchNextPage,
-        refetch,
-    } = useInfiniteUserPosts({ nickname: params.nickname });
+    const userProfile = queryClient.getQueryData<FetchMeProfile['Response']>(MY_QUERY_KEYS.profile);
+    const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchMePostList();
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
         useSharePostModalNavigation();
 
-    const keyExtractor = (item: FetchDetailUserPostResponse) => item.post.id;
+    const keyExtractor = (item: FetchMePostListResponse) => item.post.id;
 
     const renderItem = useCallback(
-        ({ item, extraData }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
+        ({ item, extraData }: ListRenderItemInfo<FetchMePostListResponse>) => {
             const {
                 user: { id: userId, nickname, profile, isFollow },
             } = (extraData as FetchDetailUserProfileResponse | undefined) ?? {

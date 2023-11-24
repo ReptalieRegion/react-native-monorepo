@@ -44,8 +44,9 @@ declare module '<api/share/post>' {
             id: string;
             contents: string;
             images: ImageType[];
+            isMine: boolean;
             isLike: boolean | undefined;
-            likenCount: number;
+            likeCount: number;
             commentCount: number;
         };
     };

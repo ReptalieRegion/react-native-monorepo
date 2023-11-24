@@ -11,7 +11,7 @@ import { SharePostLikeListHeader } from '@/pages/share-post/LikeList/header';
 import LikeListPage from '@/pages/share-post/LikeList/page';
 import SharePostListPage from '@/pages/share-post/PostList/ListPage';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
-import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/UserDetailListPage';
+import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser/UserDetailListPage';
 
 const Stack = createNativeStackNavigator<SharePostTabParamList>();
 

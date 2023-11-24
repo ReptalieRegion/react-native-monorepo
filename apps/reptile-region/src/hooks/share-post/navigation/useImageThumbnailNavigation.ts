@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { type NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import type { SharePostTabParamList } from '<routes/bottom-tab>';
+import type { PageState } from '<routes/enum>';
 import type { SharePostFollowProps, SharePostModalParamList, SharePostUserListProps } from '<routes/root>';
 
 type ModalNavigation = NativeStackNavigationProp<SharePostModalParamList, 'detail'>;
@@ -9,7 +10,7 @@ type BottomTabNavigation = NativeStackNavigationProp<SharePostTabParamList, 'sha
 
 type DetailProfileNavigation = ModalNavigation | BottomTabNavigation;
 
-const useImageThumbnailNavigation = (type: 'MODAL' | 'BOTTOM_TAB') => {
+const useImageThumbnailNavigation = (type: PageState) => {
     const navigation = useNavigation<DetailProfileNavigation>();
 
     const navigateFollowerPage = (params: SharePostFollowProps) => {

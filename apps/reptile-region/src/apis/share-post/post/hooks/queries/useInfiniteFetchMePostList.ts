@@ -8,7 +8,7 @@ import type { InfiniteState } from '<api/utils>';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 
-const useFetchMePostList = () => {
+const useInfiniteFetchMePostList = () => {
     return useSuspenseInfiniteQuery<
         FetchMePostList['Response'],
         HTTPError,
@@ -27,4 +27,4 @@ const useFetchMePostList = () => {
     });
 };
 
-export default useFetchMePostList;
+export default useInfiniteFetchMePostList;
