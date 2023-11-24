@@ -8,15 +8,13 @@ import type { SharePostDetailProfileScreenNavigationProp, SharePostModalDetailSc
 
 import ListHeaderComponent from './ListHeaderComponent';
 
-import type { SharePostDetailProps } from '<routes/bottom-tab>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import useImageThumbnailNavigation from '@/hooks/share-post/navigation/useImageThumbnailNavigation';
 
 const PostImageList = React.lazy(() => import('./PostImageList'));
 
 export function SharePostDetailImageListHeader(props: NativeStackHeaderProps) {
-    const param = props.route.params as SharePostDetailProps;
-    return createNativeStackHeader({ leftIcon: 'back', title: param.nickname })(props);
+    return createNativeStackHeader({ leftIcon: 'back' })(props);
 }
 
 export default function SharePostDetailImageListPage({

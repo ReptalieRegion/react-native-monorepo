@@ -2,7 +2,7 @@ import { useNavigation, type CompositeNavigationProp } from '@react-navigation/n
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
 
 import type { ImageType } from '<image>';
-import type { RootRoutesParamList, SharePostModalParamList } from '<routes/root>';
+import type { RootRoutesParamList, SharePostDetailProps, SharePostModalParamList } from '<routes/root>';
 
 type NavigationProp =
     | CompositeNavigationProp<
@@ -40,7 +40,7 @@ const useSharePostModalNavigation = () => {
         navigation.push('share-post/bottom-sheet/post-options-menu', params);
     };
 
-    const handlePressProfile = (params: { isFollow: boolean | undefined; nickname: string; profile: ImageType }) => {
+    const handlePressProfile = (params: Omit<SharePostDetailProps, 'pageState'>) => {
         navigation.push('detail', { ...params, pageState: 'MODAL' });
     };
 

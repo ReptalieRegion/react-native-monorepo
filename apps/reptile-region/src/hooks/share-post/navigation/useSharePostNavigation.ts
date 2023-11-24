@@ -3,7 +3,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack/l
 
 import type { ImageType } from '<image>';
 import type { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
-import type { RootRoutesParamList } from '<routes/root>';
+import type { RootRoutesParamList, SharePostDetailProps } from '<routes/root>';
 
 type NavigationProp =
     | CompositeNavigationProp<
@@ -43,7 +43,7 @@ const useSharePostNavigation = () => {
         navigation.push('share-post/bottom-sheet/post-options-menu', params);
     };
 
-    const handlePressProfile = (params: { isFollow: boolean | undefined; nickname: string; profile: ImageType }) => {
+    const handlePressProfile = (params: Omit<SharePostDetailProps, 'pageState'>) => {
         navigation.push('share-post/detail', { ...params, pageState: 'BOTTOM_TAB' });
     };
 
