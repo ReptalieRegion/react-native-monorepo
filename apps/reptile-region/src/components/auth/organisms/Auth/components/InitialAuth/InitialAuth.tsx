@@ -6,7 +6,7 @@ import { useAuth } from '../../hooks/useAuth';
 import useAuthCacheInvalidateQueries from '@/apis/@utils/react-query-cache/useAuthCacheInvalidateQueries';
 import useRefresh from '@/apis/auth/hooks/mutations/useRefresh';
 import { deleteAuthTokens, getRefreshToken } from '@/apis/auth/utils/secure-storage-token';
-import { useFetchMeProfile } from '@/apis/me/profile/hooks';
+import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
 import { useToast } from '@/components/@common/organisms/Toast';
 import useFCM from '@/components/auth/organisms/Auth/hooks/useFCM';
 

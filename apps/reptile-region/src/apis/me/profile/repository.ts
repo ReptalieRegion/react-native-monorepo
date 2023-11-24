@@ -1,8 +1,11 @@
-import type { UpdateFCMToken } from '<api/my/metadata>';
-import type { UpdateProfileImage } from '<api/my/profile>';
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
+import type { UpdateFCMToken, UpdateProfileImage } from '@/types/apis/me';
 
-/** GET */
+/**
+ *
+ * GET
+ */
+// 사용자 프로필 조회
 export const fetchMeProfile = async () => {
     const response = await clientFetch('api/users/me/profile', {
         method: METHOD.GET,
@@ -11,7 +14,11 @@ export const fetchMeProfile = async () => {
     return response.json();
 };
 
-/** PUT */
+/**
+ *
+ * PUT
+ */
+// 사용자 프로필 수정
 export const updateMeProfile = async ({ name, type, uri }: UpdateProfileImage['Request']) => {
     const formData = new FormData();
     formData.append('files', { uri, name, type } as unknown as Blob);
@@ -25,6 +32,7 @@ export const updateMeProfile = async ({ name, type, uri }: UpdateProfileImage['R
     return response.json();
 };
 
+// FCM 토큰 갱신
 export const updateFCMToken = async ({ fcmToken }: UpdateFCMToken['Request']) => {
     clientFetch('api/users/fcm-token', {
         method: METHOD.PUT,
@@ -32,7 +40,11 @@ export const updateFCMToken = async ({ fcmToken }: UpdateFCMToken['Request']) =>
     });
 };
 
-/** DELETE */
+/**
+ *
+ * DELETE
+ */
+// FCM 토큰 삭제
 export const deleteFCMToken = async () => {
     clientFetch('api/users/fcm-token', {
         method: METHOD.DELETE,

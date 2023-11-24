@@ -1,7 +1,7 @@
 import messaging from '@react-native-firebase/messaging';
 import { useCallback } from 'react';
 
-import { useUpdateFCMToken } from '@/apis/me/profile/hooks';
+import useUpdateFCMToken from '@/apis/me/profile/hooks/mutations/useUpdateFCMToken';
 import useCreatePushAgree from '@/apis/notification/push/hooks/mutations/useCreatePushAgree';
 
 const useFCM = () => {

@@ -3,7 +3,8 @@ import React from 'react';
 import { ActionSheetIOS, Alert, Platform, StyleSheet, View } from 'react-native';
 import { openCamera, openPicker, type Image } from 'react-native-image-crop-picker';
 
-import { useFetchMeProfile, useUpdateProfile } from '@/apis/me/profile/hooks';
+import useUpdateProfile from '@/apis/me/profile/hooks/mutations/useUpdateProfile';
+import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
 import { TextButton } from '@/components/@common/atoms';
 import { useToast } from '@/components/@common/organisms/Toast';
 import { EditProfile } from '@/components/me/molecules/Profile';
