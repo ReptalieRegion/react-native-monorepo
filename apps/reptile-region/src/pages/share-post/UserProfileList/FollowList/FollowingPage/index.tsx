@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react';
 
 import UserProfileListSkeleton from '../../loading';
-
-import type { FollowingPageScreenProps } from './type';
+import type { FollowingPageScreenProps } from '../../type';
 
 const FollowingList = React.lazy(() => import('./page'));
 

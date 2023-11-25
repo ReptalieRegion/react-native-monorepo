@@ -10,12 +10,13 @@ export default function FollowingList({
     route: {
         params: {
             user: { id: userId },
+            pageState,
         },
     },
 }: FollowingPageScreenProps) {
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowingList({ userId });
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
-    const { handlePressProfile } = useUserProfileNavigation();
+    const { handlePressProfile } = useUserProfileNavigation(pageState);
 
     return <UserProfileList data={data} onEndReached={handleFetchNextPage} onPressProfile={handlePressProfile} />;
 }

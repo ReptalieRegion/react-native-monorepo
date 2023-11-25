@@ -10,12 +10,14 @@ export default function FollowerList({
     route: {
         params: {
             user: { id: userId },
+            pageState,
         },
     },
 }: FollowerPageScreenProps) {
+    console.log(pageState);
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowerList({ userId });
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
-    const { handlePressProfile } = useUserProfileNavigation();
+    const { handlePressProfile } = useUserProfileNavigation(pageState);
 
     return <UserProfileList data={data} onEndReached={handleFetchNextPage} onPressProfile={handlePressProfile} />;
 }

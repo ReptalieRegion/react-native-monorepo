@@ -27,7 +27,7 @@ type UserDetailPanelState = {
 };
 
 interface UserDetailPanelActions {
-    navigateFollowPage(props: FollowRouterParams): void;
+    navigateFollowPage(props: Omit<FollowRouterParams, 'pageState'>): void;
 }
 
 type UserDetailPanelProps = UserDetailPanelState & UserDetailPanelActions;
@@ -64,7 +64,6 @@ export default function UserProfile({ user, postCount, navigateFollowPage }: Use
                         followingCount: user.followingCount,
                         nickname: user.nickname,
                     },
-                    pageState: 'BOTTOM_TAB',
                 }),
         },
         {
@@ -79,7 +78,6 @@ export default function UserProfile({ user, postCount, navigateFollowPage }: Use
                         followingCount: user.followingCount,
                         nickname: user.nickname,
                     },
-                    pageState: 'BOTTOM_TAB',
                 }),
         },
     ];

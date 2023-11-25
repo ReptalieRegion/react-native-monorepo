@@ -9,6 +9,7 @@ import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 import type { FetchFollowerListResponse } from '@/types/apis/share-post/user';
 import type { ImageType } from '@/types/global/image';
+import type { ImageThumbnailParams } from '@/types/routes/params/sharePost';
 
 type User = {
     user: {
@@ -25,7 +26,7 @@ type UserProfileListState = {
 
 interface UserProfileListActions {
     onEndReached(): void;
-    onPressProfile(): void;
+    onPressProfile(props: Omit<ImageThumbnailParams, 'pageState'>): void;
 }
 
 type UserProfileListProps = UserProfileListState & UserProfileListActions;
@@ -35,19 +36,23 @@ export default function UserProfileList({ data, onEndReached, onPressProfile }: 
 
     const keyExtractor = (item: FetchFollowerListResponse) => item.user.id;
 
-    const renderItem: ListRenderItem<FetchFollowerListResponse> = ({ item }) => {
+    const renderItem: ListRenderItem<FetchFollowerListResponse> = ({
+        item: {
+            user: { id: userId, isFollow, nickname, profile },
+        },
+    }) => {
         const handlePressFollow = () => {
-            mutateFollow({ userId: item.user.id, isFollow: item.user.isFollow });
+            mutateFollow({ userId, isFollow });
         };
 
         return (
-            <TouchableOpacity onPress={onPressProfile}>
+            <TouchableOpacity onPress={() => onPressProfile({ user: { isFollow, nickname, profile } })}>
                 <View style={styles.itemContainer}>
                     <View style={styles.testContainer}>
-                        <Avatar image={item.user.profile} size={35} />
-                        <Typo variant="body3">{item.user.nickname}</Typo>
+                        <Avatar image={profile} size={35} />
+                        <Typo variant="body3">{nickname}</Typo>
                     </View>
-                    <Follow isFollow={item.user.isFollow} onPress={handlePressFollow} />
+                    <Follow isFollow={isFollow} onPress={handlePressFollow} />
                 </View>
             </TouchableOpacity>
         );

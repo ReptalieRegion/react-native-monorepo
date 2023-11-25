@@ -115,6 +115,7 @@ type LikeParams = {
     post: {
         id: string;
     };
+    pageState: PageState;
 };
 
 export type {

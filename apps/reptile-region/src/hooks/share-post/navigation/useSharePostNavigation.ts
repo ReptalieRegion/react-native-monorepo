@@ -7,7 +7,7 @@ import type { PageState } from '@/types/routes/@common/enum';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import type { BottomTabNativeStackParamList } from '@/types/routes/param-list/bottom-tab';
 import type { SharePostBottomTabParamList, SharePostModalParamList } from '@/types/routes/param-list/sharePost';
-import type { ImageThumbnailParams, LikeParams } from '@/types/routes/params/sharePost';
+import type { CommentParams, ImageThumbnailParams, LikeParams } from '@/types/routes/params/sharePost';
 
 type ModalNavigationProp =
     | CompositeNavigationProp<
@@ -37,12 +37,12 @@ type BottomTabNavigationProp =
 
 type NavigationProp = BottomTabNavigationProp | ModalNavigationProp;
 
-const useSharePostNavigation = (type: PageState) => {
+const useSharePostNavigation = (pageState: PageState) => {
     const navigation = useNavigation<NavigationProp>();
 
     const handlePressComment = useCallback(
-        (params: { post: { id: string } }) => {
-            switch (type) {
+        (params: CommentParams) => {
+            switch (pageState) {
                 case 'MODAL':
                     return (navigation as ModalNavigationProp).push('modal/comment', {
                         screen: 'main',
@@ -55,7 +55,7 @@ const useSharePostNavigation = (type: PageState) => {
                     });
             }
         },
-        [navigation, type],
+        [navigation, pageState],
     );
 
     const handlePressPostOptionsMenu = useCallback(
@@ -75,7 +75,7 @@ const useSharePostNavigation = (type: PageState) => {
 
     const handlePressProfile = useCallback(
         (params: Omit<ImageThumbnailParams, 'pageState'>) => {
-            switch (type) {
+            switch (pageState) {
                 case 'BOTTOM_TAB':
                     return (navigation as BottomTabNavigationProp).push('bottom-tab/image-thumbnail', {
                         ...params,
@@ -88,12 +88,12 @@ const useSharePostNavigation = (type: PageState) => {
                     });
             }
         },
-        [navigation, type],
+        [navigation, pageState],
     );
 
     const handlePressTag = useCallback(
         (tag: string) => {
-            switch (type) {
+            switch (pageState) {
                 case 'BOTTOM_TAB':
                     return (navigation as BottomTabNavigationProp).push('bottom-tab/image-thumbnail', {
                         user: {
@@ -114,19 +114,19 @@ const useSharePostNavigation = (type: PageState) => {
                     });
             }
         },
-        [navigation, type],
+        [navigation, pageState],
     );
 
     const handlePressLikeContents = useCallback(
-        (params: LikeParams) => {
-            switch (type) {
+        (params: Omit<LikeParams, 'pageState'>) => {
+            switch (pageState) {
                 case 'BOTTOM_TAB':
-                    return (navigation as BottomTabNavigationProp).push('bottom-tab/like/list', params);
+                    return (navigation as BottomTabNavigationProp).push('bottom-tab/like/list', { ...params, pageState });
                 case 'MODAL':
-                    return (navigation as ModalNavigationProp).push('modal/like/list', params);
+                    return (navigation as ModalNavigationProp).push('modal/like/list', { ...params, pageState });
             }
         },
-        [navigation, type],
+        [navigation, pageState],
     );
 
     return {

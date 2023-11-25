@@ -10,12 +10,13 @@ export default function LikeList({
     route: {
         params: {
             post: { id: postId },
+            pageState,
         },
     },
 }: LikeListPageScreenProps) {
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFetchLikes({ postId });
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
-    const { handlePressProfile } = useUserProfileNavigation();
+    const { handlePressProfile } = useUserProfileNavigation(pageState);
 
     return <UserProfileList data={data} onEndReached={handleFetchNextPage} onPressProfile={handlePressProfile} />;
 }
