@@ -6,8 +6,8 @@ import FollowRoutes from './FollowRoutes';
 
 import SharePostMeDetailImageListPage, { SharePostMeDetailImageListHeader } from '@/pages/share-post/ImageThumbnailList/Me';
 import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser';
-import { SharePostDetailModalHeader } from '@/pages/share-post/PostList/PostDetailList/header';
-import PostDetailModalListPage from '@/pages/share-post/PostList/PostDetailList/page';
+import { SharePostDetailModalHeader } from '@/pages/share-post/PostDetailList/header';
+import PostDetailModalListPage from '@/pages/share-post/PostDetailList/page';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
 import MeDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/Me/page';
 import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser';

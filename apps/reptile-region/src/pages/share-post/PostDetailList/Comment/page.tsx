@@ -9,7 +9,7 @@ import type { PostDetailModalListScreenProps } from '../type';
 
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
-import Comment, { CommentReplyTextEditor } from '@/components/share-post/organisms/Comment';
+import Comment, { CommentTextEditor } from '@/components/share-post/organisms/Comment';
 import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
 import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
 import usePostDetailNavigation from '@/hooks/share-post/navigation/usePostDetailNavigation';
@@ -89,7 +89,7 @@ export default function SharePostDetailModalPage({
                     ListHeaderComponent={ListHeaderComponent}
                     ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 />
-                <CommentReplyTextEditor />
+                <CommentTextEditor />
             </Animated.View>
         </Comment>
     );
