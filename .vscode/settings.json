@@ -21,7 +21,8 @@
         "dockers": "Docker",
         "stores": "Global",
         "@utils": "Utils",
-        "@common": "Shared"
+        "@common": "Shared",
+        "@hooks": "Hook"
     },
     "cSpell.words": [
         "bootsplash",

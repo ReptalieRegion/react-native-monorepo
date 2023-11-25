@@ -1,8 +1,7 @@
 import React, { Suspense } from 'react';
 
 import UserProfileListSkeleton from '../loading';
-
-import type { LikeListPageScreenProps } from './type';
+import type { LikeListPageScreenProps } from '../type';
 
 const LikeList = React.lazy(() => import('./page'));
 

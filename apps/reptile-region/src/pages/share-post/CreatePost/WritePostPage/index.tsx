@@ -1,20 +1,13 @@
-import type { CompositeScreenProps } from '@react-navigation/native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { color } from '@reptile-region/design-system';
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
+
+import type { WritePostScreenProps } from '../type';
 
 import ChangeHeader from './header';
 
 import { FollowerUserList, FollowerUserListSkeleton, TagProvider } from '@/components/@common/organisms/TagTextInput';
 import { ContentsWriting, PhotoRegisterCarousel } from '@/components/share-post/organisms/Posting';
-import type { RootRoutesParamList } from '@/types/routes/param-list';
-import type { PostingParamList } from '@/types/routes/param-list/sharePost';
-
-type WritePostScreenProps = CompositeScreenProps<
-    NativeStackScreenProps<PostingParamList, 'write'>,
-    NativeStackScreenProps<RootRoutesParamList>
->;
 
 export default function WritePostPage({ navigation }: WritePostScreenProps) {
     return (

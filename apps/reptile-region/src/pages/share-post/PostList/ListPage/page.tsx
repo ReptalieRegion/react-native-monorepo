@@ -4,7 +4,7 @@ import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useMemo, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
-import type { SharePostListPageScreen } from './type';
+import type { SharePostListPageScreen } from '../type';
 
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';

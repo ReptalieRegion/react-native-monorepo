@@ -1,9 +1,9 @@
 import React, { Suspense } from 'react';
 
 import SharePostListSkeleton from '../loading';
+import type { SharePostListPageScreen } from '../type';
 
 import PostList from './page';
-import type { SharePostListPageScreen } from './type';
 
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 

@@ -1,30 +1,21 @@
-import type { CompositeNavigationProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableTypo } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, Keyboard } from 'react-native';
+
+import type { WritePostChangeHeaderProps } from '../type';
 
 import useCreatePost from '@/apis/share-post/post/hooks/mutations/useCreatePost';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 import { useTag } from '@/components/@common/organisms/TagTextInput';
-import type { RootRoutesParamList } from '@/types/routes/param-list';
-import type { PostingParamList } from '@/types/routes/param-list/sharePost';
-
-type ChangeHeaderProps = {
-    navigation: CompositeNavigationProp<
-        NativeStackNavigationProp<PostingParamList, 'write'>,
-        NativeStackNavigationProp<RootRoutesParamList>
-    >;
-};
 
 export const WritePostHeader = createNativeStackHeader({
     leftIcon: 'back',
     title: '일상공유 등록',
 });
 
-export default function ChangeHeader({ navigation }: ChangeHeaderProps) {
+export default function ChangeHeader({ navigation }: WritePostChangeHeaderProps) {
     const { selectedPhotos } = usePhotoSelect();
     const { contents } = useTag();
     const { isPending, mutate } = useCreatePost({

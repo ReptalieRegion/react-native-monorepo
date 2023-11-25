@@ -4,8 +4,10 @@ import React from 'react';
 import SharePostCommentRoutes from './CommentRoutes';
 import FollowRoutes from './FollowRoutes';
 
-import SharePostMeDetailImageListPage, { SharePostMeDetailImageListHeader } from '@/pages/share-post/ImageThumbnailList/Me';
-import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser';
+import SharePostMeImageThumbnailListPage from '@/pages/share-post/ImageThumbnailList/Me';
+import { SharePostMeImageThumbnailListHeader } from '@/pages/share-post/ImageThumbnailList/Me/header';
+import SharePostImageThumbnailListPage from '@/pages/share-post/ImageThumbnailList/OtherUser';
+import { SharePostImageThumbnailListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser/header';
 import { SharePostDetailModalHeader } from '@/pages/share-post/PostDetailList/header';
 import PostDetailModalListPage from '@/pages/share-post/PostDetailList/page';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
@@ -28,13 +30,13 @@ export default function SharePostModalRoutes() {
             />
             <Stack.Screen
                 name="modal/image-thumbnail"
-                component={SharePostDetailImageListPage}
-                options={{ header: SharePostDetailImageListHeader }}
+                component={SharePostImageThumbnailListPage}
+                options={{ header: SharePostImageThumbnailListHeader }}
             />
             <Stack.Screen
                 name="modal/image-thumbnail/me"
-                component={SharePostMeDetailImageListPage}
-                options={{ header: SharePostMeDetailImageListHeader }}
+                component={SharePostMeImageThumbnailListPage}
+                options={{ header: SharePostMeImageThumbnailListHeader }}
             />
             <Stack.Screen
                 name="modal/user/detail/list"

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { LikeListPageScreenProps } from './type';
+import type { LikeListPageScreenProps } from '../type';
 
 import useInfiniteFetchLikes from '@/apis/share-post/post/hooks/queries/useInfiniteFetchLikes';
 import UserProfileList from '@/components/share-post/molecules/UserProfileList';

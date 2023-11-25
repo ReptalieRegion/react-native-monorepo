@@ -2,17 +2,12 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import type { SharePostBottomTabParamList, SharePostModalParamList } from '@/types/routes/param-list/sharePost';
 
-type SharePostMeDetailProfileScreenScreenProp = NativeStackScreenProps<SharePostModalParamList, 'modal/image-thumbnail'>;
+/** 사용자의 이미지 썸네일 페이지 */
+// ScreenProps
+type SharePostMeImageThumbnailListScreenProps = NativeStackScreenProps<SharePostModalParamList, 'modal/image-thumbnail'>;
 
-type SharePostDetailProfileScreenNavigationProp = NativeStackScreenProps<
-    SharePostBottomTabParamList,
-    'bottom-tab/image-thumbnail'
->;
+/** 특정 유저의 이미지 썸네일 페이지 */
+// ScreenProps
+type SharePostImageThumbnailListScreenProps = NativeStackScreenProps<SharePostBottomTabParamList, 'bottom-tab/image-thumbnail'>;
 
-type SharePostModalDetailScreenNavigationProp = NativeStackScreenProps<SharePostModalParamList, 'modal/image-thumbnail'>;
-
-export type {
-    SharePostDetailProfileScreenNavigationProp,
-    SharePostMeDetailProfileScreenScreenProp,
-    SharePostModalDetailScreenNavigationProp,
-};
+export type { SharePostImageThumbnailListScreenProps, SharePostMeImageThumbnailListScreenProps };

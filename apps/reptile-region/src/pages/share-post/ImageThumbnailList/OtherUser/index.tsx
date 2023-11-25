@@ -1,30 +1,23 @@
-import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { color } from '@reptile-region/design-system';
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import useImageThumbnailNavigation from '../../../../hooks/share-post/navigation/useImageThumbnailNavigation';
 import SharePostsDetailListSkeleton from '../loading';
-import type { SharePostDetailProfileScreenNavigationProp, SharePostModalDetailScreenNavigationProp } from '../type';
+import type { SharePostImageThumbnailListScreenProps, SharePostMeImageThumbnailListScreenProps } from '../type';
 
 import ListHeaderComponent from './ListHeaderComponent';
 
-import { createNativeStackHeader } from '@/components/@common/molecules';
-import useImageThumbnailNavigation from '@/hooks/share-post/navigation/useImageThumbnailNavigation';
-
 const PostImageList = React.lazy(() => import('./PostImageList'));
 
-export function SharePostDetailImageListHeader(props: NativeStackHeaderProps) {
-    return createNativeStackHeader({ leftIcon: 'back' })(props);
-}
-
-export default function SharePostDetailImageListPage({
+export default function SharePostImageThumbnailListPage({
     route: {
         params: {
             user: { isFollow, nickname, profile },
             pageState,
         },
     },
-}: SharePostDetailProfileScreenNavigationProp | SharePostModalDetailScreenNavigationProp) {
+}: SharePostMeImageThumbnailListScreenProps | SharePostImageThumbnailListScreenProps) {
     const { navigateFollowerPage, navigateListUser } = useImageThumbnailNavigation(pageState);
 
     const handleImagePress = (index: number) => {

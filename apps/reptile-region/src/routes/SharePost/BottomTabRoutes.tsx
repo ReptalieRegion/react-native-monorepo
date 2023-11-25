@@ -4,7 +4,8 @@ import React from 'react';
 import FollowRoutes from './FollowRoutes';
 
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
-import SharePostDetailImageListPage, { SharePostDetailImageListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser';
+import SharePostImageThumbnailListPage from '@/pages/share-post/ImageThumbnailList/Me';
+import { SharePostImageThumbnailListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser/header';
 import SharePostListPage from '@/pages/share-post/PostList/ListPage';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
 import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser';
@@ -32,8 +33,8 @@ const SharePostRoutes = () => {
                 />
                 <Stack.Screen
                     name="bottom-tab/image-thumbnail"
-                    component={SharePostDetailImageListPage}
-                    options={{ header: SharePostDetailImageListHeader }}
+                    component={SharePostImageThumbnailListPage}
+                    options={{ header: SharePostImageThumbnailListHeader }}
                 />
                 <Stack.Screen
                     name="bottom-tab/follow/list"

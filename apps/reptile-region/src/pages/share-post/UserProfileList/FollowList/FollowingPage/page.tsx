@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { FollowingPageScreenProps } from './type';
+import type { FollowingPageScreenProps } from '../../type';
 
 import useInfiniteFollowingList from '@/apis/share-post/user/hooks/queries/useInfiniteFollowingList';
 import UserProfileList from '@/components/share-post/molecules/UserProfileList';

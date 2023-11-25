@@ -1,14 +1,12 @@
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { TouchableTypo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
+import type { ImagePickScreenProp } from '../type';
+
 import ChangeHeader from './header';
 
 import { CameraAlbum } from '@/components/@common/organisms/CameraAlbum';
-import type { PostingParamList } from '@/types/routes/param-list/sharePost';
-
-type ImagePickScreenProp = NativeStackScreenProps<PostingParamList, 'image-crop'>;
 
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
     const { width, height } = useWindowDimensions();

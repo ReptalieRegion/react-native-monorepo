@@ -3,13 +3,13 @@ import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useRef, useState } from 'react';
 import { RefreshControl } from 'react-native';
 
-import type { CommentScreenProps } from './type';
+import useCommentActions from '../../../../hooks/share-post/actions/useCommentActions';
+import useCommentNavigation from '../../../../hooks/share-post/navigation/useCommentNavigation';
+import type { CommentScreenProps } from '../type';
 
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
-import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
-import useCommentNavigation from '@/hooks/share-post/navigation/useCommentNavigation';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 
 export default function CommentList({ route: { params } }: CommentScreenProps) {

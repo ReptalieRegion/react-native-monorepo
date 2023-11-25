@@ -1,8 +1,9 @@
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import type { CommentReplyScreenProps } from '../type';
+
 import CommentReplySkeleton from './loading';
-import type { CommentReplyScreenProps } from './type';
 
 import { FollowerUserList, FollowerUserListSkeleton } from '@/components/@common/organisms/TagTextInput';
 import Comment, { CommentReplyTextEditor } from '@/components/share-post/organisms/Comment';

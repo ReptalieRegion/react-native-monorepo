@@ -1,21 +1,17 @@
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableTypo } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 
+import type { ImagePickChangeHeaderProps } from '../type';
+
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
-import type { PostingParamList } from '@/types/routes/param-list/sharePost';
-
-type ChangeHeaderProps = {
-    navigation: NativeStackNavigationProp<PostingParamList, 'image-crop'>;
-};
 
 export const ImagePickerHeader = createNativeStackHeader({
     leftIcon: 'cancel',
     title: '사진 등록',
 });
 
-export default function ChangeHeader({ navigation }: ChangeHeaderProps) {
+export default function ChangeHeader({ navigation }: ImagePickChangeHeaderProps) {
     const { selectedPhotos } = usePhotoSelect();
 
     useEffect(() => {
