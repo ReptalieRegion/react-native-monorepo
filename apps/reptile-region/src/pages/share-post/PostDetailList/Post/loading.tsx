@@ -19,7 +19,6 @@ export default function PostListSkeleton() {
                         <View style={{ ...styles.text, width: width * 0.6 }} />
                         <View style={{ ...styles.text, width: width * 0.8 }} />
                         <View style={{ ...styles.text, width: width * 0.9 }} />
-                        <View style={{ ...styles.text, width: width * 0.7 }} />
                     </View>
                 </View>
             </SkeletonPlaceholder>
@@ -29,7 +28,6 @@ export default function PostListSkeleton() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         paddingTop: 10,
         backgroundColor: color.White.toString(),
         flexDirection: 'column',
@@ -65,7 +63,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         gap: 10,
-        marginBottom: 10,
+        backgroundColor: color.White.toString(),
     },
     text: {
         borderRadius: 9999,

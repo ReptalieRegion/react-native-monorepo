@@ -30,10 +30,11 @@ const styles = StyleSheet.create({
         flex: 1,
         minHeight: 2,
         flexDirection: 'column',
-        gap: 20,
-        paddingLeft: 15,
-        paddingRight: 15,
-        marginTop: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 10,
+        gap: 15,
+        backgroundColor: color.White.toString(),
     },
     viewContainer: {
         flexDirection: 'row',
@@ -62,7 +63,6 @@ const styles = StyleSheet.create({
     textContainer: {
         gap: 5,
         width: '100%',
-        marginBottom: 10,
     },
     text: {
         borderRadius: 9999,

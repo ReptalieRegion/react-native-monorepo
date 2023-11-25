@@ -15,24 +15,22 @@ export default function CommentReplySkeleton() {
                     <View style={styles.textContainer}>
                         <View style={styles.name} />
                         <View style={{ ...styles.text, width: width * 0.85 - 40 }} />
-                        <View style={{ ...styles.text, width: width * 0.6 - 40 }} />
-                        <View style={{ ...styles.text, width: width * 0.2 - 40 }} />
                     </View>
                 </View>
             </SkeletonPlaceholder>
-            {range(10).map((_, index) => (
-                <SkeletonPlaceholder key={index} direction="right">
-                    <View style={[styles.viewContainer, styles.replyComment]}>
-                        <View style={styles.circle} />
-                        <View style={styles.textContainer}>
-                            <View style={styles.name} />
-                            <View style={{ ...styles.text, width: width * 0.85 - 40 }} />
-                            <View style={{ ...styles.text, width: width * 0.6 - 40 }} />
-                            <View style={{ ...styles.text, width: width * 0.2 - 40 }} />
+            <View style={styles.subContainer}>
+                {range(15).map((_, index) => (
+                    <SkeletonPlaceholder key={index} direction="right">
+                        <View style={styles.viewContainer}>
+                            <View style={styles.circle} />
+                            <View style={styles.textContainer}>
+                                <View style={styles.name} />
+                                <View style={{ ...styles.text, width: width * 0.79 - 40 }} />
+                            </View>
                         </View>
-                    </View>
-                </SkeletonPlaceholder>
-            ))}
+                    </SkeletonPlaceholder>
+                ))}
+            </View>
         </View>
     );
 }
@@ -42,17 +40,14 @@ const styles = StyleSheet.create({
         flex: 1,
         minHeight: 2,
         flexDirection: 'column',
-        gap: 20,
         paddingLeft: 20,
         paddingRight: 20,
         marginTop: 10,
+        gap: 15,
     },
     viewContainer: {
         flexDirection: 'row',
         gap: 10,
-    },
-    replyComment: {
-        paddingLeft: 40,
     },
     circle: {
         borderRadius: 9999,
@@ -77,7 +72,6 @@ const styles = StyleSheet.create({
     textContainer: {
         gap: 5,
         width: '100%',
-        marginBottom: 10,
     },
     text: {
         borderRadius: 9999,
