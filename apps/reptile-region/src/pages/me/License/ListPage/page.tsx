@@ -1,28 +1,14 @@
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Typo, color } from '@reptile-region/design-system';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import type { License, LicenseListScreenProps } from '../type';
+
 import { Divider } from '@/components/@common/atoms/Divider';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
-import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 const licenseList = require('@/json/license.json');
-
-type License = {
-    libraryName: string;
-    description?: string;
-    licenseType: string;
-    licenseContent: string;
-    homepage?: string;
-};
-
-type LicenseListScreenProps = NativeStackScreenProps<RootRoutesParamList, 'me/license'>;
-
-const ItemSeparatorComponent = () => {
-    return <Divider />;
-};
 
 export default function LicenseListPage({ navigation }: LicenseListScreenProps) {
     const data = licenseList as License[];
@@ -51,6 +37,10 @@ export default function LicenseListPage({ navigation }: LicenseListScreenProps) 
             />
         </View>
     );
+}
+
+function ItemSeparatorComponent() {
+    return <Divider />;
 }
 
 const styles = StyleSheet.create({

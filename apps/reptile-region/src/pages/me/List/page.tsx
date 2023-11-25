@@ -1,90 +1,114 @@
-import type { CompositeScreenProps } from '@react-navigation/native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import useSignOut from '@/apis/auth/hooks/mutations/useSignOut';
-import useDeleteFCMToken from '@/apis/me/profile/hooks/mutations/useDeleteFCMToken';
+import type { SettingList } from './type';
+
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
 import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { Share } from '@/assets/icons';
 import Diary from '@/assets/icons/Diary';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
-import { useToast } from '@/components/@common/organisms/Toast';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import { Profile } from '@/components/me/molecules/Profile';
+import useMeActions from '@/hooks/me/actions/useMeActions';
+import useMeListNavigation from '@/hooks/me/navigation/useMeListNavigation';
 import VersionCheck from '@/native-modules/version-check/VersionCheck';
-import type { RootRoutesParamList } from '@/types/routes/param-list';
-import type { MeBottomTabParamList } from '@/types/routes/param-list/me';
 
-type MyListScreenProps = CompositeScreenProps<
-    NativeStackScreenProps<MeBottomTabParamList, 'bottom-tab/list'>,
-    NativeStackScreenProps<RootRoutesParamList>
->;
-
-export default function MyListPage({ navigation }: MyListScreenProps) {
-    const { isSignIn, signOut } = useAuth();
-    const { mutateAsync: signOutMutateAsync } = useSignOut();
-    const { mutateAsync: deleteFCMTokenMutateAsync } = useDeleteFCMToken();
+export default function MyListPage() {
     const { data } = useFetchMeProfile();
     useFetchPushAgree();
-    const { openToast } = useToast();
 
-    const navigateSharePostMe = () => {
-        navigation.navigate('share-post/modal', {
-            screen: 'modal/image-thumbnail/me',
-        });
-    };
+    const { isSignIn } = useAuth();
+    const { logout } = useMeActions();
 
-    const navigateTermsOfUse = () => {
-        navigation.navigate('me/terms-of-use');
-    };
+    const {
+        navigateLicense,
+        navigateNotificationSetting,
+        navigatePrivacyPolicy,
+        navigateProfileSetting,
+        navigateSharePostMe,
+        navigateTermsOfUse,
+    } = useMeListNavigation();
 
-    const navigatePrivacyPolicy = () => {
-        navigation.navigate('me/terms-privacy-policy');
-    };
-
-    const navigateProfileSetting = () => {
-        navigation.navigate('me/profile');
-    };
-
-    const navigateLicense = () => {
-        navigation.navigate('me/license');
-    };
-
-    const navigateNotificationSetting = () => {
-        navigation.navigate('me/notification-setting');
-    };
-
-    const handleKakaoLogout = async () => {
-        try {
-            await deleteFCMTokenMutateAsync();
-            await signOutMutateAsync();
-            await signOut();
-            navigation.navigate('bottom-tab/routes', {
-                screen: 'tab',
-                params: {
-                    screen: 'home/routes',
-                    params: {
-                        screen: 'bottom-tab/list',
-                    },
+    const settingList: SettingList[] = [
+        {
+            title: '설정',
+            items: [
+                {
+                    title: '푸시 알림 설정',
+                    rightChildren: 'Chevron',
+                    showSignIn: false,
+                    onPress: navigateNotificationSetting,
                 },
-            });
-            openToast({ contents: '로그아웃 성공', severity: 'success' });
-        } catch (error) {
-            openToast({ contents: '로그아웃 실패', severity: 'error' });
-        }
-    };
+                {
+                    title: '내 프로필 설정',
+                    rightChildren: 'Chevron',
+                    showSignIn: false,
+                    onPress: navigateProfileSetting,
+                },
+            ],
+        },
+        {
+            title: '약관',
+            items: [
+                {
+                    title: '공지사항',
+                    rightChildren: 'Chevron',
+                    showSignIn: false,
+                },
+                {
+                    title: '이용약관',
+                    rightChildren: 'Chevron',
+                    showSignIn: false,
+                    onPress: navigateTermsOfUse,
+                },
+                {
+                    title: '개인정보 취급방침',
+                    rightChildren: 'Chevron',
+                    showSignIn: false,
+                    onPress: navigatePrivacyPolicy,
+                },
+            ],
+        },
+        {
+            title: '정보',
+            items: [
+                {
+                    title: '오픈소스',
+                    rightChildren: 'Chevron',
+                    showSignIn: false,
+                    onPress: navigateLicense,
+                },
+                {
+                    title: '앱 버전',
+                    rightChildren: VersionCheck.getVersion(),
+                    showSignIn: false,
+                },
+            ],
+        },
+        {
+            title: '계정',
+            items: [
+                {
+                    title: '로그아웃',
+                    rightChildren: 'Chevron',
+                    showSignIn: true,
+                    onPress: logout,
+                },
+            ],
+        },
+    ];
+
+    console.log(settingList);
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.signContainer}>
                 <Profile user={data?.user} />
             </View>
-
             <View style={styles.activeContainer}>
                 <Typo variant="title3" color="placeholder">
                     활동
@@ -108,85 +132,62 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                     </TouchableOpacity>
                 </View>
             </View>
-
-            <View style={styles.listContainer}>
-                <View style={styles.listTitle}>
-                    <Typo variant="title3" color="placeholder">
-                        설정
-                    </Typo>
+            {settingList.map(({ title, items }) => (
+                <View key={title} style={styles.listContainer}>
+                    <View style={styles.listTitle}>
+                        <Typo variant="title3" color="placeholder">
+                            {title}
+                        </Typo>
+                    </View>
+                    {items.map((item) => (
+                        <ConditionalRenderer
+                            condition={item.showSignIn}
+                            trueContent={
+                                <ConditionalRenderer
+                                    condition={isSignIn}
+                                    trueContent={
+                                        <ListItem
+                                            key={item.title}
+                                            leftChildren={<ListItem.Title text={item.title} />}
+                                            rightChildren={
+                                                <ConditionalRenderer
+                                                    condition={item.rightChildren === 'Chevron'}
+                                                    trueContent={<ListItem.Chevron />}
+                                                    falseContent={
+                                                        <View style={styles.marginRight}>
+                                                            <Typo color="placeholder">{item.rightChildren}</Typo>
+                                                        </View>
+                                                    }
+                                                />
+                                            }
+                                            onPress={item.onPress}
+                                        />
+                                    }
+                                    falseContent={null}
+                                />
+                            }
+                            falseContent={
+                                <ListItem
+                                    key={item.title}
+                                    leftChildren={<ListItem.Title text={item.title} />}
+                                    rightChildren={
+                                        <ConditionalRenderer
+                                            condition={item.rightChildren === 'Chevron'}
+                                            trueContent={<ListItem.Chevron />}
+                                            falseContent={
+                                                <View style={styles.marginRight}>
+                                                    <Typo color="placeholder">{item.rightChildren}</Typo>
+                                                </View>
+                                            }
+                                        />
+                                    }
+                                    onPress={item.onPress}
+                                />
+                            }
+                        />
+                    ))}
                 </View>
-                <ListItem
-                    leftChildren={<ListItem.Title text="푸시 알림 설정" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={navigateNotificationSetting}
-                />
-                <ListItem
-                    leftChildren={<ListItem.Title text="내 프로필 설정" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={navigateProfileSetting}
-                />
-            </View>
-
-            <View style={styles.listContainer}>
-                <View style={styles.listTitle}>
-                    <Typo variant="title3" color="placeholder">
-                        약관
-                    </Typo>
-                </View>
-                <ListItem leftChildren={<ListItem.Title text="공지사항" />} rightChildren={<ListItem.Chevron />} />
-                <ListItem
-                    leftChildren={<ListItem.Title text="이용약관" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={navigateTermsOfUse}
-                />
-                <ListItem
-                    leftChildren={<ListItem.Title text="개인정보처리" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={navigatePrivacyPolicy}
-                />
-            </View>
-
-            <View style={styles.listContainer}>
-                <View style={styles.listTitle}>
-                    <Typo variant="title3" color="placeholder">
-                        정보
-                    </Typo>
-                </View>
-                <ListItem
-                    leftChildren={<ListItem.Title text="오픈소스" />}
-                    rightChildren={<ListItem.Chevron />}
-                    onPress={navigateLicense}
-                />
-                <ListItem
-                    leftChildren={<ListItem.Title text="앱 버전" />}
-                    rightChildren={
-                        <View style={styles.marginRight}>
-                            <Typo color="placeholder">{VersionCheck.getVersion()}</Typo>
-                        </View>
-                    }
-                />
-            </View>
-
-            <View style={styles.listContainer}>
-                <View style={styles.listTitle}>
-                    <Typo variant="title3" color="placeholder">
-                        계정
-                    </Typo>
-                </View>
-                <ConditionalRenderer
-                    condition={isSignIn}
-                    trueContent={
-                        <>
-                            <ListItem
-                                leftChildren={<ListItem.Title text="로그아웃" />}
-                                rightChildren={<ListItem.Chevron />}
-                                onPress={handleKakaoLogout}
-                            />
-                        </>
-                    }
-                    falseContent={null}
-                />
-            </View>
+            ))}
         </ScrollView>
     );
 }

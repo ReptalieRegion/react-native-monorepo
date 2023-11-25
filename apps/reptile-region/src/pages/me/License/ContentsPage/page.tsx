@@ -1,16 +1,14 @@
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { RootRoutesParamList } from '@/types/routes/param-list';
+import type { LicenseContentScreenProps } from '../type';
 
-type LicenseListScreenProps = NativeStackScreenProps<RootRoutesParamList, 'me/license/contents'>;
-
-export default function LicenseContentsPage({ route: { params } }: LicenseListScreenProps) {
+export default function LicenseContentsPage({ route: { params } }: LicenseContentScreenProps) {
     const { bottom } = useSafeAreaInsets();
+
     return (
         <ScrollView style={styles.container}>
             <View style={{ paddingBottom: bottom + 20 }}>

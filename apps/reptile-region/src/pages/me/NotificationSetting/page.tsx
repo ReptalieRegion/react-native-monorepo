@@ -4,24 +4,15 @@ import React, { useEffect, useState } from 'react';
 import { AppState, Linking, StyleSheet, View } from 'react-native';
 import { Switch } from 'react-native-gesture-handler';
 
+import type { PushAgreeListType } from './type';
+
 import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useUpdatePushAgree';
 import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
-import { PushAgreeType, type FetchPushAgree, type UpdatePushAgree } from '@/types/apis/notification';
+import { PushAgreeType, type UpdatePushAgree } from '@/types/apis/notification';
 
-type ListType = {
-    title: string;
-    listItem: ListItemType[];
-};
-
-type ListItemType = {
-    type: PushAgreeType;
-    label: string;
-    dataTarget: keyof FetchPushAgree['Response'];
-};
-
-const PUSH_AGREE_LIST: ListType[] = [
+const PUSH_AGREE_LIST: PushAgreeListType[] = [
     {
         title: '일상공유',
         listItem: [

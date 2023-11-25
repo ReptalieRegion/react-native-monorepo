@@ -14,7 +14,7 @@ const RNVersionCheck = NativeModules.RNVersionCheck
       );
 
 const VersionCheck = {
-    getVersion: () => {
+    getVersion: (): string => {
         return RNVersionCheck.currentVersion;
     },
 };
