@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import SharePostCommentRoutes from './bottom-sheet/SharePostCommentRoutes';
-import BottomTabRoutes from './bottom-tab';
+import BottomTabRoutes from './BottomTab';
+import CommentRoutes from './SharePost/CommentRoutes';
 
-import type { BottomTabNativeStackParamList } from '<routes/bottom-tab>';
+import type { BottomTabNativeStackParamList } from '@/types/routes/param-list/bottom-tab';
 
 const Stack = createNativeStackNavigator<BottomTabNativeStackParamList>();
 
@@ -18,7 +18,7 @@ export default function BottomTabNativeStackRoutes() {
                     animation: 'none',
                 }}
             >
-                <Stack.Screen name="bottom-sheet/comment" component={SharePostCommentRoutes} />
+                <Stack.Screen name="bottom-tab/modal/comment" component={CommentRoutes} />
             </Stack.Group>
         </Stack.Navigator>
     );

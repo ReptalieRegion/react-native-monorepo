@@ -1,13 +1,15 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import type { SharePostTabParamList } from '<routes/bottom-tab>';
-import type { SharePostModalParamList } from '<routes/root>';
+import type { SharePostBottomTabParamList, SharePostModalParamList } from '@/types/routes/param-list/sharePost';
 
-type SharePostMeDetailProfileScreenScreenProp = NativeStackScreenProps<SharePostModalParamList, 'detail/me'>;
+type SharePostMeDetailProfileScreenScreenProp = NativeStackScreenProps<SharePostModalParamList, 'modal/image-thumbnail'>;
 
-type SharePostDetailProfileScreenNavigationProp = NativeStackScreenProps<SharePostTabParamList, 'share-post/detail'>;
+type SharePostDetailProfileScreenNavigationProp = NativeStackScreenProps<
+    SharePostBottomTabParamList,
+    'bottom-tab/image-thumbnail'
+>;
 
-type SharePostModalDetailScreenNavigationProp = NativeStackScreenProps<SharePostModalParamList, 'detail'>;
+type SharePostModalDetailScreenNavigationProp = NativeStackScreenProps<SharePostModalParamList, 'modal/image-thumbnail'>;
 
 export type {
     SharePostDetailProfileScreenNavigationProp,

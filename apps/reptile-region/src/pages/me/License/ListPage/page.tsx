@@ -4,9 +4,9 @@ import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { RootRoutesParamList } from '<routes/root>';
 import { Divider } from '@/components/@common/atoms/Divider';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 const licenseList = require('@/json/license.json');
 
@@ -18,7 +18,7 @@ type License = {
     homepage?: string;
 };
 
-type LicenseListScreenProps = NativeStackScreenProps<RootRoutesParamList, 'my/license'>;
+type LicenseListScreenProps = NativeStackScreenProps<RootRoutesParamList, 'me/license'>;
 
 const ItemSeparatorComponent = () => {
     return <Divider />;
@@ -28,7 +28,7 @@ export default function LicenseListPage({ navigation }: LicenseListScreenProps) 
     const data = licenseList as License[];
 
     const navigateLicenseContents = (props: License) => {
-        navigation.navigate('my/license/contents', props);
+        navigation.navigate('me/license/contents', props);
     };
 
     const renderItem: ListRenderItem<License> = ({ item }) => {

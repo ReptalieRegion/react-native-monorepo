@@ -53,9 +53,9 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
                     onPressPostOptionsMenu={() =>
                         handlePressPostOptionsMenu({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
                     }
-                    onPressProfile={() => handlePressProfile({ isFollow, nickname, profile })}
+                    onPressProfile={() => handlePressProfile({ user: { isFollow, nickname, profile } })}
                     onPressTag={handlePressTag}
-                    onPressLikeContents={() => handlePressLikeContents({ postId })}
+                    onPressLikeContents={() => handlePressLikeContents({ post: { id: postId } })}
                 />
             );
         },

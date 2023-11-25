@@ -14,7 +14,7 @@ import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 
 export function HomeListHeader(props: NativeStackHeaderProps) {
     const handlePressNotification = () => {
-        props.navigation.navigate('my/notification-log');
+        props.navigation.navigate('me/notification-log');
     };
 
     return createNativeStackHeader({
@@ -34,7 +34,7 @@ export default function ChangeHeader({ navigation }: HomeListPageScreenProp) {
     useEffect(() => {
         const headerRight = () => {
             const handlePressNotification = () => {
-                navigation.navigate('my/notification-log');
+                navigation.navigate('me/notification-log');
             };
 
             return (

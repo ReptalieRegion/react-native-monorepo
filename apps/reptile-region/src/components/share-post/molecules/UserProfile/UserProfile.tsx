@@ -2,7 +2,6 @@ import { Typo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { SharePostFollowProps } from '<routes/bottom-tab>';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
@@ -12,6 +11,7 @@ import type {
 } from '@/components/share-post/molecules/UserActivitySummaryItem';
 import UserActivitySummaryItem from '@/components/share-post/molecules/UserActivitySummaryItem';
 import type { ImageType } from '@/types/global/image';
+import type { FollowRouterParams } from '@/types/routes/params/sharePost';
 
 type UserDetailPanelState = {
     user: {
@@ -27,7 +27,7 @@ type UserDetailPanelState = {
 };
 
 interface UserDetailPanelActions {
-    navigateFollowPage(props: SharePostFollowProps): void;
+    navigateFollowPage(props: FollowRouterParams): void;
 }
 
 type UserDetailPanelProps = UserDetailPanelState & UserDetailPanelActions;
@@ -57,11 +57,14 @@ export default function UserProfile({ user, postCount, navigateFollowPage }: Use
             count: newData.user.followerCount,
             onPress: () =>
                 navigateFollowPage({
-                    initialRouteName: 'share-post/follower/list',
-                    userId: user.id,
-                    followerCount: user.followerCount,
-                    followingCount: user.followingCount,
-                    nickname: user.nickname,
+                    initialRouteName: 'follower',
+                    user: {
+                        id: user.id,
+                        followerCount: user.followerCount,
+                        followingCount: user.followingCount,
+                        nickname: user.nickname,
+                    },
+                    pageState: 'BOTTOM_TAB',
                 }),
         },
         {
@@ -69,11 +72,14 @@ export default function UserProfile({ user, postCount, navigateFollowPage }: Use
             count: user.followingCount,
             onPress: () =>
                 navigateFollowPage({
-                    initialRouteName: 'share-post/following/list',
-                    userId: user.id,
-                    followerCount: user.followerCount,
-                    followingCount: user.followingCount,
-                    nickname: user.nickname,
+                    initialRouteName: 'following',
+                    user: {
+                        id: user.id,
+                        followerCount: user.followerCount,
+                        followingCount: user.followingCount,
+                        nickname: user.nickname,
+                    },
+                    pageState: 'BOTTOM_TAB',
                 }),
         },
     ];

@@ -16,7 +16,11 @@ import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNa
 import type { FetchMePostListResponse, FetchMeProfile } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
 
-export default function MeDetailListModalPage({ route: { params } }: SharePostListMeModalPageScreen) {
+export default function MeDetailListModalPage({
+    route: {
+        params: { startIndex, pageState },
+    },
+}: SharePostListMeModalPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
     /** Data 시작 */
@@ -25,7 +29,7 @@ export default function MeDetailListModalPage({ route: { params } }: SharePostLi
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchMePostList();
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
-        useSharePostNavigation('MODAL');
+        useSharePostNavigation(pageState);
 
     const keyExtractor = (item: FetchMePostListResponse) => item.post.id;
 
@@ -60,8 +64,8 @@ export default function MeDetailListModalPage({ route: { params } }: SharePostLi
                     onPressPostOptionsMenu={() =>
                         handlePressPostOptionsMenu({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
                     }
-                    onPressProfile={() => handlePressProfile({ isFollow, nickname, profile })}
-                    onPressLikeContents={() => handlePressLikeContents({ postId })}
+                    onPressProfile={() => handlePressProfile({ user: { isFollow, nickname, profile } })}
+                    onPressLikeContents={() => handlePressLikeContents({ post: { id: postId } })}
                     onPressTag={handlePressTag}
                 />
             );
@@ -100,7 +104,7 @@ export default function MeDetailListModalPage({ route: { params } }: SharePostLi
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 scrollEventThrottle={16}
                 estimatedItemSize={484}
-                initialScrollIndex={params.startIndex}
+                initialScrollIndex={startIndex}
             />
         </View>
     );

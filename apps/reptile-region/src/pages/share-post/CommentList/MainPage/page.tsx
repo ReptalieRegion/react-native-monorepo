@@ -32,7 +32,7 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
             } = item;
 
             const handleNavigateDetailPage = () => {
-                navigateDetailPage({ isFollow: false, nickname, profile });
+                navigateDetailPage({ user: { isFollow: false, nickname, profile } });
             };
 
             const handleNavigateCommentReplyPage = () => {

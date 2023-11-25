@@ -1,13 +1,13 @@
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 
-import type { SharePostDetailProps } from '<routes/bottom-tab>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
+import type { FollowRouterParams } from '@/types/routes/params/sharePost';
 
 export function SharePostFollowHeader(props: NativeStackHeaderProps) {
-    const param = props.route.params as SharePostDetailProps;
+    const param = props.route.params as FollowRouterParams;
     return createNativeStackHeader({
         leftIcon: 'back',
-        title: param.nickname,
+        title: param.user.nickname,
         containerStyle: {
             borderBottomWidth: 0,
             borderBottomColor: undefined,

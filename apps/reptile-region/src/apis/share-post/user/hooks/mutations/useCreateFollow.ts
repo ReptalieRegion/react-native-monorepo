@@ -1,5 +1,5 @@
 import type { InfiniteData } from '@tanstack/react-query';
-import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQueryClient, type UseMutationOptions } from '@tanstack/react-query';
 
 import { createFollow } from '../../repository';
 
@@ -13,11 +13,17 @@ type SetQueryDataProps = {
     data: CreateFollow['Response'];
 };
 
-export default function useCreateFollow() {
+export type UseCreateFollowProps = Pick<
+    UseMutationOptions<CreateFollow['Response'], HTTPError, CreateFollow['Request']>,
+    'onMutate'
+>;
+
+export default function useCreateFollow({ onMutate }: UseCreateFollowProps) {
     const queryClient = useQueryClient();
 
     return useMutation<CreateFollow['Response'], HTTPError, CreateFollow['Request']>({
         mutationFn: ({ userId }) => createFollow({ userId }),
+        onMutate,
         onSuccess: (data) => {
             updateUserProfile({ queryClient, data });
             updateSharePostList({ queryClient, data });

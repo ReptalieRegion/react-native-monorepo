@@ -111,6 +111,7 @@ type UpdateFollow = ServerAPI<UpdateFollowRequest, UpdateFollowResponse>;
 
 export type {
     CreateFollow,
+    CreateFollowRequest,
     FetchDetailUserProfile,
     FetchDetailUserProfileResponse,
     FetchFollowerList,
@@ -121,4 +122,5 @@ export type {
     FetchFollowingListRequest,
     FetchFollowingListResponse,
     UpdateFollow,
+    UpdateFollowRequest,
 };

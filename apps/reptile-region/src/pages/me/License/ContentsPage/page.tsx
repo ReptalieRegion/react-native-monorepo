@@ -5,9 +5,9 @@ import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { RootRoutesParamList } from '<routes/root>';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 
-type LicenseListScreenProps = NativeStackScreenProps<RootRoutesParamList, 'my/license/contents'>;
+type LicenseListScreenProps = NativeStackScreenProps<RootRoutesParamList, 'me/license/contents'>;
 
 export default function LicenseContentsPage({ route: { params } }: LicenseListScreenProps) {
     const { bottom } = useSafeAreaInsets();

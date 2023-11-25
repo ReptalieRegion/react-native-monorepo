@@ -16,42 +16,38 @@ import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNa
 import type { FetchDetailUserPostResponse } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
 
-export default function UserDetailListPage({ route: { params } }: SharePostListPageScreen | SharePostListModalPageScreen) {
+export default function UserDetailListPage({
+    route: {
+        params: {
+            user: { nickname },
+            startIndex,
+            pageState,
+        },
+    },
+}: SharePostListPageScreen | SharePostListModalPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const queryClient = useQueryClient();
-    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(
-        SHARE_POST_QUERY_KEYS.profile(params.nickname),
-    );
-    const {
-        data: userPost,
-        hasNextPage,
-        isFetchingNextPage,
-        fetchNextPage,
-        refetch,
-    } = useInfiniteUserPosts({ nickname: params.nickname });
+    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(SHARE_POST_QUERY_KEYS.profile(nickname));
+    const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({ nickname });
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
-        useSharePostNavigation('BOTTOM_TAB');
+        useSharePostNavigation(pageState);
 
     const keyExtractor = useCallback((item: FetchDetailUserPostResponse) => item.post.id, []);
 
     const renderItem = useCallback(
         ({ item, extraData }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
-            const {
-                user: { id: userId, nickname, profile, isFollow },
-            } = (extraData as FetchDetailUserProfileResponse | undefined) ?? {
+            const { user } = (extraData as FetchDetailUserProfileResponse | undefined) ?? {
                 user: { id: '', nickname: '', profile: { src: '' }, isFollow: undefined },
             };
-
-            const { id: postId, contents, images, isMine } = item.post;
             const post = {
                 ...item.post,
                 showFollowButton: false,
                 user: {
-                    id: userId,
-                    nickname,
-                    profile,
-                    isFollow,
+                    id: user.id,
+                    nickname: user.nickname,
+                    profile: user.profile,
+                    isFollow: user.isFollow,
                 },
             };
 
@@ -62,12 +58,28 @@ export default function UserDetailListPage({ route: { params } }: SharePostListP
                     onPressHeart={() => handlePressHeart({ postId: post.id, isLike: post.isLike })}
                     onDoublePressImageCarousel={() => handleDoublePressImageCarousel({ postId: post.id, isLike: post.isLike })}
                     onPressFollow={() => handlePressFollow({ userId: post.user.id, isFollow: post.user.isFollow })}
-                    onPressComment={() => handlePressComment({ post: { id: postId } })}
+                    onPressComment={() => handlePressComment({ post: { id: post.id } })}
                     onPressPostOptionsMenu={() =>
-                        handlePressPostOptionsMenu({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
+                        handlePressPostOptionsMenu({
+                            post: {
+                                id: post.id,
+                                contents: post.contents,
+                                images: post.images,
+                                isMine: post.isMine,
+                                user: { id: post.user.id },
+                            },
+                        })
                     }
-                    onPressProfile={() => handlePressProfile({ isFollow, nickname, profile })}
-                    onPressLikeContents={() => handlePressLikeContents({ postId })}
+                    onPressProfile={() =>
+                        handlePressProfile({
+                            user: {
+                                isFollow: post.user.isFollow,
+                                nickname: post.user.nickname,
+                                profile: post.user.profile,
+                            },
+                        })
+                    }
+                    onPressLikeContents={() => handlePressLikeContents({ post: { id: post.id } })}
                     onPressTag={handlePressTag}
                 />
             );
@@ -105,7 +117,7 @@ export default function UserDetailListPage({ route: { params } }: SharePostListP
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 scrollEventThrottle={16}
                 estimatedItemSize={484}
-                initialScrollIndex={params.startIndex}
+                initialScrollIndex={startIndex}
             />
         </View>
     );

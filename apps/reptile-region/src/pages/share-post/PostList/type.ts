@@ -1,21 +1,22 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import type { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
-import type { RootRoutesParamList, SharePostModalParamList } from '<routes/root>';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
+import type { BottomTabNativeStackParamList } from '@/types/routes/param-list/bottom-tab';
+import type { SharePostBottomTabParamList, SharePostModalParamList } from '@/types/routes/param-list/sharePost';
 
 type SharePostListModalPageScreen = CompositeScreenProps<
-    NativeStackScreenProps<SharePostModalParamList, 'list/user'>,
+    NativeStackScreenProps<SharePostModalParamList, 'modal/user/detail/list'>,
     NativeStackScreenProps<RootRoutesParamList>
 >;
 
 type SharePostListMeModalPageScreen = CompositeScreenProps<
-    NativeStackScreenProps<SharePostModalParamList, 'list/me'>,
+    NativeStackScreenProps<SharePostModalParamList, 'modal/user/detail/list/me'>,
     NativeStackScreenProps<RootRoutesParamList>
 >;
 
 type SharePostListPageScreen = CompositeScreenProps<
-    NativeStackScreenProps<SharePostTabParamList, 'share-post/list/user'>,
+    NativeStackScreenProps<SharePostBottomTabParamList, 'bottom-tab/user/detail/list'>,
     CompositeScreenProps<NativeStackScreenProps<BottomTabNativeStackParamList>, NativeStackScreenProps<RootRoutesParamList>>
 >;
 

@@ -6,7 +6,6 @@ import * as Haptic from 'react-native-haptic-feedback';
 
 import { BottomTabBarButton } from '../../atoms';
 
-import type { BottomTabParamList } from '<routes/bottom-tab>';
 import {
     Home as HomeIcon,
     Community as InfoIcon,
@@ -15,6 +14,7 @@ import {
     Cart as ShopIcon,
 } from '@/assets/icons';
 import type { IconProps } from '@/types/global/icons';
+import type { BottomTabParamList } from '@/types/routes/param-list/bottom-tab';
 
 export interface MainBottomBarActions {
     onPressNavigate({
@@ -47,7 +47,7 @@ const MENUS: MenusType = {
         Icon: InfoIcon,
         name: '정보공유',
     },
-    'my/routes': {
+    'me/routes': {
         Icon: MyIcon,
         name: '내 정보',
     },

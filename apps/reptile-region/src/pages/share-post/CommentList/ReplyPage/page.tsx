@@ -41,7 +41,7 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
             } = item;
 
             const handleNavigateDetailPage = () => {
-                navigateDetailPage({ isFollow: false, nickname, profile });
+                navigateDetailPage({ user: { isFollow: false, nickname, profile } });
             };
 
             return (
@@ -79,7 +79,7 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
         } = params;
 
         const handleNavigateDetailPage = () => {
-            navigateDetailPage({ isFollow: false, nickname, profile });
+            navigateDetailPage({ user: { isFollow: false, nickname, profile } });
         };
 
         return (

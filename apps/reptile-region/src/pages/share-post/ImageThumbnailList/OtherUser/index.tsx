@@ -19,13 +19,16 @@ export function SharePostDetailImageListHeader(props: NativeStackHeaderProps) {
 
 export default function SharePostDetailImageListPage({
     route: {
-        params: { isFollow, nickname, profile, pageState },
+        params: {
+            user: { isFollow, nickname, profile },
+            pageState,
+        },
     },
 }: SharePostDetailProfileScreenNavigationProp | SharePostModalDetailScreenNavigationProp) {
     const { navigateFollowerPage, navigateListUser } = useImageThumbnailNavigation(pageState);
 
     const handleImagePress = (index: number) => {
-        navigateListUser({ nickname, startIndex: index });
+        navigateListUser({ user: { nickname }, startIndex: index, pageState });
     };
 
     return (

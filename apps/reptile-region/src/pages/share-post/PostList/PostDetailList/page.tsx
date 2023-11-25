@@ -9,7 +9,7 @@ import type { PostDetailModalListScreenProps } from './type';
 import Comment from '@/components/share-post/organisms/Comment';
 
 export default function PostDetailModalListPage(props: PostDetailModalListScreenProps) {
-    const postId = props.route.params.postId;
+    const postId = props.route.params.post.id;
     const ListHeaderComponent = useMemo(
         () => (
             <Suspense fallback={<PostListSkeleton />}>
@@ -28,7 +28,7 @@ export default function PostDetailModalListPage(props: PostDetailModalListScreen
                 </>
             }
         >
-            <Comment id={props.route.params.postId}>
+            <Comment id={postId}>
                 <SharePostDetailModalPage {...props} ListHeaderComponent={ListHeaderComponent} />
             </Comment>
         </Suspense>

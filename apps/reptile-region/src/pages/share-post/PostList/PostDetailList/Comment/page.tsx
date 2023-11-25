@@ -21,7 +21,9 @@ type SharePostDetailModalPageState = PostDetailModalListScreenProps & {
 
 export default function SharePostDetailModalPage({
     route: {
-        params: { postId },
+        params: {
+            post: { id: postId },
+        },
     },
     ListHeaderComponent,
 }: SharePostDetailModalPageState) {
@@ -55,7 +57,7 @@ export default function SharePostDetailModalPage({
         };
 
         const handleNavigateDetailPage = () => {
-            navigateDetailPage({ isFollow: false, nickname, profile });
+            navigateDetailPage({ user: { isFollow: false, nickname, profile } });
         };
 
         return (

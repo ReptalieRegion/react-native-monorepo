@@ -5,8 +5,6 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import type { MyTabParamList } from '<routes/bottom-tab>';
-import type { RootRoutesParamList } from '<routes/root>';
 import useSignOut from '@/apis/auth/hooks/mutations/useSignOut';
 import useDeleteFCMToken from '@/apis/me/profile/hooks/mutations/useDeleteFCMToken';
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
@@ -19,9 +17,11 @@ import { useToast } from '@/components/@common/organisms/Toast';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import { Profile } from '@/components/me/molecules/Profile';
 import VersionCheck from '@/native-modules/version-check/VersionCheck';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
+import type { MeBottomTabParamList } from '@/types/routes/param-list/me';
 
 type MyListScreenProps = CompositeScreenProps<
-    NativeStackScreenProps<MyTabParamList, 'my/list'>,
+    NativeStackScreenProps<MeBottomTabParamList, 'bottom-tab/list'>,
     NativeStackScreenProps<RootRoutesParamList>
 >;
 
@@ -35,28 +35,28 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
 
     const navigateSharePostMe = () => {
         navigation.navigate('share-post/modal', {
-            screen: 'detail/me',
+            screen: 'modal/image-thumbnail/me',
         });
     };
 
     const navigateTermsOfUse = () => {
-        navigation.navigate('my/terms-of-use');
+        navigation.navigate('me/terms-of-use');
     };
 
     const navigatePrivacyPolicy = () => {
-        navigation.navigate('my/terms-privacy-policy');
+        navigation.navigate('me/terms-privacy-policy');
     };
 
     const navigateProfileSetting = () => {
-        navigation.navigate('my/profile');
+        navigation.navigate('me/profile');
     };
 
     const navigateLicense = () => {
-        navigation.navigate('my/license');
+        navigation.navigate('me/license');
     };
 
     const navigateNotificationSetting = () => {
-        navigation.navigate('my/notification-setting');
+        navigation.navigate('me/notification-setting');
     };
 
     const handleKakaoLogout = async () => {
@@ -69,7 +69,7 @@ export default function MyListPage({ navigation }: MyListScreenProps) {
                 params: {
                     screen: 'home/routes',
                     params: {
-                        screen: 'home/list',
+                        screen: 'bottom-tab/list',
                     },
                 },
             });

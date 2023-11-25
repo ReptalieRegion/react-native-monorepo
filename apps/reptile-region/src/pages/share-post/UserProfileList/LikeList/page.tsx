@@ -1,18 +1,21 @@
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 
-import type { SharePostTabParamList } from '<routes/bottom-tab>';
-import type { SharePostModalParamList } from '<routes/root>';
+import type { LikeListPageScreenProps } from './type';
+
 import useInfiniteFetchLikes from '@/apis/share-post/post/hooks/queries/useInfiniteFetchLikes';
 import UserProfileList from '@/components/share-post/molecules/UserProfileList';
+import useUserProfileNavigation from '@/hooks/share-post/navigation/useUserProfileNavigation';
 
-type LikeListPageScreenProps =
-    | NativeStackScreenProps<SharePostTabParamList, 'share-post/list/like'>
-    | NativeStackScreenProps<SharePostModalParamList, 'list/like'>;
-
-export default function LikeList({ route: { params } }: LikeListPageScreenProps) {
-    const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFetchLikes({ postId: params.postId });
+export default function LikeList({
+    route: {
+        params: {
+            post: { id: postId },
+        },
+    },
+}: LikeListPageScreenProps) {
+    const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFetchLikes({ postId });
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
+    const { handlePressProfile } = useUserProfileNavigation();
 
-    return <UserProfileList data={data} onEndReached={handleFetchNextPage} />;
+    return <UserProfileList data={data} onEndReached={handleFetchNextPage} onPressProfile={handlePressProfile} />;
 }

@@ -5,8 +5,8 @@ import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { RootRoutesParamList } from '<routes/root>';
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 type ListItemProps = {
     text: string;

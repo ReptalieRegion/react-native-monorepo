@@ -1,34 +1,31 @@
 import { useNavigation, type CompositeNavigationProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import type {
-    RootRoutesParamList,
-    SharePostCommentParamList,
-    SharePostCommentReplyProps,
-    SharePostDetailProps,
-} from '<routes/root>';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
+import type { CommentParamList } from '@/types/routes/param-list/sharePost';
+import type { CommentReplyParams, ImageThumbnailParams } from '@/types/routes/params/sharePost';
 
 type CommentNavigation =
     | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostCommentParamList, 'main'>,
+          NativeStackNavigationProp<CommentParamList, 'main'>,
           NativeStackNavigationProp<RootRoutesParamList>
       >
     | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostCommentParamList, 'reply'>,
+          NativeStackNavigationProp<CommentParamList, 'reply'>,
           NativeStackNavigationProp<RootRoutesParamList>
       >;
 
 const useCommentNavigation = () => {
     const navigation = useNavigation<CommentNavigation>();
 
-    const navigateDetailPage = (params: Omit<SharePostDetailProps, 'pageState'>) => {
+    const navigateDetailPage = (params: Omit<ImageThumbnailParams, 'pageState'>) => {
         navigation.push('share-post/modal', {
-            screen: 'detail',
+            screen: 'modal/image-thumbnail',
             params: { ...params, pageState: 'MODAL' },
         });
     };
 
-    const navigateCommentReplyPage = (params: SharePostCommentReplyProps) => {
+    const navigateCommentReplyPage = (params: CommentReplyParams) => {
         navigation.push('reply', params);
     };
 

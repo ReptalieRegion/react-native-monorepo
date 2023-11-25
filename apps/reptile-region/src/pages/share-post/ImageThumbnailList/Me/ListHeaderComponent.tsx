@@ -1,11 +1,11 @@
 import React from 'react';
 
-import type { SharePostFollowProps } from '<routes/root>';
 import useMeProfileAndPostCount from '@/apis/share-post/post/hooks/combine/useMeProfileAndPostCount';
 import UserProfile from '@/components/share-post/molecules/UserProfile/UserProfile';
+import type { FollowRouterParams } from '@/types/routes/params/sharePost';
 
 interface ListHeaderComponentActions {
-    navigateFollowerPage(params: SharePostFollowProps): void;
+    navigateFollowerPage(params: FollowRouterParams): void;
 }
 
 type ListHeaderComponentProps = ListHeaderComponentActions;

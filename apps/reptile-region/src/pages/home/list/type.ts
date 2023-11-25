@@ -1,11 +1,11 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import type { HomeTabParamList } from '<routes/bottom-tab>';
-import type { RootRoutesParamList } from '<routes/root>';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
+import type { HomeBottomTabParamList } from '@/types/routes/param-list/home';
 
 type HomeListPageScreenProp = CompositeScreenProps<
-    NativeStackScreenProps<HomeTabParamList, 'home/list'>,
+    NativeStackScreenProps<HomeBottomTabParamList, 'bottom-tab/list'>,
     NativeStackScreenProps<RootRoutesParamList>
 >;
 

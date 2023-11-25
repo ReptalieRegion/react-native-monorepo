@@ -1,15 +1,21 @@
-import type { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import React from 'react';
 
-import type { SharePostTopTabParamList } from '<routes/top-tab>';
+import type { FollowingPageScreenProps } from './type';
+
 import useInfiniteFollowingList from '@/apis/share-post/user/hooks/queries/useInfiniteFollowingList';
 import UserProfileList from '@/components/share-post/molecules/UserProfileList';
+import useUserProfileNavigation from '@/hooks/share-post/navigation/useUserProfileNavigation';
 
-type FollowingPageScreenProps = MaterialTopTabScreenProps<SharePostTopTabParamList, 'share-post/following/list'>;
-
-export default function FollowingList({ route: { params } }: FollowingPageScreenProps) {
-    const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowingList({ userId: params.userId });
+export default function FollowingList({
+    route: {
+        params: {
+            user: { id: userId },
+        },
+    },
+}: FollowingPageScreenProps) {
+    const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowingList({ userId });
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
+    const { handlePressProfile } = useUserProfileNavigation();
 
-    return <UserProfileList data={data} onEndReached={handleFetchNextPage} />;
+    return <UserProfileList data={data} onEndReached={handleFetchNextPage} onPressProfile={handlePressProfile} />;
 }

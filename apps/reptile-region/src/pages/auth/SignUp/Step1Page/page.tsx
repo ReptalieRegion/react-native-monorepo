@@ -1,11 +1,11 @@
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { color } from '@reptile-region/design-system';
 import { useDebounce, useLoading } from '@reptile-region/react-hooks';
 import React, { useState } from 'react';
 import { Keyboard, StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import type { SignUpParamList } from '<routes/sign-up>';
+import type { SignUpStep1ScreenProps } from './type';
+
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
 import useSignUpStep1 from '@/apis/auth/hooks/mutations/useSignUpStep1';
 import useNicknameDuplicateCheck from '@/apis/auth/hooks/queries/useNicknameDuplicateCheck';
@@ -13,12 +13,12 @@ import { TextButton } from '@/components/@common/atoms';
 import { SignUpTextField, SignUpTitle } from '@/components/auth/molecules';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 
-type SignUpStep1ScreenProps = NativeStackScreenProps<SignUpParamList, 'step1'>;
-
 export default function SignUpStep1({
     navigation,
     route: {
-        params: { recommendNickname, userId },
+        params: {
+            user: { recommendNickname, id: userId },
+        },
     },
 }: SignUpStep1ScreenProps) {
     const [nickname, setNickname] = useState(recommendNickname);

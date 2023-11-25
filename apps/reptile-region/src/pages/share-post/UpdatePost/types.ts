@@ -1,6 +1,6 @@
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import type { RootRoutesParamList } from '<routes/root>';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 export type SharePostUpdateScreen = NativeStackScreenProps<RootRoutesParamList, 'share-post/post/update'>;
 

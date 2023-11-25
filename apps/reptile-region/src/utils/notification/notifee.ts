@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 
 import { navigateLinking } from '../navigation/linking';
 
-import type { RootRoutesParamList } from '<routes/root>';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 type NotifeeOptions = {
     ios: NotificationIOS;

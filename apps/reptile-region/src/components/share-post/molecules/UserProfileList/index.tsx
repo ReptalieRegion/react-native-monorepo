@@ -2,6 +2,7 @@ import { Typo, color } from '@reptile-region/design-system';
 import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
@@ -24,11 +25,12 @@ type UserProfileListState = {
 
 interface UserProfileListActions {
     onEndReached(): void;
+    onPressProfile(): void;
 }
 
 type UserProfileListProps = UserProfileListState & UserProfileListActions;
 
-export default function UserProfileList({ data, onEndReached }: UserProfileListProps) {
+export default function UserProfileList({ data, onEndReached, onPressProfile }: UserProfileListProps) {
     const { mutateFollow } = useCreateOrUpdateFollow();
 
     const keyExtractor = (item: FetchFollowerListResponse) => item.user.id;
@@ -39,13 +41,15 @@ export default function UserProfileList({ data, onEndReached }: UserProfileListP
         };
 
         return (
-            <View style={styles.itemContainer}>
-                <View style={styles.testContainer}>
-                    <Avatar image={item.user.profile} size={35} />
-                    <Typo variant="body3">{item.user.nickname}</Typo>
+            <TouchableOpacity onPress={onPressProfile}>
+                <View style={styles.itemContainer}>
+                    <View style={styles.testContainer}>
+                        <Avatar image={item.user.profile} size={35} />
+                        <Typo variant="body3">{item.user.nickname}</Typo>
+                    </View>
+                    <Follow isFollow={item.user.isFollow} onPress={handlePressFollow} />
                 </View>
-                <Follow isFollow={item.user.isFollow} onPress={handlePressFollow} />
-            </View>
+            </TouchableOpacity>
         );
     };
 

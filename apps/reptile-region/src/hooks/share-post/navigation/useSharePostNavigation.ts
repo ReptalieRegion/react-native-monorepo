@@ -2,31 +2,33 @@ import { useNavigation, type CompositeNavigationProp } from '@react-navigation/n
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
 import { useCallback } from 'react';
 
-import type { BottomTabNativeStackParamList, SharePostTabParamList } from '<routes/bottom-tab>';
-import type { PageState } from '<routes/enum>';
-import type { RootRoutesParamList, SharePostDetailProps, SharePostModalParamList } from '<routes/root>';
 import type { ImageType } from '@/types/global/image';
+import type { PageState } from '@/types/routes/@common/enum';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
+import type { BottomTabNativeStackParamList } from '@/types/routes/param-list/bottom-tab';
+import type { SharePostBottomTabParamList, SharePostModalParamList } from '@/types/routes/param-list/sharePost';
+import type { ImageThumbnailParams, LikeParams } from '@/types/routes/params/sharePost';
 
 type ModalNavigationProp =
     | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostModalParamList, 'list/user'>,
+          NativeStackNavigationProp<SharePostModalParamList, 'modal/user/detail/list'>,
           NativeStackNavigationProp<RootRoutesParamList>
       >
     | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostModalParamList, 'notification/detail'>,
+          NativeStackNavigationProp<SharePostModalParamList, 'modal/post/detail'>,
           NativeStackNavigationProp<RootRoutesParamList>
       >;
 
 type BottomTabNavigationProp =
     | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostTabParamList, 'share-post/list/user'>,
+          NativeStackNavigationProp<SharePostBottomTabParamList, 'bottom-tab/user/detail/list'>,
           CompositeNavigationProp<
               NativeStackNavigationProp<BottomTabNativeStackParamList>,
               NativeStackNavigationProp<RootRoutesParamList>
           >
       >
     | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostTabParamList, 'share-post/list'>,
+          NativeStackNavigationProp<SharePostBottomTabParamList, 'bottom-tab/list'>,
           CompositeNavigationProp<
               NativeStackNavigationProp<BottomTabNativeStackParamList>,
               NativeStackNavigationProp<RootRoutesParamList>
@@ -42,12 +44,12 @@ const useSharePostNavigation = (type: PageState) => {
         (params: { post: { id: string } }) => {
             switch (type) {
                 case 'MODAL':
-                    return (navigation as ModalNavigationProp).push('comment', {
+                    return (navigation as ModalNavigationProp).push('modal/comment', {
                         screen: 'main',
                         params,
                     });
                 case 'BOTTOM_TAB':
-                    return (navigation as BottomTabNavigationProp).push('bottom-sheet/comment', {
+                    return (navigation as BottomTabNavigationProp).push('bottom-tab/modal/comment', {
                         screen: 'main',
                         params,
                     });
@@ -72,15 +74,15 @@ const useSharePostNavigation = (type: PageState) => {
     );
 
     const handlePressProfile = useCallback(
-        (params: Omit<SharePostDetailProps, 'pageState'>) => {
+        (params: Omit<ImageThumbnailParams, 'pageState'>) => {
             switch (type) {
                 case 'BOTTOM_TAB':
-                    return (navigation as BottomTabNavigationProp).push('share-post/detail', {
+                    return (navigation as BottomTabNavigationProp).push('bottom-tab/image-thumbnail', {
                         ...params,
                         pageState: 'BOTTOM_TAB',
                     });
                 case 'MODAL':
-                    return (navigation as ModalNavigationProp).push('detail', {
+                    return (navigation as ModalNavigationProp).push('modal/image-thumbnail', {
                         ...params,
                         pageState: 'MODAL',
                     });
@@ -93,17 +95,21 @@ const useSharePostNavigation = (type: PageState) => {
         (tag: string) => {
             switch (type) {
                 case 'BOTTOM_TAB':
-                    return (navigation as BottomTabNavigationProp).push('share-post/detail', {
-                        isFollow: undefined,
-                        nickname: tag,
-                        profile: { src: '' },
+                    return (navigation as BottomTabNavigationProp).push('bottom-tab/image-thumbnail', {
+                        user: {
+                            isFollow: undefined,
+                            nickname: tag,
+                            profile: { src: '' },
+                        },
                         pageState: 'BOTTOM_TAB',
                     });
                 case 'MODAL':
-                    return (navigation as ModalNavigationProp).push('detail', {
-                        isFollow: undefined,
-                        nickname: tag,
-                        profile: { src: '' },
+                    return (navigation as ModalNavigationProp).push('modal/image-thumbnail', {
+                        user: {
+                            isFollow: undefined,
+                            nickname: tag,
+                            profile: { src: '' },
+                        },
                         pageState: 'MODAL',
                     });
             }
@@ -112,12 +118,12 @@ const useSharePostNavigation = (type: PageState) => {
     );
 
     const handlePressLikeContents = useCallback(
-        (params: { postId: string }) => {
+        (params: LikeParams) => {
             switch (type) {
                 case 'BOTTOM_TAB':
-                    return (navigation as BottomTabNavigationProp).push('share-post/list/like', params);
+                    return (navigation as BottomTabNavigationProp).push('bottom-tab/like/list', params);
                 case 'MODAL':
-                    return (navigation as ModalNavigationProp).push('list/like', params);
+                    return (navigation as ModalNavigationProp).push('modal/like/list', params);
             }
         },
         [navigation, type],

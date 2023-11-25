@@ -3,7 +3,7 @@ import type { NavigationContainerRefWithCurrent } from '@react-navigation/native
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
 
-import type { RootRoutesParamList } from '<routes/root>';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
 
 const useEffectNotifee = (navigationRef: NavigationContainerRefWithCurrent<RootRoutesParamList>) => {

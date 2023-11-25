@@ -4,12 +4,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { Linking } from 'react-native';
 
+import SignUpRoutes from './Auth/SignUpRoutes';
 import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
-import SharePostModalRoutes from './modal/SharePostModalRoutes';
-import SharePostPostingRoutes from './modal/SharePostPostingRoutes';
-import SignUpRoutes from './SignUpRoutes';
+import SharePostModalRoutes from './SharePost/ModalRoutes';
+import PostingRoutes from './SharePost/PostingRoutes';
 
-import type { RootRoutesParamList } from '<routes/root>';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
@@ -30,6 +29,7 @@ import { pushLogListHeader } from '@/pages/notification/PushLogList/header';
 import PostOptionsMenu from '@/pages/share-post/PostList/BottomSheet/PostOptionsMenu';
 import { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost/header';
 import SharePostUpdatePage from '@/pages/share-post/UpdatePost/page';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
 
 const linking: LinkingOptions<RootRoutesParamList> = {
@@ -38,8 +38,8 @@ const linking: LinkingOptions<RootRoutesParamList> = {
         screens: {
             'share-post/modal': {
                 screens: {
-                    'notification/detail': 'posts/:postId/detail/:type',
-                    detail: 'users/:nickname',
+                    'modal/post/detail': 'posts/:postId/detail/:type',
+                    'modal/image-thumbnail': 'users/:nickname',
                 },
             },
         },
@@ -117,7 +117,7 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 <Stack.Screen name="share-post/modal" component={SharePostModalRoutes} options={{ headerShown: false }} />
                 <Stack.Screen
                     name="share-post/modal/posting"
-                    component={SharePostPostingRoutes}
+                    component={PostingRoutes}
                     options={{ animation: 'slide_from_bottom', headerShown: false }}
                 />
                 <Stack.Screen
@@ -137,27 +137,25 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 />
 
                 {/** 내 정보 시작 */}
-                <Stack.Group>
-                    <Stack.Screen name="my/license" component={LicenseListPage} options={{ header: LicenseListHeader }} />
-                    <Stack.Screen
-                        name="my/license/contents"
-                        component={LicenseContentsPage}
-                        options={{ header: LicenseContentsHeader }}
-                    />
-                    <Stack.Screen name="my/terms-of-use" component={TermsOfUsePage} options={{ header: TermsOfUseHeader }} />
-                    <Stack.Screen
-                        name="my/terms-privacy-policy"
-                        component={PrivacyPolicyPage}
-                        options={{ header: PrivacyPolicyHeader }}
-                    />
-                    <Stack.Screen name="my/profile" component={ProfileSetting} options={{ header: ProfileSettingHeader }} />
-                    <Stack.Screen
-                        name="my/notification-setting"
-                        component={NotificationSetting}
-                        options={{ header: NotificationSettingHeader }}
-                    />
-                    <Stack.Screen name="my/notification-log" component={PushLogList} options={{ header: pushLogListHeader }} />
-                </Stack.Group>
+                <Stack.Screen name="me/license" component={LicenseListPage} options={{ header: LicenseListHeader }} />
+                <Stack.Screen
+                    name="me/license/contents"
+                    component={LicenseContentsPage}
+                    options={{ header: LicenseContentsHeader }}
+                />
+                <Stack.Screen name="me/terms-of-use" component={TermsOfUsePage} options={{ header: TermsOfUseHeader }} />
+                <Stack.Screen
+                    name="me/terms-privacy-policy"
+                    component={PrivacyPolicyPage}
+                    options={{ header: PrivacyPolicyHeader }}
+                />
+                <Stack.Screen name="me/profile" component={ProfileSetting} options={{ header: ProfileSettingHeader }} />
+                <Stack.Screen
+                    name="me/notification-setting"
+                    component={NotificationSetting}
+                    options={{ header: NotificationSettingHeader }}
+                />
+                <Stack.Screen name="me/notification-log" component={PushLogList} options={{ header: pushLogListHeader }} />
                 {/** 내 정보 끝 */}
             </Stack.Navigator>
         </NavigationContainer>

@@ -2,12 +2,12 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { TouchableTypo } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 
-import type { SharePostPostingParamList } from '<routes/root>';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
+import type { PostingParamList } from '@/types/routes/param-list/sharePost';
 
 type ChangeHeaderProps = {
-    navigation: NativeStackNavigationProp<SharePostPostingParamList, 'image-crop'>;
+    navigation: NativeStackNavigationProp<PostingParamList, 'image-crop'>;
 };
 
 export const ImagePickerHeader = createNativeStackHeader({

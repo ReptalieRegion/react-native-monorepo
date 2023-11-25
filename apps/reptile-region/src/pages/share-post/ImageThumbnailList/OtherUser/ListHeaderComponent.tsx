@@ -1,9 +1,9 @@
 import React from 'react';
 
-import type { SharePostFollowProps } from '<routes/root>';
 import useUserProfileAndPostCount from '@/apis/share-post/post/hooks/combine/useUserProfileAndPostCount';
 import UserProfile from '@/components/share-post/molecules/UserProfile/UserProfile';
 import type { ImageType } from '@/types/global/image';
+import type { FollowRouterParams } from '@/types/routes/params/sharePost';
 
 type ListHeaderComponentState = {
     isFollow: boolean | undefined;
@@ -12,7 +12,7 @@ type ListHeaderComponentState = {
 };
 
 interface ListHeaderComponentActions {
-    navigateFollowerPage(params: SharePostFollowProps): void;
+    navigateFollowerPage(params: FollowRouterParams): void;
 }
 
 type ListHeaderComponentProps = ListHeaderComponentState & ListHeaderComponentActions;

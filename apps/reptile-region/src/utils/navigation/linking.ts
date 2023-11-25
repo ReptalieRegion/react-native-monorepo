@@ -1,17 +1,17 @@
 import type { NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import type { RootRoutesParamList } from '<routes/root>';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 const routes = {
-    'notification/detail': 'posts/:postId/detail/:type',
-    detail: 'users/:nickname',
+    'modal/post/detail': 'posts/:postId/detail/:type',
+    'modal/image-thumbnail': 'users/:nickname',
 } as const;
 
 export function navigateLinking(
     navigation:
         | NavigationContainerRefWithCurrent<RootRoutesParamList>
-        | NativeStackNavigationProp<RootRoutesParamList, 'my/notification-log'>,
+        | NativeStackNavigationProp<RootRoutesParamList, 'me/notification-log'>,
     link: string,
 ) {
     const route = _findMatchingRoute(link);
@@ -20,23 +20,27 @@ export function navigateLinking(
     }
 
     switch (route?.screen) {
-        case 'notification/detail':
+        case 'modal/post/detail':
             navigation.navigate('share-post/modal', {
                 screen: route.screen,
                 params: {
-                    postId: route.params?.postId ?? '',
+                    post: {
+                        id: route.params?.postId ?? '',
+                    },
                     type: (route.params?.type as 'like' | 'comment') ?? 'like',
                 },
             });
             break;
-        case 'detail':
+        case 'modal/image-thumbnail':
             navigation.navigate('share-post/modal', {
                 screen: route.screen,
                 params: {
-                    isFollow: false,
-                    nickname: route.params?.nickname ?? '',
-                    profile: {
-                        src: '',
+                    user: {
+                        isFollow: false,
+                        nickname: route.params?.nickname ?? '',
+                        profile: {
+                            src: '',
+                        },
                     },
                     pageState: 'MODAL',
                 },

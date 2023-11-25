@@ -4,16 +4,17 @@ import { TouchableTypo } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, Keyboard } from 'react-native';
 
-import type { RootRoutesParamList, SharePostPostingParamList } from '<routes/root>';
 import useCreatePost from '@/apis/share-post/post/hooks/mutations/useCreatePost';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 import { useTag } from '@/components/@common/organisms/TagTextInput';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
+import type { PostingParamList } from '@/types/routes/param-list/sharePost';
 
 type ChangeHeaderProps = {
     navigation: CompositeNavigationProp<
-        NativeStackNavigationProp<SharePostPostingParamList, 'write'>,
+        NativeStackNavigationProp<PostingParamList, 'write'>,
         NativeStackNavigationProp<RootRoutesParamList>
     >;
 };
@@ -33,7 +34,7 @@ export default function ChangeHeader({ navigation }: ChangeHeaderProps) {
                 params: {
                     screen: 'share-post/routes',
                     params: {
-                        screen: 'share-post/list',
+                        screen: 'bottom-tab/list',
                     },
                 },
             });

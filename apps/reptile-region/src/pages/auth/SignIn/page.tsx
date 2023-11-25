@@ -2,12 +2,12 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import type { RootRoutesParamList } from '<routes/root>';
 import { useToast } from '@/components/@common/organisms/Toast';
 import SignInLogo from '@/components/auth/atoms/SignInLogo/SignInLogo';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import SignInTemplates, { type SocialButtons } from '@/components/auth/templates/SignInTemplates';
 import type { PostAppleAuth, PostKakaoAuth, SignUpRegister0 } from '@/types/apis/auth';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 type SignInScreenProps = NativeStackScreenProps<RootRoutesParamList, 'sign-in'>;
 
@@ -18,17 +18,16 @@ const SignInPage = ({ navigation, route: { params } }: SignInScreenProps) => {
     const navigateSignUpPage = (data: Omit<SignUpRegister0, 'type'>) => {
         switch (data.joinProgress) {
             case 'REGISTER0':
-                if (params?.isGoBack) {
-                    navigation.goBack();
-                } else {
-                    navigation.navigate('sign-up', {
-                        screen: 'step1',
-                        params: {
+                navigation.navigate('sign-up', {
+                    screen: 'step1',
+                    params: {
+                        user: {
+                            id: data.userId,
                             recommendNickname: data.nickname,
-                            userId: data.userId,
                         },
-                    });
-                }
+                    },
+                });
+
                 return;
         }
     };
@@ -38,15 +37,19 @@ const SignInPage = ({ navigation, route: { params } }: SignInScreenProps) => {
         switch (data.type) {
             case 'SIGN_IN':
                 await signIn({ accessToken: data.accessToken, refreshToken: data.refreshToken });
-                navigation.navigate('bottom-tab/routes', {
-                    screen: 'tab',
-                    params: {
-                        screen: 'my/routes',
+                if (params.successNavigate === 'BACK') {
+                    navigation.goBack();
+                } else {
+                    navigation.navigate('bottom-tab/routes', {
+                        screen: 'tab',
                         params: {
-                            screen: 'my/list',
+                            screen: 'me/routes',
+                            params: {
+                                screen: 'bottom-tab/list',
+                            },
                         },
-                    },
-                });
+                    });
+                }
                 return;
             case 'SIGN_UP':
                 navigateSignUpPage({

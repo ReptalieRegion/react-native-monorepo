@@ -6,12 +6,13 @@ import { StyleSheet, View } from 'react-native';
 
 import ChangeHeader from './header';
 
-import type { RootRoutesParamList, SharePostPostingParamList } from '<routes/root>';
 import { FollowerUserList, FollowerUserListSkeleton, TagProvider } from '@/components/@common/organisms/TagTextInput';
 import { ContentsWriting, PhotoRegisterCarousel } from '@/components/share-post/organisms/Posting';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
+import type { PostingParamList } from '@/types/routes/param-list/sharePost';
 
 type WritePostScreenProps = CompositeScreenProps<
-    NativeStackScreenProps<SharePostPostingParamList, 'write'>,
+    NativeStackScreenProps<PostingParamList, 'write'>,
     NativeStackScreenProps<RootRoutesParamList>
 >;
 

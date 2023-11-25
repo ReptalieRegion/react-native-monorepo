@@ -2,8 +2,7 @@ import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 import * as Haptic from 'react-native-haptic-feedback';
 
-import useCreateFollow from '@/apis/share-post/user/hooks/mutations/useCreateFollow';
-import useUpdateFollow from '@/apis/share-post/user/hooks/mutations/useUpdateFollow';
+import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import Follow from '@/components/share-post/atoms/Follow';
@@ -19,8 +18,7 @@ export function SharePostUserDetailListHeader(props: NativeStackHeaderProps) {
 
 export default function ChangeHeader({ nickname, navigation }: ChangeHeaderProps) {
     const { data } = useFetchUserProfile({ nickname });
-    const { mutate: createFollowMutate } = useCreateFollow();
-    const { mutate: updateFollowMutate } = useUpdateFollow();
+    const { mutateFollow } = useCreateOrUpdateFollow();
 
     useEffect(() => {
         const headerRight = () => {
@@ -32,20 +30,15 @@ export default function ChangeHeader({ nickname, navigation }: ChangeHeaderProps
                 const {
                     user: { id: userId, isFollow },
                 } = data;
-
-                if (isFollow === undefined) {
-                    createFollowMutate({ userId });
-                } else {
-                    updateFollowMutate({ userId });
-                }
                 Haptic.trigger('impactLight');
+                mutateFollow({ userId, isFollow });
             };
 
             return <Follow isFollow={data?.user.isFollow} onPress={handlePressFollow} />;
         };
 
         navigation.setOptions({ headerRight, headerTitle: nickname });
-    }, [createFollowMutate, updateFollowMutate, data, navigation, nickname]);
+    }, [data, navigation, nickname, mutateFollow]);
 
     return null;
 }

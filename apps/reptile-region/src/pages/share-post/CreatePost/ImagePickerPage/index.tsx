@@ -5,10 +5,10 @@ import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import ChangeHeader from './header';
 
-import type { SharePostPostingParamList } from '<routes/root>';
 import { CameraAlbum } from '@/components/@common/organisms/CameraAlbum';
+import type { PostingParamList } from '@/types/routes/param-list/sharePost';
 
-type ImagePickScreenProp = NativeStackScreenProps<SharePostPostingParamList, 'image-crop'>;
+type ImagePickScreenProp = NativeStackScreenProps<PostingParamList, 'image-crop'>;
 
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
     const { width, height } = useWindowDimensions();
