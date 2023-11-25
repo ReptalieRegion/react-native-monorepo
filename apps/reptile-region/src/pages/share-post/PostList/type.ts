@@ -7,8 +7,14 @@ import type { SharePostBottomTabParamList, SharePostModalParamList } from '@/typ
 
 /** 일상공유 특정 유저 모달 리스트 */
 // ScreenProps
-type SharePostListModalPageScreen = CompositeScreenProps<
+type SharePostUserDetailModalPageScreen = CompositeScreenProps<
     NativeStackScreenProps<SharePostModalParamList, 'modal/user/detail/list'>,
+    NativeStackScreenProps<RootRoutesParamList>
+>;
+
+/** 일상공유 특정 유저 리스트 */
+type SharePostUserDetailPageScreen = CompositeScreenProps<
+    NativeStackScreenProps<SharePostBottomTabParamList, 'bottom-tab/user/detail/list'>,
     NativeStackScreenProps<RootRoutesParamList>
 >;
 
@@ -22,8 +28,13 @@ type SharePostListMeModalPageScreen = CompositeScreenProps<
 /** 일상공유 전체 리스트 */
 // ScreenProps
 type SharePostListPageScreen = CompositeScreenProps<
-    NativeStackScreenProps<SharePostBottomTabParamList, 'bottom-tab/user/detail/list'>,
+    NativeStackScreenProps<SharePostBottomTabParamList, 'bottom-tab/list'>,
     CompositeScreenProps<NativeStackScreenProps<BottomTabNativeStackParamList>, NativeStackScreenProps<RootRoutesParamList>>
 >;
 
-export type { SharePostListMeModalPageScreen, SharePostListModalPageScreen, SharePostListPageScreen };
+export type {
+    SharePostListMeModalPageScreen,
+    SharePostListPageScreen,
+    SharePostUserDetailModalPageScreen,
+    SharePostUserDetailPageScreen,
+};

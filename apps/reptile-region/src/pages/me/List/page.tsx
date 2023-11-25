@@ -102,8 +102,6 @@ export default function MyListPage() {
         },
     ];
 
-    console.log(settingList);
-
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.signContainer}>

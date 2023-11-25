@@ -4,7 +4,7 @@ import React from 'react';
 import FollowRoutes from './FollowRoutes';
 
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
-import SharePostImageThumbnailListPage from '@/pages/share-post/ImageThumbnailList/Me';
+import SharePostImageThumbnailListPage from '@/pages/share-post/ImageThumbnailList/OtherUser';
 import { SharePostImageThumbnailListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser/header';
 import SharePostListPage from '@/pages/share-post/PostList/ListPage';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';

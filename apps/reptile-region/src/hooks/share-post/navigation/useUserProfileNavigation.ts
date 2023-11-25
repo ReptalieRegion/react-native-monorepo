@@ -4,7 +4,6 @@ const useUserProfileNavigation = () => {
     const navigation = useNavigation();
     const handlePressProfile = () => {
         navigation;
-        console.log('hi');
     };
 
     return {
