@@ -14,7 +14,6 @@ export default function FollowerList({
         },
     },
 }: FollowerPageScreenProps) {
-    console.log(pageState);
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowerList({ userId });
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
     const { handlePressProfile } = useUserProfileNavigation(pageState);

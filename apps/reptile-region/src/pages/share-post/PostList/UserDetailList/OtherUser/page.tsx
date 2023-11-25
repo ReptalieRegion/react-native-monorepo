@@ -29,7 +29,10 @@ export default function UserDetailListPage({
     const queryClient = useQueryClient();
     const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(SHARE_POST_QUERY_KEYS.profile(nickname));
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({ nickname });
-    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
+    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({
+        type: 'USER_DETAIL',
+        nickname,
+    });
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
         useSharePostNavigation(pageState);
 

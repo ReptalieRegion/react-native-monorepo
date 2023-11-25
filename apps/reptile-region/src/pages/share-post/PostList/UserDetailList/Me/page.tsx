@@ -27,7 +27,9 @@ export default function MeDetailListModalPage({
     const queryClient = useQueryClient();
     const userProfile = queryClient.getQueryData<FetchMeProfile['Response']>(MY_QUERY_KEYS.profile);
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchMePostList();
-    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
+    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({
+        type: 'ME_USER_DETAIL',
+    });
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
         useSharePostNavigation(pageState);
 
