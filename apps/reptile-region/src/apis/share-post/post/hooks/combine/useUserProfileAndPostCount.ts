@@ -17,6 +17,7 @@ export default function useUserProfileAndPostCount({ nickname, isFollow, profile
     const post = queryClient.getQueryData<InfiniteData<FetchDetailUserPost['Response']>>(
         SHARE_POST_QUERY_KEYS.detailUserPosts(nickname),
     );
+    console.log(profileQuery.data?.user.followingCount);
 
     const data = {
         user: {

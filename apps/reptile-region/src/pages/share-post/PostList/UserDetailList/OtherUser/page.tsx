@@ -27,7 +27,9 @@ export default function UserDetailListPage({
 }: SharePostUserDetailModalPageScreen | SharePostUserDetailPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const queryClient = useQueryClient();
-    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(SHARE_POST_QUERY_KEYS.profile(nickname));
+    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(
+        SHARE_POST_QUERY_KEYS.profileDetail(nickname),
+    );
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({ nickname });
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({
         type: 'USER_DETAIL',
@@ -36,7 +38,7 @@ export default function UserDetailListPage({
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
         useSharePostNavigation(pageState);
 
-    const keyExtractor = useCallback((item: FetchDetailUserPostResponse) => item.post.id, []);
+    const keyExtractor = (item: FetchDetailUserPostResponse) => item.post.id;
 
     const renderItem = useCallback(
         ({ item, extraData }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {

@@ -22,7 +22,8 @@ export default function useInfiniteFollowerList({ userId }: FetchFollowerList['R
         queryFn: ({ pageParam }) => getFollowerList({ userId, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
         select: useCallback(
-            (data: InfiniteData<InfiniteState<FetchFollowerListResponse>, number>) => data?.pages.flatMap((page) => page.items),
+            (data: InfiniteData<InfiniteState<FetchFollowerListResponse[]>, number>) =>
+                data?.pages.flatMap((page) => page.items),
             [],
         ),
     });

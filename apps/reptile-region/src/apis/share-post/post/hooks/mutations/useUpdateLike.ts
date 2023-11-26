@@ -19,14 +19,12 @@ export default function useUpdateLike(props?: UseUpdateLikeProps) {
         mutationFn: ({ postId }) => updateLike({ postId }),
         onSettled: (data, _error) => {
             if (data) {
-                Promise.all([
-                    queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.list, exact: true }),
-                    queryClient.invalidateQueries({
-                        queryKey: SHARE_POST_QUERY_KEYS.detailUserPosts(data.post.user.nickname),
-                        exact: true,
-                    }),
-                    queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.likeList(data.post.id), exact: true }),
-                ]);
+                queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.list, exact: true });
+                queryClient.invalidateQueries({
+                    queryKey: SHARE_POST_QUERY_KEYS.detailUserPosts(data.post.user.nickname),
+                    exact: true,
+                });
+                queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.likeList(data.post.id), exact: true });
             }
         },
         ...props,

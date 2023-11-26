@@ -26,7 +26,7 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
         onScrollUp: secondaryIconUpAnimation,
     });
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
-    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({ type: 'LIST' });
+    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({ type: 'POST' });
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
         useSharePostNavigation('BOTTOM_TAB');
 

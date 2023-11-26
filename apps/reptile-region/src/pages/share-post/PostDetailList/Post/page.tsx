@@ -17,7 +17,10 @@ export function Post({ postId }: { postId: string }) {
             user: { id: userId, isFollow, nickname, profile },
         },
     } = data;
-    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
+    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({
+        type: 'POST_DETAIL',
+        postId,
+    });
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
         useSharePostNavigation('MODAL');
 

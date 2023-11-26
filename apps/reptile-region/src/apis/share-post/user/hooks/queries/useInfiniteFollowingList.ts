@@ -22,7 +22,7 @@ export default function useInfiniteFollowingList({ userId }: FetchFollowingList[
         queryFn: ({ pageParam }) => getFollowingList({ userId, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
         select: useCallback(
-            (data: InfiniteData<InfiniteState<FetchFollowingListResponse>, number>) =>
+            (data: InfiniteData<InfiniteState<FetchFollowingListResponse[]>, number>) =>
                 data?.pages.flatMap((page) => page.items),
             [],
         ),
