@@ -1,19 +1,31 @@
 import { TouchableTypo } from '@reptile-region/design-system';
-import React from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import React, { useEffect } from 'react';
+import { AppState, StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import type { ImagePickScreenProp } from '../type';
 
 import ChangeHeader from './header';
 
 import { CameraAlbum } from '@/components/@common/organisms/CameraAlbum';
+import useImageCropActions from '@/hooks/share-post/actions/useImageCropActions';
 
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
+    const { handleOpenCamera } = useImageCropActions();
     const { width, height } = useWindowDimensions();
     const headerHeight = 60;
     const textHeight = 48;
     const photoEditorHeight = height / 2 - headerHeight;
     const photoListHeight = height - photoEditorHeight;
+
+    useEffect(() => {
+        const subscription = AppState.addEventListener('change', (nextAppState) => {
+            console.log(nextAppState);
+        });
+
+        return () => {
+            subscription.remove();
+        };
+    }, []);
 
     return (
         <>
@@ -23,7 +35,7 @@ export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
                 <View style={[styles.container, { height: textHeight }]}>
                     <TouchableTypo>최근항목</TouchableTypo>
                     <View style={styles.view}>
-                        <TouchableTypo>카메라</TouchableTypo>
+                        <TouchableTypo onPress={handleOpenCamera}>카메라</TouchableTypo>
                     </View>
                 </View>
             </View>

@@ -1,4 +1,4 @@
-import { useCameraRoll, type PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { useCameraRoll, type PhotoIdentifier, type SaveToCameraRollOptions } from '@react-native-camera-roll/camera-roll';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 
 import { PhotoActionsContext } from '../contexts/PhotoContext';
@@ -18,8 +18,9 @@ interface UseCameraAlbumHandlerActions {
 type UseCameraAlbumHandlerProps = UseCameraAlbumHandlerState & UseCameraAlbumHandlerActions;
 
 const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
-    const [photos, getPhotos] = useCameraRoll();
+    const [photos, getPhotos, save] = useCameraRoll();
     const isInitPhoto = useRef<boolean | undefined>();
+    const isSavePhoto = useRef<boolean | undefined>();
     const isLoadingFetchPhoto = useRef(false);
 
     const { isLimit } = usePhotoSelect();
@@ -41,12 +42,20 @@ const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
             return;
         }
 
+        const firstEdge = photos.edges[0];
+
         if (isInitPhoto.current) {
-            photoSelectDispatch({ type: 'INIT_CURRENT_PHOTO', photo: photos.edges[0] });
+            photoSelectDispatch({ type: 'INIT_CURRENT_PHOTO', photo: firstEdge });
         }
 
-        photoDispatch({ type: 'ADD_PHOTOS', photos: photos.edges });
-    }, [photoDispatch, photoSelectDispatch, photos]);
+        if (isSavePhoto.current) {
+            photoDispatch({ type: 'SAVE_PHOTO', photo: firstEdge });
+            photoSelectDispatch({ type: 'SELECT_PHOTO', photo: firstEdge, limit: props?.limit });
+            isSavePhoto.current = false;
+        } else {
+            photoDispatch({ type: 'ADD_PHOTOS', photos: photos.edges });
+        }
+    }, [photoDispatch, photoSelectDispatch, photos, props?.limit]);
 
     const fetchPhotos = useCallback(
         async ({ first, after, assetType, isInit }: FetchPhotosProps) => {
@@ -76,10 +85,19 @@ const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
         [photoSelectDispatch],
     );
 
+    const savePhoto = useCallback(
+        async ({ tag, options }: { tag: string; options?: SaveToCameraRollOptions | undefined }) => {
+            isSavePhoto.current = true;
+            save(tag, options).then(() => getPhotos({ first: 1, assetType: 'Photos' }));
+        },
+        [getPhotos, save],
+    );
+
     return {
         fetchPhotos,
         selectPhoto,
         deleteSelectedPhoto,
+        savePhoto,
     };
 };
 

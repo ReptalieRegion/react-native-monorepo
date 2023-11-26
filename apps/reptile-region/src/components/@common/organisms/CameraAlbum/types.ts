@@ -14,7 +14,12 @@ interface AddPhotos {
     photos: PhotoIdentifier[] | null;
 }
 
-export type PhotoActions = InitPhotos | AddPhotos;
+interface SavePhoto {
+    type: 'SAVE_PHOTO';
+    photo: PhotoIdentifier | null;
+}
+
+export type PhotoActions = InitPhotos | AddPhotos | SavePhoto;
 
 export type PhotoSelectState = {
     currentSelectedPhoto: PhotoIdentifier | null;
