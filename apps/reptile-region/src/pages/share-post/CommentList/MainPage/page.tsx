@@ -5,6 +5,7 @@ import { RefreshControl } from 'react-native';
 
 import useCommentActions from '../../../../hooks/share-post/actions/useCommentActions';
 import useCommentNavigation from '../../../../hooks/share-post/navigation/useCommentNavigation';
+import EmptyComment from '../empty';
 import type { CommentScreenProps } from '../type';
 
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
@@ -90,6 +91,7 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
             scrollEventThrottle={16}
             onEndReached={onEndReached}
             ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+            ListEmptyComponent={<EmptyComment />}
         />
     );
 }

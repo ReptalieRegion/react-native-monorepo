@@ -1,5 +1,7 @@
 import React from 'react';
 
+import EmptyData from './empty-data';
+
 import useFetchPost from '@/apis/share-post/post/hooks/queries/useFetchPost';
 import { Divider } from '@/components/@common/atoms/Divider';
 import SharePostCardNotification from '@/components/share-post/organisms/SharePostCard/SharePostCardNotification';
@@ -8,6 +10,7 @@ import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNa
 
 export function Post({ postId }: { postId: string }) {
     const { data } = useFetchPost({ postId });
+    console.log(data);
 
     const {
         post: {
@@ -24,6 +27,10 @@ export function Post({ postId }: { postId: string }) {
     });
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
         useSharePostNavigation('MODAL');
+
+    if (!data) {
+        return <EmptyData />;
+    }
 
     return (
         <>
