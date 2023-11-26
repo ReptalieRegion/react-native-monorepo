@@ -5,8 +5,8 @@ export const AUTH_QUERY_KEYS = {
 
 /** My */
 export const MY_QUERY_KEYS = {
-    profile: ['me', 'profile'],
-    post: ['me', 'post'],
+    profile: ['me', { type: 'profile' }],
+    post: ['me', { type: 'post' }],
 } as const;
 
 export const NOTIFICATION_QUERY_KEYS = {
@@ -18,15 +18,15 @@ export const NOTIFICATION_QUERY_KEYS = {
 /** SharePost */
 export const SHARE_POST_QUERY_KEYS = {
     list: ['share-post'],
-    post: (postId: string) => [...SHARE_POST_QUERY_KEYS.list, postId],
-    detailUserPosts: (nickname: string) => [...SHARE_POST_QUERY_KEYS.list, 'detail', nickname],
-    comment: (postId: string) => [...SHARE_POST_QUERY_KEYS.list, 'comment', postId],
-    commentReply: (commentId: string) => [...SHARE_POST_QUERY_KEYS.list, 'comment-reply', commentId],
+    post: (postId: string) => ['share-post', postId],
+    detailUserPosts: (nickname: string) => ['share-post', 'detail', nickname],
+    comment: (postId: string) => ['share-post', 'comment', postId],
+    commentReply: (commentId: string) => ['share-post', 'comment-reply', commentId],
     profile: ['user', 'profile'],
-    profileDetail: (nickname: string) => [...SHARE_POST_QUERY_KEYS.profile, nickname],
+    profileDetail: (nickname: string) => ['user', 'profile', nickname],
     profileList: ['user', 'profile', 'list'],
-    likeList: (postId: string) => [...SHARE_POST_QUERY_KEYS.profileList, 'like', postId],
-    followerList: (userId: string) => [...SHARE_POST_QUERY_KEYS.profileList, 'follower', userId],
-    followingList: (userId: string) => [...SHARE_POST_QUERY_KEYS.profileList, 'following', userId],
+    likeList: (postId: string) => ['user', 'profile', 'list', 'like', postId],
+    followerList: (userId: string) => ['user', 'profile', 'list', 'follower', userId],
+    followingList: (userId: string) => ['user', 'profile', 'list', 'following', userId],
     searchUser: (search: string) => ['user', 'search', search],
 } as const;

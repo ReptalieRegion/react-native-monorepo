@@ -41,12 +41,6 @@ export default function ImageCrop({ image, width, height, maxScale, onCropped }:
         scale: useSharedValue(1),
     };
 
-    // console.log(
-    //     `\nimageWidth: ${imageWidth}\nimageHeight: ${imageHeight}\nwidth: ${width}\nheight: ${height}\nx: ${
-    //         imageRatio > viewRatio ? 0 : (width - imageWidth) / 2
-    //     }`,
-    // );
-
     const lastUri = useRef(image.uri);
     if (lastUri.current !== image.uri) {
         translation.x.value = imageRatio > viewRatio ? 0 : (width - imageWidth) / 2;

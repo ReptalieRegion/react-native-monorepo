@@ -1,4 +1,4 @@
-import { QueryClient, useQueryClient, type InfiniteData } from '@tanstack/react-query';
+import { QueryClient, useQueryClient, type InfiniteData, type QueryKey } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
@@ -17,7 +17,7 @@ type MutateFollowProps = CreateFollow['Request'] | UpdateFollow['Request'];
 
 type OptionProps = {
     queryClient: QueryClient;
-    key: readonly string[];
+    key: readonly QueryKey[];
 };
 
 interface PostListKey {
@@ -158,7 +158,7 @@ export default function useSharePostActions(props: UseSharePostProps): ReturnAct
  * React query 낙관적 업데이트
  */
 async function handleCreateLikeMutateProfileDetail(_props: MutateLikeProps, { queryClient, key }: OptionProps) {
-    await queryClient.cancelQueries({ queryKey: SHARE_POST_QUERY_KEYS.list });
+    await queryClient.cancelQueries({ queryKey: key });
     const prevList = queryClient.getQueryData<FetchPost['Response']>(key);
     queryClient.setQueryData<FetchPost['Response']>(key, (prevData) => {
         if (prevData === undefined) {
@@ -178,7 +178,7 @@ async function handleCreateLikeMutateProfileDetail(_props: MutateLikeProps, { qu
 }
 
 async function handleCreateLikeMutate({ postId }: MutateLikeProps, { queryClient, key }: OptionProps) {
-    await queryClient.cancelQueries({ queryKey: SHARE_POST_QUERY_KEYS.list });
+    await queryClient.cancelQueries({ queryKey: key });
     const prevList = queryClient.getQueryData<InfiniteData<FetchPosts['Response'], number>>(key);
     queryClient.setQueryData<InfiniteData<FetchPosts['Response'], number>>(key, (prevData) => {
         if (prevData === undefined) {
@@ -204,7 +204,7 @@ async function handleCreateLikeMutate({ postId }: MutateLikeProps, { queryClient
 }
 
 async function handleUpdateLikeMutateProfileDetail(_props: MutateLikeProps, { queryClient, key }: OptionProps) {
-    await queryClient.cancelQueries({ queryKey: SHARE_POST_QUERY_KEYS.list });
+    await queryClient.cancelQueries({ queryKey: key });
     const prevList = queryClient.getQueryData<FetchPost['Response']>(key);
     queryClient.setQueryData<FetchPost['Response']>(key, (prevData) => {
         if (prevData === undefined) {
@@ -212,7 +212,6 @@ async function handleUpdateLikeMutateProfileDetail(_props: MutateLikeProps, { qu
         }
 
         const { isLike, likeCount } = prevData.post;
-        console.log(isLike, likeCount);
 
         return {
             post: {
@@ -227,7 +226,7 @@ async function handleUpdateLikeMutateProfileDetail(_props: MutateLikeProps, { qu
 }
 
 async function handleUpdateLikeMutate({ postId }: MutateLikeProps, { queryClient, key }: OptionProps) {
-    await queryClient.cancelQueries({ queryKey: SHARE_POST_QUERY_KEYS.list });
+    await queryClient.cancelQueries({ queryKey: key });
     const prevList = queryClient.getQueryData<InfiniteData<FetchPosts['Response'], number>>(key);
     queryClient.setQueryData<InfiniteData<FetchPosts['Response'], number>>(key, (prevData) => {
         if (prevData === undefined) {

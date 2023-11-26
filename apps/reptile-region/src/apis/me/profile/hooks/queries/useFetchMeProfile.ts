@@ -11,8 +11,10 @@ type UseFetchMeProfileState = {
     enabled: boolean | undefined;
 };
 
+type QueryKey = string | { type: string };
+
 export default function useFetchMeProfile(props?: UseFetchMeProfileState) {
-    return useQuery<FetchMeProfile['Response'], HTTPError, FetchMeProfile['Response'], readonly string[]>({
+    return useQuery<FetchMeProfile['Response'], HTTPError, FetchMeProfile['Response'], readonly QueryKey[]>({
         queryKey: MY_QUERY_KEYS.profile,
         staleTime: Infinity,
         gcTime: Infinity,

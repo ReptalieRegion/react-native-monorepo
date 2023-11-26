@@ -17,14 +17,14 @@ export default function useUpdateFollow(props?: UseUpdateFollowProps) {
 
     return useMutation<UpdateFollow['Response'], HTTPError, UpdateFollow['Request']>({
         mutationFn: ({ userId }) => updateFollow({ userId }),
-        onSettled: (data) => {
+        onSettled: (data, error) => {
+            console.log(error);
             if (data) {
                 queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.list, exact: true });
                 queryClient.invalidateQueries({
                     queryKey: SHARE_POST_QUERY_KEYS.profileDetail(data.user.nickname),
                     exact: true,
                 });
-
                 const userIdSet = new Set();
                 queryClient.getQueryCache().findAll({
                     queryKey: [...SHARE_POST_QUERY_KEYS.profileList],
@@ -55,8 +55,15 @@ export default function useUpdateFollow(props?: UseUpdateFollowProps) {
                         exact: true,
                     });
                 });
-
-                queryClient.invalidateQueries({ queryKey: MY_QUERY_KEYS.profile });
+                queryClient
+                    .getQueryCache()
+                    .getAll()
+                    .map((query) => {
+                        console.log(query.queryKey);
+                    });
+                queryClient.invalidateQueries({
+                    queryKey: MY_QUERY_KEYS.profile,
+                });
             }
         },
         ...props,

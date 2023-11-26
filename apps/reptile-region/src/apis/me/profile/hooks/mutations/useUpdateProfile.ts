@@ -14,14 +14,15 @@ type UseUpdateProfileContext = {
 };
 
 export default function useUpdateProfile() {
+    const queryKey = MY_QUERY_KEYS.profile;
     const queryClient = useQueryClient();
 
     return useMutation<UpdateProfileImage['Response'], HTTPError, UpdateProfileImage['Request'], UseUpdateProfileContext>({
         mutationFn: updateMeProfile,
         onMutate: async ({ uri }) => {
-            await queryClient.cancelQueries({ queryKey: MY_QUERY_KEYS.profile });
-            const previousMeProfile = queryClient.getQueryData<FetchMeProfile['Response']>(MY_QUERY_KEYS.profile);
-            queryClient.setQueryData<FetchMeProfile['Response']>(MY_QUERY_KEYS.profile, (prevProfile) => {
+            await queryClient.cancelQueries({ queryKey });
+            const previousMeProfile = queryClient.getQueryData<FetchMeProfile['Response']>(queryKey);
+            queryClient.setQueryData<FetchMeProfile['Response']>(queryKey, (prevProfile) => {
                 if (prevProfile === undefined) {
                     return prevProfile;
                 }
@@ -40,11 +41,11 @@ export default function useUpdateProfile() {
         },
         onError: (_error, _variables, context) => {
             if (context !== undefined) {
-                queryClient.setQueryData(MY_QUERY_KEYS.profile, context.previousMeProfile);
+                queryClient.setQueryData(queryKey, context.previousMeProfile);
             }
         },
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: MY_QUERY_KEYS.profile });
+            queryClient.invalidateQueries({ queryKey: queryKey });
         },
     });
 }
