@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import GlobalError from './error';
 
+import Alert from '@/components/@common/organisms/Alert';
 import Toast from '@/components/@common/organisms/Toast';
 import { Auth } from '@/components/auth/organisms/Auth';
 import useEffectNotifee from '@/hooks/notification/useEffectNotifee';
@@ -23,11 +24,15 @@ export default function App() {
             <GestureHandlerRootView style={styles.gestureContainer}>
                 <SafeAreaProvider>
                     <Toast>
-                        <Auth>
-                            <ErrorBoundary renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}>
-                                <RootRoutes navigationRef={navigationRef} />
-                            </ErrorBoundary>
-                        </Auth>
+                        <Alert>
+                            <Auth>
+                                <ErrorBoundary
+                                    renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}
+                                >
+                                    <RootRoutes navigationRef={navigationRef} />
+                                </ErrorBoundary>
+                            </Auth>
+                        </Alert>
                     </Toast>
                 </SafeAreaProvider>
             </GestureHandlerRootView>

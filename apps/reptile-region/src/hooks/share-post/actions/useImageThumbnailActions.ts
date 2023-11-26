@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
+import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 import type { FetchDetailUserProfile } from '@/types/apis/share-post/user';
 
 type UseImageThumbnailActionsProps = {
@@ -11,6 +12,8 @@ type UseImageThumbnailActionsProps = {
 const useImageThumbnailActions = ({ nickname }: UseImageThumbnailActionsProps) => {
     const profileKey = SHARE_POST_QUERY_KEYS.profileDetail(nickname);
     const queryClient = useQueryClient();
+    const { requireAuthNavigation } = useAuthNavigation();
+
     const { mutateFollow } = useCreateOrUpdateFollow({
         create: {
             onMutate: async () => {
@@ -78,7 +81,7 @@ const useImageThumbnailActions = ({ nickname }: UseImageThumbnailActionsProps) =
     });
 
     const handlePressFollow = (props: { userId: string; isFollow: boolean | undefined }) => {
-        mutateFollow(props);
+        requireAuthNavigation(() => mutateFollow(props));
     };
 
     return {

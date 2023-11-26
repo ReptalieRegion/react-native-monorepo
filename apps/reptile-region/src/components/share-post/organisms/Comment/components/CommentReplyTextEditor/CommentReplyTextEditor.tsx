@@ -8,6 +8,7 @@ import TextInputEditor from '../TextInputEditor';
 import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
 import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useUpdateCommentReply';
 import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
+import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 
 export default function CommentReplyTextEditor() {
     const { changeText } = useTagHandler();
@@ -16,6 +17,7 @@ export default function CommentReplyTextEditor() {
         setTimeout(Keyboard.dismiss, 500);
         changeText('');
     };
+    const { requireAuthNavigation } = useAuthNavigation();
     const createCommentReply = useCreateCommentReply({ onSuccess: handleSuccess });
     const updateCommentReply = useUpdateCommentReply({
         onSuccess: () => {
@@ -26,16 +28,18 @@ export default function CommentReplyTextEditor() {
 
     const handleSubmit: CommentTextInputActions['onSubmit'] = useCallback(
         ({ id, submitType, contents }) => {
-            switch (submitType) {
-                case 'UPDATE':
-                    updateCommentReply.mutate({ commentReplyId: id, contents });
-                    return;
-                case 'CREATE':
-                    createCommentReply.mutate({ commentId: id, contents });
-                    return;
-            }
+            requireAuthNavigation(() => {
+                switch (submitType) {
+                    case 'UPDATE':
+                        updateCommentReply.mutate({ commentReplyId: id, contents });
+                        return;
+                    case 'CREATE':
+                        createCommentReply.mutate({ commentId: id, contents });
+                        return;
+                }
+            });
         },
-        [createCommentReply, updateCommentReply],
+        [createCommentReply, updateCommentReply, requireAuthNavigation],
     );
 
     return (

@@ -2,6 +2,7 @@ import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
+import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 import type { FetchLike } from '@/types/apis/share-post/post';
 
 interface LikeKey {
@@ -21,6 +22,10 @@ interface FollowingKey {
 
 type UseProfileListActionsProps = LikeKey | FollowerKey | FollowingKey;
 
+interface ReturnActions {
+    handlePressFollow(props: { userId: string; isFollow: boolean | undefined }): void;
+}
+
 const createKey = (props: UseProfileListActionsProps) => {
     switch (props.type) {
         case 'LIKE':
@@ -32,9 +37,11 @@ const createKey = (props: UseProfileListActionsProps) => {
     }
 };
 
-export default function useProfileListActions(props: UseProfileListActionsProps) {
+export default function useProfileListActions(props: UseProfileListActionsProps): ReturnActions {
     const queryKey = createKey(props);
     const queryClient = useQueryClient();
+    const { requireAuthNavigation } = useAuthNavigation();
+
     const { mutateFollow } = useCreateOrUpdateFollow({
         create: {
             onMutate: async ({ userId }) => {
@@ -117,6 +124,6 @@ export default function useProfileListActions(props: UseProfileListActionsProps)
     });
 
     return {
-        handlePressFollow: mutateFollow,
+        handlePressFollow: (followProps) => requireAuthNavigation(() => mutateFollow(followProps)),
     };
 }

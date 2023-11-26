@@ -8,6 +8,7 @@ import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCre
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import Follow from '@/components/share-post/atoms/Follow';
+import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 import type { FetchDetailUserProfile } from '@/types/apis/share-post/user';
 
 type ChangeHeaderProps = {
@@ -21,7 +22,7 @@ export function SharePostUserDetailListHeader(props: NativeStackHeaderProps) {
 
 export default function ChangeHeader({ nickname, navigation }: ChangeHeaderProps) {
     const { data } = useFetchUserProfile({ nickname });
-
+    const { requireAuthNavigation } = useAuthNavigation();
     const queryKey = SHARE_POST_QUERY_KEYS.profileDetail(nickname);
     const queryClient = useQueryClient();
     const { mutateFollow } = useCreateOrUpdateFollow({
@@ -94,14 +95,14 @@ export default function ChangeHeader({ nickname, navigation }: ChangeHeaderProps
                     user: { id: userId, isFollow },
                 } = data;
                 Haptic.trigger('impactLight');
-                mutateFollow({ userId, isFollow });
+                requireAuthNavigation(() => mutateFollow({ userId, isFollow }));
             };
 
             return <Follow isFollow={data?.user.isFollow} onPress={handlePressFollow} />;
         };
 
         navigation.setOptions({ headerRight, headerTitle: nickname });
-    }, [data, navigation, nickname, mutateFollow]);
+    }, [data, navigation, nickname, mutateFollow, requireAuthNavigation]);
 
     return null;
 }

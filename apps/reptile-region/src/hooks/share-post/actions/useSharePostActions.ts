@@ -6,6 +6,7 @@ import { MY_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useCreateOrUpdateLike from '@/apis/share-post/post/hooks/combine/useCreateOrUpdateLike';
 import useOnlyLike from '@/apis/share-post/post/hooks/combine/useOnlyLike';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
+import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 import type { CreateLike, FetchPost, FetchPosts, FetchPostsResponse, UpdateLike } from '@/types/apis/share-post/post';
 import type { CreateFollow, UpdateFollow } from '@/types/apis/share-post/user';
 import type { InfiniteState } from '@/types/apis/utils';
@@ -39,6 +40,12 @@ interface MeUserDetailKey {
 
 type UseSharePostProps = PostListKey | UserDetailKey | MeUserDetailKey | PostDetail;
 
+interface ReturnActions {
+    handlePressHeart(props: { isLike: boolean | undefined; postId: string }): void;
+    handleDoublePressImageCarousel(props: { isLike: boolean | undefined; postId: string }): void;
+    handlePressFollow(props: { isFollow: boolean | undefined; userId: string }): void;
+}
+
 const createLikeKey = (props: UseSharePostProps) => {
     switch (props.type) {
         case 'POST':
@@ -52,9 +59,10 @@ const createLikeKey = (props: UseSharePostProps) => {
     }
 };
 
-export default function useSharePostActions(props: UseSharePostProps) {
+export default function useSharePostActions(props: UseSharePostProps): ReturnActions {
     const listKey = createLikeKey(props);
     const queryClient = useQueryClient();
+    const { requireAuthNavigation } = useAuthNavigation();
 
     const handleCreateMutate = useCallback(
         (mutateProps: MutateLikeProps) => {
@@ -139,9 +147,9 @@ export default function useSharePostActions(props: UseSharePostProps) {
     });
 
     return {
-        handlePressHeart: mutateLike,
-        handleDoublePressImageCarousel: mutateOnlyLike,
-        handlePressFollow: mutateFollow,
+        handlePressHeart: (likeProps) => requireAuthNavigation(() => mutateLike(likeProps)),
+        handleDoublePressImageCarousel: (likeProps) => requireAuthNavigation(() => mutateOnlyLike(likeProps)),
+        handlePressFollow: (followProps) => requireAuthNavigation(() => mutateFollow(followProps)),
     };
 }
 

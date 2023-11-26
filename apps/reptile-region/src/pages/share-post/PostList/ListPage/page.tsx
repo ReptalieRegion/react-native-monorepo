@@ -1,7 +1,7 @@
 import { color } from '@reptile-region/design-system';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import type { SharePostListPageScreen } from '../type';
@@ -14,6 +14,7 @@ import useFloatingHandler from '@/components/share-post/organisms/FloatingAction
 import { ListEmptyComponent } from '@/components/share-post/organisms/SharePostCard/components';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
+import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
 import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 import type { FetchPostResponse } from '@/types/apis/share-post/post';
@@ -79,22 +80,25 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
 
     const handleEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
 
-    const handlePressPrimaryFloatingButton = useCallback(() => {
-        navigation.navigate('share-post/modal/posting', {
-            screen: 'image-crop',
+    const { requireAuthNavigation } = useAuthNavigation();
+    const handlePressPrimaryFloatingButton = () => {
+        requireAuthNavigation(() => {
+            navigation.navigate('share-post/modal/posting', {
+                screen: 'image-crop',
+            });
         });
-    }, [navigation]);
+    };
 
-    const handlePressSecondaryFloatingButton = useCallback(() => {
+    const handlePressSecondaryFloatingButton = () => {
         scrollToTop();
-    }, [scrollToTop]);
+    };
 
     return (
         <View style={styles.container}>
             <FlashList
                 ref={flashListRef}
                 contentContainerStyle={styles.listContainer}
-                data={useMemo(() => data?.pages.flatMap((page) => page.items), [data])}
+                data={data}
                 keyExtractor={(item) => item.post.id}
                 renderItem={renderItem}
                 estimatedItemSize={400}
