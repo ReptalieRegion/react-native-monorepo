@@ -1,6 +1,6 @@
 import { TouchableTypo } from '@reptile-region/design-system';
-import React, { useEffect } from 'react';
-import { AppState, StyleSheet, View, useWindowDimensions } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import type { ImagePickScreenProp } from '../type';
 
@@ -16,16 +16,6 @@ export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
     const textHeight = 48;
     const photoEditorHeight = height / 2 - headerHeight;
     const photoListHeight = height - photoEditorHeight;
-
-    useEffect(() => {
-        const subscription = AppState.addEventListener('change', (nextAppState) => {
-            console.log(nextAppState);
-        });
-
-        return () => {
-            subscription.remove();
-        };
-    }, []);
 
     return (
         <>

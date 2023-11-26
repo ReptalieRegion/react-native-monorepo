@@ -8,7 +8,6 @@ import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNa
 
 export function Post({ postId }: { postId: string }) {
     const { data } = useFetchPost({ postId });
-    console.log(data);
 
     const {
         post: {

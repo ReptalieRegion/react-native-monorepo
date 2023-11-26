@@ -35,7 +35,6 @@ export default function KakaoButton({ height = 44, width = '90%', onSuccess, onE
             const { authToken, publicKey } = await AuthTokenAndPublicKeyMutateAsync();
             kakaoAuthMutate({ socialId: profile.id, authToken, publicKey });
         } catch (error) {
-            console.log(error);
             onError(error);
         } finally {
             closeLoading();
