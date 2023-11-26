@@ -1,11 +1,11 @@
 import { Typo, color } from '@reptile-region/design-system';
-import { useLoading } from '@reptile-region/react-hooks';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import useGoogleAuth from '@/apis/auth/hooks/mutations/useGoogleAuth';
 import GoogleSymbol from '@/assets/icons/GoogleSymbol';
+import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import { GoogleAuth } from '@/native-modules/google-auth/RNGoogleAuthModule';
 import type { PostGoogleAuth } from '@/types/apis/auth';
 
@@ -17,12 +17,12 @@ interface GoogleButtonActions {
 export type GoogleButtonProps = GoogleButtonActions;
 
 export default function GoogleButton({ onSuccess, onError }: GoogleButtonProps) {
-    const { loading, startLoading, endLoading } = useLoading();
+    const { openLoading, closeLoading } = useGlobalLoading();
     const { mutate } = useGoogleAuth({ onSuccess, onError });
 
     const handlePress = async () => {
         try {
-            startLoading();
+            openLoading();
             const result = await GoogleAuth.login();
             if (result.idToken === null) {
                 throw new Error('[Google Auth]: no idToken');
@@ -31,14 +31,13 @@ export default function GoogleButton({ onSuccess, onError }: GoogleButtonProps) 
         } catch (error) {
             onError(error);
         } finally {
-            endLoading();
+            closeLoading();
         }
     };
 
     return (
         <TouchableWithoutFeedback
             onPress={handlePress}
-            disabled={loading}
             style={[styles.fullWidth, styles.center]}
             containerStyle={styles.fullWidth}
         >

@@ -23,8 +23,9 @@ const useMeActions = () => {
     const logout = async () => {
         try {
             await deleteFCMTokenMutateAsync();
-            await signOutMutateAsync();
-            await signOut();
+            signOutMutateAsync().then(() => {
+                signOut();
+            });
             navigation.navigate('bottom-tab/routes', {
                 screen: 'tab',
                 params: {

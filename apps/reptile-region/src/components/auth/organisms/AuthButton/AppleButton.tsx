@@ -4,6 +4,7 @@ import { type DimensionValue } from 'react-native';
 
 import useAppleAuth from '@/apis/auth/hooks/mutations/useAppleAuth';
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
+import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import type { PostAppleAuth } from '@/types/apis/auth';
 
 type AppleButtonState = {
@@ -21,9 +22,11 @@ export type AppleButtonProps = AppleButtonState & AppleButtonActions;
 export default function AppleButton({ width = '90%', height = 44, onSuccess, onError }: AppleButtonProps) {
     const { mutateAsync: AuthTokenAndPublicKeyMutateAsync } = useAuthTokenAndPublicKey();
     const { mutate: appleMutate } = useAppleAuth({ onSuccess, onError });
+    const { openLoading, closeLoading } = useGlobalLoading();
 
     const handlePress = async () => {
         try {
+            openLoading();
             const appleAuthRequestResponse = await appleAuth.performRequest({
                 requestedOperation: appleAuth.Operation.LOGIN,
                 requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
@@ -42,6 +45,8 @@ export default function AppleButton({ width = '90%', height = 44, onSuccess, onE
             if (error.code === !AppleError.CANCELED) {
                 onError(error);
             }
+        } finally {
+            closeLoading();
         }
     };
 
