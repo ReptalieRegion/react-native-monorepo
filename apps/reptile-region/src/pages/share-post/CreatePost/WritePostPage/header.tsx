@@ -16,7 +16,7 @@ export const WritePostHeader = createNativeStackHeader({
 });
 
 export default function ChangeHeader({ navigation }: WritePostChangeHeaderProps) {
-    const { selectedPhotos } = usePhotoSelect();
+    const { croppedSelectedPhotos } = usePhotoSelect();
     const { contents } = useTag();
     const { isPending, mutate } = useCreatePost({
         onSuccess: () => {
@@ -35,12 +35,12 @@ export default function ChangeHeader({ navigation }: WritePostChangeHeaderProps)
     useEffect(() => {
         const headerRight = () => {
             const handleSubmitSharePost = () => {
-                if (selectedPhotos.length === 0 || contents.length === 0) {
+                if (croppedSelectedPhotos.length === 0 || contents.length === 0) {
                     return;
                 }
 
                 Keyboard.dismiss();
-                mutate({ contents, selectedPhotos });
+                mutate({ contents, selectedPhotos: croppedSelectedPhotos });
             };
 
             return (
@@ -57,7 +57,7 @@ export default function ChangeHeader({ navigation }: WritePostChangeHeaderProps)
         };
 
         navigation.setOptions({ headerRight });
-    }, [navigation, contents, isPending, selectedPhotos, mutate]);
+    }, [navigation, contents, isPending, croppedSelectedPhotos, mutate]);
 
     return null;
 }

@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useRef } from 'react';
 
 import { PhotoActionsContext } from '../contexts/PhotoContext';
 import { PhotoSelectActionsContext } from '../contexts/PhotoSelectContext';
-import type { FetchPhotosProps } from '../types';
+import type { CropInfo, FetchPhotosProps } from '../types';
 
 import usePhotoSelect from './usePhotoSelect';
 
@@ -17,7 +17,7 @@ interface UseCameraAlbumHandlerActions {
 
 type UseCameraAlbumHandlerProps = UseCameraAlbumHandlerState & UseCameraAlbumHandlerActions;
 
-const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
+export default function useCameraAlbumHandler(props?: UseCameraAlbumHandlerProps) {
     const [photos, getPhotos, save] = useCameraRoll();
     const isInitPhoto = useRef<boolean | undefined>();
     const isSavePhoto = useRef<boolean | undefined>();
@@ -93,12 +93,26 @@ const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
         [getPhotos, save],
     );
 
+    const setCropInfo = useCallback(
+        ({ originalUri, crop }: { originalUri: string; crop?: CropInfo }) => {
+            photoSelectDispatch({ type: 'CROPPED_PHOTO', originalUri, crop });
+        },
+        [photoSelectDispatch],
+    );
+
+    const setCroppedSelectedPhoto = useCallback(
+        (croppedSelectedPhoto: PhotoIdentifier, index: number) => {
+            photoSelectDispatch({ type: 'CROPPED_SELECT_PHOTO', croppedSelectedPhoto, index });
+        },
+        [photoSelectDispatch],
+    );
+
     return {
         fetchPhotos,
         selectPhoto,
         deleteSelectedPhoto,
         savePhoto,
+        setCropInfo,
+        setCroppedSelectedPhoto,
     };
-};
-
-export default useCameraAlbumHandler;
+}

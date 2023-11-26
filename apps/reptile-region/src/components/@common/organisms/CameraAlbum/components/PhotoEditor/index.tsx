@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import ImageCrop from '../../../ImageCrop';
+import useCameraAlbumHandler from '../../hooks/useCameraAlbumHandler';
 import usePhotoSelect from '../../hooks/usePhotoSelect';
 
 type PhotoEditorState = {
@@ -12,25 +13,37 @@ type PhotoEditorState = {
 type PhotoEditorProps = PhotoEditorState;
 
 export default function PhotoEditor({ width, height }: PhotoEditorProps) {
+    const { setCropInfo } = useCameraAlbumHandler();
     const { currentSelectedPhoto } = usePhotoSelect();
 
-    if (currentSelectedPhoto === null) {
+    if (!currentSelectedPhoto?.origin) {
         return <View style={{ width, height }} />;
     }
 
+    const { image } = currentSelectedPhoto.origin.node;
+
     return (
         <ImageCrop
+            key={image.uri}
             image={{
-                uri: currentSelectedPhoto?.node.image.uri,
-                width: currentSelectedPhoto?.node.image.width,
-                height: currentSelectedPhoto?.node.image.height,
+                uri: image.uri,
+                width: image.width,
+                height: image.height,
             }}
+            initPosition={
+                currentSelectedPhoto.crop
+                    ? {
+                          x: currentSelectedPhoto.crop.x,
+                          y: currentSelectedPhoto.crop.y,
+                          scale: currentSelectedPhoto.crop.scale,
+                      }
+                    : undefined
+            }
             width={width}
             height={height}
+            minScale={0.5}
             maxScale={3}
-            onCropped={({ croppedUri, originalUri }) => {
-                console.log(croppedUri, originalUri);
-            }}
+            getCropInfo={(originalUri, cropInfo) => setCropInfo({ originalUri, crop: cropInfo })}
         />
     );
 }

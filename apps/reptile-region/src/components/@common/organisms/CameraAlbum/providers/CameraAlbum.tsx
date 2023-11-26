@@ -17,6 +17,7 @@ export default function CameraAlbum({ children }: CameraAlbumProps) {
     const [photoSelect, photoSelectDispatch] = useReducer(photoSelectReducer, {
         currentSelectedPhoto: null,
         selectedPhotos: [],
+        croppedSelectedPhotos: [],
         isLimit: false,
     });
 
