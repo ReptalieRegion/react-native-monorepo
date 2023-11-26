@@ -1,4 +1,4 @@
-import { QueryClient, useQueryClient, type InfiniteData, type QueryKey } from '@tanstack/react-query';
+import { QueryClient, useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
@@ -10,6 +10,7 @@ import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 import type { CreateLike, FetchPost, FetchPosts, FetchPostsResponse, UpdateLike } from '@/types/apis/share-post/post';
 import type { CreateFollow, UpdateFollow } from '@/types/apis/share-post/user';
 import type { InfiniteState } from '@/types/apis/utils';
+import type { CustomQueryKey } from '@/types/react-query';
 
 type MutateLikeProps = CreateLike['Request'] | UpdateLike['Request'];
 
@@ -17,7 +18,7 @@ type MutateFollowProps = CreateFollow['Request'] | UpdateFollow['Request'];
 
 type OptionProps = {
     queryClient: QueryClient;
-    key: readonly QueryKey[];
+    key: CustomQueryKey;
 };
 
 interface PostListKey {
