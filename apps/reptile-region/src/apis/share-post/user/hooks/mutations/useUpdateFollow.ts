@@ -17,8 +17,7 @@ export default function useUpdateFollow(props?: UseUpdateFollowProps) {
 
     return useMutation<UpdateFollow['Response'], HTTPError, UpdateFollow['Request']>({
         mutationFn: ({ userId }) => updateFollow({ userId }),
-        onSettled: (data, error) => {
-            console.log(error);
+        onSettled: (data) => {
             if (data) {
                 queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.list, exact: true });
                 queryClient.invalidateQueries({
@@ -55,12 +54,6 @@ export default function useUpdateFollow(props?: UseUpdateFollowProps) {
                         exact: true,
                     });
                 });
-                queryClient
-                    .getQueryCache()
-                    .getAll()
-                    .map((query) => {
-                        console.log(query.queryKey);
-                    });
                 queryClient.invalidateQueries({
                     queryKey: MY_QUERY_KEYS.profile,
                 });

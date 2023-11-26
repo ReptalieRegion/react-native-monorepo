@@ -3,7 +3,7 @@ import { useMutation, useQueryClient, type InfiniteData, type UseMutationOptions
 import { createFollow } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { MY_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { CreateFollow, FetchFollowerList } from '@/types/apis/share-post/user';
 
 export type UseCreateFollowProps = Pick<
@@ -47,6 +47,9 @@ export default function useCreateFollow(props?: UseCreateFollowProps) {
                 userIdSet.forEach((userId) => {
                     queryClient.invalidateQueries({ queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'follower', userId] });
                     queryClient.invalidateQueries({ queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'following', userId] });
+                });
+                queryClient.invalidateQueries({
+                    queryKey: MY_QUERY_KEYS.profile,
                 });
             }
         },

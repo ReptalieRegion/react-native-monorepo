@@ -34,7 +34,6 @@ export const getPosts = async ({ pageParam }: WithInfinitePageParam<FetchPosts['
 
 // 특정 게시물 패치
 export const getPost = async ({ postId }: FetchPost['Request']) => {
-    console.log(postId);
     const response = await clientFetch(`api/share/posts/${postId}`, {
         method: METHOD.GET,
     });
@@ -55,7 +54,6 @@ export const fetchMePostList = async ({ pageParam }: WithInfinitePageParam<void>
 
 // 특정 유저 게시글 패치
 export const getDetailUserPosts = async ({ pageParam, nickname }: WithInfinitePageParam<FetchDetailUserPost['Request']>) => {
-    console.log('refetch');
     const queryString = objectToQueryString({
         pageParam,
     });
