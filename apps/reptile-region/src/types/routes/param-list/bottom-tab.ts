@@ -4,7 +4,6 @@ import type { HomeBottomTabParamList } from './home';
 import type { InfoBottomTabParamList } from './info';
 import type { MeBottomTabParamList } from './me';
 import type { CommentParamList, SharePostBottomTabParamList } from './sharePost';
-import type { ShopBottomTabParamList } from './shop';
 
 // 바텀 탭 라우터
 type BottomTabParamList = {
@@ -12,7 +11,8 @@ type BottomTabParamList = {
     'info/routes': NavigatorScreenParams<InfoBottomTabParamList>;
     'me/routes': NavigatorScreenParams<MeBottomTabParamList>;
     'share-post/routes': NavigatorScreenParams<SharePostBottomTabParamList>;
-    'shop/routes': NavigatorScreenParams<ShopBottomTabParamList>;
+    // TODO 추후 쇼핑 기능 추가할 때 사용
+    // 'shop/routes': NavigatorScreenParams<ShopBottomTabParamList>;
 };
 
 // 바텀 탭 위에 모달을 띄우기 위한 라우터

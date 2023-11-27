@@ -6,13 +6,7 @@ import * as Haptic from 'react-native-haptic-feedback';
 
 import { BottomTabBarButton } from '../../atoms';
 
-import {
-    Home as HomeIcon,
-    Community as InfoIcon,
-    My as MyIcon,
-    Share as SharePostIcon,
-    Cart as ShopIcon,
-} from '@/assets/icons';
+import { Home as HomeIcon, Community as InfoIcon, My as MyIcon, Share as SharePostIcon } from '@/assets/icons';
 import type { IconProps } from '@/types/global/icons';
 import type { BottomTabParamList } from '@/types/routes/param-list/bottom-tab';
 
@@ -35,10 +29,6 @@ const MENUS: MenusType = {
         Icon: HomeIcon,
         name: '홈',
     },
-    'shop/routes': {
-        Icon: ShopIcon,
-        name: '쇼핑',
-    },
     'share-post/routes': {
         Icon: SharePostIcon,
         name: '일상공유',
@@ -51,6 +41,11 @@ const MENUS: MenusType = {
         Icon: MyIcon,
         name: '내 정보',
     },
+    // TODO 추후 쇼핑 기능 추가할 때 사용
+    // 'shop/routes': {
+    //     Icon: ShopIcon,
+    //     name: '쇼핑',
+    // },
 };
 
 export default function MainBottomBar({

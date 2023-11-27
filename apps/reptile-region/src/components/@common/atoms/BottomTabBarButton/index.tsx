@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        width: '20%',
+        width: '25%',
     },
     touchContainer: {
         width: '100%',

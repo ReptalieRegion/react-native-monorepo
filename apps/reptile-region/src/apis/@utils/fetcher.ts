@@ -70,12 +70,12 @@ class Fetcher {
 
             if (!response.ok) {
                 const data = await response.json();
-                await deleteAuthTokens();
-                await this.rejectRefreshQueue(new HTTPError(response.status, data.message));
+                this.rejectRefreshQueue(new HTTPError(response.status, data.message));
+                deleteAuthTokens();
             } else {
                 const tokens = (await response.json()) as RefreshToken['Response'];
-                await registerAuthTokens(tokens);
-                await this.refetch(tokens.accessToken);
+                registerAuthTokens(tokens);
+                this.refetch(tokens.accessToken);
             }
             this.isRefresh = false;
         }
