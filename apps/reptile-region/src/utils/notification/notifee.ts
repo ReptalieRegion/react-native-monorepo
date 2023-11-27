@@ -33,6 +33,7 @@ class NotifeeManger {
     };
 
     messageReceived = async (message: FirebaseMessagingTypes.RemoteMessage) => {
+        console.log(message);
         this.deepLink = undefined;
         const data = this._dataParse(message);
         if (data === undefined) {
@@ -49,6 +50,7 @@ class NotifeeManger {
 
     foregroundEvent = (navigationRef: NavigationContainerRefWithCurrent<RootRoutesParamList>) => {
         return notifee.onForegroundEvent(async ({ type, detail }) => {
+            console.log(type);
             const { notification } = detail;
             const link = detail.notification?.data?.link;
 
@@ -100,31 +102,28 @@ class NotifeeManger {
     };
 
     private _displayNotificationAndroid = async ({ title, body, message, link }: DisplayNotification) => {
-        const android = message.notification?.android;
         const data = link ? { link } : undefined;
 
-        if (android) {
-            const channelId = await notifee.createChannel({
-                id: 'important',
-                name: 'Important Notifications',
-                importance: AndroidImportance.HIGH,
-                vibration: true,
-                visibility: AndroidVisibility.PUBLIC,
-            });
-            notifee.displayNotification({
-                title,
-                body,
-                android: {
-                    channelId,
-                    smallIcon: 'ic_launcher',
-                    largeIcon: android?.imageUrl,
-                    pressAction: {
-                        id: 'default',
-                    },
+        const channelId = await notifee.createChannel({
+            id: 'important',
+            name: 'Important Notifications',
+            importance: AndroidImportance.HIGH,
+            vibration: true,
+            visibility: AndroidVisibility.PUBLIC,
+        });
+        notifee.displayNotification({
+            title,
+            body,
+            android: {
+                channelId,
+                smallIcon: 'ic_launcher',
+                largeIcon: message.data?.imageUrl,
+                pressAction: {
+                    id: 'default',
                 },
-                data,
-            });
-        }
+            },
+            data,
+        });
     };
 }
 

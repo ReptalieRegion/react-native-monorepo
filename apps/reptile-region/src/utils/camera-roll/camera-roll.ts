@@ -22,13 +22,16 @@ const IOSUploadImage = async (uri: string, filename: string | null) => {
 
 export const uploadImage = async (photo: PhotoIdentifier) => {
     const { uri, filename } = photo.node.image;
+    const randomNumber = Math.floor(Math.random() * 9999);
+    const newFilename = `image_${filename}_${randomNumber}_${new Date().getTime()}.jpg`;
+
     if (Platform.OS === 'ios') {
-        return IOSUploadImage(uri, filename);
+        return IOSUploadImage(uri, newFilename);
     }
 
     return {
         uri,
-        name: filename,
+        name: newFilename,
         type: 'image/jpeg',
     };
 };

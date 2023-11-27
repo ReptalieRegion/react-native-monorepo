@@ -12,9 +12,8 @@ import useImageCropActions from '@/hooks/share-post/actions/useImageCropActions'
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
     const { handleOpenCamera } = useImageCropActions();
     const { width, height } = useWindowDimensions();
-    const headerHeight = 60;
     const textHeight = 48;
-    const photoEditorHeight = height / 2 - headerHeight;
+    const photoEditorHeight = height / 2;
     const photoListHeight = height - photoEditorHeight;
 
     return (
