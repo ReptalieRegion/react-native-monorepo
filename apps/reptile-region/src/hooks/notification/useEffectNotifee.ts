@@ -9,7 +9,9 @@ import Notifee from '@/utils/notification/notifee';
 const useEffectNotifee = (navigationRef: NavigationContainerRefWithCurrent<RootRoutesParamList>) => {
     useEffect(() => {
         if (Platform.OS === 'android') {
-            Notifee.getInitialNotification();
+            Notifee.getInitialNotification().then((data) => {
+                console.log(data);
+            });
         }
 
         const unMessage = messaging().onMessage(Notifee.messageReceived);

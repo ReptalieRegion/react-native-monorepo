@@ -33,7 +33,6 @@ class NotifeeManger {
     };
 
     messageReceived = async (message: FirebaseMessagingTypes.RemoteMessage) => {
-        console.log(message);
         this.deepLink = undefined;
         const data = this._dataParse(message);
         if (data === undefined) {
@@ -50,7 +49,6 @@ class NotifeeManger {
 
     foregroundEvent = (navigationRef: NavigationContainerRefWithCurrent<RootRoutesParamList>) => {
         return notifee.onForegroundEvent(async ({ type, detail }) => {
-            console.log(type);
             const { notification } = detail;
             const link = detail.notification?.data?.link;
 
@@ -78,8 +76,9 @@ class NotifeeManger {
         return notifee.getInitialNotification();
     };
 
-    getDeepLink = () => {
-        return this.deepLink;
+    getDeepLink = async () => {
+        const link = Platform.OS === 'ios' ? this.deepLink : (await this.getInitialNotification())?.notification.data?.link;
+        return link as string;
     };
 
     private _dataParse = (message: FirebaseMessagingTypes.RemoteMessage) => {

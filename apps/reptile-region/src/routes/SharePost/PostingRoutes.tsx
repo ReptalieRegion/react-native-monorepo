@@ -14,7 +14,11 @@ export default function PostingRoutes() {
     return (
         <CameraAlbum>
             <Stack.Navigator>
-                <Stack.Screen name="image-crop" component={ImagePickerPage} options={{ header: ImagePickerHeader }} />
+                <Stack.Screen
+                    name="image-crop"
+                    component={ImagePickerPage}
+                    options={{ header: ImagePickerHeader, gestureEnabled: false }}
+                />
                 <Stack.Screen name="write" component={WritePostPage} options={{ header: WritePostHeader }} />
             </Stack.Navigator>
         </CameraAlbum>
