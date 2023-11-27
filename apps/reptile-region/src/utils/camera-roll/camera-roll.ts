@@ -7,7 +7,7 @@ const IOSUploadImage = async (uri: string, filename: string | null) => {
     if (isCroppedURL) {
         return {
             uri: uri.replace('file://', ''),
-            filename,
+            name: filename,
             type: 'image/jpeg',
         };
     }
