@@ -2,7 +2,6 @@ import { Typo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 import type {
@@ -26,24 +25,20 @@ type UserDetailPanelState = {
     postCount: number;
 };
 
-interface UserDetailPanelActions {
-    navigateFollowPage(props: FollowRouterParams): void;
+export interface UserDetailPanelActions {
+    handlePressFollow?(props: { userId: string; isFollow: boolean | undefined }): void;
+    navigateFollowPage(props: Omit<FollowRouterParams, 'pageState'>): void;
 }
 
 type UserDetailPanelProps = UserDetailPanelState & UserDetailPanelActions;
 
-export default function UserProfile({ user, postCount, navigateFollowPage }: UserDetailPanelProps) {
-    const { mutateFollow } = useCreateOrUpdateFollow();
+export default function UserProfile({ user, postCount, navigateFollowPage, handlePressFollow }: UserDetailPanelProps) {
     const newData = {
         user: {
             ...user,
             isFollow: user?.isFollow,
         },
         postCount,
-    };
-
-    const handlePressFollow = () => {
-        mutateFollow({ userId: newData.user.id, isFollow: newData.user.isFollow });
     };
 
     // TODO 유저 프로필 액션
@@ -64,7 +59,6 @@ export default function UserProfile({ user, postCount, navigateFollowPage }: Use
                         followingCount: user.followingCount,
                         nickname: user.nickname,
                     },
-                    pageState: 'BOTTOM_TAB',
                 }),
         },
         {
@@ -79,7 +73,6 @@ export default function UserProfile({ user, postCount, navigateFollowPage }: Use
                         followingCount: user.followingCount,
                         nickname: user.nickname,
                     },
-                    pageState: 'BOTTOM_TAB',
                 }),
         },
     ];
@@ -97,7 +90,17 @@ export default function UserProfile({ user, postCount, navigateFollowPage }: Use
                 {/** TODO 팔로우 */}
                 <ConditionalRenderer
                     condition={user.isMine === false}
-                    trueContent={<Follow isFollow={newData.user.isFollow} onPress={handlePressFollow} />}
+                    trueContent={
+                        <Follow
+                            isFollow={newData.user.isFollow}
+                            onPress={() =>
+                                handlePressFollow?.({
+                                    userId: user.id,
+                                    isFollow: user.isFollow,
+                                })
+                            }
+                        />
+                    }
                     falseContent={null}
                 />
             </View>

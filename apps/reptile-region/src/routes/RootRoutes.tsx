@@ -33,7 +33,7 @@ import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
 
 const linking: LinkingOptions<RootRoutesParamList> = {
-    prefixes: ['sharePost://'],
+    prefixes: ['crawl://'],
     config: {
         screens: {
             'share-post/modal': {
@@ -51,7 +51,9 @@ const linking: LinkingOptions<RootRoutesParamList> = {
             return url;
         }
 
-        const deepLink = Notifee.getDeepLink();
+        const deepLink = await Notifee.getDeepLink();
+
+        console.log(deepLink);
 
         return deepLink;
     },
@@ -102,6 +104,7 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     options={{
                         header: SignInHeader,
                         animation: 'slide_from_bottom',
+                        gestureEnabled: false,
                     }}
                 />
                 <Stack.Screen

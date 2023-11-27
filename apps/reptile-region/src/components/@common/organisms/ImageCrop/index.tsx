@@ -1,10 +1,10 @@
-import type { ImageCropData } from '@react-native-community/image-editor';
-import ImageEditor from '@react-native-community/image-editor';
 import { Image } from 'expo-image';
 import { useRef } from 'react';
 import React, { StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+
+import type { CropInfo } from '../CameraAlbum/types';
 
 type ImageCropState = {
     image: {
@@ -14,26 +14,27 @@ type ImageCropState = {
     };
     width: number;
     height: number;
+    initPosition?: {
+        x: number;
+        y: number;
+        scale: number;
+    };
+    minScale: number;
     maxScale: number;
 };
 
 interface ImageCropActions {
-    onCropped(props: { originalUri: string; croppedUri: string }): void;
+    getCropInfo?(originalUri: string, props: CropInfo): void;
 }
 
 type ImageCropProps = ImageCropState & ImageCropActions;
 
-export default function ImageCrop({ image, width, height, maxScale, onCropped }: ImageCropProps) {
+export default function ImageCrop({ image, width, height, maxScale, initPosition, getCropInfo }: ImageCropProps) {
+    const lastImage = useRef(image.uri);
     const imageRatio = image.height / image.width;
     const viewRatio = height / width;
     const imageWidth = imageRatio > viewRatio ? width : height / imageRatio;
     const imageHeight = imageRatio > viewRatio ? width * imageRatio : height;
-
-    const savedTranslation = {
-        x: useSharedValue(1),
-        y: useSharedValue(1),
-        scale: useSharedValue(1),
-    };
 
     const translation = {
         x: useSharedValue(imageRatio > viewRatio ? 0 : (width - imageWidth) / 2),
@@ -41,122 +42,94 @@ export default function ImageCrop({ image, width, height, maxScale, onCropped }:
         scale: useSharedValue(1),
     };
 
-    // console.log(
-    //     `\nimageWidth: ${imageWidth}\nimageHeight: ${imageHeight}\nwidth: ${width}\nheight: ${height}\nx: ${
-    //         imageRatio > viewRatio ? 0 : (width - imageWidth) / 2
-    //     }`,
-    // );
-
-    const lastUri = useRef(image.uri);
-    if (lastUri.current !== image.uri) {
-        translation.x.value = imageRatio > viewRatio ? 0 : (width - imageWidth) / 2;
-        translation.y.value = imageRatio > viewRatio ? (height - imageHeight) / 2 : 0;
-        translation.scale.value = 1;
-        savedTranslation.x.value = 1;
-        savedTranslation.y.value = 1;
-        savedTranslation.scale.value = 1;
+    if (initPosition && lastImage.current !== image.uri) {
+        lastImage.current = image.uri;
+        translation.x.value = initPosition.x;
+        translation.y.value = initPosition.y;
+        translation.scale.value = initPosition.scale;
     }
-
-    const calcOffsetX = (scaleWidth: number) => {
-        const currentOffsetX = translation.x.value;
-
-        if (currentOffsetX < -(imageWidth - width + scaleWidth)) {
-            return -(imageWidth - width + scaleWidth);
-        }
-
-        if (currentOffsetX > scaleWidth) {
-            return scaleWidth;
-        }
-
-        return currentOffsetX;
-    };
-
-    const calcOffsetY = (scaleHeight: number) => {
-        const currentOffsetY = translation.y.value;
-
-        if (currentOffsetY < -(imageWidth - height + scaleHeight)) {
-            return -(imageWidth - height + scaleHeight);
-        }
-
-        if (currentOffsetY > scaleHeight) {
-            return scaleHeight;
-        }
-
-        return currentOffsetY;
-    };
-
-    const calcScale = () => {
-        const currentScale = translation.scale.value;
-        if (currentScale > maxScale) {
-            return maxScale;
-        }
-
-        if (currentScale < 1) {
-            return 1;
-        }
-
-        return currentScale;
-    };
-
-    const makeImageCropData = ({
-        clampedScale,
-        scaleWidth,
-        scaleHeight,
-        offsetX,
-        offsetY,
-    }: {
-        clampedScale: number;
-        scaleWidth: number;
-        scaleHeight: number;
-        offsetX: number;
-        offsetY: number;
-    }): ImageCropData => {
-        const { x, y } =
-            image.width / width < image.height / height
-                ? { x: image.width / clampedScale, y: (image.width / clampedScale) * viewRatio }
-                : { x: image.height / clampedScale / viewRatio, y: image.height / clampedScale };
-
-        return {
-            size: {
-                width: x,
-                height: y,
-            },
-            offset: {
-                x: (-(offsetX - scaleWidth) / width) * x * clampedScale,
-                y: (-(offsetY - scaleHeight) / height) * y * clampedScale,
-            },
-        };
-    };
 
     const handleEnd = async () => {
         if (!width || !height || !maxScale) {
             return;
         }
 
-        const clampedScale = Math.min(maxScale, Math.max(1, translation.scale.value));
+        const clampedScale =
+            translation.scale.value > maxScale ? maxScale : translation.scale.value < 1 ? 1 : translation.scale.value;
         const scaleWidth = (width * clampedScale - width) / (2 * clampedScale);
         const scaleHeight = (height * clampedScale - height) / (2 * clampedScale);
-        const offsetX = calcOffsetX(scaleWidth);
-        const offsetY = calcOffsetY(scaleHeight);
-        const scale = calcScale();
 
-        translation.x.value = withSpring(offsetX);
-        translation.y.value = withSpring(offsetY);
-        translation.scale.value = withSpring(scale);
+        let offsetX = translation.x.value;
+        let offsetY = translation.y.value;
 
-        const cropData = makeImageCropData({ clampedScale, scaleHeight, scaleWidth, offsetX, offsetY });
-        const url = await ImageEditor.cropImage(image.uri, cropData);
-        onCropped({ originalUri: image.uri, croppedUri: url });
+        if (translation.x.value < -(imageWidth - width + scaleWidth)) {
+            translation.x.value = withSpring(-(imageWidth - width + scaleWidth));
+            offsetX = -(imageWidth - width + scaleWidth);
+        }
+        if (translation.x.value > scaleWidth) {
+            translation.x.value = withSpring(scaleWidth);
+            offsetX = scaleWidth;
+        }
+        if (translation.y.value < -(imageHeight - height + scaleHeight)) {
+            translation.y.value = withSpring(-(imageHeight - height + scaleHeight));
+            offsetY = -(imageHeight - height + scaleHeight);
+        }
+        if (translation.y.value > scaleHeight) {
+            translation.y.value = withSpring(scaleHeight);
+            offsetY = scaleHeight;
+        }
+        if (translation.scale.value > maxScale) {
+            translation.scale.value = withSpring(maxScale);
+        }
+        if (translation.scale.value < 1) {
+            translation.scale.value = withSpring(1);
+        }
+
+        let x2 = 0;
+        let y2 = 0;
+
+        if (image.width / width < image.height / height) {
+            x2 = image.width / clampedScale;
+            y2 = x2 * viewRatio;
+        } else {
+            y2 = image.height / clampedScale;
+            x2 = y2 / viewRatio;
+        }
+
+        offsetX -= scaleWidth;
+        offsetY -= scaleHeight;
+
+        offsetX = (-offsetX / width) * x2 * clampedScale; // px
+        offsetY = (-offsetY / height) * y2 * clampedScale; // px
+
+        getCropInfo?.(image.uri, {
+            size: {
+                width: x2,
+                height: y2,
+            },
+            offset: {
+                x: offsetX,
+                y: offsetY,
+            },
+            x: translation.x.value,
+            y: translation.y.value,
+            scale: translation.scale.value,
+        });
     };
 
+    /** pan */
+    const panContext = {
+        x: useSharedValue(0),
+        y: useSharedValue(0),
+    };
     const panGesture = Gesture.Pan()
         .onStart(() => {
-            savedTranslation.x.value = translation.x.value;
-            savedTranslation.y.value = translation.y.value;
+            panContext.x.value = translation.x.value;
+            panContext.y.value = translation.y.value;
         })
         .onChange((event) => {
-            translation.x.value = savedTranslation.x.value + event.translationX;
-            translation.y.value = savedTranslation.y.value + event.translationY;
+            translation.x.value = panContext.x.value + event.translationX;
+            translation.y.value = panContext.y.value + event.translationY;
         })
         .onEnd(() => {
             runOnJS(handleEnd)();
@@ -166,12 +139,23 @@ export default function ImageCrop({ image, width, height, maxScale, onCropped }:
         transform: [{ translateX: translation.x.value }, { translateY: translation.y.value }],
     }));
 
+    /** pinch */
+    const pinchContext = {
+        scale: useSharedValue(1),
+        x: useSharedValue(0),
+        y: useSharedValue(0),
+    };
+
     const pinchGesture = Gesture.Pinch()
-        .onUpdate((event) => {
-            translation.scale.value = savedTranslation.scale.value * event.scale;
+        .onStart(() => {
+            pinchContext.scale.value = translation.scale.value;
+            pinchContext.x.value = translation.x.value;
+            pinchContext.y.value = translation.y.value;
         })
-        .onEnd((event) => {
-            savedTranslation.scale.value = event.scale;
+        .onUpdate((event) => {
+            translation.scale.value = pinchContext.scale.value * event.scale;
+        })
+        .onEnd(() => {
             runOnJS(handleEnd)();
         });
 
@@ -188,8 +172,11 @@ export default function ImageCrop({ image, width, height, maxScale, onCropped }:
                             <View style={{ width, height }}>
                                 <Animated.View style={[{ width: imageWidth, height: imageHeight }, panStyle]}>
                                     <Image
+                                        style={{ width: image.width, height: image.height }}
+                                        recyclingKey={image.uri}
                                         source={{ uri: image.uri }}
-                                        style={{ width: imageWidth, height: imageHeight }}
+                                        priority="high"
+                                        contentFit="cover"
                                         placeholder={require('@/assets/images/default_image.png')}
                                         placeholderContentFit="cover"
                                     />

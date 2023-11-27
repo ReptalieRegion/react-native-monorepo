@@ -4,11 +4,11 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 import type { FetchFollowerListResponse } from '@/types/apis/share-post/user';
 import type { ImageType } from '@/types/global/image';
+import type { ImageThumbnailParams } from '@/types/routes/params/sharePost';
 
 type User = {
     user: {
@@ -25,31 +25,33 @@ type UserProfileListState = {
 
 interface UserProfileListActions {
     onEndReached(): void;
-    onPressProfile(): void;
+    onPressFollow(props: { userId: string; isFollow: boolean | undefined }): void;
+    onPressProfile(props: Omit<ImageThumbnailParams, 'pageState'>): void;
 }
 
 type UserProfileListProps = UserProfileListState & UserProfileListActions;
 
-export default function UserProfileList({ data, onEndReached, onPressProfile }: UserProfileListProps) {
-    const { mutateFollow } = useCreateOrUpdateFollow();
-
+export default function UserProfileList({ data, onEndReached, onPressProfile, onPressFollow }: UserProfileListProps) {
     const keyExtractor = (item: FetchFollowerListResponse) => item.user.id;
 
-    const renderItem: ListRenderItem<FetchFollowerListResponse> = ({ item }) => {
-        const handlePressFollow = () => {
-            mutateFollow({ userId: item.user.id, isFollow: item.user.isFollow });
-        };
-
+    const renderItem: ListRenderItem<FetchFollowerListResponse> = ({
+        item: {
+            user: { id: userId, isFollow, nickname, profile },
+        },
+    }) => {
         return (
-            <TouchableOpacity onPress={onPressProfile}>
-                <View style={styles.itemContainer}>
-                    <View style={styles.testContainer}>
-                        <Avatar image={item.user.profile} size={35} />
-                        <Typo variant="body3">{item.user.nickname}</Typo>
-                    </View>
-                    <Follow isFollow={item.user.isFollow} onPress={handlePressFollow} />
+            <View style={styles.itemContainer}>
+                <View style={styles.profileWrapper}>
+                    <TouchableOpacity
+                        style={styles.profileContainer}
+                        onPress={() => onPressProfile({ user: { isFollow, nickname, profile } })}
+                    >
+                        <Avatar image={profile} size={35} />
+                        <Typo variant="body3">{nickname}</Typo>
+                    </TouchableOpacity>
                 </View>
-            </TouchableOpacity>
+                <Follow isFollow={isFollow} onPress={() => onPressFollow({ userId, isFollow })} />
+            </View>
         );
     };
 
@@ -82,8 +84,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 15,
     },
-    testContainer: {
+    profileWrapper: {
         flex: 1,
+    },
+    profileContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,

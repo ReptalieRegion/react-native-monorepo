@@ -23,6 +23,9 @@ export default function useCreatePost({ onSuccess }: UseCreatePostProps) {
             updateSharePostDetailUserListCache({ queryClient, data });
             onSuccess();
         },
+        onError: (error) => {
+            console.log(error);
+        },
     });
 }
 

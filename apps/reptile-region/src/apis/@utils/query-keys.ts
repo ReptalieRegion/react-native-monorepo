@@ -5,8 +5,8 @@ export const AUTH_QUERY_KEYS = {
 
 /** My */
 export const MY_QUERY_KEYS = {
-    profile: ['me', 'profile'],
-    post: ['me', 'post'],
+    profile: ['me', { type: 'profile' }],
+    post: ['me', { type: 'post' }],
 } as const;
 
 export const NOTIFICATION_QUERY_KEYS = {
@@ -20,11 +20,13 @@ export const SHARE_POST_QUERY_KEYS = {
     list: ['share-post'],
     post: (postId: string) => ['share-post', postId],
     detailUserPosts: (nickname: string) => ['share-post', 'detail', nickname],
-    likeList: (postId: string) => ['share-post', 'like', postId],
-    profile: (nickname: string) => ['user', 'profile', nickname],
-    followerList: (userId: string) => ['user', 'follower', userId],
-    followingList: (userId: string) => ['user', 'following', userId],
-    searchUser: (search: string) => ['user', 'search', search],
     comment: (postId: string) => ['share-post', 'comment', postId],
     commentReply: (commentId: string) => ['share-post', 'comment-reply', commentId],
+    profile: ['user', 'profile'],
+    profileDetail: (nickname: string) => ['user', 'profile', nickname],
+    profileList: ['user', 'profile', 'list'],
+    likeList: (postId: string) => ['user', 'profile', 'list', 'like', postId],
+    followerList: (userId: string) => ['user', 'profile', 'list', 'follower', userId],
+    followingList: (userId: string) => ['user', 'profile', 'list', 'following', userId],
+    searchUser: (search: string) => ['user', 'search', search],
 } as const;

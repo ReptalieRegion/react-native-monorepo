@@ -11,10 +11,14 @@ import { NotificationIcon } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
+import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 
 export function HomeListHeader(props: NativeStackHeaderProps) {
+    const { requireAuthNavigation } = useAuthNavigation();
     const handlePressNotification = () => {
-        props.navigation.navigate('me/notification-log');
+        requireAuthNavigation(() => {
+            props.navigation.navigate('me/notification-log');
+        });
     };
 
     return createNativeStackHeader({
@@ -29,12 +33,15 @@ export function HomeListHeader(props: NativeStackHeaderProps) {
 
 export default function ChangeHeader({ navigation }: HomeListPageScreenProp) {
     const { isSignIn } = useAuth();
+    const { requireAuthNavigation } = useAuthNavigation();
     const { data } = useFetchPushReadCheck();
 
     useEffect(() => {
         const headerRight = () => {
             const handlePressNotification = () => {
-                navigation.navigate('me/notification-log');
+                requireAuthNavigation(() => {
+                    navigation.navigate('me/notification-log');
+                });
             };
 
             return (
@@ -58,7 +65,7 @@ export default function ChangeHeader({ navigation }: HomeListPageScreenProp) {
         };
 
         navigation.setOptions({ headerRight });
-    }, [data?.isReadAllLog, isSignIn, navigation]);
+    }, [data?.isReadAllLog, isSignIn, navigation, requireAuthNavigation]);
 
     return null;
 }

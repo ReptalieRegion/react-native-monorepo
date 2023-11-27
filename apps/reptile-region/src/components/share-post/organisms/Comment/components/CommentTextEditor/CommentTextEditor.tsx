@@ -8,6 +8,7 @@ import TextInputEditor from '../TextInputEditor';
 import useCreateComment from '@/apis/share-post/comment/hooks/mutations/useCreateComment';
 import useUpdateComment from '@/apis/share-post/comment/hooks/mutations/useUpdateComment';
 import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
+import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 
 export default function CommentTextEditor() {
     const { changeText } = useTagHandler();
@@ -17,6 +18,7 @@ export default function CommentTextEditor() {
         changeText('');
     };
     const createMutate = useCreateComment({ onSuccess: handleSuccess });
+    const { requireAuthNavigation } = useAuthNavigation();
     const updateMutate = useUpdateComment({
         onSuccess: () => {
             setCreateCommentSubmitType();
@@ -26,16 +28,18 @@ export default function CommentTextEditor() {
 
     const handleSubmit: CommentTextInputActions['onSubmit'] = useCallback(
         ({ id, submitType, contents }) => {
-            switch (submitType) {
-                case 'UPDATE':
-                    updateMutate.mutate({ commentId: id, contents });
-                    return;
-                case 'CREATE':
-                    createMutate.mutate({ postId: id, contents });
-                    return;
-            }
+            requireAuthNavigation(() => {
+                switch (submitType) {
+                    case 'UPDATE':
+                        updateMutate.mutate({ commentId: id, contents });
+                        return;
+                    case 'CREATE':
+                        createMutate.mutate({ postId: id, contents });
+                        return;
+                }
+            });
         },
-        [createMutate, updateMutate],
+        [createMutate, updateMutate, requireAuthNavigation],
     );
 
     return (

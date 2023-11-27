@@ -7,6 +7,7 @@ import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchFollowingList, FetchFollowingListResponse } from '@/types/apis/share-post/user';
 import type { InfiniteState } from '@/types/apis/utils';
+import type { CustomQueryKey } from '@/types/react-query';
 
 // 사용자 팔로잉 리스트 무한스크롤 조회
 export default function useInfiniteFollowingList({ userId }: FetchFollowingList['Request']) {
@@ -14,7 +15,7 @@ export default function useInfiniteFollowingList({ userId }: FetchFollowingList[
         FetchFollowingList['Response'],
         HTTPError,
         FetchFollowingListResponse[],
-        readonly string[],
+        CustomQueryKey,
         number
     >({
         queryKey: SHARE_POST_QUERY_KEYS.followingList(userId),
@@ -22,7 +23,7 @@ export default function useInfiniteFollowingList({ userId }: FetchFollowingList[
         queryFn: ({ pageParam }) => getFollowingList({ userId, pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,
         select: useCallback(
-            (data: InfiniteData<InfiniteState<FetchFollowingListResponse>, number>) =>
+            (data: InfiniteData<InfiniteState<FetchFollowingListResponse[]>, number>) =>
                 data?.pages.flatMap((page) => page.items),
             [],
         ),

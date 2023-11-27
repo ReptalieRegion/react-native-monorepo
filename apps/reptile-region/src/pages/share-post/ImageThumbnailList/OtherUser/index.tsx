@@ -8,6 +8,8 @@ import type { SharePostImageThumbnailListScreenProps, SharePostMeImageThumbnailL
 
 import ListHeaderComponent from './ListHeaderComponent';
 
+import useImageThumbnailActions from '@/hooks/share-post/actions/useImageThumbnailActions';
+
 const PostImageList = React.lazy(() => import('./PostImageList'));
 
 export default function SharePostImageThumbnailListPage({
@@ -19,9 +21,10 @@ export default function SharePostImageThumbnailListPage({
     },
 }: SharePostMeImageThumbnailListScreenProps | SharePostImageThumbnailListScreenProps) {
     const { navigateFollowerPage, navigateListUser } = useImageThumbnailNavigation(pageState);
+    const { handlePressFollow } = useImageThumbnailActions({ nickname });
 
     const handleImagePress = (index: number) => {
-        navigateListUser({ user: { nickname }, startIndex: index, pageState });
+        navigateListUser({ user: { nickname }, startIndex: index });
     };
 
     return (
@@ -34,7 +37,7 @@ export default function SharePostImageThumbnailListPage({
                                 isFollow={isFollow}
                                 nickname={nickname}
                                 profile={profile}
-                                navigateFollowerPage={navigateFollowerPage}
+                                navigateFollowPage={navigateFollowerPage}
                             />
                         }
                         <SharePostsDetailListSkeleton />
@@ -48,7 +51,8 @@ export default function SharePostImageThumbnailListPage({
                             isFollow={isFollow}
                             nickname={nickname}
                             profile={profile}
-                            navigateFollowerPage={navigateFollowerPage}
+                            navigateFollowPage={navigateFollowerPage}
+                            handlePressFollow={handlePressFollow}
                         />
                     }
                     handleImagePress={handleImagePress}

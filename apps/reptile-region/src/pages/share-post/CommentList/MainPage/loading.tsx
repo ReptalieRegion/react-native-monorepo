@@ -9,14 +9,13 @@ export default function CommentSkeleton() {
 
     return (
         <View style={styles.subContainer}>
-            {range(20).map((_, index) => (
+            {range(17).map((_, index) => (
                 <SkeletonPlaceholder key={index} direction="right">
                     <View style={styles.viewContainer}>
                         <View style={styles.circle} />
                         <View style={styles.textContainer}>
                             <View style={styles.name} />
                             <View style={{ ...styles.text, width: width * 0.85 - 40 }} />
-                            <View style={{ ...styles.text, width: width * 0.6 - 40 }} />
                         </View>
                     </View>
                 </SkeletonPlaceholder>
@@ -30,10 +29,10 @@ const styles = StyleSheet.create({
         flex: 1,
         minHeight: 2,
         flexDirection: 'column',
-        gap: 20,
         paddingLeft: 20,
         paddingRight: 20,
         marginTop: 10,
+        gap: 15,
     },
     viewContainer: {
         flexDirection: 'row',
@@ -62,7 +61,6 @@ const styles = StyleSheet.create({
     textContainer: {
         gap: 5,
         width: '100%',
-        marginBottom: 10,
     },
     text: {
         borderRadius: 9999,

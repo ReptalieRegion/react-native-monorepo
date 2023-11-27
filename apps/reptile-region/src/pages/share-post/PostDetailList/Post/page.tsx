@@ -8,6 +8,7 @@ import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNa
 
 export function Post({ postId }: { postId: string }) {
     const { data } = useFetchPost({ postId });
+
     const {
         post: {
             contents,
@@ -17,7 +18,10 @@ export function Post({ postId }: { postId: string }) {
             user: { id: userId, isFollow, nickname, profile },
         },
     } = data;
-    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
+    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({
+        type: 'POST_DETAIL',
+        postId,
+    });
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
         useSharePostNavigation('MODAL');
 

@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
-import type { SharePostListModalPageScreen, SharePostListPageScreen } from '../../type';
+import type { SharePostUserDetailModalPageScreen, SharePostUserDetailPageScreen } from '../../type';
 
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
@@ -24,16 +24,21 @@ export default function UserDetailListPage({
             pageState,
         },
     },
-}: SharePostListPageScreen | SharePostListModalPageScreen) {
+}: SharePostUserDetailModalPageScreen | SharePostUserDetailPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const queryClient = useQueryClient();
-    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(SHARE_POST_QUERY_KEYS.profile(nickname));
+    const userProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(
+        SHARE_POST_QUERY_KEYS.profileDetail(nickname),
+    );
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({ nickname });
-    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions();
+    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({
+        type: 'USER_DETAIL',
+        nickname,
+    });
     const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
         useSharePostNavigation(pageState);
 
-    const keyExtractor = useCallback((item: FetchDetailUserPostResponse) => item.post.id, []);
+    const keyExtractor = (item: FetchDetailUserPostResponse) => item.post.id;
 
     const renderItem = useCallback(
         ({ item, extraData }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {

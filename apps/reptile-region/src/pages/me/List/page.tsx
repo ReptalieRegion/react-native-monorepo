@@ -102,8 +102,6 @@ export default function MyListPage() {
         },
     ];
 
-    console.log(settingList);
-
     return (
         <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContainer}>
             <View style={styles.signContainer}>
@@ -141,13 +139,13 @@ export default function MyListPage() {
                     </View>
                     {items.map((item) => (
                         <ConditionalRenderer
+                            key={item.title}
                             condition={item.showSignIn}
                             trueContent={
                                 <ConditionalRenderer
                                     condition={isSignIn}
                                     trueContent={
                                         <ListItem
-                                            key={item.title}
                                             leftChildren={<ListItem.Title text={item.title} />}
                                             rightChildren={
                                                 <ConditionalRenderer

@@ -4,6 +4,7 @@ import { FlashList } from '@shopify/flash-list';
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { MAX_PHOTO_COUNT } from '../../constants/photo';
 import useCameraAlbumHandler from '../../hooks/useCameraAlbumHandler';
@@ -21,6 +22,7 @@ type PhotoListState = {
 type PhotoListProps = PhotoListState;
 
 export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: PhotoListProps) {
+    const { bottom } = useSafeAreaInsets();
     const { width } = useWindowDimensions();
     const imageWidth = width / numColumns - 2;
 
@@ -63,26 +65,25 @@ export default function PhotoList({ numColumns = 4, loadPhotoLimit = 60 }: Photo
     };
 
     return (
-        <FlashList
-            data={photos}
-            numColumns={numColumns}
-            contentContainerStyle={styles.squareContainer}
-            keyExtractor={(item) => item.node.image.uri}
-            onEndReached={loadMorePhotos}
-            renderItem={renderItem}
-            estimatedItemSize={imageWidth}
-            onMomentumScrollBegin={() => (isScrolling.current = true)}
-            onMomentumScrollEnd={() => (isScrolling.current = false)}
-        />
+        <View style={styles.container}>
+            <FlashList
+                data={photos}
+                numColumns={numColumns}
+                contentContainerStyle={{ paddingBottom: imageWidth + bottom }}
+                keyExtractor={(item) => item.node.image.uri}
+                onEndReached={loadMorePhotos}
+                renderItem={renderItem}
+                estimatedItemSize={imageWidth}
+                onMomentumScrollBegin={() => (isScrolling.current = true)}
+                onMomentumScrollEnd={() => (isScrolling.current = false)}
+            />
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    squareContainer: {
-        paddingBottom: 16,
     },
     photoItemContainer: {
         position: 'relative',

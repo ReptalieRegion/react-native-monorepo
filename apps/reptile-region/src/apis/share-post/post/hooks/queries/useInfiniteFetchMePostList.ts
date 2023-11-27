@@ -8,12 +8,14 @@ import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchMePostList, FetchMePostListResponse } from '@/types/apis/share-post/post';
 import type { InfiniteState } from '@/types/apis/utils';
 
+type QueryKey = string | { type: string };
+
 export default function useInfiniteFetchMePostList() {
     return useSuspenseInfiniteQuery<
         FetchMePostList['Response'],
         HTTPError,
         FetchMePostListResponse[],
-        readonly string[],
+        readonly QueryKey[],
         number
     >({
         queryKey: MY_QUERY_KEYS.post,

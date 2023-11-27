@@ -83,6 +83,7 @@ export const createPost = async ({ contents, selectedPhotos }: CreatePost['Reque
     const formData = new FormData();
     for (const photo of selectedPhotos) {
         const file = await uploadImage(photo);
+        console.log(file);
         formData.append('files', file as unknown as Blob);
     }
     formData.append('contents', contents);

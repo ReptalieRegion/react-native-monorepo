@@ -76,8 +76,9 @@ class NotifeeManger {
         return notifee.getInitialNotification();
     };
 
-    getDeepLink = () => {
-        return this.deepLink;
+    getDeepLink = async () => {
+        const link = Platform.OS === 'ios' ? this.deepLink : (await this.getInitialNotification())?.notification.data?.link;
+        return link as string;
     };
 
     private _dataParse = (message: FirebaseMessagingTypes.RemoteMessage) => {
@@ -100,31 +101,28 @@ class NotifeeManger {
     };
 
     private _displayNotificationAndroid = async ({ title, body, message, link }: DisplayNotification) => {
-        const android = message.notification?.android;
         const data = link ? { link } : undefined;
 
-        if (android) {
-            const channelId = await notifee.createChannel({
-                id: 'important',
-                name: 'Important Notifications',
-                importance: AndroidImportance.HIGH,
-                vibration: true,
-                visibility: AndroidVisibility.PUBLIC,
-            });
-            notifee.displayNotification({
-                title,
-                body,
-                android: {
-                    channelId,
-                    smallIcon: 'ic_launcher',
-                    largeIcon: android?.imageUrl,
-                    pressAction: {
-                        id: 'default',
-                    },
+        const channelId = await notifee.createChannel({
+            id: 'important',
+            name: 'Important Notifications',
+            importance: AndroidImportance.HIGH,
+            vibration: true,
+            visibility: AndroidVisibility.PUBLIC,
+        });
+        notifee.displayNotification({
+            title,
+            body,
+            android: {
+                channelId,
+                smallIcon: 'ic_launcher',
+                largeIcon: message.data?.imageUrl,
+                pressAction: {
+                    id: 'default',
                 },
-                data,
-            });
-        }
+            },
+            data,
+        });
     };
 }
 

@@ -1,9 +1,9 @@
-import { useCameraRoll, type PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
+import { useCameraRoll, type PhotoIdentifier, type SaveToCameraRollOptions } from '@react-native-camera-roll/camera-roll';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 
 import { PhotoActionsContext } from '../contexts/PhotoContext';
 import { PhotoSelectActionsContext } from '../contexts/PhotoSelectContext';
-import type { FetchPhotosProps } from '../types';
+import type { CropInfo, FetchPhotosProps } from '../types';
 
 import usePhotoSelect from './usePhotoSelect';
 
@@ -17,9 +17,10 @@ interface UseCameraAlbumHandlerActions {
 
 type UseCameraAlbumHandlerProps = UseCameraAlbumHandlerState & UseCameraAlbumHandlerActions;
 
-const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
-    const [photos, getPhotos] = useCameraRoll();
+export default function useCameraAlbumHandler(props?: UseCameraAlbumHandlerProps) {
+    const [photos, getPhotos, save] = useCameraRoll();
     const isInitPhoto = useRef<boolean | undefined>();
+    const isSavePhoto = useRef<boolean | undefined>();
     const isLoadingFetchPhoto = useRef(false);
 
     const { isLimit } = usePhotoSelect();
@@ -41,12 +42,20 @@ const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
             return;
         }
 
+        const firstEdge = photos.edges[0];
+
         if (isInitPhoto.current) {
-            photoSelectDispatch({ type: 'INIT_CURRENT_PHOTO', photo: photos.edges[0] });
+            photoSelectDispatch({ type: 'INIT_CURRENT_PHOTO', photo: firstEdge });
         }
 
-        photoDispatch({ type: 'ADD_PHOTOS', photos: photos.edges });
-    }, [photoDispatch, photoSelectDispatch, photos]);
+        if (isSavePhoto.current) {
+            photoDispatch({ type: 'SAVE_PHOTO', photo: firstEdge });
+            photoSelectDispatch({ type: 'SELECT_PHOTO', photo: firstEdge, limit: props?.limit });
+            isSavePhoto.current = false;
+        } else {
+            photoDispatch({ type: 'ADD_PHOTOS', photos: photos.edges });
+        }
+    }, [photoDispatch, photoSelectDispatch, photos, props?.limit]);
 
     const fetchPhotos = useCallback(
         async ({ first, after, assetType, isInit }: FetchPhotosProps) => {
@@ -76,11 +85,34 @@ const useCameraAlbumHandler = (props?: UseCameraAlbumHandlerProps) => {
         [photoSelectDispatch],
     );
 
+    const savePhoto = useCallback(
+        async ({ tag, options }: { tag: string; options?: SaveToCameraRollOptions | undefined }) => {
+            isSavePhoto.current = true;
+            save(tag, options).then(() => getPhotos({ first: 1, assetType: 'Photos' }));
+        },
+        [getPhotos, save],
+    );
+
+    const setCropInfo = useCallback(
+        ({ originalUri, crop }: { originalUri: string; crop?: CropInfo }) => {
+            photoSelectDispatch({ type: 'CROPPED_PHOTO', originalUri, crop });
+        },
+        [photoSelectDispatch],
+    );
+
+    const setCroppedSelectedPhoto = useCallback(
+        (croppedSelectedPhoto: PhotoIdentifier, index: number) => {
+            photoSelectDispatch({ type: 'CROPPED_SELECT_PHOTO', croppedSelectedPhoto, index });
+        },
+        [photoSelectDispatch],
+    );
+
     return {
         fetchPhotos,
         selectPhoto,
         deleteSelectedPhoto,
+        savePhoto,
+        setCropInfo,
+        setCroppedSelectedPhoto,
     };
-};
-
-export default useCameraAlbumHandler;
+}

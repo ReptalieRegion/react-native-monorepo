@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         paddingRight: 15,
         verticalAlign: 'top',
+        textAlignVertical: 'top',
         overflow: 'hidden',
         height: 120,
     },

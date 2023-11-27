@@ -55,7 +55,7 @@ type FetchFollowerListResponse = {
     };
 };
 
-type FetchFollowerList = ServerAPI<FetchFollowerListRequest, InfiniteState<FetchFollowerListResponse>>;
+type FetchFollowerList = ServerAPI<FetchFollowerListRequest, InfiniteState<FetchFollowerListResponse[]>>;
 
 // 특정 사용자의 팔로잉 무한스크롤 리스트
 type FetchFollowingListRequest = {
@@ -71,7 +71,7 @@ type FetchFollowingListResponse = {
     };
 };
 
-type FetchFollowingList = ServerAPI<FetchFollowerListRequest, InfiniteState<FetchFollowerListResponse>>;
+type FetchFollowingList = ServerAPI<FetchFollowerListRequest, InfiniteState<FetchFollowerListResponse[]>>;
 
 /**
  *

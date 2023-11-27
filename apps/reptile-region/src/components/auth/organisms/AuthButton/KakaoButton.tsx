@@ -6,6 +6,7 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
 import useKakaoAuth from '@/apis/auth/hooks/mutations/useKakaoAuth';
 import KakaoSymbol from '@/assets/icons/KakaoSymbol';
+import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import KakaoAuth from '@/native-modules/kakao-auth/KakaoAuth';
 import type { PostKakaoAuth } from '@/types/apis/auth';
 
@@ -22,17 +23,21 @@ interface KakaoButtonActions {
 export type KakaoButtonProps = KakaoButtonState & KakaoButtonActions;
 
 export default function KakaoButton({ height = 44, width = '90%', onSuccess, onError }: KakaoButtonProps) {
+    const { openLoading, closeLoading } = useGlobalLoading();
     const { mutateAsync: AuthTokenAndPublicKeyMutateAsync } = useAuthTokenAndPublicKey();
     const { mutate: kakaoAuthMutate } = useKakaoAuth({ onSuccess, onError });
 
     const handlePress = async () => {
         try {
+            openLoading();
             await KakaoAuth.login();
             const profile = await KakaoAuth.getProfile();
             const { authToken, publicKey } = await AuthTokenAndPublicKeyMutateAsync();
             kakaoAuthMutate({ socialId: profile.id, authToken, publicKey });
         } catch (error) {
             onError(error);
+        } finally {
+            closeLoading();
         }
     };
 

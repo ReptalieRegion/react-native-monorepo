@@ -7,12 +7,13 @@ import type { ImagePickScreenProp } from '../type';
 import ChangeHeader from './header';
 
 import { CameraAlbum } from '@/components/@common/organisms/CameraAlbum';
+import useImageCropActions from '@/hooks/share-post/actions/useImageCropActions';
 
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
+    const { handleOpenCamera } = useImageCropActions();
     const { width, height } = useWindowDimensions();
-    const headerHeight = 60;
     const textHeight = 48;
-    const photoEditorHeight = height / 2 - headerHeight;
+    const photoEditorHeight = height / 2;
     const photoListHeight = height - photoEditorHeight;
 
     return (
@@ -23,7 +24,7 @@ export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
                 <View style={[styles.container, { height: textHeight }]}>
                     <TouchableTypo>최근항목</TouchableTypo>
                     <View style={styles.view}>
-                        <TouchableTypo>카메라</TouchableTypo>
+                        <TouchableTypo onPress={handleOpenCamera}>카메라</TouchableTypo>
                     </View>
                 </View>
             </View>

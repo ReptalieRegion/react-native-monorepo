@@ -24,9 +24,7 @@ export function navigateLinking(
             navigation.navigate('share-post/modal', {
                 screen: route.screen,
                 params: {
-                    post: {
-                        id: route.params?.postId ?? '',
-                    },
+                    postId: route.params?.postId ?? '',
                     type: (route.params?.type as 'like' | 'comment') ?? 'like',
                 },
             });
@@ -52,7 +50,7 @@ export function navigateLinking(
 }
 
 function _findMatchingRoute(pattern: string) {
-    const newPattern = pattern.replace('sharePost://', '');
+    const newPattern = pattern.replace('crawl://', '');
     const routesArray = Object.entries(routes);
 
     for (const routeInfo of routesArray) {
