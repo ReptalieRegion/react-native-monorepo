@@ -33,7 +33,7 @@ import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
 
 const linking: LinkingOptions<RootRoutesParamList> = {
-    prefixes: ['sharePost://'],
+    prefixes: ['crawl://'],
     config: {
         screens: {
             'share-post/modal': {

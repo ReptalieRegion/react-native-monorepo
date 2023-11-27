@@ -52,7 +52,7 @@ export function navigateLinking(
 }
 
 function _findMatchingRoute(pattern: string) {
-    const newPattern = pattern.replace('sharePost://', '');
+    const newPattern = pattern.replace('crawl://', '');
     const routesArray = Object.entries(routes);
 
     for (const routeInfo of routesArray) {
