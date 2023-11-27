@@ -24,9 +24,7 @@ export function navigateLinking(
             navigation.navigate('share-post/modal', {
                 screen: route.screen,
                 params: {
-                    post: {
-                        id: route.params?.postId ?? '',
-                    },
+                    postId: route.params?.postId ?? '',
                     type: (route.params?.type as 'like' | 'comment') ?? 'like',
                 },
             });

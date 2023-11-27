@@ -21,9 +21,7 @@ type SharePostDetailModalPageState = PostDetailModalListScreenProps & {
 
 export default function SharePostDetailModalPage({
     route: {
-        params: {
-            post: { id: postId },
-        },
+        params: { postId },
     },
     ListHeaderComponent,
 }: SharePostDetailModalPageState) {

@@ -65,9 +65,7 @@ type UserDetailParams = {
 
 // 특정 게시물 페이지
 type DetailPostParams = {
-    post: {
-        id: string;
-    };
+    postId: string;
     type: 'comment' | 'like';
 };
 

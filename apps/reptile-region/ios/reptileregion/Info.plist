@@ -41,7 +41,7 @@
 			<string>crawl</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>sharePost</string>
+				<string>crawl</string>
 			</array>
 		</dict>
 	</array>
