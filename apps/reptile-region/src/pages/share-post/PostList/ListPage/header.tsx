@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import type { HomeListPageScreenProp } from './type';
+import type { SharePostListPageScreen } from '../type';
 
 import useFetchPushReadCheck from '@/apis/notification/push/hooks/queries/useFetchPushReadCheck';
 import { NotificationIcon } from '@/assets/icons';
@@ -13,7 +13,7 @@ import { createNativeStackHeader } from '@/components/@common/molecules';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 
-export function HomeListHeader(props: NativeStackHeaderProps) {
+export function SharePostListHeader(props: NativeStackHeaderProps) {
     const { requireAuthNavigation } = useAuthNavigation();
     const handlePressNotification = () => {
         requireAuthNavigation(() => {
@@ -31,7 +31,7 @@ export function HomeListHeader(props: NativeStackHeaderProps) {
     })(props);
 }
 
-export default function ChangeHeader({ navigation }: HomeListPageScreenProp) {
+export default function ChangeHeader({ navigation }: SharePostListPageScreen) {
     const { isSignIn } = useAuth();
     const { requireAuthNavigation } = useAuthNavigation();
     const { data } = useFetchPushReadCheck();
