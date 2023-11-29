@@ -172,7 +172,7 @@ export default function ImageCrop({ image, width, height, maxScale, initPosition
                             <View style={{ width, height }}>
                                 <Animated.View style={[{ width: imageWidth, height: imageHeight }, panStyle]}>
                                     <Image
-                                        style={{ width: image.width, height: image.height }}
+                                        style={{ width: imageWidth, height: imageHeight }}
                                         recyclingKey={image.uri}
                                         source={{ uri: image.uri }}
                                         priority="high"

@@ -6,6 +6,7 @@ import { Linking } from 'react-native';
 
 import SignUpRoutes from './Auth/SignUpRoutes';
 import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
+import DiaryRoutes from './Diary/TopTabRoutes';
 import SharePostModalRoutes from './SharePost/ModalRoutes';
 import PostingRoutes from './SharePost/PostingRoutes';
 
@@ -160,6 +161,10 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 />
                 <Stack.Screen name="me/notification-log" component={PushLogList} options={{ header: pushLogListHeader }} />
                 {/** 내 정보 끝 */}
+
+                {/* 다이어리 시작 */}
+                <Stack.Screen name="diary" component={DiaryRoutes} options={{ headerShown: false }} />
+                {/* 다이어리 끝 */}
             </Stack.Navigator>
         </NavigationContainer>
     );

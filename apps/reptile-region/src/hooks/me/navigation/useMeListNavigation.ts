@@ -10,13 +10,17 @@ type MeListNavigation = CompositeNavigationProp<
     NativeStackNavigationProp<RootRoutesParamList>
 >;
 
-const useMeListNavigation = () => {
+export default function useMeListNavigation() {
     const navigation = useNavigation<MeListNavigation>();
 
     const navigateSharePostMe = useCallback(() => {
         navigation.navigate('share-post/modal', {
             screen: 'modal/image-thumbnail/me',
         });
+    }, [navigation]);
+
+    const navigateDiary = useCallback(() => {
+        navigation.navigate('diary');
     }, [navigation]);
 
     const navigateTermsOfUse = useCallback(() => {
@@ -41,12 +45,11 @@ const useMeListNavigation = () => {
 
     return {
         navigateSharePostMe,
+        navigateDiary,
         navigateTermsOfUse,
         navigatePrivacyPolicy,
         navigateProfileSetting,
         navigateLicense,
         navigateNotificationSetting,
     };
-};
-
-export default useMeListNavigation;
+}

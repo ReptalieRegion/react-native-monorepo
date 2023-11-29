@@ -11,7 +11,6 @@ import { Share } from '@/assets/icons';
 import Diary from '@/assets/icons/Diary';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
-import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import { Profile } from '@/components/me/molecules/Profile';
 import useMeActions from '@/hooks/me/actions/useMeActions';
 import useMeListNavigation from '@/hooks/me/navigation/useMeListNavigation';
@@ -21,11 +20,11 @@ export default function MyListPage() {
     const { data } = useFetchMeProfile();
     useFetchPushAgree();
 
-    const { isSignIn } = useAuth();
     const { logout } = useMeActions();
 
     const {
         navigateLicense,
+        navigateDiary,
         navigateNotificationSetting,
         navigatePrivacyPolicy,
         navigateProfileSetting,
@@ -120,7 +119,7 @@ export default function MyListPage() {
                             </Typo>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity containerStyle={styles.testContainer} onPress={navigateSharePostMe}>
+                    <TouchableOpacity containerStyle={styles.testContainer} onPress={navigateDiary}>
                         <View style={styles.testContainerAlign}>
                             <Diary />
                             <Typo textAlign="center" variant="heading3">
@@ -142,26 +141,20 @@ export default function MyListPage() {
                             key={item.title}
                             condition={item.showSignIn}
                             trueContent={
-                                <ConditionalRenderer
-                                    condition={isSignIn}
-                                    trueContent={
-                                        <ListItem
-                                            leftChildren={<ListItem.Title text={item.title} />}
-                                            rightChildren={
-                                                <ConditionalRenderer
-                                                    condition={item.rightChildren === 'Chevron'}
-                                                    trueContent={<ListItem.Chevron />}
-                                                    falseContent={
-                                                        <View style={styles.marginRight}>
-                                                            <Typo color="placeholder">{item.rightChildren}</Typo>
-                                                        </View>
-                                                    }
-                                                />
+                                <ListItem
+                                    leftChildren={<ListItem.Title text={item.title} />}
+                                    rightChildren={
+                                        <ConditionalRenderer
+                                            condition={item.rightChildren === 'Chevron'}
+                                            trueContent={<ListItem.Chevron />}
+                                            falseContent={
+                                                <View style={styles.marginRight}>
+                                                    <Typo color="placeholder">{item.rightChildren}</Typo>
+                                                </View>
                                             }
-                                            onPress={item.onPress}
                                         />
                                     }
-                                    falseContent={null}
+                                    onPress={item.onPress}
                                 />
                             }
                             falseContent={

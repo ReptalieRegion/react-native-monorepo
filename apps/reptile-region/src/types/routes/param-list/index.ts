@@ -30,6 +30,9 @@ type RootRoutesParamList = {
     'share-post/modal/posting': NavigatorScreenParams<PostingParamList>;
     'share-post/bottom-sheet/post-options-menu': OptionsMenuParams;
     'share-post/post/update': PostingUpdateParams;
+
+    // Diary
+    diary: undefined;
 };
 
 export type { RootRoutesParamList };
