@@ -1,6 +1,6 @@
 import { color } from '@reptile-region/design-system';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Camera } from '@/assets/icons';
@@ -9,6 +9,8 @@ import type { ImageType } from '@/types/global/image';
 
 type EditProfileState = {
     profile: ImageType | undefined;
+    imageSize?: number;
+    style?: Pick<ViewStyle, 'marginBottom'>;
 };
 
 interface EditProfileActions {
@@ -17,22 +19,28 @@ interface EditProfileActions {
 
 type EditProfileProps = EditProfileState & EditProfileActions;
 
-export default function EditProfile({ profile, onPress }: EditProfileProps) {
+export default function EditProfile({ profile, imageSize = 100, style, onPress }: EditProfileProps) {
     return (
-        <TouchableOpacity onPress={onPress}>
-            <View style={styles.container}>
-                <Avatar image={profile} size={100} />
-                <View style={styles.iconContainer}>
-                    <Camera width={24} height={24} />
+        <View style={[styles.profileWrapper, StyleSheet.flatten(style)]}>
+            <TouchableOpacity onPress={onPress}>
+                <View style={styles.container}>
+                    <Avatar image={profile} size={imageSize} />
+                    <View style={styles.iconContainer}>
+                        <Camera width={24} height={24} />
+                    </View>
                 </View>
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         position: 'relative',
+    },
+    profileWrapper: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     iconContainer: {
         position: 'absolute',

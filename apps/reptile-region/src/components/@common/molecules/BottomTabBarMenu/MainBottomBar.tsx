@@ -33,14 +33,18 @@ const MENUS: MenusType = {
         Icon: SharePostIcon,
         name: '일상공유',
     },
-    'info/routes': {
+    'diary/routes': {
         Icon: InfoIcon,
-        name: '정보공유',
+        name: '다이어리',
     },
     'me/routes': {
         Icon: MyIcon,
         name: '내 정보',
     },
+    // 'info/routes': {
+    //     Icon: InfoIcon,
+    //     name: '정보공유',
+    // },
     // TODO 추후 쇼핑 기능 추가할 때 사용
     // 'shop/routes': {
     //     Icon: ShopIcon,

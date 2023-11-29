@@ -2,6 +2,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import CalenderRoutes from './CalenderRoutes';
 import EntityManagerRoutes from './EntityManagerRoutes';
@@ -12,6 +13,7 @@ const TopTab = createMaterialTopTabNavigator<DiaryParamList>();
 
 export default function DiaryRoutes() {
     const { width } = useWindowDimensions();
+    const { top } = useSafeAreaInsets();
     const tabBarHeight = 40;
 
     return (
@@ -20,6 +22,7 @@ export default function DiaryRoutes() {
             initialLayout={{ width, height: tabBarHeight }}
             screenOptions={{
                 tabBarActiveTintColor: color.Black.toString(),
+                tabBarStyle: { paddingTop: top },
                 tabBarLabelStyle: { fontSize: 14 },
                 tabBarIndicatorStyle: { height: 1, backgroundColor: color.Teal[150].toString() },
             }}

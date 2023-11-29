@@ -9,7 +9,6 @@ import type { PostDetailModalListScreenProps } from './type';
 import Comment from '@/components/share-post/organisms/Comment';
 
 export default function PostDetailModalListPage(props: PostDetailModalListScreenProps) {
-    console.log(props.route.params);
     const postId = props.route.params.postId;
     const ListHeaderComponent = useMemo(
         () => (

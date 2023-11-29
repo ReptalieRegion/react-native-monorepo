@@ -4,18 +4,16 @@ import { StyleSheet, View } from 'react-native';
 
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
 import { TextButton } from '@/components/@common/atoms';
-import { EditProfile } from '@/components/me/molecules/Profile';
-import useProfileSetting from '@/hooks/me/actions/useProfileSetting';
+import { EditProfile } from '@/components/@common/molecules/Profile';
+import useProfileSettingActions from '@/hooks/me/actions/useProfileSettingActions';
 
 export default function ProfileSetting() {
     const { data } = useFetchMeProfile();
-    const { handlePressProfileImage } = useProfileSetting();
+    const { handlePressProfileImage } = useProfileSettingActions();
 
     return (
         <View style={styles.container}>
-            <View style={styles.profileWrapper}>
-                <EditProfile profile={data?.user.profile} onPress={handlePressProfileImage} />
-            </View>
+            <EditProfile style={styles.profileWrapper} profile={data?.user.profile} onPress={handlePressProfileImage} />
             <View style={styles.itemWrapper}>
                 <View style={styles.itemContainer}>
                     <Typo variant="heading2">닉네임</Typo>
@@ -38,8 +36,6 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     profileWrapper: {
-        justifyContent: 'center',
-        alignItems: 'center',
         marginBottom: 30,
     },
     itemWrapper: {

@@ -6,6 +6,7 @@ import type { OptionsMenuParams, PostingUpdateParams } from '../params/sharePost
 
 import type { SignUpParamList } from './auth';
 import type { BottomTabNativeStackParamList } from './bottom-tab';
+import type { EntityManagerCreateParamList } from './diary';
 import type { PostingParamList, SharePostModalParamList } from './sharePost';
 
 type RootRoutesParamList = {
@@ -31,8 +32,8 @@ type RootRoutesParamList = {
     'share-post/bottom-sheet/post-options-menu': OptionsMenuParams;
     'share-post/post/update': PostingUpdateParams;
 
-    // Diary
-    diary: undefined;
+    // Entity
+    'entity-manager/create': NavigatorScreenParams<EntityManagerCreateParamList>;
 };
 
 export type { RootRoutesParamList };

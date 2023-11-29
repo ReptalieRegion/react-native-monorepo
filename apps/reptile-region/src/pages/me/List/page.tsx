@@ -11,7 +11,7 @@ import { Share } from '@/assets/icons';
 import Diary from '@/assets/icons/Diary';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
-import { Profile } from '@/components/me/molecules/Profile';
+import { Profile } from '@/components/@common/molecules/Profile';
 import useMeActions from '@/hooks/me/actions/useMeActions';
 import useMeListNavigation from '@/hooks/me/navigation/useMeListNavigation';
 import VersionCheck from '@/native-modules/version-check/VersionCheck';

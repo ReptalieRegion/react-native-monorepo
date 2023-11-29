@@ -7,12 +7,15 @@ type CalenderParamList = {
 type EntityManagerCreateParamList = {
     image: undefined;
     gender: undefined;
-    birthday: undefined;
+    hatchingDay: undefined;
+    'type-and-morph': undefined;
+    weight: undefined;
+    name: undefined;
+    congrats: undefined;
 };
 
 type EntityManagerParamList = {
     'entity-manager/list': undefined;
-    'entity-manager/create': NavigatorScreenParams<EntityManagerCreateParamList>;
     'entity-manager/update': undefined;
 };
 

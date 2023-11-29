@@ -6,7 +6,7 @@ import { Linking } from 'react-native';
 
 import SignUpRoutes from './Auth/SignUpRoutes';
 import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
-import DiaryRoutes from './Diary/TopTabRoutes';
+import EntityManagerCreateRoutes from './Diary/EntityManagerCreateRoutes';
 import SharePostModalRoutes from './SharePost/ModalRoutes';
 import PostingRoutes from './SharePost/PostingRoutes';
 
@@ -163,7 +163,11 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 {/** 내 정보 끝 */}
 
                 {/* 다이어리 시작 */}
-                <Stack.Screen name="diary" component={DiaryRoutes} options={{ headerShown: false }} />
+                <Stack.Screen
+                    name="entity-manager/create"
+                    component={EntityManagerCreateRoutes}
+                    options={{ headerShown: false }}
+                />
                 {/* 다이어리 끝 */}
             </Stack.Navigator>
         </NavigationContainer>

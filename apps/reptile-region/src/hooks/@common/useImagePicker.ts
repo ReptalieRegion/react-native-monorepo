@@ -1,28 +1,14 @@
 import { ActionSheetIOS, Alert, Platform } from 'react-native';
 import { openCamera, openPicker, type Image } from 'react-native-image-crop-picker';
 
-import useUpdateProfile from '@/apis/me/profile/hooks/mutations/useUpdateProfile';
-import { useToast } from '@/components/@common/organisms/Toast';
 import { requestIOSPermissions } from '@/utils/permissions/request-permissions';
 
-const useProfileSetting = () => {
-    const { openToast } = useToast();
-    const { mutate } = useUpdateProfile();
+interface UseImagePickerActions {
+    onSuccess(imageInfo: Image): void;
+    onError(error: Error): void;
+}
 
-    const successCallback = (imageInfo: Image) => {
-        const uri = imageInfo.path;
-        const randomNumber = Math.floor(Math.random() * 9999);
-        const name = `image_${randomNumber}_${new Date().getTime()}.jpg`;
-        const type = imageInfo.mime;
-        mutate({ uri, name, type });
-    };
-
-    const failCallback = (error: Error) => {
-        if (error.message !== 'User cancelled image selection') {
-            openToast({ contents: '이미지 선택에 실패했어요. 잠시 뒤에 다시 시도해주세요.', severity: 'error' });
-        }
-    };
-
+export default function useImagePicker({ onError, onSuccess }: UseImagePickerActions) {
     const handleOpenCamera = async () => {
         const hasPermission = await requestIOSPermissions<['camera']>(['camera']);
         if (!hasPermission) {
@@ -35,8 +21,8 @@ const useProfileSetting = () => {
             cropperChooseText: '완료',
             cropperRotateButtonsHidden: true,
         })
-            .then(successCallback)
-            .catch(failCallback);
+            .then(onSuccess)
+            .catch(onError);
     };
 
     const handleOpenPicker = () => {
@@ -47,8 +33,8 @@ const useProfileSetting = () => {
             cropperChooseText: '완료',
             cropperRotateButtonsHidden: true,
         })
-            .then(successCallback)
-            .catch(failCallback);
+            .then(onSuccess)
+            .catch(onError);
     };
 
     const handleIosPress = () => {
@@ -98,6 +84,4 @@ const useProfileSetting = () => {
     return {
         handlePressProfileImage,
     };
-};
-
-export default useProfileSetting;
+}

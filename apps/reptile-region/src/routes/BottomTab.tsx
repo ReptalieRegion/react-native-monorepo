@@ -3,8 +3,8 @@ import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 
+import DiaryRoutes from './Diary/TopTabRoutes';
 import HomeRoutes from './Home';
-import InfoRoutes from './Info';
 import MeRoutes from './Me';
 import SharePostRoutes from './SharePost/BottomTabRoutes';
 
@@ -40,9 +40,10 @@ export default function BottomTabRoutes({ navigation }: BottomTabScreenProps) {
         >
             <BottomTab.Screen name="home/routes" component={HomeRoutes} />
             <BottomTab.Screen name="share-post/routes" component={SharePostRoutes} />
-            <BottomTab.Screen name="info/routes" component={InfoRoutes} />
+            <BottomTab.Screen name="diary/routes" component={DiaryRoutes} />
             <BottomTab.Screen name="me/routes" component={MeRoutes} />
             {/* TODO 추후 쇼핑 기능 추가할 때 사용 */}
+            {/* <BottomTab.Screen name="info/routes" component={InfoRoutes} /> */}
             {/* <BottomTab.Screen name="shop/routes" component={ShopRoutes} /> */}
         </BottomTab.Navigator>
     );
