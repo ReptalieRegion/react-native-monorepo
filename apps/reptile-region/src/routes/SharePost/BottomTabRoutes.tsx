@@ -3,10 +3,10 @@ import React from 'react';
 
 import FollowRoutes from './FollowRoutes';
 
-import { NativeStackDefaultHeader } from '@/components/@common/molecules';
 import SharePostImageThumbnailListPage from '@/pages/share-post/ImageThumbnailList/OtherUser';
 import { SharePostImageThumbnailListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser/header';
 import SharePostListPage from '@/pages/share-post/PostList/ListPage';
+import { SharePostListHeader } from '@/pages/share-post/PostList/ListPage/header';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
 import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser';
 import { SharePostFollowHeader } from '@/pages/share-post/UserProfileList/FollowList/header';
@@ -21,11 +21,7 @@ const SharePostRoutes = () => {
         <Stack.Navigator initialRouteName="bottom-tab/list">
             {/** BottomTab이 있는 페이지 */}
             <Stack.Group navigationKey="share-post/bottom-tab">
-                <Stack.Screen
-                    name="bottom-tab/list"
-                    component={SharePostListPage}
-                    options={{ header: NativeStackDefaultHeader }}
-                />
+                <Stack.Screen name="bottom-tab/list" component={SharePostListPage} options={{ header: SharePostListHeader }} />
                 <Stack.Screen
                     name="bottom-tab/user/detail/list"
                     component={SharePostUserDetailListPage}
