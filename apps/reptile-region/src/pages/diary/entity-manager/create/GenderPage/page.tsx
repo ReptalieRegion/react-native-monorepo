@@ -5,7 +5,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import Female from '@/assets/icons/Female';
 import Male from '@/assets/icons/Male';
-import TitleAndDescription from '@/components/diary/TitleAndDescription/TitleAndDescription';
+import CreateTemplate from '@/components/diary/CreateTemplate/CreateTemplate';
 import type { EntityManagerCreateGenderScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerGenderPage({ navigation }: EntityManagerCreateGenderScreenProps) {
@@ -14,23 +14,16 @@ export default function EntityManagerGenderPage({ navigation }: EntityManagerCre
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.item}>
-                <TitleAndDescription title="성별을 선택해주세요." description="등록할 개체의 성별을 선택해주세요." />
-                <View style={styles.row}>
-                    <View style={styles.iconContainer}>
-                        <TouchableOpacity onPress={nextPage}>
-                            <Female width={100} height={100} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.iconContainer}>
-                        <TouchableOpacity onPress={nextPage}>
-                            <Male width={100} height={100} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
+        <CreateTemplate title="성별을 선택해주세요." description="등록할 개체의 성별을 선택해주세요.">
+            <View style={styles.row}>
+                <TouchableOpacity onPress={nextPage}>
+                    <Female width={100} height={100} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={nextPage}>
+                    <Male width={100} height={100} />
+                </TouchableOpacity>
             </View>
-        </View>
+        </CreateTemplate>
     );
 }
 
@@ -42,13 +35,13 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     item: {
-        height: 400,
         justifyContent: 'flex-start',
         gap: 40,
     },
     row: {
         flexDirection: 'row',
-        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 40,
     },
     iconContainer: {
         flex: 1,

@@ -1,14 +1,14 @@
 import { color } from '@reptile-region/design-system';
-import React from 'react';
 import type { PropsWithChildren } from 'react';
-import type { Insets } from 'react-native';
+import React from 'react';
+import { Modal, type Insets } from 'react-native';
 
 import BackDrop from '../components/BackDrop';
 import BottomSheetProvider from '../providers/BottomSheetProvider';
 import type { BackDropStyle, ContainerStyle, SnapInfo } from '../types/bottom-sheet';
 
 import BottomSheetContainer from './BottomSheetContainer';
-import BottomSheetHeader from './BottomSheetHeader';
+import BottomSheetHeader, { type BottomSheetHeaderProps } from './BottomSheetHeader';
 
 type BottomSheetProps = {
     onClose: () => void;
@@ -16,7 +16,7 @@ type BottomSheetProps = {
     containerStyle?: ContainerStyle;
     snapInfo: SnapInfo;
     insets?: Insets;
-};
+} & BottomSheetHeaderProps;
 
 const BottomSheet = ({
     containerStyle = {
@@ -29,16 +29,19 @@ const BottomSheet = ({
     children,
     snapInfo,
     insets,
+    header,
     onClose,
 }: PropsWithChildren<BottomSheetProps>) => {
     return (
-        <BottomSheetProvider insets={insets} onClose={onClose} snapInfo={snapInfo}>
-            <BackDrop style={backDropStyle} />
-            <BottomSheetContainer style={{ ...containerStyle, paddingBottom: insets?.bottom }}>
-                <BottomSheetHeader />
-                {children}
-            </BottomSheetContainer>
-        </BottomSheetProvider>
+        <Modal transparent={true}>
+            <BottomSheetProvider insets={insets} onClose={onClose} snapInfo={snapInfo}>
+                <BackDrop style={backDropStyle} />
+                <BottomSheetContainer style={{ ...containerStyle, paddingBottom: insets?.bottom }}>
+                    <BottomSheetHeader header={header} />
+                    {children}
+                </BottomSheetContainer>
+            </BottomSheetProvider>
+        </Modal>
     );
 };
 

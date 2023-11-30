@@ -1,6 +1,4 @@
-import React from 'react';
-import { useWindowDimensions } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import React, { TouchableWithoutFeedback, useWindowDimensions } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 
 import useBottomSheetAnimatedAction from '../hooks/useBottomSheetAnimatedAction';

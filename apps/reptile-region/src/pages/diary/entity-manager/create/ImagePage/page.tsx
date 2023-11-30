@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     item: {
-        height: 400,
         justifyContent: 'flex-start',
         gap: 40,
     },

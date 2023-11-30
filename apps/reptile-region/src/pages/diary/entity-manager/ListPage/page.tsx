@@ -21,12 +21,13 @@ export default function EntityMangerList({}: EntityMangerListPageProps) {
 
     const renderItem: ListRenderItem<Data> = ({ item }) => {
         const { hatchingDay, image, morph, type, name, gender } = item;
+
         return (
             <View style={renderItemStyles.wrapper}>
                 <View style={renderItemStyles.container}>
                     <Avatar recyclingKey={image} image={{ src: image }} size={100} />
                 </View>
-                <View>
+                <View style={renderItemStyles.infoWrapper}>
                     <View style={renderItemStyles.infoContainer}>
                         <Typo variant="title4">이름</Typo>
                         <Typo>
@@ -96,6 +97,7 @@ const secondaryIcon = {
 
 const contentStyle: ContentStyle = {
     paddingTop: 20,
+    paddingHorizontal: 5,
 };
 
 const styles = StyleSheet.create({
@@ -108,9 +110,17 @@ const styles = StyleSheet.create({
 const renderItemStyles = StyleSheet.create({
     wrapper: {
         flex: 1,
-        marginBottom: 20,
-        paddingHorizontal: 20,
+        marginBottom: 10,
         gap: 10,
+        borderWidth: 1,
+        borderRadius: 20,
+        backgroundColor: '#fafbf9',
+        borderColor: color.Teal[150].toString(),
+        paddingVertical: 10,
+        marginHorizontal: 5,
+    },
+    infoWrapper: {
+        paddingHorizontal: 15,
     },
     container: {
         flex: 1,
@@ -119,6 +129,7 @@ const renderItemStyles = StyleSheet.create({
     },
     infoContainer: {
         flexDirection: 'row',
+        alignItems: 'center',
         gap: 10,
     },
 });

@@ -4,17 +4,22 @@ import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import BottomSheetAnimatedGesture from './BottomSheetAnimatedGesture';
 
-const BottomSheetHeader = () => {
+export type BottomSheetHeaderProps = {
+    header?: () => React.JSX.Element;
+};
+
+export default function BottomSheetHeader({ header }: BottomSheetHeaderProps) {
     const { width } = useWindowDimensions();
 
     return (
         <BottomSheetAnimatedGesture>
             <View style={styles.header}>
                 <View style={[styles.headerBar, { width: width * 0.3 }]} />
+                {header?.()}
             </View>
         </BottomSheetAnimatedGesture>
     );
-};
+}
 
 const styles = StyleSheet.create({
     header: {
@@ -28,5 +33,3 @@ const styles = StyleSheet.create({
         backgroundColor: color.Gray[400].toString(),
     },
 });
-
-export default BottomSheetHeader;

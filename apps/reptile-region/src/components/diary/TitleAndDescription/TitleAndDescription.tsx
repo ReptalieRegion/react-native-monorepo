@@ -2,7 +2,7 @@ import { Typo } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-type TitleAndDescriptionProps = {
+export type TitleAndDescriptionProps = {
     title: string;
     description: string;
 };
