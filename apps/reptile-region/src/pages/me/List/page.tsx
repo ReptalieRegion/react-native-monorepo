@@ -1,15 +1,13 @@
 import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import type { SettingList } from './type';
 
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
 import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
-import { Share } from '@/assets/icons';
-import Diary from '@/assets/icons/Diary';
 import { ConditionalRenderer } from '@/components/@common/atoms';
+import { Divider } from '@/components/@common/atoms/Divider';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { Profile } from '@/components/@common/molecules/Profile';
 import useMeActions from '@/hooks/me/actions/useMeActions';
@@ -22,15 +20,8 @@ export default function MyListPage() {
 
     const { logout } = useMeActions();
 
-    const {
-        navigateLicense,
-        navigateDiary,
-        navigateNotificationSetting,
-        navigatePrivacyPolicy,
-        navigateProfileSetting,
-        navigateSharePostMe,
-        navigateTermsOfUse,
-    } = useMeListNavigation();
+    const { navigateLicense, navigateNotificationSetting, navigatePrivacyPolicy, navigateProfileSetting, navigateTermsOfUse } =
+        useMeListNavigation();
 
     const settingList: SettingList[] = [
         {
@@ -106,29 +97,7 @@ export default function MyListPage() {
             <View style={styles.signContainer}>
                 <Profile user={data?.user} />
             </View>
-            <View style={styles.activeContainer}>
-                <Typo variant="title3" color="placeholder">
-                    활동
-                </Typo>
-                <View style={styles.testWrapper}>
-                    <TouchableOpacity containerStyle={styles.testContainer} onPress={navigateSharePostMe}>
-                        <View style={styles.testContainerAlign}>
-                            <Share fill={color.Teal[150].toString()} />
-                            <Typo textAlign="center" variant="heading3">
-                                일상공유
-                            </Typo>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity containerStyle={styles.testContainer} onPress={navigateDiary}>
-                        <View style={styles.testContainerAlign}>
-                            <Diary />
-                            <Typo textAlign="center" variant="heading3">
-                                다이어리
-                            </Typo>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </View>
+            <Divider height={10} />
             {settingList.map(({ title, items }) => (
                 <View key={title} style={styles.listContainer}>
                     <View style={styles.listTitle}>
@@ -148,7 +117,7 @@ export default function MyListPage() {
                                             condition={item.rightChildren === 'Chevron'}
                                             trueContent={<ListItem.Chevron />}
                                             falseContent={
-                                                <View style={styles.marginRight}>
+                                                <View style={styles.listMargin}>
                                                     <Typo color="placeholder">{item.rightChildren}</Typo>
                                                 </View>
                                             }
@@ -166,7 +135,7 @@ export default function MyListPage() {
                                             condition={item.rightChildren === 'Chevron'}
                                             trueContent={<ListItem.Chevron />}
                                             falseContent={
-                                                <View style={styles.marginRight}>
+                                                <View style={styles.listMargin}>
                                                     <Typo color="placeholder">{item.rightChildren}</Typo>
                                                 </View>
                                             }
@@ -189,17 +158,16 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     scrollViewContainer: {
-        gap: 5,
         flexGrow: 1,
         paddingBottom: 20,
     },
     signContainer: {
-        backgroundColor: color.White.toString(),
         paddingTop: 20,
         paddingBottom: 20,
         paddingLeft: 20,
         paddingRight: 20,
-        height: 150,
+        height: 160,
+        marginBottom: 10,
     },
     listContainer: {
         paddingTop: 10,
@@ -208,30 +176,7 @@ const styles = StyleSheet.create({
     listTitle: {
         marginLeft: 20,
     },
-    activeContainer: {
-        gap: 5,
-        paddingHorizontal: 20,
-        backgroundColor: color.White.toString(),
-        paddingVertical: 10,
-    },
-    testWrapper: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: 20,
-    },
-    testContainer: {
-        backgroundColor: color.BlueGray[50].toString(),
-        flex: 1,
-        borderRadius: 5,
-        paddingVertical: 10,
-    },
-    testContainerAlign: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 10,
-    },
-    marginRight: {
+    listMargin: {
         marginRight: 10,
     },
 });

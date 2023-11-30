@@ -19,10 +19,6 @@ export default function useMeListNavigation() {
         });
     }, [navigation]);
 
-    const navigateDiary = useCallback(() => {
-        navigation.navigate('diary');
-    }, [navigation]);
-
     const navigateTermsOfUse = useCallback(() => {
         navigation.navigate('me/terms-of-use');
     }, [navigation]);
@@ -45,7 +41,6 @@ export default function useMeListNavigation() {
 
     return {
         navigateSharePostMe,
-        navigateDiary,
         navigateTermsOfUse,
         navigatePrivacyPolicy,
         navigateProfileSetting,
