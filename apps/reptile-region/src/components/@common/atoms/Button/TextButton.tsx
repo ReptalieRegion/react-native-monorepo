@@ -102,7 +102,6 @@ export default function TextButton({
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
         justifyContent: 'center',
     },
     text: {

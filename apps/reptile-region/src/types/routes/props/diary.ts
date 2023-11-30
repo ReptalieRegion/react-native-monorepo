@@ -1,10 +1,10 @@
 import type { CompositeScreenProps } from '@react-navigation/native';
-import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import type { RootRoutesParamList } from '../param-list';
 import type { EntityManagerCreateParamList } from '../param-list/diary';
 
-type EntityManagerCreateImageNavigationProps = NativeStackNavigationProp<EntityManagerCreateParamList, 'image'>;
+type EntityManagerCreateImageScreenProps = NativeStackScreenProps<EntityManagerCreateParamList, 'image'>;
 
 type EntityManagerCreateGenderScreenProps = NativeStackScreenProps<EntityManagerCreateParamList, 'gender'>;
 
@@ -25,7 +25,7 @@ export type {
     EntityManagerCreateCongratsScreenProps,
     EntityManagerCreateGenderScreenProps,
     EntityManagerCreateHatchingScreenProps,
-    EntityManagerCreateImageNavigationProps,
+    EntityManagerCreateImageScreenProps,
     EntityManagerCreateNameScreenProps,
     EntityManagerCreateTypeAndMorphScreenProps,
     EntityManagerCreateWeightScreenProps,

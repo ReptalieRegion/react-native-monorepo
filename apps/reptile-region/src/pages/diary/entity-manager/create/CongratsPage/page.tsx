@@ -1,7 +1,8 @@
-import { TouchableTypo } from '@reptile-region/design-system';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
+import { TextButton } from '@/components/@common/atoms';
+import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
 import type { EntityManagerCreateCongratsScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerCongratsPage({ navigation }: EntityManagerCreateCongratsScreenProps) {
@@ -21,14 +22,25 @@ export default function EntityManagerCongratsPage({ navigation }: EntityManagerC
     };
 
     return (
-        <View style={styles.container}>
-            <TouchableTypo onPress={nextPage}>다음</TouchableTypo>
-        </View>
+        <CreateTemplate
+            title="등록이 완료되었어요."
+            description=""
+            contents={
+                <>
+                    <View>
+                        <Text style={styles.text}>🎉</Text>
+                    </View>
+                    <TextButton text="완료" type="view" color="surface" onPress={nextPage} />
+                </>
+            }
+        />
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    text: {
+        fontSize: 100,
+        textAlign: 'center',
+        margin: 40,
     },
 });

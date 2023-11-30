@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { BackButton, CancelButton } from '@/assets/icons';
 import { createNativeStackHeader } from '@/components/@common/molecules';
+import CreateEntity from '@/components/diary/organisms/CreateEntity/provider/CreateEntity';
 import EntityManagerCongratsPage from '@/pages/diary/entity-manager/create/CongratsPage/page';
 import EntityManagerGenderPage from '@/pages/diary/entity-manager/create/GenderPage/page';
 import EntityManagerHatchingDayPage from '@/pages/diary/entity-manager/create/HatchingDayPage/page';
@@ -58,41 +59,47 @@ export function EntityManagerCreateRoutesHeader(props: NativeStackHeaderProps) {
 
 export default function EntityManagerCreateRoutes() {
     return (
-        <Stack.Navigator initialRouteName="image">
-            <Stack.Screen
-                name="image"
-                component={EntityManagerImagePage}
-                options={{
-                    headerLeft: (props) => Cancel(props),
-                    headerTitle: '이미지 등록',
-                }}
-            />
-            <Stack.Screen
-                name="gender"
-                component={EntityManagerGenderPage}
-                options={{ headerLeft: Back, headerTitle: '성별 등록' }}
-            />
-            <Stack.Screen
-                name="hatchingDay"
-                component={EntityManagerHatchingDayPage}
-                options={{ headerLeft: Back, headerTitle: '해칭일 등록' }}
-            />
-            <Stack.Screen
-                name="type-and-morph"
-                component={EntityManagerTypeAndMorphPage}
-                options={{ headerLeft: Back, headerTitle: '종류 & 모프 등록' }}
-            />
-            <Stack.Screen
-                name="weight"
-                component={EntityManagerWeightPage}
-                options={{ headerLeft: Back, headerTitle: '몸무게 등록' }}
-            />
-            <Stack.Screen name="name" component={EntityManagerNamePage} options={{ headerLeft: Back, headerTitle: '이름' }} />
-            <Stack.Screen
-                name="congrats"
-                component={EntityManagerCongratsPage}
-                options={{ headerLeft: Back, headerTitle: '등록 완료' }}
-            />
-        </Stack.Navigator>
+        <CreateEntity>
+            <Stack.Navigator initialRouteName="image">
+                <Stack.Screen
+                    name="image"
+                    component={EntityManagerImagePage}
+                    options={{
+                        headerLeft: (props) => Cancel(props),
+                        headerTitle: '이미지 등록',
+                    }}
+                />
+                <Stack.Screen
+                    name="gender"
+                    component={EntityManagerGenderPage}
+                    options={{ headerLeft: Back, headerTitle: '성별 등록' }}
+                />
+                <Stack.Screen
+                    name="hatchingDay"
+                    component={EntityManagerHatchingDayPage}
+                    options={{ headerLeft: Back, headerTitle: '해칭일 등록' }}
+                />
+                <Stack.Screen
+                    name="type-and-morph"
+                    component={EntityManagerTypeAndMorphPage}
+                    options={{ headerLeft: Back, headerTitle: '종류 & 모프 등록' }}
+                />
+                <Stack.Screen
+                    name="weight"
+                    component={EntityManagerWeightPage}
+                    options={{ headerLeft: Back, headerTitle: '몸무게 등록' }}
+                />
+                <Stack.Screen
+                    name="name"
+                    component={EntityManagerNamePage}
+                    options={{ headerLeft: Back, headerTitle: '이름' }}
+                />
+                <Stack.Screen
+                    name="congrats"
+                    component={EntityManagerCongratsPage}
+                    options={{ headerLeft: Back, headerTitle: '등록 완료' }}
+                />
+            </Stack.Navigator>
+        </CreateEntity>
     );
 }

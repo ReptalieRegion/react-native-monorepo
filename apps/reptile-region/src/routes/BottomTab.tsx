@@ -34,7 +34,8 @@ export default function BottomTabRoutes({ navigation }: BottomTabScreenProps) {
 
     return (
         <BottomTab.Navigator
-            initialRouteName="home/routes"
+            // initialRouteName="home/routes"
+            initialRouteName="diary/routes"
             screenOptions={{ headerShown: false }}
             tabBar={(props) => MainBottomBar({ ...props, onPressNavigate: handleTabPressNavigate })}
         >

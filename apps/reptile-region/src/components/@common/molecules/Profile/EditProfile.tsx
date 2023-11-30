@@ -10,6 +10,7 @@ import type { ImageType } from '@/types/global/image';
 type EditProfileState = {
     profile: ImageType | undefined;
     imageSize?: number;
+    cameraSize?: number;
     style?: Pick<ViewStyle, 'marginBottom'>;
 };
 
@@ -19,14 +20,14 @@ interface EditProfileActions {
 
 type EditProfileProps = EditProfileState & EditProfileActions;
 
-export default function EditProfile({ profile, imageSize = 100, style, onPress }: EditProfileProps) {
+export default function EditProfile({ profile, imageSize = 100, cameraSize = 24, style, onPress }: EditProfileProps) {
     return (
         <View style={[styles.profileWrapper, StyleSheet.flatten(style)]}>
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.container}>
                     <Avatar image={profile} size={imageSize} />
-                    <View style={styles.iconContainer}>
-                        <Camera width={24} height={24} />
+                    <View style={[styles.iconContainer, { width: cameraSize * 1.5, height: cameraSize * 1.5 }]}>
+                        <Camera width={cameraSize} height={cameraSize} />
                     </View>
                 </View>
             </TouchableOpacity>
@@ -48,8 +49,6 @@ const styles = StyleSheet.create({
         right: 0,
         backgroundColor: color.Teal[150].toString(),
         borderRadius: 9999,
-        width: 35,
-        height: 35,
         justifyContent: 'center',
         alignItems: 'center',
     },

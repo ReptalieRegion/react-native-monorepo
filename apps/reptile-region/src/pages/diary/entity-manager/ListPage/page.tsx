@@ -1,12 +1,12 @@
-import { Typo, color } from '@reptile-region/design-system';
-import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
+import { color } from '@reptile-region/design-system';
+import { FlashList, type ContentStyle } from '@shopify/flash-list';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
-import { data, type Data } from './test';
+import Card2 from '../../../../components/diary/atoms/EntityCard/Card2';
+import { data, type Data } from '../../test';
 
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
-import { Avatar } from '@/components/@common/atoms';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import useEntityMangerActions from '@/hooks/diary/actions/useEntityMangerActions';
 import useEntityMangerNavigation from '@/hooks/diary/navigation/useEntityMangerNavigation';
@@ -19,48 +19,20 @@ export default function EntityMangerList({}: EntityMangerListPageProps) {
 
     const keyExtractor = (item: Data) => item.name;
 
-    const renderItem: ListRenderItem<Data> = ({ item }) => {
-        const { hatchingDay, image, morph, type, name, gender } = item;
-
-        return (
-            <View style={renderItemStyles.wrapper}>
-                <View style={renderItemStyles.container}>
-                    <Avatar recyclingKey={image} image={{ src: image }} size={100} />
-                </View>
-                <View style={renderItemStyles.infoWrapper}>
-                    <View style={renderItemStyles.infoContainer}>
-                        <Typo variant="title4">이름</Typo>
-                        <Typo>
-                            {name} ({gender})
-                        </Typo>
-                    </View>
-                    <View style={renderItemStyles.infoContainer}>
-                        <Typo variant="title4">종류</Typo>
-                        <Typo>{type}</Typo>
-                    </View>
-                    <View style={renderItemStyles.infoContainer}>
-                        <Typo variant="title4">모프</Typo>
-                        <Typo>{morph}</Typo>
-                    </View>
-                    <View style={renderItemStyles.infoContainer}>
-                        <Typo variant="title4">해칭일</Typo>
-                        <Typo>{`${hatchingDay.getFullYear()}.${hatchingDay.getMonth()}.${hatchingDay.getDay()}`}</Typo>
-                    </View>
-                </View>
-            </View>
-        );
-    };
-
     return (
         <View style={styles.container}>
             <FlashList
                 ref={flashListRef}
                 data={data}
                 contentContainerStyle={contentStyle}
-                renderItem={renderItem}
+                renderItem={(props) => (
+                    <View style={testStyle}>
+                        <Card2 {...props} />
+                    </View>
+                )}
+                numColumns={2}
                 keyExtractor={keyExtractor}
                 onScroll={handleScroll}
-                numColumns={2}
                 estimatedItemSize={212}
             />
             <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>
@@ -81,6 +53,29 @@ export default function EntityMangerList({}: EntityMangerListPageProps) {
     );
 }
 
+const testStyle = {
+    flex: 1,
+    backgroundColor: color.White.toString(),
+    ...Platform.select({
+        ios: {
+            shadowColor: '#7090B0',
+            shadowOpacity: 0.15,
+            shadowRadius: 15,
+            shadowOffset: {
+                width: 0,
+                height: 1,
+            },
+        },
+        android: {
+            elevation: 24,
+        },
+    }),
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+    marginRight: 5,
+    marginBottom: 5,
+};
+
 const primaryIcon = {
     width: 50,
     height: 50,
@@ -96,7 +91,7 @@ const secondaryIcon = {
 };
 
 const contentStyle: ContentStyle = {
-    paddingTop: 20,
+    paddingTop: 5,
     paddingHorizontal: 5,
 };
 
@@ -104,32 +99,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: color.White.toString(),
-    },
-});
-
-const renderItemStyles = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-        marginBottom: 10,
-        gap: 10,
-        borderWidth: 1,
-        borderRadius: 20,
-        backgroundColor: '#fafbf9',
-        borderColor: color.Teal[150].toString(),
-        paddingVertical: 10,
-        marginHorizontal: 5,
-    },
-    infoWrapper: {
-        paddingHorizontal: 15,
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        flexDirection: 'row',
-    },
-    infoContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
     },
 });
