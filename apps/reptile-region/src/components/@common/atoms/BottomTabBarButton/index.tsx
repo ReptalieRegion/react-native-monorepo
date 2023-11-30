@@ -68,11 +68,16 @@ export default function BottomTabBarButton({ isFocused, name, onPress, onLongPre
             >
                 <View style={styles.icon}>
                     <Animated.View style={iconAnimatedStyle}>
-                        <Icon fill={isFocused ? color.Green[700].toString() : undefined} />
+                        <Icon
+                            fill={isFocused ? color.Green[700].toString() : color.Gray[500].toString()}
+                            stroke={color.Black.toString()}
+                        />
                     </Animated.View>
                     <Animated.View style={textAnimatedStyle}>
                         <View style={styles.textContainer}>
-                            <Typo variant="body5">{name}</Typo>
+                            <Typo variant="body5" color="placeholder">
+                                {name}
+                            </Typo>
                         </View>
                     </Animated.View>
                 </View>

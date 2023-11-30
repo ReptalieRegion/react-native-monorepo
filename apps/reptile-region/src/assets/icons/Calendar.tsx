@@ -4,7 +4,7 @@ import { Circle, Path, Svg } from 'react-native-svg';
 
 import type { IconProps } from '@/types/global/icons';
 
-const Community = ({ fill = color.Gray['500'].toString(), height = '24', width = '24' }: IconProps) => {
+const Calendar = ({ fill = color.Gray[400].toString(), height = '24', width = '24' }: IconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 24 24" fill={fill}>
             <Path
@@ -22,4 +22,4 @@ const Community = ({ fill = color.Gray['500'].toString(), height = '24', width =
     );
 };
 
-export default Community;
+export default Calendar;

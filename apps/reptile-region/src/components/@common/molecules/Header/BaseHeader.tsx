@@ -8,6 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { BackButton, CancelButton, Logo } from '@/assets/icons';
 import MainStatusBar from '@/components/@common/atoms/StatusBar';
+import { headerHeight } from '@/constants/global';
 import type { IconFunction } from '@/types/global/icons';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
@@ -43,7 +44,7 @@ export default function BaseHeader({
     const customStyles = StyleSheet.create({
         container: containerStyle ?? {
             borderBottomWidth: 0.5,
-            borderBottomColor: color.Gray[250].toString(),
+            borderBottomColor: color.BlueGray[250].toString(),
         },
         title: titleStyle ?? {},
     });
@@ -77,7 +78,7 @@ export default function BaseHeader({
 
 const styles = StyleSheet.create({
     container: {
-        height: 60,
+        height: headerHeight,
         position: 'relative',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     },
     left: {
         position: 'absolute',
-        left: 10,
+        left: 20,
         zIndex: 1,
     },
     center: {
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     },
     right: {
         position: 'absolute',
-        right: 10,
+        right: 20,
         height: 30,
         flexDirection: 'row',
         justifyContent: 'center',

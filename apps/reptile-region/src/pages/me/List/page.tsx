@@ -30,13 +30,11 @@ export default function MyListPage() {
                 {
                     title: '푸시 알림 설정',
                     rightChildren: 'Chevron',
-                    showSignIn: false,
                     onPress: navigateNotificationSetting,
                 },
                 {
                     title: '내 프로필 설정',
                     rightChildren: 'Chevron',
-                    showSignIn: false,
                     onPress: navigateProfileSetting,
                 },
             ],
@@ -47,18 +45,15 @@ export default function MyListPage() {
                 {
                     title: '공지사항',
                     rightChildren: 'Chevron',
-                    showSignIn: false,
                 },
                 {
                     title: '이용약관',
                     rightChildren: 'Chevron',
-                    showSignIn: false,
                     onPress: navigateTermsOfUse,
                 },
                 {
                     title: '개인정보 취급방침',
                     rightChildren: 'Chevron',
-                    showSignIn: false,
                     onPress: navigatePrivacyPolicy,
                 },
             ],
@@ -69,13 +64,11 @@ export default function MyListPage() {
                 {
                     title: '오픈소스',
                     rightChildren: 'Chevron',
-                    showSignIn: false,
                     onPress: navigateLicense,
                 },
                 {
                     title: '앱 버전',
                     rightChildren: VersionCheck.getVersion(),
-                    showSignIn: false,
                 },
             ],
         },
@@ -85,7 +78,6 @@ export default function MyListPage() {
                 {
                     title: '로그아웃',
                     rightChildren: 'Chevron',
-                    showSignIn: true,
                     onPress: logout,
                 },
             ],
@@ -105,45 +97,22 @@ export default function MyListPage() {
                             {title}
                         </Typo>
                     </View>
-                    {items.map((item) => (
-                        <ConditionalRenderer
-                            key={item.title}
-                            condition={item.showSignIn}
-                            trueContent={
-                                <ListItem
-                                    leftChildren={<ListItem.Title text={item.title} />}
-                                    rightChildren={
-                                        <ConditionalRenderer
-                                            condition={item.rightChildren === 'Chevron'}
-                                            trueContent={<ListItem.Chevron />}
-                                            falseContent={
-                                                <View style={styles.listMargin}>
-                                                    <Typo color="placeholder">{item.rightChildren}</Typo>
-                                                </View>
-                                            }
-                                        />
+                    {items.map(({ title: subTitle, rightChildren, onPress }) => (
+                        <ListItem
+                            key={subTitle}
+                            leftChildren={<ListItem.Title text={subTitle} />}
+                            rightChildren={
+                                <ConditionalRenderer
+                                    condition={rightChildren === 'Chevron'}
+                                    trueContent={<ListItem.Chevron />}
+                                    falseContent={
+                                        <View style={styles.listMargin}>
+                                            <Typo color="placeholder">{rightChildren}</Typo>
+                                        </View>
                                     }
-                                    onPress={item.onPress}
                                 />
                             }
-                            falseContent={
-                                <ListItem
-                                    key={item.title}
-                                    leftChildren={<ListItem.Title text={item.title} />}
-                                    rightChildren={
-                                        <ConditionalRenderer
-                                            condition={item.rightChildren === 'Chevron'}
-                                            trueContent={<ListItem.Chevron />}
-                                            falseContent={
-                                                <View style={styles.listMargin}>
-                                                    <Typo color="placeholder">{item.rightChildren}</Typo>
-                                                </View>
-                                            }
-                                        />
-                                    }
-                                    onPress={item.onPress}
-                                />
-                            }
+                            onPress={onPress}
                         />
                     ))}
                 </View>
@@ -166,11 +135,11 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingLeft: 20,
         paddingRight: 20,
-        height: 160,
+        height: 170,
         marginBottom: 10,
     },
     listContainer: {
-        paddingTop: 10,
+        paddingTop: 20,
         backgroundColor: color.White.toString(),
     },
     listTitle: {

@@ -4,7 +4,6 @@ type SettingList = {
         title: string;
         onPress?(): void;
         rightChildren: 'Chevron' | string;
-        showSignIn: boolean;
     }[];
 };
 

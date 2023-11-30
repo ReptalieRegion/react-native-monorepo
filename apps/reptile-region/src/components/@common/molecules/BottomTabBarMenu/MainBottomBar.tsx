@@ -6,7 +6,7 @@ import * as Haptic from 'react-native-haptic-feedback';
 
 import { BottomTabBarButton } from '../../atoms';
 
-import { Home as HomeIcon, Community as InfoIcon, My as MyIcon, Share as SharePostIcon } from '@/assets/icons';
+import { Calendar as CalendarIcon, Home as HomeIcon, Me as MeIcon, Share as SharePostIcon } from '@/assets/icons';
 import type { IconProps } from '@/types/global/icons';
 import type { BottomTabParamList } from '@/types/routes/param-list/bottom-tab';
 
@@ -34,11 +34,11 @@ const MENUS: MenusType = {
         name: '일상공유',
     },
     'diary/routes': {
-        Icon: InfoIcon,
+        Icon: CalendarIcon,
         name: '다이어리',
     },
     'me/routes': {
-        Icon: MyIcon,
+        Icon: MeIcon,
         name: '내 정보',
     },
     // 'info/routes': {
@@ -61,59 +61,54 @@ export default function MainBottomBar({
     const paddingBottom = insets.bottom === 0 ? 10 : insets.bottom;
 
     return (
-        <View style={styles.bgWhite}>
-            <View style={[styles.container, { paddingBottom }]}>
-                {state.routes.map((route, index) => {
-                    const routeName = route.name as keyof BottomTabParamList;
-                    const item = MENUS[routeName];
+        <View style={[styles.container, { paddingBottom }]}>
+            {state.routes.map((route, index) => {
+                const routeName = route.name as keyof BottomTabParamList;
+                const item = MENUS[routeName];
 
-                    if (item === undefined) {
-                        return null;
+                if (item === undefined) {
+                    return null;
+                }
+
+                const { Icon, name } = item;
+                const isFocused = state.index === index;
+
+                const handlePress = () => {
+                    const event = navigation.emit({
+                        type: 'tabPress',
+                        target: route.key,
+                        canPreventDefault: true,
+                    });
+
+                    if (!isFocused && !event.defaultPrevented) {
+                        Haptic.trigger('impactLight');
+                        onPressNavigate({ routeName, navigation });
                     }
+                };
 
-                    const { Icon, name } = item;
-                    const isFocused = state.index === index;
+                const handleLongPress = () => {
+                    navigation.emit({
+                        type: 'tabLongPress',
+                        target: route.key,
+                    });
+                };
 
-                    const handlePress = () => {
-                        const event = navigation.emit({
-                            type: 'tabPress',
-                            target: route.key,
-                            canPreventDefault: true,
-                        });
-
-                        if (!isFocused && !event.defaultPrevented) {
-                            Haptic.trigger('impactLight');
-                            onPressNavigate({ routeName, navigation });
-                        }
-                    };
-
-                    const handleLongPress = () => {
-                        navigation.emit({
-                            type: 'tabLongPress',
-                            target: route.key,
-                        });
-                    };
-
-                    return (
-                        <BottomTabBarButton
-                            key={route.name}
-                            isFocused={isFocused}
-                            name={name}
-                            onPress={handlePress}
-                            onLongPress={handleLongPress}
-                            Icon={Icon}
-                        />
-                    );
-                })}
-            </View>
+                return (
+                    <BottomTabBarButton
+                        key={route.name}
+                        isFocused={isFocused}
+                        name={name}
+                        onPress={handlePress}
+                        onLongPress={handleLongPress}
+                        Icon={Icon}
+                    />
+                );
+            })}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    bgWhite: {
-        backgroundColor: color.White.toString(),
-    },
     container: {
         shadowColor: color.Black.toString(),
         shadowOpacity: 0.27,

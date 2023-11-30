@@ -9,6 +9,7 @@ import type { PushAgreeListType } from './type';
 import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useUpdatePushAgree';
 import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { ConditionalRenderer } from '@/components/@common/atoms';
+import { Divider } from '@/components/@common/atoms/Divider';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { PushAgreeType, type UpdatePushAgree } from '@/types/apis/notification';
 
@@ -93,28 +94,30 @@ export default function NotificationSetting() {
                 }
                 falseContent={null}
             />
-
             {PUSH_AGREE_LIST.map(({ title, listItem }, index) => (
-                <View style={[styles.list, index === PUSH_AGREE_LIST.length - 1 ? styles.lastList : undefined]} key={title}>
-                    <Typo variant="title3">{title}</Typo>
-                    <View>
-                        {listItem.map(({ label, type, dataTarget }) => (
-                            <ListItem
-                                key={type}
-                                style={listStyles}
-                                leftChildren={<ListItem.Title text={label} disabled={notNotificationPermission} />}
-                                rightChildren={
-                                    <Switch
-                                        value={data?.[dataTarget]}
-                                        onValueChange={(isAgree) => updatePushNotification({ type, isAgree })}
-                                        trackColor={{ true: color.Teal[150].toString() }}
-                                        disabled={notNotificationPermission}
-                                    />
-                                }
-                            />
-                        ))}
+                <>
+                    <View style={styles.list} key={title}>
+                        <Typo variant="title3">{title}</Typo>
+                        <View>
+                            {listItem.map(({ label, type, dataTarget }) => (
+                                <ListItem
+                                    key={type}
+                                    style={listStyles}
+                                    leftChildren={<ListItem.Title text={label} disabled={notNotificationPermission} />}
+                                    rightChildren={
+                                        <Switch
+                                            value={data?.[dataTarget]}
+                                            onValueChange={(isAgree) => updatePushNotification({ type, isAgree })}
+                                            trackColor={{ true: color.Teal[150].toString() }}
+                                            disabled={notNotificationPermission}
+                                        />
+                                    }
+                                />
+                            ))}
+                        </View>
                     </View>
-                </View>
+                    <ConditionalRenderer condition={index < 2} trueContent={<Divider height={10} />} />
+                </>
             ))}
         </View>
     );
@@ -129,14 +132,10 @@ const listStyles = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: color.White.toString(),
     },
     list: {
-        marginBottom: 10,
-        backgroundColor: color.White.toString(),
         padding: 20,
         gap: 10,
-    },
-    lastList: {
-        flex: 1,
     },
 });
