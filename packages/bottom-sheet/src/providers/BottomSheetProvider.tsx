@@ -44,7 +44,6 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
 
     useEffect(() => {
         height.value = withTiming(numberPointsFromTop[snapInfo.startIndex], { duration: 500 });
-        console.log('hihi');
     }, [height, numberPointsFromTop, snapInfo.startIndex]);
 
     return (

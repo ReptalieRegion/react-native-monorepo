@@ -13,7 +13,6 @@ export default function EntityManagerWeightPage({ navigation }: EntityManagerCre
         entityDate: { weight },
         setCreateEntity,
     } = useCreateEntity();
-    console.log(weight);
 
     const handleChangeWeight = (text: string) => {
         setCreateEntity({ type: 'SET_WEIGHT', weight: text });

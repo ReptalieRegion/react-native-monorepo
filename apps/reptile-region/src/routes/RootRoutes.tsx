@@ -55,8 +55,6 @@ const linking: LinkingOptions<RootRoutesParamList> = {
 
         const deepLink = await Notifee.getDeepLink();
 
-        console.log(deepLink);
-
         return deepLink;
     },
     subscribe(listener) {

@@ -48,9 +48,7 @@ export default function EntityManagerImagePage({ navigation }: EntityManagerCrea
                     imageSize={200}
                     cameraSize={30}
                     profile={{ src: image?.uri ?? '' }}
-                    onPress={() => {
-                        handlePressProfileImage();
-                    }}
+                    onPress={handlePressProfileImage}
                 />
             }
             button={

@@ -9,9 +9,8 @@ import Notifee from '@/utils/notification/notifee';
 const useEffectNotifee = (navigationRef: NavigationContainerRefWithCurrent<RootRoutesParamList>) => {
     useEffect(() => {
         if (Platform.OS === 'android') {
-            Notifee.getInitialNotification().then((data) => {
-                console.log(data);
-            });
+            // TODO 푸시로 유입되었는지 체크 로직 추가
+            Notifee.getInitialNotification();
         }
 
         const unMessage = messaging().onMessage(Notifee.messageReceived);

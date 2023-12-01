@@ -1,6 +1,6 @@
 import { Typo, color } from '@reptile-region/design-system';
 import React, { useEffect, useRef } from 'react';
-import type { ColorValue, DimensionValue, TextInputProps } from 'react-native';
+import type { ColorValue, DimensionValue, KeyboardType, TextInputProps } from 'react-native';
 import { Platform, StyleSheet, View } from 'react-native';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import type { WithTimingConfig } from 'react-native-reanimated';
@@ -17,6 +17,7 @@ export type TextFieldProps = {
     autoFocus?: boolean;
     secureTextEntry?: boolean;
     errorMessColor?: ColorValue;
+    keyboardType?: KeyboardType;
     labelColor?: ColorValue;
     focusColor?: ColorValue;
     size?: FontSizes;
@@ -70,6 +71,7 @@ export default function TextField({
     paddingHorizontal = 0,
     borderWidth = 1,
     borderRadius,
+    keyboardType,
     errorMessColor = color.Red[500].toString(),
     labelColor = color.Gray[400].toString(),
     focusColor = color.Teal[150].toString(),
@@ -161,6 +163,7 @@ export default function TextField({
                 <Animated.View style={[styles.container, borderAnimated, { paddingVertical, paddingHorizontal }]}>
                     <TextInput
                         ref={textRef}
+                        keyboardType={keyboardType}
                         style={styles.textInput}
                         value={value}
                         secureTextEntry={secureTextEntry}

@@ -15,6 +15,7 @@ import useNicknameDuplicateCheck from '@/apis/auth/hooks/queries/useNicknameDupl
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import { SignUpTextField, SignUpTitle } from '@/components/auth/molecules';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
+import useKeyboardOpenButtonSize from '@/hooks/@common/useKeyboardOpenButtonSize';
 
 export default function SignUpStep1({
     navigation,
@@ -26,6 +27,7 @@ export default function SignUpStep1({
 }: SignUpStep1ScreenProps) {
     const [nickname, setNickname] = useState(recommendNickname);
     const { loading, startLoading, endLoading } = useLoading();
+    const buttonSize = useKeyboardOpenButtonSize();
     const isFocused = useIsFocused();
     const { signIn } = useAuth();
     const { bottom } = useSafeAreaInsets();
@@ -69,13 +71,15 @@ export default function SignUpStep1({
     };
 
     const { height, state } = useAnimatedKeyboard();
-    const isOpenState = state.value === KeyboardState.OPENING || state.value === KeyboardState.OPEN;
 
     const buttonAnimation = useAnimatedStyle(() => {
+        const isOpenState = state.value === KeyboardState.OPEN || state.value === KeyboardState.OPENING;
         return {
-            paddingBottom: isOpenState ? height.value : bottom,
+            justifyContent: 'flex-end',
+            paddingBottom: isOpenState ? height.value : bottom <= 20 ? 20 : bottom,
+            paddingHorizontal: isOpenState ? 0 : 20,
         };
-    }, [isOpenState]);
+    }, [height.value, state.value, bottom]);
 
     return (
         <TouchableWithoutFeedback style={styles.wrapper} containerStyle={styles.wrapper} onPress={Keyboard.dismiss}>
@@ -101,7 +105,7 @@ export default function SignUpStep1({
                     <ConfirmButton
                         text="다음"
                         variant={'confirm'}
-                        size={isOpenState ? 'large' : 'medium'}
+                        size={buttonSize}
                         onPress={handleNextButton}
                         disabled={disabled}
                     />
@@ -117,12 +121,12 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     container: {
-        paddingHorizontal: 20,
         flex: 1,
+        flexDirection: 'column',
         paddingTop: 40,
-        gap: 20,
     },
     contents: {
+        paddingHorizontal: 20,
         flex: 1,
         gap: 40,
     },
