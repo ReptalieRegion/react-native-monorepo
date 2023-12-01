@@ -11,6 +11,7 @@ type SignUpTextFieldState = {
     label: string;
     isLoading: boolean;
     errorMessage?: string | undefined;
+    autoFocus?: boolean;
 };
 
 interface SignUpTextFieldActions {
@@ -50,6 +51,7 @@ export default function SignUpTextField({
     value,
     errorMessage,
     isLoading,
+    autoFocus,
     onChangeText,
     onPressCancel,
 }: SignUpTextFieldProps) {
@@ -68,7 +70,7 @@ export default function SignUpTextField({
                     <Typo variant="body4" color={style.textColor}>
                         {label}
                     </Typo>
-                    <TextInput ref={textInputRef} value={value} onChangeText={onChangeText} />
+                    <TextInput autoFocus={autoFocus} ref={textInputRef} value={value} onChangeText={onChangeText} />
                 </View>
                 <View style={styles.successIconContainer}>
                     <ConditionalRenderer

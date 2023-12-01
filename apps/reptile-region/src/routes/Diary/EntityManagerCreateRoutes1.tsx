@@ -6,13 +6,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { BackButton, CancelButton } from '@/assets/icons';
 import CreateEntity from '@/components/diary/organisms/CreateEntity/provider/CreateEntity';
-import EntityManagerCongratsPage from '@/pages/diary/entity-manager/create/CongratsPage/page';
-import EntityManagerGenderPage from '@/pages/diary/entity-manager/create/GenderPage/page';
-import EntityManagerHatchingDayPage from '@/pages/diary/entity-manager/create/HatchingDayPage/page';
-import EntityManagerImagePage from '@/pages/diary/entity-manager/create/ImagePage/page';
-import EntityManagerNamePage from '@/pages/diary/entity-manager/create/NamePage/page';
-import EntityManagerTypeAndMorphPage from '@/pages/diary/entity-manager/create/TypeAndMorphPage/page';
-import EntityManagerWeightPage from '@/pages/diary/entity-manager/create/WeightPage/page';
+import EntityManagerCongratsPage from '@/pages/diary/entity-manager/create/CongratsPage/page1';
+import EntityManagerGenderPage from '@/pages/diary/entity-manager/create/GenderPage/page1';
+import EntityManagerHatchingDayPage from '@/pages/diary/entity-manager/create/HatchingDayPage/page1';
+import EntityManagerImagePage from '@/pages/diary/entity-manager/create/ImagePage/page1';
+import EntityManagerNamePage from '@/pages/diary/entity-manager/create/NamePage/page1';
+import EntityManagerTypeAndMorphPage from '@/pages/diary/entity-manager/create/TypeAndMorphPage/page1';
+import EntityManagerWeightPage from '@/pages/diary/entity-manager/create/WeightPage/page1';
 import type { EntityManagerCreateParamList } from '@/types/routes/param-list/diary';
 
 const Stack = createNativeStackNavigator<EntityManagerCreateParamList>();
@@ -58,63 +58,38 @@ export default function EntityManagerCreateRoutes() {
                     component={EntityManagerImagePage}
                     options={{
                         headerLeft: Cancel,
-                        headerTitle: '',
-                        headerShadowVisible: false,
+                        headerTitle: '이미지 등록',
                     }}
                 />
                 <Stack.Screen
                     name="gender"
                     component={EntityManagerGenderPage}
-                    options={{
-                        headerLeft: Back,
-                        headerTitle: '',
-                        headerShadowVisible: false,
-                    }}
+                    options={{ headerLeft: Back, headerTitle: '성별 등록' }}
                 />
                 <Stack.Screen
                     name="hatchingDay"
                     component={EntityManagerHatchingDayPage}
-                    options={{
-                        headerLeft: Back,
-                        headerTitle: '',
-                        headerShadowVisible: false,
-                    }}
+                    options={{ headerLeft: Back, headerTitle: '해칭일 등록' }}
                 />
                 <Stack.Screen
                     name="type-and-morph"
                     component={EntityManagerTypeAndMorphPage}
-                    options={{
-                        headerLeft: Back,
-                        headerTitle: '',
-                        headerShadowVisible: false,
-                    }}
+                    options={{ headerLeft: Back, headerTitle: '종류 & 모프 등록' }}
                 />
                 <Stack.Screen
                     name="weight"
                     component={EntityManagerWeightPage}
-                    options={{
-                        headerLeft: Back,
-                        headerTitle: '',
-                        headerShadowVisible: false,
-                    }}
+                    options={{ headerLeft: Back, headerTitle: '몸무게 등록' }}
                 />
                 <Stack.Screen
                     name="name"
                     component={EntityManagerNamePage}
-                    options={{
-                        headerLeft: Back,
-                        headerTitle: '',
-                        headerShadowVisible: false,
-                    }}
+                    options={{ headerLeft: Back, headerTitle: '이름' }}
                 />
                 <Stack.Screen
                     name="congrats"
                     component={EntityManagerCongratsPage}
-                    options={{
-                        headerBackVisible: false,
-                        headerTitle: '',
-                        headerShadowVisible: false,
-                    }}
+                    options={{ headerLeft: Back, headerTitle: '등록 완료' }}
                 />
             </Stack.Navigator>
         </CreateEntity>

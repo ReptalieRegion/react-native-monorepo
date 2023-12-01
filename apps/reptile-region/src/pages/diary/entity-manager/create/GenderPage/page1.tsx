@@ -1,4 +1,3 @@
-import { useIsFocused } from '@react-navigation/native';
 import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -11,7 +10,7 @@ import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
 import type { EntityGender } from '@/components/diary/organisms/CreateEntity/type';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
+import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate1';
 import type { IconFunction } from '@/types/global/icons';
 import type { EntityManagerCreateGenderScreenProps } from '@/types/routes/props/diary';
 
@@ -33,7 +32,6 @@ export default function EntityManagerGenderPage({ navigation }: EntityManagerCre
         entityDate: { gender },
         setCreateEntity,
     } = useCreateEntity();
-    const isFocused = useIsFocused();
 
     const nextPage = () => {
         navigation.navigate('hatchingDay');
@@ -48,7 +46,6 @@ export default function EntityManagerGenderPage({ navigation }: EntityManagerCre
         <CreateTemplate
             title="성별을 선택해주세요."
             description="등록할 개체의 성별을 선택해주세요."
-            contentsAlign="center"
             contents={
                 <View style={styles.row}>
                     {GENDER_MAP.map(({ gender: selectedGender, Icon, color: genderColor }) => {
@@ -67,12 +64,7 @@ export default function EntityManagerGenderPage({ navigation }: EntityManagerCre
                     })}
                 </View>
             }
-            button={
-                <ConditionalRenderer
-                    condition={isFocused && !!gender}
-                    trueContent={<ConfirmButton size="medium" variant="confirm" text="다음" onPress={nextPage} />}
-                />
-            }
+            button={<ConditionalRenderer condition={!!gender} trueContent={<ConfirmButton text="다음" onPress={nextPage} />} />}
         />
     );
 }
@@ -83,6 +75,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         gap: 20,
         paddingHorizontal: 20,
-        minHeight: 100,
+    },
+    iconContainer: {
+        flex: 1,
+    },
+    iconItem: {
+        height: 20,
+        borderWidth: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });

@@ -19,6 +19,7 @@ export { default as NotificationIcon } from './Notification';
 export { default as PostWriteIcon } from './PostWriteIcon';
 export { default as Share } from './Share';
 export { default as Success } from './Success';
+export { default as SuccessBadge } from './SuccessBadge';
 export { default as Trash } from './Trash';
 export { default as UpArrow } from './UpArrow';
 export { default as Warning } from './Warning';

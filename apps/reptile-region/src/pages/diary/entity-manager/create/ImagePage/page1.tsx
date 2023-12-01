@@ -1,27 +1,18 @@
-import { useIsFocused } from '@react-navigation/native';
 import React from 'react';
 
-import { ConditionalRenderer } from '@/components/@common/atoms';
-import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import { EditProfile } from '@/components/@common/molecules/Profile';
 import { useToast } from '@/components/@common/organisms/Toast';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
+import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate1';
 import useImagePicker from '@/hooks/@common/useImagePicker';
 import type { EntityManagerCreateImageScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerImagePage({ navigation }: EntityManagerCreateImageScreenProps) {
     const { openToast } = useToast();
-    const isFocused = useIsFocused();
     const {
         entityDate: { image },
         setCreateEntity,
     } = useCreateEntity();
-
-    const nextPage = () => {
-        navigation.navigate('gender');
-    };
-
     const { handlePressProfileImage } = useImagePicker({
         onSuccess: (imageInfo) => {
             const uri = imageInfo.path;
@@ -30,7 +21,6 @@ export default function EntityManagerImagePage({ navigation }: EntityManagerCrea
             const type = imageInfo.mime;
             setCreateEntity({ type: 'SET_IMAGE', image: { name, uri, type } });
             navigation.navigate('gender');
-            nextPage();
         },
         onError: (error) => {
             if (error.message !== 'User cancelled image selection') {
@@ -51,12 +41,6 @@ export default function EntityManagerImagePage({ navigation }: EntityManagerCrea
                     onPress={() => {
                         handlePressProfileImage();
                     }}
-                />
-            }
-            button={
-                <ConditionalRenderer
-                    condition={isFocused && !!image}
-                    trueContent={<ConfirmButton size="medium" variant="confirm" text="다음" onPress={nextPage} />}
                 />
             }
         />

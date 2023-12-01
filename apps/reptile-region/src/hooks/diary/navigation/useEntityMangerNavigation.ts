@@ -17,8 +17,15 @@ const useEntityMangerNavigation = () => {
         });
     };
 
+    const navigateEntityCreatePage1 = () => {
+        navigation.navigate('entity-manager/create1', {
+            screen: 'image',
+        });
+    };
+
     return {
         navigateEntityCreatePage,
+        navigateEntityCreatePage1,
     };
 };
 

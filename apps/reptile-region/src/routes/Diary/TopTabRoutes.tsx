@@ -21,7 +21,7 @@ export default function DiaryRoutes() {
             initialRouteName="entity-manager"
             initialLayout={{ width, height: tabBarHeight }}
             screenOptions={{
-                tabBarActiveTintColor: color.Black.toString(),
+                tabBarActiveTintColor: color.DarkGray[500].toString(),
                 tabBarStyle: { paddingTop: top },
                 tabBarLabelStyle: { fontSize: 14 },
                 tabBarIndicatorStyle: { height: 1, backgroundColor: color.Teal[150].toString() },

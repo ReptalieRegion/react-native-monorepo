@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: color.Black.alpha(0.65).toString(),
+        backgroundColor: color.DarkGray[500].alpha(0.65).toString(),
     },
     modalContainer: {
         backgroundColor: color.White.toString(),

@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     cancelBackground: {
-        backgroundColor: color.Black.alpha(0.6).toString(),
+        backgroundColor: color.DarkGray[500].alpha(0.6).toString(),
         borderRadius: 9999,
     },
     image: {

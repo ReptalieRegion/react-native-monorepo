@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
+import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate1';
 import type { EntityManagerCreateHatchingScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerHatchingDayPage({ navigation }: EntityManagerCreateHatchingScreenProps) {
@@ -27,7 +27,7 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
 
     return (
         <CreateTemplate
-            title="해칭일을 등록해주세요"
+            title="해칭일을 등록해주세요."
             description="등록할 개체의 해칭일을 선택해주세요."
             contents={
                 <RNDateTimePicker
@@ -39,7 +39,7 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
                     onChange={handleChangeDate}
                 />
             }
-            button={<ConfirmButton size="medium" variant="confirm" text="다음" onPress={nextPage} />}
+            button={<ConfirmButton text="다음" onPress={nextPage} />}
         />
     );
 }

@@ -4,7 +4,7 @@ import { Path, Svg } from 'react-native-svg';
 
 import type { IconProps } from '@/types/global/icons';
 
-const Comment = ({ stroke = color.Black.toString() }: IconProps) => {
+const Comment = ({ stroke = color.DarkGray[500].toString() }: IconProps) => {
     return (
         <Svg width="40" height="40" viewBox="0 0 24 24" fill="none">
             <Path

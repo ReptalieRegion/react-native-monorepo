@@ -14,7 +14,7 @@ type SignUpTitleProps = SignUpTitleState;
 export default function SignUpTitle({ title, description }: SignUpTitleProps) {
     return (
         <View style={styles.container}>
-            <Typo variant="heading2">{title}</Typo>
+            <Typo variant="heading1Bold">{title}</Typo>
             <ConditionalRenderer
                 condition={!!description}
                 trueContent={<Typo variant="body2">{description}</Typo>}

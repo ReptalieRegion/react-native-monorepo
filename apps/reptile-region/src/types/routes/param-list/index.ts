@@ -34,6 +34,7 @@ type RootRoutesParamList = {
 
     // Entity
     'entity-manager/create': NavigatorScreenParams<EntityManagerCreateParamList>;
+    'entity-manager/create1': NavigatorScreenParams<EntityManagerCreateParamList>;
 };
 
 export type { RootRoutesParamList };

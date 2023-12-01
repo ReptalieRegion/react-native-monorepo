@@ -25,7 +25,7 @@ const BottomSheet = ({
         borderTopLeftRadius: 16,
         borderTopStartRadius: 16,
     },
-    backDropStyle = { backgroundColor: color.Black.alpha(0.3).toString() },
+    backDropStyle = { backgroundColor: color.DarkGray[500].alpha(0.3).toString() },
     children,
     snapInfo,
     insets,

@@ -4,7 +4,7 @@ import { Path, Svg } from 'react-native-svg';
 
 import type { IconProps } from '@/types/global/icons';
 
-const CancelButton = ({ width = 15, height = 15, fill = color.Black.toString() }: IconProps) => {
+const CancelButton = ({ width = 15, height = 15, fill = color.DarkGray[500].toString() }: IconProps) => {
     return (
         <Svg width={width} height={height} viewBox="0 0 15 15" fill="none">
             <Path

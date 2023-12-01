@@ -16,7 +16,7 @@ type CalenderProps = {};
 
 export default function Calender({}: CalenderProps) {
     const { flashListRef, handlePressUpFloatingButton, handleScroll } = useEntityMangerActions();
-    const { navigateEntityCreatePage } = useEntityMangerNavigation();
+    const { navigateEntityCreatePage1 } = useEntityMangerNavigation();
 
     const keyExtractor = (item: Data) => item.name;
 
@@ -37,7 +37,7 @@ export default function Calender({}: CalenderProps) {
                         name="primary"
                         Icon={PostWriteIcon}
                         iconStyle={primaryIcon}
-                        onPress={navigateEntityCreatePage}
+                        onPress={navigateEntityCreatePage1}
                     />
                     <FloatingActionButtonGroup.Button
                         name="secondary"

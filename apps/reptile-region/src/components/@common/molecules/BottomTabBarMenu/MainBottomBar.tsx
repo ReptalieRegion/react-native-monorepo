@@ -110,7 +110,7 @@ export default function MainBottomBar({
 
 const styles = StyleSheet.create({
     container: {
-        shadowColor: color.Black.toString(),
+        shadowColor: color.DarkGray[500].toString(),
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
         shadowOffset: {

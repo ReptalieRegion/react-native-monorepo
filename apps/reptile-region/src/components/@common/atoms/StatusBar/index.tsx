@@ -11,7 +11,7 @@ const backgroundColor = ENV.isProd
     ? 'red'
     : ENV.isLocal
     ? color.White.toString()
-    : color.Black.toString();
+    : color.DarkGray[500].toString();
 
 export default function MainStatusBar() {
     const { top } = useSafeAreaInsets();

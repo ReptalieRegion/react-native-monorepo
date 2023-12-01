@@ -7,6 +7,7 @@ export type FontWeight = {
 
 export type VariantType =
     | 'heading1'
+    | 'heading1Bold'
     | 'heading1Light'
     | 'heading2'
     | 'heading3'
@@ -39,6 +40,7 @@ export type TextColorType =
     | 'surface'
     | 'require'
     | 'default'
+    | 'sub-default'
     | 'error-toast'
     | 'warning-toast'
     | 'info-toast'

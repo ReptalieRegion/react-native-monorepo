@@ -4,12 +4,10 @@ import { StyleSheet, TextInput, View } from 'react-native';
 
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
-import useKeyboardOpenButtonSize from '@/hooks/@common/useKeyboardOpenButtonSize';
+import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate1';
 import type { EntityManagerCreateNameScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerNamePage({ navigation }: EntityManagerCreateNameScreenProps) {
-    const buttonSize = useKeyboardOpenButtonSize();
     const {
         entityDate: { name },
         setCreateEntity,
@@ -30,15 +28,12 @@ export default function EntityManagerNamePage({ navigation }: EntityManagerCreat
         <CreateTemplate
             title="개체의 이름을 등록해주세요."
             description="현재 개체의 이름을 알려주세요."
-            contentsAlign="top"
             contents={
                 <View style={styles.textView}>
-                    <View style={styles.textInput}>
-                        <TextInput value={name ?? ''} onChangeText={handleChangeName} autoFocus />
-                    </View>
+                    <TextInput value={name ?? ''} onChangeText={handleChangeName} />
                 </View>
             }
-            button={<ConfirmButton text="다음" size={buttonSize} onPress={nextPage} disabled={name === null || name === ''} />}
+            button={<ConfirmButton text="다음" onPress={nextPage} disabled={name === null || name === ''} />}
         />
     );
 }
@@ -46,12 +41,10 @@ export default function EntityManagerNamePage({ navigation }: EntityManagerCreat
 const styles = StyleSheet.create({
     textView: {
         flexDirection: 'row',
-        borderBottomWidth: 1,
+        borderWidth: 1,
         borderColor: color.Gray[500].toString(),
         padding: 10,
+        paddingVertical: 10,
         borderRadius: 10,
-    },
-    textInput: {
-        flex: 1,
     },
 });

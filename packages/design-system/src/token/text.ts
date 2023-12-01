@@ -19,6 +19,11 @@ export const variantMap: Variant = {
         lineHeight: 32,
         fontSize: 24,
     },
+    heading1Bold: {
+        fontWeight: fontWeightMap.bold,
+        lineHeight: 32,
+        fontSize: 24,
+    },
     heading1Light: {
         fontWeight: fontWeightMap.light,
         lineHeight: 32,
@@ -106,7 +111,8 @@ export const textLightColor: TextLightColor = {
     'sub-placeholder': color.Gray[600].toString(),
     require: color.Red[600].toString(),
     error: color.Red[500].toString(),
-    default: color.Black.toString(),
+    default: color.DarkGray[500].toString(),
+    'sub-default': color.DarkGray[200].toString(),
     'error-toast': color.Red.A800.toString(),
     'warning-toast': color.Brown.A800.toString(),
     'info-toast': color.Blue.A800.toString(),

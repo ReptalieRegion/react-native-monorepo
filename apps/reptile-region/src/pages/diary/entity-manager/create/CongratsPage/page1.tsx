@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { SuccessBadge } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
+import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate1';
 import type { EntityManagerCreateCongratsScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerCongratsPage({ navigation }: EntityManagerCreateCongratsScreenProps) {
