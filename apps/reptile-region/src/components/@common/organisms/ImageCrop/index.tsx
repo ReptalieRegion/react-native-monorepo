@@ -1,6 +1,5 @@
-import { Image } from 'expo-image';
 import { useRef } from 'react';
-import React, { StyleSheet, View } from 'react-native';
+import React, { Image, StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 
@@ -171,15 +170,7 @@ export default function ImageCrop({ image, width, height, maxScale, initPosition
                         <GestureDetector gesture={panGesture}>
                             <View style={{ width, height }}>
                                 <Animated.View style={[{ width: imageWidth, height: imageHeight }, panStyle]}>
-                                    <Image
-                                        style={{ width: imageWidth, height: imageHeight }}
-                                        recyclingKey={image.uri}
-                                        source={{ uri: image.uri }}
-                                        priority="high"
-                                        contentFit="cover"
-                                        placeholder={require('@/assets/images/default_image.png')}
-                                        placeholderContentFit="cover"
-                                    />
+                                    <Image style={{ width: imageWidth, height: imageHeight }} source={{ uri: image.uri }} />
                                 </Animated.View>
                             </View>
                         </GestureDetector>

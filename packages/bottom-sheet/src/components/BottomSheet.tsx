@@ -1,7 +1,7 @@
 import { color } from '@reptile-region/design-system';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
-import { Modal, type Insets } from 'react-native';
+import { type Insets } from 'react-native';
 
 import BackDrop from '../components/BackDrop';
 import BottomSheetProvider from '../providers/BottomSheetProvider';
@@ -33,15 +33,13 @@ const BottomSheet = ({
     onClose,
 }: PropsWithChildren<BottomSheetProps>) => {
     return (
-        <Modal transparent={true}>
-            <BottomSheetProvider insets={insets} onClose={onClose} snapInfo={snapInfo}>
-                <BackDrop style={backDropStyle} />
-                <BottomSheetContainer style={{ ...containerStyle, paddingBottom: insets?.bottom }}>
-                    <BottomSheetHeader header={header} />
-                    {children}
-                </BottomSheetContainer>
-            </BottomSheetProvider>
-        </Modal>
+        <BottomSheetProvider insets={insets} onClose={onClose} snapInfo={snapInfo}>
+            <BackDrop style={backDropStyle} />
+            <BottomSheetContainer style={{ ...containerStyle, paddingBottom: insets?.bottom }}>
+                <BottomSheetHeader header={header} />
+                {children}
+            </BottomSheetContainer>
+        </BottomSheetProvider>
     );
 };
 

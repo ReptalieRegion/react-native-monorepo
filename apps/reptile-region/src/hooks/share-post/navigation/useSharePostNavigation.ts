@@ -49,7 +49,7 @@ const useSharePostNavigation = (pageState: PageState) => {
                         params,
                     });
                 case 'BOTTOM_TAB':
-                    return (navigation as BottomTabNavigationProp).push('bottom-tab/modal/comment', {
+                    return (navigation as BottomTabNavigationProp).navigate('bottom-tab/modal/comment', {
                         screen: 'main',
                         params,
                     });
