@@ -1,5 +1,6 @@
-import { useIsFocused } from '@react-navigation/native';
-import React from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useRef } from 'react';
+import { TextInput } from 'react-native-gesture-handler';
 
 import { TextField } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
@@ -9,8 +10,12 @@ import useKeyboardOpenButtonSize from '@/hooks/@common/useKeyboardOpenButtonSize
 import type { EntityManagerCreateWeightScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerWeightPage({ navigation }: EntityManagerCreateWeightScreenProps) {
+    const textFieldRef = useRef<TextInput>(null);
     const buttonSize = useKeyboardOpenButtonSize();
-    const isFocused = useIsFocused();
+
+    useFocusEffect(() => {
+        setTimeout(() => textFieldRef.current?.focus(), 1000);
+    });
 
     const {
         entityDate: { weight },
@@ -32,11 +37,11 @@ export default function EntityManagerWeightPage({ navigation }: EntityManagerCre
             contentsAlign="top"
             contents={
                 <TextField
+                    ref={textFieldRef}
                     label={'몸무게'}
-                    size="small"
+                    size="large"
                     value={weight?.toString()}
                     onChangeText={handleChangeWeight}
-                    autoFocus={isFocused}
                     keyboardType="numeric"
                 />
             }

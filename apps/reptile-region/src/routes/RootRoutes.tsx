@@ -121,7 +121,7 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 <Stack.Screen
                     name="share-post/modal/posting"
                     component={PostingRoutes}
-                    options={{ animation: 'slide_from_bottom', headerShown: false }}
+                    options={{ animation: 'slide_from_bottom', headerShown: false, gestureEnabled: false }}
                 />
                 <Stack.Screen
                     name="share-post/bottom-sheet/post-options-menu"
@@ -165,12 +165,12 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 <Stack.Screen
                     name="entity-manager/create"
                     component={EntityManagerCreateRoutes}
-                    options={{ headerShown: false }}
+                    options={{ headerShown: false, gestureEnabled: false }}
                 />
                 <Stack.Screen
                     name="entity-manager/create1"
                     component={EntityManagerCreateRoutes1}
-                    options={{ headerShown: false }}
+                    options={{ headerShown: false, gestureEnabled: false }}
                 />
                 {/* 다이어리 끝 */}
             </Stack.Navigator>

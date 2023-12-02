@@ -3,7 +3,7 @@ import { isDate } from 'lodash-es';
 import type { CreateEntityActions, CreateEntityState, EntityGender, EntityImage } from '../type';
 
 const setImage = (state: CreateEntityState, image: EntityImage): CreateEntityState => {
-    if (!image.uri || !image.name) {
+    if (!image.uri || !image.name || !image.sourceURL) {
         return state;
     }
 

@@ -1,6 +1,6 @@
 import { Typo, color, type TypoProps } from '@reptile-region/design-system';
 import React from 'react';
-import { StyleSheet, View, type ViewStyle } from 'react-native';
+import { Dimensions, StyleSheet, View, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 type ConfirmButtonVariant = 'confirm' | 'cancel' | 'sub';
@@ -31,7 +31,13 @@ export default function ConfirmButton({
     const generatedColor = styleVariantGenerator(variant);
 
     return (
-        <TouchableOpacity activeOpacity={0.5} onPress={onPress} disabled={disabled}>
+        <TouchableOpacity
+            containerStyle={styles.container}
+            style={styles.container}
+            activeOpacity={0.5}
+            onPress={onPress}
+            disabled={disabled}
+        >
             <View style={[styles.view, generatedSize.view, generatedColor.view]}>
                 <Typo
                     variant={generatedSize.text.variant}
@@ -112,7 +118,7 @@ function styleSizeGenerator(size: ConfirmButtonSize): { view: ViewStyle; text: P
         case 'full':
             return {
                 view: {
-                    width: '100%',
+                    width: Dimensions.get('screen').width,
                     height: 55,
                 },
                 text: {
@@ -127,5 +133,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    container: {
+        alignItems: 'center',
     },
 });

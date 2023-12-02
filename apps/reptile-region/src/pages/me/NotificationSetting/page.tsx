@@ -95,7 +95,7 @@ export default function NotificationSetting() {
                 falseContent={null}
             />
             {PUSH_AGREE_LIST.map(({ title, listItem }, index) => (
-                <>
+                <View key={title}>
                     <View style={styles.list} key={title}>
                         <Typo variant="title3">{title}</Typo>
                         <View>
@@ -117,7 +117,7 @@ export default function NotificationSetting() {
                         </View>
                     </View>
                     <ConditionalRenderer condition={index < 2} trueContent={<Divider height={10} />} />
-                </>
+                </View>
             ))}
         </View>
     );

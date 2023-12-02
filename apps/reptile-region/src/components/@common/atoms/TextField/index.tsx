@@ -1,5 +1,5 @@
 import { Typo, color } from '@reptile-region/design-system';
-import React, { useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import type { ColorValue, DimensionValue, KeyboardType, TextInputProps } from 'react-native';
 import { Platform, StyleSheet, View } from 'react-native';
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -57,26 +57,27 @@ const LABEL_FONT_SIZE: LabelFontSize = {
     },
 };
 
-export default function TextField({
-    onChangeText,
-    label,
-    value,
-    errorMessage,
-    secureTextEntry = false,
-    autoFocus = false,
-    width = '100%',
-    size = 'normal',
-    variant = 'standard',
-    paddingVertical = 10,
-    paddingHorizontal = 0,
-    borderWidth = 1,
-    borderRadius,
-    keyboardType,
-    errorMessColor = color.Red[500].toString(),
-    labelColor = color.Gray[400].toString(),
-    focusColor = color.Teal[150].toString(),
-}: TextFieldProps) {
-    const textRef = useRef<TextInput>(null);
+export default forwardRef<TextInput, TextFieldProps>(function TextField(
+    {
+        onChangeText,
+        label,
+        value,
+        errorMessage,
+        secureTextEntry = false,
+        width = '100%',
+        size = 'normal',
+        variant = 'standard',
+        paddingVertical = 10,
+        paddingHorizontal = 0,
+        borderWidth = 1,
+        borderRadius,
+        keyboardType,
+        errorMessColor = color.Red[500].toString(),
+        labelColor = color.Gray[400].toString(),
+        focusColor = color.Teal[150].toString(),
+    },
+    ref,
+) {
     const isExistsText = useRef<boolean>(false);
     const fieldColor = useSharedValue<ColorValue | undefined>(labelColor);
     const labelFontSize = useSharedValue<number>(LABEL_FONT_SIZE[size].blur);
@@ -116,20 +117,10 @@ export default function TextField({
     }));
 
     useEffect(() => {
-        if (autoFocus) {
-            textRef.current?.focus();
-        }
-    }, [autoFocus]);
-
-    useEffect(() => {
         if (errorMessage) {
             fieldColor.value = errorMessColor;
         }
     }, [errorMessColor, errorMessage, fieldColor]);
-
-    const handleFocus = () => {
-        textRef.current?.focus();
-    };
 
     const handleTextInputFocus = () => {
         fieldColor.value = focusColor;
@@ -159,10 +150,11 @@ export default function TextField({
 
     return (
         <View style={{ width }}>
-            <TouchableWithoutFeedback onPress={handleFocus}>
+            <TouchableWithoutFeedback nativeID={label}>
                 <Animated.View style={[styles.container, borderAnimated, { paddingVertical, paddingHorizontal }]}>
                     <TextInput
-                        ref={textRef}
+                        aria-labelledby={label}
+                        ref={ref}
                         keyboardType={keyboardType}
                         style={styles.textInput}
                         value={value}
@@ -174,7 +166,7 @@ export default function TextField({
                 </Animated.View>
             </TouchableWithoutFeedback>
             <Animated.View style={[styles.textInputContainer, labelViewAnimated, { marginHorizontal: paddingHorizontal }]}>
-                <TouchableWithoutFeedback onPress={handleFocus}>
+                <TouchableWithoutFeedback>
                     <Animated.Text style={[labelTextAnimated]}>{label}</Animated.Text>
                 </TouchableWithoutFeedback>
             </Animated.View>
@@ -185,7 +177,7 @@ export default function TextField({
             </View>
         </View>
     );
-}
+});
 
 const styles = StyleSheet.create({
     container: {

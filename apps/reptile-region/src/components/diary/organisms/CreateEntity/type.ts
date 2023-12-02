@@ -1,4 +1,5 @@
 type EntityImage = {
+    sourceURL: string | undefined;
     uri: string;
     name: string;
     type: string;

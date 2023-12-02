@@ -30,7 +30,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
         switch (item.contents.type) {
             case ContentType.Profile:
                 return (
-                    <TouchableOpacity onPress={handlePressLog}>
+                    <TouchableOpacity key={item.contents.article} onPress={handlePressLog}>
                         <View style={styles.row}>
                             <Avatar image={{ src: item.contents.profileThumbnail }} size={40} />
                             <View>
@@ -44,7 +44,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                 );
             case ContentType.SharePost:
                 return (
-                    <TouchableOpacity onPress={handlePressLog}>
+                    <TouchableOpacity key={item.contents.article} onPress={handlePressLog}>
                         <View style={styles.row}>
                             <Avatar image={{ src: item.contents.profileThumbnail }} size={40} />
                             <View style={styles.text}>
@@ -59,7 +59,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                 );
             case ContentType.Notice:
                 return (
-                    <TouchableOpacity onPress={handlePressLog}>
+                    <TouchableOpacity key={item.contents.article} onPress={handlePressLog}>
                         <View style={styles.row}>
                             <View>
                                 <Typo variant="title5" color="placeholder">
