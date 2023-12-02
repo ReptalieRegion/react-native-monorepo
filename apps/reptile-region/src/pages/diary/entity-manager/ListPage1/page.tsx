@@ -2,6 +2,7 @@ import { color } from '@reptile-region/design-system';
 import { FlashList, type ContentStyle } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { data, type DiaryEntity } from '../../../../mocks/data/dirary-mock';
 
@@ -16,7 +17,7 @@ type EntityMangerListPageProps = {};
 
 export default function EntityMangerList1({}: EntityMangerListPageProps) {
     const { flashListRef, handlePressUpFloatingButton, handleScroll } = useEntityMangerActions();
-    const { navigateEntityCreatePage1 } = useEntityMangerNavigation();
+    const { navigateEntityCreatePage1, navigateEntityUpdatePage } = useEntityMangerNavigation();
 
     const keyExtractor = (item: DiaryEntity) => item.name;
 
@@ -27,7 +28,11 @@ export default function EntityMangerList1({}: EntityMangerListPageProps) {
                     ref={flashListRef}
                     data={data}
                     contentContainerStyle={contentStyle}
-                    renderItem={(props) => <EntityCard {...props} />}
+                    renderItem={(props) => (
+                        <TouchableOpacity onPress={navigateEntityUpdatePage}>
+                            <EntityCard {...props} />
+                        </TouchableOpacity>
+                    )}
                     keyExtractor={keyExtractor}
                     onScroll={handleScroll}
                     estimatedItemSize={212}

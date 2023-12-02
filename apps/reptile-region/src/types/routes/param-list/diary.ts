@@ -16,7 +16,6 @@ type EntityManagerCreateParamList = {
 
 type EntityManagerParamList = {
     'entity-manager/list': undefined;
-    'entity-manager/update': undefined;
 };
 
 type DiaryParamList = {

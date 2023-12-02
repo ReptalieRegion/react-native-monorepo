@@ -23,9 +23,14 @@ const useEntityMangerNavigation = () => {
         });
     };
 
+    const navigateEntityUpdatePage = () => {
+        navigation.navigate('entity-manager/update');
+    };
+
     return {
         navigateEntityCreatePage,
         navigateEntityCreatePage1,
+        navigateEntityUpdatePage,
     };
 };
 
