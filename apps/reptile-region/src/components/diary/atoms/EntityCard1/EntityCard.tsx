@@ -10,14 +10,14 @@ import { Avatar } from '@/components/@common/atoms';
 import TagView from '@/components/@common/atoms/TagView/TagView';
 
 export default function EntityCard({ item }: ListRenderItemInfo<DiaryEntity>) {
-    const { hatching, image, name, gender } = item;
+    const { hatching, image, name, gender, variety } = item;
 
     return (
         <View style={styles.wrapper}>
             <Avatar recyclingKey={image} image={{ src: image }} size={100} />
             <View style={styles.info}>
                 <Typo>{name}</Typo>
-                <TagView label="도마뱀" />
+                <TagView label={variety.상세종} />
             </View>
             <View style={styles.right}>
                 <GenderIcon gender={gender} />

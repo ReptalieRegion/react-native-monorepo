@@ -2,6 +2,8 @@ import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
+import type { IconProps } from '@/types/global/icons';
+
 export default function Error({ fill = color.DarkGray[500].toString(), height = 24, width = 24 }: IconProps) {
     return (
         <Svg height={height} width={width} viewBox="0 -960 960 960" fill={fill}>

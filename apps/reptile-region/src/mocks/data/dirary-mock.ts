@@ -2,12 +2,13 @@ import { faker, fakerKO } from '@faker-js/faker';
 import { range } from 'lodash-es';
 
 import type { EntityGender } from '@/components/diary/organisms/CreateEntity/type';
+import { 모프로컬리스트, 분류리스트, 상세종리스트, 종리스트 } from '@/json/entity';
 
 export type Variety = {
-    분류: string[];
-    종: { [key: string]: string[] };
-    상세종: { [key: string]: string[] };
-    모프로컬: { [key: string]: string[] };
+    분류: string;
+    종: string;
+    상세종: string;
+    모프로컬: string;
 };
 
 export type DiaryEntity = {
@@ -68,17 +69,36 @@ const name = [
     '경도1',
 ];
 
+const createVariety = () => {
+    const random분류리스트Index = faker.number.int({ min: 0, max: 분류리스트.length - 1 });
+    const 분류 = 분류리스트[random분류리스트Index];
+
+    const new종리스트 = 종리스트[분류] ?? [];
+    const random종리스트Index = faker.number.int({ min: 0, max: Math.max(0, new종리스트.length - 1) });
+    const 종 = new종리스트[random종리스트Index];
+
+    const new상세종리스트 = 상세종리스트[종] ?? [];
+    const random상세종종리스트Index = faker.number.int({ min: 0, max: Math.max(0, new상세종리스트.length - 1) });
+    const 상세종 = new상세종리스트[random상세종종리스트Index];
+
+    const new모프로컬리스트 = 모프로컬리스트[상세종] ?? [];
+    const random모프로컬리스트Index = faker.number.int({ min: 0, max: Math.max(0, new모프로컬리스트.length - 1) });
+    const 모프로컬 = new모프로컬리스트[random모프로컬리스트Index];
+
+    return {
+        분류,
+        종,
+        상세종,
+        모프로컬,
+    };
+};
+
 export const data: DiaryEntity[] = range(20).map((_, index) => ({
     id: fakerKO.string.uuid(),
     image: image[index],
     name: name[index],
     gender: gender[index % 3],
-    variety: {
-        모프로컬: ['a'],
-        분류: { a: [''] },
-        상세종: { a: [''] },
-        종: { a: [''] },
-    },
+    variety: createVariety(),
     weight: faker.number.float({ min: 0, max: 2 }),
     hatching: faker.date.anytime(),
 }));

@@ -10,14 +10,14 @@ import GenderIcon from '../GenderIcon/GenderIcon';
 import TagView from '@/components/@common/atoms/TagView/TagView';
 
 export default function EntityCard({ item }: ListRenderItemInfo<DiaryEntity>) {
-    const { hatching, image, name, gender } = item;
+    const { hatching, image, name, gender, variety } = item;
 
     return (
         <View style={styles.wrapper}>
             <Image source={{ uri: image }} style={styles.image} />
             <View style={styles.textContainer}>
                 <View style={styles.topWrapper}>
-                    <TagView label="게코 도마뱀" />
+                    <TagView label={variety.상세종} />
                     <GenderIcon gender={gender} />
                 </View>
                 <Typo variant="body1">{name}</Typo>

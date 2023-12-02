@@ -3,7 +3,7 @@ import { FlashList, type ContentStyle } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { data, type Data } from '../../../../mocks/data/dirary-mock';
+import { data, type DiaryEntity } from '../../../../mocks/data/dirary-mock';
 
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import EntityCard from '@/components/diary/atoms/EntityCard1/EntityCard';
@@ -18,7 +18,7 @@ export default function EntityMangerList1({}: EntityMangerListPageProps) {
     const { flashListRef, handlePressUpFloatingButton, handleScroll } = useEntityMangerActions();
     const { navigateEntityCreatePage1 } = useEntityMangerNavigation();
 
-    const keyExtractor = (item: Data) => item.name;
+    const keyExtractor = (item: DiaryEntity) => item.name;
 
     return (
         <FloatingActionButtons>

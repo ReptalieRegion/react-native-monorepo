@@ -44,7 +44,7 @@ export default function PostContents({
                 condition={commentCount === 0}
                 trueContent={null}
                 falseContent={
-                    <TouchableTypo variant="body2" color="placeholder" onPress={onPressComment}>
+                    <TouchableTypo variant="title5" color="placeholder" onPress={onPressComment}>
                         댓글 {commentCount}개 모두 보기
                     </TouchableTypo>
                 }

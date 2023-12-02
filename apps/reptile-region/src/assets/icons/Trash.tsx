@@ -2,6 +2,8 @@ import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { Path, Svg } from 'react-native-svg';
 
+import type { IconProps } from '@/types/global/icons';
+
 export default function Trash({ width = 24, height = 24, fill = color.DarkGray[500].toString() }: IconProps) {
     return (
         <Svg width={width} height={height} viewBox="0 0 25 25" fill="none">
