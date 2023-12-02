@@ -32,7 +32,7 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
             justifyContent: 'flex-end',
             minHeight: titleHeight.value + headerHeight,
             width: isOpenState ? dimensions.width : undefined,
-            transform: [{ translateY: -height.value }],
+            transform: [{ translateY: isOpenState ? -height.value : bottom <= 20 ? -20 : -bottom }],
             paddingHorizontal: isOpenState ? 0 : paddingHorizontal,
         };
     }, [height.value, titleHeight.value, state.value, dimensions.width, bottom]);

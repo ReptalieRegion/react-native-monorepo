@@ -34,7 +34,7 @@ const image = [
     'https://thesafari.kr/web/product/big/202306/e55d090cda23141a8ed63a5b4c4f42bf.jpg',
 ];
 
-const gender = ['암컷', '수컷'];
+const gender = ['암컷', '수컷', '미구분'];
 
 const name = [
     '꼴등',
@@ -59,11 +59,11 @@ const name = [
     '경도1',
 ];
 
-export const data = range(2).map((_, index) => ({
+export const data = range(3).map((_, index) => ({
     id: fakerKO.string.uuid(),
     image: image[index],
     name: name[index],
-    gender: gender[fakerKO.number.int({ min: 0, max: 1 })],
+    gender: gender[index % 3],
     type: faker.animal.type(),
     morph: faker.animal.bear(),
     hatchingDay: faker.date.anytime(),

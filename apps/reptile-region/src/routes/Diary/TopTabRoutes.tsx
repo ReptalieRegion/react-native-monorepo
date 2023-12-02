@@ -23,12 +23,21 @@ export default function DiaryRoutes() {
             screenOptions={{
                 tabBarActiveTintColor: color.DarkGray[500].toString(),
                 tabBarStyle: { paddingTop: top },
-                tabBarLabelStyle: { fontSize: 14 },
-                tabBarIndicatorStyle: { height: 1, backgroundColor: color.Teal[150].toString() },
+                tabBarLabelStyle: { fontSize: 16 },
+                tabBarIndicatorStyle: {
+                    height: 2,
+                    backgroundColor: color.Teal[150].toString(),
+                },
             }}
         >
-            <TopTab.Screen name="entity-manager" component={EntityManagerRoutes} options={{ tabBarLabel: '개체관리' }} />
-            <TopTab.Screen name="calender" component={CalenderRoutes} options={{ tabBarLabel: '다이어리' }} />
+            <TopTab.Screen
+                name="entity-manager"
+                component={EntityManagerRoutes}
+                options={{
+                    title: '개체관리',
+                }}
+            />
+            <TopTab.Screen name="calender" component={CalenderRoutes} options={{ title: '다이어리' }} />
         </TopTab.Navigator>
     );
 }
