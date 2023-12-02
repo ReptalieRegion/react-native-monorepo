@@ -1,6 +1,6 @@
 import useFloatingHandler from '@/components/share-post/organisms/FloatingActionButtons/hooks/useFloatingHandler';
 import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
-import type { Data } from '@/pages/diary/test';
+import type { Data } from '@/mocks/data/dirary-mock';
 
 export default function useEntityMangerActions() {
     const { secondaryIconDownAnimation, secondaryIconUpAnimation } = useFloatingHandler();

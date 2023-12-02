@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import CalenderRoutes from './CalenderRoutes';
 import EntityManagerRoutes from './EntityManagerRoutes';
+import EntityManagerRoutes1 from './EntityManagerRoutes1';
 
 import type { DiaryParamList } from '@/types/routes/param-list/diary';
 
@@ -30,14 +31,9 @@ export default function DiaryRoutes() {
                 },
             }}
         >
-            <TopTab.Screen
-                name="entity-manager"
-                component={EntityManagerRoutes}
-                options={{
-                    title: '개체관리',
-                }}
-            />
-            <TopTab.Screen name="calender" component={CalenderRoutes} options={{ title: '다이어리' }} />
+            <TopTab.Screen name="entity-manager" component={EntityManagerRoutes} options={{ tabBarLabel: '개체관리' }} />
+            <TopTab.Screen name="entity-manager1" component={EntityManagerRoutes1} options={{ tabBarLabel: '개체관리' }} />
+            <TopTab.Screen name="calender" component={CalenderRoutes} options={{ tabBarLabel: '다이어리' }} />
         </TopTab.Navigator>
     );
 }

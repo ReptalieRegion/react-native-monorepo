@@ -3,32 +3,28 @@ import type { ListRenderItemInfo } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { Data } from '../../../../pages/diary/test';
+import type { DiaryEntity } from '../../../../mocks/data/dirary-mock';
+import GenderIcon from '../GenderIcon/GenderIcon';
 
 import { Avatar } from '@/components/@common/atoms';
+import TagView from '@/components/@common/atoms/TagView/TagView';
 
-export default function Card1({ item }: ListRenderItemInfo<Data>) {
-    const { hatchingDay, image, name } = item;
+export default function EntityCard({ item }: ListRenderItemInfo<DiaryEntity>) {
+    const { hatching, image, name, gender } = item;
 
     return (
         <View style={styles.wrapper}>
             <Avatar recyclingKey={image} image={{ src: image }} size={100} />
             <View style={styles.info}>
-                <View style={styles.infoWrapper}>
-                    <Typo>{name}</Typo>
-                    <Typo
-                        variant="body4"
-                        color="placeholder"
-                    >{`${hatchingDay.getFullYear()}.${hatchingDay.getMonth()}.${hatchingDay.getDay()}`}</Typo>
-                </View>
-                <View style={styles.margin}>
-                    <View style={styles.tag}>
-                        <Typo variant="body5" color="primary" textAlign="center">
-                            도마뱀
-                        </Typo>
-                    </View>
-                    <View style={styles.empty} />
-                </View>
+                <Typo>{name}</Typo>
+                <TagView label="도마뱀" />
+            </View>
+            <View style={styles.right}>
+                <GenderIcon gender={gender} />
+                <Typo
+                    variant="body4"
+                    color="placeholder"
+                >{`${hatching.getFullYear()}.${hatching.getMonth()}.${hatching.getDay()}`}</Typo>
             </View>
         </View>
     );
@@ -48,6 +44,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         gap: 10,
+    },
+    right: {
+        alignItems: 'flex-end',
+        gap: 10,
+        justifyContent: 'center',
     },
     tag: {
         width: 40,

@@ -3,7 +3,7 @@ import React from 'react';
 import { EditProfile } from '@/components/@common/molecules/Profile';
 import { useToast } from '@/components/@common/organisms/Toast';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate1';
+import CreateTemplate from '@/components/diary/templates/CreateTemplate1/CreateTemplate';
 import useImagePicker from '@/hooks/@common/useImagePicker';
 import type { EntityManagerCreateImageScreenProps } from '@/types/routes/props/diary';
 
@@ -15,11 +15,12 @@ export default function EntityManagerImagePage({ navigation }: EntityManagerCrea
     } = useCreateEntity();
     const { handlePressProfileImage } = useImagePicker({
         onSuccess: (imageInfo) => {
+            const sourceURL = imageInfo.sourceURL;
             const uri = imageInfo.path;
             const randomNumber = Math.floor(Math.random() * 9999);
             const name = `image_${randomNumber}_${new Date().getTime()}.jpg`;
             const type = imageInfo.mime;
-            setCreateEntity({ type: 'SET_IMAGE', image: { name, uri, type } });
+            setCreateEntity({ type: 'SET_IMAGE', image: { name, uri, type, sourceURL } });
             navigation.navigate('gender');
         },
         onError: (error) => {

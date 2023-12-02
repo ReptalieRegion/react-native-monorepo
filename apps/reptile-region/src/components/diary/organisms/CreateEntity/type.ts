@@ -7,10 +7,28 @@ type EntityImage = {
 
 type EntityGender = 'Male' | 'Female' | 'Uncategorized';
 
+type SelectedType = {
+    분류: string;
+    종: string;
+    상세종: string;
+    모프로컬: string[];
+};
+
+type ListItem = {
+    type: keyof SelectedType;
+    itemList: string[];
+};
+
+type Variety = {
+    selected: SelectedType;
+    list: ListItem[];
+};
+
 type CreateEntityState = {
     image: EntityImage | null;
     gender: EntityGender | null;
     hatchingDate: Date | null;
+    variety: Variety;
     name: string | null;
     weight: string | null;
 };
@@ -30,6 +48,14 @@ interface SetHatchingDate {
     hatchingDate: Date;
 }
 
+interface SetVariety {
+    type: 'SET_VARIETY';
+    variety: {
+        type: keyof SelectedType;
+        value: string;
+    };
+}
+
 interface SetName {
     type: 'SET_NAME';
     name: string;
@@ -40,16 +66,19 @@ interface SetWeight {
     weight: string;
 }
 
-type CreateEntityActions = SetImage | SetGender | SetHatchingDate | SetName | SetWeight;
+type CreateEntityActions = SetImage | SetGender | SetHatchingDate | SetVariety | SetName | SetWeight;
 
 export type {
     CreateEntityActions,
     CreateEntityState,
     EntityGender,
     EntityImage,
+    SelectedType,
     SetGender,
     SetHatchingDate,
     SetImage,
     SetName,
+    SetVariety,
     SetWeight,
+    Variety,
 };

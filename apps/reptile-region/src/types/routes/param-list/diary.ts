@@ -22,6 +22,7 @@ type EntityManagerParamList = {
 type DiaryParamList = {
     calender: NavigatorScreenParams<CalenderParamList>;
     'entity-manager': NavigatorScreenParams<EntityManagerParamList>;
+    'entity-manager1': NavigatorScreenParams<EntityManagerParamList>;
 };
 
 export type { CalenderParamList, DiaryParamList, EntityManagerCreateParamList, EntityManagerParamList };

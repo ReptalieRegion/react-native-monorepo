@@ -1,7 +1,13 @@
 import { Typo, color } from '@reptile-region/design-system';
 import React, { type ReactNode } from 'react';
-import { StyleSheet, View, useWindowDimensions, type LayoutChangeEvent, type ViewStyle } from 'react-native';
-import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
+import { StyleSheet, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native';
+import Animated, {
+    KeyboardState,
+    useAnimatedKeyboard,
+    useAnimatedStyle,
+    useSharedValue,
+    withTiming,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { type TitleAndDescriptionProps } from '../../atoms/TitleAndDescription/TitleAndDescription';
@@ -14,35 +20,52 @@ type CreateTemplateState = {
     contentsAlign?: 'center' | 'top';
 };
 
-interface CreateTemplateActions {}
-
-type CreateTemplateProps = CreateTemplateState & TitleAndDescriptionProps & CreateTemplateActions;
+type CreateTemplateProps = CreateTemplateState & TitleAndDescriptionProps;
 
 const paddingHorizontal = 20;
 
 export default function CreateTemplate({ title, contents, button, contentsAlign = 'center' }: CreateTemplateProps) {
     const dimensions = useWindowDimensions();
     const { bottom } = useSafeAreaInsets();
-    const { height, state } = useAnimatedKeyboard();
+    const keyboard = useAnimatedKeyboard();
     const titleHeight = useSharedValue(32 + headerHeight);
 
-    const buttonAnimation = useAnimatedStyle(() => {
-        const isOpenState = state.value === KeyboardState.OPEN || state.value === KeyboardState.OPENING;
-        return {
-            justifyContent: 'flex-end',
-            minHeight: titleHeight.value + headerHeight,
-            width: isOpenState ? dimensions.width : undefined,
-            transform: [{ translateY: isOpenState ? -height.value : bottom <= 20 ? -20 : -bottom }],
-            paddingHorizontal: isOpenState ? 0 : paddingHorizontal,
-        };
-    }, [height.value, titleHeight.value, state.value, dimensions.width, bottom]);
+    const contentsAnimation = useAnimatedStyle(() => {
+        const isCenter = contentsAlign === 'center';
+        if (isCenter) {
+            return {
+                flex: 1,
+                paddingHorizontal,
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingBottom: titleHeight.value,
+            };
+        }
 
-    const isCenter = contentsAlign === 'center';
-    const contentsStyles: ViewStyle = {
-        flex: 1,
-        paddingHorizontal,
-        justifyContent: isCenter ? 'center' : undefined,
-    };
+        return {
+            flex: 1,
+            paddingHorizontal,
+            paddingBottom: titleHeight.value,
+        };
+    }, [dimensions, titleHeight.value]);
+
+    const buttonAnimation = useAnimatedStyle(() => {
+        const { height, state } = keyboard;
+        if (state.value === KeyboardState.OPEN || state.value === KeyboardState.OPENING) {
+            return {
+                transform: [{ translateY: -height.value + bottom }],
+            };
+        }
+
+        if (state.value === KeyboardState.CLOSED || state.value === KeyboardState.CLOSING) {
+            return {
+                transform: [{ translateY: withTiming(0, { duration: 100 }) }],
+            };
+        }
+        return {
+            bottom,
+        };
+    }, [keyboard, bottom]);
 
     const handleLayout = (event: LayoutChangeEvent) => {
         titleHeight.value = event.nativeEvent.layout.height;
@@ -53,14 +76,15 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
             <View style={styles.title} onLayout={handleLayout}>
                 <Typo variant="heading1">{title}</Typo>
             </View>
-            <View style={contentsStyles}>{contents}</View>
-            <Animated.View style={buttonAnimation}>{button}</Animated.View>
+            <Animated.View style={contentsAnimation}>{contents}</Animated.View>
+            <Animated.View style={[styles.button, buttonAnimation]}>{button}</Animated.View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     wrapper: {
+        position: 'relative',
         flex: 1,
         flexDirection: 'column',
         backgroundColor: color.White.toString(),
@@ -68,5 +92,11 @@ const styles = StyleSheet.create({
     title: {
         paddingVertical: 40,
         paddingHorizontal,
+    },
+    button: {
+        width: '100%',
+        position: 'absolute',
+        alignItems: 'center',
+        backgroundColor: color.White.toString(),
     },
 });

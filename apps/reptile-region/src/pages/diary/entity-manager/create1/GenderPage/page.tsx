@@ -10,7 +10,7 @@ import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
 import type { EntityGender } from '@/components/diary/organisms/CreateEntity/type';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate1';
+import CreateTemplate from '@/components/diary/templates/CreateTemplate1/CreateTemplate';
 import type { IconFunction } from '@/types/global/icons';
 import type { EntityManagerCreateGenderScreenProps } from '@/types/routes/props/diary';
 

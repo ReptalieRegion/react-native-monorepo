@@ -14,7 +14,7 @@ export default function EntityManagerWeightPage({ navigation }: EntityManagerCre
     const buttonSize = useKeyboardOpenButtonSize();
 
     useFocusEffect(() => {
-        setTimeout(() => textFieldRef.current?.focus(), 1000);
+        textFieldRef.current?.focus();
     });
 
     const {

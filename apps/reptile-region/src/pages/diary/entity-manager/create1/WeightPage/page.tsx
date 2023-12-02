@@ -5,7 +5,7 @@ import { TextInput } from 'react-native-gesture-handler';
 
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate1';
+import CreateTemplate from '@/components/diary/templates/CreateTemplate1/CreateTemplate';
 import type { EntityManagerCreateWeightScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerWeightPage({ navigation }: EntityManagerCreateWeightScreenProps) {

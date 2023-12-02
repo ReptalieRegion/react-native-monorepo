@@ -3,10 +3,10 @@ import { FlashList, type ContentStyle } from '@shopify/flash-list';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 
-import Card2 from '../../../../components/diary/atoms/EntityCard/Card2';
-import { data, type Data } from '../../test';
+import { data, type Data } from '../../../../mocks/data/dirary-mock';
 
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
+import EntityCard from '@/components/diary/atoms/EntityCard/EntityCard';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import useEntityMangerActions from '@/hooks/diary/actions/useEntityMangerActions';
 import useEntityMangerNavigation from '@/hooks/diary/navigation/useEntityMangerNavigation';
@@ -27,7 +27,7 @@ export default function EntityMangerList({}: EntityMangerListPageProps) {
                 contentContainerStyle={contentStyle}
                 renderItem={(props) => (
                     <View style={testStyle}>
-                        <Card2 {...props} />
+                        <EntityCard {...props} />
                     </View>
                 )}
                 numColumns={2}

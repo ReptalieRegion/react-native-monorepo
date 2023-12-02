@@ -28,7 +28,8 @@ export default function ConfirmButton({
     onPress,
 }: ConfirmButtonProps) {
     const generatedSize = styleSizeGenerator(size);
-    const generatedColor = styleVariantGenerator(variant);
+    const generatedColor = styleVariantGenerator(variant, disabled);
+    console.log(disabled);
 
     return (
         <TouchableOpacity
@@ -52,12 +53,15 @@ export default function ConfirmButton({
     );
 }
 
-function styleVariantGenerator(variant: ConfirmButtonVariant): { view: ViewStyle; text: Pick<TypoProps, 'color'> } {
+function styleVariantGenerator(
+    variant: ConfirmButtonVariant,
+    disabled: boolean,
+): { view: ViewStyle; text: Pick<TypoProps, 'color'> } {
     switch (variant) {
         case 'confirm':
             return {
                 view: {
-                    backgroundColor: color.Teal[150].toString(),
+                    backgroundColor: disabled ? '#9FD1C0' : color.Teal[150].toString(),
                 },
                 text: {
                     color: 'surface',
@@ -86,7 +90,7 @@ function styleSizeGenerator(size: ConfirmButtonSize): { view: ViewStyle; text: P
             return {
                 view: {
                     borderRadius: 15,
-                    width: 353,
+                    width: Dimensions.get('screen').width - 40,
                     height: 53,
                 },
                 text: {

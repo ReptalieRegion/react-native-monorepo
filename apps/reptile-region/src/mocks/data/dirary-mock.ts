@@ -1,14 +1,23 @@
 import { faker, fakerKO } from '@faker-js/faker';
 import { range } from 'lodash-es';
 
-export type Data = {
+import type { EntityGender } from '@/components/diary/organisms/CreateEntity/type';
+
+export type Variety = {
+    분류: string[];
+    종: { [key: string]: string[] };
+    상세종: { [key: string]: string[] };
+    모프로컬: { [key: string]: string[] };
+};
+
+export type DiaryEntity = {
     id: string;
     image: string;
     name: string;
-    gender: string;
-    type: string;
-    morph: string;
-    hatchingDay: Date;
+    gender: EntityGender;
+    variety: Variety;
+    weight: number;
+    hatching: Date;
 };
 
 const image = [
@@ -34,7 +43,7 @@ const image = [
     'https://thesafari.kr/web/product/big/202306/e55d090cda23141a8ed63a5b4c4f42bf.jpg',
 ];
 
-const gender = ['암컷', '수컷', '미구분'];
+const gender: EntityGender[] = ['Female', 'Male', 'Uncategorized'];
 
 const name = [
     '꼴등',
@@ -59,12 +68,17 @@ const name = [
     '경도1',
 ];
 
-export const data = range(3).map((_, index) => ({
+export const data: DiaryEntity[] = range(20).map((_, index) => ({
     id: fakerKO.string.uuid(),
     image: image[index],
     name: name[index],
     gender: gender[index % 3],
-    type: faker.animal.type(),
-    morph: faker.animal.bear(),
-    hatchingDay: faker.date.anytime(),
+    variety: {
+        모프로컬: ['a'],
+        분류: { a: [''] },
+        상세종: { a: [''] },
+        종: { a: [''] },
+    },
+    weight: faker.number.float({ min: 0, max: 2 }),
+    hatching: faker.date.anytime(),
 }));
