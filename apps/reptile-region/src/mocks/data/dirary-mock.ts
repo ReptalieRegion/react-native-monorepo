@@ -1,8 +1,11 @@
 import { faker, fakerKO } from '@faker-js/faker';
+import type { InfiniteData } from '@tanstack/react-query';
 import { range } from 'lodash-es';
 
 import type { EntityGender } from '@/components/diary/organisms/CreateEntity/type';
 import { 모프로컬리스트, 분류리스트, 상세종리스트, 종리스트 } from '@/json/entity';
+import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
+import type { InfiniteState } from '@/types/apis/utils';
 
 export type Variety = {
     분류: string;
@@ -71,34 +74,49 @@ const name = [
 
 const createVariety = () => {
     const random분류리스트Index = faker.number.int({ min: 0, max: 분류리스트.length - 1 });
-    const 분류 = 분류리스트[random분류리스트Index];
+    const classification = 분류리스트[random분류리스트Index];
 
-    const new종리스트 = 종리스트[분류] ?? [];
+    const new종리스트 = 종리스트[classification] ?? [];
     const random종리스트Index = faker.number.int({ min: 0, max: Math.max(0, new종리스트.length - 1) });
-    const 종 = new종리스트[random종리스트Index];
+    const species = new종리스트[random종리스트Index];
 
-    const new상세종리스트 = 상세종리스트[종] ?? [];
+    const new상세종리스트 = 상세종리스트[species] ?? [];
     const random상세종종리스트Index = faker.number.int({ min: 0, max: Math.max(0, new상세종리스트.length - 1) });
-    const 상세종 = new상세종리스트[random상세종종리스트Index];
+    const detailedSpecies = new상세종리스트[random상세종종리스트Index];
 
-    const new모프로컬리스트 = 모프로컬리스트[상세종] ?? [];
+    const new모프로컬리스트 = 모프로컬리스트[detailedSpecies] ?? [];
     const random모프로컬리스트Index = faker.number.int({ min: 0, max: Math.max(0, new모프로컬리스트.length - 1) });
-    const 모프로컬 = new모프로컬리스트[random모프로컬리스트Index];
+    const morph = new모프로컬리스트[random모프로컬리스트Index];
 
     return {
-        분류,
-        종,
-        상세종,
-        모프로컬,
+        classification,
+        species,
+        detailedSpecies,
+        morph,
     };
 };
 
-export const data: DiaryEntity[] = range(20).map((_, index) => ({
-    id: fakerKO.string.uuid(),
-    image: image[index],
-    name: name[index],
-    gender: gender[index % 3],
-    variety: createVariety(),
-    weight: faker.number.float({ min: 0, max: 2 }),
-    hatching: faker.date.anytime(),
-}));
+export const diaryEntityData: InfiniteData<InfiniteState<FetchEntityListResponse[]>, number> = {
+    pageParams: [1],
+    pages: [
+        {
+            items: range(20).map((_, index) => ({
+                entity: {
+                    id: fakerKO.string.uuid(),
+                    gender: gender[index % 3],
+                    hatching: faker.date.anytime(),
+                    name: name[index],
+                    variety: createVariety(),
+                    weight: range(20).map(() => ({
+                        date: faker.date.anytime(),
+                        weight: `${faker.number.float({ min: 0, max: 2 })}g`,
+                    })),
+                    image: {
+                        src: image[index],
+                    },
+                },
+            })),
+            nextPage: 1,
+        },
+    ],
+};

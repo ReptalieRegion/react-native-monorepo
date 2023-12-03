@@ -3,12 +3,18 @@ export const AUTH_QUERY_KEYS = {
     duplicateNickname: (nickname: string) => ['user/duplicate/nickname/', nickname],
 } as const;
 
+/** Diary */
+export const DIARY_QUERY_KEYS = {
+    list: ['entity'],
+} as const;
+
 /** My */
 export const MY_QUERY_KEYS = {
     profile: ['me', { type: 'profile' }],
     post: ['me', { type: 'post' }],
 } as const;
 
+/** Notification */
 export const NOTIFICATION_QUERY_KEYS = {
     pushLog: ['notification', 'push', 'log'],
     pushAgree: ['notification', 'push', 'agree'],

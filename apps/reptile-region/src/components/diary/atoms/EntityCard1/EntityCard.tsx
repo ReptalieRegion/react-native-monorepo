@@ -3,21 +3,23 @@ import type { ListRenderItemInfo } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { DiaryEntity } from '../../../../mocks/data/dirary-mock';
 import GenderIcon from '../GenderIcon/GenderIcon';
 
 import { Avatar } from '@/components/@common/atoms';
 import TagView from '@/components/@common/atoms/TagView/TagView';
+import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
-export default function EntityCard({ item }: ListRenderItemInfo<DiaryEntity>) {
-    const { hatching, image, name, gender, variety } = item;
+export default function EntityCard({ item }: ListRenderItemInfo<FetchEntityListResponse>) {
+    const {
+        entity: { hatching, image, name, gender, variety },
+    } = item;
 
     return (
         <View style={styles.wrapper}>
-            <Avatar recyclingKey={image} image={{ src: image }} size={100} />
+            <Avatar recyclingKey={image.src} image={{ src: image.src }} size={100} />
             <View style={styles.info}>
                 <Typo>{name}</Typo>
-                <TagView label={variety.상세종} />
+                <TagView label={variety.detailedSpecies} />
             </View>
             <View style={styles.right}>
                 <GenderIcon gender={gender} />

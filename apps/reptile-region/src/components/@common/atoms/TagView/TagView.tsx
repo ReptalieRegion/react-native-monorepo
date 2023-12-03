@@ -67,7 +67,7 @@ function sizeGenerator(size: TagViewSize): { text: { variant: VariantType }; vie
                 },
                 view: {
                     paddingVertical: 2,
-                    paddingHorizontal: 5,
+                    paddingHorizontal: 8,
                 },
             };
         case 'medium':

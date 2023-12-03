@@ -29,7 +29,6 @@ export default function ConfirmButton({
 }: ConfirmButtonProps) {
     const generatedSize = styleSizeGenerator(size);
     const generatedColor = styleVariantGenerator(variant, disabled);
-    console.log(disabled);
 
     return (
         <TouchableOpacity

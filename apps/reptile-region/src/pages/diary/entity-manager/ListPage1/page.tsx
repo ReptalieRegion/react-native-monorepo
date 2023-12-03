@@ -4,22 +4,24 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { data, type DiaryEntity } from '../../../../mocks/data/dirary-mock';
-
+import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
+import { ListFooterLoading } from '@/components/@common/atoms';
 import EntityCard from '@/components/diary/atoms/EntityCard1/EntityCard';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 import useEntityMangerActions from '@/hooks/diary/actions/useEntityMangerActions';
 import useEntityMangerNavigation from '@/hooks/diary/navigation/useEntityMangerNavigation';
+import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
-type EntityMangerListPageProps = {};
-
-export default function EntityMangerList1({}: EntityMangerListPageProps) {
+export default function EntityMangerList1() {
+    const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFetchEntity();
     const { flashListRef, handlePressUpFloatingButton, handleScroll } = useEntityMangerActions();
     const { navigateEntityCreatePage1, navigateEntityUpdatePage } = useEntityMangerNavigation();
 
-    const keyExtractor = (item: DiaryEntity) => item.name;
+    const keyExtractor = (item: FetchEntityListResponse) => item.entity.id;
+
+    const handleEndReached = () => isFetchingNextPage && hasNextPage && fetchNextPage();
 
     return (
         <FloatingActionButtons>
@@ -34,7 +36,10 @@ export default function EntityMangerList1({}: EntityMangerListPageProps) {
                         </TouchableOpacity>
                     )}
                     keyExtractor={keyExtractor}
+                    onEndReached={handleEndReached}
                     onScroll={handleScroll}
+                    ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+                    scrollEventThrottle={16}
                     estimatedItemSize={212}
                 />
                 <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>

@@ -4,20 +4,22 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { DiaryEntity } from '../../../../mocks/data/dirary-mock';
 import GenderIcon from '../GenderIcon/GenderIcon';
 
 import TagView from '@/components/@common/atoms/TagView/TagView';
+import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
-export default function EntityCard({ item }: ListRenderItemInfo<DiaryEntity>) {
-    const { hatching, image, name, gender, variety } = item;
+export default function EntityCard({ item }: ListRenderItemInfo<FetchEntityListResponse>) {
+    const {
+        entity: { hatching, image, name, gender, variety },
+    } = item;
 
     return (
         <View style={styles.wrapper}>
-            <Image source={{ uri: image }} style={styles.image} />
+            <Image recyclingKey={image.src} source={{ uri: image.src }} style={styles.image} />
             <View style={styles.textContainer}>
                 <View style={styles.topWrapper}>
-                    <TagView label={variety.상세종} />
+                    <TagView label={variety.detailedSpecies} />
                     <GenderIcon gender={gender} />
                 </View>
                 <Typo variant="body1">{name}</Typo>

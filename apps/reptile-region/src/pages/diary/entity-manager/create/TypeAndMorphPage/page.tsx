@@ -63,7 +63,17 @@ export default function EntityManagerTypeAndMorphPage({ navigation }: EntityMana
                     />
                 </View>
             }
-            button={<ConfirmButton text="다음" onPress={nextPage} />}
+            button={
+                <ConfirmButton
+                    text="다음"
+                    onPress={nextPage}
+                    disabled={
+                        variety.selected.분류.length === 0 ||
+                        variety.selected.종.length === 0 ||
+                        variety.selected.상세종.length === 0
+                    }
+                />
+            }
         />
     );
 }

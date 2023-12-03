@@ -1,10 +1,10 @@
 import useFloatingHandler from '@/components/share-post/organisms/FloatingActionButtons/hooks/useFloatingHandler';
 import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
-import type { DiaryEntity } from '@/mocks/data/dirary-mock';
+import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
 export default function useEntityMangerActions() {
     const { secondaryIconDownAnimation, secondaryIconUpAnimation } = useFloatingHandler();
-    const { flashListRef, determineScrollDirection, scrollToTop } = useFlashListScroll<DiaryEntity>({
+    const { flashListRef, determineScrollDirection, scrollToTop } = useFlashListScroll<FetchEntityListResponse>({
         onScrollDown: secondaryIconDownAnimation,
         onScrollUp: secondaryIconUpAnimation,
     });
