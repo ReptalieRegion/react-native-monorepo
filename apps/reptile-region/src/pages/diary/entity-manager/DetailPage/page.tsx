@@ -63,7 +63,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                     </View>
                     <View style={styles.tagContainer}>
                         <Typo variant="body1" color="primary">
-                            {variety.detailedSpecies} {variety.morph ? `· ${variety.morph}` : ''}
+                            {variety.detailedSpecies} {variety.morph ? `· ${variety.morph?.join(', ')}` : ''}
                         </Typo>
                     </View>
                 </View>

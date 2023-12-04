@@ -1,12 +1,11 @@
 import { color } from '@reptile-region/design-system';
-import { FlashList, type ContentStyle } from '@shopify/flash-list';
-import React from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
+import React, { useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
-import { ListFooterLoading } from '@/components/@common/atoms';
+import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
 import EntityCard from '@/components/diary/atoms/EntityCard/EntityCard';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import useEntityMangerActions from '@/hooks/diary/actions/useEntityMangerActions';
@@ -18,6 +17,19 @@ export default function EntityMangerList() {
     const { flashListRef, handlePressUpFloatingButton, handleScroll } = useEntityMangerActions();
     const { navigateEntityCreatePage, navigateEntityUpdatePage } = useEntityMangerNavigation();
 
+    const renderItem: ListRenderItem<FetchEntityListResponse> = useCallback(
+        (props) => {
+            return (
+                <EntityCard
+                    data={props.item}
+                    containerStyles={cardContainerStyles}
+                    onPress={() => navigateEntityUpdatePage({ entityId: props.item.entity.id })}
+                />
+            );
+        },
+        [navigateEntityUpdatePage],
+    );
+
     const keyExtractor = (item: FetchEntityListResponse) => item.entity.id;
 
     const handleEndReached = () => isFetchingNextPage && hasNextPage && fetchNextPage();
@@ -28,18 +40,12 @@ export default function EntityMangerList() {
                 ref={flashListRef}
                 data={data}
                 contentContainerStyle={contentStyle}
-                renderItem={(props) => (
-                    <TouchableOpacity
-                        style={testStyle}
-                        onPress={() => navigateEntityUpdatePage({ entityId: props.item.entity.id })}
-                    >
-                        <EntityCard {...props} />
-                    </TouchableOpacity>
-                )}
+                renderItem={renderItem}
                 numColumns={2}
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 keyExtractor={keyExtractor}
                 onEndReached={handleEndReached}
+                CellRendererComponent={FadeInCellRenderComponent}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
                 estimatedItemSize={212}
@@ -62,27 +68,9 @@ export default function EntityMangerList() {
     );
 }
 
-const testStyle = {
-    flex: 1,
-    backgroundColor: color.White.toString(),
-    ...Platform.select({
-        ios: {
-            shadowColor: '#7090B0',
-            shadowOpacity: 0.15,
-            shadowRadius: 15,
-            shadowOffset: {
-                width: 0,
-                height: 1,
-            },
-        },
-        android: {
-            elevation: 24,
-        },
-    }),
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
+const cardContainerStyles = {
     marginRight: 5,
-    marginBottom: 5,
+    marginLeft: 5,
 };
 
 const primaryIcon = {

@@ -36,6 +36,7 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
             return {
                 flex: 1,
                 paddingHorizontal,
+                marginTop: -20,
                 alignItems: 'center',
                 justifyContent: 'center',
                 paddingBottom: titleHeight.value,

@@ -1,42 +1,87 @@
-import { Typo } from '@reptile-region/design-system';
-import type { ListRenderItemInfo } from '@shopify/flash-list';
+import { Typo, color } from '@reptile-region/design-system';
 import { Image } from 'expo-image';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { type ReactNode } from 'react';
+import { Platform, StyleSheet, TouchableOpacity, View, type DimensionValue } from 'react-native';
 
 import GenderIcon from '../GenderIcon/GenderIcon';
 
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import TagView from '@/components/@common/atoms/TagView/TagView';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
-export default function EntityCard({ item }: ListRenderItemInfo<FetchEntityListResponse>) {
-    const {
-        entity: { hatching, image, name, gender, variety },
-    } = item;
+type EntityCardState = {
+    data: FetchEntityListResponse;
+    containerStyles?: {
+        marginRight?: DimensionValue;
+        marginBottom?: DimensionValue;
+    };
+    placeholderImage?: ReactNode;
+};
 
+interface EntityCardActions {
+    onPress?(): void;
+}
+
+type EntityCardProps = EntityCardState & EntityCardActions;
+
+export default function EntityCard({
+    data: {
+        entity: { hatching, image, name, gender, variety },
+    },
+    containerStyles,
+    placeholderImage,
+    onPress,
+}: EntityCardProps) {
     return (
-        <View style={styles.wrapper}>
-            <Image recyclingKey={image.src} source={{ uri: image.src }} style={styles.image} />
-            <View style={styles.textContainer}>
-                <View style={styles.topWrapper}>
-                    <TagView label={variety.detailedSpecies} />
-                    <GenderIcon gender={gender} />
+        <TouchableOpacity style={[styles.wrapper, containerStyles]} onPress={onPress}>
+            <View style={styles.container}>
+                <ConditionalRenderer
+                    condition={!!placeholderImage}
+                    trueContent={placeholderImage}
+                    falseContent={<Image recyclingKey={image.src} source={{ uri: image.src }} style={styles.image} />}
+                />
+
+                <View style={styles.textContainer}>
+                    <View style={styles.topWrapper}>
+                        <TagView label={variety.detailedSpecies} />
+                        <GenderIcon gender={gender} />
+                    </View>
+                    <Typo variant="body1">{name}</Typo>
+                    <Typo variant="body3" color="placeholder">{`${hatching}`}</Typo>
                 </View>
-                <Typo variant="body1">{name}</Typo>
-                <Typo variant="body3" color="placeholder">{`${hatching}`}</Typo>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+        backgroundColor: color.White.toString(),
+        ...Platform.select({
+            ios: {
+                shadowColor: '#7090B0',
+                shadowOpacity: 0.15,
+                shadowRadius: 15,
+                shadowOffset: {
+                    width: 0,
+                    height: 1,
+                },
+            },
+            android: {
+                elevation: 24,
+            },
+        }),
+        borderTopRightRadius: 10,
+        borderTopLeftRadius: 10,
+    },
     image: {
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
-        width: '100%',
         aspectRatio: '1/1',
+        width: '100%',
     },
-    wrapper: {
+    container: {
         flex: 1,
         gap: 10,
         borderRadius: 20,
