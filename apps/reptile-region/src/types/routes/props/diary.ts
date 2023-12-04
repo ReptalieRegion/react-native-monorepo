@@ -4,6 +4,7 @@ import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-n
 import type { RootRoutesParamList } from '../param-list';
 import type { EntityManagerCreateParamList } from '../param-list/diary';
 
+// 개체 관리 생성 페이지
 type EntityManagerCreateImageNavigationProps = NativeStackNavigationProp<EntityManagerCreateParamList, 'image'>;
 
 type EntityManagerCreateImageScreenProps = NativeStackScreenProps<EntityManagerCreateParamList, 'image'>;
@@ -23,7 +24,11 @@ type EntityManagerCreateCongratsScreenProps = CompositeScreenProps<
     NativeStackScreenProps<RootRoutesParamList, 'entity-manager/create'>
 >;
 
-type EntityManagerUpdateScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/update'>;
+// 개체 관리 상세 페이지
+type EntityManagerDetailScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/detail'>;
+
+// 개체 관리 옵션 바텀시트
+type EntityManagerOptionsMenu = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/options-menu'>;
 
 export type {
     EntityManagerCreateCongratsScreenProps,
@@ -34,5 +39,6 @@ export type {
     EntityManagerCreateNameScreenProps,
     EntityManagerCreateTypeAndMorphScreenProps,
     EntityManagerCreateWeightScreenProps,
-    EntityManagerUpdateScreenProps,
+    EntityManagerDetailScreenProps,
+    EntityManagerOptionsMenu,
 };

@@ -35,6 +35,7 @@ class Fetcher {
     ) {}
 
     clientFetch = async (input: RequestInfo, init?: CustomRequestInit): Promise<Response> => {
+        console.log(input);
         const fetchInfo = await this.generatorFetchInfo(input, init);
         const response = await fetch(fetchInfo.input, fetchInfo.init);
 

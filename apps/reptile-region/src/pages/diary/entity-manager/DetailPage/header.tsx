@@ -3,19 +3,24 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { KebabMenu } from '@/assets/icons';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import type { EntityManagerUpdateScreenProps } from '@/types/routes/props/diary';
+import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary';
 
 export const EntityManagerDetailPageHeader = createNativeStackHeader({
     leftIcon: 'back',
     title: '',
 });
 
-export function ChangeHeader({ navigation }: EntityManagerUpdateScreenProps) {
+export function ChangeHeader({
+    navigation,
+    route: {
+        params: { entityId },
+    },
+}: EntityManagerDetailScreenProps) {
     useEffect(() => {
         const headerRight = () => {
             const handlePressKebabMenu = () => {
-                navigation.navigate('share-post/bottom-sheet/post-options-menu', {
-                    post: { contents: '', id: '', images: [{ src: '' }], isMine: false, user: { id: '' } },
+                navigation.navigate('entity-manager/options-menu', {
+                    entityId,
                 });
             };
 
@@ -27,7 +32,7 @@ export function ChangeHeader({ navigation }: EntityManagerUpdateScreenProps) {
         };
 
         navigation.setOptions({ headerRight });
-    }, [navigation]);
+    }, [entityId, navigation]);
 
     return null;
 }

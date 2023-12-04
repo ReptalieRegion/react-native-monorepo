@@ -23,7 +23,11 @@ export default function EntityManagerWeightPage({ navigation }: EntityManagerCre
     } = useCreateEntity();
 
     const handleChangeWeight = (text: string) => {
-        setCreateEntity({ type: 'SET_WEIGHT', weight: text });
+        const textSize = text.length;
+        const reg = /^-?\d*(\.\d*)\.+$/;
+        const dotRemoveText = reg.test(text) ? text.slice(0, textSize - 1) : text;
+        const newText = dotRemoveText[0] === '.' ? '0' + text : dotRemoveText;
+        setCreateEntity({ type: 'SET_WEIGHT', weight: newText });
     };
 
     const nextPage = () => {

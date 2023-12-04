@@ -1,7 +1,7 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
 import type { SignInParams } from '../params/auth';
-import type { EntityDetailParams } from '../params/diary';
+import type { EntityDetailParams, EntityOptionsMenuParams } from '../params/diary';
 import type { LicenseContentsParams } from '../params/me';
 import type { OptionsMenuParams, PostingUpdateParams } from '../params/sharePost';
 
@@ -35,7 +35,8 @@ type RootRoutesParamList = {
 
     // Entity
     'entity-manager/create': NavigatorScreenParams<EntityManagerCreateParamList>;
-    'entity-manager/update': EntityDetailParams;
+    'entity-manager/detail': EntityDetailParams;
+    'entity-manager/options-menu': EntityOptionsMenuParams;
 };
 
 export type { RootRoutesParamList };

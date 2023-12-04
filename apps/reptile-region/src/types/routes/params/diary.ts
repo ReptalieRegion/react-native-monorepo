@@ -1,6 +1,11 @@
-// 로그인 완료 시
+// 개체 상세 페이지
 type EntityDetailParams = {
     entityId: string;
 };
 
-export type { EntityDetailParams };
+// 개체 옵션 메뉴
+type EntityOptionsMenuParams = {
+    entityId: string;
+};
+
+export type { EntityDetailParams, EntityOptionsMenuParams };

@@ -10,9 +10,9 @@ import { ChangeHeader } from './header';
 
 import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
 import GenderIcon from '@/components/diary/atoms/GenderIcon/GenderIcon';
-import type { EntityManagerUpdateScreenProps } from '@/types/routes/props/diary';
+import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary';
 
-export default function EntityManagerDetailPage(props: EntityManagerUpdateScreenProps) {
+export default function EntityManagerDetailPage(props: EntityManagerDetailScreenProps) {
     const {
         route: {
             params: { entityId },

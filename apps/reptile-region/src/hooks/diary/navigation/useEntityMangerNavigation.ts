@@ -19,7 +19,7 @@ const useEntityMangerNavigation = () => {
     };
 
     const navigateEntityUpdatePage = (props: EntityDetailParams) => {
-        navigation.navigate('entity-manager/update', props);
+        navigation.navigate('entity-manager/detail', props);
     };
 
     return {

@@ -13,6 +13,7 @@ import PostingRoutes from './SharePost/PostingRoutes';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
+import EntityManagerOptionsMenu from '@/pages/diary/entity-manager/bottom-sheet/EntityManagerOptionsMenu';
 import { EntityManagerDetailPageHeader } from '@/pages/diary/entity-manager/DetailPage/header';
 import EntityMangerDetailPage from '@/pages/diary/entity-manager/DetailPage/page';
 import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
@@ -169,9 +170,18 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     options={{ headerShown: false, gestureEnabled: false }}
                 />
                 <Stack.Screen
-                    name="entity-manager/update"
+                    name="entity-manager/detail"
                     component={EntityMangerDetailPage}
                     options={{ header: EntityManagerDetailPageHeader }}
+                />
+                <Stack.Screen
+                    name="entity-manager/options-menu"
+                    component={EntityManagerOptionsMenu}
+                    options={{
+                        presentation: 'containedTransparentModal',
+                        animation: 'none',
+                        headerShown: false,
+                    }}
                 />
                 {/* 다이어리 끝 */}
             </Stack.Navigator>
