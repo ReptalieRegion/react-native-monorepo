@@ -1,5 +1,6 @@
 import RNDateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import React, { useCallback } from 'react';
+import dayjs from 'dayjs';
+import React, { useCallback, useEffect } from 'react';
 
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
@@ -7,13 +8,19 @@ import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTe
 import type { EntityManagerCreateHatchingScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerHatchingDayPage({ navigation }: EntityManagerCreateHatchingScreenProps) {
+    const currentDate = new Date();
     const {
         entityDate: { hatchingDate },
         setCreateEntity,
     } = useCreateEntity();
 
+    useEffect(() => {
+        setCreateEntity({ type: 'SET_HATCHING_DATE', hatchingDate: new Date() });
+    }, [setCreateEntity]);
+
     const handleChangeDate = useCallback(
         (_: DateTimePickerEvent, date: Date | undefined) => {
+            console.log(date);
             if (date) {
                 setCreateEntity({ type: 'SET_HATCHING_DATE', hatchingDate: date });
             }
@@ -33,9 +40,9 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
                 <RNDateTimePicker
                     display="spinner"
                     timeZoneName="Asia/Seoul"
-                    value={hatchingDate ?? new Date()}
-                    maximumDate={new Date()}
-                    minimumDate={new Date(1950, 0, 1)}
+                    value={hatchingDate ?? currentDate}
+                    maximumDate={currentDate}
+                    minimumDate={dayjs(currentDate).subtract(50, 'year').toDate()}
                     onChange={handleChangeDate}
                 />
             }

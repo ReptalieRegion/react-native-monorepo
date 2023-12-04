@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import clientFetch, { METHOD } from '../../@utils/fetcher';
 
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
@@ -43,10 +45,16 @@ export const createEntity = async ({ files, gender, hatching, name, variety, wei
     const formDate = new FormData();
     formDate.append('files', files as unknown as Blob);
     formDate.append('gender', gender);
-    formDate.append('hatching', hatching.toLocaleDateString());
+    formDate.append('hatching', dayjs(hatching).format());
     formDate.append('name', name);
-    formDate.append('variety', JSON.stringify(variety));
-    formDate.append('weight', JSON.stringify(weight));
+    formDate.append('variety[classification]', variety.classification);
+    formDate.append('variety[species]', variety.species);
+    formDate.append('variety[detailedSpecies]', variety.detailedSpecies);
+    variety.morph?.forEach((item) => {
+        formDate.append('variety[morph]', item);
+    });
+    formDate.append('weight[date]', dayjs(weight.date).format());
+    formDate.append('weight[weight]', weight.weight);
 
     const response = await clientFetch('api/diary/entity', {
         method: METHOD.POST,

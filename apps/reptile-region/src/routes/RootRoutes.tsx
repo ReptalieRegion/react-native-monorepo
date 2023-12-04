@@ -7,15 +7,14 @@ import { Linking } from 'react-native';
 import SignUpRoutes from './Auth/SignUpRoutes';
 import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
 import EntityManagerCreateRoutes from './Diary/EntityManagerCreateRoutes';
-import EntityManagerCreateRoutes1 from './Diary/EntityManagerCreateRoutes1';
 import SharePostModalRoutes from './SharePost/ModalRoutes';
 import PostingRoutes from './SharePost/PostingRoutes';
 
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
-import { EntityManagerUpdatePageHeader } from '@/pages/diary/entity-manager/UpdatePage/header';
-import EntityMangerUpdatePage from '@/pages/diary/entity-manager/UpdatePage/page';
+import { EntityManagerDetailPageHeader } from '@/pages/diary/entity-manager/DetailPage/header';
+import EntityMangerDetailPage from '@/pages/diary/entity-manager/DetailPage/page';
 import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
 import LicenseContentsPage from '@/pages/me/License/ContentsPage/page';
 import { LicenseListHeader } from '@/pages/me/License/ListPage/header';
@@ -170,14 +169,9 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     options={{ headerShown: false, gestureEnabled: false }}
                 />
                 <Stack.Screen
-                    name="entity-manager/create1"
-                    component={EntityManagerCreateRoutes1}
-                    options={{ headerShown: false, gestureEnabled: false }}
-                />
-                <Stack.Screen
                     name="entity-manager/update"
-                    component={EntityMangerUpdatePage}
-                    options={{ header: EntityManagerUpdatePageHeader }}
+                    component={EntityMangerDetailPage}
+                    options={{ header: EntityManagerDetailPageHeader }}
                 />
                 {/* 다이어리 끝 */}
             </Stack.Navigator>

@@ -1,3 +1,5 @@
+import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
+
 type EntityImage = {
     sourceURL: string | undefined;
     uri: string;
@@ -5,22 +7,13 @@ type EntityImage = {
     type: string;
 };
 
-type EntityGender = 'Male' | 'Female' | 'Uncategorized';
-
-type SelectedType = {
-    분류: string;
-    종: string;
-    상세종: string;
-    모프로컬: string[];
-};
-
 type ListItem = {
-    type: keyof SelectedType;
+    type: keyof EntityVariety;
     itemList: string[];
 };
 
 type Variety = {
-    selected: SelectedType;
+    selected: EntityVariety;
     list: ListItem[];
 };
 
@@ -51,7 +44,7 @@ interface SetHatchingDate {
 interface SetVariety {
     type: 'SET_VARIETY';
     variety: {
-        type: keyof SelectedType;
+        type: keyof EntityVariety;
         value: string;
     };
 }
@@ -73,7 +66,6 @@ export type {
     CreateEntityState,
     EntityGender,
     EntityImage,
-    SelectedType,
     SetGender,
     SetHatchingDate,
     SetImage,

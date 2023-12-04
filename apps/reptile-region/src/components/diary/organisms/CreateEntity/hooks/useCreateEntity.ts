@@ -3,7 +3,7 @@ import { useCallback, useContext } from 'react';
 import { CreateEntityActionContext, CreateEntityStateContext } from '../context/CreateEntityContext';
 import type { CreateEntityActions } from '../type';
 
-export default function useCreateEntity() {
+export default function useCreateEntityHandler() {
     const state = useContext(CreateEntityStateContext);
     const dispatch = useContext(CreateEntityActionContext);
 

@@ -17,7 +17,7 @@ import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 export default function EntityMangerList1() {
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFetchEntity();
     const { flashListRef, handlePressUpFloatingButton, handleScroll } = useEntityMangerActions();
-    const { navigateEntityCreatePage1, navigateEntityUpdatePage } = useEntityMangerNavigation();
+    const { navigateEntityCreatePage, navigateEntityUpdatePage } = useEntityMangerNavigation();
 
     const keyExtractor = (item: FetchEntityListResponse) => item.entity.id;
 
@@ -47,7 +47,7 @@ export default function EntityMangerList1() {
                         name="primary"
                         Icon={PostWriteIcon}
                         iconStyle={primaryIcon}
-                        onPress={navigateEntityCreatePage1}
+                        onPress={navigateEntityCreatePage}
                     />
                     <FloatingActionButtonGroup.Button
                         name="secondary"

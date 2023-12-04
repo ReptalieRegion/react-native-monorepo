@@ -1,6 +1,6 @@
 // 로그인 완료 시
-type EntityUpdateParams = {
+type EntityDetailParams = {
     entityId: string;
 };
 
-export type { EntityUpdateParams };
+export type { EntityDetailParams };

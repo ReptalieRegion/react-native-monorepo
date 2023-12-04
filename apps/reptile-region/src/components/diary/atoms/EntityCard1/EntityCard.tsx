@@ -23,10 +23,7 @@ export default function EntityCard({ item }: ListRenderItemInfo<FetchEntityListR
             </View>
             <View style={styles.right}>
                 <GenderIcon gender={gender} />
-                <Typo
-                    variant="body4"
-                    color="placeholder"
-                >{`${hatching.getFullYear()}.${hatching.getMonth()}.${hatching.getDay()}`}</Typo>
+                <Typo variant="body4" color="placeholder">{`${hatching}`}</Typo>
             </View>
         </View>
     );

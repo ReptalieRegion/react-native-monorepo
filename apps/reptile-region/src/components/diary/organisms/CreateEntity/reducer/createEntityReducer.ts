@@ -2,7 +2,7 @@ import { isDate } from 'lodash-es';
 
 import type { CreateEntityActions, CreateEntityState, EntityGender, EntityImage, SetVariety } from '../type';
 
-import { 모프로컬리스트, 상세종리스트, 종리스트 } from '@/json/entity';
+import { detailedSpeciesList, morphList, speciesList } from '@/json/entity';
 
 const setImage = (state: CreateEntityState, image: EntityImage): CreateEntityState => {
     if (!image.uri || !image.name || !image.sourceURL) {
@@ -27,20 +27,21 @@ const setHatchingDate = (state: CreateEntityState, hatchingDate: Date): CreateEn
 const setVariety = (state: CreateEntityState, { type, value }: SetVariety['variety']): CreateEntityState => {
     const prevVarietyList = [...state.variety.list];
 
-    if (type === '분류') {
-        const selected = { ...state.variety.selected, [type]: value, 종: '', 상세종: '', 모프로컬: [] };
-        const alreadySelected = value === state.variety.selected.분류;
+    if (type === 'classification') {
+        const selected = { ...state.variety.selected, [type]: value, species: '', detailedSpecies: '', morph: [] };
+        const alreadySelected = value === state.variety.selected.classification;
         const newVarietyList = alreadySelected
             ? prevVarietyList
             : prevVarietyList.map((variety) => {
-                  const removeListType = variety.type === '종' || variety.type === '상세종' || variety.type === '모프로컬';
+                  const removeListType =
+                      variety.type === 'species' || variety.type === 'detailedSpecies' || variety.type === 'morph';
                   return {
                       type: variety.type,
                       itemList: removeListType ? [] : variety.itemList,
                   };
               });
-        const findIndex = newVarietyList.findIndex((prevItem) => prevItem.type === '종');
-        newVarietyList[findIndex] = { type: '종', itemList: 종리스트[value] };
+        const findIndex = newVarietyList.findIndex((prevItem) => prevItem.type === 'species');
+        newVarietyList[findIndex] = { type: 'species', itemList: speciesList[value] };
 
         const newSelected = alreadySelected ? { ...state.variety.selected } : selected;
 
@@ -53,58 +54,63 @@ const setVariety = (state: CreateEntityState, { type, value }: SetVariety['varie
         };
     }
 
-    if (type === '종') {
-        const selected = { ...state.variety.selected, [type]: value, 상세종: '', 모프로컬: [] };
-        const alreadySelected = value === state.variety.selected.종;
+    if (type === 'species') {
+        const selected = { ...state.variety.selected, [type]: value, detailedSpecies: '', morph: [] };
+        const alreadySelected = value === state.variety.selected.species;
         const newVarietyList = prevVarietyList.map((variety) => {
-            const removeListType = variety.type === '상세종' || variety.type === '모프로컬';
+            const removeListType = variety.type === 'detailedSpecies' || variety.type === 'morph';
             return {
                 type: variety.type,
                 itemList: removeListType ? [] : variety.itemList,
             };
         });
-        const findIndex = newVarietyList.findIndex((prevItem) => prevItem.type === '상세종');
-        newVarietyList[findIndex] = { type: '상세종', itemList: alreadySelected ? [] : 상세종리스트[value] };
-        const newSelected = alreadySelected ? { ...state.variety.selected, [type]: '', 상세종: '', 모프로컬: [] } : selected;
-
-        return {
-            ...state,
-            variety: {
-                list: newVarietyList,
-                selected: newSelected,
-            },
-        };
-    }
-
-    if (type === '상세종') {
-        const selected = { ...state.variety.selected, [type]: value, 모프로컬: [] };
-        const alreadySelected = value === state.variety.selected.상세종;
-        const newVarietyList = prevVarietyList.map((variety) => {
-            const removeListType = variety.type === '모프로컬';
-            return {
-                type: variety.type,
-                itemList: removeListType ? [] : variety.itemList,
-            };
-        });
-        const findIndex = newVarietyList.findIndex((prevItem) => prevItem.type === '모프로컬');
-        newVarietyList[findIndex] = { type: '모프로컬', itemList: alreadySelected ? [] : 모프로컬리스트[value] };
-
-        const newSelected = alreadySelected ? { ...state.variety.selected, [type]: '', 모프로컬: [] } : selected;
-
-        return {
-            ...state,
-            variety: {
-                list: newVarietyList,
-                selected: newSelected,
-            },
-        };
-    }
-
-    if (type === '모프로컬') {
-        const alreadySelected = state.variety.selected.모프로컬.findIndex((item) => item === value) !== -1;
+        const findIndex = newVarietyList.findIndex((prevItem) => prevItem.type === 'detailedSpecies');
+        newVarietyList[findIndex] = { type: 'detailedSpecies', itemList: alreadySelected ? [] : detailedSpeciesList[value] };
         const newSelected = alreadySelected
-            ? { ...state.variety.selected, [type]: state.variety.selected.모프로컬.filter((item) => item !== value) }
-            : { ...state.variety.selected, 모프로컬: [...state.variety.selected.모프로컬, value] };
+            ? { ...state.variety.selected, [type]: '', detailedSpecies: '', morph: [] }
+            : selected;
+
+        return {
+            ...state,
+            variety: {
+                list: newVarietyList,
+                selected: newSelected,
+            },
+        };
+    }
+
+    if (type === 'detailedSpecies') {
+        const selected = { ...state.variety.selected, [type]: value, morph: [] };
+        const alreadySelected = value === state.variety.selected.detailedSpecies;
+        const newVarietyList = prevVarietyList.map((variety) => {
+            const removeListType = variety.type === 'morph';
+            return {
+                type: variety.type,
+                itemList: removeListType ? [] : variety.itemList,
+            };
+        });
+        const findIndex = newVarietyList.findIndex((prevItem) => prevItem.type === 'morph');
+        newVarietyList[findIndex] = { type: 'morph', itemList: alreadySelected ? [] : morphList[value] };
+
+        const newSelected = alreadySelected ? { ...state.variety.selected, [type]: '', morph: [] } : selected;
+
+        return {
+            ...state,
+            variety: {
+                list: newVarietyList,
+                selected: newSelected,
+            },
+        };
+    }
+
+    if (type === 'morph') {
+        const alreadySelected = state.variety.selected.morph?.findIndex((item) => item === value) !== -1;
+        const newSelected = alreadySelected
+            ? { ...state.variety.selected, [type]: state.variety.selected.morph?.filter((item) => item !== value) }
+            : {
+                  ...state.variety.selected,
+                  morph: state.variety.selected.morph ? [...state.variety.selected.morph, value] : [value],
+              };
 
         return {
             ...state,

@@ -9,8 +9,15 @@ type EntityGender = 'Male' | 'Female' | 'Uncategorized';
 
 // 개체 무게
 type EntityWeight = {
-    date: Date;
+    date: string;
     weight: string;
+};
+
+type EntityVariety = {
+    classification: string;
+    species: string;
+    detailedSpecies: string;
+    morph?: string[];
 };
 
 /**
@@ -23,13 +30,8 @@ type FetchEntityListResponse = {
         id: string;
         name: string;
         gender: EntityGender;
-        variety: {
-            classification: string;
-            species: string;
-            detailedSpecies: string;
-            morph: string;
-        };
-        hatching: Date;
+        variety: EntityVariety;
+        hatching: string;
         weight: EntityWeight[];
         image: {
             src: string;
@@ -64,12 +66,7 @@ type CreateEntityRequest = {
     };
     name: string;
     gender: EntityGender;
-    variety: {
-        classification: string;
-        species: string;
-        detailedSpecies: string;
-        morph: string;
-    };
+    variety: EntityVariety;
     hatching: Date;
     weight: EntityWeight;
 };
@@ -136,6 +133,7 @@ export type {
     DeleteEntityWeightRequest,
     DeleteEntityWeightResponse,
     EntityGender,
+    EntityVariety,
     FetchEntityList,
     FetchEntityListResponse,
     UpdateEntity,

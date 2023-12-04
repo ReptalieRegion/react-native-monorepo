@@ -4,7 +4,7 @@ import { CreateEntityActionContext, CreateEntityStateContext } from '../context/
 import createEntityReducer from '../reducer/createEntityReducer';
 import type { CreateEntityState } from '../type';
 
-import { 분류리스트 } from '@/json/entity';
+import { classificationList } from '@/json/entity';
 
 const initialData: CreateEntityState = {
     gender: null,
@@ -12,26 +12,26 @@ const initialData: CreateEntityState = {
     hatchingDate: null,
     variety: {
         selected: {
-            분류: '',
-            상세종: '',
-            종: '',
-            모프로컬: [],
+            classification: '',
+            species: '',
+            detailedSpecies: '',
+            morph: [''],
         },
         list: [
             {
-                type: '분류',
-                itemList: 분류리스트,
+                type: 'classification',
+                itemList: classificationList,
             },
             {
-                type: '종',
+                type: 'species',
                 itemList: [],
             },
             {
-                type: '상세종',
+                type: 'detailedSpecies',
                 itemList: [],
             },
             {
-                type: '모프로컬',
+                type: 'morph',
                 itemList: [],
             },
         ],

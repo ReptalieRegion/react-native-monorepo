@@ -2,7 +2,7 @@ import { useNavigation, type CompositeNavigationProp, type NavigationProp } from
 
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import type { EntityManagerParamList } from '@/types/routes/param-list/diary';
-import type { EntityUpdateParams } from '@/types/routes/params/diary';
+import type { EntityDetailParams } from '@/types/routes/params/diary';
 
 type EntityNavigationProp = CompositeNavigationProp<
     NavigationProp<EntityManagerParamList, 'entity-manager/list'>,
@@ -18,19 +18,12 @@ const useEntityMangerNavigation = () => {
         });
     };
 
-    const navigateEntityCreatePage1 = () => {
-        navigation.navigate('entity-manager/create1', {
-            screen: 'image',
-        });
-    };
-
-    const navigateEntityUpdatePage = (props: EntityUpdateParams) => {
+    const navigateEntityUpdatePage = (props: EntityDetailParams) => {
         navigation.navigate('entity-manager/update', props);
     };
 
     return {
         navigateEntityCreatePage,
-        navigateEntityCreatePage1,
         navigateEntityUpdatePage,
     };
 };

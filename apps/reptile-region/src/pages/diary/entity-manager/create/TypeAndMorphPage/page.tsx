@@ -7,9 +7,16 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import TagView from '@/components/@common/atoms/TagView/TagView';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import type { SelectedType } from '@/components/diary/organisms/CreateEntity/type';
 import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
+import type { EntityVariety } from '@/types/apis/diary/entity';
 import type { EntityManagerCreateTypeAndMorphScreenProps } from '@/types/routes/props/diary';
+
+const TypeAndMorphMap: { [key in keyof EntityVariety]: string } = {
+    classification: '분류',
+    species: '종',
+    detailedSpecies: '상세종',
+    morph: '모프로컬',
+};
 
 export default function EntityManagerTypeAndMorphPage({ navigation }: EntityManagerCreateTypeAndMorphScreenProps) {
     const {
@@ -21,7 +28,7 @@ export default function EntityManagerTypeAndMorphPage({ navigation }: EntityMana
         navigation.navigate('weight');
     }, [navigation]);
 
-    const handlePressTag = (type: keyof SelectedType, value: string) => {
+    const handlePressTag = (type: keyof EntityVariety, value: string) => {
         setCreateEntity({ type: 'SET_VARIETY', variety: { type, value } });
     };
 
@@ -36,12 +43,12 @@ export default function EntityManagerTypeAndMorphPage({ navigation }: EntityMana
                         data={variety.list}
                         renderItem={({ item }) => (
                             <View style={styles.container}>
-                                <Typo variant="title2">{item.type}</Typo>
+                                <Typo variant="title2">{TypeAndMorphMap[item.type]}</Typo>
                                 <Animated.View style={styles.tagContainer} entering={FadeIn} exiting={FadeOut}>
                                     {item.itemList?.map((value, index) => {
                                         const isSelectedColor =
-                                            variety.selected.모프로컬.length !== 0 &&
-                                            variety.selected.모프로컬.findIndex((selectedItem) => selectedItem === value) !== -1
+                                            variety.selected.morph?.length !== 0 &&
+                                            variety.selected.morph?.findIndex((selectedItem) => selectedItem === value) !== -1
                                                 ? 'primary'
                                                 : variety.selected[item.type] === value
                                                 ? 'primary'
@@ -68,9 +75,9 @@ export default function EntityManagerTypeAndMorphPage({ navigation }: EntityMana
                     text="다음"
                     onPress={nextPage}
                     disabled={
-                        variety.selected.분류.length === 0 ||
-                        variety.selected.종.length === 0 ||
-                        variety.selected.상세종.length === 0
+                        variety.selected.classification.length === 0 ||
+                        variety.selected.species.length === 0 ||
+                        variety.selected.detailedSpecies.length === 0
                     }
                 />
             }
