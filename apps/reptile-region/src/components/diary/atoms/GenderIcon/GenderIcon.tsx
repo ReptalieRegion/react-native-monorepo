@@ -7,14 +7,19 @@ import Female from '@/assets/icons/Female';
 import Male from '@/assets/icons/Male';
 import Question from '@/assets/icons/Question';
 
-export default function GenderIcon({ gender }: { gender: EntityGender }) {
+type GenderIconProps = {
+    gender: EntityGender;
+    size?: number;
+};
+
+export default function GenderIcon({ gender, size = 24 }: GenderIconProps) {
     switch (gender) {
         case 'Male':
-            return <Male fill={color.Blue[500].toString()} />;
+            return <Male fill={color.Blue[500].toString()} width={size} height={size} />;
         case 'Female':
-            return <Female fill={color.Pink[500].toString()} />;
+            return <Female fill={color.Pink[500].toString()} width={size} height={size} />;
         case 'Uncategorized':
-            return <Question fill={color.Gray[500].toString()} />;
+            return <Question fill={color.Gray[500].toString()} width={size} height={size} />;
         default:
             return <></>;
     }

@@ -107,9 +107,9 @@ export const diaryEntityData: InfiniteData<InfiniteState<FetchEntityListResponse
                     hatching: faker.date.anytime(),
                     name: name[index],
                     variety: createVariety(),
-                    weight: range(20).map(() => ({
+                    weight: range(365).map(() => ({
                         date: faker.date.anytime(),
-                        weight: `${faker.number.float({ min: 0, max: 2 })}g`,
+                        weight: `${faker.number.float({ min: 0, max: 200 })}g`,
                     })),
                     image: {
                         src: image[index],

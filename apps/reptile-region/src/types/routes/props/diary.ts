@@ -23,6 +23,8 @@ type EntityManagerCreateCongratsScreenProps = CompositeScreenProps<
     NativeStackScreenProps<RootRoutesParamList, 'entity-manager/create'>
 >;
 
+type EntityManagerUpdateScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/update'>;
+
 export type {
     EntityManagerCreateCongratsScreenProps,
     EntityManagerCreateGenderScreenProps,
@@ -32,4 +34,5 @@ export type {
     EntityManagerCreateNameScreenProps,
     EntityManagerCreateTypeAndMorphScreenProps,
     EntityManagerCreateWeightScreenProps,
+    EntityManagerUpdateScreenProps,
 };

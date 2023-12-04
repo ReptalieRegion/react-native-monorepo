@@ -31,7 +31,7 @@ export default function EntityMangerList1() {
                     data={data}
                     contentContainerStyle={contentStyle}
                     renderItem={(props) => (
-                        <TouchableOpacity onPress={navigateEntityUpdatePage}>
+                        <TouchableOpacity onPress={() => navigateEntityUpdatePage({ entityId: props.item.entity.id })}>
                             <EntityCard {...props} />
                         </TouchableOpacity>
                     )}

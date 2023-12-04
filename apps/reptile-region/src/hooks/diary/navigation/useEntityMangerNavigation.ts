@@ -2,6 +2,7 @@ import { useNavigation, type CompositeNavigationProp, type NavigationProp } from
 
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import type { EntityManagerParamList } from '@/types/routes/param-list/diary';
+import type { EntityUpdateParams } from '@/types/routes/params/diary';
 
 type EntityNavigationProp = CompositeNavigationProp<
     NavigationProp<EntityManagerParamList, 'entity-manager/list'>,
@@ -23,8 +24,8 @@ const useEntityMangerNavigation = () => {
         });
     };
 
-    const navigateEntityUpdatePage = () => {
-        navigation.navigate('entity-manager/update');
+    const navigateEntityUpdatePage = (props: EntityUpdateParams) => {
+        navigation.navigate('entity-manager/update', props);
     };
 
     return {

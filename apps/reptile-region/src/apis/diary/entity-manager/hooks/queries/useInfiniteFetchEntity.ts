@@ -15,6 +15,8 @@ export default function useInfiniteFetchEntity() {
         queryKey: DIARY_QUERY_KEYS.list,
         initialData: diaryEntityData,
         initialPageParam: 0,
+        staleTime: 4 * 60 * 100,
+        gcTime: 5 * 60 * 1000,
         queryFn: ({ pageParam }) => fetchEntityList({ pageParam }),
         getNextPageParam: (data) => data.nextPage,
         select: useCallback(
