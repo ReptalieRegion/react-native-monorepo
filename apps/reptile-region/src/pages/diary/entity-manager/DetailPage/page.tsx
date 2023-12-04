@@ -34,7 +34,6 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
         (prev, curr) => {
             const currenWeight = Number(curr.weight.replace('g', ''));
             const roundWeight = Math.round(currenWeight * 10) / 10;
-            console.log(dayjs(curr.date).format('MM/DD'), roundWeight, typeof roundWeight);
             return {
                 dateList: [...prev.dateList, dayjs(curr.date).format('MM/DD')],
                 weightList: [...prev.weightList, roundWeight],

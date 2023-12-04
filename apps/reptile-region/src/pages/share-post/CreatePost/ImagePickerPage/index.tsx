@@ -31,7 +31,6 @@ export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
 
 function CameraAlbumActions({ height }: { height: number }) {
     const { handleOpenCamera } = useImageCropActions();
-    console.log('hi');
     return (
         <View style={[styles.container, { height: height }]}>
             <TouchableTypo>최근항목</TouchableTypo>

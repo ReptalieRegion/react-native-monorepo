@@ -52,6 +52,7 @@ type FetchFollowerListResponse = {
         profile: ImageType;
         nickname: string;
         isFollow: boolean | undefined;
+        isMine: boolean;
     };
 };
 
@@ -68,6 +69,7 @@ type FetchFollowingListResponse = {
         profile: ImageType;
         nickname: string;
         isFollow: boolean | undefined;
+        isMine: boolean;
     };
 };
 

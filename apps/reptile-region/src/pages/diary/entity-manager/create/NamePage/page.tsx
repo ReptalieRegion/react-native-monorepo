@@ -25,7 +25,6 @@ export default function EntityManagerNamePage({ navigation }: EntityManagerCreat
     );
 
     const nextPage = useCallback(() => {
-        console.log(entityDate);
         if (
             entityDate.image &&
             entityDate.gender &&

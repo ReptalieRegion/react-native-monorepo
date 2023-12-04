@@ -1,5 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
+import { Typo } from '@reptile-region/design-system';
 import React, { useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 import { TextField } from '@/components/@common/atoms';
@@ -40,14 +42,17 @@ export default function EntityManagerWeightPage({ navigation }: EntityManagerCre
             description="현재 개체의 종류와 모프를 알려주세요."
             contentsAlign="top"
             contents={
-                <TextField
-                    ref={textFieldRef}
-                    label={'몸무게'}
-                    size="large"
-                    value={weight?.toString()}
-                    onChangeText={handleChangeWeight}
-                    keyboardType="numeric"
-                />
+                <View style={styles.container}>
+                    <TextField
+                        ref={textFieldRef}
+                        label={'몸무게'}
+                        size="large"
+                        value={weight?.toString()}
+                        onChangeText={handleChangeWeight}
+                        keyboardType="numeric"
+                    />
+                    <Typo>g</Typo>
+                </View>
             }
             button={
                 <ConfirmButton text="다음" size={buttonSize} onPress={nextPage} disabled={weight === null || weight === ''} />
@@ -55,3 +60,9 @@ export default function EntityManagerWeightPage({ navigation }: EntityManagerCre
         />
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+    },
+});

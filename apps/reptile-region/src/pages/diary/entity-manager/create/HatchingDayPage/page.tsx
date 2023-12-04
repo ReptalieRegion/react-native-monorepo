@@ -20,7 +20,6 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
 
     const handleChangeDate = useCallback(
         (_: DateTimePickerEvent, date: Date | undefined) => {
-            console.log(date);
             if (date) {
                 setCreateEntity({ type: 'SET_HATCHING_DATE', hatchingDate: date });
             }

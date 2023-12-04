@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { SuccessBadge } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
 import type { EntityManagerCreateCongratsScreenProps } from '@/types/routes/props/diary';
@@ -28,7 +27,8 @@ export default function EntityManagerCongratsPage({ navigation }: EntityManagerC
             description=""
             contents={
                 <View style={styles.container}>
-                    <SuccessBadge width={150} height={150} />
+                    {/* <SuccessBadge width={150} height={150} /> */}
+                    <Text style={styles.text}>🎉</Text>
                 </View>
             }
             button={<ConfirmButton text="목록으로" onPress={nextPage} />}
@@ -40,5 +40,9 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    text: {
+        textAlign: 'center',
+        fontSize: 100,
     },
 });
