@@ -3,7 +3,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, View, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-type ConfirmButtonVariant = 'confirm' | 'cancel' | 'sub';
+type ConfirmButtonVariant = 'confirm' | 'cancel' | 'text';
 
 type ConfirmButtonSize = 'small' | 'medium' | 'large' | 'full';
 
@@ -75,10 +75,14 @@ function styleVariantGenerator(
                     color: 'sub-default',
                 },
             };
-        case 'sub':
+        case 'text':
             return {
-                view: {},
-                text: {},
+                view: {
+                    backgroundColor: color.White.toString(),
+                },
+                text: {
+                    color: 'primary',
+                },
             };
     }
 }

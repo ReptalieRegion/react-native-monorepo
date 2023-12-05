@@ -1,12 +1,14 @@
 import { Typo } from '@reptile-region/design-system';
-import { FlashList } from '@shopify/flash-list';
+import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import TagView from '@/components/@common/atoms/TagView/TagView';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
+import type { VarietyListItem } from '@/components/diary/organisms/CreateEntity/type';
 import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
 import type { EntityVariety } from '@/types/apis/diary/entity';
 import type { EntityManagerCreateTypeAndMorphScreenProps } from '@/types/routes/props/diary';
@@ -28,8 +30,57 @@ export default function EntityManagerTypeAndMorphPage({ navigation }: EntityMana
         navigation.navigate('weight');
     }, [navigation]);
 
+    const keyExtractor = (item: VarietyListItem) => item.type;
+
     const handlePressTag = (type: keyof EntityVariety, value: string) => {
         setCreateEntity({ type: 'SET_VARIETY', variety: { type, value } });
+    };
+
+    const renderItem: ListRenderItem<VarietyListItem> = ({ item }) => {
+        return (
+            <View style={styles.container}>
+                <Typo variant="title2">{TypeAndMorphMap[item.type]}</Typo>
+                <ConditionalRenderer
+                    condition={item.itemList?.length !== 0}
+                    trueContent={
+                        <Animated.View style={styles.tagContainer} entering={FadeIn} exiting={FadeOut}>
+                            {item.itemList?.map((value, index) => {
+                                const isSelectedColor =
+                                    variety.selected.morph?.length !== 0 &&
+                                    variety.selected.morph?.findIndex((selectedItem) => selectedItem === value) !== -1
+                                        ? 'primary'
+                                        : variety.selected[item.type] === value
+                                        ? 'primary'
+                                        : 'placeholder';
+                                return (
+                                    <TagView
+                                        key={index}
+                                        onPress={() => handlePressTag(item.type, value)}
+                                        label={value}
+                                        size="large"
+                                        color={isSelectedColor}
+                                    />
+                                );
+                            })}
+                            <TagView
+                                onPress={() => handlePressTag(item.type, '기타')}
+                                label={'기타'}
+                                size="large"
+                                color={
+                                    variety.selected.morph?.length !== 0 &&
+                                    variety.selected.morph?.findIndex((selectedItem) => selectedItem === '기타') !== -1
+                                        ? 'primary'
+                                        : variety.selected[item.type] === '기타'
+                                        ? 'primary'
+                                        : 'placeholder'
+                                }
+                            />
+                        </Animated.View>
+                    }
+                    falseContent={null}
+                />
+            </View>
+        );
     };
 
     return (
@@ -38,37 +89,7 @@ export default function EntityManagerTypeAndMorphPage({ navigation }: EntityMana
             description="현재 개체의 종류와 모프를 알려주세요."
             contentsAlign="top"
             contents={
-                <View style={styles.wrapper}>
-                    <FlashList
-                        data={variety.list}
-                        renderItem={({ item }) => (
-                            <View style={styles.container}>
-                                <Typo variant="title2">{TypeAndMorphMap[item.type]}</Typo>
-                                <Animated.View style={styles.tagContainer} entering={FadeIn} exiting={FadeOut}>
-                                    {item.itemList?.map((value, index) => {
-                                        const isSelectedColor =
-                                            variety.selected.morph?.length !== 0 &&
-                                            variety.selected.morph?.findIndex((selectedItem) => selectedItem === value) !== -1
-                                                ? 'primary'
-                                                : variety.selected[item.type] === value
-                                                ? 'primary'
-                                                : 'sub-placeholder';
-                                        return (
-                                            <TagView
-                                                key={index}
-                                                onPress={() => handlePressTag(item.type, value)}
-                                                label={value}
-                                                size="large"
-                                                color={isSelectedColor}
-                                            />
-                                        );
-                                    })}
-                                </Animated.View>
-                            </View>
-                        )}
-                        estimatedItemSize={69}
-                    />
-                </View>
+                <FlashList data={variety.list} keyExtractor={keyExtractor} renderItem={renderItem} estimatedItemSize={69} />
             }
             button={
                 <ConfirmButton
@@ -86,9 +107,6 @@ export default function EntityManagerTypeAndMorphPage({ navigation }: EntityMana
 }
 
 const styles = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-    },
     tagContainer: {
         flexDirection: 'row',
         marginTop: 10,

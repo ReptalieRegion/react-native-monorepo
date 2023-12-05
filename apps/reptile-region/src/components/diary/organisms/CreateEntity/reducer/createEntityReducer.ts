@@ -3,9 +3,10 @@ import { isDate } from 'lodash-es';
 import type { CreateEntityActions, CreateEntityState, EntityGender, EntityImage, SetVariety } from '../type';
 
 import { detailedSpeciesList, morphList, speciesList } from '@/json/entity';
+import type { WeightUnit } from '@/types/apis/diary/entity';
 
 const setImage = (state: CreateEntityState, image: EntityImage): CreateEntityState => {
-    if (!image.uri || !image.name || !image.sourceURL) {
+    if (!image.uri || !image.name) {
         return state;
     }
 
@@ -128,8 +129,8 @@ const setName = (state: CreateEntityState, name: string): CreateEntityState => {
     return { ...state, name };
 };
 
-const setWeight = (state: CreateEntityState, weight: string): CreateEntityState => {
-    return { ...state, weight };
+const setWeight = (state: CreateEntityState, weightUnit: WeightUnit): CreateEntityState => {
+    return { ...state, weightUnit };
 };
 
 const createEntityReducer = (state: CreateEntityState, actions: CreateEntityActions) => {
@@ -145,7 +146,7 @@ const createEntityReducer = (state: CreateEntityState, actions: CreateEntityActi
         case 'SET_NAME':
             return setName(state, actions.name);
         case 'SET_WEIGHT':
-            return setWeight(state, actions.weight);
+            return setWeight(state, actions.weightUnit);
     }
 };
 

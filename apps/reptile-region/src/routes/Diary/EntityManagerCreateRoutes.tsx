@@ -111,6 +111,7 @@ export default function EntityManagerCreateRoutes() {
                     name="congrats"
                     component={EntityManagerCongratsPage}
                     options={{
+                        gestureEnabled: false,
                         headerBackVisible: false,
                         headerTitle: '',
                         headerShadowVisible: false,

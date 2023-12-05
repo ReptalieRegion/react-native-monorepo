@@ -7,6 +7,9 @@ import type { InfiniteState, ServerAPI } from '../../utils';
 // 개체 성별
 type EntityGender = 'Male' | 'Female' | 'Uncategorized';
 
+// 개체 무게 단위
+type WeightUnit = 'g' | 'kg';
+
 // 개체 무게
 type EntityWeight = {
     date: string;
@@ -32,6 +35,7 @@ type FetchEntityListResponse = {
         gender: EntityGender;
         variety: EntityVariety;
         hatching: string;
+        weightUnit: WeightUnit;
         weight: EntityWeight[];
         image: {
             src: string;
@@ -67,8 +71,8 @@ type CreateEntityRequest = {
     name: string;
     gender: EntityGender;
     variety: EntityVariety;
-    hatching: Date;
-    weight: EntityWeight;
+    hatching: Date | undefined;
+    weightUnit: WeightUnit;
 };
 
 type CreateEntityResponse = {
@@ -139,4 +143,5 @@ export type {
     UpdateEntity,
     UpdateEntityRequest,
     UpdateEntityResponse,
+    WeightUnit,
 };

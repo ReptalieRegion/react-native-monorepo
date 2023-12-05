@@ -24,12 +24,11 @@ export default function EntityManagerImagePage({ navigation }: EntityManagerCrea
 
     const { handlePressProfileImage } = useImagePicker({
         onSuccess: (imageInfo) => {
-            const sourceURL = imageInfo.sourceURL;
             const uri = imageInfo.path;
             const randomNumber = Math.floor(Math.random() * 9999);
             const name = `image_${randomNumber}_${new Date().getTime()}.jpg`;
             const type = imageInfo.mime;
-            setCreateEntity({ type: 'SET_IMAGE', image: { sourceURL, name, uri, type } });
+            setCreateEntity({ type: 'SET_IMAGE', image: { name, uri, type } });
         },
         onError: (error) => {
             if (error.message !== 'User cancelled image selection') {
@@ -48,9 +47,10 @@ export default function EntityManagerImagePage({ navigation }: EntityManagerCrea
                         data={{
                             entity: {
                                 id: '',
-                                image: { src: image?.sourceURL ?? '' },
+                                image: { src: image?.uri ?? '' },
                                 hatching: dayjs().format('YYYY-MM-DD'),
                                 gender: 'Uncategorized',
+                                weightUnit: 'g',
                                 name: 'OOO',
                                 variety: {
                                     classification: '',

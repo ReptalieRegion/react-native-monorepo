@@ -1,29 +1,28 @@
-import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
+import type { EntityGender, EntityVariety, WeightUnit } from '@/types/apis/diary/entity';
 
 type EntityImage = {
-    sourceURL: string | undefined;
     uri: string;
     name: string;
     type: string;
 };
 
-type ListItem = {
+type VarietyListItem = {
     type: keyof EntityVariety;
     itemList: string[];
 };
 
 type Variety = {
     selected: EntityVariety;
-    list: ListItem[];
+    list: VarietyListItem[];
 };
 
 type CreateEntityState = {
     image: EntityImage | null;
     gender: EntityGender | null;
-    hatchingDate: Date | null;
+    hatchingDate: Date | undefined | null;
     variety: Variety;
     name: string | null;
-    weight: string | null;
+    weightUnit: WeightUnit;
 };
 
 interface SetImage {
@@ -38,7 +37,7 @@ interface SetGender {
 
 interface SetHatchingDate {
     type: 'SET_HATCHING_DATE';
-    hatchingDate: Date;
+    hatchingDate: Date | undefined;
 }
 
 interface SetVariety {
@@ -54,12 +53,12 @@ interface SetName {
     name: string;
 }
 
-interface SetWeight {
+interface SetWeightUnit {
     type: 'SET_WEIGHT';
-    weight: string;
+    weightUnit: WeightUnit;
 }
 
-type CreateEntityActions = SetImage | SetGender | SetHatchingDate | SetVariety | SetName | SetWeight;
+type CreateEntityActions = SetImage | SetGender | SetHatchingDate | SetVariety | SetName | SetWeightUnit;
 
 export type {
     CreateEntityActions,
@@ -71,6 +70,7 @@ export type {
     SetImage,
     SetName,
     SetVariety,
-    SetWeight,
+    SetWeightUnit,
     Variety,
+    VarietyListItem,
 };

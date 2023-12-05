@@ -41,7 +41,7 @@ export const createEntityWeight = async ({ diaryId, weight }: CreateEntityWeight
 };
 
 // 다이어리 개체등록
-export const createEntity = async ({ files, gender, hatching, name, variety, weight }: CreateEntity['Request']) => {
+export const createEntity = async ({ files, gender, hatching, name, variety, weightUnit }: CreateEntity['Request']) => {
     const formDate = new FormData();
     formDate.append('files', files as unknown as Blob);
     formDate.append('gender', gender);
@@ -53,8 +53,7 @@ export const createEntity = async ({ files, gender, hatching, name, variety, wei
     variety.morph?.forEach((item) => {
         formDate.append('variety[morph]', item);
     });
-    formDate.append('weight[date]', dayjs(weight.date).format());
-    formDate.append('weight[weight]', weight.weight);
+    formDate.append('weightUnit', weightUnit);
 
     const response = await clientFetch('api/diary/entity', {
         method: METHOD.POST,

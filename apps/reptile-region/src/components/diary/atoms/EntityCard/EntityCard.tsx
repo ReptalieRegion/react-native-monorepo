@@ -1,7 +1,6 @@
 import { Typo, color } from '@reptile-region/design-system';
-import { Image } from 'expo-image';
 import React, { type ReactNode } from 'react';
-import { Platform, StyleSheet, TouchableOpacity, View, type DimensionValue } from 'react-native';
+import { Image, Platform, StyleSheet, TouchableOpacity, View, type DimensionValue } from 'react-native';
 
 import GenderIcon from '../GenderIcon/GenderIcon';
 
@@ -38,7 +37,7 @@ export default function EntityCard({
                 <ConditionalRenderer
                     condition={!!placeholderImage}
                     trueContent={placeholderImage}
-                    falseContent={<Image recyclingKey={image.src} source={{ uri: image.src }} style={styles.image} />}
+                    falseContent={<Image source={{ uri: image.src }} style={styles.image} resizeMethod="resize" />}
                 />
 
                 <View style={styles.textContainer}>

@@ -64,7 +64,6 @@ export default forwardRef<TextInput, TextFieldProps>(function TextField(
         value,
         errorMessage,
         secureTextEntry = false,
-        width = '100%',
         size = 'normal',
         variant = 'standard',
         paddingVertical = 10,
@@ -149,7 +148,7 @@ export default forwardRef<TextInput, TextFieldProps>(function TextField(
     };
 
     return (
-        <View style={{ width }}>
+        <View style={styles.wrapper}>
             <TouchableWithoutFeedback nativeID={label}>
                 <Animated.View style={[styles.container, borderAnimated, { paddingVertical, paddingHorizontal }]}>
                     <TextInput
@@ -180,6 +179,9 @@ export default forwardRef<TextInput, TextFieldProps>(function TextField(
 });
 
 const styles = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+    },
     container: {
         position: 'relative',
     },

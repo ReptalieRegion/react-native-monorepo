@@ -9,7 +9,7 @@ type TagViewSize = 'small' | 'medium' | 'large';
 
 type TagViewState = {
     label: string;
-    color?: 'primary' | 'sub-placeholder';
+    color?: 'primary' | 'placeholder';
     size?: TagViewSize;
 };
 
@@ -21,7 +21,7 @@ type TagViewProps = TagViewState & TagViewActions;
 
 const variantMap = {
     primary: color.Teal[150].toString(),
-    'sub-placeholder': color.Gray[600].toString(),
+    placeholder: color.Gray[500].toString(),
 };
 
 export default function TagView(props: TagViewProps): React.JSX.Element {
@@ -34,24 +34,18 @@ export default function TagView(props: TagViewProps): React.JSX.Element {
             condition={!!props?.onPress}
             trueContent={
                 <TouchableOpacity onPress={props?.onPress}>
-                    <View style={styles.container}>
-                        <View style={[styles.tag, { borderColor }, size.view]}>
-                            <Typo variant={size.text.variant} color={colorType} textAlign="center">
-                                {props.label}
-                            </Typo>
-                        </View>
-                        <View style={styles.empty} />
-                    </View>
-                </TouchableOpacity>
-            }
-            falseContent={
-                <View style={styles.container}>
-                    <View style={[styles.tag, { borderColor }, size.view]}>
+                    <View style={[styles.container, styles.tag, { borderColor }, size.view]}>
                         <Typo variant={size.text.variant} color={colorType} textAlign="center">
                             {props.label}
                         </Typo>
                     </View>
-                    <View style={styles.empty} />
+                </TouchableOpacity>
+            }
+            falseContent={
+                <View style={[styles.container, styles.tag, { borderColor }, size.view]}>
+                    <Typo variant={size.text.variant} color={colorType} textAlign="center">
+                        {props.label}
+                    </Typo>
                 </View>
             }
         />
@@ -76,7 +70,7 @@ function sizeGenerator(size: TagViewSize): { text: { variant: VariantType }; vie
                     variant: 'body2',
                 },
                 view: {
-                    paddingVertical: 5,
+                    paddingVertical: 4,
                     paddingHorizontal: 10,
                 },
             };
@@ -86,8 +80,9 @@ function sizeGenerator(size: TagViewSize): { text: { variant: VariantType }; vie
                     variant: 'body1',
                 },
                 view: {
-                    paddingVertical: 5,
-                    paddingHorizontal: 15,
+                    minWidth: 40,
+                    paddingVertical: 4,
+                    paddingHorizontal: 12,
                 },
             };
     }
@@ -96,9 +91,11 @@ function sizeGenerator(size: TagViewSize): { text: { variant: VariantType }; vie
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     tag: {
-        borderRadius: 20,
+        borderRadius: 15,
         borderWidth: 1,
     },
     empty: {

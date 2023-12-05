@@ -1,5 +1,5 @@
-import dayjs from 'dayjs';
-import React, { useCallback, useEffect, useRef } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useRef } from 'react';
 import type { TextInput } from 'react-native-gesture-handler';
 
 import useCreateEntity from '@/apis/diary/entity-manager/hooks/mutations/useCreateEntity';
@@ -26,35 +26,29 @@ export default function EntityManagerNamePage({ navigation }: EntityManagerCreat
 
     const nextPage = useCallback(() => {
         if (
-            entityDate.image &&
-            entityDate.gender &&
-            entityDate.hatchingDate &&
-            entityDate.name &&
-            entityDate.variety.selected &&
-            entityDate.weight
+            !entityDate.image ||
+            !entityDate.gender ||
+            !entityDate.name ||
+            !entityDate.variety.selected ||
+            !entityDate.weightUnit ||
+            entityDate.hatchingDate === null
         ) {
-            mutate({
-                files: {
-                    uri: entityDate.image.uri,
-                    name: entityDate.image.name,
-                    type: entityDate.image.type,
-                },
-                gender: entityDate.gender,
-                hatching: entityDate.hatchingDate,
-                name: entityDate.name,
-                variety: entityDate.variety.selected,
-                weight: {
-                    date: dayjs().format(),
-                    weight: entityDate.weight,
-                },
-            });
-            navigation.navigate('congrats');
+            return;
         }
+
+        const { gender, hatchingDate, image, name, variety, weightUnit } = entityDate;
+        mutate({
+            files: { uri: image.uri, name: image.name, type: image.type },
+            gender: gender,
+            hatching: hatchingDate,
+            name: name,
+            variety: variety.selected,
+            weightUnit: weightUnit,
+        });
+        navigation.navigate('congrats');
     }, [entityDate, mutate, navigation]);
 
-    useEffect(() => {
-        textFieldRef.current?.focus();
-    }, []);
+    useFocusEffect(() => textFieldRef.current?.focus());
 
     return (
         <CreateTemplate

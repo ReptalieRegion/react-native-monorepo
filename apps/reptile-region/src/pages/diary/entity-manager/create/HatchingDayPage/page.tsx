@@ -1,4 +1,4 @@
-import RNDateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 import dayjs from 'dayjs';
 import React, { useCallback, useEffect } from 'react';
 
@@ -19,10 +19,8 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
     }, [setCreateEntity]);
 
     const handleChangeDate = useCallback(
-        (_: DateTimePickerEvent, date: Date | undefined) => {
-            if (date) {
-                setCreateEntity({ type: 'SET_HATCHING_DATE', hatchingDate: date });
-            }
+        (date: Date | undefined) => {
+            setCreateEntity({ type: 'SET_HATCHING_DATE', hatchingDate: date });
         },
         [setCreateEntity],
     );
@@ -30,6 +28,11 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
     const nextPage = useCallback(() => {
         navigation.navigate('type-and-morph');
     }, [navigation]);
+
+    const handleSkipDate = useCallback(() => {
+        handleChangeDate(undefined);
+        nextPage();
+    }, [handleChangeDate, nextPage]);
 
     return (
         <CreateTemplate
@@ -39,13 +42,19 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
                 <RNDateTimePicker
                     display="spinner"
                     timeZoneName="Asia/Seoul"
+                    themeVariant="light"
                     value={hatchingDate ?? currentDate}
                     maximumDate={currentDate}
                     minimumDate={dayjs(currentDate).subtract(50, 'year').toDate()}
-                    onChange={handleChangeDate}
+                    onChange={(_, date) => handleChangeDate(date)}
                 />
             }
-            button={<ConfirmButton size="medium" variant="confirm" text="다음" onPress={nextPage} />}
+            button={
+                <>
+                    <ConfirmButton variant="text" text="건너뛰기" onPress={handleSkipDate} />
+                    <ConfirmButton size="medium" variant="confirm" text="다음" onPress={nextPage} />
+                </>
+            }
         />
     );
 }
