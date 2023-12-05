@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { ListFooterLoading } from '@/components/@common/atoms';
-import EntityCard from '@/components/diary/atoms/EntityCard1/EntityCard';
+import EntityCard from '@/components/diary/molecules/EntityCard1/EntityCard';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 import useEntityMangerActions from '@/hooks/diary/actions/useEntityMangerActions';

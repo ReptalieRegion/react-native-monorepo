@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import { StrokeCamera } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import { useToast } from '@/components/@common/organisms/Toast';
-import EntityCard from '@/components/diary/atoms/EntityCard/EntityCard';
+import EntityCard from '@/components/diary/molecules/EntityCard/EntityCard';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
 import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
 import useImagePicker from '@/hooks/@common/useImagePicker';
@@ -31,7 +31,7 @@ export default function EntityManagerImagePage({ navigation }: EntityManagerCrea
             setCreateEntity({ type: 'SET_IMAGE', image: { name, uri, type } });
         },
         onError: (error) => {
-            if (error.message !== 'User cancelled image selection') {
+            if (error.code !== 'E_PICKER_CANCELLED') {
                 openToast({ contents: '이미지 선택에 실패했어요. 잠시 뒤에 다시 시도해주세요.', severity: 'error' });
             }
         },

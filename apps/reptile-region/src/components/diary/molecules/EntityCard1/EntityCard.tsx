@@ -3,7 +3,7 @@ import type { ListRenderItemInfo } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import GenderIcon from '../GenderIcon/GenderIcon';
+import GenderIcon from '../../atoms/GenderIcon/GenderIcon';
 
 import { Avatar } from '@/components/@common/atoms';
 import TagView from '@/components/@common/atoms/TagView/TagView';

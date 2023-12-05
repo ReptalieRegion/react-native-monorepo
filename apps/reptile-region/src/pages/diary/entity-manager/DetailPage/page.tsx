@@ -3,13 +3,13 @@ import dayjs from 'dayjs';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import { ChangeHeader } from './header';
 
 import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
 import GenderIcon from '@/components/diary/atoms/GenderIcon/GenderIcon';
+import InfiniteLineChart from '@/components/diary/organisms/Chart/components/InfiniteLineChart';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerDetailPage(props: EntityManagerDetailScreenProps) {
@@ -18,29 +18,18 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
             params: { entityId },
         },
     } = props;
+
     const { width } = useWindowDimensions();
     const { data } = useInfiniteFetchEntity();
-    const foundEntity = data.find(({ entity }) => entity.id === entityId);
 
+    const foundEntity = data.find(({ entity }) => entity.id === entityId);
     if (foundEntity === undefined) {
         return null;
     }
 
     const {
-        entity: { gender, hatching, image, name, variety, weight },
+        entity: { gender, hatching, image, name, variety, weightUnit },
     } = foundEntity;
-
-    const weightMap = weight.reduce(
-        (prev, curr) => {
-            const currenWeight = Number(curr.weight.replace('g', ''));
-            const roundWeight = Math.round(currenWeight * 10) / 10;
-            return {
-                dateList: [...prev.dateList, dayjs(curr.date).format('MM/DD')],
-                weightList: [...prev.weightList, roundWeight],
-            };
-        },
-        { dateList: [], weightList: [] } as { dateList: string[]; weightList: number[] },
-    );
 
     return (
         <>
@@ -72,54 +61,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                             무게
                         </Typo>
                     </View>
-                    <ScrollView
-                        horizontal={true}
-                        contentOffset={{ x: 0, y: 0 }}
-                        showsHorizontalScrollIndicator={false} // to hide scroll bar
-                    >
-                        <LineChart
-                            data={{
-                                labels: weightMap.dateList,
-                                datasets: [
-                                    {
-                                        data: weightMap.weightList,
-                                        color: (opacity = 1) => color.Teal[150].alpha(opacity).toString(), // optional
-                                        strokeWidth: 2,
-                                    },
-                                    {
-                                        data: [0],
-                                        withDots: false,
-                                    },
-                                    {
-                                        data: [100],
-                                        withDots: false,
-                                    },
-                                ],
-                            }}
-                            width={Math.max(width, (width * weightMap.dateList.length) / 7)}
-                            height={width - 40}
-                            chartConfig={{
-                                backgroundGradientFrom: color.White.toString(),
-                                backgroundGradientTo: color.White.toString(),
-                                color: (opacity = 1) => color.Teal[150].alpha(opacity).toString(),
-                                labelColor: (opacity = 1) => color.DarkGray[500].alpha(opacity).toString(),
-                                propsForLabels: {
-                                    fontSize: 12,
-                                },
-                                propsForDots: {
-                                    r: '6',
-                                    strokeWidth: '2',
-                                    stroke: color.White.toString(),
-                                },
-                                horizontalOffset: width,
-                            }}
-                            formatYLabel={(v) => {
-                                return v.split('.')[0];
-                            }}
-                            yAxisSuffix="g"
-                            bezier
-                        />
-                    </ScrollView>
+                    <InfiniteLineChart yAxisSuffix={weightUnit} />
                 </View>
             </ScrollView>
         </>

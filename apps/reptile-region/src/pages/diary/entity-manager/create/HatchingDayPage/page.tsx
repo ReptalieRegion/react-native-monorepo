@@ -1,6 +1,7 @@
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import dayjs from 'dayjs';
 import React, { useCallback, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
@@ -50,11 +51,17 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
                 />
             }
             button={
-                <>
+                <View style={styles.buttonContainer}>
                     <ConfirmButton variant="text" text="건너뛰기" onPress={handleSkipDate} />
                     <ConfirmButton size="medium" variant="confirm" text="다음" onPress={nextPage} />
-                </>
+                </View>
             }
         />
     );
 }
+
+const styles = StyleSheet.create({
+    buttonContainer: {
+        gap: 5,
+    },
+});

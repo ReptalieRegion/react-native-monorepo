@@ -1,11 +1,16 @@
 import { ActionSheetIOS, Alert, Platform } from 'react-native';
-import { openCamera, openPicker, type Image } from 'react-native-image-crop-picker';
+import { openCamera, openPicker, type Image, type PickerErrorCode } from 'react-native-image-crop-picker';
 
 import { requestIOSPermissions } from '@/utils/permissions/request-permissions';
 
+type ImagePickerError = {
+    message: string;
+    code: PickerErrorCode;
+};
+
 interface UseImagePickerActions {
     onSuccess(imageInfo: Image): void;
-    onError(error: Error): void;
+    onError(error: ImagePickerError): void;
 }
 
 export default function useImagePicker({ onError, onSuccess }: UseImagePickerActions) {
@@ -19,6 +24,8 @@ export default function useImagePicker({ onError, onSuccess }: UseImagePickerAct
             cropping: true,
             cropperCancelText: '취소',
             cropperChooseText: '완료',
+            width: 1200,
+            height: 1200,
             cropperRotateButtonsHidden: true,
         })
             .then(onSuccess)
@@ -31,6 +38,8 @@ export default function useImagePicker({ onError, onSuccess }: UseImagePickerAct
             cropping: true,
             cropperCancelText: '취소',
             cropperChooseText: '완료',
+            width: 1200,
+            height: 1200,
             cropperRotateButtonsHidden: true,
         })
             .then(onSuccess)

@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
-import EntityCard from '@/components/diary/atoms/EntityCard/EntityCard';
+import EntityCard from '@/components/diary/molecules/EntityCard/EntityCard';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import useEntityMangerActions from '@/hooks/diary/actions/useEntityMangerActions';
 import useEntityMangerNavigation from '@/hooks/diary/navigation/useEntityMangerNavigation';

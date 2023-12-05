@@ -19,8 +19,7 @@ export default function GenderIcon({ gender, size = 24 }: GenderIconProps) {
         case 'Female':
             return <Female fill={color.Pink[500].toString()} width={size} height={size} />;
         case 'Uncategorized':
-            return <Question fill={color.Gray[500].toString()} width={size} height={size} />;
         default:
-            return <></>;
+            return <Question fill={color.Red[500].toString()} width={size} height={size} />;
     }
 }
