@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 
-import EntityMangerList from './page';
-
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
+
+const EntityMangerList = React.lazy(() => import('./page'));
 
 export default function EntityMangerListPage() {
     return (

@@ -1,12 +1,12 @@
 import React, { Suspense, useMemo } from 'react';
 
 import CommentSkeleton from './Comment/loading';
-import SharePostDetailModalPage from './Comment/page';
 import PostListSkeleton from './Post/loading';
-import { Post } from './Post/page';
 import type { PostDetailModalListScreenProps } from './type';
 
-import Comment from '@/components/share-post/organisms/Comment';
+const Post = React.lazy(() => import('./Post/page'));
+const Comment = React.lazy(() => import('@/components/share-post/organisms/Comment'));
+const SharePostDetailModalPage = React.lazy(() => import('./Comment/page'));
 
 export default function PostDetailModalListPage(props: PostDetailModalListScreenProps) {
     const postId = props.route.params.postId;

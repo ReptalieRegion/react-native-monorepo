@@ -37,7 +37,7 @@ const initialData: CreateEntityState = {
         ],
     },
     name: null,
-    weight: null,
+    weightUnit: null,
 };
 
 export default function CreateEntity({ children }: { children: ReactNode }) {

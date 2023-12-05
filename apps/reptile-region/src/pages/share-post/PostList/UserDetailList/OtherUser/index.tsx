@@ -2,8 +2,8 @@ import React, { Suspense } from 'react';
 
 import SharePostListSkeleton from '../../loading';
 import type { SharePostUserDetailModalPageScreen, SharePostUserDetailPageScreen } from '../../type';
-import ChangeHeader from '../header';
 
+const ChangeHeader = React.lazy(() => import('../header'));
 const UserDetailListPage = React.lazy(() => import('./page'));
 
 export default function SharePostUserDetailListPage(props: SharePostUserDetailModalPageScreen | SharePostUserDetailPageScreen) {

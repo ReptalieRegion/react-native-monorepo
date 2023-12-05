@@ -22,7 +22,7 @@ type CreateEntityState = {
     hatchingDate: Date | undefined | null;
     variety: Variety;
     name: string | null;
-    weightUnit: WeightUnit;
+    weightUnit: WeightUnit | null;
 };
 
 interface SetImage {

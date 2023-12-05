@@ -17,7 +17,7 @@ const setGender = (state: CreateEntityState, gender: EntityGender): CreateEntity
     return { ...state, gender };
 };
 
-const setHatchingDate = (state: CreateEntityState, hatchingDate: Date): CreateEntityState => {
+const setHatchingDate = (state: CreateEntityState, hatchingDate: Date | undefined): CreateEntityState => {
     if (!isDate(hatchingDate)) {
         return state;
     }
