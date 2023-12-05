@@ -20,7 +20,7 @@ type WeightMap = {
 };
 
 const fetchWeight = () => {
-    return range(30).reduce(
+    return range(7).reduce(
         (prev, _) => {
             const currenWeight = Math.random();
             const roundWeight = Math.round(currenWeight * 199);
@@ -64,7 +64,7 @@ export default function InfiniteLineChart({ yAxisSuffix }: InfiniteLineChartProp
                             },
                         ],
                     }}
-                    width={Math.max(width, (width * (weightMap?.dateList?.length ?? 0)) / 7)}
+                    width={width - 20}
                     height={width - 40}
                     chartConfig={{
                         backgroundGradientFrom: color.White.toString(),

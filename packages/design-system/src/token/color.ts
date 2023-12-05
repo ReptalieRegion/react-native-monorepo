@@ -289,7 +289,7 @@ const color = {
     },
     Gray: {
         50: makeColor('#FAFAFAFF'),
-        75: makeColor('##E5E7EBFF'),
+        75: makeColor('#E5E7EBFF'),
         100: makeColor('#F5F5F5FF'),
         200: makeColor('#EEEEEEFF'),
         250: makeColor('#D3D3D3FF'),
@@ -302,7 +302,6 @@ const color = {
         700: makeColor('#616161FF'),
         800: makeColor('#424242FF'),
         900: makeColor('#212121FF'),
-
         A100: makeColor('#F5F5F5FF'),
         A200: makeColor('#EEEEEEFF'),
         A400: makeColor('#BDBDBDFF'),

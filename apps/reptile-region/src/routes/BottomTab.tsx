@@ -25,8 +25,7 @@ export default function BottomTabRoutes({ navigation }: BottomTabScreenProps) {
     const { isSignIn } = useAuth();
 
     const handleTabPressNavigate: MainBottomBarActions['onPressNavigate'] = ({ navigation: tabNavigation, routeName }) => {
-        // if (!isSignIn && (routeName === 'me/routes' || routeName === 'diary/routes')) {
-        if (!isSignIn && routeName === 'me/routes') {
+        if (!isSignIn && (routeName === 'me/routes' || routeName === 'diary/routes')) {
             navigation.navigate('sign-in', { successNavigate: 'ME' });
         } else {
             tabNavigation.navigate(routeName);

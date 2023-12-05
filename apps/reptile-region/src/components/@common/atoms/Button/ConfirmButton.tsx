@@ -1,9 +1,11 @@
 import { Typo, color, type TypoProps } from '@reptile-region/design-system';
-import React from 'react';
+import React, { type ReactNode } from 'react';
 import { Dimensions, StyleSheet, View, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-type ConfirmButtonVariant = 'confirm' | 'cancel' | 'text';
+import ConditionalRenderer from '../ConditionalRenderer';
+
+type ConfirmButtonVariant = 'confirm' | 'cancel' | 'text' | 'outline';
 
 type ConfirmButtonSize = 'small' | 'medium' | 'large' | 'full';
 
@@ -15,6 +17,7 @@ type ConfirmButtonState = {
 };
 
 interface ConfirmButtonActions {
+    Icon?: ReactNode;
     onPress?(): void;
 }
 
@@ -25,6 +28,7 @@ export default function ConfirmButton({
     variant = 'confirm',
     size = 'medium',
     disabled = false,
+    Icon,
     onPress,
 }: ConfirmButtonProps) {
     const generatedSize = styleSizeGenerator(size);
@@ -39,6 +43,7 @@ export default function ConfirmButton({
             disabled={disabled}
         >
             <View style={[styles.view, generatedSize.view, generatedColor.view]}>
+                <ConditionalRenderer condition={!!Icon} trueContent={Icon} falseContent={null} />
                 <Typo
                     variant={generatedSize.text.variant}
                     textAlign="center"
@@ -69,7 +74,7 @@ function styleVariantGenerator(
         case 'cancel':
             return {
                 view: {
-                    backgroundColor: color.BlueGray[75].toString(),
+                    backgroundColor: color.Gray[75].toString(),
                 },
                 text: {
                     color: 'sub-default',
@@ -79,6 +84,16 @@ function styleVariantGenerator(
             return {
                 view: {
                     backgroundColor: color.White.toString(),
+                },
+                text: {
+                    color: 'primary',
+                },
+            };
+        case 'outline':
+            return {
+                view: {
+                    borderWidth: 1,
+                    borderColor: color.Green[750].toString(),
                 },
                 text: {
                     color: 'primary',
@@ -106,7 +121,7 @@ function styleSizeGenerator(size: ConfirmButtonSize): { view: ViewStyle; text: P
                     borderRadius: 15,
                     paddingHorizontal: 15,
                     height: 36,
-                    maxWidth: 100,
+                    maxWidth: 120,
                 },
                 text: {
                     variant: 'title3',
@@ -140,6 +155,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        gap: 5,
     },
     container: {
         alignItems: 'center',
