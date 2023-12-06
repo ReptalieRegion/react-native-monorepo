@@ -50,6 +50,7 @@ export default function EntityManagerOptionsMenu({ navigation, route: { params }
             },
             {
                 text: '삭제',
+                style: 'destructive',
                 onPress: () => {
                     mutate({ diaryId: entityId });
                 },

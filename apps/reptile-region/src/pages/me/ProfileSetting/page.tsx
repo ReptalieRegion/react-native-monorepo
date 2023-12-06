@@ -9,7 +9,7 @@ import useProfileSettingActions from '@/hooks/me/actions/useProfileSettingAction
 
 export default function ProfileSetting() {
     const { data } = useFetchMeProfile();
-    const { handlePressProfileImage } = useProfileSettingActions();
+    const { handlePressProfileImage, handlePressWithdrawal } = useProfileSettingActions();
 
     return (
         <View style={styles.container}>
@@ -23,7 +23,7 @@ export default function ProfileSetting() {
                         </Typo>
                     </View>
                 </View>
-                <TextButton text="회원탈퇴" type="text" color="error" textAlign="right" />
+                <TextButton text="회원탈퇴" type="text" color="error" textAlign="right" onPress={handlePressWithdrawal} />
             </View>
         </View>
     );
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     itemWrapper: {
-        gap: 10,
+        gap: 40,
     },
     itemContainer: {
         gap: 8,

@@ -1,3 +1,5 @@
+import { Alert } from 'react-native';
+
 import useUpdateProfile from '@/apis/me/profile/hooks/mutations/useUpdateProfile';
 import { useToast } from '@/components/@common/organisms/Toast';
 import useImagePicker from '@/hooks/@common/useImagePicker';
@@ -21,5 +23,20 @@ export default function useProfileSettingActions() {
         },
     });
 
-    return { handlePressProfileImage };
+    const handlePressWithdrawal = () => {
+        Alert.alert('정말로 탈퇴 하시겠어요?', '', [
+            {
+                text: '취소',
+                onPress: () => {},
+                style: 'cancel',
+            },
+            {
+                text: '탈퇴',
+                style: 'destructive',
+                onPress: () => {},
+            },
+        ]);
+    };
+
+    return { handlePressProfileImage, handlePressWithdrawal };
 }

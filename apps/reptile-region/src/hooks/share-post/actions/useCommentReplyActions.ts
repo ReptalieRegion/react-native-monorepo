@@ -16,6 +16,7 @@ const useCommentReplyActions = () => {
             },
             {
                 text: '삭제',
+                style: 'destructive',
                 onPress: () => deleteMutate.mutate({ commentReplyId }),
             },
         ]);
