@@ -45,6 +45,17 @@ type FetchEntityListResponse = {
 
 type FetchEntityList = ServerAPI<void, InfiniteState<FetchEntityListResponse[]>>;
 
+type FetchEntityWeightListRequest = {
+    entityId: string;
+};
+
+type FetchEntityWeightListResponse = {
+    date: string;
+    weight: number;
+};
+
+type FetchEntityWeightList = ServerAPI<FetchEntityWeightListRequest, InfiniteState<FetchEntityWeightListResponse[]>>;
+
 /**
  *
  * POST
@@ -154,6 +165,9 @@ export type {
     EntityVariety,
     FetchEntityList,
     FetchEntityListResponse,
+    FetchEntityWeightList,
+    FetchEntityWeightListRequest,
+    FetchEntityWeightListResponse,
     UpdateEntity,
     UpdateEntityRequest,
     UpdateEntityResponse,

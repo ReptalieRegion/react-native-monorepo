@@ -8,6 +8,7 @@ import type {
     CreateEntityWeight,
     DeleteEntity,
     DeleteEntityWeight,
+    FetchEntityWeightList,
     UpdateEntity,
     UpdateEntityWeight,
 } from '@/types/apis/diary/entity';
@@ -21,6 +22,19 @@ import type { WithInfinitePageParam } from '@/types/apis/utils';
 export const fetchEntityList = async ({ pageParam }: WithInfinitePageParam<void>) => {
     const queryString = objectToQueryString({ pageParam });
     const response = await clientFetch(`api/diary/entity/list?${queryString}`, {
+        method: METHOD.GET,
+    });
+
+    return response.json();
+};
+
+// 다이어리 개체 몸무게 조회
+export const fetchEntityWeightList = async ({
+    entityId,
+    pageParam,
+}: WithInfinitePageParam<FetchEntityWeightList['Request']>) => {
+    const queryString = objectToQueryString({ pageParam });
+    const response = await clientFetch(`api/diary/entity/${entityId}/weight/list?${queryString}`, {
         method: METHOD.GET,
     });
 
