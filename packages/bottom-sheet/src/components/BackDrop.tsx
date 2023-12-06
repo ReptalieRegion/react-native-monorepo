@@ -1,5 +1,5 @@
 import React, { TouchableWithoutFeedback, useWindowDimensions } from 'react-native';
-import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 
 import useBottomSheetAnimatedAction from '../hooks/useBottomSheetAnimatedAction';
 import useBottomSheetAnimatedState from '../hooks/useBottomSheetAnimatedState';
@@ -20,7 +20,7 @@ const BackDrop = ({ style }: BackDropProps) => {
     }));
 
     const close = () => {
-        if (state.value === 0 || state.value === 4) {
+        if (state.value === KeyboardState.UNKNOWN || state.value === KeyboardState.CLOSED) {
             bottomSheetClose();
         }
     };

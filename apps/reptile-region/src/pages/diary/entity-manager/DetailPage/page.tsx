@@ -30,13 +30,12 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
     }
 
     const {
-        entity: { id, gender, hatching, image, name, variety, weightUnit, weight },
+        entity: { id, gender, hatching, image, name, variety, weightUnit },
     } = foundEntity;
 
     const navigateCreateWeight = () => {
         navigation.navigate('entity-manager/create-weight', { entity: { id, weightUnit } });
     };
-    console.log(weight);
 
     return (
         <>

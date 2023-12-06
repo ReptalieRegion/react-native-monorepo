@@ -36,7 +36,6 @@ type FetchEntityListResponse = {
         variety: EntityVariety;
         hatching: string;
         weightUnit: WeightUnit;
-        weight: EntityWeight[];
         image: {
             src: string;
         };
@@ -50,10 +49,7 @@ type FetchEntityWeightListRequest = {
     entityId: string;
 };
 
-type FetchEntityWeightListResponse = {
-    date: string;
-    weight: number;
-};
+type FetchEntityWeightListResponse = EntityWeight;
 
 type FetchEntityWeightList = ServerAPI<FetchEntityWeightListRequest, InfiniteState<FetchEntityWeightListResponse[]>>;
 
@@ -164,6 +160,7 @@ export type {
     DeleteEntityWeightResponse,
     EntityGender,
     EntityVariety,
+    EntityWeight,
     FetchEntityList,
     FetchEntityListResponse,
     FetchEntityWeightList,

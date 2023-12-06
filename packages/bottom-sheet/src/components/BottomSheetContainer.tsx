@@ -1,6 +1,5 @@
 import { color } from '@reptile-region/design-system';
-import type { PropsWithChildren } from 'react';
-import React from 'react';
+import React, { type PropsWithChildren } from 'react';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
@@ -36,7 +35,6 @@ const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheet
                 ? height.value - keyboard.height.value
                 : height.value;
 
-        console.log(maxHeight, translateY.value - subHeight);
         return {
             height: maxHeight,
             transform: [{ translateY: translateY.value - subHeight }],

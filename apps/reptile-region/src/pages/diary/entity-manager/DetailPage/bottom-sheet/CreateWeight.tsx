@@ -1,4 +1,4 @@
-import { BottomSheet } from '@reptile-region/bottom-sheet';
+import { BottomSheet, useBottomSheet } from '@reptile-region/bottom-sheet';
 import { Typo, color } from '@reptile-region/design-system';
 import { useOnOff } from '@reptile-region/react-hooks';
 import dayjs from 'dayjs';
@@ -12,6 +12,7 @@ import useCreateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/u
 import useUpdateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/useUpdateEntityWeight';
 import { DatePicker } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
+import { useToast } from '@/components/@common/organisms/Toast';
 import type { EntityCreateWeightScreenProps } from '@/types/routes/props/diary';
 
 export default function CreateWeightBottomSheet({
@@ -20,7 +21,6 @@ export default function CreateWeightBottomSheet({
         params: { entity },
     },
 }: EntityCreateWeightScreenProps) {
-    const { bottom } = useSafeAreaInsets();
     const [weight, setWeight] = useState('');
     const [selectedDate, setSelectedDate] = useState(dayjs().toDate());
     const { off: datePickerOff, on: datePickerOn, state: isDatePickerVisible } = useOnOff();
@@ -30,33 +30,6 @@ export default function CreateWeightBottomSheet({
             navigation.goBack();
         }
     }, [navigation]);
-
-    const updateEntityWeight = useUpdateEntityWeight();
-    const createEntityWeight = useCreateEntityWeight({
-        onError: (error) => {
-            if (error.statusCode === 417) {
-                Alert.alert('해당 날짜에 이미 무게가 등록되어 있어요', '수정 하시겠어요?', [
-                    {
-                        text: '취소',
-                        style: 'cancel',
-                        onPress: () => {},
-                    },
-                    {
-                        text: '수정',
-                        onPress: () =>
-                            updateEntityWeight.mutate({
-                                diaryId: entity.id,
-                                date: dayjs(selectedDate).format('YYYY-MM-DD'),
-                                weight: Number(weight),
-                            }),
-                    },
-                ]);
-            }
-        },
-        onSuccess: () => {
-            bottomSheetClose();
-        },
-    });
 
     const handleConfirm = useCallback(
         (date: Date) => {
@@ -73,17 +46,6 @@ export default function CreateWeightBottomSheet({
         const newText = dotRemoveText[0] === '.' ? '0' + text : dotRemoveText;
         setWeight(newText);
     }, []);
-
-    const handleCreateEntityWeight = () => {
-        if (weight !== undefined && weight?.length !== 0) {
-            console.log(Number(weight));
-            createEntityWeight.mutate({
-                diaryId: entity.id,
-                date: dayjs(selectedDate).format('YYYY-MM-DD'),
-                weight: Number(weight),
-            });
-        }
-    };
 
     return (
         <>
@@ -111,14 +73,7 @@ export default function CreateWeightBottomSheet({
                                 </View>
                             </TouchableOpacity>
                         </View>
-
-                        <View style={[styles.buttonWrapper, { marginBottom: bottom }]}>
-                            <ConfirmButton
-                                text="등록"
-                                onPress={handleCreateEntityWeight}
-                                disabled={!weight || createEntityWeight.isPending}
-                            />
-                        </View>
+                        <SubmitButton entityId={entity.id} selectedDate={selectedDate} weight={weight} />
                     </View>
                 </TouchableNativeFeedback>
             </BottomSheet>
@@ -141,6 +96,63 @@ function Header() {
     return (
         <View style={headerStyles.container}>
             <Typo variant="title3">몸무게 추가</Typo>
+        </View>
+    );
+}
+
+function SubmitButton({ entityId, weight, selectedDate }: { entityId: string; weight: string; selectedDate: Date }) {
+    const { bottomSheetClose } = useBottomSheet();
+    const { bottom } = useSafeAreaInsets();
+    const { openToast } = useToast();
+
+    const updateEntityWeight = useUpdateEntityWeight({
+        onSuccess: () => {
+            bottomSheetClose();
+        },
+        onError: (error) => {
+            console.log(error);
+            openToast({ contents: '몸무게 수정에 실패했어요', severity: 'error' });
+        },
+    });
+
+    const createEntityWeight = useCreateEntityWeight({
+        onError: (error) => {
+            if (error.statusCode === 417) {
+                Alert.alert('해당 날짜에 이미 무게가 등록되어 있어요', '수정 하시겠어요?', [
+                    {
+                        text: '취소',
+                        style: 'cancel',
+                        onPress: () => {},
+                    },
+                    {
+                        text: '수정',
+                        onPress: () =>
+                            updateEntityWeight.mutate({
+                                diaryId: entityId,
+                                date: dayjs(selectedDate).format('YYYY-MM-DD'),
+                                weight: Number(weight),
+                            }),
+                    },
+                ]);
+            }
+        },
+        onSuccess: () => {
+            bottomSheetClose();
+        },
+    });
+
+    const handleCreateEntityWeight = () => {
+        if (weight !== undefined && weight?.length !== 0) {
+            createEntityWeight.mutate({
+                diaryId: entityId,
+                date: dayjs(selectedDate).format('YYYY-MM-DD'),
+                weight: Number(weight),
+            });
+        }
+    };
+    return (
+        <View style={[styles.buttonWrapper, { marginBottom: bottom }]}>
+            <ConfirmButton text="등록" onPress={handleCreateEntityWeight} disabled={!weight || createEntityWeight.isPending} />
         </View>
     );
 }
@@ -178,7 +190,7 @@ const styles = StyleSheet.create({
     },
     input: {
         padding: 0,
-        width: 90,
+        width: '100%',
     },
     buttonWrapper: {
         marginTop: 'auto',

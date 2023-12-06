@@ -1,7 +1,7 @@
 import { color } from '@reptile-region/design-system';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
-import { Keyboard, StyleSheet, type Insets } from 'react-native';
+import { Keyboard, Platform, StyleSheet, type Insets } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { KeyboardState, runOnJS, useAnimatedKeyboard } from 'react-native-reanimated';
 
@@ -49,9 +49,14 @@ const BottomSheet = ({
             <BackDrop style={backDropStyle} />
             <BottomSheetContainer style={{ ...containerStyle, paddingBottom: insets?.bottom }}>
                 <BottomSheetHeader header={header} />
-                <GestureDetector gesture={gesture}>
-                    <Animated.View style={styles.container}>{children}</Animated.View>
-                </GestureDetector>
+                {Platform.select({
+                    ios: (
+                        <GestureDetector gesture={gesture}>
+                            <Animated.View style={styles.container}>{children}</Animated.View>
+                        </GestureDetector>
+                    ),
+                    android: <Animated.View style={styles.container}>{children}</Animated.View>,
+                })}
             </BottomSheetContainer>
         </BottomSheetProvider>
     );
