@@ -1,5 +1,5 @@
 import { color } from '@reptile-region/design-system';
-import type { ListRenderItem } from '@shopify/flash-list';
+import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -116,6 +116,7 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
         <FlashList
             ref={flashListRef}
             data={data}
+            contentContainerStyle={contentContainerStyle}
             renderItem={renderItem}
             estimatedItemSize={100}
             scrollEventThrottle={16}
@@ -127,6 +128,10 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
         />
     );
 }
+
+const contentContainerStyle: ContentStyle = {
+    paddingBottom: 20,
+};
 
 const styles = StyleSheet.create({
     renderItemContainer: {

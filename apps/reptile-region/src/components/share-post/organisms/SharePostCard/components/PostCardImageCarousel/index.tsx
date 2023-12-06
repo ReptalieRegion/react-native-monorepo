@@ -34,7 +34,7 @@ export default function PostCardImageCarousel({ onDoublePress, style, ...rest }:
     return (
         <DoubleTabView onDoubleTab={handleDoublePressImageCarousel} style={styles.container}>
             <View style={[styles.imageCarouselContainer, { borderRadius: style?.borderRadius ?? 6 }]}>
-                <ImageCarousel.List {...rest} width={imageWidth} height={300} scrollEventThrottle={16} />
+                <ImageCarousel.List {...rest} width={imageWidth} height={imageWidth} scrollEventThrottle={16} />
             </View>
             <ImageHeart />
         </DoubleTabView>

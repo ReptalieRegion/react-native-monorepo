@@ -31,8 +31,8 @@ export const variantMap: Variant = {
     },
     heading2: {
         fontWeight: fontWeightMap.bold,
-        lineHeight: 25,
-        fontSize: 17,
+        lineHeight: 24,
+        fontSize: 15,
     },
     heading3: {
         fontWeight: fontWeightMap.bold,
@@ -84,7 +84,7 @@ export const variantMap: Variant = {
     body2: {
         fontWeight: fontWeightMap.regular,
         lineHeight: 18,
-        fontSize: 14,
+        fontSize: 15,
     },
     body3: {
         fontWeight: fontWeightMap.regular,

@@ -6,6 +6,7 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 export default function SharePostListSkeleton() {
     const { width } = useWindowDimensions();
+    const imageWidth = width - 40;
 
     return (
         <View style={styles.container}>
@@ -18,7 +19,7 @@ export default function SharePostListSkeleton() {
                                 <View style={styles.circle} />
                                 <View style={styles.name} />
                             </View>
-                            <View style={styles.imageContainer} />
+                            <View style={{ width: imageWidth, height: imageWidth, ...styles.imageContainer }} />
                             <View style={styles.textContainer}>
                                 <View style={{ ...styles.text, width: width * 0.6 }} />
                                 <View style={{ ...styles.text, width: width * 0.8 }} />
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
     imageContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 250,
         marginBottom: 10,
         backgroundColor: color.Gray[200].toString(),
         borderRadius: 6,

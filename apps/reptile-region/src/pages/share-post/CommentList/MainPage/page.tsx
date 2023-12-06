@@ -96,4 +96,8 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
     );
 }
 
-const contentContainerStyle: ContentStyle = { paddingLeft: 20, paddingRight: 20 };
+const contentContainerStyle: ContentStyle = {
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 20,
+};

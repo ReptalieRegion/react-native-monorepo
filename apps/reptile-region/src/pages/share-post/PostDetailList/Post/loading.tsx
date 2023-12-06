@@ -14,7 +14,7 @@ export default function PostListSkeleton() {
                         <View style={styles.circle} />
                         <View style={styles.name} />
                     </View>
-                    <View style={styles.imageContainer} />
+                    <View style={{ width, height: width, ...styles.imageContainer }} />
                     <View style={{ ...styles.textContainer, ...styles.padding }}>
                         <View style={{ ...styles.text, width: width * 0.6 }} />
                         <View style={{ ...styles.text, width: width * 0.8 }} />
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     imageContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        height: 300,
         marginBottom: 10,
         backgroundColor: color.Gray[200].toString(),
         borderRadius: 6,
