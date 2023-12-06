@@ -6,6 +6,7 @@ import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { UpdateEntity } from '@/types/apis/diary/entity';
 
+// 다이어리 개체수정
 export default function useUpdateEntity() {
     const queryClient = useQueryClient();
     return useMutation<UpdateEntity['Response'], HTTPError, UpdateEntity['Request']>({

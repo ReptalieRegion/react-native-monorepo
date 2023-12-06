@@ -6,6 +6,7 @@ import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { CreateEntityWeight } from '@/types/apis/diary/entity';
 
+// 다이어리 개체 몸무게 추가등록
 export default function useCreateEntityWeight(
     props?: Pick<
         UseMutationOptions<CreateEntityWeight['Response'], HTTPError, CreateEntityWeight['Request']>,

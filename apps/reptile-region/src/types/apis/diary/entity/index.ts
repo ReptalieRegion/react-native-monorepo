@@ -45,6 +45,7 @@ type FetchEntityListResponse = {
 
 type FetchEntityList = ServerAPI<void, InfiniteState<FetchEntityListResponse[]>>;
 
+// 다이어리 개체 몸무게 조회
 type FetchEntityWeightListRequest = {
     entityId: string;
 };

@@ -10,7 +10,7 @@ import type { FetchEntityWeightList, FetchEntityWeightListResponse } from '@/typ
 import type { InfiniteState } from '@/types/apis/utils';
 import type { CustomQueryKey } from '@/types/react-query';
 
-// 다이어리 개체조회
+// 다이어리 개체 몸무게 조회
 export default function useInfiniteFetchEntityWeight() {
     return useSuspenseInfiniteQuery<
         FetchEntityWeightList['Response'],
