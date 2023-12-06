@@ -43,7 +43,6 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
     };
 
     useEffect(() => {
-        console.log('hi=======');
         height.value = withTiming(numberPointsFromTop[snapInfo.startIndex], { duration: 250 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

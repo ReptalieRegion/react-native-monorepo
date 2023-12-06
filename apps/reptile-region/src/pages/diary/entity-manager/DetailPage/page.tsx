@@ -62,7 +62,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                     </View>
                 </View>
                 <View>
-                    <View style={styles.titleContainer} onLayout={(event) => console.log(event.nativeEvent.layout.y)}>
+                    <View style={styles.titleContainer}>
                         <Typo variant="heading1Bold">최근 무게</Typo>
                         <TouchableOpacity style={styles.plusContainer} onPress={bottomSheetOn}>
                             <Plus width={16} height={16} fill={color.White.toString()} />

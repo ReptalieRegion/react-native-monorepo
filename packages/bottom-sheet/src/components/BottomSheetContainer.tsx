@@ -34,7 +34,6 @@ const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheet
                 ? height.value - keyboard.height.value
                 : height.value;
 
-        console.log(height.value);
         return {
             height: maxHeight,
             transform: [{ translateY: translateY.value - subHeight }],

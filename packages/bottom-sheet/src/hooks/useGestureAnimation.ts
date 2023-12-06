@@ -37,12 +37,10 @@ const useBottomSheetGestureAnimation = () => {
 
             if (keyboard.state.value === KeyboardState.UNKNOWN || keyboard.state.value === KeyboardState.CLOSED) {
                 const nextHeight = Math.max(minSnapPoint, Math.min(maxSnapPoint, startY.value - event.translationY));
-                console.log('here?');
                 height.value = nextHeight;
             }
         })
         .onEnd((event) => {
-            console.log('hi');
             const handleFastSwipeDown = () => {
                 if (height.value < pointsFromTop[0]) {
                     runOnJS(bottomSheetClose)();
