@@ -25,3 +25,4 @@ export { default as SuccessBadge } from './SuccessBadge';
 export { default as Trash } from './Trash';
 export { default as UpArrow } from './UpArrow';
 export { default as Warning } from './Warning';
+export { default as DatePicker } from './DatePicker';

@@ -113,7 +113,7 @@ type UpdateEntity = ServerAPI<UpdateEntityRequest, UpdateEntityResponse>;
 // 다이어리 개체 몸무게 수정
 type UpdateEntityWeightRequest = {
     diaryId: string;
-    date: Date;
+    date: string;
     weight: number;
 };
 
