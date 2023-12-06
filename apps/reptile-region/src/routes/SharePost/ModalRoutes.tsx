@@ -49,15 +49,15 @@ export default function SharePostModalRoutes() {
                 options={{ header: SharePostUserDetailListHeader }}
             />
             <Stack.Screen name="modal/follow/list" component={FollowRoutes} options={{ header: SharePostFollowHeader }} />
-            <Stack.Group
-                screenOptions={{
+            <Stack.Screen
+                name="modal/comment"
+                component={SharePostCommentRoutes}
+                options={{
                     presentation: 'containedTransparentModal',
                     headerShown: false,
                     animation: 'none',
                 }}
-            >
-                <Stack.Screen name="modal/comment" component={SharePostCommentRoutes} />
-            </Stack.Group>
+            />
             <Stack.Screen name="modal/like/list" component={LikeListPage} options={{ header: SharePostLikeListHeader }} />
         </Stack.Navigator>
     );

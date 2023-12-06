@@ -1,12 +1,12 @@
 import { color } from '@reptile-region/design-system';
-import dayjs from 'dayjs';
-import { range } from 'lodash-es';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { ScrollView } from 'react-native-gesture-handler';
 
 type InfiniteLineChartState = {
+    labels?: string[];
+    data?: number[];
     yAxisSuffix?: string;
 };
 
@@ -14,32 +14,8 @@ interface InfiniteLineChartActions {}
 
 type InfiniteLineChartProps = InfiniteLineChartState & InfiniteLineChartActions;
 
-type WeightMap = {
-    dateList: string[];
-    weightList: number[];
-};
-
-const fetchWeight = () => {
-    return range(7).reduce(
-        (prev, _) => {
-            const currenWeight = Math.random();
-            const roundWeight = Math.round(currenWeight * 199);
-            return {
-                dateList: [...prev.dateList, dayjs().format('MM/DD')],
-                weightList: [...prev.weightList, roundWeight],
-            };
-        },
-        { dateList: [], weightList: [] } as { dateList: string[]; weightList: number[] },
-    );
-};
-
-export default function InfiniteLineChart({ yAxisSuffix }: InfiniteLineChartProps) {
+export default function InfiniteLineChart({ labels, data, yAxisSuffix }: InfiniteLineChartProps) {
     const { width } = useWindowDimensions();
-    const [weightMap, setWeightMap] = useState<WeightMap>();
-
-    useEffect(() => {
-        setWeightMap(fetchWeight());
-    }, []);
 
     return (
         <View style={styles.container}>
@@ -47,10 +23,10 @@ export default function InfiniteLineChart({ yAxisSuffix }: InfiniteLineChartProp
                 <LineChart
                     segments={5}
                     data={{
-                        labels: weightMap?.dateList ?? [''],
+                        labels: labels ? ['', ...labels] : [''],
                         datasets: [
                             {
-                                data: weightMap?.weightList ?? [0],
+                                data: data ? [0, ...data] : [0],
                                 color: (opacity = 1) => color.Teal[150].alpha(opacity).toString(), // optional
                                 strokeWidth: 1,
                             },

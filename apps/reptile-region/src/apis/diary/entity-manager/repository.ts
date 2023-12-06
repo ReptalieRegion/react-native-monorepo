@@ -32,10 +32,10 @@ export const fetchEntityList = async ({ pageParam }: WithInfinitePageParam<void>
  * POST
  */
 // 다이어리 개체 몸무게 추가등록
-export const createEntityWeight = async ({ diaryId, weight }: CreateEntityWeight['Request']) => {
+export const createEntityWeight = async ({ diaryId, date, weight }: CreateEntityWeight['Request']) => {
     const response = await clientFetch(`api/diary/entity/${diaryId}/weight`, {
         method: METHOD.POST,
-        body: { weight },
+        body: { date, weight },
     });
 
     return response.json();

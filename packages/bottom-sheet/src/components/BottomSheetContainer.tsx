@@ -29,16 +29,19 @@ const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheet
 
         const maxHeight =
             keyboard.state.value === KeyboardState.OPENING || keyboard.state.value === KeyboardState.OPEN
-                ? pointsFromTop[pointsFromTop.length - 1] + (insets?.bottom ?? 0) - keyboard.height.value
+                ? pointsFromTop.length === 1
+                    ? height.value
+                    : pointsFromTop[pointsFromTop.length - 1] + (insets?.bottom ?? 0) - keyboard.height.value
                 : keyboard.state.value === KeyboardState.CLOSING
                 ? height.value - keyboard.height.value
                 : height.value;
 
+        console.log(maxHeight, translateY.value - subHeight);
         return {
             height: maxHeight,
             transform: [{ translateY: translateY.value - subHeight }],
         };
-    });
+    }, [keyboard.state.value, keyboard.height.value, insets?.bottom, translateY.value]);
 
     return (
         <Animated.View style={[styles.container]}>

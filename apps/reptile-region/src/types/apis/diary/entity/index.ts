@@ -52,7 +52,8 @@ type FetchEntityList = ServerAPI<void, InfiniteState<FetchEntityListResponse[]>>
 // 다이어리 개체 몸무게 추가등록
 type CreateEntityWeightRequest = {
     diaryId: string;
-    weight: string;
+    date: string;
+    weight: number;
 };
 
 type CreateEntityWeightResponse = {

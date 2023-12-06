@@ -1,23 +1,21 @@
 import { TouchableTypo, Typo, color } from '@reptile-region/design-system';
-import { useOnOff } from '@reptile-region/react-hooks';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import CreateWeightBottomSheet from './bottom-sheet/CreateWeight';
 import { ChangeHeader } from './header';
 
 import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
 import { Plus } from '@/assets/icons';
-import { ConditionalRenderer } from '@/components/@common/atoms';
 import GenderIcon from '@/components/diary/atoms/GenderIcon/GenderIcon';
 import InfiniteLineChart from '@/components/diary/organisms/Chart/components/InfiniteLineChart';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerDetailPage(props: EntityManagerDetailScreenProps) {
     const {
+        navigation,
         route: {
             params: { entityId },
         },
@@ -26,16 +24,19 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
     const { width } = useWindowDimensions();
     const { data } = useInfiniteFetchEntity();
 
-    const { off: BottomSheetOff, on: bottomSheetOn, state: isBottomSheetVisibility } = useOnOff();
-
     const foundEntity = data.find(({ entity }) => entity.id === entityId);
     if (foundEntity === undefined) {
         return null;
     }
 
     const {
-        entity: { gender, hatching, image, name, variety, weightUnit },
+        entity: { id, gender, hatching, image, name, variety, weightUnit, weight },
     } = foundEntity;
+
+    const navigateCreateWeight = () => {
+        navigation.navigate('entity-manager/create-weight', { entity: { id, weightUnit } });
+    };
+    console.log(weight);
 
     return (
         <>
@@ -64,7 +65,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                 <View>
                     <View style={styles.titleContainer}>
                         <Typo variant="heading1Bold">최근 무게</Typo>
-                        <TouchableOpacity style={styles.plusContainer} onPress={bottomSheetOn}>
+                        <TouchableOpacity style={styles.plusContainer} onPress={navigateCreateWeight}>
                             <Plus width={16} height={16} fill={color.White.toString()} />
                         </TouchableOpacity>
                         <View style={styles.weightDetailButtonContainer}>
@@ -76,11 +77,6 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                     <InfiniteLineChart yAxisSuffix={weightUnit} />
                 </View>
             </ScrollView>
-            <ConditionalRenderer
-                condition={isBottomSheetVisibility}
-                trueContent={<CreateWeightBottomSheet bottomSheet={{ onClose: BottomSheetOff }} />}
-                falseContent={null}
-            />
         </>
     );
 }

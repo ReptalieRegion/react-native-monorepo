@@ -14,6 +14,7 @@ import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
 import EntityManagerOptionsMenu from '@/pages/diary/entity-manager/bottom-sheet/EntityManagerOptionsMenu';
+import CreateWeightBottomSheet from '@/pages/diary/entity-manager/DetailPage/bottom-sheet/CreateWeight';
 import { EntityManagerDetailPageHeader } from '@/pages/diary/entity-manager/DetailPage/header';
 import EntityMangerDetailPage from '@/pages/diary/entity-manager/DetailPage/page';
 import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
@@ -140,6 +141,7 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     component={SharePostUpdatePage}
                     options={{ header: SharePostUpdateHeader, animation: 'slide_from_bottom' }}
                 />
+                {/** 일상공유 끝 */}
 
                 {/** 내 정보 시작 */}
                 <Stack.Screen name="me/license" component={LicenseListPage} options={{ header: LicenseListHeader }} />
@@ -177,6 +179,15 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 <Stack.Screen
                     name="entity-manager/options-menu"
                     component={EntityManagerOptionsMenu}
+                    options={{
+                        presentation: 'containedTransparentModal',
+                        animation: 'none',
+                        headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="entity-manager/create-weight"
+                    component={CreateWeightBottomSheet}
                     options={{
                         presentation: 'containedTransparentModal',
                         animation: 'none',

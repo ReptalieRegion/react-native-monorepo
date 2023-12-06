@@ -7,7 +7,7 @@ import ConditionalRenderer from '../ConditionalRenderer';
 
 type ConfirmButtonVariant = 'confirm' | 'cancel' | 'text' | 'outline';
 
-type ConfirmButtonSize = 'small' | 'medium' | 'large' | 'full';
+type ConfirmButtonSize = 'small' | 'medium' | 'large' | 'full' | 'modal';
 
 type ConfirmButtonState = {
     text: string;
@@ -35,14 +35,13 @@ export default function ConfirmButton({
     const generatedColor = styleVariantGenerator(variant, disabled);
 
     return (
-        <TouchableOpacity
-            containerStyle={styles.container}
-            style={styles.container}
-            activeOpacity={0.5}
-            onPress={onPress}
-            disabled={disabled}
-        >
-            <View style={[styles.view, generatedSize.view, generatedColor.view]}>
+        <View style={styles.container}>
+            <TouchableOpacity
+                activeOpacity={0.5}
+                containerStyle={[styles.view, generatedSize.view, generatedColor.view]}
+                onPress={onPress}
+                disabled={disabled}
+            >
                 <ConditionalRenderer condition={!!Icon} trueContent={Icon} falseContent={null} />
                 <Typo
                     variant={generatedSize.text.variant}
@@ -52,8 +51,8 @@ export default function ConfirmButton({
                 >
                     {text}
                 </Typo>
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity>
+        </View>
     );
 }
 
@@ -127,6 +126,18 @@ function styleSizeGenerator(size: ConfirmButtonSize): { view: ViewStyle; text: P
                     variant: 'title3',
                 },
             };
+        case 'modal':
+            return {
+                view: {
+                    borderRadius: 15,
+                    paddingHorizontal: 15,
+                    height: 55,
+                    width: '100%',
+                },
+                text: {
+                    variant: 'title3',
+                },
+            };
         case 'large':
             return {
                 view: {
@@ -158,6 +169,6 @@ const styles = StyleSheet.create({
         gap: 5,
     },
     container: {
-        alignItems: 'center',
+        flexDirection: 'row',
     },
 });

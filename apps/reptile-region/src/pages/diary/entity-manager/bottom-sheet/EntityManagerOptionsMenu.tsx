@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useDeleteEntity from '@/apis/diary/entity-manager/hooks/mutations/useDeleteEntity';
-import type { EntityManagerOptionsMenu } from '@/types/routes/props/diary';
+import type { EntityManagerOptionsMenuScreenProps } from '@/types/routes/props/diary';
 
 type ListItemProps = {
     text: string;
@@ -24,7 +24,7 @@ const ListItem = ({ text, onPress }: ListItemProps) => {
     );
 };
 
-export default function EntityManagerOptionsMenu({ navigation, route: { params } }: EntityManagerOptionsMenu) {
+export default function EntityManagerOptionsMenu({ navigation, route: { params } }: EntityManagerOptionsMenuScreenProps) {
     const { entityId } = params;
     const { bottom } = useSafeAreaInsets();
     const queryClient = useQueryClient();

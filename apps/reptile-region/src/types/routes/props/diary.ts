@@ -28,9 +28,13 @@ type EntityManagerCreateCongratsScreenProps = CompositeScreenProps<
 type EntityManagerDetailScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/detail'>;
 
 // 개체 관리 옵션 바텀시트
-type EntityManagerOptionsMenu = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/options-menu'>;
+type EntityManagerOptionsMenuScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/options-menu'>;
+
+// 개체 관리 몸무게 등록 바텀시트
+type EntityCreateWeightScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/create-weight'>;
 
 export type {
+    EntityCreateWeightScreenProps,
     EntityManagerCreateCongratsScreenProps,
     EntityManagerCreateGenderScreenProps,
     EntityManagerCreateHatchingScreenProps,
@@ -40,5 +44,5 @@ export type {
     EntityManagerCreateTypeAndMorphScreenProps,
     EntityManagerCreateWeightScreenProps,
     EntityManagerDetailScreenProps,
-    EntityManagerOptionsMenu,
+    EntityManagerOptionsMenuScreenProps,
 };

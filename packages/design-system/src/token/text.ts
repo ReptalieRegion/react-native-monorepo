@@ -16,7 +16,7 @@ export const variantMap: Variant = {
     // headline
     heading1: {
         fontWeight: fontWeightMap.heavy,
-        lineHeight: 32,
+        lineHeight: 36,
         fontSize: 24,
     },
     heading1Bold: {
@@ -47,8 +47,8 @@ export const variantMap: Variant = {
     // title
     title1: {
         fontWeight: fontWeightMap.bold,
-        lineHeight: 31,
-        fontSize: 23,
+        lineHeight: 36,
+        fontSize: 24,
     },
     title2: {
         fontWeight: fontWeightMap.semibold,
