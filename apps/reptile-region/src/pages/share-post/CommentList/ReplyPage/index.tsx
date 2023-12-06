@@ -11,6 +11,7 @@ import Comment, { CommentReplyTextEditor } from '@/components/share-post/organis
 const CommentReplyList = React.lazy(() => import('./page'));
 
 export default function CommentReplyPage(props: CommentReplyScreenProps) {
+    console.log('hi');
     return (
         <Comment id={props.route.params.comment.id}>
             <View style={styles.container}>
@@ -21,7 +22,7 @@ export default function CommentReplyPage(props: CommentReplyScreenProps) {
                     <FollowerUserList containerStyles={styles.followerUserListContainer} />
                 </Suspense>
             </View>
-            <CommentReplyTextEditor />
+            <CommentReplyTextEditor isFocus={props.route.params.isFocus} />
         </Comment>
     );
 }

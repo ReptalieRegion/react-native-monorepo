@@ -2,10 +2,10 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { BottomSheet } from '@reptile-region/bottom-sheet';
 import { color } from '@reptile-region/design-system';
 import React from 'react';
-import { useAnimatedKeyboard } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BottomSheetHeader } from '@/components/@common/molecules';
+import useKeyboardState, { UseKeyboardState } from '@/hooks/@common/useKeyboardState';
 import CommentPage from '@/pages/share-post/CommentList/MainPage';
 import CommentReplyPage from '@/pages/share-post/CommentList/ReplyPage';
 import type { CommentParamList } from '@/types/routes/param-list/sharePost';
@@ -14,10 +14,11 @@ const Stack = createNativeStackNavigator<CommentParamList>();
 
 export default function SharePostCommentRoutes({ navigation }: { navigation: any }) {
     const insets = useSafeAreaInsets();
-    const { state } = useAnimatedKeyboard();
+    const keyboardState = useKeyboardState();
+    const isCloseKeyboard = keyboardState === UseKeyboardState.CLOSE || keyboardState === UseKeyboardState.UNKNOWN;
 
     const handleClose = () => {
-        if (state.value === 0 || state.value === 4) {
+        if (isCloseKeyboard) {
             navigation.goBack();
         }
     };
@@ -40,6 +41,7 @@ export default function SharePostCommentRoutes({ navigation }: { navigation: any
                     name="reply"
                     component={CommentReplyPage}
                     options={{
+                        gestureEnabled: isCloseKeyboard,
                         headerBackVisible: true,
                         headerTitle: '답글',
                         header: BottomSheetHeader,

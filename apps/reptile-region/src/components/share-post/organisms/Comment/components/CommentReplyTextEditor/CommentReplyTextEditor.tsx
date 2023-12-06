@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Keyboard } from 'react-native';
 
 import useCommentActions from '../../hooks/useCommentActions';
@@ -10,8 +10,12 @@ import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutatio
 import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
 import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 
-export default function CommentReplyTextEditor() {
-    const { changeText } = useTagHandler();
+type CommentReplyTextEditorProps = {
+    isFocus: boolean;
+};
+
+export default function CommentReplyTextEditor({ isFocus }: CommentReplyTextEditorProps) {
+    const { changeText, tagTextInputFocus } = useTagHandler();
     const { setCreateCommentSubmitType } = useCommentActions();
     const handleSuccess = () => {
         setTimeout(Keyboard.dismiss, 500);
@@ -41,6 +45,19 @@ export default function CommentReplyTextEditor() {
         },
         [createCommentReply, updateCommentReply, requireAuthNavigation],
     );
+
+    useEffect(() => {
+        if (isFocus) {
+            const focusTimeout = setTimeout(() => {
+                tagTextInputFocus();
+            }, 500);
+            return () => {
+                clearTimeout(focusTimeout);
+            };
+        }
+
+        return;
+    }, [isFocus, tagTextInputFocus]);
 
     return (
         <TextInputEditor

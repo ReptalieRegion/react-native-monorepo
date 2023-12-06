@@ -1,18 +1,17 @@
-import { BottomSheet } from '@reptile-region/bottom-sheet';
 import { TouchableTypo, Typo, color } from '@reptile-region/design-system';
 import { useOnOff } from '@reptile-region/react-hooks';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
 import React from 'react';
-import { Modal, StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import CreateWeightBottomSheet from './bottom-sheet/CreateWeight';
 import { ChangeHeader } from './header';
 
 import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
 import { Plus } from '@/assets/icons';
-import { ConditionalRenderer, TextField } from '@/components/@common/atoms';
-import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import GenderIcon from '@/components/diary/atoms/GenderIcon/GenderIcon';
 import InfiniteLineChart from '@/components/diary/organisms/Chart/components/InfiniteLineChart';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary';
@@ -27,7 +26,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
     const { width } = useWindowDimensions();
     const { data } = useInfiniteFetchEntity();
 
-    const { off, on, state } = useOnOff();
+    const { off: BottomSheetOff, on: bottomSheetOn, state: isBottomSheetVisibility } = useOnOff();
 
     const foundEntity = data.find(({ entity }) => entity.id === entityId);
     if (foundEntity === undefined) {
@@ -65,7 +64,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                 <View>
                     <View style={styles.titleContainer} onLayout={(event) => console.log(event.nativeEvent.layout.y)}>
                         <Typo variant="heading1Bold">최근 무게</Typo>
-                        <TouchableOpacity style={styles.plusContainer} onPress={on}>
+                        <TouchableOpacity style={styles.plusContainer} onPress={bottomSheetOn}>
                             <Plus width={16} height={16} fill={color.White.toString()} />
                         </TouchableOpacity>
                         <View style={styles.weightDetailButtonContainer}>
@@ -75,52 +74,16 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                         </View>
                     </View>
                     <InfiniteLineChart yAxisSuffix={weightUnit} />
-                    <ConfirmButton
-                        text="몸무게 추가"
-                        variant="outline"
-                        size="small"
-                        Icon={<Plus width={12} height={12} fill={color.Green[750].toString()} />}
-                        onPress={on}
-                    />
                 </View>
             </ScrollView>
             <ConditionalRenderer
-                condition={state}
-                trueContent={
-                    <Modal transparent={true}>
-                        <BottomSheet onClose={off} snapInfo={{ pointsFromTop: [300], startIndex: 0 }}>
-                            <View style={inputStyles.container}>
-                                <View style={inputStyles.test}>
-                                    <TextField label="무게" />
-                                </View>
-                                <View style={inputStyles.button}>
-                                    <ConfirmButton text="등록" size="small" />
-                                </View>
-                            </View>
-                        </BottomSheet>
-                    </Modal>
-                }
+                condition={isBottomSheetVisibility}
+                trueContent={<CreateWeightBottomSheet bottomSheet={{ onClose: BottomSheetOff }} />}
                 falseContent={null}
             />
         </>
     );
 }
-
-const inputStyles = StyleSheet.create({
-    container: {
-        margin: 20,
-        padding: 20,
-        height: 135,
-    },
-    test: {
-        flexDirection: 'row',
-    },
-    button: {
-        marginLeft: 'auto',
-        flexDirection: 'row',
-        gap: 10,
-    },
-});
 
 const styles = StyleSheet.create({
     wrapper: {

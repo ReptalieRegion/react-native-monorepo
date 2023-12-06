@@ -12175,6 +12175,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-modal-datetime-picker@npm:^17.1.0":
+  version: 17.1.0
+  resolution: "react-native-modal-datetime-picker@npm:17.1.0"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    "@react-native-community/datetimepicker": ">=6.7.0"
+    react-native: ">=0.65.0"
+  checksum: 8a5bb21167799cc5410c0fb6c39bb3495fbaa463ef57d8f90c65429697c2b02b2e4e046e3e91c6246e1f4bd187c5fbcd30f61a6449b8d68808e68715b1332779
+  languageName: node
+  linkType: hard
+
 "react-native-monorepo@workspace:.":
   version: 0.0.0-use.local
   resolution: "react-native-monorepo@workspace:."
@@ -12627,6 +12639,7 @@ __metadata:
     react-native-haptic-feedback: ^2.2.0
     react-native-image-crop-picker: ^0.40.1
     react-native-linear-gradient: ^2.8.3
+    react-native-modal-datetime-picker: ^17.1.0
     react-native-pager-view: ^6.2.2
     react-native-permissions: ^3.9.3
     react-native-reanimated: 3.5.4

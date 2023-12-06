@@ -1,6 +1,6 @@
 import { Keyboard } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
-import { runOnJS, useAnimatedKeyboard, useSharedValue, withTiming } from 'react-native-reanimated';
+import { KeyboardState, runOnJS, useAnimatedKeyboard, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import useBottomSheetAnimatedAction from './useBottomSheetAnimatedAction';
 import useBottomSheetAnimatedState from './useBottomSheetAnimatedState';
@@ -30,17 +30,19 @@ const useBottomSheetGestureAnimation = () => {
             startY.value = height.value;
         })
         .onChange((event) => {
-            if (keyboard.state.value === 2) {
+            if (keyboard.state.value === KeyboardState.OPEN) {
                 runOnJS(keyboardDismiss)();
                 return;
             }
 
-            if (keyboard.state.value === 0 || keyboard.state.value === 4) {
+            if (keyboard.state.value === KeyboardState.UNKNOWN || keyboard.state.value === KeyboardState.CLOSED) {
                 const nextHeight = Math.max(minSnapPoint, Math.min(maxSnapPoint, startY.value - event.translationY));
+                console.log('here?');
                 height.value = nextHeight;
             }
         })
         .onEnd((event) => {
+            console.log('hi');
             const handleFastSwipeDown = () => {
                 if (height.value < pointsFromTop[0]) {
                     runOnJS(bottomSheetClose)();

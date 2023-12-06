@@ -1,7 +1,9 @@
 import { color } from '@reptile-region/design-system';
 import type { PropsWithChildren } from 'react';
 import React from 'react';
-import { type Insets } from 'react-native';
+import { Keyboard, StyleSheet, type Insets } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, { KeyboardState, runOnJS, useAnimatedKeyboard } from 'react-native-reanimated';
 
 import BackDrop from '../components/BackDrop';
 import BottomSheetProvider from '../providers/BottomSheetProvider';
@@ -32,15 +34,33 @@ const BottomSheet = ({
     header,
     onClose,
 }: PropsWithChildren<BottomSheetProps>) => {
+    const { state } = useAnimatedKeyboard();
+    const handleCloseKeyboard = () => {
+        Keyboard.dismiss();
+    };
+    const gesture = Gesture.Pan().onEnd(() => {
+        if (state.value === KeyboardState.OPEN) {
+            runOnJS(handleCloseKeyboard)();
+        }
+    });
+
     return (
         <BottomSheetProvider insets={insets} onClose={onClose} snapInfo={snapInfo}>
             <BackDrop style={backDropStyle} />
             <BottomSheetContainer style={{ ...containerStyle, paddingBottom: insets?.bottom }}>
                 <BottomSheetHeader header={header} />
-                {children}
+                <GestureDetector gesture={gesture}>
+                    <Animated.View style={styles.container}>{children}</Animated.View>
+                </GestureDetector>
             </BottomSheetContainer>
         </BottomSheetProvider>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+});
 
 export default BottomSheet;

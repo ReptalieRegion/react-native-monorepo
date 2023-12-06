@@ -51,7 +51,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                                 <Typo variant="title5" color="placeholder">
                                     {item.contents.title}
                                 </Typo>
-                                <Typo>{item.contents.article}</Typo>
+                                <Typo variant="body2">{item.contents.article}</Typo>
                             </View>
                             <Image source={{ uri: item.contents.postThumbnail }} style={styles.postThumbnail} />
                         </View>
@@ -93,7 +93,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                         <Divider />
                     </View>
                 }
-                estimatedItemSize={50}
+                estimatedItemSize={80}
             />
         </View>
     );
@@ -105,14 +105,15 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     row: {
-        padding: 20,
+        paddingHorizontal: 20,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 15,
-        height: 70,
+        height: 80,
     },
     text: {
         gap: 5,
+        flex: 1,
     },
     postThumbnail: {
         width: 40,
