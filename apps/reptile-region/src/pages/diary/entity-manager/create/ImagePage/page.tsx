@@ -58,7 +58,6 @@ export default function EntityManagerImagePage({ navigation }: EntityManagerCrea
                                     species: '',
                                     morph: [''],
                                 },
-                                weight: [],
                             },
                         }}
                         placeholderImage={

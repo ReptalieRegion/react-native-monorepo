@@ -12,7 +12,7 @@ const IOSUploadImage = async (uri: string, filename: string | null) => {
         };
     }
 
-    const fileData = await CameraRoll.iosGetImageDataById(uri, true);
+    const fileData = await CameraRoll.iosGetImageDataById(uri);
     return {
         uri: fileData.node.image.filepath,
         name: fileData.node.image.filename,
