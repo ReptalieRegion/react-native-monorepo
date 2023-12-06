@@ -9,6 +9,7 @@ import type {
     DeleteEntity,
     DeleteEntityWeight,
     UpdateEntity,
+    UpdateEntityWeight,
 } from '@/types/apis/diary/entity';
 import type { WithInfinitePageParam } from '@/types/apis/utils';
 
@@ -73,6 +74,16 @@ export const updateEntity = async ({ diaryId, name }: UpdateEntity['Request']) =
     const response = await clientFetch(`api/diary/entity/${diaryId}`, {
         method: METHOD.PUT,
         body: { name },
+    });
+
+    return response.json();
+};
+
+// 다이어리 개체 몸무게 수정
+export const updateEntityWeight = async ({ diaryId, date, weight }: UpdateEntityWeight['Request']) => {
+    const response = await clientFetch(`api/diary/entity/${diaryId}/weight`, {
+        method: METHOD.PUT,
+        body: { date, weight },
     });
 
     return response.json();

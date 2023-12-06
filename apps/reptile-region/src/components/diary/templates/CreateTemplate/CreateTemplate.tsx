@@ -1,6 +1,6 @@
 import { Typo, color } from '@reptile-region/design-system';
 import React, { type ReactNode } from 'react';
-import { StyleSheet, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native';
+import { Platform, StyleSheet, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native';
 import Animated, {
     KeyboardState,
     useAnimatedKeyboard,
@@ -50,7 +50,7 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
         };
     }, [dimensions, titleHeight.value]);
 
-    const buttonAnimation = useAnimatedStyle(() => {
+    const buttonAnimationIOS = useAnimatedStyle(() => {
         const { height, state } = keyboard;
         if (state.value === KeyboardState.OPEN || state.value === KeyboardState.OPENING) {
             return {
@@ -67,6 +67,34 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
             bottom,
         };
     }, [keyboard, bottom]);
+
+    const buttonAnimationAndroid = useAnimatedStyle(() => {
+        const { height, state } = keyboard;
+        if (state.value === KeyboardState.OPEN || state.value === KeyboardState.OPENING) {
+            return {
+                transform: [{ translateY: -height.value + bottom }],
+            };
+        }
+
+        if (
+            state.value === KeyboardState.UNKNOWN ||
+            state.value === KeyboardState.CLOSED ||
+            state.value === KeyboardState.CLOSING
+        ) {
+            return {
+                bottom: 0,
+                transform: [{ translateY: -20 }],
+            };
+        }
+        return {
+            bottom,
+        };
+    }, [keyboard, bottom]);
+
+    const buttonAnimation = Platform.select({
+        ios: buttonAnimationIOS,
+        android: buttonAnimationAndroid,
+    });
 
     const handleLayout = (event: LayoutChangeEvent) => {
         titleHeight.value = event.nativeEvent.layout.height;

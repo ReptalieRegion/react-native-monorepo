@@ -97,6 +97,19 @@ type UpdateEntityResponse = {
 
 type UpdateEntity = ServerAPI<UpdateEntityRequest, UpdateEntityResponse>;
 
+// 다이어리 개체 몸무게 수정
+type UpdateEntityWeightRequest = {
+    diaryId: string;
+    date: Date;
+    weight: number;
+};
+
+type UpdateEntityWeightResponse = {
+    message: string;
+};
+
+type UpdateEntityWeight = ServerAPI<UpdateEntityWeightRequest, UpdateEntityWeightResponse>;
+
 /**
  *
  * DELETE
@@ -143,5 +156,8 @@ export type {
     UpdateEntity,
     UpdateEntityRequest,
     UpdateEntityResponse,
+    UpdateEntityWeight,
+    UpdateEntityWeightRequest,
+    UpdateEntityWeightResponse,
     WeightUnit,
 };

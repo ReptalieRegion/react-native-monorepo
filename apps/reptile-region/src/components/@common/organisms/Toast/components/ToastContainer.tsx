@@ -2,7 +2,14 @@ import { Typo } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
-import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
+import Animated, {
+    runOnJS,
+    useAnimatedStyle,
+    useSharedValue,
+    withDelay,
+    withSpring,
+    withTiming,
+} from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useToastHandler from '../hooks/useToastHandler';
@@ -32,12 +39,15 @@ export default function ToastContainer() {
         if (show) {
             translateY.value = withSpring(top, { duration: 1000 }, (firstFinished) => {
                 if (firstFinished) {
-                    translateX.value = withTiming(width, { duration: 100 }, (secondFinished) => {
-                        'worklet';
-                        if (secondFinished) {
-                            runOnJS(closeToast)();
-                        }
-                    });
+                    translateX.value = withDelay(
+                        500,
+                        withTiming(width, { duration: 100 }, (secondFinished) => {
+                            'worklet';
+                            if (secondFinished) {
+                                runOnJS(closeToast)();
+                            }
+                        }),
+                    );
                 }
             });
 

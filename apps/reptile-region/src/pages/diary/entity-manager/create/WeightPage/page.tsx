@@ -43,30 +43,30 @@ export default function EntityManagerWeightPage({ navigation }: EntityManagerCre
             contents={
                 <View style={styles.container}>
                     {/* TODO Radio Button 컴포넌트로 분리 */}
-                    <TouchableOpacity
-                        style={styles.radioButton}
-                        containerStyle={[
+                    <View
+                        style={[
                             styles.radioButtonContainer,
                             { borderColor: weightUnit === 'g' ? color.Teal[150].toString() : color.Gray[500].toString() },
                         ]}
-                        onPress={() => handleChangeWeight('g')}
                     >
-                        <Typo textAlign="center" variant="title2" color={weightUnit === 'g' ? 'primary' : 'placeholder'}>
-                            g
-                        </Typo>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.radioButton}
-                        containerStyle={[
+                        <TouchableOpacity style={styles.radioButton} onPress={() => handleChangeWeight('g')}>
+                            <Typo textAlign="center" variant="title2" color={weightUnit === 'g' ? 'primary' : 'placeholder'}>
+                                g
+                            </Typo>
+                        </TouchableOpacity>
+                    </View>
+                    <View
+                        style={[
                             styles.radioButtonContainer,
                             { borderColor: weightUnit === 'kg' ? color.Teal[150].toString() : color.Gray[500].toString() },
                         ]}
-                        onPress={() => handleChangeWeight('kg')}
                     >
-                        <Typo textAlign="center" variant="title2" color={weightUnit === 'kg' ? 'primary' : 'placeholder'}>
-                            kg
-                        </Typo>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.radioButton} onPress={() => handleChangeWeight('kg')}>
+                            <Typo textAlign="center" variant="title2" color={weightUnit === 'kg' ? 'primary' : 'placeholder'}>
+                                kg
+                            </Typo>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             }
             button={

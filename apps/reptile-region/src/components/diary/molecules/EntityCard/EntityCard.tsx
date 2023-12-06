@@ -40,7 +40,6 @@ export default function EntityCard({
                     trueContent={placeholderImage}
                     falseContent={<Image source={{ uri: image.src }} style={styles.image} />}
                 />
-
                 <View style={styles.textContainer}>
                     <View style={styles.topWrapper}>
                         <TagView label={variety.detailedSpecies} />
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
                 },
             },
             android: {
-                elevation: 24,
+                elevation: 10,
             },
         }),
         borderTopRightRadius: 10,

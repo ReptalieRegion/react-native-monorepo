@@ -2,7 +2,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { color } from '@reptile-region/design-system';
 import { useDebounce, useLoading } from '@reptile-region/react-hooks';
 import React, { useState } from 'react';
-import { Keyboard, StyleSheet, View } from 'react-native';
+import { Keyboard, Platform, StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -72,18 +72,30 @@ export default function SignUpStep1({
 
     const { height, state } = useAnimatedKeyboard();
 
-    const buttonAnimation = useAnimatedStyle(() => {
+    const buttonAnimationIOS = useAnimatedStyle(() => {
         const isOpenState = state.value === KeyboardState.OPEN || state.value === KeyboardState.OPENING;
         return {
-            justifyContent: 'flex-end',
-            paddingBottom: isOpenState ? height.value : bottom <= 20 ? 20 : bottom,
+            transform: [{ translateY: isOpenState ? -height.value : -bottom }],
             paddingHorizontal: isOpenState ? 0 : 20,
         };
     }, [height.value, state.value, bottom]);
 
+    const buttonAnimationAndroid = useAnimatedStyle(() => {
+        const isOpenState = state.value === KeyboardState.OPEN || state.value === KeyboardState.OPENING;
+        return {
+            transform: [{ translateY: isOpenState ? -height.value - bottom : -Math.max(20, bottom * 2) }],
+            paddingHorizontal: isOpenState ? 0 : 20,
+        };
+    }, [height.value, state.value, bottom]);
+
+    const buttonAnimation = Platform.select({
+        ios: buttonAnimationIOS,
+        android: buttonAnimationAndroid,
+    });
+
     return (
-        <TouchableWithoutFeedback style={styles.wrapper} containerStyle={styles.wrapper} onPress={Keyboard.dismiss}>
-            <View style={styles.container}>
+        <View style={styles.wrapper}>
+            <TouchableWithoutFeedback style={styles.wrapper} containerStyle={styles.wrapper} onPress={Keyboard.dismiss}>
                 <View style={styles.contents}>
                     <SignUpTitle
                         title="닉네임 만들기"
@@ -101,7 +113,7 @@ export default function SignUpStep1({
                         />
                     </View>
                 </View>
-                <Animated.View style={buttonAnimation}>
+                <Animated.View style={[styles.buttonContainer, buttonAnimation]}>
                     <ConfirmButton
                         text="다음"
                         variant={'confirm'}
@@ -110,8 +122,8 @@ export default function SignUpStep1({
                         disabled={disabled}
                     />
                 </Animated.View>
-            </View>
-        </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+        </View>
     );
 }
 
@@ -120,18 +132,16 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: color.White.toString(),
     },
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        paddingTop: 40,
-    },
     contents: {
+        marginTop: 40,
         paddingHorizontal: 20,
-        flex: 1,
         gap: 40,
     },
     textFiledContainer: {
         height: 70,
         marginBottom: 10,
+    },
+    buttonContainer: {
+        marginTop: 'auto',
     },
 });

@@ -1,6 +1,6 @@
 import { Typo, color, type TextColorType } from '@reptile-region/design-system';
 import React, { useRef } from 'react';
-import { ActivityIndicator, StyleSheet, TextInput, View } from 'react-native';
+import { ActivityIndicator, Platform, StyleSheet, TextInput, View } from 'react-native';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { CancelButton, Error, Success } from '@/assets/icons';
@@ -70,7 +70,13 @@ export default function SignUpTextField({
                     <Typo variant="body4" color={style.textColor}>
                         {label}
                     </Typo>
-                    <TextInput autoFocus={autoFocus} ref={textInputRef} value={value} onChangeText={onChangeText} />
+                    <TextInput
+                        autoFocus={autoFocus}
+                        style={styles.textInput}
+                        ref={textInputRef}
+                        value={value}
+                        onChangeText={onChangeText}
+                    />
                 </View>
                 <View style={styles.successIconContainer}>
                     <ConditionalRenderer
@@ -120,5 +126,12 @@ const styles = StyleSheet.create({
     },
     successIconContainer: {
         justifyContent: 'center',
+    },
+    textInput: {
+        ...Platform.select({
+            android: {
+                padding: 0,
+            },
+        }),
     },
 });

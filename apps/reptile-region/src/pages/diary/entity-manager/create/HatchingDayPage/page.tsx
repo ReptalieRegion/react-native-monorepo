@@ -1,7 +1,8 @@
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
+import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import React, { useCallback, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
@@ -9,15 +10,11 @@ import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTe
 import type { EntityManagerCreateHatchingScreenProps } from '@/types/routes/props/diary';
 
 export default function EntityManagerHatchingDayPage({ navigation }: EntityManagerCreateHatchingScreenProps) {
-    const currentDate = new Date();
+    const currentDate = dayjs().toDate();
     const {
         entityDate: { hatchingDate },
         setCreateEntity,
     } = useCreateEntity();
-
-    useEffect(() => {
-        setCreateEntity({ type: 'SET_HATCHING_DATE', hatchingDate: new Date() });
-    }, [setCreateEntity]);
 
     const handleChangeDate = useCallback(
         (date: Date | undefined) => {
@@ -35,27 +32,51 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
         nextPage();
     }, [handleChangeDate, nextPage]);
 
+    useFocusEffect(() => {
+        if (Platform.OS === 'android') {
+            DateTimePickerAndroid.open({
+                value: dayjs().toDate(),
+                onChange: (event, date) => {
+                    if (event.type === 'set') {
+                        handleChangeDate(date);
+                        nextPage();
+                        DateTimePickerAndroid.dismiss('date');
+                    }
+                },
+            });
+        }
+    });
+
+    useEffect(() => {
+        setCreateEntity({ type: 'SET_HATCHING_DATE', hatchingDate: dayjs().toDate() });
+    }, [setCreateEntity]);
+
     return (
         <CreateTemplate
             title="해칭일을 등록해주세요"
             description="등록할 개체의 해칭일을 선택해주세요."
-            contents={
-                <RNDateTimePicker
-                    display="spinner"
-                    timeZoneName="Asia/Seoul"
-                    themeVariant="light"
-                    value={hatchingDate ?? currentDate}
-                    maximumDate={currentDate}
-                    minimumDate={dayjs(currentDate).subtract(50, 'year').toDate()}
-                    onChange={(_, date) => handleChangeDate(date)}
-                />
-            }
-            button={
-                <View style={styles.buttonContainer}>
-                    <ConfirmButton variant="text" text="건너뛰기" onPress={handleSkipDate} />
-                    <ConfirmButton size="medium" variant="confirm" text="다음" onPress={nextPage} />
-                </View>
-            }
+            contents={Platform.select({
+                ios: (
+                    <RNDateTimePicker
+                        display={Platform.select({ ios: 'spinner', android: 'default' })}
+                        timeZoneName="Asia/Seoul"
+                        themeVariant="light"
+                        value={hatchingDate ?? currentDate}
+                        maximumDate={currentDate}
+                        minimumDate={dayjs(currentDate).subtract(50, 'year').toDate()}
+                        onChange={(_, date) => handleChangeDate(date)}
+                    />
+                ),
+            })}
+            button={Platform.select({
+                ios: (
+                    <View style={styles.buttonContainer}>
+                        <ConfirmButton variant="text" text="건너뛰기" onPress={handleSkipDate} />
+                        <ConfirmButton size="medium" variant="confirm" text="다음" onPress={nextPage} />
+                    </View>
+                ),
+                android: <ConfirmButton variant="text" text="건너뛰기" onPress={handleSkipDate} />,
+            })}
         />
     );
 }
