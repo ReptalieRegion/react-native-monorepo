@@ -48,7 +48,7 @@ export default function UserProfileList({ data, onEndReached, onPressProfile, on
                         onPress={() => onPressProfile({ user: { isFollow, nickname, profile } })}
                     >
                         <Avatar image={profile} size={35} />
-                        <Typo variant="body3">{nickname}</Typo>
+                        <Typo variant="body2">{nickname}</Typo>
                     </TouchableOpacity>
                 </View>
                 <ConditionalRenderer
