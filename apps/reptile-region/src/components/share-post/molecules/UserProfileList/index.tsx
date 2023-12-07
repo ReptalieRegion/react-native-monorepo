@@ -47,7 +47,7 @@ export default function UserProfileList({ data, onEndReached, onPressProfile, on
                         style={styles.profileContainer}
                         onPress={() => onPressProfile({ user: { isFollow, nickname, profile } })}
                     >
-                        <Avatar image={profile} size={35} />
+                        <Avatar image={profile} size={40} />
                         <Typo variant="body2">{nickname}</Typo>
                     </TouchableOpacity>
                 </View>
@@ -95,6 +95,6 @@ const styles = StyleSheet.create({
     profileContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10,
+        gap: 15,
     },
 });
