@@ -18,7 +18,6 @@ type InfiniteLineChartProps = InfiniteLineChartState & InfiniteLineChartActions;
 export default function InfiniteLineChart({ entityId, yAxisSuffix }: InfiniteLineChartProps) {
     const { width } = useWindowDimensions();
     const { data } = useInfiniteFetchEntityWeight({ entityId });
-    console.log(data);
     const newData = data.reduce<{ dateList: string[]; weightList: number[] }>(
         (prev, curr) => {
             return {

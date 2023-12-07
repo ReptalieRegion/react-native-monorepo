@@ -111,8 +111,7 @@ function SubmitButton({ entityId, weight, selectedDate }: { entityId: string; we
         onSuccess: () => {
             bottomSheetClose();
         },
-        onError: (error) => {
-            console.log(error);
+        onError: () => {
             openToast({ contents: '몸무게 수정에 실패했어요', severity: 'error' });
         },
     });

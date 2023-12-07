@@ -65,7 +65,6 @@ export default function EntityMangerUpdate({
             setImage((prevImage) => ({ ...prevImage, uri, type }));
         },
         onError: (error) => {
-            console.log(error);
             if (error.code !== 'E_PICKER_CANCELLED') {
                 openToast({ contents: '이미지 선택에 실패했어요. 잠시 뒤에 다시 시도해주세요.', severity: 'error' });
             }

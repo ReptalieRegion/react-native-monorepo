@@ -16,7 +16,7 @@ type QueryKey = string | { type: string };
 export default function useFetchMeProfile(props?: UseFetchMeProfileState) {
     return useQuery<FetchMeProfile['Response'], HTTPError, FetchMeProfile['Response'], readonly QueryKey[]>({
         queryKey: MY_QUERY_KEYS.profile,
-        staleTime: Infinity,
+        staleTime: 10 * 60 * 1000,
         gcTime: Infinity,
         enabled: props?.enabled,
         queryFn: fetchMeProfile,
