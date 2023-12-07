@@ -1,6 +1,7 @@
 import { Typo, color } from '@reptile-region/design-system';
 import React, { useCallback, useState } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
@@ -33,37 +34,44 @@ export default function VarietyModal({ visible, initialSelected, onComplete, onC
 
     return (
         <Modal transparent={true} visible={visible} animationType="slide">
-            <View style={[styles.wrapper, { paddingBottom: bottom, paddingLeft: left, paddingRight: right, paddingTop: top }]}>
-                <View style={styles.container}>
-                    <View style={styles.titleContainer}>
-                        <Typo variant="heading1">종류와 모프를 선택해주세요</Typo>
-                    </View>
-                    <Variety initialSelected={initialSelected} onChangeVariety={handleChangeVariety} />
-                    <View style={styles.buttonWrapper}>
-                        <View style={styles.buttonContainer}>
-                            <ConfirmButton text="취소" variant="cancel" size="modal" onPress={onClose} />
+            <GestureHandlerRootView style={styles.gesture}>
+                <View
+                    style={[styles.wrapper, { paddingBottom: bottom, paddingLeft: left, paddingRight: right, paddingTop: top }]}
+                >
+                    <View style={styles.container}>
+                        <View style={styles.titleContainer}>
+                            <Typo variant="heading1">종류와 모프를 선택해주세요</Typo>
                         </View>
-                        <View style={styles.buttonContainer}>
-                            <ConfirmButton
-                                text="적용하기"
-                                variant="confirm"
-                                size="modal"
-                                onPress={handleComplete}
-                                disabled={
-                                    variety.classification.length === 0 ||
-                                    variety.species.length === 0 ||
-                                    variety.detailedSpecies.length === 0
-                                }
-                            />
+                        <Variety initialSelected={initialSelected} onChangeVariety={handleChangeVariety} />
+                        <View style={styles.buttonWrapper}>
+                            <View style={styles.buttonContainer}>
+                                <ConfirmButton text="취소" variant="cancel" size="modal" onPress={onClose} />
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <ConfirmButton
+                                    text="적용하기"
+                                    variant="confirm"
+                                    size="modal"
+                                    onPress={handleComplete}
+                                    disabled={
+                                        variety.classification.length === 0 ||
+                                        variety.species.length === 0 ||
+                                        variety.detailedSpecies.length === 0
+                                    }
+                                />
+                            </View>
                         </View>
                     </View>
                 </View>
-            </View>
+            </GestureHandlerRootView>
         </Modal>
     );
 }
 
 const styles = StyleSheet.create({
+    gesture: {
+        flex: 1,
+    },
     wrapper: {
         flex: 1,
         backgroundColor: color.White.toString(),

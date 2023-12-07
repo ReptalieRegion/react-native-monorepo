@@ -3,8 +3,8 @@ import { Typo, color } from '@reptile-region/design-system';
 import { useOnOff } from '@reptile-region/react-hooks';
 import dayjs from 'dayjs';
 import React, { useCallback, useState } from 'react';
-import { Alert, Keyboard, StyleSheet, TextInput, View } from 'react-native';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { Alert, Keyboard, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -50,11 +50,7 @@ export default function CreateWeightBottomSheet({
     return (
         <>
             <BottomSheet onClose={bottomSheetClose} snapInfo={{ pointsFromTop: [450], startIndex: 0 }} header={Header}>
-                <TouchableWithoutFeedback
-                    onPress={Keyboard.dismiss}
-                    style={styles.wrapper}
-                    containerStyle={styles.modalContainer}
-                >
+                <Pressable onPress={Keyboard.dismiss} style={[styles.wrapper, styles.modalContainer]}>
                     <View style={styles.content}>
                         <Typo variant="title3">{`몸무게 ${entity.weightUnit}`}</Typo>
                         <View style={styles.inputWrapper}>
@@ -77,7 +73,7 @@ export default function CreateWeightBottomSheet({
                         </TouchableOpacity>
                     </View>
                     <SubmitButton entityId={entity.id} selectedDate={selectedDate} weight={weight} />
-                </TouchableWithoutFeedback>
+                </Pressable>
             </BottomSheet>
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
@@ -152,7 +148,7 @@ function SubmitButton({ entityId, weight, selectedDate }: { entityId: string; we
         }
     };
     return (
-        <View style={[styles.buttonWrapper, { marginBottom: bottom }]}>
+        <View style={[styles.buttonWrapper, { marginBottom: Platform.select({ ios: bottom, android: bottom + 20 }) }]}>
             <ConfirmButton text="등록" onPress={handleCreateEntityWeight} disabled={!weight || createEntityWeight.isPending} />
         </View>
     );

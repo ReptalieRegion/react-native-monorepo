@@ -3,7 +3,7 @@ import { useOnOff } from '@reptile-region/react-hooks';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
 import React, { useCallback, useState } from 'react';
-import { Keyboard, StyleSheet, View } from 'react-native';
+import { Keyboard, Platform, StyleSheet, View } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -44,6 +44,7 @@ export default function EntityMangerUpdate({
     },
 }: EntityUpdateScreenProps) {
     const { bottom } = useSafeAreaInsets();
+
     const [image, setImage] = useState({
         name: `image_${Math.floor(Math.random() * 9999)}_${new Date().getTime()}.jpg`,
         uri: entity.image.src,
@@ -108,9 +109,11 @@ export default function EntityMangerUpdate({
         mutate({ entityId: entity.id, gender, hatching: dayjs(hatching).format(), name, variety });
     };
 
+    console.log(variety.morph?.length);
+
     return (
         <>
-            <View style={[styles.wrapper, { paddingBottom: bottom }]}>
+            <View style={[styles.wrapper, { paddingBottom: Platform.select({ ios: bottom, android: bottom + 20 }) }]}>
                 <ScrollView contentContainerStyle={styles.scrollContainer}>
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={styles.container}>
                         <View style={styles.article}>
@@ -126,28 +129,24 @@ export default function EntityMangerUpdate({
                         </View>
                         <View style={styles.article}>
                             <Typo variant="title3">종/모프</Typo>
-                            <TouchableOpacity onPress={varietyOn} containerStyle={styles.inputWrapper}>
-                                <Typo
-                                    textBreakStrategy="highQuality"
-                                    lineBreakMode="clip"
-                                    lineBreakStrategyIOS="hangul-word"
-                                    numberOfLines={1}
-                                >
+                            <TouchableOpacity onPress={varietyOn}>
+                                <View style={styles.inputWrapper}>
                                     <Typo>{variety.classification}</Typo>
                                     <RightArrow />
                                     <Typo>{variety.species}</Typo>
                                     <RightArrow />
                                     <Typo>{variety.detailedSpecies}</Typo>
                                     <ConditionalRenderer
-                                        condition={variety.morph?.length !== 0}
-                                        trueContent={
+                                        condition={!variety.morph}
+                                        trueContent={null}
+                                        falseContent={
                                             <>
                                                 <RightArrow />
                                                 <Typo>{variety.morph?.join(', ')}</Typo>
                                             </>
                                         }
                                     />
-                                </Typo>
+                                </View>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.article}>

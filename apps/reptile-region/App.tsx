@@ -15,6 +15,7 @@ import useEffectNotifee from '@/hooks/notification/useEffectNotifee';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
+import 'react-native-gesture-handler';
 
 export default function App() {
     const navigationRef = useNavigationContainerRef<RootRoutesParamList>();

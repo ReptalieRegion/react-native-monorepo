@@ -71,13 +71,12 @@ export default function VarietyList({
                         <View style={[renderItemStyles.itemsContainer, renderItemStyles.marginBottom]}>
                             {item.data?.map((name, index) => {
                                 const selectedColor =
-                                    selected.morph?.length !== 0 &&
-                                    selected.morph?.findIndex((selectedItem) => selectedItem === name) !== -1
+                                    selected.morph && selected.morph.findIndex((selectedItem) => selectedItem === name) !== -1
                                         ? 'primary'
                                         : selected[item.varietyType] === name
                                         ? 'primary'
                                         : 'placeholder';
-
+                                console.log(name, selected[item.varietyType]);
                                 return (
                                     <TagView
                                         key={index}
