@@ -131,21 +131,27 @@ export default function EntityMangerUpdate({
                             <Typo variant="title3">종/모프</Typo>
                             <TouchableOpacity onPress={varietyOn}>
                                 <View style={styles.inputWrapper}>
-                                    <Typo>{variety.classification}</Typo>
-                                    <RightArrow />
-                                    <Typo>{variety.species}</Typo>
-                                    <RightArrow />
-                                    <Typo>{variety.detailedSpecies}</Typo>
-                                    <ConditionalRenderer
-                                        condition={!variety.morph}
-                                        trueContent={null}
-                                        falseContent={
-                                            <>
-                                                <RightArrow />
-                                                <Typo>{variety.morph?.join(', ')}</Typo>
-                                            </>
-                                        }
-                                    />
+                                    <Typo
+                                        textBreakStrategy="highQuality"
+                                        lineBreakMode="clip"
+                                        lineBreakStrategyIOS="hangul-word"
+                                        numberOfLines={1}
+                                    >
+                                        <Typo>{variety.classification}</Typo>
+                                        <RightArrow />
+                                        <Typo>{variety.species}</Typo>
+                                        <RightArrow />
+                                        <Typo>{variety.detailedSpecies}</Typo>
+                                        <ConditionalRenderer
+                                            condition={variety.morph?.length !== 0}
+                                            trueContent={
+                                                <>
+                                                    <RightArrow />
+                                                    <Typo>{variety.morph?.join(', ')}</Typo>
+                                                </>
+                                            }
+                                        />
+                                    </Typo>
                                 </View>
                             </TouchableOpacity>
                         </View>
