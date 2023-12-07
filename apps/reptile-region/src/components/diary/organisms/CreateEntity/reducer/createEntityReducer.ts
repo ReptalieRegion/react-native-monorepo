@@ -1,5 +1,3 @@
-import { isDate } from 'lodash-es';
-
 import type { CreateEntityActions, CreateEntityState, EntityGender, EntityImage } from '../type';
 
 import type { EntityVariety, WeightUnit } from '@/types/apis/diary/entity';
@@ -17,10 +15,6 @@ const setGender = (state: CreateEntityState, gender: EntityGender): CreateEntity
 };
 
 const setHatchingDate = (state: CreateEntityState, hatchingDate: Date | undefined): CreateEntityState => {
-    if (!isDate(hatchingDate)) {
-        return state;
-    }
-
     return { ...state, hatchingDate };
 };
 

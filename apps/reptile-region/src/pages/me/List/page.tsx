@@ -7,7 +7,6 @@ import type { SettingList } from './type';
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
 import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { ConditionalRenderer } from '@/components/@common/atoms';
-import { Divider } from '@/components/@common/atoms/Divider';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { Profile } from '@/components/@common/molecules/Profile';
 import useMeActions from '@/hooks/me/actions/useMeActions';
@@ -89,7 +88,6 @@ export default function MyListPage() {
             <View style={styles.signContainer}>
                 <Profile user={data?.user} />
             </View>
-            <Divider height={10} />
             {settingList.map(({ title, items }) => (
                 <View key={title} style={styles.listContainer}>
                     <View style={styles.listTitle}>

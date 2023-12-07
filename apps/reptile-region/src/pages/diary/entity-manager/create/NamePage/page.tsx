@@ -37,6 +37,7 @@ export default function EntityManagerNamePage({ navigation }: EntityManagerCreat
         }
 
         const { gender, hatchingDate, image, name, variety, weightUnit } = entityDate;
+
         mutate({
             files: { uri: image.uri, name: image.name, type: image.type },
             gender,

@@ -18,7 +18,7 @@ export default function useCreateEntityWeight(
         mutationFn: createEntityWeight,
         onSuccess: (data, variables, context) => {
             props?.onSuccess?.(data, variables, context);
-            queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.list, exact: true });
+            queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.list });
         },
         onError: props?.onError,
     });

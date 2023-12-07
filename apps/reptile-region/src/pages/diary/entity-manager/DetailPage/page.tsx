@@ -73,7 +73,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                             </TouchableTypo>
                         </View>
                     </View>
-                    <InfiniteLineChart yAxisSuffix={weightUnit} />
+                    <InfiniteLineChart entityId={entityId} yAxisSuffix={weightUnit} />
                 </View>
             </ScrollView>
         </>

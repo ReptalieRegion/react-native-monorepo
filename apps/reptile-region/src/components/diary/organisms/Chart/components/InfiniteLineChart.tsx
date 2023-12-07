@@ -4,9 +4,10 @@ import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import useInfiniteFetchEntityWeight from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntityWeight';
+
 type InfiniteLineChartState = {
-    labels?: string[];
-    data?: number[];
+    entityId: string;
     yAxisSuffix?: string;
 };
 
@@ -14,8 +15,22 @@ interface InfiniteLineChartActions {}
 
 type InfiniteLineChartProps = InfiniteLineChartState & InfiniteLineChartActions;
 
-export default function InfiniteLineChart({ labels, data, yAxisSuffix }: InfiniteLineChartProps) {
+export default function InfiniteLineChart({ entityId, yAxisSuffix }: InfiniteLineChartProps) {
     const { width } = useWindowDimensions();
+    const { data } = useInfiniteFetchEntityWeight({ entityId });
+    console.log(data);
+    const newData = data.reduce<{ dateList: string[]; weightList: number[] }>(
+        (prev, curr) => {
+            return {
+                dateList: [...prev.dateList, curr.date],
+                weightList: [...prev.weightList, Number(curr.weight)],
+            };
+        },
+        {
+            dateList: [],
+            weightList: [],
+        },
+    );
 
     return (
         <View style={styles.container}>
@@ -23,10 +38,10 @@ export default function InfiniteLineChart({ labels, data, yAxisSuffix }: Infinit
                 <LineChart
                     segments={5}
                     data={{
-                        labels: labels ? ['', ...labels] : [''],
+                        labels: newData.dateList ? ['', ...newData.dateList] : [''],
                         datasets: [
                             {
-                                data: data ? [0, ...data] : [0],
+                                data: newData.weightList ? [0, ...newData.weightList] : [0],
                                 color: (opacity = 1) => color.Teal[150].alpha(opacity).toString(), // optional
                                 strokeWidth: 1,
                             },
