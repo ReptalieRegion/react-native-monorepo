@@ -3,8 +3,8 @@ import { Typo, color } from '@reptile-region/design-system';
 import { useOnOff } from '@reptile-region/react-hooks';
 import dayjs from 'dayjs';
 import React, { useCallback, useState } from 'react';
-import { Alert, Keyboard, StyleSheet, TextInput, TouchableNativeFeedback, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Alert, Keyboard, StyleSheet, TextInput, View } from 'react-native';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -50,32 +50,34 @@ export default function CreateWeightBottomSheet({
     return (
         <>
             <BottomSheet onClose={bottomSheetClose} snapInfo={{ pointsFromTop: [450], startIndex: 0 }} header={Header}>
-                <TouchableNativeFeedback onPress={Keyboard.dismiss}>
-                    <View style={styles.modalContainer}>
-                        <View style={styles.content}>
-                            <Typo variant="title3">{`몸무게 ${entity.weightUnit}`}</Typo>
-                            <View style={styles.inputWrapper}>
-                                <TextInput
-                                    value={weight}
-                                    keyboardType="numeric"
-                                    onChangeText={handleChangeWeight}
-                                    style={styles.input}
-                                    textAlign="center"
-                                />
-                            </View>
+                <TouchableWithoutFeedback
+                    onPress={Keyboard.dismiss}
+                    style={styles.wrapper}
+                    containerStyle={styles.modalContainer}
+                >
+                    <View style={styles.content}>
+                        <Typo variant="title3">{`몸무게 ${entity.weightUnit}`}</Typo>
+                        <View style={styles.inputWrapper}>
+                            <TextInput
+                                value={weight}
+                                keyboardType="numeric"
+                                onChangeText={handleChangeWeight}
+                                style={styles.input}
+                                textAlign="center"
+                            />
                         </View>
-                        <View style={styles.content}>
-                            <Typo variant="title3">등록일</Typo>
-                            <TouchableOpacity onPress={datePickerOn}>
-                                <View style={styles.inputWrapper}>
-                                    <DatePicker />
-                                    <Typo color="default">{dayjs(selectedDate).format('YYYY.MM.DD')}</Typo>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                        <SubmitButton entityId={entity.id} selectedDate={selectedDate} weight={weight} />
                     </View>
-                </TouchableNativeFeedback>
+                    <View style={styles.content}>
+                        <Typo variant="title3">등록일</Typo>
+                        <TouchableOpacity onPress={datePickerOn}>
+                            <View style={styles.inputWrapper}>
+                                <DatePicker />
+                                <Typo color="default">{dayjs(selectedDate).format('YYYY.MM.DD')}</Typo>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <SubmitButton entityId={entity.id} selectedDate={selectedDate} weight={weight} />
+                </TouchableWithoutFeedback>
             </BottomSheet>
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
@@ -128,7 +130,7 @@ function SubmitButton({ entityId, weight, selectedDate }: { entityId: string; we
                         text: '수정',
                         onPress: () =>
                             updateEntityWeight.mutate({
-                                diaryId: entityId,
+                                entityId: entityId,
                                 date: dayjs(selectedDate).format('YYYY-MM-DD'),
                                 weight: Number(weight),
                             }),
@@ -144,7 +146,7 @@ function SubmitButton({ entityId, weight, selectedDate }: { entityId: string; we
     const handleCreateEntityWeight = () => {
         if (weight !== undefined && weight?.length !== 0) {
             createEntityWeight.mutate({
-                diaryId: entityId,
+                entityId: entityId,
                 date: dayjs(selectedDate).format('YYYY-MM-DD'),
                 weight: Number(weight),
             });
@@ -168,12 +170,15 @@ const headerStyles = StyleSheet.create({
 });
 
 const styles = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+        backgroundColor: color.White.toString(),
+    },
     modalContainer: {
         flex: 1,
         gap: 20,
         paddingTop: 20,
         paddingHorizontal: 20,
-        backgroundColor: color.White.toString(),
     },
     content: {
         gap: 10,

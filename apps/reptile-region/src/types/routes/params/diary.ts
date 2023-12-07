@@ -1,4 +1,4 @@
-import type { EntityVariety, WeightUnit } from '@/types/apis/diary/entity';
+import type { EntityGender, EntityVariety, WeightUnit } from '@/types/apis/diary/entity';
 import type { ImageType } from '@/types/global/image';
 
 // 개체 상세 페이지
@@ -14,6 +14,7 @@ type EntityOptionsMenuParams = {
         variety: EntityVariety;
         name: string;
         hatching: string;
+        gender: EntityGender;
     };
 };
 
@@ -33,6 +34,7 @@ type EntityUpdateParams = {
         variety: EntityVariety;
         name: string;
         hatching: string;
+        gender: EntityGender;
     };
 };
 

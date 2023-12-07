@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, type UseMutationOptions } from '@tanstack/react-query';
 
 import { updateEntity } from '../../repository';
 
@@ -7,12 +7,16 @@ import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { UpdateEntity } from '@/types/apis/diary/entity';
 
 // 다이어리 개체수정
-export default function useUpdateEntity() {
+export default function useUpdateEntity(
+    props?: Pick<UseMutationOptions<UpdateEntity['Response'], HTTPError, UpdateEntity['Request']>, 'onError' | 'onSuccess'>,
+) {
     const queryClient = useQueryClient();
     return useMutation<UpdateEntity['Response'], HTTPError, UpdateEntity['Request']>({
         mutationFn: updateEntity,
-        onSuccess: () => {
+        onSuccess: (data, variables, context) => {
+            props?.onSuccess?.(data, variables, context);
             queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.list, exact: true });
         },
+        onError: props?.onError,
     });
 }

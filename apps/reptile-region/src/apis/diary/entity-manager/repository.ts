@@ -46,8 +46,8 @@ export const fetchEntityWeightList = async ({
  * POST
  */
 // 다이어리 개체 몸무게 추가등록
-export const createEntityWeight = async ({ diaryId, date, weight }: CreateEntityWeight['Request']) => {
-    const response = await clientFetch(`api/diary/entity/${diaryId}/weight`, {
+export const createEntityWeight = async ({ entityId, date, weight }: CreateEntityWeight['Request']) => {
+    const response = await clientFetch(`api/diary/entity/${entityId}/weight`, {
         method: METHOD.POST,
         body: { date, weight },
     });
@@ -84,8 +84,8 @@ export const createEntity = async ({ files, gender, hatching, name, variety, wei
  * PUT
  */
 // 다이어리 개체수정
-export const updateEntity = async ({ diaryId, name }: UpdateEntity['Request']) => {
-    const response = await clientFetch(`api/diary/entity/${diaryId}`, {
+export const updateEntity = async ({ entityId, name }: UpdateEntity['Request']) => {
+    const response = await clientFetch(`api/diary/entity/${entityId}`, {
         method: METHOD.PUT,
         body: { name },
     });
@@ -94,8 +94,8 @@ export const updateEntity = async ({ diaryId, name }: UpdateEntity['Request']) =
 };
 
 // 다이어리 개체 몸무게 수정
-export const updateEntityWeight = async ({ diaryId, date, weight }: UpdateEntityWeight['Request']) => {
-    const response = await clientFetch(`api/diary/entity/${diaryId}/weight`, {
+export const updateEntityWeight = async ({ entityId, date, weight }: UpdateEntityWeight['Request']) => {
+    const response = await clientFetch(`api/diary/entity/${entityId}/weight`, {
         method: METHOD.PUT,
         body: { date, weight },
     });
@@ -108,8 +108,8 @@ export const updateEntityWeight = async ({ diaryId, date, weight }: UpdateEntity
  * DELETE
  */
 // 다이어리 개체 몸무게 삭제
-export const deleteEntityWeight = async ({ diaryId, date }: DeleteEntityWeight['Request']) => {
-    const response = await clientFetch(`api/diary/entity/${diaryId}/weight`, {
+export const deleteEntityWeight = async ({ entityId, date }: DeleteEntityWeight['Request']) => {
+    const response = await clientFetch(`api/diary/entity/${entityId}/weight`, {
         method: METHOD.DELETE,
         body: { date },
     });
@@ -118,8 +118,8 @@ export const deleteEntityWeight = async ({ diaryId, date }: DeleteEntityWeight['
 };
 
 // 다이어리 개체삭제
-export const deleteEntity = async ({ diaryId }: DeleteEntity['Request']) => {
-    const response = await clientFetch(`api/diary/entity/${diaryId}`, {
+export const deleteEntity = async ({ entityId }: DeleteEntity['Request']) => {
+    const response = await clientFetch(`api/diary/entity/${entityId}`, {
         method: METHOD.DELETE,
     });
 

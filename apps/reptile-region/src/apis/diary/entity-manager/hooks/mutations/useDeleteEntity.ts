@@ -14,7 +14,7 @@ type UseDeleteEntityProps = UseDeleteEntityActions;
 
 export default function useDeleteEntity(props?: UseDeleteEntityProps) {
     return useMutation<DeleteEntity['Response'], HTTPError, DeleteEntity['Request']>({
-        mutationFn: ({ diaryId }) => deleteEntity({ diaryId }),
+        mutationFn: ({ entityId }) => deleteEntity({ entityId }),
         onSuccess: props?.onSuccess,
     });
 }

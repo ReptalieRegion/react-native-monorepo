@@ -1,17 +1,25 @@
 import { Typo, color, type TextColorType, type VariantType } from '@reptile-region/design-system';
 import { useOnOff } from '@reptile-region/react-hooks';
 import dayjs from 'dayjs';
+import { Image } from 'expo-image';
 import React, { useCallback, useState } from 'react';
 import { Keyboard, StyleSheet, View } from 'react-native';
-import { TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { ScrollView, TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import VarietyModal from './modal/VarietyModal';
 
-import { DatePicker } from '@/assets/icons';
+import useUpdateEntity from '@/apis/diary/entity-manager/hooks/mutations/useUpdateEntity';
+import { DatePicker, RightArrow } from '@/assets/icons';
 import Female from '@/assets/icons/Female';
 import Male from '@/assets/icons/Male';
 import Question from '@/assets/icons/Question';
+import { ConditionalRenderer } from '@/components/@common/atoms';
+import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
+import ImagePickerIcon from '@/components/@common/molecules/ImagePickerIcon/ImagePickerIcon';
+import { useToast } from '@/components/@common/organisms/Toast';
+import useImagePicker from '@/hooks/@common/useImagePicker';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
 import type { IconFunction } from '@/types/global/icons';
 import type { EntityUpdateScreenProps } from '@/types/routes/props/diary';
@@ -30,17 +38,48 @@ const GENDER_MAP: GenderMapItem[] = [
 ];
 
 export default function EntityMangerUpdate({
+    navigation,
     route: {
         params: { entity },
     },
 }: EntityUpdateScreenProps) {
+    const { bottom } = useSafeAreaInsets();
+    const [image, setImage] = useState({
+        name: `image_${Math.floor(Math.random() * 9999)}_${new Date().getTime()}.jpg`,
+        uri: entity.image.src,
+        type: '',
+    });
     const [name, setName] = useState(entity.name);
-    const [selectedDate, setSelectedDate] = useState(dayjs(entity.hatching).toDate());
-    const [gender, setGender] = useState<EntityGender>('Female');
+    const [hatching, setHatching] = useState(dayjs(entity.hatching).toDate());
+    const [gender, setGender] = useState<EntityGender>(entity.gender);
     const [variety, setVariety] = useState<EntityVariety>(entity.variety);
-    console.log(variety);
     const { off: varietyOff, on: varietyOn, state: isVarietyVisible } = useOnOff();
     const { off: datePickerOff, on: datePickerOn, state: isDatePickerVisible } = useOnOff();
+    const { openToast } = useToast();
+
+    const { handlePressProfileImage } = useImagePicker({
+        onSuccess: (imageInfo) => {
+            const uri = imageInfo.path;
+            const type = imageInfo.mime;
+
+            setImage((prevImage) => ({ ...prevImage, uri, type }));
+        },
+        onError: (error) => {
+            console.log(error);
+            if (error.code !== 'E_PICKER_CANCELLED') {
+                openToast({ contents: '이미지 선택에 실패했어요. 잠시 뒤에 다시 시도해주세요.', severity: 'error' });
+            }
+        },
+    });
+
+    const { mutate, isPending } = useUpdateEntity({
+        onSuccess: () => {
+            navigation.pop(2);
+        },
+        onError: () => {
+            openToast({ contents: '수정에 실패했어요. 잠시후에 다시 시도해주세요.', severity: 'error' });
+        },
+    });
 
     const handlePress = useCallback((selectedGender: EntityGender) => {
         setGender(selectedGender);
@@ -48,74 +87,113 @@ export default function EntityMangerUpdate({
 
     const handleConfirm = useCallback(
         (date: Date) => {
-            setSelectedDate(date);
+            setHatching(date);
             datePickerOff();
         },
         [datePickerOff],
     );
 
-    const handleChangeText = (text: string) => {
+    const handleChangeText = useCallback((text: string) => {
         setName(text);
-    };
+    }, []);
 
-    const handleCompleteVariety = (selectedVariety: EntityVariety) => {
-        setVariety(selectedVariety);
-        varietyOff();
+    const handleCompleteVariety = useCallback(
+        (selectedVariety: EntityVariety) => {
+            setVariety(selectedVariety);
+            varietyOff();
+        },
+        [varietyOff],
+    );
+
+    const handleSubmit = () => {
+        mutate({ entityId: entity.id, gender, hatching: dayjs(hatching).format(), name, variety });
     };
 
     return (
         <>
-            <View style={styles.wrapper}>
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={styles.container}>
-                    <View style={styles.article}>
-                        <Typo variant="title3">이름</Typo>
-                        <TextInput style={styles.inputWrapper} value={name} onChangeText={handleChangeText} />
-                    </View>
-                    <View style={styles.article}>
-                        <Typo variant="title3">종/모프</Typo>
-                        <TouchableOpacity onPress={varietyOn} containerStyle={styles.inputWrapper}>
-                            <Typo>{`${variety.classification} > ${variety.detailedSpecies} > ${variety.species}`}</Typo>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.article}>
-                        <Typo variant="title3">성별</Typo>
-                        <View style={genderStyles.container}>
-                            {GENDER_MAP.map(({ gender: selectedGender, Icon, color: genderColor, text }) => {
-                                const isSelected = gender === selectedGender;
-                                const selectedStyles = isSelected ? { borderColor: genderColor } : {};
-                                const selectedIconStyles = isSelected ? genderColor : color.Gray[500].toString();
-                                const selectedTextStyles: { variant: VariantType; color: TextColorType } = isSelected
-                                    ? { variant: 'title3', color: 'default' }
-                                    : { variant: 'body2', color: 'placeholder' };
-
-                                return (
-                                    <TouchableOpacity
-                                        key={selectedGender}
-                                        onPress={() => handlePress(selectedGender)}
-                                        style={[genderStyles.iconWrapper, selectedStyles]}
-                                        containerStyle={genderStyles.iconContainer}
-                                    >
-                                        <Icon width={24} height={24} fill={selectedIconStyles} />
-                                        <Typo variant={selectedTextStyles.variant} color={selectedTextStyles.color}>
-                                            {text}
-                                        </Typo>
-                                    </TouchableOpacity>
-                                );
-                            })}
+            <View style={[styles.wrapper, { paddingBottom: bottom }]}>
+                <ScrollView contentContainerStyle={styles.scrollContainer}>
+                    <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={styles.container}>
+                        <View style={styles.article}>
+                            <Typo variant="title3">이미지</Typo>
+                            <View style={imageStyles.wrapper}>
+                                <ImagePickerIcon onPress={handlePressProfileImage} />
+                                <Image source={{ uri: image.uri }} style={imageStyles.image} />
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.article}>
-                        <Typo variant="title3">해칭일</Typo>
-                        <TouchableOpacity onPress={datePickerOn} style={styles.inputWrapper}>
-                            <DatePicker />
-                            <Typo>{dayjs(selectedDate).format('YYYY.MM.DD')}</Typo>
-                        </TouchableOpacity>
-                    </View>
-                </TouchableWithoutFeedback>
+                        <View style={styles.article}>
+                            <Typo variant="title3">이름</Typo>
+                            <TextInput style={styles.inputWrapper} value={name} onChangeText={handleChangeText} />
+                        </View>
+                        <View style={styles.article}>
+                            <Typo variant="title3">종/모프</Typo>
+                            <TouchableOpacity onPress={varietyOn} containerStyle={styles.inputWrapper}>
+                                <Typo
+                                    textBreakStrategy="highQuality"
+                                    lineBreakMode="clip"
+                                    lineBreakStrategyIOS="hangul-word"
+                                    numberOfLines={1}
+                                >
+                                    <Typo>{variety.classification}</Typo>
+                                    <RightArrow />
+                                    <Typo>{variety.species}</Typo>
+                                    <RightArrow />
+                                    <Typo>{variety.detailedSpecies}</Typo>
+                                    <ConditionalRenderer
+                                        condition={variety.morph?.length !== 0}
+                                        trueContent={
+                                            <>
+                                                <RightArrow />
+                                                <Typo>{variety.morph?.join(', ')}</Typo>
+                                            </>
+                                        }
+                                    />
+                                </Typo>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.article}>
+                            <Typo variant="title3">성별</Typo>
+                            <View style={genderStyles.container}>
+                                {GENDER_MAP.map(({ gender: selectedGender, Icon, color: genderColor, text }) => {
+                                    const isSelected = gender === selectedGender;
+                                    const selectedStyles = isSelected ? { borderColor: genderColor } : {};
+                                    const selectedIconStyles = isSelected ? genderColor : color.Gray[500].toString();
+                                    const selectedTextStyles: { variant: VariantType; color: TextColorType } = isSelected
+                                        ? { variant: 'title3', color: 'default' }
+                                        : { variant: 'body2', color: 'placeholder' };
+
+                                    return (
+                                        <TouchableOpacity
+                                            key={selectedGender}
+                                            onPress={() => handlePress(selectedGender)}
+                                            style={[genderStyles.iconWrapper, selectedStyles]}
+                                            containerStyle={genderStyles.iconContainer}
+                                        >
+                                            <Icon width={24} height={24} fill={selectedIconStyles} />
+                                            <Typo variant={selectedTextStyles.variant} color={selectedTextStyles.color}>
+                                                {text}
+                                            </Typo>
+                                        </TouchableOpacity>
+                                    );
+                                })}
+                            </View>
+                        </View>
+                        <View style={styles.article}>
+                            <Typo variant="title3">해칭일</Typo>
+                            <TouchableOpacity onPress={datePickerOn} style={styles.inputWrapper}>
+                                <DatePicker />
+                                <Typo>{dayjs(hatching).format('YYYY.MM.DD')}</Typo>
+                            </TouchableOpacity>
+                        </View>
+                    </TouchableWithoutFeedback>
+                </ScrollView>
+                <View style={buttonStyles.buttonContainer}>
+                    <ConfirmButton text="수정 완료" disabled={isPending} onPress={handleSubmit} />
+                </View>
             </View>
             <DateTimePickerModal
                 isVisible={isDatePickerVisible}
-                date={selectedDate}
+                date={hatching}
                 maximumDate={dayjs().toDate()}
                 mode="date"
                 confirmTextIOS="확인"
@@ -138,7 +216,10 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         backgroundColor: color.White.toString(),
-        padding: 20,
+        paddingHorizontal: 20,
+    },
+    scrollContainer: {
+        paddingTop: 20,
     },
     container: {
         gap: 30,
@@ -156,6 +237,19 @@ const styles = StyleSheet.create({
         gap: 10,
         paddingHorizontal: 10,
         height: 45,
+    },
+});
+
+const imageStyles = StyleSheet.create({
+    wrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+    },
+    image: {
+        width: 70,
+        height: 70,
+        borderRadius: 15,
     },
 });
 
@@ -178,5 +272,12 @@ const genderStyles = StyleSheet.create({
     },
     iconContainer: {
         flex: 1,
+    },
+});
+
+const buttonStyles = StyleSheet.create({
+    buttonContainer: {
+        marginTop: 'auto',
+        paddingTop: 20,
     },
 });

@@ -59,7 +59,7 @@ type FetchEntityWeightList = ServerAPI<FetchEntityWeightListRequest, InfiniteSta
  */
 // 다이어리 개체 몸무게 추가등록
 type CreateEntityWeightRequest = {
-    diaryId: string;
+    entityId: string;
     date: string;
     weight: number;
 };
@@ -96,8 +96,11 @@ type CreateEntity = ServerAPI<CreateEntityRequest, CreateEntityResponse>;
  */
 // 다이어리 개체 수정
 type UpdateEntityRequest = {
-    diaryId: string;
+    entityId: string;
     name: string;
+    gender: EntityGender;
+    variety: EntityVariety;
+    hatching: string;
 };
 
 type UpdateEntityResponse = {
@@ -108,7 +111,7 @@ type UpdateEntity = ServerAPI<UpdateEntityRequest, UpdateEntityResponse>;
 
 // 다이어리 개체 몸무게 수정
 type UpdateEntityWeightRequest = {
-    diaryId: string;
+    entityId: string;
     date: string;
     weight: number;
 };
@@ -125,7 +128,7 @@ type UpdateEntityWeight = ServerAPI<UpdateEntityWeightRequest, UpdateEntityWeigh
  */
 // 다이어리 개체삭제
 type DeleteEntityRequest = {
-    diaryId: string;
+    entityId: string;
 };
 type DeleteEntityResponse = {
     message: string;
@@ -135,7 +138,7 @@ type DeleteEntity = ServerAPI<DeleteEntityRequest, DeleteEntityResponse>;
 
 // 다이어리 개체 몸무게 삭제
 type DeleteEntityWeightRequest = {
-    diaryId: string;
+    entityId: string;
     date: Date;
 };
 

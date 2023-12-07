@@ -34,7 +34,7 @@ export default function EntityManagerOptionsMenu({
                 text: '삭제',
                 style: 'destructive',
                 onPress: () => {
-                    mutate({ diaryId: entity.id });
+                    mutate({ entityId: entity.id });
                 },
             },
         ]);

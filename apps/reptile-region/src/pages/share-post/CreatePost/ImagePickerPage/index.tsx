@@ -1,4 +1,4 @@
-import { TouchableTypo } from '@reptile-region/design-system';
+import { TouchableTypo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
         paddingBottom: 15,
         paddingLeft: 10,
         paddingRight: 10,
+        backgroundColor: color.White.toString(),
     },
     view: {
         display: 'flex',

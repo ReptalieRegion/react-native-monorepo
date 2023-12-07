@@ -24,7 +24,7 @@ const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheet
         const subHeight =
             keyboard.state.value === KeyboardState.OPENING || keyboard.state.value === KeyboardState.OPEN
                 ? keyboard.height.value - (insets?.bottom ?? 0)
-                : keyboard.height.value;
+                : 0;
 
         const maxHeight =
             keyboard.state.value === KeyboardState.OPENING || keyboard.state.value === KeyboardState.OPEN
@@ -42,7 +42,7 @@ const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheet
     }, [keyboard.state.value, keyboard.height.value, insets?.bottom, translateY.value]);
 
     return (
-        <Animated.View style={[styles.container]}>
+        <Animated.View style={styles.container}>
             <Animated.View style={[styles.viewContainer, { width: dimensions.width }, snapAnimatedStyles, style]}>
                 {children}
             </Animated.View>

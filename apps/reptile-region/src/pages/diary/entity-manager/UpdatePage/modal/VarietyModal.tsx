@@ -35,8 +35,8 @@ export default function VarietyModal({ visible, initialSelected, onComplete, onC
         <Modal transparent={true} visible={visible} animationType="slide">
             <View style={[styles.wrapper, { paddingBottom: bottom, paddingLeft: left, paddingRight: right, paddingTop: top }]}>
                 <View style={styles.container}>
-                    <View>
-                        <Typo>종류 모프</Typo>
+                    <View style={styles.titleContainer}>
+                        <Typo variant="heading1">종류와 모프를 선택해주세요</Typo>
                     </View>
                     <Variety initialSelected={initialSelected} onChangeVariety={handleChangeVariety} />
                     <View style={styles.buttonWrapper}>
@@ -44,7 +44,17 @@ export default function VarietyModal({ visible, initialSelected, onComplete, onC
                             <ConfirmButton text="취소" variant="cancel" size="modal" onPress={onClose} />
                         </View>
                         <View style={styles.buttonContainer}>
-                            <ConfirmButton text="적용하기" variant="confirm" size="modal" onPress={handleComplete} />
+                            <ConfirmButton
+                                text="적용하기"
+                                variant="confirm"
+                                size="modal"
+                                onPress={handleComplete}
+                                disabled={
+                                    variety.classification.length === 0 ||
+                                    variety.species.length === 0 ||
+                                    variety.detailedSpecies.length === 0
+                                }
+                            />
                         </View>
                     </View>
                 </View>
@@ -61,6 +71,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 20,
+    },
+    titleContainer: {
+        paddingVertical: 40,
     },
     buttonWrapper: {
         marginTop: 'auto',
