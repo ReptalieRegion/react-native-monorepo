@@ -13,10 +13,12 @@ import PostingRoutes from './SharePost/PostingRoutes';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
-import EntityManagerOptionsMenu from '@/pages/diary/entity-manager/bottom-sheet/EntityManagerOptionsMenu';
+import EntityManagerOptionsMenuPage from '@/pages/diary/entity-manager/bottom-sheet/EntityManagerOptionsMenu';
 import CreateWeightBottomSheet from '@/pages/diary/entity-manager/DetailPage/bottom-sheet/CreateWeight';
 import { EntityManagerDetailPageHeader } from '@/pages/diary/entity-manager/DetailPage/header';
 import EntityMangerDetailPage from '@/pages/diary/entity-manager/DetailPage/page';
+import { EntityMangerUpdateHeader } from '@/pages/diary/entity-manager/UpdatePage/header';
+import EntityMangerUpdate from '@/pages/diary/entity-manager/UpdatePage/page';
 import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
 import LicenseContentsPage from '@/pages/me/License/ContentsPage/page';
 import { LicenseListHeader } from '@/pages/me/License/ListPage/header';
@@ -178,7 +180,7 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 />
                 <Stack.Screen
                     name="entity-manager/options-menu"
-                    component={EntityManagerOptionsMenu}
+                    component={EntityManagerOptionsMenuPage}
                     options={{
                         presentation: 'containedTransparentModal',
                         animation: 'none',
@@ -192,6 +194,14 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                         presentation: 'containedTransparentModal',
                         animation: 'none',
                         headerShown: false,
+                    }}
+                />
+                <Stack.Screen
+                    name="entity-manager/update"
+                    component={EntityMangerUpdate}
+                    options={{
+                        header: EntityMangerUpdateHeader,
+                        presentation: 'containedTransparentModal',
                     }}
                 />
                 {/* 다이어리 끝 */}

@@ -11,16 +11,11 @@ type VarietyListItem = {
     itemList: string[];
 };
 
-type Variety = {
-    selected: EntityVariety;
-    list: VarietyListItem[];
-};
-
 type CreateEntityState = {
     image: EntityImage | null;
     gender: EntityGender | null;
     hatchingDate: Date | undefined | null;
-    variety: Variety;
+    variety: EntityVariety;
     name: string | null;
     weightUnit: WeightUnit | null;
 };
@@ -42,10 +37,7 @@ interface SetHatchingDate {
 
 interface SetVariety {
     type: 'SET_VARIETY';
-    variety: {
-        type: keyof EntityVariety;
-        value: string;
-    };
+    variety: EntityVariety;
 }
 
 interface SetName {
@@ -71,6 +63,5 @@ export type {
     SetName,
     SetVariety,
     SetWeightUnit,
-    Variety,
     VarietyListItem,
 };

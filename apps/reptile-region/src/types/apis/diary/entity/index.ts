@@ -1,5 +1,7 @@
 import type { InfiniteState, ServerAPI } from '../../utils';
 
+import type { ImageType } from '@/types/global/image';
+
 /**
  *
  * 공통 타입
@@ -36,9 +38,7 @@ type FetchEntityListResponse = {
         variety: EntityVariety;
         hatching: string;
         weightUnit: WeightUnit;
-        image: {
-            src: string;
-        };
+        image: ImageType;
     };
 };
 

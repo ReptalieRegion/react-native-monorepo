@@ -4,37 +4,15 @@ import { CreateEntityActionContext, CreateEntityStateContext } from '../context/
 import createEntityReducer from '../reducer/createEntityReducer';
 import type { CreateEntityState } from '../type';
 
-import { classificationList } from '@/json/entity';
-
 const initialData: CreateEntityState = {
     gender: null,
     image: null,
     hatchingDate: null,
     variety: {
-        selected: {
-            classification: '',
-            species: '',
-            detailedSpecies: '',
-            morph: [''],
-        },
-        list: [
-            {
-                type: 'classification',
-                itemList: classificationList,
-            },
-            {
-                type: 'species',
-                itemList: [],
-            },
-            {
-                type: 'detailedSpecies',
-                itemList: [],
-            },
-            {
-                type: 'morph',
-                itemList: [],
-            },
-        ],
+        classification: '',
+        species: '',
+        detailedSpecies: '',
+        morph: [''],
     },
     name: null,
     weightUnit: null,

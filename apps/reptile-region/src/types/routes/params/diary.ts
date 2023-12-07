@@ -1,4 +1,5 @@
-import type { WeightUnit } from '@/types/apis/diary/entity';
+import type { EntityVariety, WeightUnit } from '@/types/apis/diary/entity';
+import type { ImageType } from '@/types/global/image';
 
 // 개체 상세 페이지
 type EntityDetailParams = {
@@ -7,7 +8,13 @@ type EntityDetailParams = {
 
 // 개체 옵션 메뉴
 type EntityOptionsMenuParams = {
-    entityId: string;
+    entity: {
+        id: string;
+        image: ImageType;
+        variety: EntityVariety;
+        name: string;
+        hatching: string;
+    };
 };
 
 // 개체 몸무게 생성 바텀시트
@@ -18,4 +25,15 @@ type EntityCreateWeightParams = {
     };
 };
 
-export type { EntityCreateWeightParams, EntityDetailParams, EntityOptionsMenuParams };
+// 개체 수정
+type EntityUpdateParams = {
+    entity: {
+        id: string;
+        image: ImageType;
+        variety: EntityVariety;
+        name: string;
+        hatching: string;
+    };
+};
+
+export type { EntityCreateWeightParams, EntityDetailParams, EntityOptionsMenuParams, EntityUpdateParams };

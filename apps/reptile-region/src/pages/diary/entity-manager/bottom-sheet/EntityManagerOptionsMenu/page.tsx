@@ -1,4 +1,3 @@
-import { BottomSheet } from '@reptile-region/bottom-sheet';
 import { TouchableTypo } from '@reptile-region/design-system';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
@@ -9,23 +8,12 @@ import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useDeleteEntity from '@/apis/diary/entity-manager/hooks/mutations/useDeleteEntity';
 import type { EntityManagerOptionsMenuScreenProps } from '@/types/routes/props/diary';
 
-type ListItemProps = {
-    text: string;
-    onPress?: () => void;
-};
-
-const ListItem = ({ text, onPress }: ListItemProps) => {
-    return (
-        <View style={styles.listItem}>
-            <TouchableTypo variant="body2" onPress={onPress}>
-                {text}
-            </TouchableTypo>
-        </View>
-    );
-};
-
-export default function EntityManagerOptionsMenu({ navigation, route: { params } }: EntityManagerOptionsMenuScreenProps) {
-    const { entityId } = params;
+export default function EntityManagerOptionsMenu({
+    navigation,
+    route: {
+        params: { entity },
+    },
+}: EntityManagerOptionsMenuScreenProps) {
     const { bottom } = useSafeAreaInsets();
     const queryClient = useQueryClient();
     const { mutate } = useDeleteEntity({
@@ -34,12 +22,6 @@ export default function EntityManagerOptionsMenu({ navigation, route: { params }
             navigation.pop(2);
         },
     });
-
-    const closeMenu = () => {
-        if (navigation.canGoBack()) {
-            navigation.goBack();
-        }
-    };
 
     const deletePost = () => {
         Alert.alert('정말로 삭제 하시겠어요?', '', [
@@ -52,13 +34,15 @@ export default function EntityManagerOptionsMenu({ navigation, route: { params }
                 text: '삭제',
                 style: 'destructive',
                 onPress: () => {
-                    mutate({ diaryId: entityId });
+                    mutate({ diaryId: entity.id });
                 },
             },
         ]);
     };
 
-    const navigateUpdatePage = () => {};
+    const navigateUpdatePage = () => {
+        navigation.navigate('entity-manager/update', { entity });
+    };
 
     const listItem = [
         {
@@ -72,13 +56,15 @@ export default function EntityManagerOptionsMenu({ navigation, route: { params }
     ];
 
     return (
-        <BottomSheet onClose={closeMenu} snapInfo={{ startIndex: 0, pointsFromTop: [59 + 38 * listItem.length] }}>
-            <View style={[styles.content, { paddingBottom: bottom }]}>
-                {listItem.map(({ text, onPress }) => (
-                    <ListItem key={text} text={text} onPress={onPress} />
-                ))}
-            </View>
-        </BottomSheet>
+        <View style={[styles.content, { paddingBottom: bottom }]}>
+            {listItem.map(({ text, onPress }) => (
+                <View key={text} style={styles.listItem}>
+                    <TouchableTypo variant="body2" onPress={onPress}>
+                        {text}
+                    </TouchableTypo>
+                </View>
+            ))}
+        </View>
     );
 }
 

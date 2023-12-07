@@ -3,6 +3,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { KebabMenu } from '@/assets/icons';
 import { createNativeStackHeader } from '@/components/@common/molecules';
+import type { EntityOptionsMenuParams } from '@/types/routes/params/diary';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary';
 
 export const EntityManagerDetailPageHeader = createNativeStackHeader({
@@ -12,15 +13,13 @@ export const EntityManagerDetailPageHeader = createNativeStackHeader({
 
 export function ChangeHeader({
     navigation,
-    route: {
-        params: { entityId },
-    },
-}: EntityManagerDetailScreenProps) {
+    entity,
+}: Pick<EntityManagerDetailScreenProps, 'navigation'> & EntityOptionsMenuParams) {
     useEffect(() => {
         const headerRight = () => {
             const handlePressKebabMenu = () => {
                 navigation.navigate('entity-manager/options-menu', {
-                    entityId,
+                    entity,
                 });
             };
 
@@ -32,7 +31,7 @@ export function ChangeHeader({
         };
 
         navigation.setOptions({ headerRight });
-    }, [entityId, navigation]);
+    }, [entity, navigation]);
 
     return null;
 }

@@ -39,7 +39,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
 
     return (
         <>
-            <ChangeHeader {...props} />
+            <ChangeHeader navigation={props.navigation} entity={{ hatching, id, image, name, variety }} />
             <ScrollView style={styles.wrapper} contentContainerStyle={styles.wrapperContent}>
                 <Image source={{ uri: image.src }} style={{ width, height: width }} />
                 <View style={styles.container}>

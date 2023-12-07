@@ -33,6 +33,9 @@ type EntityManagerOptionsMenuScreenProps = NativeStackScreenProps<RootRoutesPara
 // 개체 관리 몸무게 등록 바텀시트
 type EntityCreateWeightScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/create-weight'>;
 
+// 개체 관리 수정
+type EntityUpdateScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/update'>;
+
 export type {
     EntityCreateWeightScreenProps,
     EntityManagerCreateCongratsScreenProps,
@@ -45,4 +48,5 @@ export type {
     EntityManagerCreateWeightScreenProps,
     EntityManagerDetailScreenProps,
     EntityManagerOptionsMenuScreenProps,
+    EntityUpdateScreenProps,
 };

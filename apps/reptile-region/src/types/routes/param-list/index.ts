@@ -1,7 +1,12 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
 import type { SignInParams } from '../params/auth';
-import type { EntityCreateWeightParams, EntityDetailParams, EntityOptionsMenuParams } from '../params/diary';
+import type {
+    EntityCreateWeightParams,
+    EntityDetailParams,
+    EntityOptionsMenuParams,
+    EntityUpdateParams,
+} from '../params/diary';
 import type { LicenseContentsParams } from '../params/me';
 import type { OptionsMenuParams, PostingUpdateParams } from '../params/sharePost';
 
@@ -38,6 +43,7 @@ type RootRoutesParamList = {
     'entity-manager/detail': EntityDetailParams;
     'entity-manager/options-menu': EntityOptionsMenuParams;
     'entity-manager/create-weight': EntityCreateWeightParams;
+    'entity-manager/update': EntityUpdateParams;
 };
 
 export type { RootRoutesParamList };

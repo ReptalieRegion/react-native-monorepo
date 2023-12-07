@@ -29,7 +29,7 @@ export default function EntityManagerNamePage({ navigation }: EntityManagerCreat
             !entityDate.image ||
             !entityDate.gender ||
             !entityDate.name ||
-            !entityDate.variety.selected ||
+            !entityDate.variety ||
             !entityDate.weightUnit ||
             entityDate.hatchingDate === null
         ) {
@@ -39,11 +39,11 @@ export default function EntityManagerNamePage({ navigation }: EntityManagerCreat
         const { gender, hatchingDate, image, name, variety, weightUnit } = entityDate;
         mutate({
             files: { uri: image.uri, name: image.name, type: image.type },
-            gender: gender,
+            gender,
             hatching: hatchingDate,
-            name: name,
-            variety: variety.selected,
-            weightUnit: weightUnit,
+            name,
+            variety,
+            weightUnit,
         });
         navigation.navigate('congrats');
     }, [entityDate, mutate, navigation]);
