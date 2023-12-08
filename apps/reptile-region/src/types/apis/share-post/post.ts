@@ -1,7 +1,6 @@
-import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
-
 import type { InfiniteState, ServerAPI } from '../utils';
 
+import type { Photo } from '@/components/@common/organisms/CameraAlbum/types';
 import type { ImageType } from '@/types/global/image';
 
 /**
@@ -124,7 +123,7 @@ type FetchLike = ServerAPI<FetchLikeRequest, InfiniteState<FetchLikeResponse[]>>
  */
 // 일상공유 게시글 생성
 type CreatePostRequest = {
-    selectedPhotos: PhotoIdentifier[];
+    selectedPhotos: Photo[];
     contents: string;
 };
 

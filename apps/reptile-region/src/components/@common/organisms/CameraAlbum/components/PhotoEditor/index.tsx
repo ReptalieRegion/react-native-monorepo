@@ -20,15 +20,15 @@ export default function PhotoEditor({ width, height }: PhotoEditorProps) {
         return <View style={{ width, height }} />;
     }
 
-    const { image } = currentSelectedPhoto.origin.node;
+    const uri = currentSelectedPhoto.origin.uri;
 
     return (
         <ImageCrop
-            key={image.uri}
+            key={currentSelectedPhoto.origin.uri}
             image={{
-                uri: image.uri,
-                width: image.width ?? width,
-                height: image.height ?? height,
+                uri,
+                width: width,
+                height: height,
             }}
             initPosition={
                 currentSelectedPhoto.crop

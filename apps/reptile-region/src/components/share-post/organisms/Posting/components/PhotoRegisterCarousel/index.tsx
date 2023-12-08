@@ -1,4 +1,3 @@
-import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import ImageEditor from '@react-native-community/image-editor';
 import { color } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
@@ -11,6 +10,7 @@ import { CancelButton } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ImagePickerIcon from '@/components/@common/molecules/ImagePickerIcon/ImagePickerIcon';
 import { useCameraAlbumHandler, usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
+import type { Photo } from '@/components/@common/organisms/CameraAlbum/types';
 import { useTagSearch } from '@/components/@common/organisms/TagTextInput';
 
 export default function PhotoRegisterCarousel() {
@@ -20,14 +20,14 @@ export default function PhotoRegisterCarousel() {
 
     useEffect(() => {
         selectedPhotos.forEach(async ({ origin, crop }, index) => {
-            let newOrigin: PhotoIdentifier = origin;
+            let newOrigin: Photo = origin;
             if (crop) {
                 const { size, offset } = crop;
-                const uri = await ImageEditor.cropImage(origin.node.image.uri, { size, offset });
-                newOrigin = { node: { ...origin.node, image: { ...origin.node.image, uri } } };
+                const uri = await ImageEditor.cropImage(origin.uri, { size, offset });
+                newOrigin = { uri, name: origin.name };
             }
 
-            setCroppedSelectedPhoto(newOrigin, index);
+            setCroppedSelectedPhoto({ croppedSelectedPhoto: newOrigin, index });
         });
     }, [selectedPhotos, setCroppedSelectedPhoto]);
 
@@ -38,7 +38,7 @@ export default function PhotoRegisterCarousel() {
 
         const photo = selectedPhotos[index];
         if (photo) {
-            deleteSelectedPhoto(photo.origin.node.image.uri);
+            deleteSelectedPhoto({ uri: photo.origin.uri });
         }
     };
 
@@ -65,7 +65,7 @@ export default function PhotoRegisterCarousel() {
                                     </TouchableOpacity>
                                     <ConditionalRenderer
                                         condition={item !== null}
-                                        trueContent={<Image style={styles.image} source={{ uri: item?.node.image.uri }} />}
+                                        trueContent={<Image style={styles.image} source={{ uri: item?.uri }} />}
                                         falseContent={<ActivityIndicator />}
                                     />
                                 </View>

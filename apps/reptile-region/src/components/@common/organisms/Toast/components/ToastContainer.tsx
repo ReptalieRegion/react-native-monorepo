@@ -40,7 +40,7 @@ export default function ToastContainer() {
             translateY.value = withSpring(top, { duration: 1000 }, (firstFinished) => {
                 if (firstFinished) {
                     translateX.value = withDelay(
-                        500,
+                        200,
                         withTiming(width, { duration: 100 }, (secondFinished) => {
                             'worklet';
                             if (secondFinished) {

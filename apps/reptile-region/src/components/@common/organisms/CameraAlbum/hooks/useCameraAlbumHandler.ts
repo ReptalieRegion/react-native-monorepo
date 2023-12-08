@@ -1,29 +1,16 @@
-import { useCameraRoll, type PhotoIdentifier, type SaveToCameraRollOptions } from '@react-native-camera-roll/camera-roll';
+import { useCameraRoll, type SaveToCameraRollOptions } from '@react-native-camera-roll/camera-roll';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 
 import { PhotoActionsContext } from '../contexts/PhotoContext';
 import { PhotoSelectActionsContext } from '../contexts/PhotoSelectContext';
-import type { CropInfo, FetchPhotosProps } from '../types';
+import type { CroppedPhoto, CroppedSelectedPhoto, DeleteSelectedPhoto, FetchPhotosProps, SelectPhoto } from '../types';
 
-import usePhotoSelect from './usePhotoSelect';
-
-type UseCameraAlbumHandlerState = {
-    limit: number;
-};
-
-interface UseCameraAlbumHandlerActions {
-    limitCallback(): void;
-}
-
-type UseCameraAlbumHandlerProps = UseCameraAlbumHandlerState & UseCameraAlbumHandlerActions;
-
-export default function useCameraAlbumHandler(props?: UseCameraAlbumHandlerProps) {
+export default function useCameraAlbumHandler() {
     const [photos, getPhotos, save] = useCameraRoll();
     const isInitPhoto = useRef<boolean | undefined>();
     const isSavePhoto = useRef<boolean | undefined>();
     const isLoadingFetchPhoto = useRef(false);
 
-    const { isLimit } = usePhotoSelect();
     const photoDispatch = useContext(PhotoActionsContext);
     const photoSelectDispatch = useContext(PhotoSelectActionsContext);
 
@@ -32,17 +19,15 @@ export default function useCameraAlbumHandler(props?: UseCameraAlbumHandlerProps
     }
 
     useEffect(() => {
-        if (!!props && isLimit) {
-            props.limitCallback();
-        }
-    }, [props, isLimit]);
-
-    useEffect(() => {
         if (!photos) {
             return;
         }
 
-        const firstEdge = photos.edges[0];
+        const newPhotos = photos.edges.map((edge) => ({
+            uri: edge.node.image.uri,
+            name: edge.node.image.filename ?? `image_${Math.floor(Math.random() * 9999)}_${new Date().getTime()}.jpg`,
+        }));
+        const firstEdge = newPhotos[0];
 
         if (isInitPhoto.current) {
             photoSelectDispatch({ type: 'INIT_CURRENT_PHOTO', photo: firstEdge });
@@ -50,12 +35,12 @@ export default function useCameraAlbumHandler(props?: UseCameraAlbumHandlerProps
 
         if (isSavePhoto.current) {
             photoDispatch({ type: 'SAVE_PHOTO', photo: firstEdge });
-            photoSelectDispatch({ type: 'SELECT_PHOTO', photo: firstEdge, limit: props?.limit });
+            photoSelectDispatch({ type: 'SELECT_PHOTO', photo: firstEdge });
             isSavePhoto.current = false;
         } else {
-            photoDispatch({ type: 'ADD_PHOTOS', photos: photos.edges });
+            photoDispatch({ type: 'ADD_PHOTOS', photos: newPhotos });
         }
-    }, [photoDispatch, photoSelectDispatch, photos, props?.limit]);
+    }, [photoDispatch, photoSelectDispatch, photos]);
 
     const fetchPhotos = useCallback(
         async ({ first, after, assetType, isInit }: FetchPhotosProps) => {
@@ -65,21 +50,21 @@ export default function useCameraAlbumHandler(props?: UseCameraAlbumHandlerProps
 
             isLoadingFetchPhoto.current = true;
             isInitPhoto.current = isInit;
-            getPhotos({ first, after, assetType });
+            await getPhotos({ first, after, assetType });
             isLoadingFetchPhoto.current = false;
         },
         [getPhotos],
     );
 
     const selectPhoto = useCallback(
-        ({ photo }: { photo: PhotoIdentifier }) => {
-            photoSelectDispatch({ type: 'SELECT_PHOTO', photo, limit: props?.limit });
+        ({ photo }: Pick<SelectPhoto, 'photo'>) => {
+            photoSelectDispatch({ type: 'SELECT_PHOTO', photo });
         },
-        [photoSelectDispatch, props?.limit],
+        [photoSelectDispatch],
     );
 
     const deleteSelectedPhoto = useCallback(
-        (uri: string) => {
+        ({ uri }: Pick<DeleteSelectedPhoto, 'uri'>) => {
             photoSelectDispatch({ type: 'DELETE_SELECTED_PHOTO', uri });
         },
         [photoSelectDispatch],
@@ -94,14 +79,14 @@ export default function useCameraAlbumHandler(props?: UseCameraAlbumHandlerProps
     );
 
     const setCropInfo = useCallback(
-        ({ originalUri, crop }: { originalUri: string; crop?: CropInfo }) => {
+        ({ originalUri, crop }: Pick<CroppedPhoto, 'originalUri' | 'crop'>) => {
             photoSelectDispatch({ type: 'CROPPED_PHOTO', originalUri, crop });
         },
         [photoSelectDispatch],
     );
 
     const setCroppedSelectedPhoto = useCallback(
-        (croppedSelectedPhoto: PhotoIdentifier, index: number) => {
+        ({ croppedSelectedPhoto, index }: Pick<CroppedSelectedPhoto, 'croppedSelectedPhoto' | 'index'>) => {
             photoSelectDispatch({ type: 'CROPPED_SELECT_PHOTO', croppedSelectedPhoto, index });
         },
         [photoSelectDispatch],

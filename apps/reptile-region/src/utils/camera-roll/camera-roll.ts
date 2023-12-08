@@ -1,6 +1,7 @@
-import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { Platform } from 'react-native';
+
+import type { Photo } from '@/components/@common/organisms/CameraAlbum/types';
 
 const IOSUploadImage = async (uri: string, filename: string | null) => {
     const isCroppedURL = uri.startsWith('file://');
@@ -20,10 +21,10 @@ const IOSUploadImage = async (uri: string, filename: string | null) => {
     };
 };
 
-export const uploadImage = async (photo: PhotoIdentifier) => {
-    const { uri, filename } = photo.node.image;
+export const uploadImage = async (photo: Photo) => {
+    const { name, uri } = photo;
     const randomNumber = Math.floor(Math.random() * 9999);
-    const newFilename = `image_${filename}_${randomNumber}_${new Date().getTime()}.jpg`;
+    const newFilename = `image_${name}_${randomNumber}_${new Date().getTime()}.jpg`;
 
     if (Platform.OS === 'ios') {
         return IOSUploadImage(uri, newFilename);
