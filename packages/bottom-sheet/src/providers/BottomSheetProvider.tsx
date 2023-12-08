@@ -8,21 +8,28 @@ import { BottomSheetAnimationActionContext, BottomSheetAnimationStateContext } f
 import type { BottomSheetAnimationAction, BottomSheetAnimationState, SnapInfo } from '../types/bottom-sheet';
 import { getPixel } from '../utils/calc-pixel';
 
-type BottomSheetProviderProps = {
-    onClose: () => void;
+type BottomSheetProviderState = {
     snapInfo: SnapInfo;
 };
+
+interface BottomSheetProviderActions {
+    onClose: () => void;
+}
+
+type BottomSheetProviderProps = BottomSheetProviderState & BottomSheetProviderActions;
 
 const BottomSheetProvider = ({ children, snapInfo, onClose }: PropsWithChildren<BottomSheetProviderProps>) => {
     const dimensions = useWindowDimensions();
     const { top } = useSafeAreaInsets();
+
+    const height = useSharedValue(0);
+    const translateY = useSharedValue(0);
+    const opacity = useSharedValue(1);
+
     const numberPointsFromTop = snapInfo.pointsFromTop.map((snapPoint) =>
         getPixel({ baseHeight: dimensions.height - top, snapPoint }),
     );
     const sortedPointsFromTop = [...numberPointsFromTop].sort();
-    const height = useSharedValue(0);
-    const translateY = useSharedValue(0);
-    const opacity = useSharedValue(1);
 
     const bottomSheetClose = useCallback(() => {
         translateY.value = withTiming(height.value);

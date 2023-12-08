@@ -1,12 +1,4 @@
-import type { ViewStyle } from 'react-native';
 import type { SharedValue } from 'react-native-reanimated';
-
-export type BackDropStyle = Pick<ViewStyle, 'backgroundColor'>;
-
-export type ContainerStyle = Pick<
-    ViewStyle,
-    'borderTopRightRadius' | 'borderTopLeftRadius' | 'borderTopStartRadius' | 'borderTopEndRadius'
->;
 
 export type SnapInfo = {
     startIndex: number;

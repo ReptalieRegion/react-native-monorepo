@@ -1,17 +1,17 @@
 import { color } from '@reptile-region/design-system';
 import React, { useMemo, type PropsWithChildren } from 'react';
 import type { ViewStyle } from 'react-native';
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useBottomSheetAnimatedState from '../hooks/useBottomSheetAnimatedState';
 
-type BottomSheetContainerProps = {
-    style?: ViewStyle;
+export type BottomSheetContainerProps = {
+    style?: Pick<ViewStyle, 'borderTopRightRadius' | 'borderTopEndRadius' | 'borderTopLeftRadius' | 'borderTopStartRadius'>;
 };
 
-const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheetContainerProps>) => {
+export default function BottomSheetContainer({ children, style }: PropsWithChildren<BottomSheetContainerProps>) {
     const dimensions = useWindowDimensions();
     const {
         snapInfo: { pointsFromTop },
@@ -25,39 +25,31 @@ const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheet
 
     const snapAnimatedStyles = useAnimatedStyle(() => {
         const isOpen = keyboard.state.value === KeyboardState.OPENING || keyboard.state.value === KeyboardState.OPEN;
-        const isTest = maxHeight - keyboard.height.value >= height.value;
-        const subHeight = isOpen ? keyboard.height.value - bottom : Math.max(keyboard.height.value - bottom, 0);
+        const isNotOverMaxHeight = maxHeight - keyboard.height.value >= height.value;
 
+        const subHeight = isOpen ? keyboard.height.value - bottom : Math.max(keyboard.height.value - bottom, 0);
         const newHeight = isOpen
             ? pointsFromTop.length === 1
                 ? height.value
                 : pointsFromTop[pointsFromTop.length - 1] + bottom - keyboard.height.value
-            : isTest
+            : isNotOverMaxHeight
             ? height.value
             : Math.min(height.value, height.value - keyboard.height.value + bottom);
 
         return {
-            height: newHeight === 0 ? 'auto' : newHeight,
+            height: newHeight,
             transform: [{ translateY: translateY.value - subHeight }],
         };
     }, [keyboard.state.value, keyboard.height.value, bottom, translateY.value]);
 
     return (
-        <Animated.View style={styles.container}>
-            <Animated.View
-                style={[
-                    styles.viewContainer,
-                    { width: dimensions.width },
-                    snapAnimatedStyles,
-                    { paddingBottom: bottom },
-                    style,
-                ]}
-            >
+        <View style={styles.container}>
+            <Animated.View style={[styles.viewContainer, snapAnimatedStyles, { paddingBottom: bottom }, style]}>
                 {children}
             </Animated.View>
-        </Animated.View>
+        </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -65,9 +57,8 @@ const styles = StyleSheet.create({
     },
     viewContainer: {
         position: 'absolute',
+        width: '100%',
         bottom: 0,
         backgroundColor: color.White.toString(),
     },
 });
-
-export default BottomSheetContainer;

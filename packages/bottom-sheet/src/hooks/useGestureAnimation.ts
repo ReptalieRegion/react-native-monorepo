@@ -88,14 +88,11 @@ const useBottomSheetGestureAnimation = () => {
             if (isFastSwipe && isDownSwipe) {
                 handleFastSwipeDown();
                 return;
-            }
-
-            if (isFastSwipe && isUpSwipe) {
+            } else if (isFastSwipe && isUpSwipe) {
                 handleFastSwipeUp();
-                return;
+            } else {
+                handleSlowSwipe();
             }
-
-            handleSlowSwipe();
         });
 
     return panGesture;

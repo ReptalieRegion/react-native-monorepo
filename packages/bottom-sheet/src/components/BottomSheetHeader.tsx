@@ -5,7 +5,7 @@ import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import BottomSheetAnimatedGesture from './BottomSheetAnimatedGesture';
 
 export type BottomSheetHeaderProps = {
-    header?: () => React.JSX.Element;
+    header?(): React.JSX.Element;
 };
 
 export default function BottomSheetHeader({ header }: BottomSheetHeaderProps) {
