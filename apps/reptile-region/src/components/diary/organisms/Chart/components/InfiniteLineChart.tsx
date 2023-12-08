@@ -30,7 +30,6 @@ export default function InfiniteLineChart({ entityId, yAxisSuffix }: InfiniteLin
             weightList: [],
         },
     );
-    console.log(newData);
 
     return (
         <View style={styles.container}>
