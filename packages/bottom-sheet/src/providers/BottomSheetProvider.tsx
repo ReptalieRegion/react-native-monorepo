@@ -1,8 +1,8 @@
 import type { PropsWithChildren } from 'react';
 import React, { useCallback, useEffect } from 'react';
-import type { Insets } from 'react-native';
 import { useWindowDimensions } from 'react-native';
 import { runOnJS, useSharedValue, withTiming } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BottomSheetAnimationActionContext, BottomSheetAnimationStateContext } from '../contexts/BottomSheetAnimationContext';
 import type { BottomSheetAnimationAction, BottomSheetAnimationState, SnapInfo } from '../types/bottom-sheet';
@@ -11,13 +11,13 @@ import { getPixel } from '../utils/calc-pixel';
 type BottomSheetProviderProps = {
     onClose: () => void;
     snapInfo: SnapInfo;
-    insets?: Insets;
 };
 
-const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithChildren<BottomSheetProviderProps>) => {
+const BottomSheetProvider = ({ children, snapInfo, onClose }: PropsWithChildren<BottomSheetProviderProps>) => {
     const dimensions = useWindowDimensions();
+    const { top } = useSafeAreaInsets();
     const numberPointsFromTop = snapInfo.pointsFromTop.map((snapPoint) =>
-        getPixel({ baseHeight: dimensions.height - (insets?.top ?? 0), snapPoint }),
+        getPixel({ baseHeight: dimensions.height - top, snapPoint }),
     );
     const sortedPointsFromTop = [...numberPointsFromTop].sort();
     const height = useSharedValue(0);
@@ -30,7 +30,6 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
     }, [height.value, onClose, opacity, translateY]);
 
     const animationState: BottomSheetAnimationState = {
-        insets,
         height,
         translateY,
         opacity,
@@ -43,7 +42,7 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
     };
 
     useEffect(() => {
-        height.value = withTiming(numberPointsFromTop[snapInfo.startIndex], { duration: 250 });
+        height.value = withTiming(numberPointsFromTop[snapInfo.startIndex]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

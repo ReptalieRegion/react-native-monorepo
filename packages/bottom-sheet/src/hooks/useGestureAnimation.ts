@@ -23,7 +23,7 @@ const useBottomSheetGestureAnimation = () => {
     const minSnapPoint = 0;
     const maxSnapPoint = pointsFromTop[snapPointsLastIndex];
 
-    const keyboardDismiss = () => {
+    const handleKeyboardDismiss = () => {
         Keyboard.dismiss();
     };
 
@@ -34,7 +34,7 @@ const useBottomSheetGestureAnimation = () => {
         })
         .onChange((event) => {
             if (keyboard.state.value === KeyboardState.OPEN) {
-                runOnJS(keyboardDismiss)();
+                runOnJS(handleKeyboardDismiss)();
                 return;
             }
 

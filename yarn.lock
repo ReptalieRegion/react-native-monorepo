@@ -3540,6 +3540,7 @@ __metadata:
     react-native: "*"
     react-native-gesture-handler: ">=2.12.0"
     react-native-reanimated: ">=3.4.2"
+    react-native-safe-area-context: "*"
   languageName: unknown
   linkType: soft
 
@@ -12196,7 +12197,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-calendars@npm:^1.1302.0":
+"react-native-calendars@npm:1.1302.0":
   version: 1.1302.0
   resolution: "react-native-calendars@npm:1.1302.0"
   dependencies:
@@ -12212,6 +12213,25 @@ __metadata:
     moment:
       optional: true
   checksum: 27934bc55aa3563c3609486b81e14655eaaf30519232bf71b3ccbb2f396d1b60bcc300bc5888b5bc4e37a5863c22008c2aa34e1603887e61d51a471c7576d3ef
+  languageName: node
+  linkType: hard
+
+"react-native-calendars@patch:react-native-calendars@npm%3A1.1302.0#./.yarn/patches/react-native-calendars-npm-1.1302.0-c461927407.patch::locator=react-native-monorepo%40workspace%3A.":
+  version: 1.1302.0
+  resolution: "react-native-calendars@patch:react-native-calendars@npm%3A1.1302.0#./.yarn/patches/react-native-calendars-npm-1.1302.0-c461927407.patch::version=1.1302.0&hash=4d1491&locator=react-native-monorepo%40workspace%3A."
+  dependencies:
+    hoist-non-react-statics: ^3.3.1
+    lodash: ^4.17.15
+    memoize-one: ^5.2.1
+    moment: ^2.29.4
+    prop-types: ^15.5.10
+    react-native-swipe-gestures: ^1.0.5
+    recyclerlistview: ^4.0.0
+    xdate: ^0.8.0
+  dependenciesMeta:
+    moment:
+      optional: true
+  checksum: 2949d45b7cfe6d81107a1dbc5b78c52b5ec62d5331ee93826fce75fb2867be2fee15669aca9d198f22389b2e778b17e2b719efbfadb124b87250bf626ff1329e
   languageName: node
   linkType: hard
 

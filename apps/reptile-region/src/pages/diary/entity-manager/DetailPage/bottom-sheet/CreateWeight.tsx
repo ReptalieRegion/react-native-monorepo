@@ -6,7 +6,6 @@ import React, { useCallback, useState } from 'react';
 import { Alert, Keyboard, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useCreateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/useCreateEntityWeight';
 import useUpdateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/useUpdateEntityWeight';
@@ -51,26 +50,28 @@ export default function CreateWeightBottomSheet({
         <>
             <BottomSheet onClose={bottomSheetClose} snapInfo={{ pointsFromTop: [450], startIndex: 0 }} header={Header}>
                 <Pressable onPress={Keyboard.dismiss} style={[styles.wrapper, styles.modalContainer]}>
-                    <View style={styles.content}>
-                        <Typo variant="title3">{`몸무게 ${entity.weightUnit}`}</Typo>
-                        <View style={styles.inputWrapper}>
-                            <TextInput
-                                value={weight}
-                                keyboardType="numeric"
-                                onChangeText={handleChangeWeight}
-                                style={styles.input}
-                                textAlign="center"
-                            />
-                        </View>
-                    </View>
-                    <View style={styles.content}>
-                        <Typo variant="title3">등록일</Typo>
-                        <TouchableOpacity onPress={datePickerOn}>
+                    <View style={styles.inputGroup}>
+                        <View style={styles.content}>
+                            <Typo variant="title3">{`몸무게 ${entity.weightUnit}`}</Typo>
                             <View style={styles.inputWrapper}>
-                                <DatePicker />
-                                <Typo color="default">{dayjs(selectedDate).format('YYYY.MM.DD')}</Typo>
+                                <TextInput
+                                    value={weight}
+                                    keyboardType="numeric"
+                                    onChangeText={handleChangeWeight}
+                                    style={styles.input}
+                                    textAlign="center"
+                                />
                             </View>
-                        </TouchableOpacity>
+                        </View>
+                        <View style={styles.content}>
+                            <Typo variant="title3">등록일</Typo>
+                            <TouchableOpacity onPress={datePickerOn}>
+                                <View style={styles.inputWrapper}>
+                                    <DatePicker />
+                                    <Typo color="default">{dayjs(selectedDate).format('YYYY.MM.DD')}</Typo>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <SubmitButton entityId={entity.id} selectedDate={selectedDate} weight={weight} />
                 </Pressable>
@@ -100,7 +101,6 @@ function Header() {
 
 function SubmitButton({ entityId, weight, selectedDate }: { entityId: string; weight: string; selectedDate: Date }) {
     const { bottomSheetClose } = useBottomSheet();
-    const { bottom } = useSafeAreaInsets();
     const { openToast } = useToast();
 
     const updateEntityWeight = useUpdateEntityWeight({
@@ -148,7 +148,7 @@ function SubmitButton({ entityId, weight, selectedDate }: { entityId: string; we
         }
     };
     return (
-        <View style={[styles.buttonWrapper, { marginBottom: Platform.select({ ios: bottom, android: bottom + 20 }) }]}>
+        <View style={[{ marginBottom: Platform.select({ android: 20 }) }]}>
             <ConfirmButton text="등록" onPress={handleCreateEntityWeight} disabled={!weight || createEntityWeight.isPending} />
         </View>
     );
@@ -171,12 +171,15 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
         flex: 1,
-        gap: 20,
         paddingTop: 20,
         paddingHorizontal: 20,
     },
     content: {
         gap: 10,
+    },
+    inputGroup: {
+        flex: 1,
+        gap: 20,
     },
     inputWrapper: {
         flexDirection: 'row',
@@ -192,9 +195,7 @@ const styles = StyleSheet.create({
         padding: 0,
         width: '100%',
     },
-    buttonWrapper: {
-        marginTop: 'auto',
-    },
+
     inputContainer: {
         flexDirection: 'row',
     },

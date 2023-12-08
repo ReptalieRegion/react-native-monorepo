@@ -2,7 +2,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { BottomSheet } from '@reptile-region/bottom-sheet';
 import { color } from '@reptile-region/design-system';
 import React from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BottomSheetHeader } from '@/components/@common/molecules';
 import useKeyboardState, { UseKeyboardState } from '@/hooks/@common/useKeyboardState';
@@ -13,7 +12,6 @@ import type { CommentParamList } from '@/types/routes/param-list/sharePost';
 const Stack = createNativeStackNavigator<CommentParamList>();
 
 export default function SharePostCommentRoutes({ navigation }: { navigation: any }) {
-    const insets = useSafeAreaInsets();
     const keyboardState = useKeyboardState();
     const isCloseKeyboard = keyboardState === UseKeyboardState.CLOSE || keyboardState === UseKeyboardState.UNKNOWN;
 
@@ -24,7 +22,7 @@ export default function SharePostCommentRoutes({ navigation }: { navigation: any
     };
 
     return (
-        <BottomSheet onClose={handleClose} snapInfo={{ startIndex: 1, pointsFromTop: ['60%', '100%'] }} insets={insets}>
+        <BottomSheet onClose={handleClose} snapInfo={{ startIndex: 1, pointsFromTop: ['60%', '100%'] }}>
             <Stack.Navigator
                 initialRouteName="main"
                 screenOptions={{ contentStyle: { backgroundColor: color.White.toString() } }}

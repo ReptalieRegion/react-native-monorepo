@@ -13,7 +13,7 @@ export default function EntityManagerOptionsMenuPage(props: EntityManagerOptions
     };
 
     return (
-        <BottomSheet onClose={closeMenu} snapInfo={{ startIndex: 0, pointsFromTop: [59 + 38 * 2] }}>
+        <BottomSheet onClose={closeMenu} snapInfo={{ startIndex: 0, pointsFromTop: [0] }}>
             <EntityManagerOptionsMenu {...props} />
         </BottomSheet>
     );

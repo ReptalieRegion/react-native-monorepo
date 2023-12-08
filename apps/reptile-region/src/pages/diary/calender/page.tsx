@@ -50,7 +50,7 @@ const ExpandableCalendarScreen = (props: Props) => {
                     // disableAllTouchEventsForDisabledDays
                     firstDay={1}
                     markedDates={marked.current}
-                    // animateScroll
+                    animateScroll
                     // closeOnDayPress={false}
                 />
             )}
