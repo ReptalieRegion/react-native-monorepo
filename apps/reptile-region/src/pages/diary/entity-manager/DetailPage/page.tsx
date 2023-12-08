@@ -9,6 +9,7 @@ import { ChangeHeader } from './header';
 
 import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
 import { Plus } from '@/assets/icons';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import GenderIcon from '@/components/diary/atoms/GenderIcon/GenderIcon';
 import InfiniteLineChart from '@/components/diary/organisms/Chart/components/InfiniteLineChart';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary';
@@ -44,10 +45,15 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                 <Image source={{ uri: image.src }} style={{ width, height: width }} />
                 <View style={styles.container}>
                     <View style={styles.topContainer}>
-                        <Typo variant="title1">{name}</Typo>
-                        <GenderIcon gender={gender} size={31} />
+                        <Typo variant="title1">
+                            {name} <GenderIcon gender={gender} size={31} />
+                        </Typo>
                         <View style={styles.hatchingContainer}>
-                            <Typo color="placeholder">{dayjs(hatching).format('YYYY-MM-DD')}</Typo>
+                            <ConditionalRenderer
+                                condition={!!hatching}
+                                trueContent={<Typo color="placeholder">{dayjs(hatching).format('YYYY-MM-DD')}</Typo>}
+                                falseContent={null}
+                            />
                         </View>
                     </View>
                     <View style={styles.tagContainer}>
@@ -95,6 +101,7 @@ const styles = StyleSheet.create({
     topContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        flexWrap: 'wrap',
         gap: 5,
         marginBottom: 10,
     },

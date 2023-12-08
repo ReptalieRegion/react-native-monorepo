@@ -9,6 +9,7 @@ import Title from '../Title';
 
 import { CancelButton } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
+import ImagePickerIcon from '@/components/@common/molecules/ImagePickerIcon/ImagePickerIcon';
 import { useCameraAlbumHandler, usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 import { useTagSearch } from '@/components/@common/organisms/TagTextInput';
 
@@ -49,6 +50,9 @@ export default function PhotoRegisterCarousel() {
                 <View>
                     <Title title="사진 등록" />
                     <ScrollView contentContainerStyle={styles.container} horizontal showsHorizontalScrollIndicator={false}>
+                        <View style={styles.imageContainer}>
+                            <ImagePickerIcon currentSize={croppedSelectedPhotos.length} maxSize={5} />
+                        </View>
                         {croppedSelectedPhotos.map((item, index) => {
                             return (
                                 <View key={index} style={styles.imageContainer}>

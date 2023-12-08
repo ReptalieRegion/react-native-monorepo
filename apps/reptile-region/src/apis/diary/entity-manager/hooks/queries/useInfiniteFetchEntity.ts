@@ -24,7 +24,7 @@ export default function useInfiniteFetchEntity() {
                     page.items.map((item) => ({
                         entity: {
                             ...item.entity,
-                            hatching: dayjs(item.entity.hatching).format('YYYY-MM-DD'),
+                            hatching: item.entity.hatching ? dayjs(item.entity.hatching).format('YYYY-MM-DD') : undefined,
                         },
                     })),
                 ),

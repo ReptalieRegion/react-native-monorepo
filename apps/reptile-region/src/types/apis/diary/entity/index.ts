@@ -36,7 +36,7 @@ type FetchEntityListResponse = {
         name: string;
         gender: EntityGender;
         variety: EntityVariety;
-        hatching: string;
+        hatching: string | undefined;
         weightUnit: WeightUnit;
         image: ImageType;
     };
@@ -96,11 +96,18 @@ type CreateEntity = ServerAPI<CreateEntityRequest, CreateEntityResponse>;
  */
 // 다이어리 개체 수정
 type UpdateEntityRequest = {
+    files:
+        | {
+              uri: string;
+              name: string;
+              type: string;
+          }
+        | undefined;
     entityId: string;
     name: string;
     gender: EntityGender;
     variety: EntityVariety;
-    hatching: string;
+    hatching: Date | undefined;
 };
 
 type UpdateEntityResponse = {

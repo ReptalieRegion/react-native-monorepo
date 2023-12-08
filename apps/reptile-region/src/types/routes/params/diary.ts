@@ -13,7 +13,7 @@ type EntityOptionsMenuParams = {
         image: ImageType;
         variety: EntityVariety;
         name: string;
-        hatching: string;
+        hatching: string | undefined;
         gender: EntityGender;
     };
 };
@@ -33,7 +33,7 @@ type EntityUpdateParams = {
         image: ImageType;
         variety: EntityVariety;
         name: string;
-        hatching: string;
+        hatching: string | undefined;
         gender: EntityGender;
     };
 };

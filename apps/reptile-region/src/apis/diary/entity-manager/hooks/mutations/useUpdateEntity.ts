@@ -8,7 +8,10 @@ import type { UpdateEntity } from '@/types/apis/diary/entity';
 
 // 다이어리 개체수정
 export default function useUpdateEntity(
-    props?: Pick<UseMutationOptions<UpdateEntity['Response'], HTTPError, UpdateEntity['Request']>, 'onError' | 'onSuccess'>,
+    props?: Pick<
+        UseMutationOptions<UpdateEntity['Response'], HTTPError, UpdateEntity['Request']>,
+        'onError' | 'onSuccess' | 'onMutate' | 'onSettled'
+    >,
 ) {
     const queryClient = useQueryClient();
     return useMutation<UpdateEntity['Response'], HTTPError, UpdateEntity['Request']>({
@@ -18,5 +21,7 @@ export default function useUpdateEntity(
             queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.list });
         },
         onError: props?.onError,
+        onMutate: props?.onMutate,
+        onSettled: props?.onSettled,
     });
 }

@@ -44,8 +44,8 @@ const useBottomSheetGestureAnimation = () => {
                 if (!isMinHeight) {
                     const nextHeight = Math.max(minSnapPoint, Math.min(maxSnapPoint, startY.value - event.translationY));
                     height.value = nextHeight;
-                } else if (isMinHeight && event.velocityY > 0) {
-                    translateY.value = startTranslateY.value + event.translationY;
+                } else {
+                    translateY.value = Math.max(0, startTranslateY.value + event.translationY);
                 }
             }
         })

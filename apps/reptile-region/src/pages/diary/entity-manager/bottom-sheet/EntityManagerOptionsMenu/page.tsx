@@ -41,7 +41,7 @@ export default function EntityManagerOptionsMenu({
     };
 
     const navigateUpdatePage = () => {
-        navigation.navigate('entity-manager/update', { entity });
+        navigation.replace('entity-manager/update', { entity });
     };
 
     const listItem = [

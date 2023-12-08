@@ -76,7 +76,7 @@ export default function VarietyList({
                                         : selected[item.varietyType] === name
                                         ? 'primary'
                                         : 'placeholder';
-                                console.log(name, selected[item.varietyType]);
+
                                 return (
                                     <TagView
                                         key={index}

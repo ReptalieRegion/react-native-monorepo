@@ -57,22 +57,25 @@ export const createEntityWeight = async ({ entityId, date, weight }: CreateEntit
 
 // 다이어리 개체등록
 export const createEntity = async ({ files, gender, hatching, name, variety, weightUnit }: CreateEntity['Request']) => {
-    const formDate = new FormData();
-    formDate.append('files', files as unknown as Blob);
-    formDate.append('gender', gender);
-    formDate.append('hatching', dayjs(hatching).format());
-    formDate.append('name', name);
-    formDate.append('variety[classification]', variety.classification);
-    formDate.append('variety[species]', variety.species);
-    formDate.append('variety[detailedSpecies]', variety.detailedSpecies);
+    const formData = new FormData();
+    formData.append('files', files as unknown as Blob);
+    formData.append('gender', gender);
+    formData.append('name', name);
+    formData.append('variety[classification]', variety.classification);
+    formData.append('variety[species]', variety.species);
+    formData.append('variety[detailedSpecies]', variety.detailedSpecies);
+    formData.append('weightUnit', weightUnit);
     variety.morph?.forEach((item) => {
-        formDate.append('variety[morph]', item);
+        formData.append('variety[morph]', item);
     });
-    formDate.append('weightUnit', weightUnit);
+
+    if (hatching) {
+        formData.append('hatching', dayjs(hatching).format());
+    }
 
     const response = await clientFetch('api/diary/entity', {
         method: METHOD.POST,
-        body: formDate,
+        body: formData,
         isFormData: true,
     });
 
@@ -84,10 +87,29 @@ export const createEntity = async ({ files, gender, hatching, name, variety, wei
  * PUT
  */
 // 다이어리 개체수정
-export const updateEntity = async ({ entityId, name }: UpdateEntity['Request']) => {
+export const updateEntity = async ({ entityId, files, name, gender, hatching, variety }: UpdateEntity['Request']) => {
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('gender', gender);
+    formData.append('variety[classification]', variety.classification);
+    formData.append('variety[species]', variety.species);
+    formData.append('variety[detailedSpecies]', variety.detailedSpecies);
+    variety.morph?.forEach((item) => {
+        formData.append('variety[morph]', item);
+    });
+
+    if (files) {
+        formData.append('files', files as unknown as Blob);
+    }
+
+    if (hatching) {
+        formData.append('hatching', dayjs(hatching).format());
+    }
+
     const response = await clientFetch(`api/diary/entity/${entityId}`, {
         method: METHOD.PUT,
-        body: { name },
+        body: formData,
+        isFormData: true,
     });
 
     return response.json();

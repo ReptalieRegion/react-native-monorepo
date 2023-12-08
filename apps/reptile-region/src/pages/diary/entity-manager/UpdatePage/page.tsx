@@ -18,6 +18,7 @@ import Question from '@/assets/icons/Question';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import ImagePickerIcon from '@/components/@common/molecules/ImagePickerIcon/ImagePickerIcon';
+import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import { useToast } from '@/components/@common/organisms/Toast';
 import useImagePicker from '@/hooks/@common/useImagePicker';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
@@ -51,12 +52,13 @@ export default function EntityMangerUpdate({
         type: '',
     });
     const [name, setName] = useState(entity.name);
-    const [hatching, setHatching] = useState(dayjs(entity.hatching).toDate());
+    const [hatching, setHatching] = useState<Date | undefined>(entity.hatching ? dayjs(entity.hatching).toDate() : undefined);
     const [gender, setGender] = useState<EntityGender>(entity.gender);
     const [variety, setVariety] = useState<EntityVariety>(entity.variety);
     const { off: varietyOff, on: varietyOn, state: isVarietyVisible } = useOnOff();
     const { off: datePickerOff, on: datePickerOn, state: isDatePickerVisible } = useOnOff();
     const { openToast } = useToast();
+    const { openLoading, closeLoading } = useGlobalLoading();
 
     const { handlePressProfileImage } = useImagePicker({
         onSuccess: (imageInfo) => {
@@ -73,8 +75,14 @@ export default function EntityMangerUpdate({
     });
 
     const { mutate, isPending } = useUpdateEntity({
+        onMutate: () => {
+            openLoading();
+        },
+        onSettled: () => {
+            closeLoading();
+        },
         onSuccess: () => {
-            navigation.pop(2);
+            navigation.pop();
         },
         onError: () => {
             openToast({ contents: '수정에 실패했어요. 잠시후에 다시 시도해주세요.', severity: 'error' });
@@ -106,10 +114,9 @@ export default function EntityMangerUpdate({
     );
 
     const handleSubmit = () => {
-        mutate({ entityId: entity.id, gender, hatching: dayjs(hatching).format(), name, variety });
+        const files = image.uri !== entity.image.src ? image : undefined;
+        mutate({ entityId: entity.id, files, gender, hatching: hatching, name, variety });
     };
-
-    console.log(variety.morph?.length);
 
     return (
         <>
@@ -119,7 +126,7 @@ export default function EntityMangerUpdate({
                         <View style={styles.article}>
                             <Typo variant="title3">이미지</Typo>
                             <View style={imageStyles.wrapper}>
-                                <ImagePickerIcon onPress={handlePressProfileImage} />
+                                <ImagePickerIcon currentSize={1} maxSize={1} onPress={handlePressProfileImage} />
                                 <Image source={{ uri: image.uri }} style={imageStyles.image} />
                             </View>
                         </View>
@@ -186,7 +193,11 @@ export default function EntityMangerUpdate({
                             <Typo variant="title3">해칭일</Typo>
                             <TouchableOpacity onPress={datePickerOn} style={styles.inputWrapper}>
                                 <DatePicker />
-                                <Typo>{dayjs(hatching).format('YYYY.MM.DD')}</Typo>
+                                <ConditionalRenderer
+                                    condition={!!hatching}
+                                    trueContent={<Typo>{dayjs(hatching).format('YYYY.MM.DD')}</Typo>}
+                                    falseContent={<Typo>없음</Typo>}
+                                />
                             </TouchableOpacity>
                         </View>
                     </TouchableWithoutFeedback>

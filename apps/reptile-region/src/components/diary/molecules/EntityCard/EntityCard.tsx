@@ -45,8 +45,24 @@ export default function EntityCard({
                         <TagView label={variety.detailedSpecies} />
                         <GenderIcon gender={gender} />
                     </View>
-                    <Typo variant="body1">{name}</Typo>
-                    <Typo variant="body3" color="placeholder">{`${hatching}`}</Typo>
+                    <Typo
+                        variant="body1"
+                        textBreakStrategy="highQuality"
+                        lineBreakMode="clip"
+                        lineBreakStrategyIOS="hangul-word"
+                        numberOfLines={1}
+                    >
+                        {name}
+                    </Typo>
+                    <ConditionalRenderer
+                        condition={!!hatching}
+                        trueContent={
+                            <Typo variant="body3" color="placeholder">
+                                {hatching}
+                            </Typo>
+                        }
+                        falseContent={null}
+                    />
                 </View>
             </View>
         </TouchableOpacity>
@@ -73,6 +89,7 @@ const styles = StyleSheet.create({
         }),
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
+        height: 290,
     },
     image: {
         borderTopRightRadius: 10,
