@@ -6,9 +6,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import type { SharePostListPageScreen } from '../type';
 
+import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
 import useFetchPushReadCheck from '@/apis/notification/push/hooks/queries/useFetchPushReadCheck';
 import { NotificationIcon } from '@/assets/icons';
-import { ConditionalRenderer } from '@/components/@common/atoms';
+import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
@@ -34,7 +35,8 @@ export function SharePostListHeader(props: NativeStackHeaderProps) {
 export default function ChangeHeader({ navigation }: SharePostListPageScreen) {
     const { isSignIn } = useAuth();
     const { requireAuthNavigation } = useAuthNavigation();
-    const { data } = useFetchPushReadCheck();
+    const { data: pushRead } = useFetchPushReadCheck();
+    const { data: profile } = useFetchMeProfile();
 
     useEffect(() => {
         const headerRight = () => {
@@ -44,33 +46,48 @@ export default function ChangeHeader({ navigation }: SharePostListPageScreen) {
                 });
             };
 
+            const handlePressProfile = () => {
+                navigation.navigate('share-post/modal', {
+                    screen: 'modal/image-thumbnail/me',
+                });
+            };
+
             return (
-                <ConditionalRenderer
-                    condition={isSignIn && data?.isReadAllLog !== undefined && !data.isReadAllLog}
-                    trueContent={
-                        <TouchableOpacity onPress={handlePressNotification}>
-                            <View style={styles.container}>
+                <View style={styles.rightContainer}>
+                    <ConditionalRenderer
+                        condition={isSignIn && pushRead?.isReadAllLog !== undefined && !pushRead.isReadAllLog}
+                        trueContent={
+                            <TouchableOpacity onPress={handlePressNotification}>
+                                <View style={styles.container}>
+                                    <NotificationIcon />
+                                    <View style={styles.circle} />
+                                </View>
+                            </TouchableOpacity>
+                        }
+                        falseContent={
+                            <TouchableOpacity onPress={handlePressNotification}>
                                 <NotificationIcon />
-                                <View style={styles.circle} />
-                            </View>
-                        </TouchableOpacity>
-                    }
-                    falseContent={
-                        <TouchableOpacity onPress={handlePressNotification}>
-                            <NotificationIcon />
-                        </TouchableOpacity>
-                    }
-                />
+                            </TouchableOpacity>
+                        }
+                    />
+                    <TouchableOpacity onPress={handlePressProfile}>
+                        <Avatar image={profile?.user.profile} size={24} />
+                    </TouchableOpacity>
+                </View>
             );
         };
 
         navigation.setOptions({ headerRight });
-    }, [data?.isReadAllLog, isSignIn, navigation, requireAuthNavigation]);
+    }, [isSignIn, navigation, profile?.user, pushRead?.isReadAllLog, requireAuthNavigation]);
 
     return null;
 }
 
 const styles = StyleSheet.create({
+    rightContainer: {
+        flexDirection: 'row',
+        gap: 20,
+    },
     container: {
         position: 'relative',
     },
@@ -78,9 +95,11 @@ const styles = StyleSheet.create({
         backgroundColor: color.Red[500].toString(),
         position: 'absolute',
         borderRadius: 9999,
-        height: 5,
-        width: 5,
-        top: 1,
-        right: 4,
+        borderWidth: 1,
+        borderColor: color.White.toString(),
+        height: 8,
+        width: 8,
+        top: 0,
+        right: 1,
     },
 });

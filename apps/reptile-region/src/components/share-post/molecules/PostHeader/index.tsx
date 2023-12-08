@@ -36,7 +36,7 @@ export default function PostHeader({
         <View style={styles.container}>
             <View style={styles.leftItemContainer}>
                 <Avatar image={{ src: profileImage.src }} size={30} priority={'high'} onPress={onPressProfile} />
-                <TouchableTypo onPress={onPressProfile} variant="title5">
+                <TouchableTypo onPress={onPressProfile} variant="title4">
                     {nickname}
                 </TouchableTypo>
             </View>

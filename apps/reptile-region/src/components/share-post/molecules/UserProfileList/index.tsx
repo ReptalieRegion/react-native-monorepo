@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
+import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import Follow from '@/components/share-post/atoms/Follow';
 import type { FetchFollowerListResponse } from '@/types/apis/share-post/user';
 import type { ImageType } from '@/types/global/image';
@@ -16,6 +16,7 @@ type User = {
         profile: ImageType;
         nickname: string;
         isFollow: boolean | undefined;
+        isMine: boolean;
     };
 };
 
@@ -34,9 +35,9 @@ type UserProfileListProps = UserProfileListState & UserProfileListActions;
 export default function UserProfileList({ data, onEndReached, onPressProfile, onPressFollow }: UserProfileListProps) {
     const keyExtractor = (item: FetchFollowerListResponse) => item.user.id;
 
-    const renderItem: ListRenderItem<FetchFollowerListResponse> = ({
+    const renderItem: ListRenderItem<User> = ({
         item: {
-            user: { id: userId, isFollow, nickname, profile },
+            user: { id: userId, isFollow, nickname, profile, isMine },
         },
     }) => {
         return (
@@ -46,11 +47,15 @@ export default function UserProfileList({ data, onEndReached, onPressProfile, on
                         style={styles.profileContainer}
                         onPress={() => onPressProfile({ user: { isFollow, nickname, profile } })}
                     >
-                        <Avatar image={profile} size={35} />
-                        <Typo variant="body3">{nickname}</Typo>
+                        <Avatar image={profile} size={40} />
+                        <Typo variant="body2">{nickname}</Typo>
                     </TouchableOpacity>
                 </View>
-                <Follow isFollow={isFollow} onPress={() => onPressFollow({ userId, isFollow })} />
+                <ConditionalRenderer
+                    condition={isMine}
+                    trueContent={null}
+                    falseContent={<Follow isFollow={isFollow} onPress={() => onPressFollow({ userId, isFollow })} />}
+                />
             </View>
         );
     };
@@ -90,6 +95,6 @@ const styles = StyleSheet.create({
     profileContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10,
+        gap: 15,
     },
 });

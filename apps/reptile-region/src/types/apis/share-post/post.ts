@@ -112,6 +112,7 @@ type FetchLikeResponse = {
         profile: ImageType;
         nickname: string;
         isFollow: boolean | undefined;
+        isMine: boolean;
     };
 };
 

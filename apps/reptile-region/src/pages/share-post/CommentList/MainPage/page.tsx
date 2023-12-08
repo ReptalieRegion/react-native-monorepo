@@ -36,19 +36,6 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
                 navigateDetailPage({ user: { isFollow: false, nickname, profile } });
             };
 
-            const handleNavigateCommentReplyPage = () => {
-                navigateCommentReplyPage({
-                    comment: {
-                        id: commentId,
-                        contents,
-                        isMine,
-                        isModified,
-                        user: { id: userId, nickname, profile },
-                    },
-                    isFocus: false,
-                });
-            };
-
             return (
                 <CommentItem
                     item={item}
@@ -57,8 +44,30 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
                     onPressDeclarationButton={handlePressDeclarationButton}
                     onPressDeleteButton={() => handleDeleteButton(commentId)}
                     onPressUpdateButton={handlePressUpdateButton}
-                    onPressWriteButton={handleNavigateCommentReplyPage}
-                    onPressShowCommentReplyButton={handleNavigateCommentReplyPage}
+                    onPressWriteButton={() =>
+                        navigateCommentReplyPage({
+                            comment: {
+                                id: commentId,
+                                contents,
+                                isMine,
+                                isModified,
+                                user: { id: userId, nickname, profile },
+                            },
+                            isFocus: true,
+                        })
+                    }
+                    onPressShowCommentReplyButton={() =>
+                        navigateCommentReplyPage({
+                            comment: {
+                                id: commentId,
+                                contents,
+                                isMine,
+                                isModified,
+                                user: { id: userId, nickname, profile },
+                            },
+                            isFocus: false,
+                        })
+                    }
                 />
             );
         },
@@ -96,4 +105,8 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
     );
 }
 
-const contentContainerStyle: ContentStyle = { paddingLeft: 20, paddingRight: 20 };
+const contentContainerStyle: ContentStyle = {
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 20,
+};

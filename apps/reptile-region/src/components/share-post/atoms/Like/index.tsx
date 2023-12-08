@@ -21,7 +21,7 @@ const LIKE_STYLE: LikeStyle = {
     },
     unLike: {
         fill: color.White.toString(),
-        stroke: color.Black.toString(),
+        stroke: color.DarkGray[500].toString(),
     },
 };
 

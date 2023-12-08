@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
 import type { PropsWithChildren } from 'react';
-import { useWindowDimensions } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
 import type { Insets } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { runOnJS, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import { BottomSheetAnimationStateContext, BottomSheetAnimationActionContext } from '../contexts/BottomSheetAnimationContext';
+import { BottomSheetAnimationActionContext, BottomSheetAnimationStateContext } from '../contexts/BottomSheetAnimationContext';
 import type { BottomSheetAnimationAction, BottomSheetAnimationState, SnapInfo } from '../types/bottom-sheet';
 import { getPixel } from '../utils/calc-pixel';
 
@@ -43,7 +43,7 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
     };
 
     useEffect(() => {
-        height.value = withTiming(numberPointsFromTop[snapInfo.startIndex]);
+        height.value = withTiming(numberPointsFromTop[snapInfo.startIndex], { duration: 250 });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

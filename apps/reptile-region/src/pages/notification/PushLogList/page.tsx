@@ -30,7 +30,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
         switch (item.contents.type) {
             case ContentType.Profile:
                 return (
-                    <TouchableOpacity onPress={handlePressLog}>
+                    <TouchableOpacity key={item.contents.article} onPress={handlePressLog}>
                         <View style={styles.row}>
                             <Avatar image={{ src: item.contents.profileThumbnail }} size={40} />
                             <View>
@@ -44,14 +44,14 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                 );
             case ContentType.SharePost:
                 return (
-                    <TouchableOpacity onPress={handlePressLog}>
+                    <TouchableOpacity key={item.contents.article} onPress={handlePressLog}>
                         <View style={styles.row}>
                             <Avatar image={{ src: item.contents.profileThumbnail }} size={40} />
                             <View style={styles.text}>
                                 <Typo variant="title5" color="placeholder">
                                     {item.contents.title}
                                 </Typo>
-                                <Typo>{item.contents.article}</Typo>
+                                <Typo variant="body2">{item.contents.article}</Typo>
                             </View>
                             <Image source={{ uri: item.contents.postThumbnail }} style={styles.postThumbnail} />
                         </View>
@@ -59,7 +59,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                 );
             case ContentType.Notice:
                 return (
-                    <TouchableOpacity onPress={handlePressLog}>
+                    <TouchableOpacity key={item.contents.article} onPress={handlePressLog}>
                         <View style={styles.row}>
                             <View>
                                 <Typo variant="title5" color="placeholder">
@@ -93,7 +93,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                         <Divider />
                     </View>
                 }
-                estimatedItemSize={50}
+                estimatedItemSize={80}
             />
         </View>
     );
@@ -105,14 +105,15 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     row: {
-        padding: 20,
+        paddingHorizontal: 20,
         flexDirection: 'row',
         alignItems: 'center',
         gap: 15,
-        height: 70,
+        height: 80,
     },
     text: {
         gap: 5,
+        flex: 1,
     },
     postThumbnail: {
         width: 40,

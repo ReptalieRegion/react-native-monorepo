@@ -54,20 +54,26 @@ const selectPhoto = (
                 isLimit: false,
             };
         default:
-            return state;
+            return { ...state, isLimit: false };
     }
 };
 
 const deleteSelectedPhoto = (state: PhotoSelectState, uri: string): PhotoSelectState => {
-    const { selectedPhotos } = state;
+    const { selectedPhotos, croppedSelectedPhotos } = state;
     if (selectedPhotos.length === 1) {
         return state;
     }
 
     const filteredSelectedPhotos = selectedPhotos.filter(({ origin: { node } }) => node.image.uri !== uri);
+    const filteredCroppedPhotos = croppedSelectedPhotos.filter((croppedPhoto) => croppedPhoto.node.image.uri !== uri);
     const newCurrentSelectedPhoto = filteredSelectedPhotos.at(-1) ?? null;
 
-    return { ...state, selectedPhotos: filteredSelectedPhotos, currentSelectedPhoto: newCurrentSelectedPhoto };
+    return {
+        ...state,
+        selectedPhotos: filteredSelectedPhotos,
+        currentSelectedPhoto: newCurrentSelectedPhoto,
+        croppedSelectedPhotos: filteredCroppedPhotos,
+    };
 };
 
 const croppedImage = (

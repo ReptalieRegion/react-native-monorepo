@@ -10,7 +10,7 @@ type MeListNavigation = CompositeNavigationProp<
     NativeStackNavigationProp<RootRoutesParamList>
 >;
 
-const useMeListNavigation = () => {
+export default function useMeListNavigation() {
     const navigation = useNavigation<MeListNavigation>();
 
     const navigateSharePostMe = useCallback(() => {
@@ -47,6 +47,4 @@ const useMeListNavigation = () => {
         navigateLicense,
         navigateNotificationSetting,
     };
-};
-
-export default useMeListNavigation;
+}

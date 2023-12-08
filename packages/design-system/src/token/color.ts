@@ -289,6 +289,7 @@ const color = {
     },
     Gray: {
         50: makeColor('#FAFAFAFF'),
+        75: makeColor('#E5E7EBFF'),
         100: makeColor('#F5F5F5FF'),
         200: makeColor('#EEEEEEFF'),
         250: makeColor('#D3D3D3FF'),
@@ -306,10 +307,18 @@ const color = {
         A400: makeColor('#BDBDBDFF'),
         A700: makeColor('#616161FF'),
     },
+    DarkGray: {
+        50: makeColor('#B1B8C0'),
+        200: makeColor('#505866'),
+        400: makeColor('#333D4BFF'),
+        500: makeColor('#1A1E27FF'),
+    },
     BlueGray: {
         50: makeColor('#ECEFF1FF'),
+        75: makeColor('#D6DADFFF'),
         100: makeColor('#CFD8DCFF'),
-        200: makeColor('#B0BEc5FF'),
+        200: makeColor('#B0BEC5FF'),
+        250: makeColor('#B0B8C1FF'),
         300: makeColor('#90A4AEFF'),
         400: makeColor('#78909CFF'),
         500: makeColor('#607D8BFF'),

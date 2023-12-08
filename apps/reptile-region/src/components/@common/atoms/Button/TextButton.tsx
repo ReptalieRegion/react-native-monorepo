@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import type { GenericTouchableProps } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
 
-type ButtonType = 'view' | 'text' | 'outline';
+type ButtonType = 'view' | 'text' | 'outline' | 'underLine';
 
 type BorderType = 'OVAL' | 'RECTANGLE';
 
@@ -47,9 +47,10 @@ const styleGenerator = ({
             ? color.Teal[150].toString()
             : color.White.toString(),
         padding: 10,
-        border: border === 'OVAL' ? 20 : 4,
+        border: border === 'OVAL' ? 20 : type === 'underLine' ? 0 : 4,
+        borderBottom: type === 'underLine' ? 1 : undefined,
         textColor: disabled ? 'placeholder' : textColor,
-        borderWidth: type === 'outline' ? 1 : undefined,
+        borderWidth: type === 'outline' || type === 'underLine' ? 1 : undefined,
         borderColor: type === 'outline' ? color.Gray[400].toString() : undefined,
     };
 };
@@ -102,7 +103,7 @@ export default function TextButton({
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
+        justifyContent: 'center',
     },
     text: {
         fontSize: 14,

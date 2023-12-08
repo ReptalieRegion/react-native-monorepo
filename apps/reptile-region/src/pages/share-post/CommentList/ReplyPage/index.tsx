@@ -21,7 +21,7 @@ export default function CommentReplyPage(props: CommentReplyScreenProps) {
                     <FollowerUserList containerStyles={styles.followerUserListContainer} />
                 </Suspense>
             </View>
-            <CommentReplyTextEditor />
+            <CommentReplyTextEditor isFocus={props.route.params.isFocus} />
         </Comment>
     );
 }

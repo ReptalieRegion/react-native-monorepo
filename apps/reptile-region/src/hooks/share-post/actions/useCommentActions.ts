@@ -14,6 +14,7 @@ const useCommentActions = () => {
             },
             {
                 text: '삭제',
+                style: 'destructive',
                 onPress: () => deleteMutate.mutate({ commentId }),
             },
         ]);

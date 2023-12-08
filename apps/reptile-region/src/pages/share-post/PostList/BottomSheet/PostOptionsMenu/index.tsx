@@ -45,6 +45,7 @@ export default function PostOptionsMenu({ navigation, route: { params } }: PostO
             },
             {
                 text: '삭제',
+                style: 'destructive',
                 onPress: () => {
                     mutate({ postId: post.id });
                     closeMenu();

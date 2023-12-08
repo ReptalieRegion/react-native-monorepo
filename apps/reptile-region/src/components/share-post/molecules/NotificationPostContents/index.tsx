@@ -31,7 +31,7 @@ export default function NotificationPostContents({
                 condition={likeCount === 0}
                 trueContent={null}
                 falseContent={
-                    <TouchableTypo variant="heading3" onPress={onPressLikeContents}>
+                    <TouchableTypo variant="heading2" onPress={onPressLikeContents}>
                         {likeCount}명이 좋아합니다.
                     </TouchableTypo>
                 }

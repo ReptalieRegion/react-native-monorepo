@@ -41,7 +41,7 @@ export default function Follow({ isFollow, onPress }: FollowProps) {
     const followInfo = makeFollowInfo(isFollow);
 
     return (
-        <TouchableTypo variant="title5" color={followInfo.color} onPress={onPress}>
+        <TouchableTypo variant="title4" color={followInfo.color} onPress={onPress}>
             {followInfo.text}
         </TouchableTypo>
     );

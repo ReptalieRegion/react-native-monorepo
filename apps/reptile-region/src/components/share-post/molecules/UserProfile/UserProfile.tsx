@@ -80,7 +80,7 @@ export default function UserProfile({ user, postCount, navigateFollowPage, handl
     return (
         <View style={styles.container}>
             <Avatar image={{ src: newData.user.profile.src }} size={80} priority={'high'} />
-            <Typo variant="title5">{newData.user.nickname}</Typo>
+            <Typo variant="title4">{newData.user.nickname}</Typo>
             <View style={styles.activitySummaryContainer}>
                 {activitySummaryItems.map(({ label, count, onPress }) => (
                     <UserActivitySummaryItem key={label} label={label} count={count} onPress={onPress} />
@@ -113,13 +113,13 @@ const styles = StyleSheet.create({
         padding: 20,
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 5,
+        gap: 7,
         height: 195,
     },
     activitySummaryContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        gap: 10,
+        gap: 15,
     },
     textContainer: {
         height: 20,

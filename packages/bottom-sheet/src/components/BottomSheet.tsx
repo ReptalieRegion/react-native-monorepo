@@ -1,14 +1,16 @@
 import { color } from '@reptile-region/design-system';
-import React from 'react';
 import type { PropsWithChildren } from 'react';
-import type { Insets } from 'react-native';
+import React from 'react';
+import { Keyboard, Platform, StyleSheet, type Insets } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Animated, { KeyboardState, runOnJS, useAnimatedKeyboard } from 'react-native-reanimated';
 
 import BackDrop from '../components/BackDrop';
 import BottomSheetProvider from '../providers/BottomSheetProvider';
 import type { BackDropStyle, ContainerStyle, SnapInfo } from '../types/bottom-sheet';
 
 import BottomSheetContainer from './BottomSheetContainer';
-import BottomSheetHeader from './BottomSheetHeader';
+import BottomSheetHeader, { type BottomSheetHeaderProps } from './BottomSheetHeader';
 
 type BottomSheetProps = {
     onClose: () => void;
@@ -16,7 +18,7 @@ type BottomSheetProps = {
     containerStyle?: ContainerStyle;
     snapInfo: SnapInfo;
     insets?: Insets;
-};
+} & BottomSheetHeaderProps;
 
 const BottomSheet = ({
     containerStyle = {
@@ -25,21 +27,45 @@ const BottomSheet = ({
         borderTopLeftRadius: 16,
         borderTopStartRadius: 16,
     },
-    backDropStyle = { backgroundColor: color.Black.alpha(0.3).toString() },
+    backDropStyle = { backgroundColor: color.DarkGray[500].alpha(0.3).toString() },
     children,
     snapInfo,
     insets,
+    header,
     onClose,
 }: PropsWithChildren<BottomSheetProps>) => {
+    const { state } = useAnimatedKeyboard();
+    const handleCloseKeyboard = () => {
+        Keyboard.dismiss();
+    };
+    const gesture = Gesture.Pan().onEnd(() => {
+        if (state.value === KeyboardState.OPEN) {
+            runOnJS(handleCloseKeyboard)();
+        }
+    });
+
     return (
         <BottomSheetProvider insets={insets} onClose={onClose} snapInfo={snapInfo}>
             <BackDrop style={backDropStyle} />
             <BottomSheetContainer style={{ ...containerStyle, paddingBottom: insets?.bottom }}>
-                <BottomSheetHeader />
-                {children}
+                <BottomSheetHeader header={header} />
+                {Platform.select({
+                    ios: (
+                        <GestureDetector gesture={gesture}>
+                            <Animated.View style={styles.container}>{children}</Animated.View>
+                        </GestureDetector>
+                    ),
+                    android: <Animated.View style={styles.container}>{children}</Animated.View>,
+                })}
             </BottomSheetContainer>
         </BottomSheetProvider>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+});
 
 export default BottomSheet;

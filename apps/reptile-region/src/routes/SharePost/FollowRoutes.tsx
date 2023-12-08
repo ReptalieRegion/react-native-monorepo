@@ -39,11 +39,11 @@ export default function FollowRoutes({
             initialRouteName={initialRouteName}
             initialLayout={{ width }}
             screenOptions={{
-                tabBarActiveTintColor: color.Black.toString(),
+                tabBarActiveTintColor: color.DarkGray[500].toString(),
                 tabBarLabelStyle: { fontSize: 14 },
                 tabBarStyle: { height: 40, marginTop: 0, paddingTop: 0 },
                 tabBarItemStyle: { marginTop: 0, paddingTop: 0 },
-                tabBarIndicatorStyle: { height: 1, backgroundColor: color.Black.toString() },
+                tabBarIndicatorStyle: { height: 1, backgroundColor: color.DarkGray[500].toString() },
             }}
         >
             <TopTab.Screen

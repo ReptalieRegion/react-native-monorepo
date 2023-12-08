@@ -1,5 +1,5 @@
 import { color } from '@reptile-region/design-system';
-import { FlashList, type ListRenderItem } from '@shopify/flash-list';
+import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
@@ -81,6 +81,7 @@ export default function SharePostDetailModalPage({
             <Animated.View style={[styles.container, animatedKeyboard]}>
                 <FlashList
                     data={comments}
+                    contentContainerStyle={contentContainerStyle}
                     renderItem={renderItem}
                     estimatedItemSize={150}
                     onEndReached={handleFetchNextPage}
@@ -92,6 +93,10 @@ export default function SharePostDetailModalPage({
         </Comment>
     );
 }
+
+const contentContainerStyle: ContentStyle = {
+    paddingBottom: 20,
+};
 
 const styles = StyleSheet.create({
     container: {

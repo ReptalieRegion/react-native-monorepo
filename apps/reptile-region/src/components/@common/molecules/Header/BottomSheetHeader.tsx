@@ -2,7 +2,6 @@ import { getHeaderTitle } from '@react-navigation/elements';
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { BottomSheetAnimatedGesture } from '@reptile-region/bottom-sheet';
 import { Typo, color } from '@reptile-region/design-system';
-import { useCallback } from 'react';
 import React, { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -19,11 +18,11 @@ export type BottomSheetHeaderProps = {
 
 export default function BottomSheetHeader({ navigation, route, options }: NativeStackHeaderProps) {
     const title = getHeaderTitle(options, route.name);
-    const handleLeftPress = useCallback(() => {
+    const handleLeftPress = () => {
         if (options.headerBackVisible && navigation.canGoBack()) {
             navigation.goBack();
         }
-    }, [navigation, options.headerBackVisible]);
+    };
 
     return (
         <BottomSheetAnimatedGesture>

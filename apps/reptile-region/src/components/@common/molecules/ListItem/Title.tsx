@@ -10,7 +10,7 @@ type TitleProps = TitleState;
 
 export default function Title({ text, disabled }: TitleProps) {
     return (
-        <Typo variant="title5" textAlign="left" color={disabled ? 'placeholder' : 'default'}>
+        <Typo variant="body1" textAlign="left" color={disabled ? 'placeholder' : 'default'}>
             {text}
         </Typo>
     );

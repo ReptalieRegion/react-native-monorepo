@@ -105,7 +105,7 @@ export default function MeDetailListModalPage({
                 onEndReached={onEndReached}
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 scrollEventThrottle={16}
-                estimatedItemSize={484}
+                estimatedItemSize={594}
                 initialScrollIndex={startIndex}
             />
         </View>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     postCardContainer: {
         marginTop: 20,
         marginBottom: 20,
-        minHeight: 444,
-        height: 444,
+        minHeight: 594,
+        height: 594,
     },
 });

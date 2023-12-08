@@ -5,34 +5,32 @@ import { Modal, StyleSheet, View, useWindowDimensions } from 'react-native';
 import useAlertHandler from '../hooks/useAlertHandler';
 import useAlertState from '../hooks/useAlertState';
 
-import { ConditionalRenderer, TextButton } from '@/components/@common/atoms';
+import { ConditionalRenderer } from '@/components/@common/atoms';
+import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 
 export default function AlertContainer() {
     const { width } = useWindowDimensions();
     const { show, contents, title, buttons } = useAlertState();
     const { closeAlert } = useAlertHandler();
-    const modalWidth = width < 275 ? width * 0.8 : 275;
-    const buttonWidth = modalWidth / 2 - 30;
+    const modalWidth = width - 80;
 
     return (
         <Modal visible={show} transparent={true}>
             <View style={styles.container}>
                 <View style={[styles.modalContainer, { width: modalWidth }]}>
                     <View style={styles.textContainer}>
-                        <Typo variant="title3" textAlign="center">
-                            {title}
-                        </Typo>
+                        <Typo variant="title1">{title}</Typo>
                         <ConditionalRenderer
                             condition={!!contents}
                             trueContent={
-                                <Typo variant="body2" textAlign="center">
+                                <Typo variant="body1" color="sub-placeholder">
                                     {contents}
                                 </Typo>
                             }
                             falseContent={null}
                         />
                     </View>
-                    <View style={styles.buttonContainer}>
+                    <View style={styles.buttonWrapper}>
                         {buttons.map((button, index) => {
                             const handleButtonClick = () => {
                                 closeAlert();
@@ -42,26 +40,26 @@ export default function AlertContainer() {
                             switch (button.type) {
                                 case 'ok':
                                     return (
-                                        <TextButton
-                                            key={button.text + index}
-                                            type="view"
-                                            color="surface"
-                                            text={button?.text ?? '확인'}
-                                            onPress={handleButtonClick}
-                                            containerStyle={{ width: buttonWidth }}
-                                        />
+                                        <View key={index} style={styles.buttonContainer}>
+                                            <ConfirmButton
+                                                text={button.text}
+                                                variant="confirm"
+                                                size="modal"
+                                                onPress={handleButtonClick}
+                                            />
+                                        </View>
                                     );
                                 case 'cancel':
                                 default:
                                     return (
-                                        <TextButton
-                                            key={button.text + index}
-                                            type="outline"
-                                            text={button?.text ?? '취소'}
-                                            color="sub-placeholder"
-                                            onPress={handleButtonClick}
-                                            containerStyle={{ width: buttonWidth }}
-                                        />
+                                        <View key={index} style={styles.buttonContainer}>
+                                            <ConfirmButton
+                                                text={button.text}
+                                                variant="cancel"
+                                                size="modal"
+                                                onPress={handleButtonClick}
+                                            />
+                                        </View>
                                     );
                             }
                         })}
@@ -77,21 +75,24 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: color.Black.alpha(0.65).toString(),
+        backgroundColor: color.DarkGray[500].alpha(0.3).toString(),
     },
     modalContainer: {
         backgroundColor: color.White.toString(),
+        margin: 20,
         paddingHorizontal: 20,
-        paddingVertical: 26,
-        borderRadius: 10,
+        paddingVertical: 20,
+        borderRadius: 20,
     },
     textContainer: {
         marginBottom: 20,
         gap: 10,
     },
-    buttonContainer: {
+    buttonWrapper: {
         flexDirection: 'row',
-        justifyContent: 'center',
-        gap: 20,
+        gap: 10,
+    },
+    buttonContainer: {
+        flex: 1,
     },
 });

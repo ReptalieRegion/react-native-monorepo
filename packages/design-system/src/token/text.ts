@@ -16,6 +16,11 @@ export const variantMap: Variant = {
     // headline
     heading1: {
         fontWeight: fontWeightMap.heavy,
+        lineHeight: 36,
+        fontSize: 24,
+    },
+    heading1Bold: {
+        fontWeight: fontWeightMap.bold,
         lineHeight: 32,
         fontSize: 24,
     },
@@ -26,8 +31,8 @@ export const variantMap: Variant = {
     },
     heading2: {
         fontWeight: fontWeightMap.bold,
-        lineHeight: 25,
-        fontSize: 17,
+        lineHeight: 24,
+        fontSize: 15,
     },
     heading3: {
         fontWeight: fontWeightMap.bold,
@@ -42,8 +47,8 @@ export const variantMap: Variant = {
     // title
     title1: {
         fontWeight: fontWeightMap.bold,
-        lineHeight: 31,
-        fontSize: 23,
+        lineHeight: 36,
+        fontSize: 24,
     },
     title2: {
         fontWeight: fontWeightMap.semibold,
@@ -79,7 +84,7 @@ export const variantMap: Variant = {
     body2: {
         fontWeight: fontWeightMap.regular,
         lineHeight: 18,
-        fontSize: 14,
+        fontSize: 15,
     },
     body3: {
         fontWeight: fontWeightMap.regular,
@@ -106,7 +111,8 @@ export const textLightColor: TextLightColor = {
     'sub-placeholder': color.Gray[600].toString(),
     require: color.Red[600].toString(),
     error: color.Red[500].toString(),
-    default: color.Black.toString(),
+    default: color.DarkGray[500].toString(),
+    'sub-default': color.DarkGray[200].toString(),
     'error-toast': color.Red.A800.toString(),
     'warning-toast': color.Brown.A800.toString(),
     'info-toast': color.Blue.A800.toString(),

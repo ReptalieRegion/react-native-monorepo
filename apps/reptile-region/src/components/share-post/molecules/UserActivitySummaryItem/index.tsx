@@ -22,7 +22,7 @@ export default function UserActivitySummaryItem({
             <View style={styles.container}>
                 <Typo variant="body2" textAlign="center">
                     {label + ' '}
-                    <Typo variant="body2" color="primary">
+                    <Typo variant="title4" color="primary">
                         {count}
                     </Typo>
                 </Typo>

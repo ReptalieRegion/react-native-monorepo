@@ -6,7 +6,7 @@ import SharePostCardNotification from '@/components/share-post/organisms/SharePo
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
 import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 
-export function Post({ postId }: { postId: string }) {
+export default function Post({ postId }: { postId: string }) {
     const { data } = useFetchPost({ postId });
 
     const {

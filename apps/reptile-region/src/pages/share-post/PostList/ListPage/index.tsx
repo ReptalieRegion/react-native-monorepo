@@ -3,10 +3,11 @@ import React, { Suspense } from 'react';
 import SharePostListSkeleton from '../loading';
 import type { SharePostListPageScreen } from '../type';
 
-import ChangeHeader from './header';
-import PostList from './page';
-
-import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
+const ChangeHeader = React.lazy(() => import('./header'));
+const PostList = React.lazy(() => import('./page'));
+const FloatingActionButtons = React.lazy(
+    () => import('@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons'),
+);
 
 export default function SharePostListPage(props: SharePostListPageScreen) {
     return (
