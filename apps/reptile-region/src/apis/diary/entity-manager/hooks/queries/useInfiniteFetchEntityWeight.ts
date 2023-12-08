@@ -25,7 +25,7 @@ export default function useInfiniteFetchEntityWeight({ entityId }: FetchEntityWe
         queryFn: ({ pageParam }) => fetchEntityWeightList({ entityId, pageParam }),
         getNextPageParam: (data) => data.nextPage,
         select: useCallback((data: InfiniteData<InfiniteState<FetchEntityWeightListResponse[]>, number>) => {
-            return data.pages.flatMap((page) =>
+            return data.pages.reverse().flatMap((page) =>
                 page.items.map((item) => ({
                     date: dayjs(item.date).format('MM/DD'),
                     weight: item.weight,
