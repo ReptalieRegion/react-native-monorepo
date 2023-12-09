@@ -31,7 +31,11 @@ interface SavePhoto {
     photo: Photo | null;
 }
 
-export type PhotoActions = InitPhotos | AddPhotos | SavePhoto;
+interface RefetchPhoto {
+    type: 'REFETCH';
+}
+
+export type PhotoActions = InitPhotos | AddPhotos | SavePhoto | RefetchPhoto;
 
 export type PhotoSelectState = {
     currentSelectedPhoto: { origin: Photo | null; crop?: CropInfo } | null;
@@ -72,13 +76,18 @@ export interface FinishedLimitCallback {
     type: 'FINISHED_LIMIT_CALLBACK';
 }
 
+export interface RefetchSelectPhoto {
+    type: 'REFETCH';
+}
+
 export type PhotoSelectActions =
     | SelectPhoto
     | DeleteSelectedPhoto
     | InitCurrentPhoto
     | CroppedPhoto
     | CroppedSelectedPhoto
-    | FinishedLimitCallback;
+    | FinishedLimitCallback
+    | RefetchSelectPhoto;
 
 export type FetchPhotosProps = {
     first: number;

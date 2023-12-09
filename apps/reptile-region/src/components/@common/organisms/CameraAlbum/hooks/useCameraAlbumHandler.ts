@@ -8,6 +8,7 @@ import type { CroppedPhoto, CroppedSelectedPhoto, DeleteSelectedPhoto, FetchPhot
 export default function useCameraAlbumHandler() {
     const [photos, getPhotos, save] = useCameraRoll();
     const isInitPhoto = useRef<boolean | undefined>();
+    const isRetchPhoto = useRef<boolean | undefined>();
     const isSavePhoto = useRef<boolean | undefined>();
     const isLoadingFetchPhoto = useRef(false);
 
@@ -28,6 +29,10 @@ export default function useCameraAlbumHandler() {
             name: edge.node.image.filename ?? `image_${Math.floor(Math.random() * 9999)}_${new Date().getTime()}.jpg`,
         }));
         const firstEdge = newPhotos[0];
+
+        if (isRetchPhoto.current) {
+            photoSelectDispatch({ type: 'REFETCH' });
+        }
 
         if (isInitPhoto.current) {
             photoSelectDispatch({ type: 'INIT_CURRENT_PHOTO', photo: firstEdge });
@@ -92,6 +97,14 @@ export default function useCameraAlbumHandler() {
         [photoSelectDispatch],
     );
 
+    const refetchPhoto = useCallback(
+        async ({ first, after, assetType, isInit }: FetchPhotosProps) => {
+            isRetchPhoto.current = true;
+            fetchPhotos({ first, after, assetType, isInit });
+        },
+        [fetchPhotos],
+    );
+
     return {
         fetchPhotos,
         selectPhoto,
@@ -99,5 +112,6 @@ export default function useCameraAlbumHandler() {
         savePhoto,
         setCropInfo,
         setCroppedSelectedPhoto,
+        refetchPhoto,
     };
 }
