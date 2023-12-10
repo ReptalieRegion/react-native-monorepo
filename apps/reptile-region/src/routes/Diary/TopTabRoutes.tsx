@@ -4,10 +4,11 @@ import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import CalenderRoutes from './CalenderRoutes';
 import EntityManagerRoutes from './EntityManagerRoutes';
 
 import type { DiaryParamList } from '@/types/routes/param-list/diary';
+
+const CalenderRoutes = React.lazy(() => import('./CalenderRoutes'));
 
 const TopTab = createMaterialTopTabNavigator<DiaryParamList>();
 

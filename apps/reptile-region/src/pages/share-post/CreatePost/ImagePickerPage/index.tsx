@@ -1,4 +1,3 @@
-import { useIsFocused } from '@react-navigation/native';
 import { TouchableTypo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
@@ -32,8 +31,6 @@ export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
 
 function CameraAlbumActions({ height }: { height: number }) {
     const { handleOpenCamera, handleOpenPhotoPicker } = useImageCropActions();
-    const isFocused = useIsFocused();
-    console.log(isFocused);
 
     return (
         <View style={[styles.container, { height: height }]}>

@@ -16,8 +16,6 @@ const Stack = createNativeStackNavigator<PostingParamList>();
 export default function PostingRoutes() {
     const { openToast } = useToast();
 
-    console.log('hi');
-
     return (
         <CameraAlbum
             maxPhotoCount={MAX_PHOTO_COUNT}
