@@ -28,8 +28,5 @@
         "prettier": "^3.0.3",
         "typescript": "5.2.2"
     },
-    "packageManager": "yarn@3.6.0",
-    "resolutions": {
-        "react-native-calendars@^1.1302.0": "patch:react-native-calendars@npm%3A1.1302.0#./.yarn/patches/react-native-calendars-npm-1.1302.0-c461927407.patch"
-    }
+    "packageManager": "yarn@3.6.0"
 }

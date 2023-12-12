@@ -8,8 +8,8 @@
      */
     "prettier.prettierPath": "node_modules/prettier/index.cjs",
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true,
-        "source.organizeImports": true
+        "source.fixAll.eslint": "explicit",
+        "source.organizeImports": "explicit"
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.rulers": [120],
