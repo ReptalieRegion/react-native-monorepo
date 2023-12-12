@@ -1,17 +1,17 @@
 import { color } from '@reptile-region/design-system';
-import React from 'react';
+import dayjs from 'dayjs';
+import React, { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import ExpandableCalendar from '@/components/@common/organisms/Calendars/components/ExpandableCalendar';
-import Calendar from '@/components/@common/organisms/Calendars/providers/Calendar';
 
 export default function ExpandableCalendarScreen() {
+    const today = useRef(dayjs().format('YYYY-MM-DD')).current;
+
     return (
-        <Calendar>
-            <View style={styles.wrapper}>
-                <ExpandableCalendar />
-            </View>
-        </Calendar>
+        <View style={styles.wrapper}>
+            <ExpandableCalendar date={today} minDate="1997-01-01" maxDate={today} />
+        </View>
     );
 }
 

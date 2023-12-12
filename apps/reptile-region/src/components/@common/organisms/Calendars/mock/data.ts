@@ -1,7 +1,8 @@
 import { fakerKO } from '@faker-js/faker';
-import { color } from '@reptile-region/design-system';
-import isEmpty from 'lodash/isEmpty';
-import type { MarkedDates } from 'react-native-calendars/src/types';
+import dayjs from 'dayjs';
+
+import { dotStyle } from '../components/style';
+import type { MarkedDates } from '../type';
 
 const today = new Date().toISOString().split('T')[0];
 const fastDate = getPastDate(3);
@@ -27,93 +28,208 @@ function getPastDate(numberOfDays: number) {
     return new Date(Date.now() - 864e5 * numberOfDays).toISOString().split('T')[0];
 }
 
-export const agendaItems = [
+export const flashListItems = [
+    dates[0],
     {
-        title: dates[0],
-        data: [{ date: fakerKO.date.anytime(), name: '댕댕이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) }],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '댕댕이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
+    },
+    dates[1],
+    {
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '동동이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[1],
-        data: [
-            { date: fakerKO.date.anytime(), name: '동동이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '깜찍이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-        ],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '깜찍이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
+    },
+    dates[2],
+    {
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '흰둥이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[2],
-        data: [
-            { date: fakerKO.date.anytime(), name: '흰둥이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '호돌이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '공순이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-        ],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '호돌이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[3],
-        data: [{ date: fakerKO.date.anytime(), name: '흰둥이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) }],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '공순이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
+    },
+    dates[3],
+    {
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '흰둥이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
+    },
+    dates[5],
+    {
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '호돌이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[5],
-        data: [
-            { date: fakerKO.date.anytime(), name: '호돌이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '댕댕이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '목도리', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '흰둥이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-        ],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '댕댕이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[6],
-        data: [{ date: fakerKO.date.anytime(), name: '공순이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) }],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '목도리',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[8],
-        data: [
-            { date: fakerKO.date.anytime(), name: '댕댕이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '목도리', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '공순이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '깜찍이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-        ],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '흰둥이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
+    },
+    dates[6],
+    {
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '공순이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
+    },
+    dates[8],
+    {
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '댕댕이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[9],
-        data: [
-            { date: fakerKO.date.anytime(), name: '호돌이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '상댕이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '목도리', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-        ],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '목도리',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[10],
-        data: [{ date: fakerKO.date.anytime(), name: '상댕이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) }],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '공순이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[11],
-        data: [
-            { date: fakerKO.date.anytime(), name: '달래', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '윤댕이', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-            { date: fakerKO.date.anytime(), name: '꽉시', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) },
-        ],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '깜찍이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
+    },
+    dates[10],
+    {
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '상댕이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
+    },
+    dates[11],
+    {
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '달래',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[12],
-        data: [{ date: fakerKO.date.anytime(), name: '임팔라', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) }],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '윤댕이',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
     {
-        title: dates[13],
-        data: [{ date: fakerKO.date.anytime(), name: '라마', memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }) }],
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '꽉시',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
+    },
+    dates[12],
+    {
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '임팔라',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
+    },
+    dates[13],
+    {
+        date: dayjs(fakerKO.date.anytime()).format('YYYY-MM-DD'),
+        image: {
+            src: fakerKO.image.url(),
+        },
+        name: '라마',
+        memo: fakerKO.lorem.paragraph({ min: 0, max: 2 }),
     },
 ];
 
 export function getMarkedDates() {
-    const marked: MarkedDates = {};
-
-    agendaItems.forEach((item) => {
-        // NOTE: only mark dates with data
-        if (item.data && item.data.length > 0 && !isEmpty(item.data[0])) {
-            marked[item.title] = { marked: true, dotColor: color.Teal[150].toString() };
-        } else {
-            marked[item.title] = { disabled: true };
+    return flashListItems.reduce<MarkedDates>((prev, curr) => {
+        if (typeof curr === 'string') {
+            return {
+                ...prev,
+                [curr]: {
+                    marked: true,
+                    dotStyle: dotStyle,
+                },
+            };
         }
-    });
 
-    return marked;
+        return prev;
+    }, {});
 }

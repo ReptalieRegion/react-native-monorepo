@@ -8,6 +8,13 @@ export type ScrollIntoView = (props: { offset: number; animated?: boolean }) => 
 
 export type ScrollToTop = (animated?: boolean) => void;
 
+export type ScrollToIndex = (params: {
+    animated?: boolean | null | undefined;
+    index: number;
+    viewOffset?: number | undefined;
+    viewPosition?: number | undefined;
+}) => void;
+
 interface UseFlashListScrollActions {
     onScrollUp?(): void;
     onScrollDown?(): void;
@@ -26,6 +33,10 @@ const useFlashListScroll = <T>(props?: UseFlashListScrollProps) => {
 
     const scrollToTop: ScrollToTop = useCallback((animated = false) => {
         flashListRef.current?.scrollToOffset({ offset: 0, animated });
+    }, []);
+
+    const scrollToIndex: ScrollToIndex = useCallback(({ index, animated, viewOffset, viewPosition }) => {
+        flashListRef.current?.scrollToIndex({ index, animated, viewOffset, viewPosition });
     }, []);
 
     const determineScrollDirection = useCallback(
@@ -52,6 +63,7 @@ const useFlashListScroll = <T>(props?: UseFlashListScrollProps) => {
         flashListRef,
         scrollToTop,
         scrollIntoView,
+        scrollToIndex,
         determineScrollDirection,
     };
 };

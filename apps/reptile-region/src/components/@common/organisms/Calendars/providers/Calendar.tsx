@@ -1,22 +1,25 @@
 import dayjs from 'dayjs';
 import React, { useReducer } from 'react';
 
-import ExpandableCalendar from '../components/ExpandableCalendar';
 import { CalendarsActionsContext, CalendarsStateContext } from '../contexts/CalendarsContext';
 import calendarReducer from '../reducer/calendarReducer';
+import type { CalendarState } from '../type';
 import { getWeekCountInMonthAndWeekNumber } from '../utils/calcDate';
 
 type CalendarProps = {
     children: React.ReactNode;
 };
 
-const initialDate = {
-    selectedDate: dayjs(),
+const initialDate = (initDay: dayjs.Dayjs): CalendarState => ({
+    selectedDate: initDay,
+    selectedDateString: initDay.format('YYYY-MM-DD'),
+    maxDate: undefined,
+    minDate: undefined,
     ...getWeekCountInMonthAndWeekNumber(dayjs()),
-};
+});
 
-export default function Calendar({ children }: CalendarProps) {
-    const [state, dispatch] = useReducer(calendarReducer, initialDate);
+export default function CalendarProvider({ children }: CalendarProps) {
+    const [state, dispatch] = useReducer(calendarReducer, initialDate(dayjs()));
 
     return (
         <CalendarsActionsContext.Provider value={dispatch}>
@@ -24,5 +27,3 @@ export default function Calendar({ children }: CalendarProps) {
         </CalendarsActionsContext.Provider>
     );
 }
-
-Calendar.ExpandableCalendar = ExpandableCalendar;

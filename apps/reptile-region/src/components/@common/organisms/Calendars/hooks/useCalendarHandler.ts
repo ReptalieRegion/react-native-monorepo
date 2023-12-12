@@ -1,9 +1,21 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 import { CalendarsActionsContext } from '../contexts/CalendarsContext';
 
-export default function useCalendarHandler() {
+type UseCalendarHandler = {
+    date?: string;
+    minDate?: string;
+    maxDate?: string;
+};
+
+export default function useCalendarHandler(props?: UseCalendarHandler) {
     const dispatch = useContext(CalendarsActionsContext);
+
+    useEffect(() => {
+        if (props && props?.date) {
+            dispatch?.({ type: 'INIT_DATE', date: props.date, maxDate: props.maxDate, minDate: props.minDate });
+        }
+    }, [dispatch, props]);
 
     if (dispatch === null) {
         throw new Error('Calendar Provider를 감싸주세요');

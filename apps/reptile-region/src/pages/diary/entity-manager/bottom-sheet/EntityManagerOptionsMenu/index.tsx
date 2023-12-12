@@ -12,8 +12,10 @@ export default function EntityManagerOptionsMenuPage(props: EntityManagerOptions
         }
     };
 
+    const bottomSheetHeight = 59 + 38 * 2;
+
     return (
-        <BottomSheet onClose={closeMenu} snapInfo={{ startIndex: 0, pointsFromTop: [0] }}>
+        <BottomSheet onClose={closeMenu} snapInfo={{ startIndex: 0, pointsFromTop: [bottomSheetHeight] }}>
             <EntityManagerOptionsMenu {...props} />
         </BottomSheet>
     );
