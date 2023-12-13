@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import EntityMangerListPage from '@/pages/diary/entity-manager/ListPage';
+import EntityMangerListPage from '@/pages/diary/entity-manager/ListPage/async-page';
 import type { EntityManagerParamList } from '@/types/routes/param-list/diary';
 
 const Stack = createNativeStackNavigator<EntityManagerParamList>();

@@ -4,8 +4,8 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
 
-import FollowerPage from '@/pages/share-post/UserProfileList/FollowList/FollowerPage';
-import FollowingPage from '@/pages/share-post/UserProfileList/FollowList/FollowingPage';
+import { SharePostFollowerPage } from '@/pages/share-post/UserProfileList/FollowList/FollowerPage';
+import { SharePostFollowingPage } from '@/pages/share-post/UserProfileList/FollowList/FollowingPage';
 import type {
     FollowParamList,
     SharePostBottomTabParamList,
@@ -48,7 +48,7 @@ export default function FollowRoutes({
         >
             <TopTab.Screen
                 name="follower"
-                component={FollowerPage}
+                component={SharePostFollowerPage}
                 options={{ tabBarLabel: `${followerCount} 팔로워` }}
                 initialParams={{
                     user: { followerCount, id: userId },
@@ -57,7 +57,7 @@ export default function FollowRoutes({
             />
             <TopTab.Screen
                 name="following"
-                component={FollowingPage}
+                component={SharePostFollowingPage}
                 options={{ tabBarLabel: `${followingCount} 팔로잉` }}
                 initialParams={{
                     user: {

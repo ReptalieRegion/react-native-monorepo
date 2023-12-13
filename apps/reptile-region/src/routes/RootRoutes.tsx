@@ -31,11 +31,9 @@ import { PrivacyPolicyHeader } from '@/pages/me/Terms/PrivacyPolicy/header';
 import PrivacyPolicyPage from '@/pages/me/Terms/PrivacyPolicy/page';
 import { TermsOfUseHeader } from '@/pages/me/Terms/TermsOfUse/header';
 import TermsOfUsePage from '@/pages/me/Terms/TermsOfUse/page';
-import PushLogList from '@/pages/notification/PushLogList';
-import { pushLogListHeader } from '@/pages/notification/PushLogList/header';
+import { PushLogList, PushLogListHeader } from '@/pages/notification/PushLogList';
 import PostOptionsMenu from '@/pages/share-post/PostList/BottomSheet/PostOptionsMenu';
-import { SharePostUpdateHeader } from '@/pages/share-post/UpdatePost/header';
-import SharePostUpdatePage from '@/pages/share-post/UpdatePost/page';
+import { SharePostUpdatePosteHeader, SharePostUpdatePostPage } from '@/pages/share-post/UpdatePost';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
 
@@ -140,8 +138,8 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 />
                 <Stack.Screen
                     name="share-post/post/update"
-                    component={SharePostUpdatePage}
-                    options={{ header: SharePostUpdateHeader, animation: 'slide_from_bottom' }}
+                    component={SharePostUpdatePostPage}
+                    options={{ header: SharePostUpdatePosteHeader, animation: 'slide_from_bottom' }}
                 />
                 {/** 일상공유 끝 */}
 
@@ -164,7 +162,7 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     component={NotificationSetting}
                     options={{ header: NotificationSettingHeader }}
                 />
-                <Stack.Screen name="me/notification-log" component={PushLogList} options={{ header: pushLogListHeader }} />
+                <Stack.Screen name="me/notification-log" component={PushLogList} options={{ header: PushLogListHeader }} />
                 {/** 내 정보 끝 */}
 
                 {/* 다이어리 시작 */}

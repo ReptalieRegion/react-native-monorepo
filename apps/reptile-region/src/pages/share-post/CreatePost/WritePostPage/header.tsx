@@ -9,7 +9,7 @@ import { usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 import { useTag } from '@/components/@common/organisms/TagTextInput';
 import type { WritePostChangeHeaderProps } from '@/types/routes/props/share-post/create-post';
 
-export const WritePostHeader = createNativeStackHeader({
+export const SharePostWritePostHeader = createNativeStackHeader({
     leftIcon: 'back',
     title: '일상공유 등록',
 });

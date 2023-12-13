@@ -5,7 +5,7 @@ import { createNativeStackHeader } from '@/components/@common/molecules';
 import { usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 import type { ImagePickChangeHeaderProps } from '@/types/routes/props/share-post/create-post';
 
-export const ImagePickerHeader = createNativeStackHeader({
+export const SharePostImagePickerHeader = createNativeStackHeader({
     leftIcon: 'cancel',
     title: '사진 등록',
 });

@@ -4,18 +4,17 @@ import React from 'react';
 import SharePostCommentRoutes from './CommentRoutes';
 import FollowRoutes from './FollowRoutes';
 
-import SharePostMeImageThumbnailListPage from '@/pages/share-post/ImageThumbnailList/Me';
-import { SharePostMeImageThumbnailListHeader } from '@/pages/share-post/ImageThumbnailList/Me/header';
-import SharePostImageThumbnailListPage from '@/pages/share-post/ImageThumbnailList/OtherUser';
-import { SharePostImageThumbnailListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser/header';
-import { SharePostDetailModalHeader } from '@/pages/share-post/PostDetailList/header';
-import PostDetailModalListPage from '@/pages/share-post/PostDetailList/page';
+import { SharePostMeImageThumbnailList, SharePostMeImageThumbnailListHeader } from '@/pages/share-post/ImageThumbnailList/Me';
+import {
+    SharePostImageThumbnailListHeader,
+    SharePostImageThumbnailListPage,
+} from '@/pages/share-post/ImageThumbnailList/OtherUser';
+import { SharePostDetailListHeader, SharePostDetailListPage } from '@/pages/share-post/PostDetailList';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
-import MeDetailListModalPage from '@/pages/share-post/PostList/UserDetailList/Me/page';
-import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser';
+import { SharePostMeUserDetailList } from '@/pages/share-post/PostList/UserDetailList/Me';
+import { SharePostOtherUserDetailListPage } from '@/pages/share-post/PostList/UserDetailList/OtherUser';
 import { SharePostFollowHeader } from '@/pages/share-post/UserProfileList/FollowList/header';
-import LikeListPage from '@/pages/share-post/UserProfileList/LikeList';
-import { SharePostLikeListHeader } from '@/pages/share-post/UserProfileList/LikeList/header';
+import { SharePostLikeList, SharePostLikeListHeader } from '@/pages/share-post/UserProfileList/LikeList';
 import type { SharePostModalParamList } from '@/types/routes/param-list/sharePost';
 
 const Stack = createNativeStackNavigator<SharePostModalParamList>();
@@ -25,8 +24,8 @@ export default function SharePostModalRoutes() {
         <Stack.Navigator>
             <Stack.Screen
                 name="modal/post/detail"
-                component={PostDetailModalListPage}
-                options={{ header: SharePostDetailModalHeader }}
+                component={SharePostDetailListPage}
+                options={{ header: SharePostDetailListHeader }}
             />
             <Stack.Screen
                 name="modal/image-thumbnail"
@@ -35,17 +34,17 @@ export default function SharePostModalRoutes() {
             />
             <Stack.Screen
                 name="modal/image-thumbnail/me"
-                component={SharePostMeImageThumbnailListPage}
+                component={SharePostMeImageThumbnailList}
                 options={{ header: SharePostMeImageThumbnailListHeader }}
             />
             <Stack.Screen
                 name="modal/user/detail/list"
-                component={SharePostUserDetailListPage}
+                component={SharePostOtherUserDetailListPage}
                 options={{ header: SharePostUserDetailListHeader }}
             />
             <Stack.Screen
                 name="modal/user/detail/list/me"
-                component={MeDetailListModalPage}
+                component={SharePostMeUserDetailList}
                 options={{ header: SharePostUserDetailListHeader }}
             />
             <Stack.Screen name="modal/follow/list" component={FollowRoutes} options={{ header: SharePostFollowHeader }} />
@@ -58,7 +57,7 @@ export default function SharePostModalRoutes() {
                     animation: 'none',
                 }}
             />
-            <Stack.Screen name="modal/like/list" component={LikeListPage} options={{ header: SharePostLikeListHeader }} />
+            <Stack.Screen name="modal/like/list" component={SharePostLikeList} options={{ header: SharePostLikeListHeader }} />
         </Stack.Navigator>
     );
 }

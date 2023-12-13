@@ -2,7 +2,7 @@ import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 
 import { createNativeStackHeader } from '@/components/@common/molecules';
 
-export function SharePostDetailModalHeader(props: NativeStackHeaderProps) {
+export function SharePostDetailListHeader(props: NativeStackHeaderProps) {
     const handleLeftIconClick = () => {
         props.navigation.navigate('bottom-tab/routes');
     };

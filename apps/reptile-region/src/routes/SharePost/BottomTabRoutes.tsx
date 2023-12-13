@@ -3,15 +3,15 @@ import React from 'react';
 
 import FollowRoutes from './FollowRoutes';
 
-import SharePostImageThumbnailListPage from '@/pages/share-post/ImageThumbnailList/OtherUser';
-import { SharePostImageThumbnailListHeader } from '@/pages/share-post/ImageThumbnailList/OtherUser/header';
-import SharePostListPage from '@/pages/share-post/PostList/ListPage';
-import { SharePostListHeader } from '@/pages/share-post/PostList/ListPage/header';
+import {
+    SharePostImageThumbnailListHeader,
+    SharePostImageThumbnailListPage,
+} from '@/pages/share-post/ImageThumbnailList/OtherUser';
+import { SharePostListHeader, SharePostListPage } from '@/pages/share-post/PostList/ListPage';
 import { SharePostUserDetailListHeader } from '@/pages/share-post/PostList/UserDetailList/header';
-import SharePostUserDetailListPage from '@/pages/share-post/PostList/UserDetailList/OtherUser';
+import { SharePostOtherUserDetailListPage } from '@/pages/share-post/PostList/UserDetailList/OtherUser';
 import { SharePostFollowHeader } from '@/pages/share-post/UserProfileList/FollowList/header';
-import LikeListPage from '@/pages/share-post/UserProfileList/LikeList';
-import { SharePostLikeListHeader } from '@/pages/share-post/UserProfileList/LikeList/header';
+import { SharePostLikeList, SharePostLikeListHeader } from '@/pages/share-post/UserProfileList/LikeList';
 import type { SharePostBottomTabParamList } from '@/types/routes/param-list/sharePost';
 
 const Stack = createNativeStackNavigator<SharePostBottomTabParamList>();
@@ -24,7 +24,7 @@ export default function SharePostRoutes() {
                 <Stack.Screen name="bottom-tab/list" component={SharePostListPage} options={{ header: SharePostListHeader }} />
                 <Stack.Screen
                     name="bottom-tab/user/detail/list"
-                    component={SharePostUserDetailListPage}
+                    component={SharePostOtherUserDetailListPage}
                     options={{ header: SharePostUserDetailListHeader }}
                 />
                 <Stack.Screen
@@ -39,7 +39,7 @@ export default function SharePostRoutes() {
                 />
                 <Stack.Screen
                     name="bottom-tab/like/list"
-                    component={LikeListPage}
+                    component={SharePostLikeList}
                     options={{ header: SharePostLikeListHeader }}
                 />
             </Stack.Group>

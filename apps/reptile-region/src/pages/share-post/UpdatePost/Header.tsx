@@ -11,7 +11,7 @@ type ChangeHeaderProps = {
     navigation: SharePostUpdateNavigationProp;
 };
 
-export const SharePostUpdateHeader = createNativeStackHeader({
+export const SharePostUpdatePosteHeader = createNativeStackHeader({
     leftIcon: 'cancel',
     title: '정보 수정',
 });

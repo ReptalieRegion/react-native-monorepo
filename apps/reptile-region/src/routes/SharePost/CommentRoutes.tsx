@@ -5,8 +5,8 @@ import React from 'react';
 
 import { BottomSheetHeader } from '@/components/@common/molecules';
 import useKeyboardState, { UseKeyboardState } from '@/hooks/@common/useKeyboardState';
-import CommentPage from '@/pages/share-post/CommentList/MainPage';
-import CommentReplyPage from '@/pages/share-post/CommentList/ReplyPage';
+import { SharePostCommentPage } from '@/pages/share-post/CommentList/MainPage';
+import { SharePostCommentReplyPage } from '@/pages/share-post/CommentList/ReplyPage';
 import type { CommentParamList } from '@/types/routes/param-list/sharePost';
 
 const Stack = createNativeStackNavigator<CommentParamList>();
@@ -29,7 +29,7 @@ export default function SharePostCommentRoutes({ navigation }: { navigation: any
             >
                 <Stack.Screen
                     name="main"
-                    component={CommentPage}
+                    component={SharePostCommentPage}
                     options={{
                         headerTitle: '댓글',
                         header: BottomSheetHeader,
@@ -37,7 +37,7 @@ export default function SharePostCommentRoutes({ navigation }: { navigation: any
                 />
                 <Stack.Screen
                     name="reply"
-                    component={CommentReplyPage}
+                    component={SharePostCommentReplyPage}
                     options={{
                         gestureEnabled: isCloseKeyboard,
                         headerBackVisible: true,
