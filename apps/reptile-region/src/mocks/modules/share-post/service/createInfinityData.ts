@@ -1,5 +1,3 @@
-import { random } from 'lodash-es';
-
 import type { InfiniteState } from '@/types/apis/utils';
 
 type CreateInfinityDataProps<ItemT> = {
@@ -17,7 +15,7 @@ const createInfinityData = <ItemT>({
     const pageNumber = pageParam ? Number(pageParam) + 1 : 0;
 
     if (isRandomFinish) {
-        const isFinishPage = pageNumber !== 1 && random(true) > 0.5;
+        const isFinishPage = pageNumber !== 1 && Math.random() > 0.5;
         const nextPage = isFinishPage ? undefined : pageNumber;
         return { items, nextPage };
     }

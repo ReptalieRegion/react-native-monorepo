@@ -1,5 +1,5 @@
 {
-    "name": "@reptile-region/overlay-manager",
+    "name": "@crawl/overlay-manager",
     "version": "1.0.0",
     "packageManager": "yarn@3.6.0",
     "main": "lib/commonjs/index.js",

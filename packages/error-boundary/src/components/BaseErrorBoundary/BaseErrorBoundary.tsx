@@ -1,4 +1,4 @@
-import { isDifferentArray } from '@reptile-region/utils';
+import { isDifferentArray } from '@crawl/utils';
 import type { ErrorInfo, PropsWithChildren, PropsWithRef } from 'react';
 import React from 'react';
 

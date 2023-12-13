@@ -1,5 +1,5 @@
-import { Typo, color, type TextColorType, type VariantType } from '@reptile-region/design-system';
-import { useOnOff } from '@reptile-region/react-hooks';
+import { Typo, color, type TextColorType, type VariantType } from '@crawl/design-system';
+import { useOnOff } from '@crawl/react-hooks';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
 import React, { useCallback, useState } from 'react';

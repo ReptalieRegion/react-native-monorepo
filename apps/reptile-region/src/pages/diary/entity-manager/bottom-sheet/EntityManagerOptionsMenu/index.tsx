@@ -1,4 +1,4 @@
-import { BottomSheet } from '@reptile-region/bottom-sheet';
+import { BottomSheet } from '@crawl/bottom-sheet';
 import React from 'react';
 
 import EntityManagerOptionsMenu from './page';

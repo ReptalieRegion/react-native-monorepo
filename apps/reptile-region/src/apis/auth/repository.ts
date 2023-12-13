@@ -1,4 +1,4 @@
-import { encryptionRSA } from '@reptile-region/utils';
+import { encryptionRSA } from '@crawl/utils';
 
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import type {

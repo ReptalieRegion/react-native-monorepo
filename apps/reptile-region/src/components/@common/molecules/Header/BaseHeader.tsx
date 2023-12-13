@@ -1,5 +1,5 @@
+import { Typo, color } from '@crawl/design-system';
 import { useNavigation } from '@react-navigation/native';
-import { Typo, color } from '@reptile-region/design-system';
 import type { ReactNode } from 'react';
 import React from 'react';
 import type { TextStyle, ViewStyle } from 'react-native';

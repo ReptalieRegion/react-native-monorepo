@@ -1,4 +1,4 @@
-import { range } from '@reptile-region/utils';
+import { range } from '@crawl/utils';
 
 import type { CropInfo, Photo, PhotoSelectActions, PhotoSelectState } from '../types';
 

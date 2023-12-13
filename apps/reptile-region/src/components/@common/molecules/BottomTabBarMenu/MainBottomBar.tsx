@@ -1,5 +1,5 @@
+import { color } from '@crawl/design-system';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';

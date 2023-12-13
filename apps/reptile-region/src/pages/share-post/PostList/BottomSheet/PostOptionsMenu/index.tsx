@@ -1,6 +1,6 @@
+import { BottomSheet } from '@crawl/bottom-sheet';
+import { Typo } from '@crawl/design-system';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { BottomSheet } from '@reptile-region/bottom-sheet';
-import { Typo } from '@reptile-region/design-system';
 import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';

@@ -1,4 +1,4 @@
-import { Typo } from '@reptile-region/design-system';
+import { Typo } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 

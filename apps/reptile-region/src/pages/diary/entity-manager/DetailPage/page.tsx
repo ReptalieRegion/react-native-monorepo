@@ -1,4 +1,4 @@
-import { TouchableTypo, Typo, color } from '@reptile-region/design-system';
+import { TouchableTypo, Typo, color } from '@crawl/design-system';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
 import React from 'react';

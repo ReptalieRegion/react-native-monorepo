@@ -1,4 +1,4 @@
-import { range } from '@reptile-region/utils';
+import { range } from '@crawl/utils';
 import { rest } from 'msw';
 
 import type { CreateCommentProps } from '../service/createComment';

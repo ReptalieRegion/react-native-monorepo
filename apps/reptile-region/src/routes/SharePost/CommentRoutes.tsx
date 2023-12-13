@@ -1,6 +1,6 @@
+import { BottomSheet } from '@crawl/bottom-sheet';
+import { color } from '@crawl/design-system';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { BottomSheet } from '@reptile-region/bottom-sheet';
-import { color } from '@reptile-region/design-system';
 import React from 'react';
 
 import { BottomSheetHeader } from '@/components/@common/molecules';

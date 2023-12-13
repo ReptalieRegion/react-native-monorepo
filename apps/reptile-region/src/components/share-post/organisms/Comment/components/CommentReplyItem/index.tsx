@@ -1,4 +1,4 @@
-import { TouchableTypo, Typo } from '@reptile-region/design-system';
+import { TouchableTypo, Typo } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';

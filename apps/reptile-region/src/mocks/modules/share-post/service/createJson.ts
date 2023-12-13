@@ -1,5 +1,5 @@
+import { range } from '@crawl/utils';
 import { fakerKO } from '@faker-js/faker';
-import { range } from '@reptile-region/utils';
 
 interface TimeStamp {
     createdAt: Date;

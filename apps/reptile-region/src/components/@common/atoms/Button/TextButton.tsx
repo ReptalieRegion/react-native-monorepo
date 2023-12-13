@@ -1,5 +1,5 @@
-import type { TextAlign, TextAlignVertical, TextColorType, VariantType } from '@reptile-region/design-system';
-import { Typo, color } from '@reptile-region/design-system';
+import type { TextAlign, TextAlignVertical, TextColorType, VariantType } from '@crawl/design-system';
+import { Typo, color } from '@crawl/design-system';
 import React from 'react';
 import type { TouchableOpacityProps, ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';

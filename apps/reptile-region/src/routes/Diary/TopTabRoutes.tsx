@@ -1,5 +1,5 @@
+import { color } from '@crawl/design-system';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

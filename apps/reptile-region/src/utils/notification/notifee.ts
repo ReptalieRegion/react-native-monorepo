@@ -3,7 +3,7 @@ import type { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import type { NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { Platform } from 'react-native';
 
-import { navigateLinking } from '../navigation/linking';
+import { navigateLinking } from '../../routes/@utils/linking';
 
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 

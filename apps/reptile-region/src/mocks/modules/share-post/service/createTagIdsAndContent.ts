@@ -1,5 +1,5 @@
+import { range } from '@crawl/utils';
 import { fakerKO } from '@faker-js/faker';
-import { range } from '@reptile-region/utils';
 
 export const createContents = () => {
     const tagIdsCount = fakerKO.number.int({ min: 0, max: 3 });

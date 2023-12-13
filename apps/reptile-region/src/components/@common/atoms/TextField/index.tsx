@@ -1,4 +1,4 @@
-import { Typo, color } from '@reptile-region/design-system';
+import { Typo, color } from '@crawl/design-system';
 import React, { forwardRef, useEffect, useRef } from 'react';
 import type { ColorValue, DimensionValue, KeyboardType, TextInputProps } from 'react-native';
 import { Platform, StyleSheet, View } from 'react-native';

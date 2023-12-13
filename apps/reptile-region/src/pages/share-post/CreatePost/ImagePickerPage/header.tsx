@@ -1,4 +1,4 @@
-import { TouchableTypo } from '@reptile-region/design-system';
+import { TouchableTypo } from '@crawl/design-system';
 import React, { useEffect } from 'react';
 
 import type { ImagePickChangeHeaderProps } from '../type';

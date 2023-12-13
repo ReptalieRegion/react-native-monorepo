@@ -1,4 +1,4 @@
-import { useIsMounted } from '@reptile-region/react-hooks';
+import { useIsMounted } from '@crawl/react-hooks';
 import React, { useContext, useEffect, useMemo, useRef, type PropsWithChildren } from 'react';
 
 import { ErrorBoundaryGroupContext } from '../contexts/ErrorBoundaryGroupContext';

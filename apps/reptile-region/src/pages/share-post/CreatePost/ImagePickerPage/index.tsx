@@ -1,4 +1,4 @@
-import { TouchableTypo, color } from '@reptile-region/design-system';
+import { TouchableTypo, color } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 

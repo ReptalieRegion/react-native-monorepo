@@ -1,4 +1,4 @@
-import { color, type TextColorType } from '@reptile-region/design-system';
+import { color, type TextColorType } from '@crawl/design-system';
 import dayjs from 'dayjs';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';

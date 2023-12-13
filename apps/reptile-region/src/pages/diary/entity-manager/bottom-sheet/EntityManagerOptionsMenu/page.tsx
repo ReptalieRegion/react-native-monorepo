@@ -1,4 +1,4 @@
-import { TouchableTypo } from '@reptile-region/design-system';
+import { TouchableTypo } from '@crawl/design-system';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';

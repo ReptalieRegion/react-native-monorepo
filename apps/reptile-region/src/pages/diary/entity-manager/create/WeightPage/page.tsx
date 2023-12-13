@@ -1,5 +1,5 @@
+import { Typo, color } from '@crawl/design-system';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
-import { Typo, color } from '@reptile-region/design-system';
 import React, { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';

@@ -1,5 +1,5 @@
+import { ErrorBoundary } from '@crawl/error-boundary';
 import { useNavigationContainerRef } from '@react-navigation/native';
-import { ErrorBoundary } from '@reptile-region/error-boundary';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';

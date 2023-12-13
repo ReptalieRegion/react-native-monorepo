@@ -1,4 +1,4 @@
-import { color, Typo } from '@reptile-region/design-system';
+import { color, Typo } from '@crawl/design-system';
 import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';

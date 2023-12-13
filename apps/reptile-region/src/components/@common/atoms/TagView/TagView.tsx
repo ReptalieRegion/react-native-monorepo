@@ -1,4 +1,4 @@
-import { Typo, color, type VariantType } from '@reptile-region/design-system';
+import { Typo, color, type VariantType } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';

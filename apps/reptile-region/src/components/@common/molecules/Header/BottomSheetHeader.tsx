@@ -1,7 +1,7 @@
+import { BottomSheetAnimatedGesture } from '@crawl/bottom-sheet';
+import { Typo, color } from '@crawl/design-system';
 import { getHeaderTitle } from '@react-navigation/elements';
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import { BottomSheetAnimatedGesture } from '@reptile-region/bottom-sheet';
-import { Typo, color } from '@reptile-region/design-system';
 import React, { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 

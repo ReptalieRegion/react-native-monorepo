@@ -1,5 +1,5 @@
+import { color } from '@crawl/design-system';
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import { color } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';

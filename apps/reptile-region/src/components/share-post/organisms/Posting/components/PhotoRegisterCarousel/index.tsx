@@ -1,5 +1,5 @@
+import { color } from '@crawl/design-system';
 import ImageEditor from '@react-native-community/image-editor';
-import { color } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, Image, StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';

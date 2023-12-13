@@ -1,4 +1,4 @@
-import { color } from '@reptile-region/design-system';
+import { color } from '@crawl/design-system';
 import React, { useMemo, type PropsWithChildren } from 'react';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';

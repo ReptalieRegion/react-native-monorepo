@@ -1,6 +1,6 @@
-import { BottomSheet, useBottomSheet } from '@reptile-region/bottom-sheet';
-import { Typo, color } from '@reptile-region/design-system';
-import { useOnOff } from '@reptile-region/react-hooks';
+import { BottomSheet, useBottomSheet } from '@crawl/bottom-sheet';
+import { Typo, color } from '@crawl/design-system';
+import { useOnOff } from '@crawl/react-hooks';
 import dayjs from 'dayjs';
 import React, { useCallback, useState } from 'react';
 import { Alert, Keyboard, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';

@@ -1,4 +1,4 @@
-import { color, type TextColorType } from '@reptile-region/design-system';
+import { color, type TextColorType } from '@crawl/design-system';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';

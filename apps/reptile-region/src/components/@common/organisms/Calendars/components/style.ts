@@ -1,4 +1,4 @@
-import { color } from '@reptile-region/design-system';
+import { color } from '@crawl/design-system';
 import { StyleSheet } from 'react-native';
 
 import type { DotStyle, MarkingStyle } from '../type';

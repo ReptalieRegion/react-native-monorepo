@@ -1,5 +1,5 @@
 {
-    "name": "@reptile-region/utils",
+    "name": "@crawl/utils",
     "version": "1.0.0",
     "packageManager": "yarn@3.6.0",
     "main": "lib/commonjs/index.js",

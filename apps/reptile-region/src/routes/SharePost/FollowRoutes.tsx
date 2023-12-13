@@ -1,6 +1,6 @@
+import { color } from '@crawl/design-system';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { color } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { useWindowDimensions } from 'react-native';
 

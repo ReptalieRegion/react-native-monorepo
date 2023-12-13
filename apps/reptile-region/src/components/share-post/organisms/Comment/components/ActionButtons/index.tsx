@@ -1,4 +1,4 @@
-import { TouchableTypo } from '@reptile-region/design-system';
+import { TouchableTypo } from '@crawl/design-system';
 import React, { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 

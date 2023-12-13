@@ -1,5 +1,5 @@
 {
-    "name": "@reptile-region/error-boundary",
+    "name": "@crawl/error-boundary",
     "version": "1.0.0",
     "packageManager": "yarn@3.6.0",
     "main": "lib/commonjs/index.js",
@@ -19,8 +19,8 @@
         "postinstall": "bob build"
     },
     "dependencies": {
-        "@reptile-region/react-hooks": "1.0.0",
-        "@reptile-region/utils": "1.0.0"
+        "@crawl/react-hooks": "1.0.0",
+        "@crawl/utils": "1.0.0"
     },
     "devDependencies": {
         "react-native-builder-bob": "^0.23.1",

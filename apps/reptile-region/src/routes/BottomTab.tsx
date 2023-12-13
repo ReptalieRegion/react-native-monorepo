@@ -1,7 +1,7 @@
+import { color } from '@crawl/design-system';
 import { createBottomTabNavigator, type BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { color } from '@reptile-region/design-system';
 import React, { useCallback } from 'react';
 
 import DiaryRoutes from './Diary/TopTabRoutes';

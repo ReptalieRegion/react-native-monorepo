@@ -1,4 +1,4 @@
-import { Typo, color } from '@reptile-region/design-system';
+import { Typo, color } from '@crawl/design-system';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React, { useEffect } from 'react';
@@ -12,8 +12,8 @@ import useReadPushLog from '@/apis/notification/push/hooks/mutations/useReadPush
 import useInfinitePushLog from '@/apis/notification/push/hooks/queries/useInfinitePushLog';
 import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';
+import { navigateLinking } from '@/routes/@utils/linking';
 import { ContentType, type FetchPushLogResponse } from '@/types/apis/notification';
-import { navigateLinking } from '@/utils/navigation/linking';
 
 export default function PushLogList({ navigation }: PushLogListScreenProp) {
     const { bottom } = useSafeAreaInsets();
