@@ -70,7 +70,7 @@ export default function PostOptionsMenu({ navigation, route: { params } }: PostO
         <BottomSheet onClose={closeMenu} snapInfo={{ startIndex: 0, pointsFromTop: [bottomSheetHeight] }}>
             <View style={[styles.content, { height: bottomSheetHeight, paddingBottom: bottom }]}>
                 {listItem.map(({ text, onPress }) => (
-                    <TouchableOpacity style={styles.listItem} onPress={onPress}>
+                    <TouchableOpacity key={text} style={styles.listItem} onPress={onPress}>
                         <Typo>{text}</Typo>
                     </TouchableOpacity>
                 ))}

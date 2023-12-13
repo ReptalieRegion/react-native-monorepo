@@ -169,7 +169,7 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 <Stack.Screen
                     name="entity-manager/create"
                     component={EntityManagerCreateRoutes}
-                    options={{ headerShown: false, gestureEnabled: false }}
+                    options={{ headerShown: false, gestureEnabled: false, animation: 'slide_from_bottom' }}
                 />
                 <Stack.Screen
                     name="entity-manager/detail"
