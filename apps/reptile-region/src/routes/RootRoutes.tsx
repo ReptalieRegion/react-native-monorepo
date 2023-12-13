@@ -13,6 +13,7 @@ import PostingRoutes from './SharePost/PostingRoutes';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
+import { CalendarItemCreateHeader, CalendarItemCreatePage } from '@/pages/diary/calender/Create';
 import EntityManagerOptionsMenuPage from '@/pages/diary/entity-manager/bottom-sheet/EntityManagerOptionsMenu';
 import CreateWeightBottomSheet from '@/pages/diary/entity-manager/DetailPage/bottom-sheet/CreateWeight';
 import { EntityManagerDetailPageHeader } from '@/pages/diary/entity-manager/DetailPage/header';
@@ -199,6 +200,14 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     component={EntityMangerUpdate}
                     options={{
                         header: EntityMangerUpdateHeader,
+                        presentation: 'containedTransparentModal',
+                    }}
+                />
+                <Stack.Screen
+                    name="calendar/create"
+                    component={CalendarItemCreatePage}
+                    options={{
+                        header: CalendarItemCreateHeader,
                         presentation: 'containedTransparentModal',
                     }}
                 />

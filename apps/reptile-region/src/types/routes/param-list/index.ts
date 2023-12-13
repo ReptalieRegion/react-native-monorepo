@@ -44,6 +44,9 @@ type RootRoutesParamList = {
     'entity-manager/options-menu': EntityOptionsMenuParams;
     'entity-manager/create-weight': EntityCreateWeightParams;
     'entity-manager/update': EntityUpdateParams;
+
+    // Calendar
+    'calendar/create': undefined;
 };
 
 export type { RootRoutesParamList };

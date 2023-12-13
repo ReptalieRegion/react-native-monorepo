@@ -6,9 +6,11 @@ import { StyleSheet, View } from 'react-native';
 import { PostWriteIcon } from '@/assets/icons';
 import ExpandableCalendar from '@/components/@common/organisms/Calendars/components/ExpandableCalendar';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
+import useCalendarNavigation from '@/hooks/diary/navigation/useCalendarNavigation';
 
 export default function ExpandableCalendarScreen() {
     const today = useRef(dayjs().format('YYYY-MM-DD')).current;
+    const { navigateCalendarCreate } = useCalendarNavigation();
 
     return (
         <View style={styles.wrapper}>
@@ -18,7 +20,7 @@ export default function ExpandableCalendarScreen() {
                     name="primary"
                     Icon={PostWriteIcon}
                     iconStyle={primaryIcon}
-                    // onPress={navigateEntityCreatePage}
+                    onPress={navigateCalendarCreate}
                 />
             </FloatingActionButtonGroup>
         </View>
