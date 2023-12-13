@@ -16,7 +16,7 @@ import type { SharePostBottomTabParamList } from '@/types/routes/param-list/shar
 
 const Stack = createNativeStackNavigator<SharePostBottomTabParamList>();
 
-const SharePostRoutes = () => {
+export default function SharePostRoutes() {
     return (
         <Stack.Navigator initialRouteName="bottom-tab/list">
             {/** BottomTab이 있는 페이지 */}
@@ -45,6 +45,4 @@ const SharePostRoutes = () => {
             </Stack.Group>
         </Stack.Navigator>
     );
-};
-
-export default SharePostRoutes;
+}
