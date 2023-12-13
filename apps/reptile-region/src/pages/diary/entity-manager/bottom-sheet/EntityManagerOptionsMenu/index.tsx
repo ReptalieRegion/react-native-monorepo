@@ -3,7 +3,7 @@ import React from 'react';
 
 import EntityManagerOptionsMenu from './page';
 
-import type { EntityManagerOptionsMenuScreenProps } from '@/types/routes/props/diary';
+import type { EntityManagerOptionsMenuScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerOptionsMenuPage(props: EntityManagerOptionsMenuScreenProps) {
     const closeMenu = () => {

@@ -2,13 +2,12 @@ import { TouchableTypo } from '@crawl/design-system';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, Keyboard } from 'react-native';
 
-import type { WritePostChangeHeaderProps } from '../type';
-
 import useCreatePost from '@/apis/share-post/post/hooks/mutations/useCreatePost';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 import { useTag } from '@/components/@common/organisms/TagTextInput';
+import type { WritePostChangeHeaderProps } from '@/types/routes/props/share-post/create-post';
 
 export const WritePostHeader = createNativeStackHeader({
     leftIcon: 'back',

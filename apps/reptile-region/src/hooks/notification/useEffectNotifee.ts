@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
 
-const useEffectNotifee = (navigationRef: NavigationContainerRefWithCurrent<RootRoutesParamList>) => {
+export default function useEffectNotifee(navigationRef: NavigationContainerRefWithCurrent<RootRoutesParamList>) {
     useEffect(() => {
         if (Platform.OS === 'android') {
             // TODO 푸시로 유입되었는지 체크 로직 추가
@@ -21,6 +21,4 @@ const useEffectNotifee = (navigationRef: NavigationContainerRefWithCurrent<RootR
             unSubMessaging();
         };
     }, [navigationRef]);
-};
-
-export default useEffectNotifee;
+}

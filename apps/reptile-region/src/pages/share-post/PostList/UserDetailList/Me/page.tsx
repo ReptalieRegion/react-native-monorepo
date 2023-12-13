@@ -5,8 +5,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
-import type { SharePostListMeModalPageScreen } from '../../type';
-
 import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteFetchMePostList from '@/apis/share-post/post/hooks/queries/useInfiniteFetchMePostList';
 import { ListFooterLoading } from '@/components/@common/atoms';
@@ -15,6 +13,7 @@ import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions'
 import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 import type { FetchMePostListResponse, FetchMeProfile } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
+import type { SharePostListMeModalPageScreen } from '@/types/routes/props/share-post/post-list';
 
 export default function MeDetailListModalPage({
     route: {

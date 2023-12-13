@@ -5,8 +5,6 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { PostDetailModalListScreenProps } from '../type';
-
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import Comment, { CommentTextEditor } from '@/components/share-post/organisms/Comment';
@@ -14,6 +12,7 @@ import CommentItem from '@/components/share-post/organisms/Comment/components/Co
 import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
 import usePostDetailNavigation from '@/hooks/share-post/navigation/usePostDetailNavigation';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
+import type { PostDetailModalListScreenProps } from '@/types/routes/props/share-post/post-detail';
 
 type SharePostDetailModalPageState = PostDetailModalListScreenProps & {
     ListHeaderComponent: React.JSX.Element;

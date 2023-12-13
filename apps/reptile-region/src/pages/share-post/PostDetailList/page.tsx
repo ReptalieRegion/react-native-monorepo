@@ -2,7 +2,8 @@ import React, { Suspense, useMemo } from 'react';
 
 import CommentSkeleton from './Comment/loading';
 import PostListSkeleton from './Post/loading';
-import type { PostDetailModalListScreenProps } from './type';
+
+import type { PostDetailModalListScreenProps } from '@/types/routes/props/share-post/post-detail';
 
 const Post = React.lazy(() => import('./Post/page'));
 const Comment = React.lazy(() => import('@/components/share-post/organisms/Comment'));

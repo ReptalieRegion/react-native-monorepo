@@ -1,8 +1,8 @@
-import type { CompositeScreenProps } from '@react-navigation/native';
+import type { CompositeNavigationProp, CompositeScreenProps, NavigationProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import type { RootRoutesParamList } from '../param-list';
-import type { EntityManagerCreateParamList } from '../param-list/diary';
+import type { RootRoutesParamList } from '../../param-list';
+import type { EntityManagerCreateParamList, EntityManagerParamList } from '../../param-list/diary';
 
 // 개체 관리 생성 페이지
 type EntityManagerCreateImageNavigationProps = NativeStackNavigationProp<EntityManagerCreateParamList, 'image'>;
@@ -36,6 +36,11 @@ type EntityCreateWeightScreenProps = NativeStackScreenProps<RootRoutesParamList,
 // 개체 관리 수정
 type EntityUpdateScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/update'>;
 
+type EntityNavigationProp = CompositeNavigationProp<
+    NavigationProp<EntityManagerParamList, 'entity-manager/list'>,
+    NavigationProp<RootRoutesParamList>
+>;
+
 export type {
     EntityCreateWeightScreenProps,
     EntityManagerCreateCongratsScreenProps,
@@ -48,5 +53,6 @@ export type {
     EntityManagerCreateWeightScreenProps,
     EntityManagerDetailScreenProps,
     EntityManagerOptionsMenuScreenProps,
+    EntityNavigationProp,
     EntityUpdateScreenProps,
 };

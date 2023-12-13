@@ -2,12 +2,11 @@ import { color } from '@crawl/design-system';
 import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { WritePostScreenProps } from '../type';
-
 import ChangeHeader from './header';
 
 import { FollowerUserList, FollowerUserListSkeleton, TagProvider } from '@/components/@common/organisms/TagTextInput';
 import { ContentsWriting, PhotoRegisterCarousel } from '@/components/share-post/organisms/Posting';
+import type { WritePostScreenProps } from '@/types/routes/props/share-post/create-post';
 
 export default function WritePostPage({ navigation }: WritePostScreenProps) {
     return (

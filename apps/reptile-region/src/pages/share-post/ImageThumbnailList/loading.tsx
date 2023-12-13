@@ -1,3 +1,4 @@
+import { color } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
@@ -10,7 +11,7 @@ export default function SharePostsDetailListSkeleton() {
 
     return (
         <View style={styles.container}>
-            <SkeletonPlaceholder backgroundColor={'#d9d9d9'} direction="right">
+            <SkeletonPlaceholder backgroundColor={color.Gray[500].toString()} direction="right">
                 <SkeletonPlaceholder.Item flexDirection="column">
                     <SkeletonPlaceholder.Item flexDirection="row">
                         <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />

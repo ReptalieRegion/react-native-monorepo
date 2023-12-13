@@ -5,11 +5,14 @@ import { StyleSheet, View } from 'react-native';
 import useImageThumbnailNavigation from '../../../../hooks/share-post/navigation/useImageThumbnailNavigation';
 import { LIST_HEADER_HEIGHT, LIST_HEADER_PADDING } from '../constants';
 import SharePostsDetailListSkeleton from '../loading';
-import type { SharePostImageThumbnailListScreenProps, SharePostMeImageThumbnailListScreenProps } from '../type';
 
 import ListHeaderComponent from './ListHeaderComponent';
 
 import useImageThumbnailActions from '@/hooks/share-post/actions/useImageThumbnailActions';
+import type {
+    SharePostImageThumbnailListScreenProps,
+    SharePostMeImageThumbnailListScreenProps,
+} from '@/types/routes/props/share-post/image-thumbnail';
 
 const PostImageList = React.lazy(() => import('./PostImageList'));
 

@@ -13,7 +13,7 @@ import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/use
 import type { EntityGender } from '@/components/diary/organisms/CreateEntity/type';
 import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
 import type { IconFunction } from '@/types/global/icons';
-import type { EntityManagerCreateGenderScreenProps } from '@/types/routes/props/diary';
+import type { EntityManagerCreateGenderScreenProps } from '@/types/routes/props/diary/entity';
 
 type GenderMapItem = {
     text: string;

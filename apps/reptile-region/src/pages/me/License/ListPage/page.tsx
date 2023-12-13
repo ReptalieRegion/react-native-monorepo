@@ -3,10 +3,11 @@ import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { License, LicenseListScreenProps } from '../type';
+import type { License } from './type';
 
 import { Divider } from '@/components/@common/atoms/Divider';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
+import type { LicenseListScreenProps } from '@/types/routes/props/me/license';
 
 const licenseList = require('@/json/license.json');
 

@@ -1,55 +1,28 @@
-import { useNavigation, type CompositeNavigationProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
+import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
 
 import type { ImageType } from '@/types/global/image';
 import type { PageState } from '@/types/routes/@common/enum';
-import type { RootRoutesParamList } from '@/types/routes/param-list';
-import type { BottomTabNativeStackParamList } from '@/types/routes/param-list/bottom-tab';
-import type { SharePostBottomTabParamList, SharePostModalParamList } from '@/types/routes/param-list/sharePost';
 import type { CommentParams, ImageThumbnailParams, LikeParams } from '@/types/routes/params/sharePost';
+import type {
+    SharePostListBottomTabNavigationProp,
+    SharePostListModalNavigationProp,
+    SharePostListNavigationProp,
+} from '@/types/routes/props/share-post/post-list';
 
-type ModalNavigationProp =
-    | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostModalParamList, 'modal/user/detail/list'>,
-          NativeStackNavigationProp<RootRoutesParamList>
-      >
-    | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostModalParamList, 'modal/post/detail'>,
-          NativeStackNavigationProp<RootRoutesParamList>
-      >;
-
-type BottomTabNavigationProp =
-    | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostBottomTabParamList, 'bottom-tab/user/detail/list'>,
-          CompositeNavigationProp<
-              NativeStackNavigationProp<BottomTabNativeStackParamList>,
-              NativeStackNavigationProp<RootRoutesParamList>
-          >
-      >
-    | CompositeNavigationProp<
-          NativeStackNavigationProp<SharePostBottomTabParamList, 'bottom-tab/list'>,
-          CompositeNavigationProp<
-              NativeStackNavigationProp<BottomTabNativeStackParamList>,
-              NativeStackNavigationProp<RootRoutesParamList>
-          >
-      >;
-
-type NavigationProp = BottomTabNavigationProp | ModalNavigationProp;
-
-const useSharePostNavigation = (pageState: PageState) => {
-    const navigation = useNavigation<NavigationProp>();
+export default function useSharePostNavigation(pageState: PageState) {
+    const navigation = useNavigation<SharePostListNavigationProp>();
 
     const handlePressComment = useCallback(
         (params: CommentParams) => {
             switch (pageState) {
                 case 'MODAL':
-                    return (navigation as ModalNavigationProp).push('modal/comment', {
+                    return (navigation as SharePostListModalNavigationProp).push('modal/comment', {
                         screen: 'main',
                         params,
                     });
                 case 'BOTTOM_TAB':
-                    return (navigation as BottomTabNavigationProp).navigate('bottom-tab/modal/comment', {
+                    return (navigation as SharePostListBottomTabNavigationProp).navigate('bottom-tab/modal/comment', {
                         screen: 'main',
                         params,
                     });
@@ -77,12 +50,12 @@ const useSharePostNavigation = (pageState: PageState) => {
         (params: Omit<ImageThumbnailParams, 'pageState'>) => {
             switch (pageState) {
                 case 'BOTTOM_TAB':
-                    return (navigation as BottomTabNavigationProp).push('bottom-tab/image-thumbnail', {
+                    return (navigation as SharePostListBottomTabNavigationProp).push('bottom-tab/image-thumbnail', {
                         ...params,
                         pageState: 'BOTTOM_TAB',
                     });
                 case 'MODAL':
-                    return (navigation as ModalNavigationProp).push('modal/image-thumbnail', {
+                    return (navigation as SharePostListModalNavigationProp).push('modal/image-thumbnail', {
                         ...params,
                         pageState: 'MODAL',
                     });
@@ -95,7 +68,7 @@ const useSharePostNavigation = (pageState: PageState) => {
         (tag: string) => {
             switch (pageState) {
                 case 'BOTTOM_TAB':
-                    return (navigation as BottomTabNavigationProp).push('bottom-tab/image-thumbnail', {
+                    return (navigation as SharePostListBottomTabNavigationProp).push('bottom-tab/image-thumbnail', {
                         user: {
                             isFollow: undefined,
                             nickname: tag,
@@ -104,7 +77,7 @@ const useSharePostNavigation = (pageState: PageState) => {
                         pageState: 'BOTTOM_TAB',
                     });
                 case 'MODAL':
-                    return (navigation as ModalNavigationProp).push('modal/image-thumbnail', {
+                    return (navigation as SharePostListModalNavigationProp).push('modal/image-thumbnail', {
                         user: {
                             isFollow: undefined,
                             nickname: tag,
@@ -121,9 +94,12 @@ const useSharePostNavigation = (pageState: PageState) => {
         (params: Omit<LikeParams, 'pageState'>) => {
             switch (pageState) {
                 case 'BOTTOM_TAB':
-                    return (navigation as BottomTabNavigationProp).push('bottom-tab/like/list', { ...params, pageState });
+                    return (navigation as SharePostListBottomTabNavigationProp).push('bottom-tab/like/list', {
+                        ...params,
+                        pageState,
+                    });
                 case 'MODAL':
-                    return (navigation as ModalNavigationProp).push('modal/like/list', { ...params, pageState });
+                    return (navigation as SharePostListModalNavigationProp).push('modal/like/list', { ...params, pageState });
             }
         },
         [navigation, pageState],
@@ -136,6 +112,4 @@ const useSharePostNavigation = (pageState: PageState) => {
         handlePressProfile,
         handlePressTag,
     };
-};
-
-export default useSharePostNavigation;
+}

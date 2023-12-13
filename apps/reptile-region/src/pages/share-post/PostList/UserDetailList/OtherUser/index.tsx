@@ -1,7 +1,11 @@
 import React, { Suspense } from 'react';
 
 import SharePostListSkeleton from '../../loading';
-import type { SharePostUserDetailModalPageScreen, SharePostUserDetailPageScreen } from '../../type';
+
+import type {
+    SharePostUserDetailModalPageScreen,
+    SharePostUserDetailPageScreen,
+} from '@/types/routes/props/share-post/post-list';
 
 const ChangeHeader = React.lazy(() => import('../header'));
 const UserDetailListPage = React.lazy(() => import('./page'));

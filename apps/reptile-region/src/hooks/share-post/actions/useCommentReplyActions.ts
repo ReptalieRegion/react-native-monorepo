@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import useDeleteCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useDeleteCommentReply';
 import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
 
-const useCommentReplyActions = () => {
+export default function useCommentReplyActions() {
     const { changeText, tagTextInputFocus } = useTagHandler();
     const deleteMutate = useDeleteCommentReply();
 
@@ -39,6 +39,4 @@ const useCommentReplyActions = () => {
         handlePressUpdateButton,
         handlePressWriteButton,
     };
-};
-
-export default useCommentReplyActions;
+}

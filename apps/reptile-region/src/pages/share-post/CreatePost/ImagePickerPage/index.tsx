@@ -2,12 +2,11 @@ import { TouchableTypo, color } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
-import type { ImagePickScreenProp } from '../type';
-
 import ChangeHeader from './header';
 
 import { CameraAlbum } from '@/components/@common/organisms/CameraAlbum';
 import useImageCropActions from '@/hooks/share-post/actions/useImageCropActions';
+import type { ImagePickScreenProp } from '@/types/routes/props/share-post/create-post';
 
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
     const { width, height } = useWindowDimensions();

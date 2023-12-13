@@ -1,10 +1,10 @@
 import React from 'react';
 
 import ChangeHeader from './header';
-import type { SharePostUpdateScreen } from './types';
 
 import { useToast } from '@/components/@common/organisms/Toast';
 import PostUpdate from '@/components/share-post/organisms/PostUpdate/providers/PostUpdate';
+import type { SharePostUpdateScreen } from '@/types/routes/props/share-post/update-post';
 
 export default function SharePostUpdatePage({
     navigation,

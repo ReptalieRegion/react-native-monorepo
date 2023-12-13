@@ -7,7 +7,7 @@ import { Platform, StyleSheet, View } from 'react-native';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
 import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
-import type { EntityManagerCreateHatchingScreenProps } from '@/types/routes/props/diary';
+import type { EntityManagerCreateHatchingScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerHatchingDayPage({ navigation }: EntityManagerCreateHatchingScreenProps) {
     const currentDate = dayjs().toDate();

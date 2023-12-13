@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 
 import { useToast } from '@/components/@common/organisms/Toast';
 import useImagePicker from '@/hooks/@common/useImagePicker';
-import type { EntityManagerCreateImageNavigationProps } from '@/types/routes/props/diary';
+import type { EntityManagerCreateImageNavigationProps } from '@/types/routes/props/diary/entity';
 
 export default function useEntityMangerImageAction() {
     const { openToast } = useToast();

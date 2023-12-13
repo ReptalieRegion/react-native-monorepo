@@ -1,11 +1,10 @@
 import { TouchableTypo } from '@crawl/design-system';
 import React, { useEffect } from 'react';
 
-import type { SharePostUpdateNavigationProp } from './types';
-
 import useUpdatePost from '@/apis/share-post/post/hooks/mutations/useUpdatePost';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { usePostUpdate } from '@/components/share-post/organisms/PostUpdate';
+import type { SharePostUpdateNavigationProp } from '@/types/routes/props/share-post/update-post';
 
 type ChangeHeaderProps = {
     postId: string;

@@ -23,7 +23,7 @@ import { useToast } from '@/components/@common/organisms/Toast';
 import useImagePicker from '@/hooks/@common/useImagePicker';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
 import type { IconFunction } from '@/types/global/icons';
-import type { EntityUpdateScreenProps } from '@/types/routes/props/diary';
+import type { EntityUpdateScreenProps } from '@/types/routes/props/diary/entity';
 
 type GenderMapItem = {
     text: string;

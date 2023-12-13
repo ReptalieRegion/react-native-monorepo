@@ -1,10 +1,12 @@
+type SettingItem = {
+    title: string;
+    onPress?(): void;
+    rightChildren: 'Chevron' | string;
+};
+
 type SettingList = {
     title: string;
-    items: {
-        title: string;
-        onPress?(): void;
-        rightChildren: 'Chevron' | string;
-    }[];
+    items: SettingItem[];
 };
 
 export type { SettingList };

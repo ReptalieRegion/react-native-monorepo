@@ -1,15 +1,9 @@
-import { useNavigation, type CompositeNavigationProp, type NavigationProp } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-import type { RootRoutesParamList } from '@/types/routes/param-list';
-import type { EntityManagerParamList } from '@/types/routes/param-list/diary';
 import type { EntityDetailParams } from '@/types/routes/params/diary';
+import type { EntityNavigationProp } from '@/types/routes/props/diary/entity';
 
-type EntityNavigationProp = CompositeNavigationProp<
-    NavigationProp<EntityManagerParamList, 'entity-manager/list'>,
-    NavigationProp<RootRoutesParamList>
->;
-
-const useEntityMangerNavigation = () => {
+export default function useEntityMangerNavigation() {
     const navigation = useNavigation<EntityNavigationProp>();
 
     const navigateEntityCreatePage = () => {
@@ -26,6 +20,4 @@ const useEntityMangerNavigation = () => {
         navigateEntityCreatePage,
         navigateEntityUpdatePage,
     };
-};
-
-export default useEntityMangerNavigation;
+}

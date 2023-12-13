@@ -5,7 +5,7 @@ import { useCameraAlbumHandler } from '@/components/@common/organisms/CameraAlbu
 import { useToast } from '@/components/@common/organisms/Toast';
 import useImagePicker from '@/hooks/@common/useImagePicker';
 
-const useImageCropActions = () => {
+export default function useImageCropActions() {
     const { savePhoto } = useCameraAlbumHandler();
     const { openToast } = useToast();
     const { handleOpenCamera } = useImagePicker({
@@ -39,6 +39,4 @@ const useImageCropActions = () => {
             }),
         handleOpenPhotoPicker,
     };
-};
-
-export default useImageCropActions;
+}

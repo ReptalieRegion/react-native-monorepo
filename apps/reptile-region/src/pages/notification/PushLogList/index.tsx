@@ -1,7 +1,8 @@
 import React, { Suspense } from 'react';
 
 import PushLogSkeleton from './loading';
-import type { PushLogListScreenProp } from './type';
+
+import type { PushLogListScreenProp } from '@/types/routes/props/notification/push-log';
 
 const PushLogListPage = React.lazy(() => import('./page'));
 

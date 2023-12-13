@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 
 import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
 
-const useCommentActions = () => {
+export default function useCommentActions() {
     const deleteMutate = useDeleteComment();
 
     const handleDeleteButton = (commentId: string) => {
@@ -31,6 +31,4 @@ const useCommentActions = () => {
         handlePressDeclarationButton,
         handlePressUpdateButton,
     };
-};
-
-export default useCommentActions;
+}

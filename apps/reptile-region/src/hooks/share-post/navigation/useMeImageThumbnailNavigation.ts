@@ -1,13 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import { type NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import type { SharePostModalParamList } from '@/types/routes/param-list/sharePost';
 import type { FollowRouterParams, MeUserDetailParams } from '@/types/routes/params/sharePost';
+import type { SharePostImageThumbnailNavigation } from '@/types/routes/props/share-post/image-thumbnail';
 
-type DetailProfileNavigation = NativeStackNavigationProp<SharePostModalParamList, 'modal/image-thumbnail/me'>;
-
-const useMeImageThumbnailNavigation = () => {
-    const navigation = useNavigation<DetailProfileNavigation>();
+export default function useMeImageThumbnailNavigation() {
+    const navigation = useNavigation<SharePostImageThumbnailNavigation>();
 
     const navigateFollowerPage = (params: Omit<FollowRouterParams, 'pageState'>) => {
         return navigation.push('modal/follow/list', { ...params, pageState: 'MODAL' });
@@ -18,6 +15,4 @@ const useMeImageThumbnailNavigation = () => {
     };
 
     return { navigateFollowerPage, navigateListUser };
-};
-
-export default useMeImageThumbnailNavigation;
+}

@@ -12,7 +12,7 @@ import useUpdateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/u
 import { DatePicker } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import { useToast } from '@/components/@common/organisms/Toast';
-import type { EntityCreateWeightScreenProps } from '@/types/routes/props/diary';
+import type { EntityCreateWeightScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function CreateWeightBottomSheet({
     navigation,

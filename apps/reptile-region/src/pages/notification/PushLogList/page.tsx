@@ -6,7 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { PushLogListScreenProp } from './type';
+import type { PushLogListScreenProp } from '../../../types/routes/props/notification/push-log';
 
 import useReadPushLog from '@/apis/notification/push/hooks/mutations/useReadPushLog';
 import useInfinitePushLog from '@/apis/notification/push/hooks/queries/useInfinitePushLog';

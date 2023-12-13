@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useDeleteEntity from '@/apis/diary/entity-manager/hooks/mutations/useDeleteEntity';
-import type { EntityManagerOptionsMenuScreenProps } from '@/types/routes/props/diary';
+import type { EntityManagerOptionsMenuScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerOptionsMenu({
     navigation,
