@@ -7,7 +7,7 @@
         "packages/*"
     ],
     "scripts": {
-        "rr": "yarn workspace crawl",
+        "rr": "yarn workspace reptile-region",
         "bottom-sheet": "yarn workspace @crawl/bottom-sheet",
         "calendar": "yarn workspace @crawl/calendar",
         "design": "yarn workspace @crawl/design-system",
