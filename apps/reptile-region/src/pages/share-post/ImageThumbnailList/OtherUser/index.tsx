@@ -1,8 +1,9 @@
 import { color } from '@reptile-region/design-system';
-import React, { Suspense } from 'react';
+import React, { Suspense, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import useImageThumbnailNavigation from '../../../../hooks/share-post/navigation/useImageThumbnailNavigation';
+import { LIST_HEADER_HEIGHT, LIST_HEADER_PADDING } from '../constants';
 import SharePostsDetailListSkeleton from '../loading';
 import type { SharePostImageThumbnailListScreenProps, SharePostMeImageThumbnailListScreenProps } from '../type';
 
@@ -27,34 +28,37 @@ export default function SharePostImageThumbnailListPage({
         navigateListUser({ user: { nickname }, startIndex: index });
     };
 
+    const MemoListHeaderComponent = useMemo(
+        () => (
+            <ListHeaderComponent
+                isFollow={isFollow}
+                nickname={nickname}
+                profile={profile}
+                navigateFollowPage={navigateFollowerPage}
+                handlePressFollow={handlePressFollow}
+                containerStyle={{
+                    height: LIST_HEADER_HEIGHT,
+                    padding: LIST_HEADER_PADDING,
+                }}
+            />
+        ),
+        [isFollow, nickname, profile, navigateFollowerPage, handlePressFollow],
+    );
+
     return (
         <View style={styles.container}>
             <Suspense
                 fallback={
                     <>
-                        {
-                            <ListHeaderComponent
-                                isFollow={isFollow}
-                                nickname={nickname}
-                                profile={profile}
-                                navigateFollowPage={navigateFollowerPage}
-                            />
-                        }
+                        {MemoListHeaderComponent}
                         <SharePostsDetailListSkeleton />
                     </>
                 }
             >
                 <PostImageList
+                    pageState={pageState}
                     nickname={nickname}
-                    ListHeaderComponent={
-                        <ListHeaderComponent
-                            isFollow={isFollow}
-                            nickname={nickname}
-                            profile={profile}
-                            navigateFollowPage={navigateFollowerPage}
-                            handlePressFollow={handlePressFollow}
-                        />
-                    }
+                    ListHeaderComponent={MemoListHeaderComponent}
                     handleImagePress={handleImagePress}
                 />
             </Suspense>

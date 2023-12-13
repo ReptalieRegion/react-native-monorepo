@@ -15,9 +15,8 @@ export default function EmptyComment() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         alignItems: 'center',
-        marginTop: 60,
+        marginTop: 80,
         gap: 10,
     },
 });

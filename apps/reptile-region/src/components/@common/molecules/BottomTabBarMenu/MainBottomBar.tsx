@@ -7,6 +7,7 @@ import * as Haptic from 'react-native-haptic-feedback';
 import { BottomTabBarButton } from '../../atoms';
 
 import { Calendar as CalendarIcon, Home as HomeIcon, Me as MeIcon, Share as SharePostIcon } from '@/assets/icons';
+import { BOTTOM_TAB_HEIGHT } from '@/constants/global';
 import type { IconProps } from '@/types/global/icons';
 import type { BottomTabParamList } from '@/types/routes/param-list/bottom-tab';
 
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderTopLeftRadius: 19,
         borderTopRightRadius: 19,
-        height: 91,
+        height: BOTTOM_TAB_HEIGHT,
         backgroundColor: color.White.toString(),
     },
 });

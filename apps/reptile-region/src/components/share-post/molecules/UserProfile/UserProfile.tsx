@@ -1,4 +1,4 @@
-import { Typo } from '@reptile-region/design-system';
+import { Typo, color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -23,6 +23,10 @@ type UserDetailPanelState = {
         followingCount: number;
     };
     postCount: number;
+    style?: {
+        height?: number;
+        padding?: number;
+    };
 };
 
 export interface UserDetailPanelActions {
@@ -32,7 +36,7 @@ export interface UserDetailPanelActions {
 
 type UserDetailPanelProps = UserDetailPanelState & UserDetailPanelActions;
 
-export default function UserProfile({ user, postCount, navigateFollowPage, handlePressFollow }: UserDetailPanelProps) {
+export default function UserProfile({ user, postCount, style, navigateFollowPage, handlePressFollow }: UserDetailPanelProps) {
     const newData = {
         user: {
             ...user,
@@ -78,7 +82,7 @@ export default function UserProfile({ user, postCount, navigateFollowPage, handl
     ];
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, style]}>
             <Avatar image={{ src: newData.user.profile.src }} size={80} priority={'high'} />
             <Typo variant="title4">{newData.user.nickname}</Typo>
             <View style={styles.activitySummaryContainer}>
@@ -111,10 +115,12 @@ export default function UserProfile({ user, postCount, navigateFollowPage, handl
 const styles = StyleSheet.create({
     container: {
         padding: 20,
+        height: 200,
         flexDirection: 'column',
         alignItems: 'center',
         gap: 7,
-        height: 195,
+        borderBottomWidth: 1,
+        borderColor: color.Gray[200].toString(),
     },
     activitySummaryContainer: {
         flexDirection: 'row',
