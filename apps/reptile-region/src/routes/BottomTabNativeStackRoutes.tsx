@@ -12,14 +12,14 @@ export default function BottomTabNativeStackRoutes() {
     return (
         <Stack.Navigator initialRouteName="tab" screenOptions={{ headerShown: false }}>
             <Stack.Screen name="tab" component={BottomTabRoutes} />
-            <Stack.Group
-                screenOptions={{
+            <Stack.Screen
+                name="bottom-tab/modal/comment"
+                component={CommentRoutes}
+                options={{
                     presentation: 'containedTransparentModal',
                     animation: 'none',
                 }}
-            >
-                <Stack.Screen name="bottom-tab/modal/comment" component={CommentRoutes} />
-            </Stack.Group>
+            />
         </Stack.Navigator>
     );
 }

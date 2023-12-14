@@ -11,7 +11,7 @@ export default function SharePostsDetailListSkeleton() {
 
     return (
         <View style={styles.container}>
-            <SkeletonPlaceholder backgroundColor={color.Gray[500].toString()} direction="right">
+            <SkeletonPlaceholder backgroundColor={color.Gray[650].toString()} direction="right">
                 <SkeletonPlaceholder.Item flexDirection="column">
                     <SkeletonPlaceholder.Item flexDirection="row">
                         <SkeletonPlaceholder.Item width={itemSize} height={itemSize} margin={1} />
