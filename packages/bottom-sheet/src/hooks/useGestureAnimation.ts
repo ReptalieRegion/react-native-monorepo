@@ -7,7 +7,7 @@ import useBottomSheetAnimatedState from './useBottomSheetAnimatedState';
 
 const FAST_SWIPE_VELOCITY_THRESHOLD = 500;
 
-const useBottomSheetGestureAnimation = () => {
+export default function useBottomSheetGestureAnimation() {
     const {
         snapInfo: { pointsFromTop },
         height,
@@ -96,6 +96,4 @@ const useBottomSheetGestureAnimation = () => {
         });
 
     return panGesture;
-};
-
-export default useBottomSheetGestureAnimation;
+}

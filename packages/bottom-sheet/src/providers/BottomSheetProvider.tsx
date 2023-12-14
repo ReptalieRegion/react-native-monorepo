@@ -21,16 +21,15 @@ type BottomSheetProviderProps = BottomSheetProviderState & BottomSheetProviderAc
 const BottomSheetProvider = ({ children, snapInfo, onClose }: PropsWithChildren<BottomSheetProviderProps>) => {
     const dimensions = useWindowDimensions();
     const { top } = useSafeAreaInsets();
-
-    const height = useSharedValue(0);
-    const translateY = useSharedValue(0);
-    const opacity = useSharedValue(1);
-
     const numberPointsFromTop = useMemo(
         () => snapInfo.pointsFromTop.map((snapPoint) => getPixel({ baseHeight: dimensions.height - top, snapPoint })),
         [dimensions.height, snapInfo.pointsFromTop, top],
     );
     const sortedPointsFromTop = [...numberPointsFromTop].sort();
+
+    const height = useSharedValue(sortedPointsFromTop[snapInfo.startIndex]);
+    const translateY = useSharedValue(sortedPointsFromTop[snapInfo.startIndex]);
+    const opacity = useSharedValue(0);
 
     const bottomSheetClose = useCallback(() => {
         translateY.value = withTiming(height.value);
