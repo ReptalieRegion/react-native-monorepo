@@ -27,7 +27,7 @@ export default function useImageCropActions() {
     });
 
     const handleOpenPhotoPicker = () => {
-        openPhotoPicker().then((value) => console.log('hi', value));
+        openPhotoPicker();
     };
 
     return {

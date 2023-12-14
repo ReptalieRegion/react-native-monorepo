@@ -17,7 +17,7 @@ type CalendarFlashListData = (string | FetchCalendarItem)[];
 
 export default function useFetchCalendar({ date }: FetchCalendar['Request']) {
     return useSuspenseQuery<FetchCalendar['Response'], HTTPError, CalendarFlashListData, CustomQueryKey>({
-        queryKey: DIARY_QUERY_KEYS.calendar(date),
+        queryKey: DIARY_QUERY_KEYS.calendar(dayjs(date).format('YYYY-MM-DD')),
         queryFn: () => fetchCalendar({ date }),
         select: (data) => {
             const dateMap = data.items.reduce<CalendarDataMap>((prev, calendarItem) => {
@@ -31,6 +31,8 @@ export default function useFetchCalendar({ date }: FetchCalendar['Request']) {
 
                 return { ...prev, [dateString]: [calendarItem] };
             }, {});
+
+            console.log(dateMap);
 
             const calendarList = Object.entries(dateMap).flatMap(([key, calendarItem]) => [key, ...calendarItem]);
 

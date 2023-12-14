@@ -1,1 +1,1 @@
-export { default as SharePostCommentPage } from './page';
+export { default as SharePostCommentPage } from './async-page';

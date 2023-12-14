@@ -1,12 +1,18 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 import type { CreateCalendar, DeleteCalendar, FetchCalendar, UpdateCalendar } from '@/types/apis/diary/calendar';
+
+dayjs.locale('ko');
+
 /**
  *
  * GET
  */
 export const fetchCalendar = async ({ date }: FetchCalendar['Request']) => {
-    const queryString = objectToQueryString({ date });
+    const queryString = objectToQueryString({ date: dayjs(date).format('YYYY-MM-DD') });
     const response = await clientFetch(`api/diary/calendar/list?${queryString}`, {
         method: METHOD.GET,
     });
@@ -21,7 +27,10 @@ export const fetchCalendar = async ({ date }: FetchCalendar['Request']) => {
 export const createCalendarItem = async (data: CreateCalendar['Request']) => {
     const response = await clientFetch('api/diary/calendar', {
         method: METHOD.POST,
-        body: data,
+        body: {
+            ...data,
+            date: dayjs(data.date).format('YYYY-MM-DDTHH:mm:ss'),
+        },
     });
 
     return response.json();

@@ -2,17 +2,9 @@ import React from 'react';
 
 import CalendarProvider from '../../providers/Calendar';
 
-import ExpandableCalendarView from './ExpandableCalendarView';
+import ExpandableCalendarView, { type ExpandableCalendarViewProps } from './ExpandableCalendarView';
 
-type ExpandableCalendarProps = {
-    date?: string;
-    minDate?: string;
-    maxDate?: string;
-    hideHeader?: boolean;
-    dayNames?: string[] | undefined;
-};
-
-export default function ExpandableCalendar(props: ExpandableCalendarProps) {
+export default function ExpandableCalendar(props: ExpandableCalendarViewProps) {
     return (
         <CalendarProvider>
             <ExpandableCalendarView {...props} />

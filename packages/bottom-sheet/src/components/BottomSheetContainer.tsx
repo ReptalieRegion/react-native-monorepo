@@ -1,8 +1,8 @@
 import { color } from '@crawl/design-system';
-import React, { useMemo, type PropsWithChildren } from 'react';
+import React, { useEffect, useMemo, type PropsWithChildren } from 'react';
 import type { ViewStyle } from 'react-native';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
-import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
+import { StyleSheet, useWindowDimensions } from 'react-native';
+import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useBottomSheetAnimatedState from '../hooks/useBottomSheetAnimatedState';
@@ -14,7 +14,7 @@ export type BottomSheetContainerProps = {
 export default function BottomSheetContainer({ children, style }: PropsWithChildren<BottomSheetContainerProps>) {
     const dimensions = useWindowDimensions();
     const {
-        snapInfo: { pointsFromTop },
+        snapInfo: { pointsFromTop, startIndex },
         height,
         translateY,
     } = useBottomSheetAnimatedState();
@@ -42,18 +42,24 @@ export default function BottomSheetContainer({ children, style }: PropsWithChild
         };
     }, [keyboard.state.value, keyboard.height.value, bottom, translateY.value]);
 
-    return (
-        <View style={styles.container}>
-            <Animated.View style={[styles.viewContainer, snapAnimatedStyles, { paddingBottom: bottom }, style]}>
-                {children}
-            </Animated.View>
-        </View>
+    const animatedStyle = useMemo(
+        () => [styles.viewContainer, snapAnimatedStyles, { paddingBottom: bottom }, style],
+        [bottom, snapAnimatedStyles, style],
     );
+
+    useEffect(() => {
+        height.value = withTiming(pointsFromTop[startIndex]);
+        translateY.value = withTiming(0);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return <Animated.View style={animatedStyle}>{children}</Animated.View>;
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        minHeight: 2,
     },
     viewContainer: {
         position: 'absolute',

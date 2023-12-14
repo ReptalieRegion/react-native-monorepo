@@ -207,8 +207,8 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     name="calendar/create"
                     component={CalendarItemCreatePage}
                     options={{
+                        animation: 'slide_from_bottom',
                         header: CalendarItemCreateHeader,
-                        presentation: 'containedTransparentModal',
                     }}
                 />
                 {/* 다이어리 끝 */}

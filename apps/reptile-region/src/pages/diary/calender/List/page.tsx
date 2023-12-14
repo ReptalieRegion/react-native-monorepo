@@ -1,20 +1,27 @@
 import { color } from '@crawl/design-system';
 import dayjs from 'dayjs';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import useFetchCalendar from '@/apis/diary/calendar/hooks/queries/useFetchCalendar';
 import { PostWriteIcon } from '@/assets/icons';
 import ExpandableCalendar from '@/components/@common/organisms/Calendars/components/ExpandableCalendar';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import useCalendarNavigation from '@/hooks/diary/navigation/useCalendarNavigation';
 
 export default function ExpandableCalendarScreen() {
-    const today = useRef(dayjs().format('YYYY-MM-DD')).current;
+    const today = useRef(dayjs()).current;
+    const todayString = today.format('YYYY-MM-DD');
     const { navigateCalendarCreate } = useCalendarNavigation();
+    const {} = useFetchCalendar({ date: today.toDate() });
+
+    const MemoizedExpandableCalendar = useMemo(() => {
+        return <ExpandableCalendar date={todayString} minDate="1997-01-01" maxDate={todayString} />;
+    }, [todayString]);
 
     return (
         <View style={styles.wrapper}>
-            <ExpandableCalendar date={today} minDate="1997-01-01" maxDate={today} />
+            {MemoizedExpandableCalendar}
             <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>
                 <FloatingActionButtonGroup.Button
                     name="primary"

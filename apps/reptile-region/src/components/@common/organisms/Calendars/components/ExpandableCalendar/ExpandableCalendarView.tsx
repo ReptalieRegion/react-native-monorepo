@@ -1,5 +1,5 @@
 import { color, Typo } from '@crawl/design-system';
-import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
+import { FlashList, type ContentStyle, type ListRenderItem, type ViewToken } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -11,6 +11,7 @@ import {
     type LayoutChangeEvent,
     type NativeScrollEvent,
     type NativeSyntheticEvent,
+    type ViewabilityConfig,
 } from 'react-native';
 import { Gesture, GestureDetector, TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
@@ -29,7 +30,7 @@ import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
 
 dayjs.locale('ko');
 
-type ExpandableCalendarViewState = {
+export type ExpandableCalendarViewState = {
     date?: string;
     minDate?: string;
     maxDate?: string;
@@ -37,15 +38,22 @@ type ExpandableCalendarViewState = {
     dayNames?: string[] | undefined;
 };
 
-interface ExpandableCalendarViewActions {}
+export interface ExpandableCalendarViewActions {
+    onChangeMonth?(): void;
+}
 
-type ExpandableCalendarViewProps = ExpandableCalendarViewState & ExpandableCalendarViewActions & HeaderActions;
+export type ExpandableCalendarViewProps = ExpandableCalendarViewState & ExpandableCalendarViewActions & HeaderActions;
+
+const viewabilityConfig: ViewabilityConfig = {
+    itemVisiblePercentThreshold: 50,
+    waitForInteraction: true,
+};
 
 export default function ExpandableCalendarView({ date, maxDate, minDate, dayNames, hideHeader }: ExpandableCalendarViewProps) {
     const marked = useRef(getMarkedDates());
     const calendarState = useCalendarState();
     const initData = useMemo(() => ({ date, maxDate, minDate }), [date, maxDate, minDate]);
-    const { addMonth, subMonth } = useCalendarHandler(initData);
+    const { addMonth, subMonth, setDate } = useCalendarHandler(initData);
 
     // 주간,월간 캘린더와 리스트의 목표 위치 초기화
     const dayHeight = useMemo(() => dayStyle.wrapper.height, []);
@@ -452,6 +460,17 @@ export default function ExpandableCalendarView({ date, maxDate, minDate, dayName
     }));
     const listWrapperStyle = useMemo(() => [listStyles.wrapper, listAnimatedStyle], [listAnimatedStyle]);
 
+    const viewingDate = useRef(date);
+    const _handleViewableItemsChanged = useCallback((info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
+        viewingDate.current = info.viewableItems.find((viewToken) => typeof viewToken.item === 'string')?.item;
+    }, []);
+
+    const _handleScrollMomentumScrollEnd = useCallback(() => {
+        if (viewingDate.current) {
+            setDate(viewingDate.current);
+        }
+    }, [setDate]);
+
     const list = useCallback(() => {
         return (
             <Animated.View style={listWrapperStyle}>
@@ -462,12 +481,22 @@ export default function ExpandableCalendarView({ date, maxDate, minDate, dayName
                     renderItem={flashRenderItem}
                     keyExtractor={(item) => (typeof item === 'string' ? item : item.date.concat(item.name))}
                     onScroll={handleScroll}
+                    onMomentumScrollEnd={_handleScrollMomentumScrollEnd}
                     getItemType={(item) => (typeof item === 'string' ? 'title' : 'content')}
                     estimatedItemSize={90}
+                    onViewableItemsChanged={_handleViewableItemsChanged}
+                    viewabilityConfig={viewabilityConfig}
                 />
             </Animated.View>
         );
-    }, [listWrapperStyle, flashListRef, flashRenderItem, handleScroll]);
+    }, [
+        listWrapperStyle,
+        flashListRef,
+        flashRenderItem,
+        handleScroll,
+        _handleViewableItemsChanged,
+        _handleScrollMomentumScrollEnd,
+    ]);
     /** List 끝 */
 
     const handleGetLayoutHeight = useCallback(

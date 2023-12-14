@@ -1778,6 +1778,22 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@crawl/calendar@1.0.0, @crawl/calendar@workspace:packages/calendar":
+  version: 0.0.0-use.local
+  resolution: "@crawl/calendar@workspace:packages/calendar"
+  dependencies:
+    react-native-builder-bob: ^0.23.1
+    typescript: 5.2.2
+  peerDependencies:
+    "@crawl/design-system": 1.0.0
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">=2.12.0"
+    react-native-reanimated: ">=3.4.2"
+    react-native-safe-area-context: "*"
+  languageName: unknown
+  linkType: soft
+
 "@crawl/design-system@1.0.0, @crawl/design-system@workspace:^, @crawl/design-system@workspace:packages/design-system":
   version: 0.0.0-use.local
   resolution: "@crawl/design-system@workspace:packages/design-system"
@@ -12668,6 +12684,7 @@ __metadata:
     "@babel/preset-env": ^7.22.5
     "@babel/runtime": ^7.20.0
     "@crawl/bottom-sheet": 1.0.0
+    "@crawl/calendar": 1.0.0
     "@crawl/design-system": 1.0.0
     "@crawl/error-boundary": 1.0.0
     "@crawl/overlay-manager": 1.0.0

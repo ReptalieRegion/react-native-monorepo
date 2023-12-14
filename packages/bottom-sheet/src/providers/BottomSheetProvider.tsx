@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { runOnJS, useSharedValue, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -26,8 +26,9 @@ const BottomSheetProvider = ({ children, snapInfo, onClose }: PropsWithChildren<
     const translateY = useSharedValue(0);
     const opacity = useSharedValue(1);
 
-    const numberPointsFromTop = snapInfo.pointsFromTop.map((snapPoint) =>
-        getPixel({ baseHeight: dimensions.height - top, snapPoint }),
+    const numberPointsFromTop = useMemo(
+        () => snapInfo.pointsFromTop.map((snapPoint) => getPixel({ baseHeight: dimensions.height - top, snapPoint })),
+        [dimensions.height, snapInfo.pointsFromTop, top],
     );
     const sortedPointsFromTop = [...numberPointsFromTop].sort();
 
@@ -47,11 +48,6 @@ const BottomSheetProvider = ({ children, snapInfo, onClose }: PropsWithChildren<
     const animationActions: BottomSheetAnimationAction = {
         bottomSheetClose,
     };
-
-    useEffect(() => {
-        height.value = withTiming(numberPointsFromTop[snapInfo.startIndex]);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <BottomSheetAnimationActionContext.Provider value={animationActions}>

@@ -14,7 +14,7 @@ type DiaryCalendarMarkType = '먹이급여' | '청소' | '탈피' | '메이팅' 
  * GET
  */
 type FetchCalendarRequest = {
-    date: string;
+    date: Date;
 };
 
 type FetchCalendarItem = {
@@ -45,8 +45,8 @@ type FetchCalendar = ServerAPI<FetchCalendarRequest, FetchCalendarResponse>;
 type CreateCalendarRequest = {
     entityId: string;
     memo: string;
-    markType: DiaryCalendarMarkType;
-    date: string;
+    markType: DiaryCalendarMarkType[];
+    date: Date;
 };
 
 type CreateCalendarResponse = {
@@ -62,7 +62,7 @@ type CreateCalendar = ServerAPI<CreateCalendarRequest, CreateCalendarResponse>;
 type UpdateCalendarRequest = {
     calendarId: string;
     memo: string;
-    markType: DiaryCalendarMarkType;
+    markType: DiaryCalendarMarkType[];
     date: string;
 };
 
@@ -93,6 +93,7 @@ export type {
     DeleteCalendar,
     DeleteCalendarRequest,
     DeleteCalendarResponse,
+    DiaryCalendarMarkType,
     FetchCalendar,
     FetchCalendarItem,
     FetchCalendarRequest,

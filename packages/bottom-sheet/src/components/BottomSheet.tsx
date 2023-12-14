@@ -1,9 +1,9 @@
 import { color } from '@crawl/design-system';
 import type { PropsWithChildren } from 'react';
 import React, { useCallback } from 'react';
-import { Keyboard, Platform, StyleSheet } from 'react-native';
+import { Keyboard, Platform, StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, { KeyboardState, runOnJS, useAnimatedKeyboard } from 'react-native-reanimated';
+import { KeyboardState, runOnJS, useAnimatedKeyboard } from 'react-native-reanimated';
 
 import BackDrop, { type BackDropProps } from '../components/BackDrop';
 import BottomSheetProvider from '../providers/BottomSheetProvider';
@@ -59,10 +59,10 @@ export default function BottomSheet({
                 {Platform.select({
                     ios: (
                         <GestureDetector gesture={gesture}>
-                            <Animated.View style={styles.container}>{children}</Animated.View>
+                            <View style={styles.container}>{children}</View>
                         </GestureDetector>
                     ),
-                    android: <Animated.View style={styles.container}>{children}</Animated.View>,
+                    android: <View style={styles.container}>{children}</View>,
                 })}
             </BottomSheetContainer>
         </BottomSheetProvider>

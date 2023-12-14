@@ -2,7 +2,7 @@ import type { CompositeNavigationProp, CompositeScreenProps, NavigationProp } fr
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import type { RootRoutesParamList } from '../../param-list';
-import type { CalenderParamList, EntityManagerCreateParamList, EntityManagerParamList } from '../../param-list/diary';
+import type { EntityManagerCreateParamList, EntityManagerParamList } from '../../param-list/diary';
 
 // 개체 관리 생성 페이지
 type EntityManagerCreateImageNavigationProps = NativeStackNavigationProp<EntityManagerCreateParamList, 'image'>;
@@ -41,13 +41,7 @@ type EntityNavigationProp = CompositeNavigationProp<
     NavigationProp<RootRoutesParamList>
 >;
 
-type CalendarNavigationProp = CompositeNavigationProp<
-    NavigationProp<CalenderParamList, 'main'>,
-    NavigationProp<RootRoutesParamList>
->;
-
 export type {
-    CalendarNavigationProp,
     EntityCreateWeightScreenProps,
     EntityManagerCreateCongratsScreenProps,
     EntityManagerCreateGenderScreenProps,
