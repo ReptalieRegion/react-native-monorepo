@@ -19,7 +19,7 @@ interface DayActions {
 
 type DayProps = DayState & DayActions;
 
-export default React.memo(function Day({ date, textColor = 'default', markingStyle, dotStyle, onPress }: DayProps) {
+export default function Day({ date, textColor = 'default', markingStyle, dotStyle, onPress }: DayProps) {
     return (
         <Animated.View style={styles.wrapper}>
             <TouchableOpacity onPress={onPress} style={styles.dayContainer}>
@@ -32,7 +32,7 @@ export default React.memo(function Day({ date, textColor = 'default', markingSty
             </TouchableOpacity>
         </Animated.View>
     );
-});
+}
 
 const styles = StyleSheet.create({
     wrapper: {

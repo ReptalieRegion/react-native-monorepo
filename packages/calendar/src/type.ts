@@ -1,8 +1,6 @@
 import type { Dayjs } from 'dayjs';
 import type { DimensionValue } from 'react-native';
 
-import type { ImageType } from '@/types/global/image';
-
 type DateType = {
     dayString: string;
     year: number;
@@ -10,13 +8,17 @@ type DateType = {
     date: number;
 };
 
-type MarkingStyle = {
+type DotStyle = {
     height?: DimensionValue;
     width?: DimensionValue;
     backgroundColor?: string;
 };
 
-type DotStyle = {
+/**
+ *
+ * 캘린더 core context
+ */
+type MarkingStyle = {
     height?: DimensionValue;
     width?: DimensionValue;
     backgroundColor?: string;
@@ -29,15 +31,6 @@ type MarkedDates = {
         markingStyle?: MarkingStyle;
     };
 };
-
-type CalendarListItem =
-    | string
-    | {
-          date: string;
-          image: ImageType;
-          name: string;
-          memo: string;
-      };
 
 type CalendarState = {
     selectedDate: Dayjs;
@@ -71,16 +64,23 @@ interface SubMonth {
 
 type CalendarActions = InitDate | SetDate | AddMonth | SubMonth;
 
+type ScrollToIndex = {
+    animated?: boolean | null | undefined;
+    index: number;
+    viewOffset?: number | undefined;
+    viewPosition?: number | undefined;
+};
+
 export type {
     AddMonth,
     CalendarActions,
-    CalendarListItem,
     CalendarState,
     DateType,
     DotStyle,
     InitDate,
     MarkedDates,
     MarkingStyle,
+    ScrollToIndex,
     SetDate,
     SubMonth,
 };

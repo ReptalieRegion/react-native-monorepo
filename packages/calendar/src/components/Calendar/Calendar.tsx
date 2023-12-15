@@ -1,6 +1,6 @@
 import { color, type TextColorType } from '@crawl/design-system';
 import dayjs from 'dayjs';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import useCalendarHandler from '../../hooks/useCalendarHandler';
@@ -20,11 +20,25 @@ type CalendarState = {
     dayNames?: string[] | undefined;
 };
 
-interface CalendarActions {}
+interface CalendarActions {
+    onPressDay?(dateString: string): void;
+    onPressLeft?(): void;
+    onPressRight?(): void;
+}
 
-type CalendarProps = CalendarState & CalendarActions & HeaderActions;
+export type CalendarProps = CalendarState & CalendarActions & HeaderActions;
 
-export default function Calendar({ date, dayNames, maxDate, minDate, markedDates, hideHeader }: CalendarProps) {
+function Calendar({
+    date,
+    dayNames,
+    maxDate,
+    minDate,
+    markedDates,
+    hideHeader,
+    onPressDay,
+    onPressLeft,
+    onPressRight,
+}: CalendarProps) {
     const calendarState = useCalendarState();
 
     /** 같은 달은 새로 생성하지 않게 하기 위해 */
@@ -36,28 +50,7 @@ export default function Calendar({ date, dayNames, maxDate, minDate, markedDates
     }
 
     const initData = useMemo(() => ({ date, maxDate, minDate }), [date, maxDate, minDate]);
-    const { addMonth, subMonth, setDate } = useCalendarHandler(initData);
-
-    const renderHeader = useCallback(() => {
-        const isPossibleNextMonth = calendarState.maxDate
-            ? calendarState.selectedDate.isBefore(calendarState.maxDate, 'month')
-            : true;
-        const isPossiblePrevMonth = calendarState.minDate
-            ? calendarState.selectedDate.isAfter(calendarState.minDate, 'month')
-            : true;
-        const isSameYear = dayjs().year() === calendarState.selectedDate.year();
-
-        return (
-            <Header
-                dayNames={dayNames}
-                label={isSameYear ? calendarState.selectedDate.format('MM월') : calendarState.selectedDate.format('YY년 MM월')}
-                isPossibleNextMonth={isPossibleNextMonth}
-                isPossiblePrevMonth={isPossiblePrevMonth}
-                onPressLeft={subMonth}
-                onPressRight={addMonth}
-            />
-        );
-    }, [calendarState.maxDate, calendarState.selectedDate, calendarState.minDate, dayNames, subMonth, addMonth]);
+    const { setDate } = useCalendarHandler(initData);
 
     const renderDay = useCallback(
         (dayInfo: DateType) => {
@@ -72,6 +65,11 @@ export default function Calendar({ date, dayNames, maxDate, minDate, markedDates
             const typoColor: TextColorType = isDisableDay ? 'light-placeholder' : isSameMonth ? 'default' : 'light-placeholder';
             const isDot = markedDates?.[dayInfo.dayString]?.marked;
 
+            const handlePressDay = () => {
+                onPressDay?.(dayInfo.dayString);
+                setDate(dayInfo.dayString);
+            };
+
             return (
                 <View key={dayInfo.dayString} style={dayStyle.wrapper}>
                     <Day
@@ -80,17 +78,17 @@ export default function Calendar({ date, dayNames, maxDate, minDate, markedDates
                         markingStyle={isSameDay ? markingStyle : undefined}
                         dotStyle={isDot ? dotStyle : undefined}
                         textColor={typoColor}
-                        onPress={!isDisableDay ? () => setDate(dayInfo.dayString) : undefined}
+                        onPress={!isDisableDay ? handlePressDay : undefined}
                     />
                 </View>
             );
         },
-        [calendarState.maxDate, calendarState.minDate, calendarState.selectedDate, markedDates, setDate],
+        [calendarState.maxDate, calendarState.minDate, calendarState.selectedDate, markedDates, onPressDay, setDate],
     );
 
     return (
         <>
-            {!hideHeader && renderHeader()}
+            {!hideHeader && <Header dayNames={dayNames} onPressLeft={onPressLeft} onPressRight={onPressRight} />}
             <View style={styles.wrapper}>{monthArray.map(renderDay)}</View>
         </>
     );
@@ -103,3 +101,5 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
 });
+
+export default memo(Calendar);
