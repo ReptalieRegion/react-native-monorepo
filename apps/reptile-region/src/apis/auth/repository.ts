@@ -42,7 +42,7 @@ export const refreshTokenIssued = async ({ refreshToken }: RefreshToken['Request
         },
     });
 
-    return await response.json();
+    return response.json();
 };
 
 // 카카오 로그인

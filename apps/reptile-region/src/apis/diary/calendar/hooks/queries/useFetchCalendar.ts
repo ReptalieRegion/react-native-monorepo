@@ -11,30 +11,65 @@ import type { CustomQueryKey } from '@/types/react-query';
 
 dayjs.locale('ko');
 
-type CalendarDataMap = { [key: string]: FetchCalendarItem[] };
+export type Title = {
+    type: 'TITLE';
+    label: string;
+    dateString: string;
+};
 
-type CalendarFlashListData = (string | FetchCalendarItem)[];
+export type CalendarItem = {
+    type: 'CALENDAR_ITEM';
+} & FetchCalendarItem;
+
+export type CalendarFlashListItem = Title | CalendarItem;
+
+type CalendarDataMap = { [key: string]: CalendarItem[] };
 
 export default function useFetchCalendar({ date }: FetchCalendar['Request']) {
-    return useSuspenseQuery<FetchCalendar['Response'], HTTPError, CalendarFlashListData, CustomQueryKey>({
+    return useSuspenseQuery<FetchCalendar['Response'], HTTPError, CalendarFlashListItem[], CustomQueryKey>({
         queryKey: DIARY_QUERY_KEYS.calendar(dayjs(date).format('YYYY-MM-DD')),
         queryFn: () => fetchCalendar({ date }),
         select: (data) => {
             const dateMap = data.items.reduce<CalendarDataMap>((prev, calendarItem) => {
-                const dateString = dayjs(calendarItem.calendar.date).format('DD일 ddd요일');
+                const dateString = dayjs(calendarItem.calendar.date).format('YYYY-MM-DD');
                 const dateArray = prev[dateString];
                 const isAlreadyDate = !!dateArray;
 
                 if (isAlreadyDate) {
-                    return { ...prev, [dateString]: [...dateArray, calendarItem] };
+                    return {
+                        ...prev,
+                        [dateString]: [
+                            ...dateArray,
+                            {
+                                type: 'CALENDAR_ITEM',
+                                ...calendarItem,
+                            },
+                        ],
+                    };
                 }
 
-                return { ...prev, [dateString]: [calendarItem] };
+                return {
+                    ...prev,
+                    [dateString]: [
+                        {
+                            type: 'CALENDAR_ITEM',
+                            ...calendarItem,
+                        },
+                    ],
+                };
             }, {});
 
-            console.log(dateMap);
-
-            const calendarList = Object.entries(dateMap).flatMap(([key, calendarItem]) => [key, ...calendarItem]);
+            const calendarList = Object.entries(dateMap).flatMap<CalendarFlashListItem>(([key, calendarItem]) => {
+                const currentDay = dayjs(key);
+                return [
+                    {
+                        type: 'TITLE',
+                        label: currentDay.format('DD일 ddd요일'),
+                        dateString: key,
+                    },
+                    ...calendarItem,
+                ];
+            });
 
             return calendarList;
         },

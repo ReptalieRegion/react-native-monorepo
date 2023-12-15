@@ -21,7 +21,7 @@ type FetchCalendarItem = {
     calendar: {
         id: string;
         memo: string;
-        markType: DiaryCalendarMarkType;
+        markType: DiaryCalendarMarkType[];
         date: string;
     };
     entity: {

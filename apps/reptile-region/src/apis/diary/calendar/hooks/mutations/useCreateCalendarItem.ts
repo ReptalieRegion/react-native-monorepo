@@ -8,7 +8,7 @@ import type { CreateCalendar } from '@/types/apis/diary/calendar';
 export default function useCreateCalendarItem(
     props?: Pick<
         UseMutationOptions<CreateCalendar['Response'], HTTPError, CreateCalendar['Request'], unknown>,
-        'onSuccess' | 'onError'
+        'onSuccess' | 'onError' | 'onMutate' | 'onSettled'
     >,
 ) {
     return useMutation<CreateCalendar['Response'], HTTPError, CreateCalendar['Request'], unknown>({

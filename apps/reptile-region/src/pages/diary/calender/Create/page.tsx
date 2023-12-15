@@ -1,5 +1,6 @@
 import { Typo, color } from '@crawl/design-system';
 import { useOnOff } from '@crawl/react-hooks';
+import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
@@ -9,9 +10,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import SelectEntityBottomSheet from './bottom-sheet/SelectEntity';
 
+import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useCreateCalendarItem from '@/apis/diary/calendar/hooks/mutations/useCreateCalendarItem';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
+import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import TagTextCheckBox from '@/components/diary/atoms/TagTextCheckBox/index,';
 import type { DiaryCalendarMarkType } from '@/types/apis/diary/calendar';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
@@ -33,17 +36,23 @@ const markTypeArray: MarkTypeArray[] = [
 
 export default function CalendarItemCreatePage({ navigation }: CalendarItemCreateScreenProps) {
     const currentDate = useRef(dayjs()).current;
-    console.log('hi');
     const [entity, setEntity] = useState<FetchEntityListResponse['entity']>();
     const [createDate, setCreateDate] = useState(currentDate.toDate());
     const [memo, setMemo] = useState('');
     const [markTypeCheckedArray, setMarkTypeCheckedArray] = useState<DiaryCalendarMarkType[]>([]);
-
+    const { openLoading, closeLoading } = useGlobalLoading();
+    const queryClient = useQueryClient();
     const { mutate, isPending } = useCreateCalendarItem({
+        onMutate: openLoading,
+        onSettled: closeLoading,
         onSuccess: () => {
             if (navigation.canGoBack()) {
                 navigation.goBack();
             }
+            queryClient.invalidateQueries({
+                queryKey: DIARY_QUERY_KEYS.calendar(dayjs(createDate).format('YYYY-MM-DD')),
+                exact: true,
+            });
         },
         onError: (error) => {
             console.log(error);

@@ -1786,11 +1786,12 @@ __metadata:
     typescript: 5.2.2
   peerDependencies:
     "@crawl/design-system": 1.0.0
+    dayjs: ^1.11.10
     react: "*"
     react-native: "*"
     react-native-gesture-handler: ">=2.12.0"
     react-native-reanimated: ">=3.4.2"
-    react-native-safe-area-context: "*"
+    react-native-svg: ^14.1.0
   languageName: unknown
   linkType: soft
 

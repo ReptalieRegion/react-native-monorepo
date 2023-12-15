@@ -26,7 +26,6 @@ export default function SharePostImageThumbnailListPage({
 }: SharePostMeImageThumbnailListScreenProps | SharePostImageThumbnailListScreenProps) {
     const { navigateFollowerPage, navigateListUser } = useImageThumbnailNavigation(pageState);
     const { handlePressFollow } = useImageThumbnailActions({ nickname });
-
     const handleImagePress = (index: number) => {
         navigateListUser({ user: { nickname }, startIndex: index });
     };
