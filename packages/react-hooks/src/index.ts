@@ -1,4 +1,4 @@
-export * from './useDebounce';
+export * from './useDebounceValue';
 export * from './useIsMounted';
 export * from './useLoading';
 export * from './useOnOff';
