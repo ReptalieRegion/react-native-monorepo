@@ -92,6 +92,8 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
             applyContext.calendarTranslateY.value = calendarGoalTranslateY;
             applyContext.listTranslateY.value = listMinTranslateY;
             startContext.weekPageIndex.value = -1;
+        } else {
+            applyContext.listHeight.value = startContext.layoutHeight.value - headerHeight - calendarHeight;
         }
 
         if (applyContext.listTranslateY.value !== listGoalTranslateY && !isShowWeek) {
@@ -118,6 +120,7 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
     const openCalendar = useCallback(() => {
         'worklet';
         applyContext.listHeight.value = withTiming(startContext.layoutHeight.value - headerHeight - calendarHeight);
+        console.log(startContext.layoutHeight.value - headerHeight - calendarHeight);
         applyContext.weekCalendarZIndex.value = 0;
         applyContext.calendarZIndex.value = 1;
         applyContext.listTranslateY.value = withTiming(listGoalTranslateY);

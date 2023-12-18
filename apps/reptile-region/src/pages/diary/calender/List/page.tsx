@@ -4,8 +4,7 @@ import { useIsFocused, useRoute } from '@react-navigation/native';
 import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import useFetchCalendar, {
     type CalendarFlashListItem,
@@ -15,6 +14,7 @@ import { PostWriteIcon } from '@/assets/icons';
 import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
+import ScaleListItem from '@/components/diary/atoms/CalendarListItem/CalendarListItem';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 import useCalendarNavigation from '@/hooks/diary/navigation/useCalendarNavigation';
@@ -60,18 +60,15 @@ export default function ExpandableCalendarScreen() {
                     </View>
                 );
             case 'CALENDAR_ITEM':
-                const handleItemPress = () => {
-                    Alert.alert(item.calendar.memo);
-                };
                 return (
-                    <TouchableOpacity
-                        onPress={handleItemPress}
-                        style={listStyles.item}
+                    <ScaleListItem
+                        pressInBackground={color.Gray[100].toString()}
                         containerStyle={listStyles.itemContainer}
+                        onLongPress={() => console.log('hi')}
                     >
                         <Avatar image={item.entity.image} size={60} />
                         <View style={listStyles.contentWrapper}>
-                            <View style={listStyles.contentContainer}>
+                            <View>
                                 <Typo
                                     variant="title3"
                                     textAlign="left"
@@ -82,33 +79,33 @@ export default function ExpandableCalendarScreen() {
                                 >
                                     {item.entity.name}
                                 </Typo>
-                                <View>
-                                    <ConditionalRenderer
-                                        condition={!!item.calendar.memo}
-                                        trueContent={
-                                            <Typo
-                                                variant="body2"
-                                                color="placeholder"
-                                                textBreakStrategy="highQuality"
-                                                lineBreakMode="clip"
-                                                lineBreakStrategyIOS="hangul-word"
-                                                numberOfLines={1}
-                                            >
-                                                {item.calendar.memo}
-                                            </Typo>
-                                        }
-                                    />
-                                </View>
-                                <View style={listStyles.tagWrapper}>
-                                    {item.calendar.markType.map((type) => (
-                                        <Typo key={type} color="primary" textAlign="left" variant="body3">
-                                            #{type}
+                            </View>
+                            <View>
+                                <ConditionalRenderer
+                                    condition={!!item.calendar.memo}
+                                    trueContent={
+                                        <Typo
+                                            variant="body2"
+                                            color="placeholder"
+                                            textBreakStrategy="highQuality"
+                                            lineBreakMode="clip"
+                                            lineBreakStrategyIOS="hangul-word"
+                                            numberOfLines={1}
+                                        >
+                                            {item.calendar.memo}
                                         </Typo>
-                                    ))}
-                                </View>
+                                    }
+                                />
+                            </View>
+                            <View style={listStyles.tagWrapper}>
+                                {item.calendar.markType.map((type) => (
+                                    <Typo key={type} color="primary" textAlign="left" variant="body3">
+                                        #{type}
+                                    </Typo>
+                                ))}
                             </View>
                         </View>
-                    </TouchableOpacity>
+                    </ScaleListItem>
                 );
         }
     }, []);
@@ -200,7 +197,7 @@ export default function ExpandableCalendarScreen() {
 
 const contentContainerStyle: ContentStyle = {
     paddingVertical: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     backgroundColor: color.White.toString(),
 };
 
@@ -232,33 +229,23 @@ const listStyles = StyleSheet.create({
         width: '100%',
     },
     item: {
-        flexDirection: 'row',
         width: '100%',
-        height: 90,
-        gap: 20,
-        backgroundColor: color.White.toString(),
     },
     itemContainer: {
-        flex: 1,
-        alignItems: 'center',
+        paddingHorizontal: 10,
     },
     contentWrapper: {
         justifyContent: 'center',
         flex: 1,
-        gap: 5,
+        height: 90,
     },
     title: {
         height: 20,
         backgroundColor: color.White.toString(),
         marginVertical: 10,
-    },
-    contentContainer: {
-        flex: 1,
-        justifyContent: 'space-between',
-        height: 60,
+        paddingHorizontal: 10,
     },
     tagWrapper: {
-        flex: 1,
         flexDirection: 'row',
         gap: 5,
     },
