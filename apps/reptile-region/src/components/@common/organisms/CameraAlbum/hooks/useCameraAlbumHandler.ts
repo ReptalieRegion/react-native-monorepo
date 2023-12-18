@@ -27,6 +27,8 @@ export default function useCameraAlbumHandler() {
         const newPhotos = photos.edges.map((edge) => ({
             uri: edge.node.image.uri,
             name: edge.node.image.filename ?? `image_${Math.floor(Math.random() * 9999)}_${new Date().getTime()}.jpg`,
+            width: edge.node.image.width,
+            height: edge.node.image.height,
         }));
         const firstEdge = newPhotos[0];
 

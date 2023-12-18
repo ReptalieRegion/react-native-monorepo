@@ -4,6 +4,8 @@ import type { ImageCropData } from '@react-native-community/image-editor';
 export type Photo = {
     uri: string;
     name: string;
+    width: number;
+    height: number;
 };
 
 export type CropInfo = ImageCropData & {

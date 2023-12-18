@@ -27,8 +27,8 @@ export default function PhotoEditor({ width, height }: PhotoEditorProps) {
             key={currentSelectedPhoto.origin.uri}
             image={{
                 uri,
-                width: width,
-                height: height,
+                width: currentSelectedPhoto.origin.width,
+                height: currentSelectedPhoto.origin.height,
             }}
             initPosition={
                 currentSelectedPhoto.crop

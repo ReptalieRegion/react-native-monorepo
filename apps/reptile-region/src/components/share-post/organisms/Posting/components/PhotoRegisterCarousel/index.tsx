@@ -24,7 +24,12 @@ export default function PhotoRegisterCarousel() {
             if (crop) {
                 const { size, offset } = crop;
                 const uri = await ImageEditor.cropImage(origin.uri, { size, offset });
-                newOrigin = { uri, name: origin.name };
+                newOrigin = {
+                    uri,
+                    name: origin.name,
+                    width: origin.width,
+                    height: origin.height,
+                };
             }
 
             setCroppedSelectedPhoto({ croppedSelectedPhoto: newOrigin, index });
