@@ -12,7 +12,7 @@
         "calendar": "yarn workspace @crawl/calendar",
         "design": "yarn workspace @crawl/design-system",
         "error-boundary": "yarn workspace @crawl/error-boundary",
-        "react-hook": "yarn workspace @crawl/react-hook",
+        "react-hooks": "yarn workspace @crawl/react-hooks",
         "overlay-manager": "yarn workspace @crawl/overlay-manager",
         "utils": "yarn workspace @crawl/utils",
         "lint-front": "lint-staged",

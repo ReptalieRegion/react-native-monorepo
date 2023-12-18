@@ -5,55 +5,24 @@ import { GestureDetector } from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 
 import useExpandableAnimation from '../../hooks/useExpandableAnimation';
-import type { DateType, MarkedDates, ScrollToIndex } from '../../type';
-import Calendar, { type CalendarProps } from '../Calendar/Calendar';
-import Header from '../Header';
-import WeekCalendar, { type WeekCalendarProps } from '../WeekCalendar/WeekCalendar';
+import type { DateType, ScrollToIndex } from '../../types/calendar';
+import Header from '../@common/Header';
+import Calendar from '../Calendar/Calendar';
+import type { CalendarProps } from '../Calendar/type';
+import type { WeekCalendarProps } from '../WeekCalendar/type';
 
-import AgendaList, { type AgendaListProps, type TitleData } from './AgendaList';
+import AgendaList from './AgendaList';
+import type { AgendaListProps, ExpandableCalendarProps } from './type';
 
-type ExpandableCalendarState = {
-    date?: string;
-    minDate?: string;
-    maxDate?: string;
-    markedDates?: MarkedDates;
-    hideHeader?: boolean;
-    dayNames?: string[] | undefined;
-};
+const WeekCalendar = React.lazy(() => import('../WeekCalendar/WeekCalendar'));
 
-interface ExpandableCalendarActions {
-    onChangeMonth?(dateString: string): void;
-}
-
-type ExpandableCalendarProps = ExpandableCalendarState & ExpandableCalendarActions;
-
-export default function ExpandableCalendar<TData>({
-    calendarProps,
-    listProps,
-}: {
-    calendarProps: ExpandableCalendarProps;
-    listProps: Omit<AgendaListProps<TData>, 'openCalendar' | 'closeCalendar'>;
-}) {
+export default function ExpandableCalendar<TData>({ calendarProps, listProps }: ExpandableCalendarProps<TData>) {
     const weekCalendarRef = useRef<FlashList<DateType[]>>(null);
-    const agendaListRef = useRef<FlashList<TData | TitleData>>(null);
 
     // 주간 캘린더 스크롤
     const handleScrollToIndexWeekCalendar = useCallback((scrollProps: ScrollToIndex) => {
         weekCalendarRef.current?.scrollToIndex(scrollProps);
     }, []);
-
-    // 리스트 스크롤
-    const handleScrollToIndexList = useCallback(
-        (dateString: string) => {
-            const findMoveIndex = listProps.data?.findIndex(
-                (item: any) => item.type === 'TITLE' && item.dateString === dateString,
-            );
-            if (findMoveIndex !== undefined && findMoveIndex !== -1) {
-                agendaListRef.current?.scrollToIndex({ index: findMoveIndex, animated: true });
-            }
-        },
-        [listProps.data],
-    );
 
     // 애니메이션
     const useExpandableAnimationProps = useMemo(
@@ -89,20 +58,17 @@ export default function ExpandableCalendar<TData>({
             maxDate: calendarProps.maxDate,
             markedDates: calendarProps.markedDates,
             hideHeader: true,
-            onPressDay: handleScrollToIndexList,
         }),
-        [calendarProps.date, calendarProps.markedDates, calendarProps.maxDate, calendarProps.minDate, handleScrollToIndexList],
+        [calendarProps.date, calendarProps.markedDates, calendarProps.maxDate, calendarProps.minDate],
     );
 
     const weekCalendarProps: WeekCalendarProps = useMemo(
         () => ({
             markedDates: calendarProps?.markedDates,
             hideHeader: true,
-            handleScrollToIndexList: handleScrollToIndexList,
             onChangePage: handleChangeCalendarTranslateY,
-            onPressDay: handleScrollToIndexList,
         }),
-        [calendarProps?.markedDates, handleChangeCalendarTranslateY, handleScrollToIndexList],
+        [calendarProps?.markedDates, handleChangeCalendarTranslateY],
     );
 
     const listComponentProps: AgendaListProps<TData> = useMemo(
@@ -129,7 +95,7 @@ export default function ExpandableCalendar<TData>({
                 </View>
             </GestureDetector>
             <Animated.View style={listWrapperStyle}>
-                <AgendaList<TData> ref={agendaListRef} {...listComponentProps} />
+                <AgendaList<TData> {...listComponentProps} />
             </Animated.View>
         </View>
     );

@@ -7,32 +7,13 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 
 import useCalendarHandler from '../../hooks/useCalendarHandler';
 import useCalendarState from '../../hooks/useCalendarState';
-import type { DateType, MarkedDates } from '../../type';
+import type { DateType } from '../../types/calendar';
 import { getWeekOfMonthArray } from '../../utils/calcDate';
-import Day from '../Day';
-import Header from '../Header';
-import { dayStyle, dotStyle, markingStyle } from '../style';
+import Day from '../@common/Day';
+import Header from '../@common/Header';
+import { dayStyle, dotStyle, markingStyle } from '../@common/style';
 
-type WeekCalendarState = {
-    date?: string;
-    minDate?: string;
-    maxDate?: string;
-    markedDates?: MarkedDates;
-    containerStyle?: {
-        width: number;
-    };
-    hideHeader?: boolean;
-    dayNames?: string[];
-};
-
-interface WeekCalendarActions {
-    onPressDay?(dateString: string): void;
-    onChangePage?(index: number): void;
-    onPressLeft?(): void;
-    onPressRight?(): void;
-}
-
-export type WeekCalendarProps = WeekCalendarState & WeekCalendarActions;
+import type { WeekCalendarProps } from './type';
 
 function WeekCalendar(
     {
@@ -43,7 +24,6 @@ function WeekCalendar(
         markedDates,
         containerStyle,
         hideHeader,
-        onPressDay,
         onChangePage,
         onPressLeft,
         onPressRight,
@@ -104,7 +84,6 @@ function WeekCalendar(
                         const isDot = markedDates?.[dayInfo.dayString]?.marked;
 
                         const handlePressDay = () => {
-                            onPressDay?.(dayInfo.dayString);
                             setDate(dayInfo.dayString);
                         };
 
@@ -124,15 +103,7 @@ function WeekCalendar(
                 </View>
             );
         },
-        [
-            calendarState.maxDate,
-            calendarState.minDate,
-            calendarState.selectedDate,
-            itemWrapper,
-            markedDates,
-            onPressDay,
-            setDate,
-        ],
+        [calendarState.maxDate, calendarState.minDate, calendarState.selectedDate, itemWrapper, markedDates, setDate],
     );
 
     return (

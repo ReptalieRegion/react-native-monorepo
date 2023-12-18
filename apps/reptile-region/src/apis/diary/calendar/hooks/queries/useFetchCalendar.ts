@@ -21,6 +21,7 @@ export type Title = {
 
 export type CalendarItem = {
     type: 'CALENDAR_ITEM';
+    dateString: string;
 } & FetchCalendarItem;
 
 export type CalendarFlashListItem = Title | CalendarItem;
@@ -34,7 +35,7 @@ type CalendarDataMap = { [key: string]: CalendarItem[] };
 
 export default function useFetchCalendar({ date }: FetchCalendar['Request']) {
     return useQuery<FetchCalendar['Response'], HTTPError, CalendarData, CustomQueryKey>({
-        queryKey: DIARY_QUERY_KEYS.calendar(dayjs(date).format('YYYY-MM-DD')),
+        queryKey: DIARY_QUERY_KEYS.calendar(dayjs(date).startOf('month').format('YYYY-MM-DD')),
         staleTime: 4 * 60 * 1000,
         gcTime: 5 * 60 * 1000,
         queryFn: useCallback(() => fetchCalendar({ date }), [date]),
@@ -51,6 +52,7 @@ export default function useFetchCalendar({ date }: FetchCalendar['Request']) {
                             ...dateArray,
                             {
                                 type: 'CALENDAR_ITEM',
+                                dateString,
                                 ...calendarItem,
                             },
                         ],
@@ -62,6 +64,7 @@ export default function useFetchCalendar({ date }: FetchCalendar['Request']) {
                     [dateString]: [
                         {
                             type: 'CALENDAR_ITEM',
+                            dateString,
                             ...calendarItem,
                         },
                     ],

@@ -5,40 +5,15 @@ import { StyleSheet, View } from 'react-native';
 
 import useCalendarHandler from '../../hooks/useCalendarHandler';
 import useCalendarState from '../../hooks/useCalendarState';
-import type { DateType, MarkedDates } from '../../type';
+import type { DateType } from '../../types/calendar';
 import { getMonthArray } from '../../utils/calcDate';
-import Day from '../Day';
-import Header, { type HeaderActions } from '../Header';
-import { dayStyle, dotStyle, markingStyle } from '../style';
+import Day from '../@common/Day';
+import Header from '../@common/Header';
+import { dayStyle, dotStyle, markingStyle } from '../@common/style';
 
-type CalendarState = {
-    date?: string;
-    minDate?: string;
-    maxDate?: string;
-    markedDates?: MarkedDates;
-    hideHeader?: boolean;
-    dayNames?: string[] | undefined;
-};
+import type { CalendarProps } from './type';
 
-interface CalendarActions {
-    onPressDay?(dateString: string): void;
-    onPressLeft?(): void;
-    onPressRight?(): void;
-}
-
-export type CalendarProps = CalendarState & CalendarActions & HeaderActions;
-
-function Calendar({
-    date,
-    dayNames,
-    maxDate,
-    minDate,
-    markedDates,
-    hideHeader,
-    onPressDay,
-    onPressLeft,
-    onPressRight,
-}: CalendarProps) {
+function Calendar({ date, dayNames, maxDate, minDate, markedDates, hideHeader, onPressLeft, onPressRight }: CalendarProps) {
     const calendarState = useCalendarState();
 
     /** 같은 달은 새로 생성하지 않게 하기 위해 */
@@ -51,14 +26,6 @@ function Calendar({
 
     const initData = useMemo(() => ({ date, maxDate, minDate }), [date, maxDate, minDate]);
     const { setDate } = useCalendarHandler(initData);
-
-    const handlePressDay = useCallback(
-        (dayString: string) => {
-            onPressDay?.(dayString);
-            setDate(dayString);
-        },
-        [onPressDay, setDate],
-    );
 
     const renderDay = useCallback(
         (dayInfo: DateType) => {
@@ -81,12 +48,12 @@ function Calendar({
                         markingStyle={isSameDay ? markingStyle : undefined}
                         dotStyle={isDot ? dotStyle : undefined}
                         textColor={typoColor}
-                        onPress={!isDisableDay ? () => handlePressDay(dayInfo.dayString) : undefined}
+                        onPress={!isDisableDay ? () => setDate(dayInfo.dayString) : undefined}
                     />
                 </View>
             );
         },
-        [calendarState.maxDate, calendarState.minDate, calendarState.selectedDate, markedDates, handlePressDay],
+        [calendarState.selectedDate, calendarState.maxDate, calendarState.minDate, markedDates, setDate],
     );
 
     return (

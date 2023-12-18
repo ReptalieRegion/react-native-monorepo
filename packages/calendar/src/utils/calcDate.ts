@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from 'dayjs';
 
-import type { DateType } from '../type';
+import type { DateType } from '../types/calendar';
 
 const WEEK = 7;
 

@@ -1,7 +1,7 @@
 import { color } from '@crawl/design-system';
 import { StyleSheet } from 'react-native';
 
-import type { DotStyle, MarkingStyle } from '../type';
+import type { DotStyle, MarkingStyle } from '../../types/calendar';
 
 const markingStyle: MarkingStyle = {
     backgroundColor: color.Gray[300].toString(),

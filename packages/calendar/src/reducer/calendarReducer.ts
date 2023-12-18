@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import type { CalendarActions, CalendarState, InitDate } from '../type';
+import type { CalendarActions, CalendarState, InitDate } from '../types/calendar';
 import { getWeekCountInMonthAndWeekNumber } from '../utils/calcDate';
 
 export default function calendarReducer(state: CalendarState, actions: CalendarActions) {

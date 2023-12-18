@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 
-import type { CalendarActions, CalendarState } from '../type';
+import type { CalendarActions, CalendarState } from '../types/calendar';
 
 const CalendarsStateContext = createContext<CalendarState | null>(null);
 

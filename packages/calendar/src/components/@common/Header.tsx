@@ -1,32 +1,15 @@
-import { Typo, color, type TextColorType, type VariantType } from '@crawl/design-system';
+import { Typo, color } from '@crawl/design-system';
 import dayjs from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
-import { View, type ViewStyle } from 'react-native';
+import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { LeftArrow, RightArrow } from '../assets/icons';
-import useCalendarHandler from '../hooks/useCalendarHandler';
-import useCalendarState from '../hooks/useCalendarState';
+import { LeftArrow, RightArrow } from '../../assets/icons';
+import useCalendarHandler from '../../hooks/useCalendarHandler';
+import useCalendarState from '../../hooks/useCalendarState';
 
 import { headerStyles } from './style';
-
-type HeaderState = {
-    label?: string;
-    dayNames?: string[];
-    containerStyle?: ViewStyle;
-    labelStyle?: {
-        variant: VariantType;
-        color: TextColorType;
-    };
-};
-
-export interface HeaderActions {
-    monthFormat?(date: Date): string;
-    onPressLeft?(): void;
-    onPressRight?(): void;
-}
-
-type HeaderProps = HeaderState & HeaderActions;
+import type { HeaderProps } from './type';
 
 export default function Header({
     dayNames = ['일', '월', '화', '수', '목', '금', '토'],

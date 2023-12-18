@@ -1,8 +1,9 @@
 import { ExpandableCalendar, useCalendar } from '@crawl/calendar';
 import { Typo, color } from '@crawl/design-system';
+import { useRoute } from '@react-navigation/native';
 import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -16,6 +17,7 @@ import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 import useCalendarNavigation from '@/hooks/diary/navigation/useCalendarNavigation';
+import type { CalendarListRouteProp } from '@/types/routes/props/diary/calendar';
 
 export default function ExpandableCalendarScreen() {
     const today = useRef(dayjs()).current;
@@ -24,7 +26,15 @@ export default function ExpandableCalendarScreen() {
     const [searchDate, setSearchDate] = useState(today);
     const { data } = useFetchCalendar({ date: searchDate.toDate() });
 
-    const { subMonth } = useCalendar();
+    const { params } = useRoute<CalendarListRouteProp>();
+    const { subMonth, setDate } = useCalendar();
+
+    useEffect(() => {
+        const initialDateString = params?.initialDateString;
+        if (initialDateString) {
+            setDate(params.initialDateString);
+        }
+    }, [params?.initialDateString, setDate]);
 
     const handleChangeSearchDate = useCallback((dateString: string) => {
         setSearchDate(dayjs(dateString));

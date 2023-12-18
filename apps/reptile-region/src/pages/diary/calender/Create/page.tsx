@@ -45,14 +45,27 @@ export default function CalendarItemCreatePage({ navigation }: CalendarItemCreat
     const { mutate, isPending } = useCreateCalendarItem({
         onMutate: openLoading,
         onSettled: closeLoading,
-        onSuccess: () => {
+        onSuccess: (_data, variables) => {
             queryClient.invalidateQueries({
-                queryKey: DIARY_QUERY_KEYS.calendar(dayjs(createDate).format('YYYY-MM-DD')),
+                queryKey: DIARY_QUERY_KEYS.calendar(dayjs(variables.date).startOf('month').format('YYYY-MM-DD')),
                 exact: true,
             });
-            if (navigation.canGoBack()) {
-                navigation.goBack();
-            }
+            console.log('create', dayjs(variables.date).format('YYYY-MM-DD'));
+            navigation.navigate('bottom-tab/routes', {
+                screen: 'tab',
+                params: {
+                    screen: 'diary/routes',
+                    params: {
+                        screen: 'calender',
+                        params: {
+                            screen: 'main',
+                            params: {
+                                initialDateString: dayjs(variables.date).format('YYYY-MM-DD'),
+                            },
+                        },
+                    },
+                },
+            });
         },
         onError: (error) => {
             console.log(error);

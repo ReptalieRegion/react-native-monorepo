@@ -1,5 +1,5 @@
 import { color } from '@crawl/design-system';
-import { useDebounce, useLoading } from '@crawl/react-hooks';
+import { useDebounceValue, useLoading } from '@crawl/react-hooks';
 import { useIsFocused } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Keyboard, Platform, StyleSheet, View } from 'react-native';
@@ -31,7 +31,7 @@ export default function SignUpStep1({
     const isFocused = useIsFocused();
     const { signIn } = useAuth();
     const { bottom } = useSafeAreaInsets();
-    const debouncedNickname = useDebounce(nickname, 500, endLoading);
+    const debouncedNickname = useDebounceValue(nickname, 500, endLoading);
     const { data, isLoading } = useNicknameDuplicateCheck({
         nickname: debouncedNickname,
         enabled: debouncedNickname !== recommendNickname && debouncedNickname !== '',

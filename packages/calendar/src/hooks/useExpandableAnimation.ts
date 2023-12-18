@@ -3,8 +3,8 @@ import { useWindowDimensions, type LayoutChangeEvent } from 'react-native';
 import { Gesture } from 'react-native-gesture-handler';
 import { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import { dayStyle, headerStyles } from '../components/style';
-import type { ScrollToIndex } from '../type';
+import { dayStyle, headerStyles } from '../components/@common/style';
+import type { ScrollToIndex } from '../types/calendar';
 
 import useCalendarState from './useCalendarState';
 
@@ -211,7 +211,6 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
                     listGoalTranslateY,
                 );
 
-                applyContext.calendarOpacity.value = applyContext.listTranslateY.value / listGoalTranslateY;
                 applyContext.listHeight.value = Math.min(
                     Math.max(
                         startContext.listHeight.value - event.translationY,
@@ -219,6 +218,8 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
                     ),
                     startContext.layoutHeight.value - headerHeight - dayHeight,
                 );
+                applyContext.calendarOpacity.value =
+                    (applyContext.listTranslateY.value - headerHeight - dayHeight) / (listGoalTranslateY - listMinTranslateY);
             } else {
                 applyContext.weekCalendarTranslateY.value = Math.min(
                     Math.max(startContext.weekCalendarTranslateY.value + event.translationY * upSpeedPercent, 0),
@@ -238,7 +239,6 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
                     listMinTranslateY,
                 );
 
-                applyContext.calendarOpacity.value = 1 - listMinTranslateY / applyContext.listTranslateY.value;
                 applyContext.listHeight.value = Math.max(
                     Math.min(
                         startContext.listHeight.value - event.translationY,
@@ -247,6 +247,10 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
                     startContext.layoutHeight.value - headerHeight - calendarHeight,
                 );
             }
+
+            applyContext.calendarOpacity.value =
+                1 -
+                -(applyContext.listTranslateY.value - headerHeight - calendarHeight) / (listGoalTranslateY - listMinTranslateY);
         })
         .onEnd((event) => {
             const isDownSwipe = event.velocityY > -50;

@@ -3,7 +3,7 @@ import React, { useReducer } from 'react';
 
 import { CalendarsActionsContext, CalendarsStateContext } from '../contexts/CalendarsContext';
 import calendarReducer from '../reducer/calendarReducer';
-import type { CalendarState } from '../type';
+import type { CalendarState } from '../types/calendar';
 import { getWeekCountInMonthAndWeekNumber } from '../utils/calcDate';
 
 type CalendarProps = {

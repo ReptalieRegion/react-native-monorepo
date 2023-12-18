@@ -1,40 +1,24 @@
-import { FlashList, type FlashListProps, type ViewToken } from '@shopify/flash-list';
-import React, { forwardRef, useCallback, useRef } from 'react';
+import { useDebounce } from '@crawl/react-hooks';
+import { FlashList, type ViewToken } from '@shopify/flash-list';
+import React, { memo, useCallback, useEffect, useRef } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent, ViewabilityConfig } from 'react-native';
 
 import useCalendarHandler from '../../hooks/useCalendarHandler';
 import useCalendarState from '../../hooks/useCalendarState';
 
-type AgendaListState = {};
-
-interface AgendaListActions {
-    openCalendar(): void;
-    closeCalendar(): void;
-}
-
-export type TitleData = {
-    type: 'TITLE';
-    dateString: string;
-    label: string;
-};
-
-export type AgendaListProps<TData> = AgendaListState &
-    AgendaListActions &
-    Omit<FlashListProps<TitleData | TData>, 'viewabilityConfig' | 'onMomentumScrollEnd'>;
+import type { AgendaListProps, ContentData, TitleData } from './type';
 
 const viewabilityConfig: ViewabilityConfig = {
-    itemVisiblePercentThreshold: 20,
+    itemVisiblePercentThreshold: 100,
     waitForInteraction: true,
 };
 
-function AgendaListInner<TData>(
-    { onScroll, openCalendar, closeCalendar, ...props }: AgendaListProps<TData>,
-    ref: React.ForwardedRef<FlashList<TData | TitleData>>,
-) {
+function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, ...props }: AgendaListProps<TData>) {
     const { selectedDateString } = useCalendarState();
     const { setDate } = useCalendarHandler();
     const viewingDate = useRef(selectedDateString);
     const startScrollY = useRef(0);
+    const agendaListRef = useRef<FlashList<ContentData<TData> | TitleData>>(null);
 
     const _handleScroll = useCallback(
         (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -53,32 +37,37 @@ function AgendaListInner<TData>(
         [closeCalendar, onScroll, openCalendar],
     );
 
-    const _handleViewableItemChanged = useCallback((info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
-        viewingDate.current = info.viewableItems.find((viewToken) => viewToken.item.type === 'TITLE')?.item.dateString;
-    }, []);
+    const _handleViewableItemChanged = useDebounce((info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
+        viewingDate.current = info.viewableItems[0]?.item.dateString;
+        setDate(viewingDate.current);
+    }, 500);
 
-    const _handleScrollMomentumScrollEnd = useCallback(() => {
-        if (viewingDate.current) {
-            setDate(viewingDate.current);
+    useEffect(() => {
+        if (selectedDateString !== viewingDate.current) {
+            viewingDate.current = selectedDateString;
+            const findMoveIndex = props.data?.findIndex(
+                (item) => item.type === 'TITLE' && item.dateString === selectedDateString,
+            );
+            if (findMoveIndex !== undefined && findMoveIndex !== -1) {
+                agendaListRef.current?.scrollToIndex({ index: findMoveIndex, animated: true });
+            }
         }
-    }, [setDate]);
+    }, [props.data, selectedDateString]);
 
     return (
         <FlashList
-            ref={ref}
+            ref={agendaListRef}
             {...props}
             viewabilityConfig={viewabilityConfig}
             onScroll={_handleScroll}
-            onMomentumScrollEnd={_handleScrollMomentumScrollEnd}
             onViewableItemsChanged={_handleViewableItemChanged}
         />
     );
 }
 
-const AgendaList = forwardRef(AgendaListInner) as <TData>(
-    props: AgendaListProps<TData> & {
-        ref: React.ForwardedRef<FlashList<TData | TitleData>>;
-    },
-) => ReturnType<typeof AgendaListInner>;
+const genericMemo: <T>(
+    component: T,
+    propsAreEqual?: (prevProps: React.PropsWithChildren<T>, nextProps: React.PropsWithChildren<T>) => boolean,
+) => T = memo;
 
-export default AgendaList;
+export default genericMemo(AgendaList);

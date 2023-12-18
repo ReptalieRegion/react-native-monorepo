@@ -38,4 +38,8 @@ type EntityUpdateParams = {
     };
 };
 
-export type { EntityCreateWeightParams, EntityDetailParams, EntityOptionsMenuParams, EntityUpdateParams };
+type CalendarListParams = {
+    initialDateString?: string;
+};
+
+export type { CalendarListParams, EntityCreateWeightParams, EntityDetailParams, EntityOptionsMenuParams, EntityUpdateParams };
