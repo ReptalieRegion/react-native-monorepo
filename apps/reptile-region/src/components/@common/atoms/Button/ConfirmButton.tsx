@@ -119,20 +119,8 @@ function styleSizeGenerator(size: ConfirmButtonSize): { view: ViewStyle; text: P
                 view: {
                     borderRadius: 15,
                     paddingHorizontal: 15,
-                    height: 36,
-                    maxWidth: 120,
-                },
-                text: {
-                    variant: 'title3',
-                },
-            };
-        case 'modal':
-            return {
-                view: {
-                    borderRadius: 15,
-                    paddingHorizontal: 15,
-                    height: 55,
-                    width: '100%',
+                    paddingVertical: 10,
+                    maxWidth: 140,
                 },
                 text: {
                     variant: 'title3',
@@ -153,6 +141,18 @@ function styleSizeGenerator(size: ConfirmButtonSize): { view: ViewStyle; text: P
                 view: {
                     width: Dimensions.get('screen').width,
                     height: 55,
+                },
+                text: {
+                    variant: 'title3',
+                },
+            };
+        case 'modal':
+            return {
+                view: {
+                    borderRadius: 15,
+                    paddingHorizontal: 15,
+                    height: 55,
+                    width: '100%',
                 },
                 text: {
                     variant: 'title3',

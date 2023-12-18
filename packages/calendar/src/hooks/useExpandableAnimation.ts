@@ -8,11 +8,14 @@ import type { ScrollToIndex } from '../type';
 
 import useCalendarState from './useCalendarState';
 
-interface UseExpandableAnimation {
+interface UseExpandableAnimationActions {
+    onChangeMonth?(dateString: string): void;
     onScrollToIndexWeekCalendar(scrollProps: ScrollToIndex): void;
 }
 
-export default function useExpandableAnimation({ onScrollToIndexWeekCalendar }: UseExpandableAnimation) {
+type UseExpandableAnimationProps = UseExpandableAnimationActions;
+
+export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, onChangeMonth }: UseExpandableAnimationProps) {
     const calendarState = useCalendarState();
     const dimensions = useWindowDimensions();
 
@@ -76,6 +79,12 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar }: 
     const lastMonth = useRef(calendarState.selectedDateString);
     const isNotSameMonth = !calendarState.selectedDate.isSame(lastMonth.current, 'month');
     const isShowWeek = applyContext.weekCalendarZIndex.value === 1;
+
+    useEffect(() => {
+        if (isNotSameMonth) {
+            onChangeMonth?.(calendarState.selectedDateString);
+        }
+    }, [calendarState.selectedDateString, isNotSameMonth, onChangeMonth]);
     if (isNotSameMonth) {
         lastMonth.current = calendarState.selectedDateString;
 

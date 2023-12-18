@@ -52,6 +52,14 @@ function Calendar({
     const initData = useMemo(() => ({ date, maxDate, minDate }), [date, maxDate, minDate]);
     const { setDate } = useCalendarHandler(initData);
 
+    const handlePressDay = useCallback(
+        (dayString: string) => {
+            onPressDay?.(dayString);
+            setDate(dayString);
+        },
+        [onPressDay, setDate],
+    );
+
     const renderDay = useCallback(
         (dayInfo: DateType) => {
             const isSameDay = calendarState.selectedDate.isSame(dayInfo.dayString, 'day');
@@ -65,11 +73,6 @@ function Calendar({
             const typoColor: TextColorType = isDisableDay ? 'light-placeholder' : isSameMonth ? 'default' : 'light-placeholder';
             const isDot = markedDates?.[dayInfo.dayString]?.marked;
 
-            const handlePressDay = () => {
-                onPressDay?.(dayInfo.dayString);
-                setDate(dayInfo.dayString);
-            };
-
             return (
                 <View key={dayInfo.dayString} style={dayStyle.wrapper}>
                     <Day
@@ -78,12 +81,12 @@ function Calendar({
                         markingStyle={isSameDay ? markingStyle : undefined}
                         dotStyle={isDot ? dotStyle : undefined}
                         textColor={typoColor}
-                        onPress={!isDisableDay ? handlePressDay : undefined}
+                        onPress={!isDisableDay ? () => handlePressDay(dayInfo.dayString) : undefined}
                     />
                 </View>
             );
         },
-        [calendarState.maxDate, calendarState.minDate, calendarState.selectedDate, markedDates, onPressDay, setDate],
+        [calendarState.maxDate, calendarState.minDate, calendarState.selectedDate, markedDates, handlePressDay],
     );
 
     return (

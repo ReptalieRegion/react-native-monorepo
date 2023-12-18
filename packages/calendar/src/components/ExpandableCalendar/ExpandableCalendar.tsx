@@ -21,11 +21,17 @@ type ExpandableCalendarState = {
     dayNames?: string[] | undefined;
 };
 
+interface ExpandableCalendarActions {
+    onChangeMonth?(dateString: string): void;
+}
+
+type ExpandableCalendarProps = ExpandableCalendarState & ExpandableCalendarActions;
+
 export default function ExpandableCalendar<TData>({
     calendarProps,
     listProps,
 }: {
-    calendarProps: ExpandableCalendarState;
+    calendarProps: ExpandableCalendarProps;
     listProps: Omit<AgendaListProps<TData>, 'openCalendar' | 'closeCalendar'>;
 }) {
     const weekCalendarRef = useRef<FlashList<DateType[]>>(null);
@@ -35,12 +41,6 @@ export default function ExpandableCalendar<TData>({
     const handleScrollToIndexWeekCalendar = useCallback((scrollProps: ScrollToIndex) => {
         weekCalendarRef.current?.scrollToIndex(scrollProps);
     }, []);
-    const useExpandableAnimationProps = useMemo(
-        () => ({
-            onScrollToIndexWeekCalendar: handleScrollToIndexWeekCalendar,
-        }),
-        [handleScrollToIndexWeekCalendar],
-    );
 
     // 리스트 스크롤
     const handleScrollToIndexList = useCallback(
@@ -48,8 +48,7 @@ export default function ExpandableCalendar<TData>({
             const findMoveIndex = listProps.data?.findIndex(
                 (item: any) => item.type === 'TITLE' && item.dateString === dateString,
             );
-            console.log(findMoveIndex);
-            if (findMoveIndex && findMoveIndex !== -1) {
+            if (findMoveIndex !== undefined && findMoveIndex !== -1) {
                 agendaListRef.current?.scrollToIndex({ index: findMoveIndex, animated: true });
             }
         },
@@ -57,6 +56,13 @@ export default function ExpandableCalendar<TData>({
     );
 
     // 애니메이션
+    const useExpandableAnimationProps = useMemo(
+        () => ({
+            onChangeMonth: calendarProps.onChangeMonth,
+            onScrollToIndexWeekCalendar: handleScrollToIndexWeekCalendar,
+        }),
+        [calendarProps.onChangeMonth, handleScrollToIndexWeekCalendar],
+    );
     const {
         calendarGesture,
         calendarHeight,

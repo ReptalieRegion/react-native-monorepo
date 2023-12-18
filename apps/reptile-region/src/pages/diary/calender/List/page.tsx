@@ -1,8 +1,8 @@
-import { CalendarProvider, ExpandableCalendar } from '@crawl/calendar';
+import { ExpandableCalendar, useCalendar } from '@crawl/calendar';
 import { Typo, color } from '@crawl/design-system';
 import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -11,7 +11,9 @@ import useFetchCalendar, {
     type CalendarItem,
 } from '@/apis/diary/calendar/hooks/queries/useFetchCalendar';
 import { PostWriteIcon } from '@/assets/icons';
-import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
+import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
+import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
+import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 import useCalendarNavigation from '@/hooks/diary/navigation/useCalendarNavigation';
@@ -19,8 +21,20 @@ import useCalendarNavigation from '@/hooks/diary/navigation/useCalendarNavigatio
 export default function ExpandableCalendarScreen() {
     const today = useRef(dayjs()).current;
     const todayString = today.format('YYYY-MM-DD');
+    const [searchDate, setSearchDate] = useState(today);
     const { navigateCalendarCreate } = useCalendarNavigation();
-    const { data } = useFetchCalendar({ date: today.toDate() });
+    const { openLoading, closeLoading } = useGlobalLoading();
+    const { data, isFetching } = useFetchCalendar({ date: searchDate.toDate() });
+
+    useEffect(() => {
+        if (isFetching) {
+            openLoading();
+        } else {
+            closeLoading();
+        }
+    }, [isFetching, closeLoading, openLoading]);
+
+    const { subMonth } = useCalendar();
 
     const renderItem: ListRenderItem<CalendarFlashListItem> = useCallback(({ item }) => {
         switch (item.type) {
@@ -41,7 +55,6 @@ export default function ExpandableCalendarScreen() {
                             style={listStyles.item}
                             containerStyle={listStyles.itemContainer}
                         >
-                            {/* <Image source={{ uri: item.entity.image.src }} style={listStyles.image} /> */}
                             <Avatar image={item.entity.image} size={60} />
                             <View style={listStyles.contentWrapper}>
                                 <View style={listStyles.contentContainer}>
@@ -89,27 +102,51 @@ export default function ExpandableCalendarScreen() {
 
     const getItemType = useCallback((item: CalendarFlashListItem) => (typeof item === 'string' ? 'title' : 'content'), []);
 
+    const renderListFooterComponent = useCallback(() => {
+        return (
+            <View style={listStyles.buttonWrapper}>
+                <ConfirmButton
+                    text={searchDate.subtract(1, 'month').format('M월 기록 더보기')}
+                    size="small"
+                    variant="cancel"
+                    onPress={subMonth}
+                />
+            </View>
+        );
+    }, [searchDate, subMonth]);
+
+    const renderListEmptyComponent = useCallback(() => {
+        return (
+            <View style={listStyles.emptyWrapper}>
+                <Typo color="sub-placeholder">{searchDate.format('M월')}에는 기록된 내용이 없어요</Typo>
+            </View>
+        );
+    }, [searchDate]);
+
     const MemoizedExpandableCalendar = useMemo(() => {
         return (
-            <CalendarProvider>
-                <ExpandableCalendar<CalendarItem>
-                    calendarProps={{
-                        date: todayString,
-                        minDate: '1997-01-01',
-                        maxDate: todayString,
-                    }}
-                    listProps={{
-                        data,
-                        contentContainerStyle: contentContainerStyle,
-                        renderItem: renderItem,
-                        estimatedItemSize: 50,
-                        keyExtractor: keyExtractor,
-                        getItemType: getItemType,
-                    }}
-                />
-            </CalendarProvider>
+            <ExpandableCalendar<CalendarItem>
+                calendarProps={{
+                    date: todayString,
+                    minDate: '1997-01-01',
+                    maxDate: todayString,
+                    markedDates: data?.markedDates,
+                    onChangeMonth: (dateString) => setSearchDate(dayjs(dateString)),
+                }}
+                listProps={{
+                    data: data?.list,
+                    contentContainerStyle: contentContainerStyle,
+                    estimatedItemSize: 50,
+                    CellRendererComponent: FadeInCellRenderComponent,
+                    renderItem: renderItem,
+                    keyExtractor: keyExtractor,
+                    getItemType: getItemType,
+                    ListEmptyComponent: renderListEmptyComponent,
+                    ListFooterComponent: renderListFooterComponent,
+                }}
+            />
         );
-    }, [todayString, data, renderItem, keyExtractor, getItemType]);
+    }, [todayString, data, renderItem, keyExtractor, getItemType, renderListEmptyComponent, renderListFooterComponent]);
 
     return (
         <View style={styles.wrapper}>
@@ -165,7 +202,7 @@ const listStyles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         height: 90,
-        gap: 10,
+        gap: 20,
         backgroundColor: color.White.toString(),
     },
     itemContainer: {
@@ -195,5 +232,16 @@ const listStyles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 10,
+    },
+    buttonWrapper: {
+        flex: 1,
+        alignItems: 'center',
+        marginTop: 20,
+        marginBottom: 60,
+    },
+    emptyWrapper: {
+        marginTop: 60,
+        marginBottom: 20,
+        alignItems: 'center',
     },
 });
