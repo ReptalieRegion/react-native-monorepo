@@ -9,7 +9,7 @@ import useCalendarState from '../../hooks/useCalendarState';
 import type { AgendaListProps, ContentData, TitleData } from './type';
 
 const viewabilityConfig: ViewabilityConfig = {
-    itemVisiblePercentThreshold: 100,
+    itemVisiblePercentThreshold: 20,
     waitForInteraction: true,
 };
 
@@ -44,14 +44,14 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...pro
 
     const _handleViewableItemChanged = useDebounce((info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
         if (isScrollStart.current) {
-            viewingDate.current = info.viewableItems[0]?.item.dateString;
+            viewingDate.current = info.viewableItems.find((viewToken) => viewToken.item.type === 'TITLE')?.item.dateString;
             setDate(viewingDate.current);
             isScrollStart.current = false;
         }
     }, 500);
 
     useEffect(() => {
-        if (selectedDateString !== viewingDate.current) {
+        if (viewingDate.current !== undefined && selectedDateString !== viewingDate.current) {
             viewingDate.current = selectedDateString;
             const findMoveIndex = data?.findIndex((item) => item.type === 'TITLE' && item.dateString === selectedDateString);
             if (findMoveIndex !== undefined && findMoveIndex !== -1) {
