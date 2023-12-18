@@ -13,7 +13,7 @@ const viewabilityConfig: ViewabilityConfig = {
     waitForInteraction: true,
 };
 
-function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, ...props }: AgendaListProps<TData>) {
+function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...props }: AgendaListProps<TData>) {
     const { selectedDateString } = useCalendarState();
     const { setDate } = useCalendarHandler();
     const viewingDate = useRef(selectedDateString);
@@ -53,19 +53,18 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, ...props }: 
     useEffect(() => {
         if (selectedDateString !== viewingDate.current) {
             viewingDate.current = selectedDateString;
-            const findMoveIndex = props.data?.findIndex(
-                (item) => item.type === 'TITLE' && item.dateString === selectedDateString,
-            );
+            const findMoveIndex = data?.findIndex((item) => item.type === 'TITLE' && item.dateString === selectedDateString);
             if (findMoveIndex !== undefined && findMoveIndex !== -1) {
                 agendaListRef.current?.scrollToIndex({ index: findMoveIndex, animated: true });
             }
         }
-    }, [props.data, selectedDateString]);
+    }, [data, selectedDateString]);
 
     return (
         <FlashList
             ref={agendaListRef}
             {...props}
+            data={data}
             viewabilityConfig={viewabilityConfig}
             onScroll={_handleScroll}
             onMomentumScrollBegin={_handleMomentumScrollBegin}

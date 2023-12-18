@@ -1,10 +1,10 @@
 import { ExpandableCalendar, useCalendar } from '@crawl/calendar';
 import { Typo, color } from '@crawl/design-system';
-import { useRoute } from '@react-navigation/native';
+import { useIsFocused, useRoute } from '@react-navigation/native';
 import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Alert, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useFetchCalendar, {
@@ -14,6 +14,7 @@ import useFetchCalendar, {
 import { PostWriteIcon } from '@/assets/icons';
 import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
+import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 import useCalendarNavigation from '@/hooks/diary/navigation/useCalendarNavigation';
@@ -24,10 +25,20 @@ export default function ExpandableCalendarScreen() {
     const todayString = today.format('YYYY-MM-DD');
     const { navigateCalendarCreate } = useCalendarNavigation();
     const [searchDate, setSearchDate] = useState(today);
-    const { data } = useFetchCalendar({ date: searchDate.toDate() });
+    const { isLoading: isGlobalLoading, openLoading, closeLoading } = useGlobalLoading();
+    const isFocused = useIsFocused();
+    const { data, isLoading } = useFetchCalendar({ date: searchDate.toDate() });
 
     const { params } = useRoute<CalendarListRouteProp>();
     const { subMonth, setDate } = useCalendar();
+
+    useEffect(() => {
+        if (isFocused && isLoading) {
+            openLoading();
+        } else if (isGlobalLoading) {
+            closeLoading();
+        }
+    }, [isFocused, isLoading, isGlobalLoading, openLoading, closeLoading]);
 
     useEffect(() => {
         const initialDateString = params?.initialDateString;
@@ -53,47 +64,51 @@ export default function ExpandableCalendarScreen() {
                     Alert.alert(item.calendar.memo);
                 };
                 return (
-                    <View>
-                        <TouchableOpacity
-                            onPress={handleItemPress}
-                            style={listStyles.item}
-                            containerStyle={listStyles.itemContainer}
-                        >
-                            <Avatar image={item.entity.image} size={60} />
-                            <View style={listStyles.contentWrapper}>
-                                <View style={listStyles.contentContainer}>
-                                    <Typo variant="title3" textAlign="left">
-                                        {item.entity.name}
-                                    </Typo>
-                                    <View>
-                                        <ConditionalRenderer
-                                            condition={!!item.calendar.memo}
-                                            trueContent={
-                                                <Typo
-                                                    variant="body3"
-                                                    color="placeholder"
-                                                    textBreakStrategy="highQuality"
-                                                    lineBreakMode="clip"
-                                                    lineBreakStrategyIOS="hangul-word"
-                                                    textAlign="left"
-                                                    numberOfLines={1}
-                                                >
-                                                    {item.calendar.memo}
-                                                </Typo>
-                                            }
-                                        />
-                                    </View>
-                                    <View style={listStyles.tagWrapper}>
-                                        {item.calendar.markType.map((type) => (
-                                            <Typo key={type} color="default" textAlign="left">
-                                                #{type}
+                    <TouchableOpacity
+                        onPress={handleItemPress}
+                        style={listStyles.item}
+                        containerStyle={listStyles.itemContainer}
+                    >
+                        <Avatar image={item.entity.image} size={60} />
+                        <View style={listStyles.contentWrapper}>
+                            <View style={listStyles.contentContainer}>
+                                <Typo
+                                    variant="title3"
+                                    textAlign="left"
+                                    textBreakStrategy="highQuality"
+                                    lineBreakMode="clip"
+                                    lineBreakStrategyIOS="hangul-word"
+                                    numberOfLines={1}
+                                >
+                                    {item.entity.name}
+                                </Typo>
+                                <View>
+                                    <ConditionalRenderer
+                                        condition={!!item.calendar.memo}
+                                        trueContent={
+                                            <Typo
+                                                variant="body2"
+                                                color="placeholder"
+                                                textBreakStrategy="highQuality"
+                                                lineBreakMode="clip"
+                                                lineBreakStrategyIOS="hangul-word"
+                                                numberOfLines={1}
+                                            >
+                                                {item.calendar.memo}
                                             </Typo>
-                                        ))}
-                                    </View>
+                                        }
+                                    />
+                                </View>
+                                <View style={listStyles.tagWrapper}>
+                                    {item.calendar.markType.map((type) => (
+                                        <Typo key={type} color="primary" textAlign="left" variant="body3">
+                                            #{type}
+                                        </Typo>
+                                    ))}
                                 </View>
                             </View>
-                        </TouchableOpacity>
-                    </View>
+                        </View>
+                    </TouchableOpacity>
                 );
         }
     }, []);
@@ -139,6 +154,8 @@ export default function ExpandableCalendarScreen() {
                 }}
                 listProps={{
                     data: data?.list,
+                    isLoading: isFocused && isLoading,
+                    LoadingComponent: <ActivityIndicator />,
                     contentContainerStyle: contentContainerStyle,
                     estimatedItemSize: 50,
                     CellRendererComponent: FadeInCellRenderComponent,
@@ -152,7 +169,10 @@ export default function ExpandableCalendarScreen() {
         );
     }, [
         todayString,
-        data,
+        data?.markedDates,
+        data?.list,
+        isFocused,
+        isLoading,
         handleChangeSearchDate,
         renderItem,
         keyExtractor,
@@ -224,7 +244,8 @@ const listStyles = StyleSheet.create({
     },
     contentWrapper: {
         justifyContent: 'center',
-        height: 90,
+        flex: 1,
+        gap: 5,
     },
     title: {
         height: 20,

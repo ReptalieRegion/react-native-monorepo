@@ -1,4 +1,5 @@
 import type { FlashListProps } from '@shopify/flash-list';
+import type React from 'react';
 
 import type { MarkedDates } from '../../types/calendar';
 
@@ -19,7 +20,10 @@ type ContentData<TData> = {
 } & TData;
 
 type AgendaListProps<TData> = AgendaListActions &
-    Omit<FlashListProps<TitleData | ContentData<TData>>, 'viewabilityConfig' | 'onMomentumScrollEnd'>;
+    Omit<FlashListProps<TitleData | ContentData<TData>>, 'viewabilityConfig' | 'onMomentumScrollEnd'> & {
+        isLoading: boolean;
+        LoadingComponent: React.ReactNode;
+    };
 
 type ExpandableCalendarState = {
     date?: string;
