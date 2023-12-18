@@ -5,6 +5,7 @@ import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import * as Haptic from 'react-native-haptic-feedback';
 
 import useFetchCalendar, {
     type CalendarFlashListItem,
@@ -60,11 +61,15 @@ export default function ExpandableCalendarScreen() {
                     </View>
                 );
             case 'CALENDAR_ITEM':
+                const handleLongPress = () => {
+                    Haptic.trigger('impactLight');
+                };
+
                 return (
                     <ScaleListItem
                         pressInBackground={color.Gray[100].toString()}
                         containerStyle={listStyles.itemContainer}
-                        onLongPress={() => console.log('hi')}
+                        onLongPress={handleLongPress}
                     >
                         <Avatar image={item.entity.image} size={60} />
                         <View style={listStyles.contentWrapper}>

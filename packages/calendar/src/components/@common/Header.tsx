@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as Haptic from 'react-native-haptic-feedback';
 
 import { LeftArrow, RightArrow } from '../../assets/icons';
 import useCalendarHandler from '../../hooks/useCalendarHandler';
@@ -45,6 +46,7 @@ export default function Header({
         } else {
             subMonth();
         }
+        Haptic.trigger('impactLight');
     }, [isPossiblePrevMonth, onPressLeft, subMonth]);
 
     const handlePressNextMonth = useCallback(() => {
@@ -57,6 +59,7 @@ export default function Header({
         } else {
             addMonth();
         }
+        Haptic.trigger('impactLight');
     }, [isPossibleNextMonth, onPressRight, addMonth]);
 
     return (
