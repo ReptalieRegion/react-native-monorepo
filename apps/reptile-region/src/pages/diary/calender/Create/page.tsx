@@ -40,19 +40,19 @@ export default function CalendarItemCreatePage({ navigation }: CalendarItemCreat
     const [createDate, setCreateDate] = useState(currentDate.toDate());
     const [memo, setMemo] = useState('');
     const [markTypeCheckedArray, setMarkTypeCheckedArray] = useState<DiaryCalendarMarkType[]>([]);
-    const { openLoading, closeLoading } = useGlobalLoading();
     const queryClient = useQueryClient();
+    const { openLoading, closeLoading } = useGlobalLoading();
     const { mutate, isPending } = useCreateCalendarItem({
         onMutate: openLoading,
         onSettled: closeLoading,
         onSuccess: () => {
-            if (navigation.canGoBack()) {
-                navigation.goBack();
-            }
             queryClient.invalidateQueries({
                 queryKey: DIARY_QUERY_KEYS.calendar(dayjs(createDate).format('YYYY-MM-DD')),
                 exact: true,
             });
+            if (navigation.canGoBack()) {
+                navigation.goBack();
+            }
         },
         onError: (error) => {
             console.log(error);

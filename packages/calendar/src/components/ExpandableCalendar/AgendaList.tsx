@@ -39,10 +39,11 @@ function AgendaListInner<TData>(
     const _handleScroll = useCallback(
         (event: NativeSyntheticEvent<NativeScrollEvent>) => {
             if (startScrollY.current === 0) {
-                const isDownScroll = event.nativeEvent.contentOffset.y <= 0;
+                const isDownScroll = event.nativeEvent.contentOffset.y < 0;
+                const isUpScroll = event.nativeEvent.contentOffset.y > 0;
                 if (isDownScroll) {
                     openCalendar();
-                } else {
+                } else if (isUpScroll) {
                     closeCalendar();
                 }
             }

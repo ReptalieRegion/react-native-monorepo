@@ -2,7 +2,7 @@ import { ExpandableCalendar, useCalendar } from '@crawl/calendar';
 import { Typo, color } from '@crawl/design-system';
 import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -13,7 +13,6 @@ import useFetchCalendar, {
 import { PostWriteIcon } from '@/assets/icons';
 import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 import useCalendarNavigation from '@/hooks/diary/navigation/useCalendarNavigation';
@@ -21,20 +20,15 @@ import useCalendarNavigation from '@/hooks/diary/navigation/useCalendarNavigatio
 export default function ExpandableCalendarScreen() {
     const today = useRef(dayjs()).current;
     const todayString = today.format('YYYY-MM-DD');
-    const [searchDate, setSearchDate] = useState(today);
     const { navigateCalendarCreate } = useCalendarNavigation();
-    const { openLoading, closeLoading } = useGlobalLoading();
-    const { data, isFetching } = useFetchCalendar({ date: searchDate.toDate() });
-
-    useEffect(() => {
-        if (isFetching) {
-            openLoading();
-        } else {
-            closeLoading();
-        }
-    }, [isFetching, closeLoading, openLoading]);
+    const [searchDate, setSearchDate] = useState(today);
+    const { data } = useFetchCalendar({ date: searchDate.toDate() });
 
     const { subMonth } = useCalendar();
+
+    const handleChangeSearchDate = useCallback((dateString: string) => {
+        setSearchDate(dayjs(dateString));
+    }, []);
 
     const renderItem: ListRenderItem<CalendarFlashListItem> = useCallback(({ item }) => {
         switch (item.type) {
@@ -131,7 +125,7 @@ export default function ExpandableCalendarScreen() {
                     minDate: '1997-01-01',
                     maxDate: todayString,
                     markedDates: data?.markedDates,
-                    onChangeMonth: (dateString) => setSearchDate(dayjs(dateString)),
+                    onChangeMonth: handleChangeSearchDate,
                 }}
                 listProps={{
                     data: data?.list,
@@ -146,7 +140,16 @@ export default function ExpandableCalendarScreen() {
                 }}
             />
         );
-    }, [todayString, data, renderItem, keyExtractor, getItemType, renderListEmptyComponent, renderListFooterComponent]);
+    }, [
+        todayString,
+        data,
+        handleChangeSearchDate,
+        renderItem,
+        keyExtractor,
+        getItemType,
+        renderListEmptyComponent,
+        renderListFooterComponent,
+    ]);
 
     return (
         <View style={styles.wrapper}>

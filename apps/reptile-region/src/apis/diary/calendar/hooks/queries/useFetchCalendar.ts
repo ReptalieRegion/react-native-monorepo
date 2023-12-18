@@ -35,6 +35,8 @@ type CalendarDataMap = { [key: string]: CalendarItem[] };
 export default function useFetchCalendar({ date }: FetchCalendar['Request']) {
     return useQuery<FetchCalendar['Response'], HTTPError, CalendarData, CustomQueryKey>({
         queryKey: DIARY_QUERY_KEYS.calendar(dayjs(date).format('YYYY-MM-DD')),
+        staleTime: 4 * 60 * 1000,
+        gcTime: 5 * 60 * 1000,
         queryFn: useCallback(() => fetchCalendar({ date }), [date]),
         select: useCallback((data: FetchCalendar['Response']) => {
             const dateMap = data.items.reduce<CalendarDataMap>((prev, calendarItem) => {
@@ -91,7 +93,7 @@ export default function useFetchCalendar({ date }: FetchCalendar['Request']) {
                     markedDates: {},
                 },
             );
-
+            console.log(calendarData.markedDates);
             return calendarData;
         }, []),
     });
