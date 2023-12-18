@@ -17,8 +17,13 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, ...props }: 
     const { selectedDateString } = useCalendarState();
     const { setDate } = useCalendarHandler();
     const viewingDate = useRef(selectedDateString);
+    const isScrollStart = useRef(false);
     const startScrollY = useRef(0);
     const agendaListRef = useRef<FlashList<ContentData<TData> | TitleData>>(null);
+
+    const _handleMomentumScrollBegin = useCallback(() => {
+        isScrollStart.current = true;
+    }, []);
 
     const _handleScroll = useCallback(
         (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -38,8 +43,11 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, ...props }: 
     );
 
     const _handleViewableItemChanged = useDebounce((info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
-        viewingDate.current = info.viewableItems[0]?.item.dateString;
-        setDate(viewingDate.current);
+        if (isScrollStart.current) {
+            viewingDate.current = info.viewableItems[0]?.item.dateString;
+            setDate(viewingDate.current);
+            isScrollStart.current = false;
+        }
     }, 500);
 
     useEffect(() => {
@@ -60,6 +68,7 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, ...props }: 
             {...props}
             viewabilityConfig={viewabilityConfig}
             onScroll={_handleScroll}
+            onMomentumScrollBegin={_handleMomentumScrollBegin}
             onViewableItemsChanged={_handleViewableItemChanged}
         />
     );

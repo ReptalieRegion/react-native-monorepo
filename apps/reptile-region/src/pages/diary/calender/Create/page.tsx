@@ -50,7 +50,6 @@ export default function CalendarItemCreatePage({ navigation }: CalendarItemCreat
                 queryKey: DIARY_QUERY_KEYS.calendar(dayjs(variables.date).startOf('month').format('YYYY-MM-DD')),
                 exact: true,
             });
-            console.log('create', dayjs(variables.date).format('YYYY-MM-DD'));
             navigation.navigate('bottom-tab/routes', {
                 screen: 'tab',
                 params: {

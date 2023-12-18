@@ -12,10 +12,10 @@ export default function useCalendarHandler(props?: UseCalendarHandler) {
     const dispatch = useContext(CalendarsActionsContext);
 
     useEffect(() => {
-        if (props && props?.date) {
+        if (props?.date) {
             dispatch?.({ type: 'INIT_DATE', date: props.date, maxDate: props.maxDate, minDate: props.minDate });
         }
-    }, [dispatch, props]);
+    }, [dispatch, props?.date, props?.maxDate, props?.minDate]);
 
     if (dispatch === null) {
         throw new Error('Calendar Provider를 감싸주세요');

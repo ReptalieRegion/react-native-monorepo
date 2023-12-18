@@ -96,7 +96,6 @@ export default function useFetchCalendar({ date }: FetchCalendar['Request']) {
                     markedDates: {},
                 },
             );
-            console.log(calendarData.markedDates);
             return calendarData;
         }, []),
     });

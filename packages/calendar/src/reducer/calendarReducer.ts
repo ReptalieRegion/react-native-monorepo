@@ -33,7 +33,6 @@ function subMonth(state: CalendarState): CalendarState {
     const subSelectedDate = dayjs(state.selectedDate).subtract(1, 'month').endOf('month');
     const selectedDate = subSelectedDate.isBefore(state.minDate) ? dayjs(state.minDate).endOf('month') : subSelectedDate;
     const selectedDateString = selectedDate.format('YYYY-MM-DD');
-    console.log(state.selectedDate, selectedDate);
 
     return {
         ...state,

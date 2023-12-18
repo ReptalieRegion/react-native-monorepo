@@ -15,7 +15,7 @@ type TitleData = {
 
 type ContentData<TData> = {
     type: 'CALENDAR_ITEM';
-    dateString: TData;
+    dateString: string;
 } & TData;
 
 type AgendaListProps<TData> = AgendaListActions &
