@@ -1,7 +1,7 @@
 import { useOverlay } from '@crawl/overlay-manager';
 import React, { useCallback } from 'react';
 
-import ActionMenuBottomSheet from '../../bottom-sheet/ActionMenu';
+import ActionMenuBottomSheet from './ActionMenu';
 
 export default function useOverlayActionMenuBottomSheet() {
     const overlay = useOverlay();

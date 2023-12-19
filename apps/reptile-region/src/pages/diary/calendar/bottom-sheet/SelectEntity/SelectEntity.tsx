@@ -9,16 +9,18 @@ import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/us
 import { Avatar } from '@/components/@common/atoms';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
-type SelectEntityState = {};
+type SelectEntityState = {
+    isOpen: boolean;
+};
 
-interface SelectEntityActions {
+export interface SelectEntityActions {
     onClose(): void;
     onSelectEntity(entity: FetchEntityListResponse['entity']): void;
 }
 
 type SelectEntityProps = SelectEntityState & SelectEntityActions;
 
-export default function SelectEntityBottomSheet({ onClose, onSelectEntity }: SelectEntityProps) {
+export default function SelectEntityBottomSheet({ isOpen, onClose, onSelectEntity }: SelectEntityProps) {
     const { data } = useInfiniteFetchEntity();
 
     const renderItem: ListRenderItem<FetchEntityListResponse> = useCallback(
@@ -43,7 +45,7 @@ export default function SelectEntityBottomSheet({ onClose, onSelectEntity }: Sel
     );
 
     return (
-        <Modal transparent={true}>
+        <Modal transparent={true} visible={isOpen}>
             <BottomSheet onClose={onClose} snapInfo={{ pointsFromTop: ['70%'], startIndex: 0 }} header={BottomSheetHeader}>
                 <View style={styles.wrapper}>
                     <FlashList

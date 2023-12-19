@@ -8,11 +8,11 @@ import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-ha
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import SelectEntityBottomSheet from '../bottom-sheet/SelectEntity';
+import useOverlaySelectEntityBottomSheet from '../bottom-sheet/SelectEntity/useOverlaySelectEntityBottomSheet';
 
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useCreateCalendarItem from '@/apis/diary/calendar/hooks/mutations/useCreateCalendarItem';
-import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
+import { Avatar } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import TagTextCheckBox from '@/components/diary/atoms/TagTextCheckBox/index,';
@@ -40,6 +40,11 @@ export default function CalendarItemCreatePage({ navigation }: CalendarItemCreat
     const [createDate, setCreateDate] = useState(currentDate.toDate());
     const [memo, setMemo] = useState('');
     const [markTypeCheckedArray, setMarkTypeCheckedArray] = useState<DiaryCalendarMarkType[]>([]);
+
+    const openSelectEntityBottomSheet = useOverlaySelectEntityBottomSheet({
+        onSelectEntity: setEntity,
+    });
+
     const queryClient = useQueryClient();
     const { openLoading, closeLoading } = useGlobalLoading();
     const { mutate, isPending } = useCreateCalendarItem({
@@ -70,7 +75,7 @@ export default function CalendarItemCreatePage({ navigation }: CalendarItemCreat
             console.log(error);
         },
     });
-    const { off: closeBottomSheet, on: openBottomSheet, state: isShowBottomSheet } = useOnOff();
+
     const { off: datePickerOff, on: datePickerOn, state: isShowDatePicker } = useOnOff();
 
     const { bottom } = useSafeAreaInsets();
@@ -112,7 +117,7 @@ export default function CalendarItemCreatePage({ navigation }: CalendarItemCreat
                 <View style={styes.allWrapper}>
                     <View style={styes.selection}>
                         <Typo variant="title2">개체 선택</Typo>
-                        <TouchableOpacity onPress={openBottomSheet}>
+                        <TouchableOpacity onPress={() => openSelectEntityBottomSheet()}>
                             <View style={styes.entityWrapper}>
                                 <Avatar image={entity?.image} size={80} />
                                 <View style={styes.entityTextWrapper}>
@@ -165,11 +170,6 @@ export default function CalendarItemCreatePage({ navigation }: CalendarItemCreat
                     onPress={handlePressSubmit}
                 />
             </View>
-            <ConditionalRenderer
-                condition={isShowBottomSheet}
-                trueContent={<SelectEntityBottomSheet onClose={closeBottomSheet} onSelectEntity={setEntity} />}
-                falseContent={null}
-            />
             <DateTimePickerModal
                 isVisible={isShowDatePicker}
                 date={createDate}
