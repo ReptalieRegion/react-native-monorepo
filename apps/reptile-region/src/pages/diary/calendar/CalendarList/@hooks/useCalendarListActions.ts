@@ -22,7 +22,7 @@ export default function useCalendarListActions() {
 
     // 캘린더 API 관련
     const [searchDate, setSearchDate] = useState(today.startOf('month'));
-    const fetchedCalendarList = useFetchCalendarList({ date: searchDate.toDate() });
+    const fetchedCalendarList = useFetchCalendarList({ date: searchDate.format('YYYY-MM-DD') });
 
     // 로딩 관련
     const { isLoading: isGlobalLoading, openLoading, closeLoading } = useGlobalLoading();

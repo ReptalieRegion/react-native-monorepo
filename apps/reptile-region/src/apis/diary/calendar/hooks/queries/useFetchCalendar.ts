@@ -21,8 +21,6 @@ export default function useFetchCalendar<TData = FetchCalendar['Response']>({
     data: { date },
     options,
 }: UseFetchCalendar<TData>) {
-    console.log(date);
-    console.log(dayjs(date).startOf('month').format('YYYY-MM-DD'));
     return useQuery<FetchCalendar['Response'], HTTPError, TData, CustomQueryKey>({
         queryKey: DIARY_QUERY_KEYS.calendar(date),
         queryFn: useCallback(() => fetchCalendar({ date }), [date]),

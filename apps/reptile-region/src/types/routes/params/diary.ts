@@ -48,6 +48,10 @@ type CalendarDetailParams = {
     calendar: {
         id: string;
     };
+    entity: {
+        id: string;
+    };
+    searchDate: string;
 };
 
 export type {

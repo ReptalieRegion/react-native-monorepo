@@ -1,4 +1,5 @@
 import type { ServerAPI } from '../../utils';
+import type { EntityGender, EntityVariety } from '../entity';
 
 import type { ImageType } from '@/types/global/image';
 
@@ -14,7 +15,7 @@ type DiaryCalendarMarkType = '먹이급여' | '청소' | '탈피' | '메이팅' 
  * GET
  */
 type FetchCalendarRequest = {
-    date: Date;
+    date: string;
 };
 
 type FetchCalendarItem = {
@@ -28,6 +29,9 @@ type FetchCalendarItem = {
         id: string;
         name: string;
         image: ImageType;
+        gender: EntityGender;
+        hatching: string | undefined;
+        variety: EntityVariety;
     };
 };
 

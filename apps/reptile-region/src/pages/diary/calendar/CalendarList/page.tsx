@@ -1,6 +1,7 @@
 import { ExpandableCalendar } from '@crawl/calendar';
 import { Typo, color } from '@crawl/design-system';
 import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
+import dayjs from 'dayjs';
 import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -51,7 +52,13 @@ export default function ExpandableCalendarScreen() {
                         <ScaleListItem
                             pressInBackground={color.Gray[100].toString()}
                             containerStyle={listStyles.itemContainer}
-                            onPress={() => handlePressCalendarItem({ calendar: { id: item.calendar.id } })}
+                            onPress={() =>
+                                handlePressCalendarItem({
+                                    calendar: { id: item.calendar.id },
+                                    entity: { id: item.entity.id },
+                                    searchDate: dayjs(item.dateString).startOf('month').format('YYYY-MM-DD'),
+                                })
+                            }
                             onLongPress={handleLongPressCalendarItem}
                         >
                             <Avatar image={item.entity.image} size={60} />

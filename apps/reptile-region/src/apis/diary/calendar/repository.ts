@@ -18,6 +18,7 @@ export const fetchCalendar = async ({ date }: FetchCalendar['Request']) => {
         startDate: currentDate.startOf('month').utc().format(),
         endDate: currentDate.endOf('month').utc().format(),
     });
+
     const response = await clientFetch(`api/diary/calendar/list?${queryString}`, {
         method: METHOD.GET,
     });
