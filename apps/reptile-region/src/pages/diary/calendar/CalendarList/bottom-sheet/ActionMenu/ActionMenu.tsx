@@ -1,14 +1,16 @@
 import { BottomSheet } from '@crawl/bottom-sheet';
 import { Typo } from '@crawl/design-system';
+import dayjs from 'dayjs';
 import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import useDeleteCalendarItem from '@/apis/diary/calendar/hooks/mutations/useDeleteCalendarItem';
+import useDeleteCalendarItem from '../../hooks/mutations/useDeleteCalendarItem';
 
 type ActionMenuState = {
     calendar: {
         id: string;
+        date: string;
     };
     isShowBottomSheet: boolean;
 };
@@ -20,12 +22,13 @@ interface ActionMenuActions {
 export type ActionMenuProps = ActionMenuState & ActionMenuActions;
 
 export default function ActionMenuBottomSheet({ calendar, isShowBottomSheet, onClose }: ActionMenuProps) {
-    const { mutate } = useDeleteCalendarItem();
+    const { mutate } = useDeleteCalendarItem({ searchDate: dayjs(calendar.date).startOf('month').format('YYYY-MM-DD') });
 
     const list = [
         {
             label: '삭제',
             onPress: () => {
+                onClose();
                 mutate({ calendarId: calendar.id });
             },
         },
