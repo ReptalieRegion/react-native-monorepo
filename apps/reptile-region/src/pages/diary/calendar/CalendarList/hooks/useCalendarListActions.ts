@@ -21,6 +21,13 @@ export default function useCalendarListActions() {
     // 캘린더 API 관련
     const [searchDate, setSearchDate] = useState(today.startOf('month'));
     const fetchedCalendarList = useFetchCalendarList({ date: searchDate.format('YYYY-MM-DD') });
+    const prevCalendarData = useRef(fetchedCalendarList.data);
+
+    if (fetchedCalendarList.isFetched) {
+        prevCalendarData.current = fetchedCalendarList.data;
+    }
+
+    const calendarListData = fetchedCalendarList.isFetching ? prevCalendarData.current : fetchedCalendarList.data;
 
     // 로딩 관련
     const { isLoading: isGlobalLoading, openLoading, closeLoading } = useGlobalLoading();
@@ -61,7 +68,7 @@ export default function useCalendarListActions() {
     );
 
     const state = {
-        calendarListData: fetchedCalendarList.data,
+        calendarListData,
         todayString: today.format('YYYY-MM-DD'),
         searchDate,
     };
