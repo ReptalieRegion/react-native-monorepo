@@ -2,7 +2,7 @@ import { ExpandableCalendar } from '@crawl/calendar';
 import { Typo, color } from '@crawl/design-system';
 import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { type CalendarFlashListItem, type CalendarItem } from './@hooks/queries/useFetchCalendarList';
@@ -128,29 +128,45 @@ export default function ExpandableCalendarScreen() {
         );
     }, [searchDate]);
 
+    const memoizedExpandableCalendar = useMemo(() => {
+        return (
+            <ExpandableCalendar<CalendarItem>
+                calendarProps={{
+                    date: todayString,
+                    minDate: '1997-01-01',
+                    maxDate: todayString,
+                    markedDates: calendarListData?.markedDates,
+                    onChangeMonth: handleChangeMonth,
+                }}
+                listProps={{
+                    data: calendarListData?.list,
+                    contentContainerStyle: contentContainerStyle,
+                    estimatedItemSize: 50,
+                    CellRendererComponent: FadeInCellRenderComponent,
+                    renderItem: renderItem,
+                    keyExtractor: keyExtractor,
+                    getItemType: getItemType,
+                    ListEmptyComponent: renderListEmptyComponent,
+                    ListFooterComponent: renderListFooterComponent,
+                }}
+            />
+        );
+    }, [
+        calendarListData?.list,
+        calendarListData?.markedDates,
+        getItemType,
+        handleChangeMonth,
+        keyExtractor,
+        renderItem,
+        renderListEmptyComponent,
+        renderListFooterComponent,
+        todayString,
+    ]);
+
     return (
         <>
             <View style={styles.wrapper}>
-                <ExpandableCalendar<CalendarItem>
-                    calendarProps={{
-                        date: todayString,
-                        minDate: '1997-01-01',
-                        maxDate: todayString,
-                        markedDates: calendarListData?.markedDates,
-                        onChangeMonth: handleChangeMonth,
-                    }}
-                    listProps={{
-                        data: calendarListData?.list,
-                        contentContainerStyle: contentContainerStyle,
-                        estimatedItemSize: 50,
-                        CellRendererComponent: FadeInCellRenderComponent,
-                        renderItem: renderItem,
-                        keyExtractor: keyExtractor,
-                        getItemType: getItemType,
-                        ListEmptyComponent: renderListEmptyComponent,
-                        ListFooterComponent: renderListFooterComponent,
-                    }}
-                />
+                {memoizedExpandableCalendar}
                 <FloatingActionButtons>
                     <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>
                         <FloatingActionButtonGroup.Button

@@ -13,7 +13,17 @@ import { dayStyle, dotStyle, markingStyle } from '../@common/style';
 
 import type { CalendarProps } from './type';
 
-function Calendar({ date, dayNames, maxDate, minDate, markedDates, hideHeader, onPressLeft, onPressRight }: CalendarProps) {
+function Calendar({
+    date,
+    dayNames,
+    maxDate,
+    minDate,
+    markedDates,
+    hideHeader,
+    onPressDay,
+    onPressLeft,
+    onPressRight,
+}: CalendarProps) {
     const calendarState = useCalendarState();
 
     /** 같은 달은 새로 생성하지 않게 하기 위해 */
@@ -48,12 +58,19 @@ function Calendar({ date, dayNames, maxDate, minDate, markedDates, hideHeader, o
                         markingStyle={isSameDay ? markingStyle : undefined}
                         dotStyle={isDot ? dotStyle : undefined}
                         textColor={typoColor}
-                        onPress={!isDisableDay ? () => setDate(dayInfo.dayString) : undefined}
+                        onPress={
+                            !isDisableDay
+                                ? () => {
+                                      onPressDay?.(dayInfo.dayString);
+                                      setDate(dayInfo.dayString);
+                                  }
+                                : undefined
+                        }
                     />
                 </View>
             );
         },
-        [calendarState.selectedDate, calendarState.maxDate, calendarState.minDate, markedDates, setDate],
+        [calendarState.selectedDate, calendarState.maxDate, calendarState.minDate, markedDates, onPressDay, setDate],
     );
 
     return (

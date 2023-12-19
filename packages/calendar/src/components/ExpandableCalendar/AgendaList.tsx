@@ -23,7 +23,7 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...pro
 
     const _handleScroll = useCallback(
         (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-            if (startScrollY.current === 0) {
+            if (startScrollY.current === 0 && isScrollStart.current) {
                 const isDownScroll = event.nativeEvent.contentOffset.y < 0;
                 const isUpScroll = event.nativeEvent.contentOffset.y > 0;
                 if (isDownScroll) {
@@ -38,15 +38,16 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...pro
         [closeCalendar, onScroll, openCalendar],
     );
 
-    const _handleMomentumScrollBegin = useCallback(() => {
+    const _handleScrollBeginDrag = useCallback(() => {
+        console.log('hi');
         isScrollStart.current = true;
     }, []);
 
     const _handleViewableItemChanged = useDebounce((info: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
         if (isScrollStart.current) {
             viewingDate.current = info.viewableItems.find((viewToken) => viewToken.item.type === 'TITLE')?.item.dateString;
-            setDate(viewingDate.current);
             isScrollStart.current = false;
+            setDate(viewingDate.current);
         }
     }, 500);
 
@@ -67,7 +68,7 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...pro
             data={data}
             viewabilityConfig={viewabilityConfig}
             onScroll={_handleScroll}
-            onMomentumScrollBegin={_handleMomentumScrollBegin}
+            onScrollBeginDrag={_handleScrollBeginDrag}
             onViewableItemsChanged={_handleViewableItemChanged}
         />
     );

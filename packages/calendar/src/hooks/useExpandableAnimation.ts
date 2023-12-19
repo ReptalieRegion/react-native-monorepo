@@ -76,8 +76,8 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
     ]);
 
     // 달이 변했을 때, 위치 초기화
-    const lastMonth = useRef(calendarState.selectedDateString);
-    const isNotSameMonth = !calendarState.selectedDate.isSame(lastMonth.current, 'month');
+    const lastDate = useRef(calendarState.selectedDateString);
+    const isNotSameMonth = !calendarState.selectedDate.isSame(lastDate.current, 'month');
     const isShowWeek = applyContext.weekCalendarZIndex.value === 1;
 
     useEffect(() => {
@@ -86,7 +86,7 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         }
     }, [calendarState.selectedDateString, isNotSameMonth, onChangeMonth]);
     if (isNotSameMonth) {
-        lastMonth.current = calendarState.selectedDateString;
+        lastDate.current = calendarState.selectedDateString;
 
         if (isShowWeek) {
             applyContext.calendarTranslateY.value = calendarGoalTranslateY;
@@ -141,7 +141,7 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         weekCalendarGoalTranslateY,
         startContext.changeWeekCalendarGoalTranslateY,
         startContext.weekPageIndex,
-        startContext.layoutHeight.value,
+        startContext.layoutHeight,
         headerHeight,
         calendarHeight,
         handleScrollToIndex,
@@ -151,17 +151,15 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
     const closeCalendar = useCallback(() => {
         'worklet';
         applyContext.listHeight.value = withTiming(startContext.layoutHeight.value - headerHeight - dayHeight);
-        applyContext.weekCalendarZIndex.value = 1;
-        applyContext.calendarZIndex.value = 0;
-        applyContext.listTranslateY.value = withTiming(listMinTranslateY);
+        applyContext.listTranslateY.value = withTiming(listMinTranslateY, {}, (isFinished) => {
+            if (isFinished) {
+                applyContext.calendarOpacity.value = 0;
+                applyContext.weekCalendarZIndex.value = 1;
+                applyContext.calendarZIndex.value = 0;
+            }
+        });
         applyContext.calendarTranslateY.value = withTiming(
             startContext.weekPageIndex.value === -1 ? calendarGoalTranslateY : -dayHeight * startContext.weekPageIndex.value,
-            {},
-            (isFinished) => {
-                if (isFinished) {
-                    applyContext.calendarOpacity.value = 0;
-                }
-            },
         );
         applyContext.weekCalendarTranslateY.value = withTiming(0);
     }, [
@@ -176,8 +174,8 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         dayHeight,
         headerHeight,
         listMinTranslateY,
-        startContext.layoutHeight.value,
-        startContext.weekPageIndex.value,
+        startContext.layoutHeight,
+        startContext.weekPageIndex,
     ]);
 
     // 캘린더 제스쳐
@@ -268,7 +266,7 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
             }
         });
 
-    // 주간 캘린더 스크롤 변경될 때마다, 웤간 캘린더 위치 변경
+    // 주간 캘린더 스크롤 변경될 때마다, 웤간 캘린더 위치 변경, 락 해제
     const handleChangeCalendarTranslateY = useCallback(
         (index: number) => {
             startContext.weekPageIndex.value = index;

@@ -74,11 +74,10 @@ export default function ExpandableCalendar<TData>({ calendarProps, listProps }: 
     const listComponentProps: AgendaListProps<TData> = useMemo(
         () => ({
             ...listProps,
-            handleScrollToIndexWeekCalendar: handleScrollToIndexWeekCalendar,
             openCalendar: openCalendar,
             closeCalendar: closeCalendar,
         }),
-        [listProps, handleScrollToIndexWeekCalendar, openCalendar, closeCalendar],
+        [listProps, openCalendar, closeCalendar],
     );
 
     return (

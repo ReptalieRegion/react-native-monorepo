@@ -25,6 +25,7 @@ function WeekCalendar(
         containerStyle,
         hideHeader,
         onChangePage,
+        onPressDay,
         onPressLeft,
         onPressRight,
     }: WeekCalendarProps,
@@ -83,10 +84,6 @@ function WeekCalendar(
                             : 'light-placeholder';
                         const isDot = markedDates?.[dayInfo.dayString]?.marked;
 
-                        const handlePressDay = () => {
-                            setDate(dayInfo.dayString);
-                        };
-
                         return (
                             <View key={index} style={dayStyle.wrapper}>
                                 <Day
@@ -95,7 +92,14 @@ function WeekCalendar(
                                     markingStyle={isSameDay ? markingStyle : undefined}
                                     dotStyle={isDot ? dotStyle : undefined}
                                     textColor={typoColor}
-                                    onPress={!isDisableDay ? handlePressDay : undefined}
+                                    onPress={
+                                        !isDisableDay
+                                            ? () => {
+                                                  onPressDay?.(dayInfo.dayString);
+                                                  setDate(dayInfo.dayString);
+                                              }
+                                            : undefined
+                                    }
                                 />
                             </View>
                         );
@@ -103,7 +107,15 @@ function WeekCalendar(
                 </View>
             );
         },
-        [calendarState.maxDate, calendarState.minDate, calendarState.selectedDate, itemWrapper, markedDates, setDate],
+        [
+            calendarState.maxDate,
+            calendarState.minDate,
+            calendarState.selectedDate,
+            itemWrapper,
+            markedDates,
+            onPressDay,
+            setDate,
+        ],
     );
 
     return (
