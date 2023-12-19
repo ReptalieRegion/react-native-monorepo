@@ -1,61 +1,41 @@
-import { ExpandableCalendar, useCalendar } from '@crawl/calendar';
+import { ExpandableCalendar } from '@crawl/calendar';
 import { Typo, color } from '@crawl/design-system';
-import { useOnOff } from '@crawl/react-hooks';
-import { useIsFocused, useRoute } from '@react-navigation/native';
 import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
-import dayjs from 'dayjs';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import * as Haptic from 'react-native-haptic-feedback';
+import React, { useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
 
+import { type CalendarFlashListItem, type CalendarItem } from './@hooks/queries/useFetchCalendarList';
+import useCalendarListActions from './@hooks/useCalendarListActions';
 import ActionMenuBottomSheet from './bottom-sheet/ActionMenu';
 
-import useFetchCalendar, {
-    type CalendarFlashListItem,
-    type CalendarItem,
-} from '@/apis/diary/calendar/hooks/queries/useFetchCalendar';
 import { PostWriteIcon } from '@/assets/icons';
 import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import ScaleListItem from '@/components/diary/atoms/CalendarListItem/CalendarListItem';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
-import useCalendarNavigation from '@/hooks/diary/navigation/useCalendarListNavigation';
-import type { CalendarListRouteProp } from '@/types/routes/props/diary/calendar';
 
 export default function ExpandableCalendarScreen() {
-    const today = useRef(dayjs()).current;
-    const todayString = today.format('YYYY-MM-DD');
-    const { navigateCalendarCreate, navigateCalendarDetail } = useCalendarNavigation();
-    const [searchDate, setSearchDate] = useState(today);
-    const { isLoading: isGlobalLoading, openLoading, closeLoading } = useGlobalLoading();
-    const isFocused = useIsFocused();
-    const { data, isLoading } = useFetchCalendar({ date: searchDate.toDate() });
+    const {
+        calendarListData,
+        searchDate,
+        todayString,
+        isShowBottomSheet,
+        closeBottomSheet,
+        handleChangeMonth,
+        handleLongPressCalendarItem,
+        handlePressCalendarItem,
+        handlePressWriteFloatingButton,
+        subMonth,
+    } = useCalendarListActions();
 
-    const { params } = useRoute<CalendarListRouteProp>();
-    const { subMonth, setDate } = useCalendar();
+    const keyExtractor = useCallback(
+        (item: CalendarFlashListItem) =>
+            item.type === 'TITLE' ? item.dateString : item.calendar.date.concat(item.entity.name),
+        [],
+    );
 
-    const { state, on, off } = useOnOff();
-
-    useEffect(() => {
-        if (isFocused && isLoading) {
-            openLoading();
-        } else if (isGlobalLoading) {
-            closeLoading();
-        }
-    }, [isFocused, isLoading, isGlobalLoading, openLoading, closeLoading]);
-
-    useEffect(() => {
-        const initialDateString = params?.initialDateString;
-        if (initialDateString) {
-            setDate(params.initialDateString);
-        }
-    }, [params?.initialDateString, setDate]);
-
-    const handleChangeSearchDate = useCallback((dateString: string) => {
-        setSearchDate(dayjs(dateString));
-    }, []);
+    const getItemType = useCallback((item: CalendarFlashListItem) => (typeof item === 'string' ? 'title' : 'content'), []);
 
     const renderItem: ListRenderItem<CalendarFlashListItem> = useCallback(
         ({ item }) => {
@@ -67,21 +47,12 @@ export default function ExpandableCalendarScreen() {
                         </View>
                     );
                 case 'CALENDAR_ITEM':
-                    const handlePress = () => {
-                        navigateCalendarDetail({ calendar: { id: item.calendar.id } });
-                    };
-
-                    const handleLongPress = () => {
-                        on();
-                        Haptic.trigger('impactLight');
-                    };
-
                     return (
                         <ScaleListItem
                             pressInBackground={color.Gray[100].toString()}
                             containerStyle={listStyles.itemContainer}
-                            onPress={handlePress}
-                            onLongPress={handleLongPress}
+                            onPress={() => handlePressCalendarItem({ calendar: { id: item.calendar.id } })}
+                            onLongPress={handleLongPressCalendarItem}
                         >
                             <Avatar image={item.entity.image} size={60} />
                             <View style={listStyles.contentWrapper}>
@@ -126,16 +97,8 @@ export default function ExpandableCalendarScreen() {
                     );
             }
         },
-        [navigateCalendarDetail, on],
+        [handleLongPressCalendarItem, handlePressCalendarItem],
     );
-
-    const keyExtractor = useCallback(
-        (item: CalendarFlashListItem) =>
-            item.type === 'TITLE' ? item.dateString : item.calendar.date.concat(item.entity.name),
-        [],
-    );
-
-    const getItemType = useCallback((item: CalendarFlashListItem) => (typeof item === 'string' ? 'title' : 'content'), []);
 
     const renderListFooterComponent = useCallback(() => {
         return (
@@ -166,13 +129,11 @@ export default function ExpandableCalendarScreen() {
                         date: todayString,
                         minDate: '1997-01-01',
                         maxDate: todayString,
-                        markedDates: data?.markedDates,
-                        onChangeMonth: handleChangeSearchDate,
+                        markedDates: calendarListData?.markedDates,
+                        onChangeMonth: handleChangeMonth,
                     }}
                     listProps={{
-                        data: data?.list,
-                        isLoading: isFocused && isLoading,
-                        LoadingComponent: <ActivityIndicator />,
+                        data: calendarListData?.list,
                         contentContainerStyle: contentContainerStyle,
                         estimatedItemSize: 50,
                         CellRendererComponent: FadeInCellRenderComponent,
@@ -189,12 +150,12 @@ export default function ExpandableCalendarScreen() {
                             name="primary"
                             Icon={PostWriteIcon}
                             iconStyle={primaryIcon}
-                            onPress={navigateCalendarCreate}
+                            onPress={handlePressWriteFloatingButton}
                         />
                     </FloatingActionButtonGroup>
                 </FloatingActionButtons>
             </View>
-            <ActionMenuBottomSheet isShowBottomSheet={state} onClose={off} />
+            <ActionMenuBottomSheet isShowBottomSheet={isShowBottomSheet} onClose={closeBottomSheet} />
         </>
     );
 }

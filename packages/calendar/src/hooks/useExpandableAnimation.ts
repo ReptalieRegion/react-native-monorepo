@@ -120,7 +120,6 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
     const openCalendar = useCallback(() => {
         'worklet';
         applyContext.listHeight.value = withTiming(startContext.layoutHeight.value - headerHeight - calendarHeight);
-        console.log(startContext.layoutHeight.value - headerHeight - calendarHeight);
         applyContext.weekCalendarZIndex.value = 0;
         applyContext.calendarZIndex.value = 1;
         applyContext.listTranslateY.value = withTiming(listGoalTranslateY);
