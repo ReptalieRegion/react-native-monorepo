@@ -18,10 +18,13 @@ type CalendarListRouteProp = RouteProp<CalendarParamList, 'main'>;
 
 type CalendarItemCreateScreenProps = NativeStackScreenProps<RootRoutesParamList, 'calendar/create'>;
 
+type CalendarItemCreateNavigationProp = NavigationProp<RootRoutesParamList, 'calendar/create'>;
+
 type CalendarDetailScreenProps = NativeStackScreenProps<RootRoutesParamList, 'calendar/detail'>;
 
 export type {
     CalendarDetailScreenProps,
+    CalendarItemCreateNavigationProp,
     CalendarItemCreateScreenProps,
     CalendarListNavigationProp,
     CalendarListRouteProp,

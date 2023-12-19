@@ -5,7 +5,7 @@ import { createCalendarItem } from '../../repository';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import type { CreateCalendar } from '@/types/apis/diary/calendar';
 
-export default function useCreateCalendarItem(
+export default function useBaseCreateCalendarItem(
     props?: Pick<
         UseMutationOptions<CreateCalendar['Response'], HTTPError, CreateCalendar['Request'], unknown>,
         'onSuccess' | 'onError' | 'onMutate' | 'onSettled'

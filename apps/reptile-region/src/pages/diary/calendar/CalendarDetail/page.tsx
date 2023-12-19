@@ -3,7 +3,7 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import useFetchCalendarDetail from './@hooks/queries/useFetchCalendarDetail';
+import useFetchCalendarDetail from './hooks/queries/useFetchCalendarDetail';
 
 import TagView from '@/components/@common/atoms/TagView/TagView';
 import type { CalendarDetailScreenProps } from '@/types/routes/props/diary/calendar';

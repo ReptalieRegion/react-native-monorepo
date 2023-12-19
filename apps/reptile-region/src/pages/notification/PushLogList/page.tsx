@@ -22,6 +22,8 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
 
     useEffect(mutate, [mutate]);
 
+    const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
+
     const renderItem: ListRenderItem<FetchPushLogResponse> = ({ item }) => {
         const handlePressLog = () => {
             navigateLinking(navigation, item.contents.deepLink);
@@ -72,8 +74,6 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                 );
         }
     };
-
-    const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
 
     return (
         <View style={styles.container}>

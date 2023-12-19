@@ -6,9 +6,9 @@ import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
 
-import { type CalendarFlashListItem, type CalendarItem } from './@hooks/queries/useFetchCalendarList';
-import useCalendarListActions from './@hooks/useCalendarListActions';
 import useOverlayActionMenuBottomSheet from './bottom-sheet/ActionMenu/useOverlayActionMenu';
+import { type CalendarFlashListItem, type CalendarItem } from './hooks/queries/useFetchCalendarList';
+import useCalendarListActions from './hooks/useCalendarListActions';
 
 import { PostWriteIcon } from '@/assets/icons';
 import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
@@ -60,7 +60,7 @@ export default function ExpandableCalendarScreen() {
                             }
                             onLongPress={() => {
                                 Haptic.trigger('impactLight');
-                                openActionMenuBottomSheet();
+                                openActionMenuBottomSheet({ calendar: { id: item.calendar.id } });
                             }}
                         >
                             <Avatar image={item.entity.image} size={60} />

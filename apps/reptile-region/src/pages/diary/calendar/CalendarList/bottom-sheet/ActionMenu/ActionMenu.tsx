@@ -4,7 +4,12 @@ import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import useDeleteCalendarItem from '@/apis/diary/calendar/hooks/mutations/useDeleteCalendarItem';
+
 type ActionMenuState = {
+    calendar: {
+        id: string;
+    };
     isShowBottomSheet: boolean;
 };
 
@@ -12,13 +17,17 @@ interface ActionMenuActions {
     onClose(): void;
 }
 
-type ActionMenuProps = ActionMenuState & ActionMenuActions;
+export type ActionMenuProps = ActionMenuState & ActionMenuActions;
 
-export default function ActionMenuBottomSheet({ isShowBottomSheet, onClose }: ActionMenuProps) {
+export default function ActionMenuBottomSheet({ calendar, isShowBottomSheet, onClose }: ActionMenuProps) {
+    const { mutate } = useDeleteCalendarItem();
+
     const list = [
         {
             label: '삭제',
-            onPress: () => {},
+            onPress: () => {
+                mutate({ calendarId: calendar.id });
+            },
         },
         {
             label: '수정',

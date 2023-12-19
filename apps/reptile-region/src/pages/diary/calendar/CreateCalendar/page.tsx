@@ -1,8 +1,6 @@
 import { Typo, color } from '@crawl/design-system';
-import { useOnOff } from '@crawl/react-hooks';
-import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -10,15 +8,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useOverlaySelectEntityBottomSheet from '../bottom-sheet/SelectEntity/useOverlaySelectEntityBottomSheet';
 
-import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import useCreateCalendarItem from '@/apis/diary/calendar/hooks/mutations/useCreateCalendarItem';
+import useCreateCalendarActions from './hooks/useCreateCalendarActions';
+
 import { Avatar } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import TagTextCheckBox from '@/components/diary/atoms/TagTextCheckBox/index,';
 import type { DiaryCalendarMarkType } from '@/types/apis/diary/calendar';
-import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
-import type { CalendarItemCreateScreenProps } from '@/types/routes/props/diary/calendar';
 
 type MarkTypeArray = {
     label: string;
@@ -34,82 +29,31 @@ const markTypeArray: MarkTypeArray[] = [
     { label: '#메이팅', markType: '메이팅' },
 ];
 
-export default function CalendarItemCreatePage({ navigation }: CalendarItemCreateScreenProps) {
-    const currentDate = useRef(dayjs()).current;
-    const [entity, setEntity] = useState<FetchEntityListResponse['entity']>();
-    const [createDate, setCreateDate] = useState(currentDate.toDate());
-    const [memo, setMemo] = useState('');
-    const [markTypeCheckedArray, setMarkTypeCheckedArray] = useState<DiaryCalendarMarkType[]>([]);
+export default function CalendarItemCreatePage() {
+    const {
+        disabledSubmit,
+        isShowDatePicker,
+        today,
+        entity,
+        memo,
+        createDate,
+        markTypeCheckedArray,
+        datePickerOff,
+        datePickerOn,
+        handleChangeDate,
+        handleChangeEntity,
+        handleChangeMemo,
+        handlePressSubmit,
+        handlePressTag,
+    } = useCreateCalendarActions();
 
     const openSelectEntityBottomSheet = useOverlaySelectEntityBottomSheet({
-        onSelectEntity: setEntity,
+        onSelectEntity: handleChangeEntity,
     });
-
-    const queryClient = useQueryClient();
-    const { openLoading, closeLoading } = useGlobalLoading();
-    const { mutate, isPending } = useCreateCalendarItem({
-        onMutate: openLoading,
-        onSettled: closeLoading,
-        onSuccess: (_data, variables) => {
-            queryClient.invalidateQueries({
-                queryKey: DIARY_QUERY_KEYS.calendar(dayjs(variables.date).startOf('month').format('YYYY-MM-DD')),
-                exact: true,
-            });
-            navigation.navigate('bottom-tab/routes', {
-                screen: 'tab',
-                params: {
-                    screen: 'diary/routes',
-                    params: {
-                        screen: 'calender',
-                        params: {
-                            screen: 'main',
-                            params: {
-                                initialDateString: dayjs(variables.date).format('YYYY-MM-DD'),
-                            },
-                        },
-                    },
-                },
-            });
-        },
-        onError: (error) => {
-            console.log(error);
-        },
-    });
-
-    const { off: datePickerOff, on: datePickerOn, state: isShowDatePicker } = useOnOff();
 
     const { bottom } = useSafeAreaInsets();
 
     const wrapperStyle: StyleProp<ViewStyle> = useMemo(() => [styes.wrapper, { paddingBottom: bottom }], [bottom]);
-
-    const handlePressTag = useCallback((markType: DiaryCalendarMarkType, isChecked: boolean) => {
-        setMarkTypeCheckedArray((prev) => {
-            if (isChecked) {
-                return [...prev, markType];
-            }
-
-            return prev.filter((prevMarkType) => prevMarkType !== markType);
-        });
-    }, []);
-
-    const handleChangeMemo = useCallback((text: string) => {
-        setMemo(text);
-    }, []);
-
-    const handleChangeDate = useCallback(
-        (date: Date) => {
-            setCreateDate(date);
-            datePickerOff();
-        },
-        [datePickerOff],
-    );
-
-    const handlePressSubmit = useCallback(() => {
-        const entityId = entity?.id;
-        if (entityId) {
-            mutate({ entityId, date: createDate, markType: markTypeCheckedArray, memo });
-        }
-    }, [createDate, entity?.id, markTypeCheckedArray, memo, mutate]);
 
     return (
         <View style={wrapperStyle}>
@@ -139,7 +83,7 @@ export default function CalendarItemCreatePage({ navigation }: CalendarItemCreat
                         <View style={styes.actionWrapper}>
                             <TouchableOpacity onPress={datePickerOn}>
                                 <Typo color="primary" variant="title4">
-                                    {dayjs(createDate).format('YYYY-MM-DD A HH:mm ')}
+                                    {dayjs(today).format('YYYY-MM-DD A HH:mm ')}
                                 </Typo>
                             </TouchableOpacity>
                         </View>
@@ -164,16 +108,12 @@ export default function CalendarItemCreatePage({ navigation }: CalendarItemCreat
                 </View>
             </ScrollView>
             <View style={styes.buttonWrapper}>
-                <ConfirmButton
-                    text="등록"
-                    disabled={isPending || markTypeCheckedArray.length === 0}
-                    onPress={handlePressSubmit}
-                />
+                <ConfirmButton text="등록" disabled={disabledSubmit} onPress={handlePressSubmit} />
             </View>
             <DateTimePickerModal
                 isVisible={isShowDatePicker}
                 date={createDate}
-                maximumDate={currentDate.toDate()}
+                maximumDate={today.toDate()}
                 mode="datetime"
                 confirmTextIOS="확인"
                 display="spinner"
