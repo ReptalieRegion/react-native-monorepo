@@ -3,7 +3,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 
 import { StrokeCamera } from '@/assets/icons';
-import { headerHeight } from '@/constants/global';
+import { Header_HEIGHT } from '@/constants/global';
 
 type ImageThumbnailEmptyListProps = {
     height: number;
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         gap: 20,
-        height: Dimensions.get('screen').height - 200 - headerHeight,
+        height: Dimensions.get('screen').height - 200 - Header_HEIGHT,
     },
     circle: {
         borderRadius: 9999,
