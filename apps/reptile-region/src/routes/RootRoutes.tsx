@@ -13,6 +13,7 @@ import PostingRoutes from './SharePost/PostingRoutes';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
+import { CalendarDetailHeader } from '@/pages/diary/calendar/CalendarDetail/header';
 import CalendarDetailPage from '@/pages/diary/calendar/CalendarDetail/page';
 import { CalendarItemCreateHeader, CalendarItemCreatePage } from '@/pages/diary/calendar/CreateCalendar';
 import EntityManagerOptionsMenuPage from '@/pages/diary/entity-manager/bottom-sheet/EntityManagerOptionsMenu';
@@ -215,7 +216,7 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                 <Stack.Screen
                     name="calendar/detail"
                     component={CalendarDetailPage}
-                    options={{ header: CalendarItemCreateHeader }}
+                    options={{ header: CalendarDetailHeader }}
                 />
                 {/* 다이어리 끝 */}
             </Stack.Navigator>
