@@ -18,7 +18,7 @@ interface BottomSheetProviderActions {
 
 type BottomSheetProviderProps = BottomSheetProviderState & BottomSheetProviderActions;
 
-const BottomSheetProvider = ({ children, snapInfo, onClose }: PropsWithChildren<BottomSheetProviderProps>) => {
+export default function BottomSheetProvider({ children, snapInfo, onClose }: PropsWithChildren<BottomSheetProviderProps>) {
     const dimensions = useWindowDimensions();
     const { top } = useSafeAreaInsets();
     const numberPointsFromTop = useMemo(
@@ -55,6 +55,4 @@ const BottomSheetProvider = ({ children, snapInfo, onClose }: PropsWithChildren<
             </BottomSheetAnimationStateContext.Provider>
         </BottomSheetAnimationActionContext.Provider>
     );
-};
-
-export default BottomSheetProvider;
+}

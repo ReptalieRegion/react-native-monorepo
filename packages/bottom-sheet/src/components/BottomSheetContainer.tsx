@@ -1,17 +1,32 @@
 import { color } from '@crawl/design-system';
 import React, { useEffect, useMemo, type PropsWithChildren } from 'react';
 import type { ViewStyle } from 'react-native';
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useBottomSheetAnimatedState from '../hooks/useBottomSheetAnimatedState';
 
 export type BottomSheetContainerProps = {
-    style?: Pick<ViewStyle, 'borderTopRightRadius' | 'borderTopEndRadius' | 'borderTopLeftRadius' | 'borderTopStartRadius'>;
+    style?: ViewStyle;
+    border?: Pick<
+        ViewStyle,
+        | 'borderTopRightRadius'
+        | 'borderTopEndRadius'
+        | 'borderTopLeftRadius'
+        | 'borderTopStartRadius'
+        | 'borderBottomEndRadius'
+        | 'borderBottomLeftRadius'
+        | 'borderBottomRightRadius'
+        | 'borderBottomStartRadius'
+    >;
 };
 
-export default function BottomSheetContainer({ children, style }: PropsWithChildren<BottomSheetContainerProps>) {
+export default function BottomSheetContainer({
+    children,
+    style,
+    border = { borderTopRightRadius: 16, borderTopEndRadius: 16, borderTopLeftRadius: 16, borderTopStartRadius: 16 },
+}: PropsWithChildren<BottomSheetContainerProps>) {
     const dimensions = useWindowDimensions();
     const {
         snapInfo: { pointsFromTop, startIndex },
@@ -33,7 +48,7 @@ export default function BottomSheetContainer({ children, style }: PropsWithChild
         [keyboard.state.value, keyboard.height.value, bottom, translateY.value],
     );
 
-    const animatedStyle = useMemo(() => [styles.viewContainer, snapAnimatedStyles, style], [snapAnimatedStyles, style]);
+    const animatedStyle = useMemo(() => [styles.viewContainer, snapAnimatedStyles, border], [snapAnimatedStyles, border]);
 
     useEffect(() => {
         height.value = withTiming(pointsFromTop[startIndex], { duration: 250 });
@@ -42,14 +57,14 @@ export default function BottomSheetContainer({ children, style }: PropsWithChild
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <Animated.View style={animatedStyle}>{children}</Animated.View>;
+    return (
+        <View style={style}>
+            <Animated.View style={animatedStyle}>{children}</Animated.View>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        minHeight: 2,
-    },
     viewContainer: {
         position: 'absolute',
         width: '100%',

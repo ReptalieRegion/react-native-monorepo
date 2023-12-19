@@ -1,11 +1,11 @@
 import type { SharedValue } from 'react-native-reanimated';
 
-export type SnapInfo = {
+type SnapInfo = {
     startIndex: number;
     pointsFromTop: Array<number | string>;
 };
 
-export type BottomSheetAnimationState = {
+type BottomSheetAnimationState = {
     height: SharedValue<number>;
     translateY: SharedValue<number>;
     opacity: SharedValue<number>;
@@ -16,6 +16,8 @@ export type BottomSheetAnimationState = {
     onClose: () => void;
 };
 
-export type BottomSheetAnimationAction = {
+type BottomSheetAnimationAction = {
     bottomSheetClose: () => void;
 };
+
+export type { BottomSheetAnimationAction, BottomSheetAnimationState, SnapInfo };
