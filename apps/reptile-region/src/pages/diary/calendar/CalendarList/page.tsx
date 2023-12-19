@@ -4,10 +4,11 @@ import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
+import * as Haptic from 'react-native-haptic-feedback';
 
+import useOverlayActionMenuBottomSheet from './@hooks/overlay/useOverlayActionMenu';
 import { type CalendarFlashListItem, type CalendarItem } from './@hooks/queries/useFetchCalendarList';
 import useCalendarListActions from './@hooks/useCalendarListActions';
-import ActionMenuBottomSheet from './bottom-sheet/ActionMenu';
 
 import { PostWriteIcon } from '@/assets/icons';
 import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
@@ -17,14 +18,12 @@ import FloatingActionButtonGroup from '@/components/share-post/organisms/Floatin
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 
 export default function ExpandableCalendarScreen() {
+    const openActionMenuBottomSheet = useOverlayActionMenuBottomSheet();
     const {
         calendarListData,
         searchDate,
         todayString,
-        isShowBottomSheet,
-        closeBottomSheet,
         handleChangeMonth,
-        handleLongPressCalendarItem,
         handlePressCalendarItem,
         handlePressWriteFloatingButton,
         subMonth,
@@ -59,7 +58,10 @@ export default function ExpandableCalendarScreen() {
                                     searchDate: dayjs(item.dateString).startOf('month').format('YYYY-MM-DD'),
                                 })
                             }
-                            onLongPress={handleLongPressCalendarItem}
+                            onLongPress={async () => {
+                                Haptic.trigger('impactLight');
+                                await openActionMenuBottomSheet();
+                            }}
                         >
                             <Avatar image={item.entity.image} size={60} />
                             <View style={listStyles.contentWrapper}>
@@ -104,7 +106,7 @@ export default function ExpandableCalendarScreen() {
                     );
             }
         },
-        [handleLongPressCalendarItem, handlePressCalendarItem],
+        [handlePressCalendarItem, openActionMenuBottomSheet],
     );
 
     const renderListFooterComponent = useCallback(() => {
@@ -164,22 +166,19 @@ export default function ExpandableCalendarScreen() {
     ]);
 
     return (
-        <>
-            <View style={styles.wrapper}>
-                {memoizedExpandableCalendar}
-                <FloatingActionButtons>
-                    <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>
-                        <FloatingActionButtonGroup.Button
-                            name="primary"
-                            Icon={PostWriteIcon}
-                            iconStyle={primaryIcon}
-                            onPress={handlePressWriteFloatingButton}
-                        />
-                    </FloatingActionButtonGroup>
-                </FloatingActionButtons>
-            </View>
-            <ActionMenuBottomSheet isShowBottomSheet={isShowBottomSheet} onClose={closeBottomSheet} />
-        </>
+        <View style={styles.wrapper}>
+            {memoizedExpandableCalendar}
+            <FloatingActionButtons>
+                <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>
+                    <FloatingActionButtonGroup.Button
+                        name="primary"
+                        Icon={PostWriteIcon}
+                        iconStyle={primaryIcon}
+                        onPress={handlePressWriteFloatingButton}
+                    />
+                </FloatingActionButtonGroup>
+            </FloatingActionButtons>
+        </View>
     );
 }
 

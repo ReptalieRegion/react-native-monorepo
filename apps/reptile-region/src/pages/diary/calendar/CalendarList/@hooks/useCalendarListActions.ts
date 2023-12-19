@@ -1,9 +1,7 @@
 import { useCalendar } from '@crawl/calendar';
-import { useOnOff } from '@crawl/react-hooks';
 import { useIsFocused, useRoute } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import * as Haptic from 'react-native-haptic-feedback';
 
 import useFetchCalendarList from './queries/useFetchCalendarList';
 import useCalendarListNavigation from './useCalendarListNavigation';
@@ -39,7 +37,6 @@ export default function useCalendarListActions() {
     // 캘린더 관련
     const { params } = useRoute<CalendarListRouteProp>();
     const { subMonth, setDate } = useCalendar();
-    const { state: isShowBottomSheet, on: openBottomSheet, off: closeBottomSheet } = useOnOff();
 
     useEffect(() => {
         const initialDateString = params?.initialDateString;
@@ -52,36 +49,21 @@ export default function useCalendarListActions() {
         setSearchDate(dayjs(dateString).startOf('month'));
     }, []);
 
-    const handleLongPressCalendarItem = useCallback(() => {
-        openBottomSheet();
-        Haptic.trigger('impactLight');
-    }, [openBottomSheet]);
-
     // 상태 및 함수
     const memoizedActions = useMemo(
         () => ({
             handlePressWriteFloatingButton: navigateCalendarCreate,
             handleChangeMonth,
-            handleLongPressCalendarItem,
             handlePressCalendarItem: navigateCalendarDetail,
-            closeBottomSheet,
             subMonth,
         }),
-        [
-            closeBottomSheet,
-            handleChangeMonth,
-            handleLongPressCalendarItem,
-            navigateCalendarCreate,
-            navigateCalendarDetail,
-            subMonth,
-        ],
+        [handleChangeMonth, navigateCalendarCreate, navigateCalendarDetail, subMonth],
     );
 
     const state = {
         calendarListData: fetchedCalendarList.data,
         todayString: today.format('YYYY-MM-DD'),
         searchDate,
-        isShowBottomSheet,
     };
 
     return {
