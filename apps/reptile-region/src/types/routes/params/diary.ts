@@ -38,8 +38,23 @@ type EntityUpdateParams = {
     };
 };
 
+// 캘린더 리스트
 type CalendarListParams = {
     initialDateString?: string;
 };
 
-export type { CalendarListParams, EntityCreateWeightParams, EntityDetailParams, EntityOptionsMenuParams, EntityUpdateParams };
+// 캘린더 상세 페이지
+type CalendarDetailParams = {
+    calendar: {
+        id: string;
+    };
+};
+
+export type {
+    CalendarDetailParams,
+    CalendarListParams,
+    EntityCreateWeightParams,
+    EntityDetailParams,
+    EntityOptionsMenuParams,
+    EntityUpdateParams,
+};

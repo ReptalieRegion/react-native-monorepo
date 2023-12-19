@@ -8,7 +8,7 @@ import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-ha
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import SelectEntityBottomSheet from './bottom-sheet/SelectEntity';
+import SelectEntityBottomSheet from '../bottom-sheet/SelectEntity';
 
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useCreateCalendarItem from '@/apis/diary/calendar/hooks/mutations/useCreateCalendarItem';

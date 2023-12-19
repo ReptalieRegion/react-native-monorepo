@@ -84,17 +84,22 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                 onEndReached={handleFetchNextPage}
                 getItemType={(item) => item.contents.type}
                 CellRendererComponent={FadeInCellRenderComponent}
-                ListFooterComponent={
-                    <View style={styles.footer}>
-                        <Divider />
-                        <Typo variant="body3" color="placeholder">
-                            최대 2주 전까지의 알림을 확인할 수 있어요
-                        </Typo>
-                        <Divider />
-                    </View>
-                }
+                ListFooterComponent={ListFooterComponent}
                 estimatedItemSize={80}
             />
+        </View>
+    );
+}
+
+// 리스트 하단
+function ListFooterComponent() {
+    return (
+        <View style={styles.footer}>
+            <Divider />
+            <Typo variant="body3" color="placeholder">
+                최대 2주 전까지의 알림을 확인할 수 있어요
+            </Typo>
+            <Divider />
         </View>
     );
 }

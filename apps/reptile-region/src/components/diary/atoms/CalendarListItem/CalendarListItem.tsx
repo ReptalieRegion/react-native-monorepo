@@ -4,7 +4,7 @@ import React, { useMemo } from 'react';
 import { StyleSheet, type ViewStyle } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import type { GenericTouchableProps } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { Easing, ReduceMotion, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 type CalendarListItemState = {
     containerStyle: ViewStyle;
@@ -15,6 +15,12 @@ type CalendarListItemState = {
 interface CalendarListItemActions {}
 
 type CalendarListItemProps = CalendarListItemState & CalendarListItemActions & Omit<GenericTouchableProps, 'containerStyle'>;
+
+const userConfig = {
+    duration: 100,
+    easing: Easing.inOut(Easing.quad),
+    reduceMotion: ReduceMotion.System,
+};
 
 export default function ScaleListItem({
     children,
@@ -31,12 +37,12 @@ export default function ScaleListItem({
     };
 
     const handlePressIn = () => {
-        scale.value = withTiming(0.98);
+        scale.value = withTiming(0.98, userConfig);
         on();
     };
 
     const handlePressOut = () => {
-        scale.value = withTiming(1);
+        scale.value = withTiming(1, userConfig);
         off();
     };
 

@@ -1,18 +1,29 @@
-import type { CompositeNavigationProp, NavigationProp, RouteProp } from '@react-navigation/native';
+import type { CompositeNavigationProp, CompositeScreenProps, NavigationProp, RouteProp } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import type { RootRoutesParamList } from '../../param-list';
 import type { CalendarParamList } from '../../param-list/diary';
 
-type CalendarListScreenProps = NativeStackScreenProps<CalendarParamList, 'main'>;
+type CalendarListScreenProps = CompositeScreenProps<
+    NativeStackScreenProps<CalendarParamList, 'main'>,
+    NativeStackScreenProps<RootRoutesParamList>
+>;
+
+type CalendarListNavigationProp = CompositeNavigationProp<
+    NavigationProp<CalendarParamList, 'main'>,
+    NavigationProp<RootRoutesParamList>
+>;
 
 type CalendarListRouteProp = RouteProp<CalendarParamList, 'main'>;
 
 type CalendarItemCreateScreenProps = NativeStackScreenProps<RootRoutesParamList, 'calendar/create'>;
 
-type CalendarNavigationProp = CompositeNavigationProp<
-    NavigationProp<CalendarParamList, 'main'>,
-    NavigationProp<RootRoutesParamList>
->;
+type CalendarDetailScreenProps = NativeStackScreenProps<RootRoutesParamList, 'calendar/detail'>;
 
-export type { CalendarItemCreateScreenProps, CalendarListRouteProp, CalendarListScreenProps, CalendarNavigationProp };
+export type {
+    CalendarDetailScreenProps,
+    CalendarItemCreateScreenProps,
+    CalendarListNavigationProp,
+    CalendarListRouteProp,
+    CalendarListScreenProps,
+};

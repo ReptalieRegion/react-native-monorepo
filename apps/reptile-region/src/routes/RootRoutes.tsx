@@ -13,7 +13,8 @@ import PostingRoutes from './SharePost/PostingRoutes';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
-import { CalendarItemCreateHeader, CalendarItemCreatePage } from '@/pages/diary/calender/Create';
+import CalendarDetailPage from '@/pages/diary/calendar/CalendarDetail/page';
+import { CalendarItemCreateHeader, CalendarItemCreatePage } from '@/pages/diary/calendar/CreateCalendar';
 import EntityManagerOptionsMenuPage from '@/pages/diary/entity-manager/bottom-sheet/EntityManagerOptionsMenu';
 import CreateWeightBottomSheet from '@/pages/diary/entity-manager/DetailPage/bottom-sheet/CreateWeight';
 import { EntityManagerDetailPageHeader } from '@/pages/diary/entity-manager/DetailPage/header';
@@ -210,6 +211,11 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                         animation: 'slide_from_bottom',
                         header: CalendarItemCreateHeader,
                     }}
+                />
+                <Stack.Screen
+                    name="calendar/detail"
+                    component={CalendarDetailPage}
+                    options={{ header: CalendarItemCreateHeader }}
                 />
                 {/* 다이어리 끝 */}
             </Stack.Navigator>

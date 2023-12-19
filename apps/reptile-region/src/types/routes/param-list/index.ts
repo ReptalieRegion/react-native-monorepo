@@ -2,6 +2,7 @@ import type { NavigatorScreenParams } from '@react-navigation/native';
 
 import type { SignInParams } from '../params/auth';
 import type {
+    CalendarDetailParams,
     EntityCreateWeightParams,
     EntityDetailParams,
     EntityOptionsMenuParams,
@@ -47,6 +48,7 @@ type RootRoutesParamList = {
 
     // Calendar
     'calendar/create': undefined;
+    'calendar/detail': CalendarDetailParams;
 };
 
 export type { RootRoutesParamList };
