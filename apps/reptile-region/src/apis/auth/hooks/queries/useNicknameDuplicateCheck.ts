@@ -5,7 +5,7 @@ import { nicknameDuplicateCheck } from '../../repository';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { AUTH_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { NicknameDuplicateCheck } from '@/types/apis/auth';
-import type { CustomQueryKey } from '@/types/react-query';
+import type { CustomQueryKey } from '@/types/apis/react-query';
 
 // 닉네임 중복 체크
 type UseNicknameDuplicateCheckProps = NicknameDuplicateCheck['Request'] & {

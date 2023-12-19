@@ -4,8 +4,8 @@ import { getDetailUserProfile } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { CustomQueryKey } from '@/types/apis/react-query';
 import type { FetchDetailUserProfile } from '@/types/apis/share-post/user';
-import type { CustomQueryKey } from '@/types/react-query';
 
 // 특정 사용자 프로필 조회
 export default function useFetchUserProfile({ nickname }: FetchDetailUserProfile['Request']) {

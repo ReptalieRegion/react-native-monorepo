@@ -14,7 +14,6 @@ dayjs.extend(utc);
  */
 export const fetchCalendar = async ({ date }: FetchCalendar['Request']) => {
     const currentDate = dayjs(date);
-
     const queryString = objectToQueryString({
         startDate: currentDate.startOf('month').utc().format(),
         endDate: currentDate.endOf('month').utc().format(),

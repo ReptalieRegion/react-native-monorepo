@@ -7,8 +7,8 @@ import { fetchEntityWeightList } from '../../repository';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchEntityWeightList, FetchEntityWeightListResponse } from '@/types/apis/diary/entity';
+import type { CustomQueryKey } from '@/types/apis/react-query';
 import type { InfiniteState } from '@/types/apis/utils';
-import type { CustomQueryKey } from '@/types/react-query';
 
 // 다이어리 개체 몸무게 조회
 export default function useInfiniteFetchEntityWeight({ entityId }: FetchEntityWeightList['Request']) {

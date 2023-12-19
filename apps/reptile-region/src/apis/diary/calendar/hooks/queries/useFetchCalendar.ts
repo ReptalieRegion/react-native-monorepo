@@ -7,7 +7,7 @@ import { fetchCalendar } from '../../repository';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchCalendar } from '@/types/apis/diary/calendar';
-import type { CustomQueryKey } from '@/types/react-query';
+import type { CustomQueryKey } from '@/types/apis/react-query';
 
 import 'dayjs/locale/ko';
 dayjs.locale('ko');
@@ -21,8 +21,10 @@ export default function useFetchCalendar<TData = FetchCalendar['Response']>({
     data: { date },
     options,
 }: UseFetchCalendar<TData>) {
+    console.log(date);
+    console.log(dayjs(date).startOf('month').format('YYYY-MM-DD'));
     return useQuery<FetchCalendar['Response'], HTTPError, TData, CustomQueryKey>({
-        queryKey: DIARY_QUERY_KEYS.calendar(dayjs(date).startOf('month').format('YYYY-MM-DD')),
+        queryKey: DIARY_QUERY_KEYS.calendar(date),
         queryFn: useCallback(() => fetchCalendar({ date }), [date]),
         staleTime: 4 * 60 * 1000,
         gcTime: 5 * 60 * 1000,
