@@ -6,9 +6,9 @@ import useImageThumbnailNavigation from '../@hooks/useImageThumbnailNavigation';
 import { LIST_HEADER_HEIGHT, LIST_HEADER_PADDING } from '../constants';
 import SharePostsDetailListSkeleton from '../loading';
 
+import useUpdateOrCreateFollow from './@hooks/useUpdateOrCreateFollow';
 import ListHeaderComponent from './ListHeaderComponent';
 
-import useImageThumbnailActions from '@/pages/share-post/ImageThumbnailList/OtherUser/@hooks/useImageThumbnailActions';
 import type {
     SharePostImageThumbnailListScreenProps,
     SharePostMeImageThumbnailListScreenProps,
@@ -25,7 +25,7 @@ export default function SharePostImageThumbnailListPage({
     },
 }: SharePostMeImageThumbnailListScreenProps | SharePostImageThumbnailListScreenProps) {
     const { navigateFollowerPage, navigateListUser } = useImageThumbnailNavigation(pageState);
-    const { handlePressFollow } = useImageThumbnailActions({ nickname });
+    const updateOrCreateFollow = useUpdateOrCreateFollow(nickname);
     const handleImagePress = (index: number) => {
         navigateListUser({ user: { nickname }, startIndex: index });
     };
@@ -37,14 +37,14 @@ export default function SharePostImageThumbnailListPage({
                 nickname={nickname}
                 profile={profile}
                 navigateFollowPage={navigateFollowerPage}
-                handlePressFollow={handlePressFollow}
+                handlePressFollow={updateOrCreateFollow}
                 containerStyle={{
                     height: LIST_HEADER_HEIGHT,
                     padding: LIST_HEADER_PADDING,
                 }}
             />
         ),
-        [isFollow, nickname, profile, navigateFollowerPage, handlePressFollow],
+        [isFollow, nickname, profile, navigateFollowerPage, updateOrCreateFollow],
     );
 
     return (
