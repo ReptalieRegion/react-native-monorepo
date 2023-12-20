@@ -3,7 +3,7 @@ import { Typo, color } from '@crawl/design-system';
 import { useOnOff } from '@crawl/react-hooks';
 import dayjs from 'dayjs';
 import React, { useCallback, useState } from 'react';
-import { Alert, Keyboard, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Alert, Keyboard, Modal, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -12,30 +12,34 @@ import useUpdateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/u
 import { DatePicker } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import { useToast } from '@/components/@common/organisms/Toast';
-import type { EntityCreateWeightScreenProps } from '@/types/routes/props/diary/entity';
+import type { WeightUnit } from '@/types/apis/diary/entity';
 
-export default function CreateWeightBottomSheet({
-    navigation,
-    route: {
-        params: { entity },
-    },
-}: EntityCreateWeightScreenProps) {
+type CreateWeightBottomSheetState = {
+    isOpen: boolean;
+    entity: {
+        id: string;
+        weightUnit: WeightUnit;
+    };
+};
+
+interface CreateWeightBottomSheetActions {
+    onClose(): void;
+}
+
+export type CreateWeightBottomSheetProps = CreateWeightBottomSheetState & CreateWeightBottomSheetActions;
+
+export default function CreateWeightBottomSheet({ isOpen, entity, onClose }: CreateWeightBottomSheetProps) {
     const [weight, setWeight] = useState('');
     const [selectedDate, setSelectedDate] = useState(dayjs().toDate());
     const { off: datePickerOff, on: datePickerOn, state: isDatePickerVisible } = useOnOff();
-
-    const bottomSheetClose = useCallback(() => {
-        if (navigation.canGoBack()) {
-            navigation.goBack();
-        }
-    }, [navigation]);
 
     const handleConfirm = useCallback(
         (date: Date) => {
             setSelectedDate(date);
             datePickerOff();
+            onClose();
         },
-        [datePickerOff],
+        [datePickerOff, onClose],
     );
 
     const handleChangeWeight = useCallback((text: string) => {
@@ -47,8 +51,8 @@ export default function CreateWeightBottomSheet({
     }, []);
 
     return (
-        <>
-            <BottomSheet onClose={bottomSheetClose} snapInfo={{ pointsFromTop: [450], startIndex: 0 }} header={Header}>
+        <Modal visible={isOpen} transparent={true}>
+            <BottomSheet onClose={onClose} snapInfo={{ pointsFromTop: [450], startIndex: 0 }} header={Header}>
                 <Pressable onPress={Keyboard.dismiss} style={[styles.wrapper, styles.modalContainer]}>
                     <View style={styles.inputGroup}>
                         <View style={styles.content}>
@@ -87,7 +91,7 @@ export default function CreateWeightBottomSheet({
                 onConfirm={handleConfirm}
                 onCancel={datePickerOff}
             />
-        </>
+        </Modal>
     );
 }
 

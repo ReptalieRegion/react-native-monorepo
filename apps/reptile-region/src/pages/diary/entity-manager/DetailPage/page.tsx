@@ -5,6 +5,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import useCreateWeightBottomSheet from './bottom-sheet/CreateWeight/useCreateWeightBottomSheet';
 import { ChangeHeader } from './header';
 
 import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
@@ -16,7 +17,6 @@ import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/
 
 export default function EntityManagerDetailPage(props: EntityManagerDetailScreenProps) {
     const {
-        navigation,
         route: {
             params: { entityId },
         },
@@ -24,6 +24,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
 
     const { width } = useWindowDimensions();
     const { data } = useInfiniteFetchEntity();
+    const openCreateWeightBottomSheet = useCreateWeightBottomSheet();
 
     const foundEntity = data.find(({ entity }) => entity.id === entityId);
     if (foundEntity === undefined) {
@@ -35,7 +36,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
     } = foundEntity;
 
     const navigateCreateWeight = () => {
-        navigation.navigate('entity-manager/create-weight', { entity: { id, weightUnit } });
+        openCreateWeightBottomSheet({ entity: { id, weightUnit } });
     };
 
     return (

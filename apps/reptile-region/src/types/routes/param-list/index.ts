@@ -1,13 +1,7 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
 import type { SignInParams } from '../params/auth';
-import type {
-    CalendarDetailParams,
-    EntityCreateWeightParams,
-    EntityDetailParams,
-    EntityOptionsMenuParams,
-    EntityUpdateParams,
-} from '../params/diary';
+import type { CalendarDetailParams, EntityDetailParams, EntityUpdateParams } from '../params/diary';
 import type { LicenseContentsParams } from '../params/me';
 import type { PostingUpdateParams } from '../params/sharePost';
 
@@ -41,8 +35,6 @@ type RootRoutesParamList = {
     // Entity
     'entity-manager/create': NavigatorScreenParams<EntityManagerCreateParamList>;
     'entity-manager/detail': EntityDetailParams;
-    'entity-manager/options-menu': EntityOptionsMenuParams;
-    'entity-manager/create-weight': EntityCreateWeightParams;
     'entity-manager/update': EntityUpdateParams;
 
     // Calendar

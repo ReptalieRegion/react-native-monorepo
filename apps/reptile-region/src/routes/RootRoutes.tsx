@@ -16,8 +16,6 @@ import { SignUpHeader } from '@/pages/auth/SignUp/header';
 import { CalendarDetailHeader } from '@/pages/diary/calendar/CalendarDetail/header';
 import CalendarDetailPage from '@/pages/diary/calendar/CalendarDetail/page';
 import { CalendarItemCreateHeader, CalendarItemCreatePage } from '@/pages/diary/calendar/CreateCalendar';
-import CreateWeightBottomSheet from '@/pages/diary/entity-manager/DetailPage/bottom-sheet/CreateWeight';
-import EntityManagerOptionsMenuPage from '@/pages/diary/entity-manager/DetailPage/bottom-sheet/EntityManagerOptionsMenu';
 import { EntityManagerDetailPageHeader } from '@/pages/diary/entity-manager/DetailPage/header';
 import EntityMangerDetailPage from '@/pages/diary/entity-manager/DetailPage/page';
 import { EntityMangerUpdateHeader } from '@/pages/diary/entity-manager/UpdatePage/header';
@@ -167,24 +165,6 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     name="entity-manager/detail"
                     component={EntityMangerDetailPage}
                     options={{ header: EntityManagerDetailPageHeader }}
-                />
-                <Stack.Screen
-                    name="entity-manager/options-menu"
-                    component={EntityManagerOptionsMenuPage}
-                    options={{
-                        presentation: 'containedTransparentModal',
-                        animation: 'none',
-                        headerShown: false,
-                    }}
-                />
-                <Stack.Screen
-                    name="entity-manager/create-weight"
-                    component={CreateWeightBottomSheet}
-                    options={{
-                        presentation: 'containedTransparentModal',
-                        animation: 'none',
-                        headerShown: false,
-                    }}
                 />
                 <Stack.Screen
                     name="entity-manager/update"
