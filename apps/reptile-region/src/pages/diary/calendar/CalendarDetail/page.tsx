@@ -20,26 +20,14 @@ export default function CalendarDetailPage({
             <View style={cardStyles.wrapper}>
                 <View style={cardStyles.container}>
                     <Image source={{ uri: data?.entity.image.src }} style={cardStyles.imageSize} />
-                    {/* <View style={cardStyles.content}>
-                        <Typo variant="title2">
-                            {data?.entity.name} <GenderIcon gender="Female" />
-                        </Typo>
-                        <View style={cardStyles.varietyWrapper}>
-                            <TagView label="파충류" />
-                            <TagView label="개코도마뱀" />
-                            <TagView label="몰라몰라" />
-                            <TagView label="ㅋㅋㅋ" />
-                        </View>
-                        <Typo variant="body3" color="placeholder">
-                            {data?.entity.hatching ?? '2023-12-23'}
-                        </Typo>
-                    </View> */}
                 </View>
             </View>
             <View style={articleStyles.wrapper}>
                 <View style={articleStyles.itemWrapper}>
                     <Typo variant="title2">메모</Typo>
-                    <Typo>{data?.calendar.memo}</Typo>
+                    <View style={articleStyles.memoContainer}>
+                        <Typo>{data?.calendar.memo}</Typo>
+                    </View>
                 </View>
                 <View style={articleStyles.itemWrapper}>
                     <Typo variant="title2">태그</Typo>
@@ -116,7 +104,7 @@ const articleStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        height: 50,
+        paddingVertical: 10,
         gap: 30,
     },
     tagWrapper: {
@@ -125,5 +113,8 @@ const articleStyles = StyleSheet.create({
         flexWrap: 'wrap',
         flex: 1,
         justifyContent: 'flex-end',
+    },
+    memoContainer: {
+        flex: 1,
     },
 });

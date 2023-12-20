@@ -83,7 +83,7 @@ export default function CalendarItemCreatePage() {
                         <View style={styes.actionWrapper}>
                             <TouchableOpacity onPress={datePickerOn}>
                                 <Typo color="primary" variant="title4">
-                                    {dayjs(today).format('YYYY-MM-DD A HH:mm ')}
+                                    {dayjs(createDate).format('YYYY-MM-DD A HH:mm ')}
                                 </Typo>
                             </TouchableOpacity>
                         </View>
