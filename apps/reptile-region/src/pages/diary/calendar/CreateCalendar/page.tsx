@@ -6,9 +6,9 @@ import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-ha
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import useOverlaySelectEntityBottomSheet from '../bottom-sheet/SelectEntity/useOverlaySelectEntityBottomSheet';
+import useOverlaySelectEntityBottomSheet from '../@common/SelectEntity/useOverlaySelectEntityBottomSheet';
 
-import useCreateCalendarActions from './hooks/useCreateCalendarActions';
+import useCreateCalendarActions from './@hooks/useCreateCalendarActions';
 
 import { Avatar } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';

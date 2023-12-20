@@ -4,7 +4,7 @@ import { Image } from 'expo-image';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 
-import useFetchCalendarDetail from './hooks/queries/useFetchCalendarDetail';
+import useFetchCalendarDetail from './@hooks/queries/useFetchCalendarDetail';
 
 import type { CalendarDetailScreenProps } from '@/types/routes/props/diary/calendar';
 
