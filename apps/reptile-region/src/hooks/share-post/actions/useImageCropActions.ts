@@ -3,7 +3,7 @@ import { openPhotoPicker } from 'react-native-permissions';
 
 import { useCameraAlbumHandler } from '@/components/@common/organisms/CameraAlbum';
 import { useToast } from '@/components/@common/organisms/Toast';
-import useImagePicker from '@/hooks/@common/useImagePicker';
+import useImagePicker from '@/hooks/useImagePicker';
 
 export default function useImageCropActions() {
     const { savePhoto } = useCameraAlbumHandler();

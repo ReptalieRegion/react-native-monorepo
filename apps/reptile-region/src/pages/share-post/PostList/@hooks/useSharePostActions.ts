@@ -6,7 +6,7 @@ import useCreateLike from './mutations/useCreateLike';
 import useUpdateFollow from './mutations/useUpdateFollow';
 import useUpdateLike from './mutations/useUpdateLike';
 
-import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
+import useAuthNavigation from '@/hooks/useNavigationAuth';
 
 export default function useSharePostActions() {
     const { mutate: createLikeMutate } = useCreateLike();

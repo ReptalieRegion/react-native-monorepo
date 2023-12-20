@@ -8,7 +8,7 @@ import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCre
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import Follow from '@/components/share-post/atoms/Follow';
-import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
+import useAuthNavigation from '@/hooks/useNavigationAuth';
 import type { FetchDetailUserProfile } from '@/types/apis/share-post/user';
 
 type ChangeHeaderProps = {

@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import { BottomSheetHeader } from '@/components/@common/molecules';
-import useKeyboardState, { UseKeyboardState } from '@/hooks/@common/useKeyboardState';
+import useKeyboardState, { UseKeyboardState } from '@/hooks/useKeyboardState';
 import { SharePostCommentPage } from '@/pages/share-post/CommentList/MainPage';
 import { SharePostCommentReplyPage } from '@/pages/share-post/CommentList/ReplyPage';
 import type { CommentParamList } from '@/types/routes/param-list/sharePost';

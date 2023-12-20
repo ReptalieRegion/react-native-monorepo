@@ -8,7 +8,7 @@ import { useToast } from '@/components/@common/organisms/Toast';
 import EntityCard from '@/components/diary/molecules/EntityCard/EntityCard';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
 import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
-import useImagePicker from '@/hooks/@common/useImagePicker';
+import useImagePicker from '@/hooks/useImagePicker';
 import type { EntityManagerCreateImageScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerImagePage({ navigation }: EntityManagerCreateImageScreenProps) {

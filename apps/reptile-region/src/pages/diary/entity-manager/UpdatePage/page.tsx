@@ -20,7 +20,7 @@ import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import ImagePickerIcon from '@/components/@common/molecules/ImagePickerIcon/ImagePickerIcon';
 import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import { useToast } from '@/components/@common/organisms/Toast';
-import useImagePicker from '@/hooks/@common/useImagePicker';
+import useImagePicker from '@/hooks/useImagePicker';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
 import type { IconFunction } from '@/types/global/icons';
 import type { EntityUpdateScreenProps } from '@/types/routes/props/diary/entity';

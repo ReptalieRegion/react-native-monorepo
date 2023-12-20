@@ -10,7 +10,7 @@ import { PostUpdateImageCarousel } from '../PostUpdateImageCarousel';
 import TextEditor from '../TextEditor';
 
 import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
-import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
+import useFlashListScroll from '@/hooks/useFlashListScroll';
 import type { ImageType } from '@/types/global/image';
 
 export enum MessageType {

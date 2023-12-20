@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
 
 import { useToast } from '@/components/@common/organisms/Toast';
-import useImagePicker from '@/hooks/@common/useImagePicker';
+import useImagePicker from '@/hooks/useImagePicker';
 import type { EntityManagerCreateImageNavigationProps } from '@/types/routes/props/diary/entity';
 
 export default function useEntityMangerImageAction() {

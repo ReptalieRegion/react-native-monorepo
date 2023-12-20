@@ -1,7 +1,7 @@
 import React from 'react';
 
 import TagView, { type TagViewState } from '@/components/@common/atoms/TagView/TagView';
-import useCheckBox, { type UseCheckBoxActions } from '@/hooks/@common/useCheckBox';
+import useCheckBox, { type UseCheckBoxActions } from '@/hooks/useCheckBox';
 
 type TagTextCheckBoxProps = Pick<TagViewState, 'label'> & UseCheckBoxActions;
 

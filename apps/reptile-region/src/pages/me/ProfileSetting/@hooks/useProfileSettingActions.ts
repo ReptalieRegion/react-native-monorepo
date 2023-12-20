@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import useUpdateProfile from '@/apis/me/profile/hooks/mutations/useUpdateProfile';
 import { useToast } from '@/components/@common/organisms/Toast';
-import useImagePicker from '@/hooks/@common/useImagePicker';
+import useImagePicker from '@/hooks/useImagePicker';
 
 export default function useProfileSettingActions() {
     const { openToast } = useToast();

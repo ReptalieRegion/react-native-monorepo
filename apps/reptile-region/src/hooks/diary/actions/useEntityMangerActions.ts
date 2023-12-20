@@ -1,5 +1,5 @@
 import useFloatingHandler from '@/components/share-post/organisms/FloatingActionButtons/hooks/useFloatingHandler';
-import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
+import useFlashListScroll from '@/hooks/useFlashListScroll';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
 export default function useEntityMangerActions() {

@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
-import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
+import useAuthNavigation from '@/hooks/useNavigationAuth';
 import type { FetchDetailUserProfile } from '@/types/apis/share-post/user';
 
 type UseImageThumbnailActionsProps = {

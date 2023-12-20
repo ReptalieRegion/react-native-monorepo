@@ -3,7 +3,7 @@ import * as Haptic from 'react-native-haptic-feedback';
 import useCreateFollow from './mutations/useCreateFollow';
 import useUpdateFollow from './mutations/useUpdateFollow';
 
-import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
+import useAuthNavigation from '@/hooks/useNavigationAuth';
 import type { CustomQueryKey } from '@/types/apis/react-query';
 
 export default function useProfileListActions(props: { queryKey: CustomQueryKey }) {

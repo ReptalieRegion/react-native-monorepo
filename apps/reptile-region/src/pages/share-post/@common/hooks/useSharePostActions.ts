@@ -6,7 +6,7 @@ import { MY_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useCreateOrUpdateLike from '@/apis/share-post/post/hooks/combine/useCreateOrUpdateLike';
 import useOnlyLike from '@/apis/share-post/post/hooks/combine/useOnlyLike';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
-import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
+import useAuthNavigation from '@/hooks/useNavigationAuth';
 import type { CustomQueryKey } from '@/types/apis/react-query';
 import type { CreateLike, FetchPost, FetchPosts, FetchPostsResponse, UpdateLike } from '@/types/apis/share-post/post';
 import type { CreateFollow, UpdateFollow } from '@/types/apis/share-post/user';

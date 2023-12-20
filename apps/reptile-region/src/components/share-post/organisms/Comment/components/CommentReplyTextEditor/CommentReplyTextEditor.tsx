@@ -8,7 +8,7 @@ import TextInputEditor from '../TextInputEditor';
 import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
 import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useUpdateCommentReply';
 import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
-import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
+import useAuthNavigation from '@/hooks/useNavigationAuth';
 
 type CommentReplyTextEditorProps = {
     isFocus: boolean;

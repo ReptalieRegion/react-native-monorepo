@@ -14,8 +14,8 @@ import FloatingActionButtonGroup from '@/components/share-post/organisms/Floatin
 import useFloatingHandler from '@/components/share-post/organisms/FloatingActionButtons/hooks/useFloatingHandler';
 import { ListEmptyComponent } from '@/components/share-post/organisms/SharePostCard/components';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
-import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
-import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
+import useFlashListScroll from '@/hooks/useFlashListScroll';
+import useAuthNavigation from '@/hooks/useNavigationAuth';
 import useSharePostNavigation from '@/pages/share-post/PostList/@hooks/useSharePostNavigation';
 import type { FetchPostResponse } from '@/types/apis/share-post/post';
 import type { SharePostListPageScreen } from '@/types/routes/props/share-post/post-list';
