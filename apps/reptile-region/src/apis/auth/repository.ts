@@ -1,4 +1,4 @@
-import { encryptionRSA } from '@reptile-region/utils';
+import { encryptionRSA } from '@crawl/utils';
 
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import type {
@@ -42,7 +42,7 @@ export const refreshTokenIssued = async ({ refreshToken }: RefreshToken['Request
         },
     });
 
-    return await response.json();
+    return response.json();
 };
 
 // 카카오 로그인

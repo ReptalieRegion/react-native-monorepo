@@ -1,8 +1,8 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 
 import { ImageCarouselRefContext, ImageIndicatorActionsContext } from '../contexts/ImageIndicator';
 
-const useImageCarouselHandler = () => {
+export default function useImageCarouselHandler() {
     const state = useContext(ImageCarouselRefContext);
     const dispatch = useContext(ImageIndicatorActionsContext);
 
@@ -24,7 +24,11 @@ const useImageCarouselHandler = () => {
         [state.imageCarouselRef],
     );
 
-    return { handleScrollCalcIndicator, scrollIntoView };
-};
-
-export default useImageCarouselHandler;
+    return useMemo(
+        () => ({
+            handleScrollCalcIndicator,
+            scrollIntoView,
+        }),
+        [handleScrollCalcIndicator, scrollIntoView],
+    );
+}

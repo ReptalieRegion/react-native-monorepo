@@ -23,7 +23,7 @@ const modules = workspaces
     })
     .sort()
     .filter((m, i, self) => {
-        return self.lastIndexOf(m) === i && !m.startsWith('@reptile-region/');
+        return self.lastIndexOf(m) === i && !m.startsWith('@crawl/');
     });
 
 /**

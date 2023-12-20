@@ -1,28 +1,35 @@
 import type { PropsWithChildren } from 'react';
-import React, { useCallback, useEffect } from 'react';
-import type { Insets } from 'react-native';
+import React, { useCallback, useMemo } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { runOnJS, useSharedValue, withTiming } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { BottomSheetAnimationActionContext, BottomSheetAnimationStateContext } from '../contexts/BottomSheetAnimationContext';
 import type { BottomSheetAnimationAction, BottomSheetAnimationState, SnapInfo } from '../types/bottom-sheet';
 import { getPixel } from '../utils/calc-pixel';
 
-type BottomSheetProviderProps = {
-    onClose: () => void;
+type BottomSheetProviderState = {
     snapInfo: SnapInfo;
-    insets?: Insets;
 };
 
-const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithChildren<BottomSheetProviderProps>) => {
+interface BottomSheetProviderActions {
+    onClose: () => void;
+}
+
+type BottomSheetProviderProps = BottomSheetProviderState & BottomSheetProviderActions;
+
+export default function BottomSheetProvider({ children, snapInfo, onClose }: PropsWithChildren<BottomSheetProviderProps>) {
     const dimensions = useWindowDimensions();
-    const numberPointsFromTop = snapInfo.pointsFromTop.map((snapPoint) =>
-        getPixel({ baseHeight: dimensions.height - (insets?.top ?? 0), snapPoint }),
+    const { top } = useSafeAreaInsets();
+    const numberPointsFromTop = useMemo(
+        () => snapInfo.pointsFromTop.map((snapPoint) => getPixel({ baseHeight: dimensions.height - top, snapPoint })),
+        [dimensions.height, snapInfo.pointsFromTop, top],
     );
     const sortedPointsFromTop = [...numberPointsFromTop].sort();
-    const height = useSharedValue(0);
-    const translateY = useSharedValue(0);
-    const opacity = useSharedValue(1);
+
+    const height = useSharedValue(sortedPointsFromTop[snapInfo.startIndex]);
+    const translateY = useSharedValue(sortedPointsFromTop[snapInfo.startIndex]);
+    const opacity = useSharedValue(0);
 
     const bottomSheetClose = useCallback(() => {
         translateY.value = withTiming(height.value);
@@ -30,7 +37,6 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
     }, [height.value, onClose, opacity, translateY]);
 
     const animationState: BottomSheetAnimationState = {
-        insets,
         height,
         translateY,
         opacity,
@@ -42,11 +48,6 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
         bottomSheetClose,
     };
 
-    useEffect(() => {
-        height.value = withTiming(numberPointsFromTop[snapInfo.startIndex], { duration: 250 });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     return (
         <BottomSheetAnimationActionContext.Provider value={animationActions}>
             <BottomSheetAnimationStateContext.Provider value={animationState}>
@@ -54,6 +55,4 @@ const BottomSheetProvider = ({ children, snapInfo, insets, onClose }: PropsWithC
             </BottomSheetAnimationStateContext.Provider>
         </BottomSheetAnimationActionContext.Provider>
     );
-};
-
-export default BottomSheetProvider;
+}

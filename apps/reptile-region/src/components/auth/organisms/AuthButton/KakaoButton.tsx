@@ -1,4 +1,4 @@
-import { Typo } from '@reptile-region/design-system';
+import { Typo } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View, type DimensionValue } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';

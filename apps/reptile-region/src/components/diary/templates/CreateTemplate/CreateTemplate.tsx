@@ -1,4 +1,4 @@
-import { Typo, color } from '@reptile-region/design-system';
+import { Typo, color } from '@crawl/design-system';
 import React, { type ReactNode } from 'react';
 import { Platform, StyleSheet, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native';
 import Animated, {
@@ -12,7 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { type TitleAndDescriptionProps } from '../../atoms/TitleAndDescription/TitleAndDescription';
 
-import { headerHeight } from '@/constants/global';
+import { Header_HEIGHT } from '@/constants/global';
 
 type CreateTemplateState = {
     contents: ReactNode;
@@ -28,7 +28,7 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
     const dimensions = useWindowDimensions();
     const { bottom } = useSafeAreaInsets();
     const keyboard = useAnimatedKeyboard();
-    const titleHeight = useSharedValue(32 + headerHeight);
+    const titleHeight = useSharedValue(32 + Header_HEIGHT);
 
     const contentsAnimation = useAnimatedStyle(() => {
         const isCenter = contentsAlign === 'center';

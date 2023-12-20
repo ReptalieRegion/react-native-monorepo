@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import CalenderPage from '@/pages/diary/calender';
-import type { CalenderParamList } from '@/types/routes/param-list/diary';
+import CalenderPage from '@/pages/diary/calendar/CalendarList/async-page';
+import type { CalendarParamList } from '@/types/routes/param-list/diary';
 
-const Stack = createNativeStackNavigator<CalenderParamList>();
+const Stack = createNativeStackNavigator<CalendarParamList>();
 
 export default function CalenderRoutes() {
     return (

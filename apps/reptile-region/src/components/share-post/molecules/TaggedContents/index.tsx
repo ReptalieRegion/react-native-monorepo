@@ -1,4 +1,4 @@
-import { TouchableTypo, Typo } from '@reptile-region/design-system';
+import { TouchableTypo, Typo } from '@crawl/design-system';
 import React, { useRef, useState } from 'react';
 import type { NativeSyntheticEvent, TextLayoutEventData } from 'react-native';
 

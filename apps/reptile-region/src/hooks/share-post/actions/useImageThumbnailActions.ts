@@ -9,7 +9,7 @@ type UseImageThumbnailActionsProps = {
     nickname: string;
 };
 
-const useImageThumbnailActions = ({ nickname }: UseImageThumbnailActionsProps) => {
+export default function useImageThumbnailActions({ nickname }: UseImageThumbnailActionsProps) {
     const profileKey = SHARE_POST_QUERY_KEYS.profileDetail(nickname);
     const queryClient = useQueryClient();
     const { requireAuthNavigation } = useAuthNavigation();
@@ -87,6 +87,4 @@ const useImageThumbnailActions = ({ nickname }: UseImageThumbnailActionsProps) =
     return {
         handlePressFollow,
     };
-};
-
-export default useImageThumbnailActions;
+}

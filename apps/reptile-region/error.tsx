@@ -1,4 +1,4 @@
-import { Typo, color } from '@reptile-region/design-system';
+import { Typo, color } from '@crawl/design-system';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';

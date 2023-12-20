@@ -1,5 +1,5 @@
+import { Typo, color } from '@crawl/design-system';
 import { useNavigation } from '@react-navigation/native';
-import { Typo, color } from '@reptile-region/design-system';
 import type { ReactNode } from 'react';
 import React from 'react';
 import type { TextStyle, ViewStyle } from 'react-native';
@@ -8,7 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { BackButton, CancelButton, Logo } from '@/assets/icons';
 import MainStatusBar from '@/components/@common/atoms/StatusBar';
-import { headerHeight } from '@/constants/global';
+import { Header_HEIGHT } from '@/constants/global';
 import type { IconFunction } from '@/types/global/icons';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
@@ -78,7 +78,7 @@ export default function BaseHeader({
 
 const styles = StyleSheet.create({
     container: {
-        height: headerHeight,
+        height: Header_HEIGHT,
         position: 'relative',
         flexDirection: 'row',
         justifyContent: 'center',

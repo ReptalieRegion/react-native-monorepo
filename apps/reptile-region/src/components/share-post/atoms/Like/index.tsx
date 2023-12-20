@@ -1,4 +1,4 @@
-import { color } from '@reptile-region/design-system';
+import { color } from '@crawl/design-system';
 import React from 'react';
 
 import { Like_40 as Like } from '@/assets/icons';

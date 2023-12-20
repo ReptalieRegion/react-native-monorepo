@@ -1,4 +1,4 @@
-import { Typo } from '@reptile-region/design-system';
+import { Typo } from '@crawl/design-system';
 import React, { useEffect } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
@@ -40,7 +40,7 @@ export default function ToastContainer() {
             translateY.value = withSpring(top, { duration: 1000 }, (firstFinished) => {
                 if (firstFinished) {
                     translateX.value = withDelay(
-                        500,
+                        200,
                         withTiming(width, { duration: 100 }, (secondFinished) => {
                             'worklet';
                             if (secondFinished) {

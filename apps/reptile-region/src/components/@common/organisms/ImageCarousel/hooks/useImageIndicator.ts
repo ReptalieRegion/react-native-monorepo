@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { ImagesIndicatorStateContext } from '../contexts/ImageIndicator';
 
-const useImageIndicator = () => {
+export default function useImageIndicator() {
     const state = useContext(ImagesIndicatorStateContext);
 
     if (state === null) {
@@ -10,6 +10,4 @@ const useImageIndicator = () => {
     }
 
     return state;
-};
-
-export default useImageIndicator;
+}

@@ -7,10 +7,10 @@ import useCreateOrUpdateLike from '@/apis/share-post/post/hooks/combine/useCreat
 import useOnlyLike from '@/apis/share-post/post/hooks/combine/useOnlyLike';
 import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
 import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
+import type { CustomQueryKey } from '@/types/apis/react-query';
 import type { CreateLike, FetchPost, FetchPosts, FetchPostsResponse, UpdateLike } from '@/types/apis/share-post/post';
 import type { CreateFollow, UpdateFollow } from '@/types/apis/share-post/user';
 import type { InfiniteState } from '@/types/apis/utils';
-import type { CustomQueryKey } from '@/types/react-query';
 
 type MutateLikeProps = CreateLike['Request'] | UpdateLike['Request'];
 

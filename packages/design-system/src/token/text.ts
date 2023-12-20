@@ -107,6 +107,7 @@ export const textLightColor: TextLightColor = {
     primary: color.Green[750].toString(),
     secondary: color.Teal[150].toString(),
     surface: color.White.toString(),
+    'light-placeholder': color.Gray[400].toString(),
     placeholder: color.Gray[500].toString(),
     'sub-placeholder': color.Gray[600].toString(),
     require: color.Red[600].toString(),

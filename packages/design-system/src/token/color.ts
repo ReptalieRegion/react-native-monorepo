@@ -299,6 +299,7 @@ const color = {
         500: makeColor('#9E9E9EFF'),
         550: makeColor('#747775FF'),
         600: makeColor('#757575FF'),
+        650: makeColor('#d9d9d9'),
         700: makeColor('#616161FF'),
         800: makeColor('#424242FF'),
         900: makeColor('#212121FF'),
@@ -310,6 +311,7 @@ const color = {
     DarkGray: {
         50: makeColor('#B1B8C0'),
         200: makeColor('#505866'),
+        350: makeColor('#323B53'),
         400: makeColor('#333D4BFF'),
         500: makeColor('#1A1E27FF'),
     },

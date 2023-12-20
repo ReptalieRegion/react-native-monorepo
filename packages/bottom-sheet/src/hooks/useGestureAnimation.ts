@@ -7,7 +7,7 @@ import useBottomSheetAnimatedState from './useBottomSheetAnimatedState';
 
 const FAST_SWIPE_VELOCITY_THRESHOLD = 500;
 
-const useBottomSheetGestureAnimation = () => {
+export default function useBottomSheetGestureAnimation() {
     const {
         snapInfo: { pointsFromTop },
         height,
@@ -23,7 +23,7 @@ const useBottomSheetGestureAnimation = () => {
     const minSnapPoint = 0;
     const maxSnapPoint = pointsFromTop[snapPointsLastIndex];
 
-    const keyboardDismiss = () => {
+    const handleKeyboardDismiss = () => {
         Keyboard.dismiss();
     };
 
@@ -34,7 +34,7 @@ const useBottomSheetGestureAnimation = () => {
         })
         .onChange((event) => {
             if (keyboard.state.value === KeyboardState.OPEN) {
-                runOnJS(keyboardDismiss)();
+                runOnJS(handleKeyboardDismiss)();
                 return;
             }
 
@@ -88,17 +88,12 @@ const useBottomSheetGestureAnimation = () => {
             if (isFastSwipe && isDownSwipe) {
                 handleFastSwipeDown();
                 return;
-            }
-
-            if (isFastSwipe && isUpSwipe) {
+            } else if (isFastSwipe && isUpSwipe) {
                 handleFastSwipeUp();
-                return;
+            } else {
+                handleSlowSwipe();
             }
-
-            handleSlowSwipe();
         });
 
     return panGesture;
-};
-
-export default useBottomSheetGestureAnimation;
+}

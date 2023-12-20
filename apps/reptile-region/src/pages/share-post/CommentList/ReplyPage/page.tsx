@@ -1,18 +1,17 @@
-import { color } from '@reptile-region/design-system';
+import { color } from '@crawl/design-system';
 import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import useCommentActions from '../../../../hooks/share-post/actions/useCommentActions';
-import useCommentNavigation from '../../../../hooks/share-post/navigation/useCommentNavigation';
-import type { CommentReplyScreenProps } from '../type';
-
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import CommentReplyItem from '@/components/share-post/organisms/Comment/components/CommentReplyItem';
+import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
 import useCommentReplyActions from '@/hooks/share-post/actions/useCommentReplyActions';
+import useCommentNavigation from '@/hooks/share-post/navigation/useCommentNavigation';
 import type { FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
+import type { CommentReplyScreenProps } from '@/types/routes/props/share-post/comment';
 
 export default function CommentReplyList({ route: { params } }: CommentReplyScreenProps) {
     const flashListRef = useRef<FlashList<FetchCommentReplyResponse>>(null);

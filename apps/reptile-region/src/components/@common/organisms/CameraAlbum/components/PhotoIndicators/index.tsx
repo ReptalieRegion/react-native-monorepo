@@ -1,4 +1,4 @@
-import { Typo, color } from '@reptile-region/design-system';
+import { Typo, color } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
@@ -40,7 +40,7 @@ const makeSelectedPhotoInfo = (selectedNumber: number) => {
 
 export default function PhotoIndicators({ uri }: PhotoIndicatorsProps) {
     const { currentSelectedPhoto, selectedPhotos } = usePhotoSelect();
-    const selectedPhotoInfo = makeSelectedPhotoInfo(selectedPhotos.findIndex(({ origin: { node } }) => node.image.uri === uri));
+    const selectedPhotoInfo = makeSelectedPhotoInfo(selectedPhotos.findIndex(({ origin }) => origin.uri === uri));
 
     return (
         <View style={styles.container}>
@@ -50,7 +50,7 @@ export default function PhotoIndicators({ uri }: PhotoIndicatorsProps) {
                 </Typo>
             </View>
             <ConditionalRenderer
-                condition={selectedPhotos.length !== 0 && currentSelectedPhoto?.origin?.node.image.uri === uri}
+                condition={selectedPhotos.length !== 0 && currentSelectedPhoto?.origin?.uri === uri}
                 trueContent={<View style={styles.blur} />}
                 falseContent={null}
             />

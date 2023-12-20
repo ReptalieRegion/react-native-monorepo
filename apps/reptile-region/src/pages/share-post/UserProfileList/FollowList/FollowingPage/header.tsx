@@ -1,10 +1,9 @@
 import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-import type { FollowingPageScreenProps } from '../../type';
-
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchFollowingList } from '@/types/apis/share-post/user';
+import type { FollowingPageScreenProps } from '@/types/routes/props/share-post/user-profile';
 
 export default function FollowingChangeHeader({
     navigation,

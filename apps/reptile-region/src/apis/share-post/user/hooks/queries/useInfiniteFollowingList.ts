@@ -5,9 +5,9 @@ import { getFollowingList } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { CustomQueryKey } from '@/types/apis/react-query';
 import type { FetchFollowingList, FetchFollowingListResponse } from '@/types/apis/share-post/user';
 import type { InfiniteState } from '@/types/apis/utils';
-import type { CustomQueryKey } from '@/types/react-query';
 
 // 사용자 팔로잉 리스트 무한스크롤 조회
 export default function useInfiniteFollowingList({ userId }: FetchFollowingList['Request']) {

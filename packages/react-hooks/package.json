@@ -1,5 +1,5 @@
 {
-    "name": "@reptile-region/react-hooks",
+    "name": "@crawl/react-hooks",
     "version": "1.0.0",
     "packageManager": "yarn@3.6.0",
     "main": "lib/commonjs/index.js",
@@ -18,7 +18,11 @@
         "prepack": "bob build",
         "postinstall": "bob build"
     },
+    "dependencies": {
+        "lodash.debounce": "^4.0.8"
+    },
     "devDependencies": {
+        "@types/lodash.debounce": "^4",
         "react-native-builder-bob": "^0.23.1",
         "typescript": "5.2.2"
     },

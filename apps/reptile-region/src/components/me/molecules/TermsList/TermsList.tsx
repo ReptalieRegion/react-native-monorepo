@@ -1,4 +1,4 @@
-import { color } from '@reptile-region/design-system';
+import { color } from '@crawl/design-system';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';

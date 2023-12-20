@@ -1,4 +1,4 @@
-import { Typo, color } from '@reptile-region/design-system';
+import { Typo, color } from '@crawl/design-system';
 import { Image } from 'expo-image';
 import React, { type ReactNode } from 'react';
 import { Platform, StyleSheet, TouchableOpacity, View, type DimensionValue } from 'react-native';

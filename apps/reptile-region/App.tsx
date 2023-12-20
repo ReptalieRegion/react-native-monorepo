@@ -1,5 +1,6 @@
+import { ErrorBoundary } from '@crawl/error-boundary';
+import { OverlayProvider } from '@crawl/overlay-manager';
 import { useNavigationContainerRef } from '@react-navigation/native';
-import { ErrorBoundary } from '@reptile-region/error-boundary';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -15,7 +16,6 @@ import useEffectNotifee from '@/hooks/notification/useEffectNotifee';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
-import 'react-native-gesture-handler';
 
 export default function App() {
     const navigationRef = useNavigationContainerRef<RootRoutesParamList>();
@@ -32,7 +32,9 @@ export default function App() {
                                     <ErrorBoundary
                                         renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}
                                     >
-                                        <RootRoutes navigationRef={navigationRef} />
+                                        <OverlayProvider>
+                                            <RootRoutes navigationRef={navigationRef} />
+                                        </OverlayProvider>
                                     </ErrorBoundary>
                                 </Auth>
                             </Alert>

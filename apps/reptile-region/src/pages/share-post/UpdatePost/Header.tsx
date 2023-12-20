@@ -1,18 +1,17 @@
-import { TouchableTypo } from '@reptile-region/design-system';
+import { TouchableTypo } from '@crawl/design-system';
 import React, { useEffect } from 'react';
-
-import type { SharePostUpdateNavigationProp } from './types';
 
 import useUpdatePost from '@/apis/share-post/post/hooks/mutations/useUpdatePost';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { usePostUpdate } from '@/components/share-post/organisms/PostUpdate';
+import type { SharePostUpdateNavigationProp } from '@/types/routes/props/share-post/update-post';
 
 type ChangeHeaderProps = {
     postId: string;
     navigation: SharePostUpdateNavigationProp;
 };
 
-export const SharePostUpdateHeader = createNativeStackHeader({
+export const SharePostUpdatePosteHeader = createNativeStackHeader({
     leftIcon: 'cancel',
     title: '정보 수정',
 });

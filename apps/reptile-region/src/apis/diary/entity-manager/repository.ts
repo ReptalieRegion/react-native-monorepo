@@ -82,6 +82,33 @@ export const createEntity = async ({ files, gender, hatching, name, variety, wei
     return response.json();
 };
 
+// 다이어리 개체등록
+export const createCalendar = async ({ files, gender, hatching, name, variety, weightUnit }: CreateEntity['Request']) => {
+    const formData = new FormData();
+    formData.append('files', files as unknown as Blob);
+    formData.append('gender', gender);
+    formData.append('name', name);
+    formData.append('variety[classification]', variety.classification);
+    formData.append('variety[species]', variety.species);
+    formData.append('variety[detailedSpecies]', variety.detailedSpecies);
+    formData.append('weightUnit', weightUnit);
+    variety.morph?.forEach((item) => {
+        formData.append('variety[morph]', item);
+    });
+
+    if (hatching) {
+        formData.append('hatching', dayjs(hatching).format());
+    }
+
+    const response = await clientFetch('api/diary/calendar', {
+        method: METHOD.POST,
+        body: formData,
+        isFormData: true,
+    });
+
+    return response.json();
+};
+
 /**
  *
  * PUT

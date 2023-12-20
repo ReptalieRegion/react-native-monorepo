@@ -1,11 +1,9 @@
-import { color } from '@reptile-region/design-system';
+import { color } from '@crawl/design-system';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
-
-import type { SharePostUserDetailModalPageScreen, SharePostUserDetailPageScreen } from '../../type';
 
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
@@ -15,6 +13,10 @@ import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions'
 import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 import type { FetchDetailUserPostResponse } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
+import type {
+    SharePostUserDetailModalPageScreen,
+    SharePostUserDetailPageScreen,
+} from '@/types/routes/props/share-post/post-list';
 
 export default function UserDetailListPage({
     route: {

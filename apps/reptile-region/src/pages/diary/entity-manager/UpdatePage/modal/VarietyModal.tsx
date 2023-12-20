@@ -1,4 +1,4 @@
-import { Typo, color } from '@reptile-region/design-system';
+import { Typo, color } from '@crawl/design-system';
 import React, { useCallback, useState } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';

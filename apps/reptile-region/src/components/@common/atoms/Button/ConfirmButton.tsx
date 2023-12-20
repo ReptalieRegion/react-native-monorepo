@@ -1,4 +1,4 @@
-import { Typo, color, type TypoProps } from '@reptile-region/design-system';
+import { Typo, color, type TypoProps } from '@crawl/design-system';
 import React, { type ReactNode } from 'react';
 import { Dimensions, StyleSheet, View, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -119,20 +119,8 @@ function styleSizeGenerator(size: ConfirmButtonSize): { view: ViewStyle; text: P
                 view: {
                     borderRadius: 15,
                     paddingHorizontal: 15,
-                    height: 36,
-                    maxWidth: 120,
-                },
-                text: {
-                    variant: 'title3',
-                },
-            };
-        case 'modal':
-            return {
-                view: {
-                    borderRadius: 15,
-                    paddingHorizontal: 15,
-                    height: 55,
-                    width: '100%',
+                    paddingVertical: 10,
+                    maxWidth: 140,
                 },
                 text: {
                     variant: 'title3',
@@ -153,6 +141,18 @@ function styleSizeGenerator(size: ConfirmButtonSize): { view: ViewStyle; text: P
                 view: {
                     width: Dimensions.get('screen').width,
                     height: 55,
+                },
+                text: {
+                    variant: 'title3',
+                },
+            };
+        case 'modal':
+            return {
+                view: {
+                    borderRadius: 15,
+                    paddingHorizontal: 15,
+                    height: 55,
+                    width: '100%',
                 },
                 text: {
                     variant: 'title3',

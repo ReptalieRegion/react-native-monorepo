@@ -1,5 +1,5 @@
+import { color } from '@crawl/design-system';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { color } from '@reptile-region/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
@@ -7,6 +7,7 @@ import * as Haptic from 'react-native-haptic-feedback';
 import { BottomTabBarButton } from '../../atoms';
 
 import { Calendar as CalendarIcon, Home as HomeIcon, Me as MeIcon, Share as SharePostIcon } from '@/assets/icons';
+import { BOTTOM_TAB_HEIGHT } from '@/constants/global';
 import type { IconProps } from '@/types/global/icons';
 import type { BottomTabParamList } from '@/types/routes/param-list/bottom-tab';
 
@@ -41,11 +42,11 @@ const MENUS: MenusType = {
         Icon: MeIcon,
         name: '내 정보',
     },
+    // TODO 추후 추가 예정
     // 'info/routes': {
     //     Icon: InfoIcon,
     //     name: '정보공유',
     // },
-    // TODO 추후 쇼핑 기능 추가할 때 사용
     // 'shop/routes': {
     //     Icon: ShopIcon,
     //     name: '쇼핑',
@@ -61,54 +62,59 @@ export default function MainBottomBar({
     const paddingBottom = insets.bottom === 0 ? 10 : insets.bottom;
 
     return (
-        <View style={[styles.container, { paddingBottom }]}>
-            {state.routes.map((route, index) => {
-                const routeName = route.name as keyof BottomTabParamList;
-                const item = MENUS[routeName];
+        <View style={styles.wrapper}>
+            <View style={[styles.container, { paddingBottom }]}>
+                {state.routes.map((route, index) => {
+                    const routeName = route.name as keyof BottomTabParamList;
+                    const item = MENUS[routeName];
 
-                if (item === undefined) {
-                    return null;
-                }
-
-                const { Icon, name } = item;
-                const isFocused = state.index === index;
-
-                const handlePress = () => {
-                    const event = navigation.emit({
-                        type: 'tabPress',
-                        target: route.key,
-                        canPreventDefault: true,
-                    });
-
-                    if (!isFocused && !event.defaultPrevented) {
-                        Haptic.trigger('impactLight');
-                        onPressNavigate({ routeName, navigation });
+                    if (item === undefined) {
+                        return null;
                     }
-                };
 
-                const handleLongPress = () => {
-                    navigation.emit({
-                        type: 'tabLongPress',
-                        target: route.key,
-                    });
-                };
+                    const { Icon, name } = item;
+                    const isFocused = state.index === index;
 
-                return (
-                    <BottomTabBarButton
-                        key={route.name}
-                        isFocused={isFocused}
-                        name={name}
-                        onPress={handlePress}
-                        onLongPress={handleLongPress}
-                        Icon={Icon}
-                    />
-                );
-            })}
+                    const handlePress = () => {
+                        const event = navigation.emit({
+                            type: 'tabPress',
+                            target: route.key,
+                            canPreventDefault: true,
+                        });
+
+                        if (!isFocused && !event.defaultPrevented) {
+                            Haptic.trigger('impactLight');
+                            onPressNavigate({ routeName, navigation });
+                        }
+                    };
+
+                    const handleLongPress = () => {
+                        navigation.emit({
+                            type: 'tabLongPress',
+                            target: route.key,
+                        });
+                    };
+
+                    return (
+                        <BottomTabBarButton
+                            key={route.name}
+                            isFocused={isFocused}
+                            name={name}
+                            onPress={handlePress}
+                            onLongPress={handleLongPress}
+                            Icon={Icon}
+                        />
+                    );
+                })}
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    wrapper: {
+        backgroundColor: color.White.toString(),
+    },
     container: {
         shadowColor: color.DarkGray[500].toString(),
         shadowOpacity: 0.27,
@@ -125,6 +131,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderTopLeftRadius: 19,
         borderTopRightRadius: 19,
+        height: BOTTOM_TAB_HEIGHT,
         backgroundColor: color.White.toString(),
     },
 });

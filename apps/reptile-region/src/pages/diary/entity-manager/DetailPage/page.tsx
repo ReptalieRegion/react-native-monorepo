@@ -1,4 +1,4 @@
-import { TouchableTypo, Typo, color } from '@reptile-region/design-system';
+import { TouchableTypo, Typo, color } from '@crawl/design-system';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
 import React from 'react';
@@ -12,7 +12,7 @@ import { Plus } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import GenderIcon from '@/components/diary/atoms/GenderIcon/GenderIcon';
 import InfiniteLineChart from '@/components/diary/organisms/Chart/components/InfiniteLineChart';
-import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary';
+import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerDetailPage(props: EntityManagerDetailScreenProps) {
     const {

@@ -1,5 +1,5 @@
-import { color } from '@reptile-region/design-system';
-import { range } from '@reptile-region/utils';
+import { color } from '@crawl/design-system';
+import { range } from '@crawl/utils';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';

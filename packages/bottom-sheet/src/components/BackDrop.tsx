@@ -1,15 +1,15 @@
-import React, { TouchableWithoutFeedback, useWindowDimensions } from 'react-native';
+import { useCallback } from 'react';
+import React, { TouchableWithoutFeedback, useWindowDimensions, type ViewStyle } from 'react-native';
 import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 
 import useBottomSheetAnimatedAction from '../hooks/useBottomSheetAnimatedAction';
 import useBottomSheetAnimatedState from '../hooks/useBottomSheetAnimatedState';
-import type { BackDropStyle } from '../types/bottom-sheet';
 
 export type BackDropProps = {
-    style?: BackDropStyle;
+    style?: Pick<ViewStyle, 'backgroundColor'>;
 };
 
-const BackDrop = ({ style }: BackDropProps) => {
+export default function BackDrop({ style }: BackDropProps) {
     const { width, height } = useWindowDimensions();
     const { opacity } = useBottomSheetAnimatedState();
     const { bottomSheetClose } = useBottomSheetAnimatedAction();
@@ -19,17 +19,15 @@ const BackDrop = ({ style }: BackDropProps) => {
         opacity: opacity.value,
     }));
 
-    const close = () => {
+    const close = useCallback(() => {
         if (state.value === KeyboardState.UNKNOWN || state.value === KeyboardState.CLOSED) {
             bottomSheetClose();
         }
-    };
+    }, [bottomSheetClose, state.value]);
 
     return (
         <TouchableWithoutFeedback onPress={close}>
             <Animated.View style={[{ width, height }, style, closeAnimatedStyle]} />
         </TouchableWithoutFeedback>
     );
-};
-
-export default BackDrop;
+}

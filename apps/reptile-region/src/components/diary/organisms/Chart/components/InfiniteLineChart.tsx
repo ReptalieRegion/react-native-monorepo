@@ -1,4 +1,4 @@
-import { color } from '@reptile-region/design-system';
+import { color } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
@@ -30,7 +30,6 @@ export default function InfiniteLineChart({ entityId, yAxisSuffix }: InfiniteLin
             weightList: [],
         },
     );
-    console.log(newData);
 
     return (
         <View style={styles.container}>

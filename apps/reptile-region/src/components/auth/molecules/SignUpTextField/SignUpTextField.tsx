@@ -1,4 +1,4 @@
-import { Typo, color, type TextColorType } from '@reptile-region/design-system';
+import { Typo, color, type TextColorType } from '@crawl/design-system';
 import React, { useRef } from 'react';
 import { ActivityIndicator, Platform, StyleSheet, TextInput, View } from 'react-native';
 import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';

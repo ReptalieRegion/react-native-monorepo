@@ -1,10 +1,8 @@
+import { color } from '@crawl/design-system';
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import { color } from '@reptile-region/design-system';
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
-import type { SharePostListPageScreen } from '../type';
 
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
 import useFetchPushReadCheck from '@/apis/notification/push/hooks/queries/useFetchPushReadCheck';
@@ -13,6 +11,7 @@ import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
+import type { SharePostListPageScreen } from '@/types/routes/props/share-post/post-list';
 
 export function SharePostListHeader(props: NativeStackHeaderProps) {
     const { requireAuthNavigation } = useAuthNavigation();

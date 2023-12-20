@@ -1,19 +1,12 @@
-import { useNavigation, type CompositeNavigationProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
 import useSignOut from '@/apis/auth/hooks/mutations/useSignOut';
 import useDeleteFCMToken from '@/apis/me/profile/hooks/mutations/useDeleteFCMToken';
 import { useToast } from '@/components/@common/organisms/Toast';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
-import type { RootRoutesParamList } from '@/types/routes/param-list';
-import type { MeBottomTabParamList } from '@/types/routes/param-list/me';
+import type { MyListNavigation } from '@/types/routes/props/me/me-list';
 
-type MyListNavigation = CompositeNavigationProp<
-    NativeStackNavigationProp<MeBottomTabParamList, 'bottom-tab/list'>,
-    NativeStackNavigationProp<RootRoutesParamList>
->;
-
-const useMeActions = () => {
+export default function useMeActions() {
     const navigation = useNavigation<MyListNavigation>();
     const { signOut } = useAuth();
     const { mutateAsync: signOutMutateAsync } = useSignOut();
@@ -44,6 +37,4 @@ const useMeActions = () => {
     return {
         logout,
     };
-};
-
-export default useMeActions;
+}

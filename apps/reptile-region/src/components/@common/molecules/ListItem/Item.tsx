@@ -1,4 +1,4 @@
-import { color } from '@reptile-region/design-system';
+import { color } from '@crawl/design-system';
 import React, { type ReactNode } from 'react';
 import { StyleSheet, View, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';

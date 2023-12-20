@@ -8,6 +8,10 @@ type ListHeaderComponentState = {
     isFollow: boolean | undefined;
     nickname: string;
     profile: ImageType;
+    containerStyle?: {
+        height?: number;
+        padding?: number;
+    };
 };
 
 type ListHeaderComponentProps = ListHeaderComponentState & UserDetailPanelActions;
@@ -16,6 +20,7 @@ export default function ListHeaderComponent({
     isFollow,
     nickname,
     profile,
+    containerStyle,
     handlePressFollow,
     navigateFollowPage,
 }: ListHeaderComponentProps) {
@@ -23,6 +28,7 @@ export default function ListHeaderComponent({
 
     return (
         <UserProfile
+            style={containerStyle}
             user={data.user}
             postCount={data.postCount}
             navigateFollowPage={navigateFollowPage}

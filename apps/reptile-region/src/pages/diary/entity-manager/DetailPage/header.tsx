@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { KebabMenu } from '@/assets/icons';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import type { EntityOptionsMenuParams } from '@/types/routes/params/diary';
-import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary';
+import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/entity';
 
 export const EntityManagerDetailPageHeader = createNativeStackHeader({
     leftIcon: 'back',

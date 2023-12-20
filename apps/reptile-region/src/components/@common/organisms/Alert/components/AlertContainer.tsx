@@ -1,4 +1,4 @@
-import { Typo, color } from '@reptile-region/design-system';
+import { Typo, color } from '@crawl/design-system';
 import React from 'react';
 import { Modal, StyleSheet, View, useWindowDimensions } from 'react-native';
 

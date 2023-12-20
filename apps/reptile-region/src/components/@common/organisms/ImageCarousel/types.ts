@@ -2,11 +2,11 @@ import FlashList from '@shopify/flash-list/dist/FlashList';
 
 import type { ImageType } from '@/types/global/image';
 
-export type ImageCarouselRef = {
+type ImageCarouselRef = {
     imageCarouselRef: React.RefObject<FlashList<ImageType>>;
 };
 
-export type ImagesIndicatorState = {
+type ImagesIndicatorState = {
     indicatorIndex: number;
 };
 
@@ -16,4 +16,6 @@ interface CalcIndicator {
     contentOffsetX: number;
 }
 
-export type ImagesIndicatorActions = CalcIndicator;
+type ImagesIndicatorActions = CalcIndicator;
+
+export type { CalcIndicator, ImageCarouselRef, ImagesIndicatorActions, ImagesIndicatorState };

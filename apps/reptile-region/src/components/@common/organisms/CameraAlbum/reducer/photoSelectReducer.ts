@@ -1,28 +1,57 @@
-import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
-import { range } from '@reptile-region/utils';
+import { range } from '@crawl/utils';
 
-import type { CropInfo, PhotoSelectActions, PhotoSelectState } from '../types';
+import type { CropInfo, Photo, PhotoSelectActions, PhotoSelectState } from '../types';
 
-const selectPhoto = (
-    state: PhotoSelectState,
-    { photo, limit }: { photo: PhotoIdentifier; limit: number | undefined },
-): PhotoSelectState => {
+export default function photoSelectReducer(state: PhotoSelectState, actions: PhotoSelectActions): PhotoSelectState {
+    switch (actions.type) {
+        case 'SELECT_PHOTO':
+            return selectPhoto(state, actions.photo);
+        case 'INIT_CURRENT_PHOTO':
+            return { ...state, currentSelectedPhoto: { origin: actions.photo } };
+        case 'DELETE_SELECTED_PHOTO':
+            return deleteSelectedPhoto(state, actions.uri);
+        case 'CROPPED_PHOTO':
+            return croppedImage(state, { originalUri: actions.originalUri, crop: actions.crop });
+        case 'CROPPED_SELECT_PHOTO':
+            return croppedSelectPhoto(state, actions.croppedSelectedPhoto, actions.index);
+        case 'FINISHED_LIMIT_CALLBACK':
+            return { ...state, isLimit: false };
+        default:
+            return state;
+    }
+}
+
+function selectPhoto(state: PhotoSelectState, photo: Photo): PhotoSelectState {
     const { currentSelectedPhoto, selectedPhotos } = state;
 
     const actionType =
-        selectedPhotos.length !== 0 && currentSelectedPhoto?.origin?.node.image.uri === photo.node.image.uri
+        selectedPhotos.length !== 0 && currentSelectedPhoto?.origin?.uri === photo.uri
             ? 'DELETE'
-            : selectedPhotos.findIndex(({ origin: { node } }) => node.image.uri === photo.node.image.uri) !== -1
+            : selectedPhotos.findIndex(({ origin: { uri } }) => uri === photo.uri) !== -1
             ? 'CHANGE_CURRENT_SELECTED_PHOTO'
-            : limit !== undefined && selectedPhotos.length >= limit
+            : selectedPhotos.length >= state.maxPhotoCount
             ? 'LIMIT'
             : 'ADD';
 
     switch (actionType) {
+        case 'ADD':
+            return {
+                ...state,
+                currentSelectedPhoto: selectedPhotos.find(({ origin }) => origin.uri === photo.uri) ?? {
+                    origin: photo,
+                },
+                selectedPhotos: [...state.selectedPhotos, { origin: photo }],
+                croppedSelectedPhotos: range(state.croppedSelectedPhotos.length + 1),
+                isLimit: false,
+            };
+        case 'CHANGE_CURRENT_SELECTED_PHOTO':
+            return {
+                ...state,
+                currentSelectedPhoto: selectedPhotos.find(({ origin }) => origin.uri === photo.uri) ?? null,
+                isLimit: false,
+            };
         case 'DELETE':
-            const filteredSelectedPhotos = selectedPhotos.filter(
-                ({ origin: { node } }) => node.image.uri !== photo.node.image.uri,
-            );
+            const filteredSelectedPhotos = selectedPhotos.filter(({ origin: { uri } }) => uri !== photo.uri);
             const newCurrentSelectedPhoto =
                 filteredSelectedPhotos.length !== 0
                     ? filteredSelectedPhotos[filteredSelectedPhotos.length - 1]
@@ -34,38 +63,21 @@ const selectPhoto = (
                 croppedSelectedPhotos: range(state.croppedSelectedPhotos.length - 1),
                 isLimit: false,
             };
-        case 'CHANGE_CURRENT_SELECTED_PHOTO':
-            return {
-                ...state,
-                currentSelectedPhoto:
-                    selectedPhotos.find(({ origin }) => origin.node.image.uri === photo.node.image.uri) ?? null,
-                isLimit: false,
-            };
         case 'LIMIT':
             return { ...state, isLimit: true };
-        case 'ADD':
-            return {
-                ...state,
-                currentSelectedPhoto: selectedPhotos.find(({ origin }) => origin.node.image.uri === photo.node.image.uri) ?? {
-                    origin: photo,
-                },
-                selectedPhotos: [...state.selectedPhotos, { origin: photo }],
-                croppedSelectedPhotos: range(state.croppedSelectedPhotos.length + 1),
-                isLimit: false,
-            };
         default:
             return { ...state, isLimit: false };
     }
-};
+}
 
-const deleteSelectedPhoto = (state: PhotoSelectState, uri: string): PhotoSelectState => {
+function deleteSelectedPhoto(state: PhotoSelectState, deleteUri: string): PhotoSelectState {
     const { selectedPhotos, croppedSelectedPhotos } = state;
     if (selectedPhotos.length === 1) {
         return state;
     }
 
-    const filteredSelectedPhotos = selectedPhotos.filter(({ origin: { node } }) => node.image.uri !== uri);
-    const filteredCroppedPhotos = croppedSelectedPhotos.filter((croppedPhoto) => croppedPhoto.node.image.uri !== uri);
+    const filteredSelectedPhotos = selectedPhotos.filter(({ origin: { uri } }) => uri !== deleteUri);
+    const filteredCroppedPhotos = croppedSelectedPhotos.filter((croppedPhoto) => croppedPhoto.uri !== deleteUri);
     const newCurrentSelectedPhoto = filteredSelectedPhotos.at(-1) ?? null;
 
     return {
@@ -74,33 +86,27 @@ const deleteSelectedPhoto = (state: PhotoSelectState, uri: string): PhotoSelectS
         currentSelectedPhoto: newCurrentSelectedPhoto,
         croppedSelectedPhotos: filteredCroppedPhotos,
     };
-};
+}
 
-const croppedImage = (
+function croppedImage(
     state: PhotoSelectState,
     { originalUri, crop }: { originalUri: string; crop?: CropInfo },
-): PhotoSelectState => {
+): PhotoSelectState {
     const { selectedPhotos } = state;
     if (selectedPhotos.length === 0) {
         return state;
     }
 
-    const newSelectedPhotos = selectedPhotos.map((photo) =>
-        photo.origin.node.image.uri === originalUri ? { ...photo, crop } : photo,
-    );
+    const newSelectedPhotos = selectedPhotos.map((photo) => (photo.origin.uri === originalUri ? { ...photo, crop } : photo));
 
     return {
         ...state,
         currentSelectedPhoto: { origin: state.currentSelectedPhoto?.origin ?? null, crop },
         selectedPhotos: newSelectedPhotos,
     };
-};
+}
 
-const croppedSelectPhoto = (
-    state: PhotoSelectState,
-    croppedSelectedPhoto: PhotoIdentifier,
-    index: number,
-): PhotoSelectState => {
+function croppedSelectPhoto(state: PhotoSelectState, croppedSelectedPhoto: Photo, index: number): PhotoSelectState {
     let newCroppedSelectedPhotos = state.croppedSelectedPhotos;
     if (newCroppedSelectedPhotos.length === 0) {
         newCroppedSelectedPhotos = range(state.selectedPhotos.length);
@@ -108,23 +114,4 @@ const croppedSelectPhoto = (
 
     newCroppedSelectedPhotos[index] = croppedSelectedPhoto;
     return { ...state, croppedSelectedPhotos: newCroppedSelectedPhotos };
-};
-
-const photoSelectReducer = (state: PhotoSelectState, actions: PhotoSelectActions): PhotoSelectState => {
-    switch (actions.type) {
-        case 'SELECT_PHOTO':
-            return selectPhoto(state, { photo: actions.photo, limit: actions.limit });
-        case 'INIT_CURRENT_PHOTO':
-            return { ...state, currentSelectedPhoto: { origin: actions.photo } };
-        case 'DELETE_SELECTED_PHOTO':
-            return deleteSelectedPhoto(state, actions.uri);
-        case 'CROPPED_PHOTO':
-            return croppedImage(state, { originalUri: actions.originalUri, crop: actions.crop });
-        case 'CROPPED_SELECT_PHOTO':
-            return croppedSelectPhoto(state, actions.croppedSelectedPhoto, actions.index);
-        default:
-            return state;
-    }
-};
-
-export default photoSelectReducer;
+}

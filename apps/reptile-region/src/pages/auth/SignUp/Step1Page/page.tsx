@@ -1,6 +1,6 @@
+import { color } from '@crawl/design-system';
+import { useDebounceValue, useLoading } from '@crawl/react-hooks';
 import { useIsFocused } from '@react-navigation/native';
-import { color } from '@reptile-region/design-system';
-import { useDebounce, useLoading } from '@reptile-region/react-hooks';
 import React, { useState } from 'react';
 import { Keyboard, Platform, StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -31,7 +31,7 @@ export default function SignUpStep1({
     const isFocused = useIsFocused();
     const { signIn } = useAuth();
     const { bottom } = useSafeAreaInsets();
-    const debouncedNickname = useDebounce(nickname, 500, endLoading);
+    const debouncedNickname = useDebounceValue(nickname, 500, endLoading);
     const { data, isLoading } = useNicknameDuplicateCheck({
         nickname: debouncedNickname,
         enabled: debouncedNickname !== recommendNickname && debouncedNickname !== '',

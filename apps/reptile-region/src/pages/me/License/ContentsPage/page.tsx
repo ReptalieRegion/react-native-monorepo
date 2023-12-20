@@ -1,10 +1,10 @@
-import { Typo, color } from '@reptile-region/design-system';
+import { Typo, color } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { LicenseContentScreenProps } from '../type';
+import type { LicenseContentScreenProps } from '@/types/routes/props/me/license';
 
 export default function LicenseContentsPage({ route: { params } }: LicenseContentScreenProps) {
     const { bottom } = useSafeAreaInsets();

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { ImageCarouselRefContext } from '../contexts/ImageIndicator';
 
-const useImageCarouselRef = () => {
+export default function useImageCarouselRef() {
     const state = useContext(ImageCarouselRefContext);
 
     if (state === null) {
@@ -10,6 +10,4 @@ const useImageCarouselRef = () => {
     }
 
     return state;
-};
-
-export default useImageCarouselRef;
+}

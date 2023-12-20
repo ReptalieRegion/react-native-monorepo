@@ -34,6 +34,7 @@ export type Variant = {
 export type TextColorType =
     | 'primary'
     | 'secondary'
+    | 'light-placeholder'
     | 'placeholder'
     | 'sub-placeholder'
     | 'error'

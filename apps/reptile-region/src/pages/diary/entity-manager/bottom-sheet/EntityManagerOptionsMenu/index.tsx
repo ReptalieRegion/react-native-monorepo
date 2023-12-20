@@ -1,9 +1,9 @@
-import { BottomSheet } from '@reptile-region/bottom-sheet';
+import { BottomSheet } from '@crawl/bottom-sheet';
 import React from 'react';
 
 import EntityManagerOptionsMenu from './page';
 
-import type { EntityManagerOptionsMenuScreenProps } from '@/types/routes/props/diary';
+import type { EntityManagerOptionsMenuScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerOptionsMenuPage(props: EntityManagerOptionsMenuScreenProps) {
     const closeMenu = () => {
@@ -12,8 +12,10 @@ export default function EntityManagerOptionsMenuPage(props: EntityManagerOptions
         }
     };
 
+    const bottomSheetHeight = 59 + 38 * 2;
+
     return (
-        <BottomSheet onClose={closeMenu} snapInfo={{ startIndex: 0, pointsFromTop: [59 + 38 * 2] }}>
+        <BottomSheet onClose={closeMenu} snapInfo={{ startIndex: 0, pointsFromTop: [bottomSheetHeight] }}>
             <EntityManagerOptionsMenu {...props} />
         </BottomSheet>
     );

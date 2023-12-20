@@ -1,10 +1,8 @@
-import { color } from '@reptile-region/design-system';
+import { color } from '@crawl/design-system';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
-
-import type { SharePostListPageScreen } from '../type';
 
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
@@ -18,6 +16,7 @@ import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
 import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
 import type { FetchPostResponse } from '@/types/apis/share-post/post';
+import type { SharePostListPageScreen } from '@/types/routes/props/share-post/post-list';
 
 export default function PostList({ navigation }: SharePostListPageScreen) {
     const [refreshing, setRefreshing] = useState<boolean>(false);

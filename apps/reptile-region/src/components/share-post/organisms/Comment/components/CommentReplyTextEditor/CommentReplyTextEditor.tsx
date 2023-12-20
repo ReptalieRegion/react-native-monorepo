@@ -51,6 +51,7 @@ export default function CommentReplyTextEditor({ isFocus }: CommentReplyTextEdit
             const focusTimeout = setTimeout(() => {
                 tagTextInputFocus();
             }, 500);
+
             return () => {
                 clearTimeout(focusTimeout);
             };

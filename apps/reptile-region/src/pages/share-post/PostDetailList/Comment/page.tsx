@@ -1,11 +1,9 @@
-import { color } from '@reptile-region/design-system';
+import { color } from '@crawl/design-system';
 import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import type { PostDetailModalListScreenProps } from '../type';
 
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
@@ -14,6 +12,7 @@ import CommentItem from '@/components/share-post/organisms/Comment/components/Co
 import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
 import usePostDetailNavigation from '@/hooks/share-post/navigation/usePostDetailNavigation';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
+import type { PostDetailModalListScreenProps } from '@/types/routes/props/share-post/post-detail';
 
 type SharePostDetailModalPageState = PostDetailModalListScreenProps & {
     ListHeaderComponent: React.JSX.Element;

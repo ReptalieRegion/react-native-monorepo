@@ -1,4 +1,4 @@
-import { Typo, color } from '@reptile-region/design-system';
+import { Typo, color } from '@crawl/design-system';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React, { useEffect } from 'react';
@@ -6,14 +6,14 @@ import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { PushLogListScreenProp } from './type';
+import type { PushLogListScreenProp } from '../../../types/routes/props/notification/push-log';
 
 import useReadPushLog from '@/apis/notification/push/hooks/mutations/useReadPushLog';
 import useInfinitePushLog from '@/apis/notification/push/hooks/queries/useInfinitePushLog';
 import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';
+import { navigateLinking } from '@/routes/@utils/linking';
 import { ContentType, type FetchPushLogResponse } from '@/types/apis/notification';
-import { navigateLinking } from '@/utils/navigation/linking';
 
 export default function PushLogList({ navigation }: PushLogListScreenProp) {
     const { bottom } = useSafeAreaInsets();
@@ -21,6 +21,8 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
     const { mutate } = useReadPushLog();
 
     useEffect(mutate, [mutate]);
+
+    const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
 
     const renderItem: ListRenderItem<FetchPushLogResponse> = ({ item }) => {
         const handlePressLog = () => {
@@ -73,8 +75,6 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
         }
     };
 
-    const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
-
     return (
         <View style={styles.container}>
             <FlashList
@@ -84,17 +84,22 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                 onEndReached={handleFetchNextPage}
                 getItemType={(item) => item.contents.type}
                 CellRendererComponent={FadeInCellRenderComponent}
-                ListFooterComponent={
-                    <View style={styles.footer}>
-                        <Divider />
-                        <Typo variant="body3" color="placeholder">
-                            최대 2주 전까지의 알림을 확인할 수 있어요
-                        </Typo>
-                        <Divider />
-                    </View>
-                }
+                ListFooterComponent={ListFooterComponent}
                 estimatedItemSize={80}
             />
+        </View>
+    );
+}
+
+// 리스트 하단
+function ListFooterComponent() {
+    return (
+        <View style={styles.footer}>
+            <Divider />
+            <Typo variant="body3" color="placeholder">
+                최대 2주 전까지의 알림을 확인할 수 있어요
+            </Typo>
+            <Divider />
         </View>
     );
 }

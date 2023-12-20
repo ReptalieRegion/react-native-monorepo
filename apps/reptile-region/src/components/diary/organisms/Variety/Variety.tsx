@@ -1,4 +1,4 @@
-import { Typo } from '@reptile-region/design-system';
+import { Typo } from '@crawl/design-system';
 import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import React, { useEffect, useReducer } from 'react';
 import { StyleSheet, View } from 'react-native';

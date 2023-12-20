@@ -1,7 +1,9 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
-type CalenderParamList = {
-    main: undefined;
+import type { CalendarListParams } from '../params/diary';
+
+type CalendarParamList = {
+    main?: CalendarListParams;
 };
 
 type EntityManagerCreateParamList = {
@@ -19,8 +21,8 @@ type EntityManagerParamList = {
 };
 
 type DiaryParamList = {
-    calender: NavigatorScreenParams<CalenderParamList>;
+    calender: NavigatorScreenParams<CalendarParamList>;
     'entity-manager': NavigatorScreenParams<EntityManagerParamList>;
 };
 
-export type { CalenderParamList, DiaryParamList, EntityManagerCreateParamList, EntityManagerParamList };
+export type { CalendarParamList, DiaryParamList, EntityManagerCreateParamList, EntityManagerParamList };

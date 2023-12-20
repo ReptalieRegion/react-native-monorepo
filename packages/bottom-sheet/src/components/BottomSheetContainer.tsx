@@ -1,64 +1,74 @@
-import { color } from '@reptile-region/design-system';
-import React, { type PropsWithChildren } from 'react';
+import { color } from '@crawl/design-system';
+import React, { useEffect, useMemo, type PropsWithChildren } from 'react';
 import type { ViewStyle } from 'react-native';
-import { StyleSheet, useWindowDimensions } from 'react-native';
-import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import Animated, { useAnimatedKeyboard, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useBottomSheetAnimatedState from '../hooks/useBottomSheetAnimatedState';
 
-type BottomSheetContainerProps = {
+export type BottomSheetContainerProps = {
     style?: ViewStyle;
+    border?: Pick<
+        ViewStyle,
+        | 'borderTopRightRadius'
+        | 'borderTopEndRadius'
+        | 'borderTopLeftRadius'
+        | 'borderTopStartRadius'
+        | 'borderBottomEndRadius'
+        | 'borderBottomLeftRadius'
+        | 'borderBottomRightRadius'
+        | 'borderBottomStartRadius'
+    >;
 };
 
-const BottomSheetContainer = ({ children, style }: PropsWithChildren<BottomSheetContainerProps>) => {
+export default function BottomSheetContainer({
+    children,
+    style,
+    border = { borderTopRightRadius: 16, borderTopEndRadius: 16, borderTopLeftRadius: 16, borderTopStartRadius: 16 },
+}: PropsWithChildren<BottomSheetContainerProps>) {
     const dimensions = useWindowDimensions();
     const {
-        snapInfo: { pointsFromTop },
+        snapInfo: { pointsFromTop, startIndex },
         height,
         translateY,
-        insets,
+        opacity,
     } = useBottomSheetAnimatedState();
     const keyboard = useAnimatedKeyboard();
+    const { top, bottom } = useSafeAreaInsets();
 
-    const snapAnimatedStyles = useAnimatedStyle(() => {
-        const subHeight =
-            keyboard.state.value === KeyboardState.OPENING || keyboard.state.value === KeyboardState.OPEN
-                ? keyboard.height.value - (insets?.bottom ?? 0)
-                : 0;
+    const maxHeight = useMemo(() => dimensions.height - top, [dimensions.height, top]);
 
-        const maxHeight =
-            keyboard.state.value === KeyboardState.OPENING || keyboard.state.value === KeyboardState.OPEN
-                ? pointsFromTop.length === 1
-                    ? height.value
-                    : pointsFromTop[pointsFromTop.length - 1] + (insets?.bottom ?? 0) - keyboard.height.value
-                : keyboard.state.value === KeyboardState.CLOSING
-                ? height.value - keyboard.height.value
-                : height.value;
+    const snapAnimatedStyles = useAnimatedStyle(
+        () => ({
+            height: Math.min(height.value + keyboard.height.value, maxHeight),
+            paddingBottom: Math.max(keyboard.height.value, bottom),
+            transform: [{ translateY: translateY.value }],
+        }),
+        [keyboard.state.value, keyboard.height.value, bottom, translateY.value],
+    );
 
-        return {
-            height: maxHeight,
-            transform: [{ translateY: translateY.value - subHeight }],
-        };
-    }, [keyboard.state.value, keyboard.height.value, insets?.bottom, translateY.value]);
+    const animatedStyle = useMemo(() => [styles.viewContainer, snapAnimatedStyles, border], [snapAnimatedStyles, border]);
+
+    useEffect(() => {
+        height.value = withTiming(pointsFromTop[startIndex], { duration: 250 });
+        translateY.value = withTiming(0, { duration: 250 });
+        opacity.value = withTiming(1, { duration: 250 });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
-        <Animated.View style={styles.container}>
-            <Animated.View style={[styles.viewContainer, { width: dimensions.width }, snapAnimatedStyles, style]}>
-                {children}
-            </Animated.View>
-        </Animated.View>
+        <View style={style}>
+            <Animated.View style={animatedStyle}>{children}</Animated.View>
+        </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     viewContainer: {
         position: 'absolute',
+        width: '100%',
         bottom: 0,
         backgroundColor: color.White.toString(),
     },
 });
-
-export default BottomSheetContainer;

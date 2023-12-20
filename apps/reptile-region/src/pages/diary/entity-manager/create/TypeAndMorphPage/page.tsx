@@ -5,7 +5,7 @@ import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/use
 import Variety from '@/components/diary/organisms/Variety/Variety';
 import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
 import type { EntityVariety } from '@/types/apis/diary/entity';
-import type { EntityManagerCreateTypeAndMorphScreenProps } from '@/types/routes/props/diary';
+import type { EntityManagerCreateTypeAndMorphScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerTypeAndMorphPage({ navigation }: EntityManagerCreateTypeAndMorphScreenProps) {
     const {

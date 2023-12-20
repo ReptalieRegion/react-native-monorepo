@@ -1,16 +1,9 @@
-import { useNavigation, type CompositeNavigationProp } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
-import type { RootRoutesParamList } from '@/types/routes/param-list';
-import type { SharePostModalParamList } from '@/types/routes/param-list/sharePost';
 import type { CommentReplyParams, ImageThumbnailParams } from '@/types/routes/params/sharePost';
+import type { PostDetailNavigation } from '@/types/routes/props/share-post/post-detail';
 
-type PostDetailNavigation = CompositeNavigationProp<
-    NativeStackNavigationProp<SharePostModalParamList, 'modal/post/detail'>,
-    NativeStackNavigationProp<RootRoutesParamList>
->;
-
-const usePostDetailNavigation = () => {
+export default function usePostDetailNavigation() {
     const navigation = useNavigation<PostDetailNavigation>();
 
     const navigateDetailPage = (params: Omit<ImageThumbnailParams, 'pageState'>) => {
@@ -34,6 +27,4 @@ const usePostDetailNavigation = () => {
         navigateDetailPage,
         navigateCommentReplyPage,
     };
-};
-
-export default usePostDetailNavigation;
+}

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { BottomSheetAnimationStateContext } from '../contexts/BottomSheetAnimationContext';
 
-const useBottomSheetAnimatedState = () => {
+export default function useBottomSheetAnimatedState() {
     const state = useContext(BottomSheetAnimationStateContext);
 
     if (state === null) {
@@ -10,6 +10,4 @@ const useBottomSheetAnimatedState = () => {
     }
 
     return state;
-};
-
-export default useBottomSheetAnimatedState;
+}

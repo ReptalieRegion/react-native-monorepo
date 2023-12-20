@@ -8,10 +8,13 @@
     ],
     "scripts": {
         "rr": "yarn workspace reptile-region",
-        "rr:deploy": "yarn workspace reptile-region deploy",
-        "rr:start": "yarn workspace reptile-region start",
-        "rr:android": "yarn workspace reptile-region android",
-        "rr:ios": "yarn workspace reptile-region ios",
+        "bottom-sheet": "yarn workspace @crawl/bottom-sheet",
+        "calendar": "yarn workspace @crawl/calendar",
+        "design": "yarn workspace @crawl/design-system",
+        "error-boundary": "yarn workspace @crawl/error-boundary",
+        "react-hooks": "yarn workspace @crawl/react-hooks",
+        "overlay-manager": "yarn workspace @crawl/overlay-manager",
+        "utils": "yarn workspace @crawl/utils",
         "lint-front": "lint-staged",
         "postinstall": "husky install"
     },

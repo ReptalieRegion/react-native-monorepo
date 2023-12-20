@@ -23,7 +23,7 @@ const modules = workspaces
         return pak.peerDependencies ? Object.keys(pak.peerDependencies) : pak.dependencies ? Object.keys(pak.dependencies) : [];
     })
     .filter((m, i, self) => {
-        return self.lastIndexOf(m) === i && !m.startsWith('@reptile-region/');
+        return self.lastIndexOf(m) === i && !m.startsWith('@crawl/');
     });
 
 const license = modules.map((module) => {

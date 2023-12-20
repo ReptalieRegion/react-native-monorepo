@@ -1,5 +1,5 @@
-import { Typo, color, type TextColorType, type VariantType } from '@reptile-region/design-system';
-import { useOnOff } from '@reptile-region/react-hooks';
+import { Typo, color, type TextColorType, type VariantType } from '@crawl/design-system';
+import { useOnOff } from '@crawl/react-hooks';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
 import React, { useCallback, useState } from 'react';
@@ -23,7 +23,7 @@ import { useToast } from '@/components/@common/organisms/Toast';
 import useImagePicker from '@/hooks/@common/useImagePicker';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
 import type { IconFunction } from '@/types/global/icons';
-import type { EntityUpdateScreenProps } from '@/types/routes/props/diary';
+import type { EntityUpdateScreenProps } from '@/types/routes/props/diary/entity';
 
 type GenderMapItem = {
     text: string;

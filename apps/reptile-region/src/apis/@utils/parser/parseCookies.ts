@@ -1,4 +1,4 @@
-import { isArray, isEmpty, isString } from 'lodash-es';
+import { isEmpty } from 'lodash-es';
 
 type ParseCookiesProps = {
     setCookieHeader: string | null;
@@ -15,8 +15,8 @@ export const parseCookies = ({ setCookieHeader, findCookie }: ParseCookiesProps)
         return undefined;
     }
 
-    if (isArray(findCookie)) {
-        const cookiesMap = findCookie.reduce<Record<string, string>>((prev, curr) => {
+    if (Array.isArray(findCookie)) {
+        const cookiesMap = findCookie.reduce<{ [key: string]: string }>((prev, curr) => {
             const findKey = `${curr}=`;
             const newCookies = cookies
                 .find((cookie) => cookie.trim().startsWith(findKey))
@@ -28,7 +28,7 @@ export const parseCookies = ({ setCookieHeader, findCookie }: ParseCookiesProps)
         return !isEmpty(cookiesMap) ? cookiesMap : undefined;
     }
 
-    if (isString(findCookie)) {
+    if (typeof findCookie === 'string') {
         const findKey = `${findCookie}=`;
         const newCookies = cookies
             .find((cookie) => cookie.trim().startsWith(findKey))

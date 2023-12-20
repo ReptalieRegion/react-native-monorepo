@@ -1,7 +1,8 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { color } from '@crawl/design-system';
+import { createBottomTabNavigator, type BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import DiaryRoutes from './Diary/TopTabRoutes';
 import HomeRoutes from './Home';
@@ -24,20 +25,33 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 export default function BottomTabRoutes({ navigation }: BottomTabScreenProps) {
     const { isSignIn } = useAuth();
 
-    const handleTabPressNavigate: MainBottomBarActions['onPressNavigate'] = ({ navigation: tabNavigation, routeName }) => {
-        if (!isSignIn && (routeName === 'me/routes' || routeName === 'diary/routes')) {
-            navigation.navigate('sign-in', { successNavigate: 'ME' });
-        } else {
-            tabNavigation.navigate(routeName);
-        }
-    };
+    const tabBar = useCallback(
+        (props: BottomTabBarProps) => {
+            const handleTabPressNavigate: MainBottomBarActions['onPressNavigate'] = ({
+                navigation: tabNavigation,
+                routeName,
+            }) => {
+                const requireAuthRouteList: (keyof BottomTabParamList)[] = ['me/routes', 'diary/routes'];
+                const isNavigateSignPage = !isSignIn && requireAuthRouteList.includes(routeName);
+
+                isNavigateSignPage
+                    ? navigation.navigate('sign-in', { successNavigate: 'ME' })
+                    : tabNavigation.navigate(routeName);
+            };
+
+            return <MainBottomBar {...props} onPressNavigate={handleTabPressNavigate} />;
+        },
+        [isSignIn, navigation],
+    );
 
     return (
         <BottomTab.Navigator
-            // initialRouteName="home/routes"
             initialRouteName="home/routes"
             screenOptions={{ headerShown: false }}
-            tabBar={(props) => MainBottomBar({ ...props, onPressNavigate: handleTabPressNavigate })}
+            tabBar={tabBar}
+            sceneContainerStyle={{
+                backgroundColor: color.White.toString(),
+            }}
         >
             <BottomTab.Screen name="home/routes" component={HomeRoutes} />
             <BottomTab.Screen name="share-post/routes" component={SharePostRoutes} />

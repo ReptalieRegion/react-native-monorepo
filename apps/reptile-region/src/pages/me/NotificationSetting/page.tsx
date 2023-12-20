@@ -1,5 +1,5 @@
+import { Typo, color } from '@crawl/design-system';
 import messaging from '@react-native-firebase/messaging';
-import { Typo, color } from '@reptile-region/design-system';
 import React, { useEffect, useState } from 'react';
 import { AppState, Linking, StyleSheet, View } from 'react-native';
 import { Switch } from 'react-native-gesture-handler';
