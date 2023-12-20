@@ -17,7 +17,7 @@ type UseFetchCalendar<TData = FetchCalendar['Response']> = {
     options?: Pick<UndefinedInitialDataOptions<FetchCalendar['Response'], HTTPError, TData, CustomQueryKey>, 'select'>;
 };
 
-export default function useFetchCalendar<TData = FetchCalendar['Response']>({
+export default function useBaseFetchCalendar<TData = FetchCalendar['Response']>({
     data: { date },
     options,
 }: UseFetchCalendar<TData>) {

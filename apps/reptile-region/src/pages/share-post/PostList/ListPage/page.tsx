@@ -5,8 +5,9 @@ import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import usePostOptionsMenuBottomSheet from '../bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
+import useInfiniteFetchPosts from '../hooks/queries/useInfiniteFetchPosts';
+import useSharePostActionsV2 from '../hooks/useSharePostActionsV2';
 
-import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
@@ -15,7 +16,6 @@ import { ListEmptyComponent } from '@/components/share-post/organisms/SharePostC
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
 import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
-import useSharePostActions from '@/pages/share-post/PostList/hooks/useSharePostActions';
 import useSharePostNavigation from '@/pages/share-post/PostList/hooks/useSharePostNavigation';
 import type { FetchPostResponse } from '@/types/apis/share-post/post';
 import type { SharePostListPageScreen } from '@/types/routes/props/share-post/post-list';
@@ -56,7 +56,7 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
     });
     /** Floating 관련 액션 끝 */
 
-    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({ type: 'POST' });
+    const { onlyLike, updateOrCreateFollow, updateOrCreateLike } = useSharePostActionsV2();
     const { navigateComment, handlePressLikeContents, navigateImageThumbnail, handlePressTag } =
         useSharePostNavigation('BOTTOM_TAB');
     const openPostOptionsMenuBottomSheet = usePostOptionsMenuBottomSheet();
@@ -77,9 +77,9 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
             return (
                 <SharePostCard
                     post={item.post}
-                    onPressHeart={() => handlePressHeart({ postId, isLike })}
-                    onDoublePressImageCarousel={() => handleDoublePressImageCarousel({ postId, isLike })}
-                    onPressFollow={() => handlePressFollow({ userId, isFollow })}
+                    onPressHeart={() => updateOrCreateLike({ postId, isLike })}
+                    onDoublePressImageCarousel={() => onlyLike({ postId, isLike })}
+                    onPressFollow={() => updateOrCreateFollow({ userId, isFollow })}
                     onPressComment={() => navigateComment({ post: { id: postId } })}
                     onPressPostOptionsMenu={() =>
                         openPostOptionsMenuBottomSheet({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
@@ -91,14 +91,14 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
             );
         },
         [
-            handleDoublePressImageCarousel,
-            navigateComment,
-            handlePressFollow,
-            handlePressHeart,
-            handlePressLikeContents,
-            navigateImageThumbnail,
             handlePressTag,
+            updateOrCreateLike,
+            onlyLike,
+            updateOrCreateFollow,
+            navigateComment,
             openPostOptionsMenuBottomSheet,
+            navigateImageThumbnail,
+            handlePressLikeContents,
         ],
     );
 

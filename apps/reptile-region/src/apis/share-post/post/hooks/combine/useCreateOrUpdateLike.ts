@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import * as Haptic from 'react-native-haptic-feedback';
 
-import useCreateLike, { type UseCreateLikeProps } from '../mutations/useCreateLike';
-import useUpdateLike, { type UseUpdateLikeProps } from '../mutations/useUpdateLike';
+import useCreateLike, { type UseCreateLikeProps } from '../mutations/useBaseCreateLike';
+import useUpdateLike, { type UseUpdateLikeProps } from '../mutations/useBaseUpdateLike';
 
 type UseCreateOrUpdateLike = {
     create?: UseCreateLikeProps;

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import useFetchCalendar from '@/apis/diary/calendar/hooks/queries/useFetchCalendar';
+import useBaseFetchCalendar from '@/apis/diary/calendar/hooks/queries/useBaseFetchCalendar';
 import type { FetchCalendar } from '@/types/apis/diary/calendar';
 
 type UseFetchCalendarDetail = FetchCalendar['Request'] & {
@@ -14,7 +14,7 @@ export default function useFetchCalendarDetail({ date, calendarId }: UseFetchCal
         [calendarId],
     );
 
-    return useFetchCalendar({
+    return useBaseFetchCalendar({
         data: { date },
         options: { select },
     });

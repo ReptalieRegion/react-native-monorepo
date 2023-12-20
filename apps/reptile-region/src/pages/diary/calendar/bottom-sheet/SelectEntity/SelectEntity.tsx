@@ -13,12 +13,12 @@ type SelectEntityState = {
     isOpen: boolean;
 };
 
-export interface SelectEntityActions {
+interface SelectEntityActions {
     onClose(): void;
     onSelectEntity(entity: FetchEntityListResponse['entity']): void;
 }
 
-type SelectEntityProps = SelectEntityState & SelectEntityActions;
+export type SelectEntityProps = SelectEntityState & SelectEntityActions;
 
 export default function SelectEntityBottomSheet({ isOpen, onClose, onSelectEntity }: SelectEntityProps) {
     const { data } = useInfiniteFetchEntity();

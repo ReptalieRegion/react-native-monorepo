@@ -1,9 +1,9 @@
 import { useOverlay } from '@crawl/overlay-manager';
 import React, { useCallback } from 'react';
 
-import SelectEntityBottomSheet, { type SelectEntityActions } from './SelectEntity';
+import SelectEntityBottomSheet, { type SelectEntityProps } from './SelectEntity';
 
-export default function useOverlaySelectEntityBottomSheet({ onSelectEntity }: Pick<SelectEntityActions, 'onSelectEntity'>) {
+export default function useOverlaySelectEntityBottomSheet({ onSelectEntity }: Pick<SelectEntityProps, 'onSelectEntity'>) {
     const overlay = useOverlay();
     const openSelectEntityBottomSheet = useCallback(() => {
         return new Promise<boolean>((resolve) => {

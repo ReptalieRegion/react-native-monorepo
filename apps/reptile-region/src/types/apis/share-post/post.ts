@@ -225,6 +225,8 @@ type DeletePost = ServerAPI<DeletePostRequest, DeletePostResponse>;
 
 export type {
     CreateLike,
+    CreateLikeRequest,
+    CreateLikeResponse,
     CreatePost,
     DeletePost,
     FetchDetailUserPost,
@@ -239,5 +241,7 @@ export type {
     FetchPosts,
     FetchPostsResponse,
     UpdateLike,
+    UpdateLikeRequest,
+    UpdateLikeResponse,
     UpdatePost,
 };

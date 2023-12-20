@@ -1,7 +1,7 @@
 import * as Haptic from 'react-native-haptic-feedback';
 
-import useCreateFollow, { type UseCreateFollowProps } from '../mutations/useCreateFollow';
-import useUpdateFollow, { type UseUpdateFollowProps } from '../mutations/useUpdateFollow';
+import useCreateFollow, { type UseCreateFollowProps } from '../mutations/useBaseCreateFollow';
+import useUpdateFollow, { type UseUpdateFollowProps } from '../mutations/useBaseUpdateFollow';
 
 interface UseCreateOrUpdateFollowActions {
     create?: UseCreateFollowProps;

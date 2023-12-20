@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import type { PageState } from '@/types/routes/@common/enum';
 import type { CommentParams, ImageThumbnailParams, LikeParams } from '@/types/routes/params/sharePost';
@@ -89,10 +89,13 @@ export default function useSharePostNavigation(pageState: PageState) {
         [navigation, pageState],
     );
 
-    return {
-        navigateComment,
-        handlePressLikeContents,
-        navigateImageThumbnail,
-        handlePressTag,
-    };
+    return useMemo(
+        () => ({
+            navigateComment,
+            handlePressLikeContents,
+            navigateImageThumbnail,
+            handlePressTag,
+        }),
+        [handlePressLikeContents, handlePressTag, navigateComment, navigateImageThumbnail],
+    );
 }

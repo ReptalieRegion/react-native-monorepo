@@ -2,7 +2,7 @@ import type { MarkedDates } from '@crawl/calendar';
 import dayjs from 'dayjs';
 import { useCallback } from 'react';
 
-import useFetchCalendar from '@/apis/diary/calendar/hooks/queries/useFetchCalendar';
+import useBaseFetchCalendar from '@/apis/diary/calendar/hooks/queries/useBaseFetchCalendar';
 import type { FetchCalendar, FetchCalendarItem } from '@/types/apis/diary/calendar';
 
 export type Title = {
@@ -86,7 +86,7 @@ export default function useCalendar({ date }: FetchCalendar['Request']) {
         return calendarData;
     }, []);
 
-    return useFetchCalendar({
+    return useBaseFetchCalendar({
         data: { date },
         options: { select },
     });
