@@ -1,6 +1,5 @@
 import { useNavigation, type CompositeNavigationProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useCallback } from 'react';
 
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import type { MeBottomTabParamList } from '@/types/routes/param-list/me';
@@ -13,31 +12,43 @@ type MeListNavigation = CompositeNavigationProp<
 export default function useMeListNavigation() {
     const navigation = useNavigation<MeListNavigation>();
 
-    const navigateSharePostMe = useCallback(() => {
+    const navigateSharePostMe = () => {
         navigation.navigate('share-post/modal', {
             screen: 'modal/image-thumbnail/me',
         });
-    }, [navigation]);
+    };
 
-    const navigateTermsOfUse = useCallback(() => {
+    const navigateTermsOfUse = () => {
         navigation.navigate('me/terms-of-use');
-    }, [navigation]);
+    };
 
-    const navigatePrivacyPolicy = useCallback(() => {
+    const navigatePrivacyPolicy = () => {
         navigation.navigate('me/terms-privacy-policy');
-    }, [navigation]);
+    };
 
-    const navigateProfileSetting = useCallback(() => {
+    const navigateProfileSetting = () => {
         navigation.navigate('me/profile');
-    }, [navigation]);
+    };
 
-    const navigateLicense = useCallback(() => {
+    const navigateLicense = () => {
         navigation.navigate('me/license');
-    }, [navigation]);
+    };
 
-    const navigateNotificationSetting = useCallback(() => {
+    const navigateNotificationSetting = () => {
         navigation.navigate('me/notification-setting');
-    }, [navigation]);
+    };
+
+    const navigateHomeList = () => {
+        navigation.navigate('bottom-tab/routes', {
+            screen: 'tab',
+            params: {
+                screen: 'home/routes',
+                params: {
+                    screen: 'bottom-tab/list',
+                },
+            },
+        });
+    };
 
     return {
         navigateSharePostMe,
@@ -46,5 +57,6 @@ export default function useMeListNavigation() {
         navigateProfileSetting,
         navigateLicense,
         navigateNotificationSetting,
+        navigateHomeList,
     };
 }

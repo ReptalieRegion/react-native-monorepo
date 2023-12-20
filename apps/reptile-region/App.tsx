@@ -11,7 +11,7 @@ import Alert from '@/components/@common/organisms/Alert';
 import Loading from '@/components/@common/organisms/Loading/LoadingProvider';
 import Toast from '@/components/@common/organisms/Toast';
 import { Auth } from '@/components/auth/organisms/Auth';
-import useEffectNotifee from '@/hooks/notification/useEffectNotifee';
+import useEffectNotifee from '@/hooks/@common/useEffectNotifee';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 import type { RootRoutesParamList } from '@/types/routes/param-list';

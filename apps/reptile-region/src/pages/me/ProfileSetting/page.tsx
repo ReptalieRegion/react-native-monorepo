@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
 import { TextButton } from '@/components/@common/atoms';
 import { EditProfile } from '@/components/@common/molecules/Profile';
-import useProfileSettingActions from '@/hooks/me/actions/useProfileSettingActions';
+import useProfileSettingActions from '@/pages/me/ProfileSetting/@hooks/useProfileSettingActions';
 
 export default function ProfileSetting() {
     const { data } = useFetchMeProfile();

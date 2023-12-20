@@ -9,9 +9,9 @@ import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPu
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { Profile } from '@/components/@common/molecules/Profile';
-import useMeActions from '@/hooks/me/actions/useMeActions';
-import useMeListNavigation from '@/hooks/me/navigation/useMeListNavigation';
 import VersionCheck from '@/native-modules/version-check/VersionCheck';
+import useMeActions from '@/pages/me/List/@hooks/useMeActions';
+import useMeListNavigation from '@/pages/me/List/@hooks/useMeListNavigation';
 
 export default function MyListPage() {
     const { data } = useFetchMeProfile();
@@ -19,8 +19,14 @@ export default function MyListPage() {
 
     const { logout } = useMeActions();
 
-    const { navigateLicense, navigateNotificationSetting, navigatePrivacyPolicy, navigateProfileSetting, navigateTermsOfUse } =
-        useMeListNavigation();
+    const {
+        navigateHomeList,
+        navigateLicense,
+        navigateNotificationSetting,
+        navigatePrivacyPolicy,
+        navigateProfileSetting,
+        navigateTermsOfUse,
+    } = useMeListNavigation();
 
     const settingList: SettingList[] = [
         {
@@ -77,7 +83,9 @@ export default function MyListPage() {
                 {
                     title: '로그아웃',
                     rightChildren: 'Chevron',
-                    onPress: logout,
+                    onPress: async () => {
+                        logout({ successCallback: navigateHomeList });
+                    },
                 },
             ],
         },
