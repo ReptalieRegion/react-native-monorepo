@@ -58,10 +58,13 @@ export default function useBaseCreateFollow<TContext = unknown>(props?: UseCreat
                     });
 
                     // 팔로우, 팔로잉, 좋아요 리스트 무효화
-                    userIdSet.forEach((userId) => {
-                        queryClient.invalidateQueries({ queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'follower', userId] });
+                    userIdSet.forEach((id) => {
+                        queryClient.invalidateQueries({ queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'follower', id] });
                         queryClient.invalidateQueries({
-                            queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'following', userId],
+                            queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'following', id],
+                        });
+                        queryClient.invalidateQueries({
+                            queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'like', id],
                         });
                     });
                 }
