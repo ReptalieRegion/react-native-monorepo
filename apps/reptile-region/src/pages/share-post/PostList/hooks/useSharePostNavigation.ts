@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
 
-import type { ImageType } from '@/types/global/image';
 import type { PageState } from '@/types/routes/@common/enum';
 import type { CommentParams, ImageThumbnailParams, LikeParams } from '@/types/routes/params/sharePost';
 import type {
@@ -13,7 +12,7 @@ import type {
 export default function useSharePostNavigation(pageState: PageState) {
     const navigation = useNavigation<SharePostListNavigationProp>();
 
-    const handlePressComment = useCallback(
+    const navigateComment = useCallback(
         (params: CommentParams) => {
             switch (pageState) {
                 case 'MODAL':
@@ -31,22 +30,7 @@ export default function useSharePostNavigation(pageState: PageState) {
         [navigation, pageState],
     );
 
-    const handlePressPostOptionsMenu = useCallback(
-        (params: {
-            post: {
-                id: string;
-                images: ImageType[];
-                contents: string;
-                isMine: boolean;
-                user: { id: string };
-            };
-        }) => {
-            navigation.push('share-post/bottom-sheet/post-options-menu', params);
-        },
-        [navigation],
-    );
-
-    const handlePressProfile = useCallback(
+    const navigateImageThumbnail = useCallback(
         (params: Omit<ImageThumbnailParams, 'pageState'>) => {
             switch (pageState) {
                 case 'BOTTOM_TAB':
@@ -106,10 +90,9 @@ export default function useSharePostNavigation(pageState: PageState) {
     );
 
     return {
-        handlePressComment,
+        navigateComment,
         handlePressLikeContents,
-        handlePressPostOptionsMenu,
-        handlePressProfile,
+        navigateImageThumbnail,
         handlePressTag,
     };
 }

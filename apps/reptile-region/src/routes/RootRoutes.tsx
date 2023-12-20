@@ -35,7 +35,6 @@ import PrivacyPolicyPage from '@/pages/me/Terms/PrivacyPolicy/page';
 import { TermsOfUseHeader } from '@/pages/me/Terms/TermsOfUse/header';
 import TermsOfUsePage from '@/pages/me/Terms/TermsOfUse/page';
 import { PushLogList, PushLogListHeader } from '@/pages/notification/PushLogList';
-import PostOptionsMenu from '@/pages/share-post/PostList/BottomSheet/PostOptionsMenu';
 import { SharePostUpdatePosteHeader, SharePostUpdatePostPage } from '@/pages/share-post/UpdatePost';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
@@ -128,16 +127,6 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     name="share-post/modal/posting"
                     component={PostingRoutes}
                     options={{ animation: 'slide_from_bottom', headerShown: false, gestureEnabled: false }}
-                />
-                <Stack.Screen
-                    name="share-post/bottom-sheet/post-options-menu"
-                    component={PostOptionsMenu}
-                    options={{
-                        header: SignInHeader,
-                        presentation: 'containedTransparentModal',
-                        animation: 'none',
-                        headerShown: false,
-                    }}
                 />
                 <Stack.Screen
                     name="share-post/post/update"

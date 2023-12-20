@@ -5,12 +5,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
+import usePostOptionsMenuBottomSheet from '../../bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
+
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
-import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
-import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
+import useSharePostActions from '@/pages/share-post/PostList/hooks/useSharePostActions';
+import useSharePostNavigation from '@/pages/share-post/PostList/hooks/useSharePostNavigation';
 import type { FetchDetailUserPostResponse } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
 import type {
@@ -37,8 +39,9 @@ export default function UserDetailListPage({
         type: 'USER_DETAIL',
         nickname,
     });
-    const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
+    const { navigateComment, handlePressLikeContents, navigateImageThumbnail, handlePressTag } =
         useSharePostNavigation(pageState);
+    const openPostOptionsMenuBottomSheet = usePostOptionsMenuBottomSheet();
 
     const keyExtractor = (item: FetchDetailUserPostResponse) => item.post.id;
 
@@ -65,9 +68,9 @@ export default function UserDetailListPage({
                     onPressHeart={() => handlePressHeart({ postId: post.id, isLike: post.isLike })}
                     onDoublePressImageCarousel={() => handleDoublePressImageCarousel({ postId: post.id, isLike: post.isLike })}
                     onPressFollow={() => handlePressFollow({ userId: post.user.id, isFollow: post.user.isFollow })}
-                    onPressComment={() => handlePressComment({ post: { id: post.id } })}
+                    onPressComment={() => navigateComment({ post: { id: post.id } })}
                     onPressPostOptionsMenu={() =>
-                        handlePressPostOptionsMenu({
+                        openPostOptionsMenuBottomSheet({
                             post: {
                                 id: post.id,
                                 contents: post.contents,
@@ -78,7 +81,7 @@ export default function UserDetailListPage({
                         })
                     }
                     onPressProfile={() =>
-                        handlePressProfile({
+                        navigateImageThumbnail({
                             user: {
                                 isFollow: post.user.isFollow,
                                 nickname: post.user.nickname,
@@ -93,12 +96,12 @@ export default function UserDetailListPage({
         },
         [
             handleDoublePressImageCarousel,
-            handlePressComment,
+            navigateComment,
             handlePressFollow,
             handlePressHeart,
             handlePressLikeContents,
-            handlePressPostOptionsMenu,
-            handlePressProfile,
+            openPostOptionsMenuBottomSheet,
+            navigateImageThumbnail,
             handlePressTag,
         ],
     );
@@ -143,7 +146,5 @@ const styles = StyleSheet.create({
     postCardContainer: {
         marginTop: 20,
         marginBottom: 20,
-        minHeight: 594,
-        height: 594,
     },
 });

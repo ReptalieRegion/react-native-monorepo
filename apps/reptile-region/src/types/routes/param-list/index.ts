@@ -9,7 +9,7 @@ import type {
     EntityUpdateParams,
 } from '../params/diary';
 import type { LicenseContentsParams } from '../params/me';
-import type { OptionsMenuParams, PostingUpdateParams } from '../params/sharePost';
+import type { PostingUpdateParams } from '../params/sharePost';
 
 import type { SignUpParamList } from './auth';
 import type { BottomTabNativeStackParamList } from './bottom-tab';
@@ -36,7 +36,6 @@ type RootRoutesParamList = {
     // SharePost
     'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
     'share-post/modal/posting': NavigatorScreenParams<PostingParamList>;
-    'share-post/bottom-sheet/post-options-menu': OptionsMenuParams;
     'share-post/post/update': PostingUpdateParams;
 
     // Entity

@@ -1,5 +1,4 @@
 import { ErrorBoundary } from '@crawl/error-boundary';
-import { OverlayProvider } from '@crawl/overlay-manager';
 import { useNavigationContainerRef } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet } from 'react-native';
@@ -32,9 +31,7 @@ export default function App() {
                                     <ErrorBoundary
                                         renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}
                                     >
-                                        <OverlayProvider>
-                                            <RootRoutes navigationRef={navigationRef} />
-                                        </OverlayProvider>
+                                        <RootRoutes navigationRef={navigationRef} />
                                     </ErrorBoundary>
                                 </Auth>
                             </Alert>

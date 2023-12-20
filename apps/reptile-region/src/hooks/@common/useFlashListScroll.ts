@@ -1,5 +1,5 @@
 import { FlashList } from '@shopify/flash-list';
-import { useCallback, useRef } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 
 export type ScrollDirection = 'UP' | 'DOWN' | 'TOP';
@@ -22,7 +22,7 @@ interface UseFlashListScrollActions {
 
 type UseFlashListScrollProps = UseFlashListScrollActions;
 
-const useFlashListScroll = <T>(props?: UseFlashListScrollProps) => {
+export default function useFlashListScroll<T>(props?: UseFlashListScrollProps) {
     const flashListRef = useRef<FlashList<T>>(null);
     const prevDirection = useRef<ScrollDirection>('TOP');
     const prevScrollYRef = useRef(0);
@@ -59,13 +59,14 @@ const useFlashListScroll = <T>(props?: UseFlashListScrollProps) => {
         [props],
     );
 
-    return {
-        flashListRef,
-        scrollToTop,
-        scrollIntoView,
-        scrollToIndex,
-        determineScrollDirection,
-    };
-};
-
-export default useFlashListScroll;
+    return useMemo(
+        () => ({
+            flashListRef,
+            scrollToTop,
+            scrollIntoView,
+            scrollToIndex,
+            determineScrollDirection,
+        }),
+        [determineScrollDirection, scrollIntoView, scrollToIndex, scrollToTop],
+    );
+}

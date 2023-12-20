@@ -25,19 +25,6 @@ type CommentReplyParams = {
     isFocus: boolean;
 };
 
-// 게시물 더보기 메뉴 바텀 시트
-type OptionsMenuParams = {
-    post: {
-        id: string;
-        images: ImageType[];
-        contents: string;
-        isMine: boolean;
-        user: {
-            id: string;
-        };
-    };
-};
-
 // 특정 사용자 이미지 썸네일 페이지
 type ImageThumbnailParams = {
     user: {
@@ -126,7 +113,6 @@ export type {
     ImageThumbnailParams,
     LikeParams,
     MeUserDetailParams,
-    OptionsMenuParams,
     PostingUpdateParams,
     UserDetailParams,
 };

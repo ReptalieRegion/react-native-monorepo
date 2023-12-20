@@ -4,6 +4,8 @@ import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
+import usePostOptionsMenuBottomSheet from '../bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
+
 import useInfiniteFetchPosts from '@/apis/share-post/post/hooks/queries/useInfiniteFetchPosts';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
@@ -13,22 +15,51 @@ import { ListEmptyComponent } from '@/components/share-post/organisms/SharePostC
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
 import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
-import useSharePostActions from '@/hooks/share-post/actions/useSharePostActions';
-import useSharePostNavigation from '@/hooks/share-post/navigation/useSharePostNavigation';
+import useSharePostActions from '@/pages/share-post/PostList/hooks/useSharePostActions';
+import useSharePostNavigation from '@/pages/share-post/PostList/hooks/useSharePostNavigation';
 import type { FetchPostResponse } from '@/types/apis/share-post/post';
 import type { SharePostListPageScreen } from '@/types/routes/props/share-post/post-list';
 
+// 일상공유 조회 페이지
 export default function PostList({ navigation }: SharePostListPageScreen) {
+    // 일상 공유 패칭
+    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
+
+    /** Pull To Refresh 시작 */
     const [refreshing, setRefreshing] = useState<boolean>(false);
+
+    const asyncOnRefresh = async () => {
+        setRefreshing(true);
+        await refetch();
+        setRefreshing(false);
+    };
+
+    const handleEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
+    /** Pull To Refresh 끝 */
+
+    /** Floating 관련 액션 시작 */
     const { secondaryIconDownAnimation, secondaryIconUpAnimation } = useFloatingHandler();
+    const { requireAuthNavigation } = useAuthNavigation();
+
+    const handlePressPrimaryFloatingButton = () => {
+        requireAuthNavigation(() => {
+            navigation.navigate('share-post/modal/posting', {
+                screen: 'image-crop',
+            });
+        });
+    };
+
+    // FlashList 스크롤 관련 함수
     const { flashListRef, determineScrollDirection, scrollToTop } = useFlashListScroll<FetchPostResponse>({
         onScrollDown: secondaryIconDownAnimation,
         onScrollUp: secondaryIconUpAnimation,
     });
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
+    /** Floating 관련 액션 끝 */
+
     const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({ type: 'POST' });
-    const { handlePressComment, handlePressLikeContents, handlePressPostOptionsMenu, handlePressProfile, handlePressTag } =
+    const { navigateComment, handlePressLikeContents, navigateImageThumbnail, handlePressTag } =
         useSharePostNavigation('BOTTOM_TAB');
+    const openPostOptionsMenuBottomSheet = usePostOptionsMenuBottomSheet();
 
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<FetchPostResponse>) => {
@@ -49,11 +80,11 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
                     onPressHeart={() => handlePressHeart({ postId, isLike })}
                     onDoublePressImageCarousel={() => handleDoublePressImageCarousel({ postId, isLike })}
                     onPressFollow={() => handlePressFollow({ userId, isFollow })}
-                    onPressComment={() => handlePressComment({ post: { id: postId } })}
+                    onPressComment={() => navigateComment({ post: { id: postId } })}
                     onPressPostOptionsMenu={() =>
-                        handlePressPostOptionsMenu({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
+                        openPostOptionsMenuBottomSheet({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
                     }
-                    onPressProfile={() => handlePressProfile({ user: { isFollow, nickname, profile } })}
+                    onPressProfile={() => navigateImageThumbnail({ user: { isFollow, nickname, profile } })}
                     onPressTag={handlePressTag}
                     onPressLikeContents={() => handlePressLikeContents({ post: { id: postId } })}
                 />
@@ -61,36 +92,15 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
         },
         [
             handleDoublePressImageCarousel,
-            handlePressComment,
+            navigateComment,
             handlePressFollow,
             handlePressHeart,
             handlePressLikeContents,
-            handlePressPostOptionsMenu,
-            handlePressProfile,
+            navigateImageThumbnail,
             handlePressTag,
+            openPostOptionsMenuBottomSheet,
         ],
     );
-
-    const asyncOnRefresh = async () => {
-        setRefreshing(true);
-        await refetch();
-        setRefreshing(false);
-    };
-
-    const handleEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
-
-    const { requireAuthNavigation } = useAuthNavigation();
-    const handlePressPrimaryFloatingButton = () => {
-        requireAuthNavigation(() => {
-            navigation.navigate('share-post/modal/posting', {
-                screen: 'image-crop',
-            });
-        });
-    };
-
-    const handlePressSecondaryFloatingButton = () => {
-        scrollToTop();
-    };
 
     return (
         <View style={styles.container}>
@@ -109,7 +119,7 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
                 scrollEventThrottle={16}
                 onScroll={determineScrollDirection}
             />
-            <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>
+            <FloatingActionButtonGroup position={floatingPosition}>
                 <FloatingActionButtonGroup.Button
                     name="primary"
                     Icon={PostWriteIcon}
@@ -120,12 +130,18 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
                     name="secondary"
                     Icon={UpArrow}
                     iconStyle={secondaryIcon}
-                    onPress={handlePressSecondaryFloatingButton}
+                    onPress={scrollToTop}
                 />
             </FloatingActionButtonGroup>
         </View>
     );
 }
+
+/** Floating 관련 스타일 시작 */
+const floatingPosition = {
+    right: 70,
+    bottom: 70,
+};
 
 const primaryIcon = {
     width: 50,
@@ -140,6 +156,7 @@ const secondaryIcon = {
     borderColor: color.Gray[200].toString(),
     borderWidth: 1,
 };
+/** Floating 관련 스타일 끝 */
 
 const styles = StyleSheet.create({
     container: {

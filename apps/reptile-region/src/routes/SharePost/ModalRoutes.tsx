@@ -1,3 +1,4 @@
+import { OverlayProvider } from '@crawl/overlay-manager';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
@@ -21,43 +22,49 @@ const Stack = createNativeStackNavigator<SharePostModalParamList>();
 
 export default function SharePostModalRoutes() {
     return (
-        <Stack.Navigator>
-            <Stack.Screen
-                name="modal/post/detail"
-                component={SharePostDetailListPage}
-                options={{ header: SharePostDetailListHeader }}
-            />
-            <Stack.Screen
-                name="modal/image-thumbnail"
-                component={SharePostImageThumbnailListPage}
-                options={{ header: SharePostImageThumbnailListHeader }}
-            />
-            <Stack.Screen
-                name="modal/image-thumbnail/me"
-                component={SharePostMeImageThumbnailList}
-                options={{ header: SharePostMeImageThumbnailListHeader }}
-            />
-            <Stack.Screen
-                name="modal/user/detail/list"
-                component={SharePostOtherUserDetailListPage}
-                options={{ header: SharePostUserDetailListHeader }}
-            />
-            <Stack.Screen
-                name="modal/user/detail/list/me"
-                component={SharePostMeUserDetailList}
-                options={{ header: SharePostUserDetailListHeader }}
-            />
-            <Stack.Screen name="modal/follow/list" component={FollowRoutes} options={{ header: SharePostFollowHeader }} />
-            <Stack.Screen
-                name="modal/comment"
-                component={SharePostCommentRoutes}
-                options={{
-                    presentation: 'containedTransparentModal',
-                    headerShown: false,
-                    animation: 'none',
-                }}
-            />
-            <Stack.Screen name="modal/like/list" component={SharePostLikeList} options={{ header: SharePostLikeListHeader }} />
-        </Stack.Navigator>
+        <OverlayProvider>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="modal/post/detail"
+                    component={SharePostDetailListPage}
+                    options={{ header: SharePostDetailListHeader }}
+                />
+                <Stack.Screen
+                    name="modal/image-thumbnail"
+                    component={SharePostImageThumbnailListPage}
+                    options={{ header: SharePostImageThumbnailListHeader }}
+                />
+                <Stack.Screen
+                    name="modal/image-thumbnail/me"
+                    component={SharePostMeImageThumbnailList}
+                    options={{ header: SharePostMeImageThumbnailListHeader }}
+                />
+                <Stack.Screen
+                    name="modal/user/detail/list"
+                    component={SharePostOtherUserDetailListPage}
+                    options={{ header: SharePostUserDetailListHeader }}
+                />
+                <Stack.Screen
+                    name="modal/user/detail/list/me"
+                    component={SharePostMeUserDetailList}
+                    options={{ header: SharePostUserDetailListHeader }}
+                />
+                <Stack.Screen name="modal/follow/list" component={FollowRoutes} options={{ header: SharePostFollowHeader }} />
+                <Stack.Screen
+                    name="modal/comment"
+                    component={SharePostCommentRoutes}
+                    options={{
+                        presentation: 'containedTransparentModal',
+                        headerShown: false,
+                        animation: 'none',
+                    }}
+                />
+                <Stack.Screen
+                    name="modal/like/list"
+                    component={SharePostLikeList}
+                    options={{ header: SharePostLikeListHeader }}
+                />
+            </Stack.Navigator>
+        </OverlayProvider>
     );
 }
