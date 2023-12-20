@@ -8,7 +8,7 @@ import useUpdateLike from './mutations/useUpdateLike';
 
 import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
 
-export default function useSharePostActionsV2() {
+export default function useSharePostActions() {
     const { mutate: createLikeMutate } = useCreateLike();
     const { mutate: updateLikeMutate } = useUpdateLike();
     const { mutate: createFollowMutate } = useCreateFollow();
@@ -54,12 +54,12 @@ export default function useSharePostActionsV2() {
         [createFollowMutate, requireAuthNavigation, updateFollowMutate],
     );
 
-    return useMemo(() => {
-        console.log('rerender');
-        return {
+    return useMemo(
+        () => ({
             onlyLike,
             updateOrCreateLike,
             updateOrCreateFollow,
-        };
-    }, [onlyLike, updateOrCreateFollow, updateOrCreateLike]);
+        }),
+        [onlyLike, updateOrCreateFollow, updateOrCreateLike],
+    );
 }

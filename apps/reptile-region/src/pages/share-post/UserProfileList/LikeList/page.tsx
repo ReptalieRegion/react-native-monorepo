@@ -1,9 +1,10 @@
 import React from 'react';
 
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteFetchLikes from '@/apis/share-post/post/hooks/queries/useInfiniteFetchLikes';
 import UserProfileList from '@/components/share-post/molecules/UserProfileList';
-import useProfileListActions from '@/hooks/share-post/actions/useProfileListActions';
-import useUserProfileNavigation from '@/hooks/share-post/navigation/useUserProfileNavigation';
+import useProfileListActions from '@/pages/share-post/UserProfileList/@hooks/useProfileListActions';
+import useUserProfileNavigation from '@/pages/share-post/UserProfileList/@hooks/useUserProfileNavigation';
 import type { LikeListPageScreenProps } from '@/types/routes/props/share-post/user-profile';
 
 export default function LikeList({
@@ -16,15 +17,15 @@ export default function LikeList({
 }: LikeListPageScreenProps) {
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFetchLikes({ postId });
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
-    const { handlePressProfile } = useUserProfileNavigation(pageState);
-    const { handlePressFollow } = useProfileListActions({ type: 'LIKE', postId });
+    const { navigateImageThumbnail } = useUserProfileNavigation(pageState);
+    const { updateOrCreateFollow } = useProfileListActions({ queryKey: SHARE_POST_QUERY_KEYS.likeList(postId) });
 
     return (
         <UserProfileList
             data={data}
             onEndReached={handleFetchNextPage}
-            onPressProfile={handlePressProfile}
-            onPressFollow={handlePressFollow}
+            onPressProfile={navigateImageThumbnail}
+            onPressFollow={updateOrCreateFollow}
         />
     );
 }

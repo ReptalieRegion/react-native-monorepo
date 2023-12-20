@@ -1,9 +1,10 @@
 import React from 'react';
 
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteFollowingList from '@/apis/share-post/user/hooks/queries/useInfiniteFollowingList';
 import UserProfileList from '@/components/share-post/molecules/UserProfileList';
-import useProfileListActions from '@/hooks/share-post/actions/useProfileListActions';
-import useUserProfileNavigation from '@/hooks/share-post/navigation/useUserProfileNavigation';
+import useProfileListActions from '@/pages/share-post/UserProfileList/@hooks/useProfileListActions';
+import useUserProfileNavigation from '@/pages/share-post/UserProfileList/@hooks/useUserProfileNavigation';
 import type { FollowingPageScreenProps } from '@/types/routes/props/share-post/user-profile';
 
 export default function FollowingList({
@@ -16,15 +17,15 @@ export default function FollowingList({
 }: FollowingPageScreenProps) {
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowingList({ userId });
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
-    const { handlePressProfile } = useUserProfileNavigation(pageState);
-    const { handlePressFollow } = useProfileListActions({ type: 'FOLLOWING_LIST', userId });
+    const { navigateImageThumbnail } = useUserProfileNavigation(pageState);
+    const { updateOrCreateFollow } = useProfileListActions({ queryKey: SHARE_POST_QUERY_KEYS.followerList(userId) });
 
     return (
         <UserProfileList
             data={data}
             onEndReached={handleFetchNextPage}
-            onPressProfile={handlePressProfile}
-            onPressFollow={handlePressFollow}
+            onPressProfile={navigateImageThumbnail}
+            onPressFollow={updateOrCreateFollow}
         />
     );
 }

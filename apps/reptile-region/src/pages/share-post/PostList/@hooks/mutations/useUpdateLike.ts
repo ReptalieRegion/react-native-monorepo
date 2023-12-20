@@ -3,20 +3,20 @@ import { useCallback } from 'react';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import useBaseCreateLike from '@/apis/share-post/post/hooks/mutations/useBaseCreateLike';
-import type { CreateLikeRequest, CreateLikeResponse, FetchPosts, FetchPostsResponse } from '@/types/apis/share-post/post';
+import useBaseUpdateLike from '@/apis/share-post/post/hooks/mutations/useBaseUpdateLike';
+import type { FetchPosts, FetchPostsResponse, UpdateLikeRequest } from '@/types/apis/share-post/post';
 import type { InfiniteState } from '@/types/apis/utils';
 
 type Context = {
     prevList: InfiniteData<InfiniteState<FetchPostsResponse[]>, number> | undefined;
 };
 
-export default function useCreateLike() {
+export default function useUpdateLike() {
     const queryClient = useQueryClient();
 
-    return useBaseCreateLike<Context>({
+    return useBaseUpdateLike<Context>({
         onMutate: useCallback(
-            async (variables: CreateLikeRequest) => {
+            async (variables: UpdateLikeRequest) => {
                 const queryKey = SHARE_POST_QUERY_KEYS.list;
                 await queryClient.cancelQueries({ queryKey });
                 const prevList = queryClient.getQueryData<InfiniteData<FetchPosts['Response'], number>>(queryKey);
@@ -30,8 +30,9 @@ export default function useCreateLike() {
                         nextPage: page.nextPage,
                         items: page.items.map((item) => {
                             const isTargetPost = item.post.id === variables.postId;
+                            const { isLike, likeCount } = item.post;
                             return isTargetPost
-                                ? { post: { ...item.post, isLike: true, likeCount: item.post.likeCount + 1 } }
+                                ? { post: { ...item.post, isLike: !isLike, likeCount: isLike ? likeCount - 1 : likeCount + 1 } }
                                 : item;
                         }),
                     }));
@@ -47,26 +48,12 @@ export default function useCreateLike() {
             [queryClient],
         ),
         onError: useCallback(
-            (_error: HTTPError, _variables: CreateLikeRequest, context: Context | undefined) => {
+            (_error: HTTPError, _variables: UpdateLikeRequest, context: Context | undefined) => {
                 if (context?.prevList) {
                     queryClient.setQueryData<InfiniteData<InfiniteState<FetchPostsResponse[]>, number>>(
                         SHARE_POST_QUERY_KEYS.list,
                         context.prevList,
                     );
-                }
-            },
-            [queryClient],
-        ),
-        onSettled: useCallback(
-            (data: CreateLikeResponse | undefined) => {
-                if (data) {
-                    // 일상 공유 리스트, 특정 유저 일상공유 리스트, 좋아요 리스트 캐시 무효화
-                    queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.list, exact: true });
-                    queryClient.invalidateQueries({
-                        queryKey: SHARE_POST_QUERY_KEYS.detailUserPosts(data.post.user.nickname),
-                        exact: true,
-                    });
-                    queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.likeList(data.post.id), exact: true });
                 }
             },
             [queryClient],

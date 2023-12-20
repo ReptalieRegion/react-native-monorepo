@@ -7,7 +7,7 @@ import type { BottomTabNavigation, ModalNavigation } from '@/types/routes/props/
 export default function useUserProfileNavigation(pageState: PageState) {
     const navigation = useNavigation<BottomTabNavigation | ModalNavigation>();
 
-    const handlePressProfile = (params: Omit<ImageThumbnailParams, 'pageState'>) => {
+    const navigateImageThumbnail = (params: Omit<ImageThumbnailParams, 'pageState'>) => {
         switch (pageState) {
             case 'MODAL':
                 return (navigation as ModalNavigation).push('modal/image-thumbnail', { ...params, pageState });
@@ -17,6 +17,6 @@ export default function useUserProfileNavigation(pageState: PageState) {
     };
 
     return {
-        handlePressProfile,
+        navigateImageThumbnail,
     };
 }

@@ -4,9 +4,9 @@ import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
-import usePostOptionsMenuBottomSheet from '../bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
-import useInfiniteFetchPosts from '../hooks/queries/useInfiniteFetchPosts';
-import useSharePostActionsV2 from '../hooks/useSharePostActionsV2';
+import usePostOptionsMenuBottomSheet from '../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
+import useInfiniteFetchPosts from '../@hooks/queries/useInfiniteFetchPosts';
+import useSharePostActions from '../@hooks/useSharePostActions';
 
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
@@ -16,7 +16,7 @@ import { ListEmptyComponent } from '@/components/share-post/organisms/SharePostC
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useFlashListScroll from '@/hooks/@common/useFlashListScroll';
 import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
-import useSharePostNavigation from '@/pages/share-post/PostList/hooks/useSharePostNavigation';
+import useSharePostNavigation from '@/pages/share-post/PostList/@hooks/useSharePostNavigation';
 import type { FetchPostResponse } from '@/types/apis/share-post/post';
 import type { SharePostListPageScreen } from '@/types/routes/props/share-post/post-list';
 
@@ -56,7 +56,7 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
     });
     /** Floating 관련 액션 끝 */
 
-    const { onlyLike, updateOrCreateFollow, updateOrCreateLike } = useSharePostActionsV2();
+    const { onlyLike, updateOrCreateFollow, updateOrCreateLike } = useSharePostActions();
     const { navigateComment, handlePressLikeContents, navigateImageThumbnail, handlePressTag } =
         useSharePostNavigation('BOTTOM_TAB');
     const openPostOptionsMenuBottomSheet = usePostOptionsMenuBottomSheet();

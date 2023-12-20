@@ -5,14 +5,14 @@ import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
-import usePostOptionsMenuBottomSheet from '../../bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
+import usePostOptionsMenuBottomSheet from '../../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
 
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
-import useSharePostActions from '@/pages/share-post/PostList/hooks/useSharePostActions';
-import useSharePostNavigation from '@/pages/share-post/PostList/hooks/useSharePostNavigation';
+import useSharePostActions from '@/pages/share-post/@common/hooks/useSharePostActions';
+import useSharePostNavigation from '@/pages/share-post/PostList/@hooks/useSharePostNavigation';
 import type { FetchDetailUserPostResponse } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
 import type {
