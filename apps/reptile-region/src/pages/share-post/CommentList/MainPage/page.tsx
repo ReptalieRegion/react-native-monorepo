@@ -32,15 +32,11 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
                 },
             } = item;
 
-            const handleNavigateDetailPage = () => {
-                navigateDetailPage({ user: { isFollow: false, nickname, profile } });
-            };
-
             return (
                 <CommentItem
                     item={item}
-                    onPressNickname={handleNavigateDetailPage}
-                    onPressTag={handleNavigateDetailPage}
+                    onPressNickname={() => navigateDetailPage({ user: { isFollow: false, nickname, profile } })}
+                    onPressTag={(tag) => navigateDetailPage({ user: { isFollow: false, nickname: tag, profile: { src: '' } } })}
                     onPressDeclarationButton={handlePressDeclarationButton}
                     onPressDeleteButton={() => handleDeleteButton(commentId)}
                     onPressUpdateButton={handlePressUpdateButton}

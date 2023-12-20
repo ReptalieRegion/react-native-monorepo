@@ -39,16 +39,14 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
                 },
             } = item;
 
-            const handleNavigateDetailPage = () => {
-                navigateDetailPage({ user: { isFollow: false, nickname, profile } });
-            };
-
             return (
                 <View style={styles.renderItemContainer}>
                     <CommentReplyItem
                         item={item}
-                        onPressNickname={handleNavigateDetailPage}
-                        onPressTag={handleNavigateDetailPage}
+                        onPressNickname={() => navigateDetailPage({ user: { isFollow: false, nickname, profile } })}
+                        onPressTag={(tag) =>
+                            navigateDetailPage({ user: { isFollow: false, nickname: tag, profile: { src: '' } } })
+                        }
                         onPressDeclarationButton={handlePressDeclarationButton}
                         onPressDeleteButton={() => handleCommentReplyDeleteButton(commentReplyId)}
                         onPressUpdateButton={handlePressUpdateButton}

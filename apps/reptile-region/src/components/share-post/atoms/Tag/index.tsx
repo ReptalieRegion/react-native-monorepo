@@ -13,7 +13,7 @@ export interface TagActions {
 export default function Tag({ contents, activeOpacity = 0.5, onPressTag }: TagProps & TagActions) {
     const handlePressTag = () => {
         if (contents.length > 0) {
-            onPressTag(contents.slice(1));
+            onPressTag(contents.slice(1).trim());
         }
     };
 

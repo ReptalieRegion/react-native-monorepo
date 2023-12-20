@@ -21,6 +21,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
     const queryClient = useQueryClient();
     const { openToast } = useToast();
 
+    if (__DEV__) {
+        console.log(error.message);
+    }
+
     useEffect(() => {
         if (__DEV__) {
             openToast({ contents: error.message, severity: 'error' });
