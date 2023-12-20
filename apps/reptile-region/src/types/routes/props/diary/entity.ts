@@ -26,6 +26,7 @@ type EntityManagerCreateCongratsScreenProps = CompositeScreenProps<
 
 // 개체 관리 상세 페이지
 type EntityManagerDetailScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/detail'>;
+type EntityManagerDetailNavigationProp = NavigationProp<RootRoutesParamList, 'entity-manager/detail'>;
 
 // 개체 관리 옵션 바텀시트
 type EntityManagerOptionsMenuScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/options-menu'>;
@@ -51,6 +52,7 @@ export type {
     EntityManagerCreateNameScreenProps,
     EntityManagerCreateTypeAndMorphScreenProps,
     EntityManagerCreateWeightScreenProps,
+    EntityManagerDetailNavigationProp,
     EntityManagerDetailScreenProps,
     EntityManagerOptionsMenuScreenProps,
     EntityNavigationProp,

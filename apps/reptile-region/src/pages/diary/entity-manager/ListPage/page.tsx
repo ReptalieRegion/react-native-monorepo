@@ -8,8 +8,8 @@ import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
 import EntityCard from '@/components/diary/molecules/EntityCard/EntityCard';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
-import useEntityMangerActions from '@/hooks/diary/actions/useEntityMangerActions';
-import useEntityMangerNavigation from '@/hooks/diary/navigation/useEntityMangerNavigation';
+import useEntityMangerActions from '@/pages/diary/entity-manager/ListPage/@hooks/useEntityMangerActions';
+import useEntityMangerNavigation from '@/pages/diary/entity-manager/ListPage/@hooks/useEntityMangerNavigation';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
 export default function EntityMangerList() {
