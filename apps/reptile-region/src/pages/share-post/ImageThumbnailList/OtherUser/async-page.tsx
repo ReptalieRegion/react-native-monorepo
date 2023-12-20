@@ -2,13 +2,13 @@ import { color } from '@crawl/design-system';
 import React, { Suspense, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import useImageThumbnailNavigation from '../../../../hooks/share-post/navigation/useImageThumbnailNavigation';
+import useImageThumbnailNavigation from '../@hooks/useImageThumbnailNavigation';
 import { LIST_HEADER_HEIGHT, LIST_HEADER_PADDING } from '../constants';
 import SharePostsDetailListSkeleton from '../loading';
 
 import ListHeaderComponent from './ListHeaderComponent';
 
-import useImageThumbnailActions from '@/hooks/share-post/actions/useImageThumbnailActions';
+import useImageThumbnailActions from '@/pages/share-post/ImageThumbnailList/OtherUser/@hooks/useImageThumbnailActions';
 import type {
     SharePostImageThumbnailListScreenProps,
     SharePostMeImageThumbnailListScreenProps,

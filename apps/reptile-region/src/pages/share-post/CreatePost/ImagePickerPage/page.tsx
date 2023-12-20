@@ -5,7 +5,7 @@ import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import ChangeHeader from './header';
 
 import { CameraAlbum } from '@/components/@common/organisms/CameraAlbum';
-import useImageCropActions from '@/hooks/share-post/actions/useImageCropActions';
+import useImageCropActions from '@/pages/share-post/CreatePost/ImagePickerPage/@hooks/useImageCropActions';
 import type { ImagePickScreenProp } from '@/types/routes/props/share-post/create-post';
 
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {

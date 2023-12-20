@@ -8,8 +8,8 @@ import EmptyComment from '../empty';
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
-import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
-import useCommentNavigation from '@/hooks/share-post/navigation/useCommentNavigation';
+import useCommentActions from '@/pages/share-post/CommentList/@hooks/useCommentActions';
+import useCommentNavigation from '@/pages/share-post/CommentList/@hooks/useCommentNavigation';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 import type { CommentScreenProps } from '@/types/routes/props/share-post/comment';
 

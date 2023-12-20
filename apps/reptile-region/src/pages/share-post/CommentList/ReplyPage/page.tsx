@@ -7,9 +7,9 @@ import { StyleSheet, View } from 'react-native';
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import CommentReplyItem from '@/components/share-post/organisms/Comment/components/CommentReplyItem';
-import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
-import useCommentReplyActions from '@/hooks/share-post/actions/useCommentReplyActions';
-import useCommentNavigation from '@/hooks/share-post/navigation/useCommentNavigation';
+import useCommentActions from '@/pages/share-post/CommentList/@hooks/useCommentActions';
+import useCommentNavigation from '@/pages/share-post/CommentList/@hooks/useCommentNavigation';
+import useCommentReplyActions from '@/pages/share-post/CommentList/@hooks/useCommentReplyActions';
 import type { FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
 import type { CommentReplyScreenProps } from '@/types/routes/props/share-post/comment';
 

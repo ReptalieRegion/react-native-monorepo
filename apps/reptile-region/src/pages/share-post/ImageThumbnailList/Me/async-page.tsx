@@ -6,7 +6,7 @@ import SharePostsDetailListSkeleton from '../loading';
 
 import ListHeaderComponent from './ListHeaderComponent';
 
-import useMeImageThumbnailNavigation from '@/hooks/share-post/navigation/useMeImageThumbnailNavigation';
+import useMeImageThumbnailNavigation from '@/pages/share-post/ImageThumbnailList/Me/@hooks/useMeImageThumbnailNavigation';
 
 const PostImageList = React.lazy(() => import('./PostImageList'));
 
