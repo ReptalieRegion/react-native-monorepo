@@ -1,12 +1,14 @@
 import type { InitSelectedPhoto, Photo, PhotoSelectState, PhotoSelectedActions, SelectActionType } from '../types';
 import { _parsingPhoto } from '../utils/photo-parsing';
 
-export default function photoSelectReducer(state: PhotoSelectState, actions: PhotoSelectedActions) {
+export default function photoSelectReducer(state: PhotoSelectState, actions: PhotoSelectedActions): PhotoSelectState {
     switch (actions.type) {
         case 'SELECT_PHOTO':
             return selectPhoto(state, actions.photo);
         case 'DELETE_SELECTED_PHOTO':
             return deleteSelectedPhoto(state, actions.uri);
+        case 'SET_NONE_LIMIT':
+            return { ...state, limitType: 'NONE' };
         case 'INIT_SELECTED_PHOTO':
             return setCurrentSelectedPhoto(state, {
                 photoIdentifier: actions.photoIdentifier,
@@ -87,7 +89,6 @@ function _deleteSelectPhoto(state: PhotoSelectState, photo: Photo): PhotoSelectS
         ...state,
         selectedPhotos: filteredSelectedPhotos,
         currentSelectedPhoto: newCurrentSelectedPhoto,
-        limitType: 'NONE',
     };
 }
 
@@ -96,7 +97,6 @@ function _changeCurrentSelectedPhoto(state: PhotoSelectState, photo: Photo): Pho
     return {
         ...state,
         currentSelectedPhoto: state.selectedPhotos.find((prevPhoto) => prevPhoto.uri === photo.uri) ?? null,
-        limitType: 'NONE',
     };
 }
 
@@ -108,6 +108,5 @@ function _addSelectPhoto(state: PhotoSelectState, photo: Photo): PhotoSelectStat
         ...state,
         currentSelectedPhoto: newCurrentSelectedPhoto,
         selectedPhotos: newSelectedPhotos,
-        limitType: 'NONE',
     };
 }

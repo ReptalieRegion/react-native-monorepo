@@ -31,9 +31,14 @@ export default function usePhotoSelectHandler() {
         [dispatch],
     );
 
+    const setNoneLimitType = useCallback(() => {
+        dispatch({ type: 'SET_NONE_LIMIT' });
+    }, [dispatch]);
+
     return {
         selectPhoto,
         deletePhoto,
         initSelectedPhoto,
+        setNoneLimitType,
     };
 }

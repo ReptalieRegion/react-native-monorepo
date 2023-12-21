@@ -72,7 +72,11 @@ interface DeleteSelectPhoto {
     uri: string;
 }
 
-type PhotoSelectedActions = SelectPhoto | DeleteSelectPhoto | InitSelectedPhoto;
+interface SetNoneLimit {
+    type: 'SET_NONE_LIMIT';
+}
+
+type PhotoSelectedActions = SelectPhoto | DeleteSelectPhoto | InitSelectedPhoto | SetNoneLimit;
 
 export type {
     AddPhotos,
@@ -88,4 +92,5 @@ export type {
     SavePhotos,
     SelectActionType,
     SelectPhoto,
+    SetNoneLimit,
 };

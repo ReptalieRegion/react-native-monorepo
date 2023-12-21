@@ -7,6 +7,7 @@ import type { PhotoSelectState } from '../types';
 const initialState: PhotoSelectState = {
     currentSelectedPhoto: null,
     selectedPhotos: [],
+    limitType: 'NONE',
 };
 
 export default function PhotoSelectProvider({ children }: PropsWithChildren) {

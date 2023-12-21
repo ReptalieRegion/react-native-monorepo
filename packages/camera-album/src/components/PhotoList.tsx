@@ -107,15 +107,19 @@ function ChangeLimitType({
     onMaxSelectCount,
     onMinSelectCount,
 }: Pick<PhotoListProps, 'onMaxSelectCount' | 'onMinSelectCount'>) {
+    const { setNoneLimitType } = usePhotoSelectHandler();
     const { limitType } = usePhotoSelect();
 
     useEffect(() => {
-        if (limitType === 'MIN') {
-            onMinSelectCount?.();
-        } else if (limitType === 'MAX') {
-            onMaxSelectCount?.();
+        if (limitType !== 'NONE') {
+            if (limitType === 'MIN') {
+                onMinSelectCount?.();
+            } else if (limitType === 'MAX') {
+                onMaxSelectCount?.();
+            }
+            setNoneLimitType();
         }
-    }, [limitType, onMaxSelectCount, onMinSelectCount]);
+    }, [limitType, onMaxSelectCount, onMinSelectCount, setNoneLimitType]);
 
     return null;
 }
