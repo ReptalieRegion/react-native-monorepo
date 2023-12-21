@@ -70,6 +70,8 @@
 	<string>카메라에 접근할 수 있도록 허가해 주세요</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>앨범에 접근할 수 있도록 허가해 주세요</string>
+	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
+	<true/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>DancingScript-Bold.ttf</string>
