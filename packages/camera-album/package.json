@@ -1,0 +1,50 @@
+{
+    "name": "@crawl/camera-album",
+    "version": "1.0.0",
+    "packageManager": "yarn@3.6.0",
+    "main": "lib/commonjs/index.js",
+    "module": "lib/module/index.js",
+    "react-native": "src/index.ts",
+    "types": "lib/typescript/src/index.d.ts",
+    "source": "src/index.ts",
+    "files": [
+        "lib",
+        "src"
+    ],
+    "scripts": {
+        "build": "rm -rf ./lib && bob build",
+        "watch": "tsc --watch",
+        "typecheck": "tsc --noEmit",
+        "prepack": "bob build",
+        "postinstall": "bob build"
+    },
+    "dependencies": {
+        "@react-native-camera-roll/camera-roll": "^7.2.2"
+    },
+    "devDependencies": {
+        "react-native-builder-bob": "^0.23.1",
+        "typescript": "5.2.2"
+    },
+    "peerDependencies": {
+        "@crawl/design-system": "1.0.0",
+        "@shopify/flash-list": "^1.6.3",
+        "react": "*",
+        "react-native": "*",
+        "react-native-gesture-handler": ">=2.12.0",
+        "react-native-safe-area-context": "^4.7.4"
+    },
+    "react-native-builder-bob": {
+        "source": "src",
+        "output": "lib",
+        "targets": [
+            "commonjs",
+            "module",
+            [
+                "typescript",
+                {
+                    "project": "tsconfig.build.json"
+                }
+            ]
+        ]
+    }
+}
