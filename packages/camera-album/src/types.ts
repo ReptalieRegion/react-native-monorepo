@@ -21,6 +21,14 @@ type PhotoState = {
     isFeting: boolean;
 };
 
+interface RefetchPhotos {
+    type: 'REFETCH_PHOTOS';
+    photoInfo: {
+        photos: PhotoIdentifier[];
+        pageInfo: PageInfo;
+    };
+}
+
 interface AddPhotos {
     type: 'ADD_PHOTOS';
     photoInfo: {
@@ -34,20 +42,25 @@ interface SavePhotos {
     photo: PhotoIdentifier;
 }
 
-type PhotoActions = AddPhotos | SavePhotos;
+type PhotoActions = AddPhotos | SavePhotos | RefetchPhotos;
 
 /** 사진 선택 Context */
 type PhotoSelectState = {
     selectedPhotos: Photo[];
     currentSelectedPhoto: Photo | null;
+    minSelectCount?: number;
+    maxSelectCount?: number;
+    limitType: 'MIN' | 'MAX' | 'NONE';
 };
 
-interface SetCurrentSelectedPhoto {
-    type: 'SET_CURRENT_SELECTED_PHOTO';
+interface InitSelectedPhoto {
+    type: 'INIT_SELECTED_PHOTO';
     photoIdentifier: PhotoIdentifier;
+    minSelectCount?: number;
+    maxSelectCount?: number;
 }
 
-type SelectActionType = 'DELETE' | 'CHANGE_CURRENT_SELECTED_PHOTO' | 'ADD';
+type SelectActionType = 'DELETE' | 'CHANGE_CURRENT_SELECTED_PHOTO' | 'ADD' | 'MIN' | 'MAX';
 
 interface SelectPhoto {
     type: 'SELECT_PHOTO';
@@ -59,17 +72,19 @@ interface DeleteSelectPhoto {
     uri: string;
 }
 
-type PhotoSelectedActions = SelectPhoto | DeleteSelectPhoto | SetCurrentSelectedPhoto;
+type PhotoSelectedActions = SelectPhoto | DeleteSelectPhoto | InitSelectedPhoto;
 
 export type {
     AddPhotos,
     DeleteSelectPhoto,
+    InitSelectedPhoto,
     PageInfo,
     Photo,
     PhotoActions,
     PhotoSelectState,
     PhotoSelectedActions,
     PhotoState,
+    RefetchPhotos,
     SavePhotos,
     SelectActionType,
     SelectPhoto,

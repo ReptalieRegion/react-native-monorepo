@@ -1,6 +1,4 @@
-import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
-
-import type { Photo, PhotoSelectState, PhotoSelectedActions, SelectActionType } from '../types';
+import type { InitSelectedPhoto, Photo, PhotoSelectState, PhotoSelectedActions, SelectActionType } from '../types';
 import { _parsingPhoto } from '../utils/photo-parsing';
 
 export default function photoSelectReducer(state: PhotoSelectState, actions: PhotoSelectedActions) {
@@ -9,17 +7,26 @@ export default function photoSelectReducer(state: PhotoSelectState, actions: Pho
             return selectPhoto(state, actions.photo);
         case 'DELETE_SELECTED_PHOTO':
             return deleteSelectedPhoto(state, actions.uri);
-        case 'SET_CURRENT_SELECTED_PHOTO':
-            return setCurrentSelectedPhoto(state, actions.photoIdentifier);
+        case 'INIT_SELECTED_PHOTO':
+            return setCurrentSelectedPhoto(state, {
+                photoIdentifier: actions.photoIdentifier,
+                maxSelectCount: actions.maxSelectCount,
+                minSelectCount: actions.minSelectCount,
+            });
         default:
             return state;
     }
 }
 
 // 현재 선택된 사진 세팅
-function setCurrentSelectedPhoto(state: PhotoSelectState, photoIdentifier: PhotoIdentifier): PhotoSelectState {
+function setCurrentSelectedPhoto(
+    state: PhotoSelectState,
+    { photoIdentifier, maxSelectCount, minSelectCount }: Omit<InitSelectedPhoto, 'type'>,
+): PhotoSelectState {
     return {
         ...state,
+        maxSelectCount,
+        minSelectCount,
         currentSelectedPhoto: _parsingPhoto(photoIdentifier),
     };
 }
@@ -40,12 +47,17 @@ function deleteSelectedPhoto(state: PhotoSelectState, uri: string): PhotoSelectS
 
 // 사진 선택
 function selectPhoto(state: PhotoSelectState, photo: Photo): PhotoSelectState {
-    const { currentSelectedPhoto, selectedPhotos } = state;
+    const { currentSelectedPhoto, selectedPhotos, maxSelectCount, minSelectCount } = state;
+
     const actionType: SelectActionType =
         selectedPhotos.length !== 0 && currentSelectedPhoto?.uri === photo.uri
             ? 'DELETE'
             : selectedPhotos.find((prevPhoto) => prevPhoto.uri === photo.uri) !== undefined
             ? 'CHANGE_CURRENT_SELECTED_PHOTO'
+            : minSelectCount && selectedPhotos.length <= minSelectCount
+            ? 'MIN'
+            : maxSelectCount && selectedPhotos.length >= maxSelectCount
+            ? 'MAX'
             : 'ADD';
 
     switch (actionType) {
@@ -55,6 +67,10 @@ function selectPhoto(state: PhotoSelectState, photo: Photo): PhotoSelectState {
             return _changeCurrentSelectedPhoto(state, photo);
         case 'DELETE':
             return _deleteSelectPhoto(state, photo);
+        case 'MIN':
+            return { ...state, limitType: 'MIN' };
+        case 'MAX':
+            return { ...state, limitType: 'MAX' };
         default:
             return state;
     }
@@ -71,6 +87,7 @@ function _deleteSelectPhoto(state: PhotoSelectState, photo: Photo): PhotoSelectS
         ...state,
         selectedPhotos: filteredSelectedPhotos,
         currentSelectedPhoto: newCurrentSelectedPhoto,
+        limitType: 'NONE',
     };
 }
 
@@ -79,6 +96,7 @@ function _changeCurrentSelectedPhoto(state: PhotoSelectState, photo: Photo): Pho
     return {
         ...state,
         currentSelectedPhoto: state.selectedPhotos.find((prevPhoto) => prevPhoto.uri === photo.uri) ?? null,
+        limitType: 'NONE',
     };
 }
 
@@ -90,5 +108,6 @@ function _addSelectPhoto(state: PhotoSelectState, photo: Photo): PhotoSelectStat
         ...state,
         currentSelectedPhoto: newCurrentSelectedPhoto,
         selectedPhotos: newSelectedPhotos,
+        limitType: 'NONE',
     };
 }

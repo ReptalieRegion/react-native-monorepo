@@ -1,8 +1,7 @@
-import type { PhotoIdentifier } from '@react-native-camera-roll/camera-roll';
 import { useCallback, useContext } from 'react';
 
 import { PhotoSelectActionsContext } from '../contexts/PhotoSelectContext';
-import type { Photo } from '../types';
+import type { InitSelectedPhoto, Photo } from '../types';
 
 export default function usePhotoSelectHandler() {
     const dispatch = useContext(PhotoSelectActionsContext);
@@ -25,9 +24,9 @@ export default function usePhotoSelectHandler() {
         [dispatch],
     );
 
-    const setCurrentSelectedPhoto = useCallback(
-        (photoIdentifier: PhotoIdentifier) => {
-            dispatch({ type: 'SET_CURRENT_SELECTED_PHOTO', photoIdentifier });
+    const initSelectedPhoto = useCallback(
+        (props: Omit<InitSelectedPhoto, 'type'>) => {
+            dispatch({ type: 'INIT_SELECTED_PHOTO', ...props });
         },
         [dispatch],
     );
@@ -35,6 +34,6 @@ export default function usePhotoSelectHandler() {
     return {
         selectPhoto,
         deletePhoto,
-        setCurrentSelectedPhoto,
+        initSelectedPhoto,
     };
 }

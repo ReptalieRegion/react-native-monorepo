@@ -1,11 +1,13 @@
 import { FlashList, type ContentStyle, type FlashListProps, type ListRenderItem } from '@shopify/flash-list';
+import { Image } from 'expo-image';
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { Image, StyleSheet, View, useWindowDimensions, type ImageStyle } from 'react-native';
+import { StyleSheet, View, useWindowDimensions, type ImageStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import usePhoto from '../hooks/usePhoto';
 import usePhotoHandler from '../hooks/usePhotoHandler';
+import usePhotoSelect from '../hooks/usePhotoSelect';
 import usePhotoSelectHandler from '../hooks/usePhotoSelectHandler';
 import type { Photo } from '../types';
 
@@ -26,10 +28,18 @@ interface PhotoListActions {
 
 type PhotoListProps = PhotoListState & PhotoListActions & Pick<FlashListProps<Photo>, 'numColumns'>;
 
-export default function PhotoList({ numColumns = 4, photoFetchOptions = { first: 100 } }: PhotoListProps) {
+export default function PhotoList({
+    maxSelectCount,
+    minSelectCount,
+    onMaxSelectCount,
+    onMinSelectCount,
+    numColumns = 4,
+    photoFetchOptions = { first: 100 },
+}: PhotoListProps) {
     const { photos, pageInfo } = usePhoto();
     const { addPhotos } = usePhotoHandler();
-    const { setCurrentSelectedPhoto, selectPhoto } = usePhotoSelectHandler();
+
+    const { initSelectedPhoto, selectPhoto } = usePhotoSelectHandler();
 
     const { width } = useWindowDimensions();
     const { bottom } = useSafeAreaInsets();
@@ -39,9 +49,14 @@ export default function PhotoList({ numColumns = 4, photoFetchOptions = { first:
 
     useEffect(() => {
         addPhotos({ ...photoFetchOptions, assetType: 'Photos' }).then((photoIdentifiersPage) =>
-            setCurrentSelectedPhoto(photoIdentifiersPage.edges[0]),
+            initSelectedPhoto({
+                photoIdentifier: photoIdentifiersPage.edges[0],
+                minSelectCount,
+                maxSelectCount,
+            }),
         );
-    }, [photoFetchOptions, addPhotos, setCurrentSelectedPhoto]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleEndReached = useCallback(() => {
         if (pageInfo.hasNextPage) {
@@ -53,10 +68,14 @@ export default function PhotoList({ numColumns = 4, photoFetchOptions = { first:
         ({ item }) => {
             const uri = item.uri;
 
+            const handlePressPhoto = () => {
+                selectPhoto(item);
+            };
+
             return (
-                <TouchableOpacity activeOpacity={0.5} onPress={() => selectPhoto(item)}>
+                <TouchableOpacity activeOpacity={0.5} onPress={handlePressPhoto}>
                     <View style={styles.wrapper}>
-                        <Image source={{ uri }} style={itemStyle} />
+                        <Image style={itemStyle} recyclingKey={uri} source={{ uri }} priority="high" contentFit="cover" />
                         <View style={styles.photoIndicators}>
                             <PhotoIndicators uri={uri} />
                         </View>
@@ -68,17 +87,37 @@ export default function PhotoList({ numColumns = 4, photoFetchOptions = { first:
     );
 
     return (
-        <View style={styles.wrapper}>
-            <FlashList
-                data={photos}
-                renderItem={renderItem}
-                onEndReached={handleEndReached}
-                contentContainerStyle={contentContainerStyle}
-                numColumns={numColumns}
-                estimatedItemSize={imageWidth}
-            />
-        </View>
+        <>
+            <ChangeLimitType onMaxSelectCount={onMaxSelectCount} onMinSelectCount={onMinSelectCount} />
+            <View style={styles.wrapper}>
+                <FlashList
+                    data={photos}
+                    renderItem={renderItem}
+                    onEndReached={handleEndReached}
+                    contentContainerStyle={contentContainerStyle}
+                    numColumns={numColumns}
+                    estimatedItemSize={imageWidth}
+                />
+            </View>
+        </>
     );
+}
+
+function ChangeLimitType({
+    onMaxSelectCount,
+    onMinSelectCount,
+}: Pick<PhotoListProps, 'onMaxSelectCount' | 'onMinSelectCount'>) {
+    const { limitType } = usePhotoSelect();
+
+    useEffect(() => {
+        if (limitType === 'MIN') {
+            onMinSelectCount?.();
+        } else if (limitType === 'MAX') {
+            onMaxSelectCount?.();
+        }
+    }, [limitType, onMaxSelectCount, onMinSelectCount]);
+
+    return null;
 }
 
 const styles = StyleSheet.create({

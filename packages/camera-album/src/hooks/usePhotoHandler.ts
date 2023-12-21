@@ -11,7 +11,7 @@ export default function usePhotoHandler() {
     }
 
     const addPhotos = useCallback(
-        (params: GetPhotosParams) => {
+        async (params: GetPhotosParams) => {
             return CameraRoll.getPhotos(params).then((photo) => {
                 dispatch({
                     type: 'ADD_PHOTOS',
@@ -41,8 +41,28 @@ export default function usePhotoHandler() {
         [dispatch],
     );
 
+    const refetchPhoto = useCallback(
+        (params: GetPhotosParams) => {
+            CameraRoll.getPhotos(params).then((photo) => {
+                dispatch({
+                    type: 'REFETCH_PHOTOS',
+                    photoInfo: {
+                        photos: photo.edges,
+                        pageInfo: {
+                            hasNextPage: photo.page_info.has_next_page,
+                            endCursor: photo.page_info.end_cursor,
+                            startCursor: photo.page_info.start_cursor,
+                        },
+                    },
+                });
+            });
+        },
+        [dispatch],
+    );
+
     return {
         addPhotos,
         savePhoto,
+        refetchPhoto,
     };
 }
