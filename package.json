@@ -14,6 +14,8 @@
         "error-boundary": "yarn workspace @crawl/error-boundary",
         "react-hooks": "yarn workspace @crawl/react-hooks",
         "overlay-manager": "yarn workspace @crawl/overlay-manager",
+        "camera": "yarn workspace @crawl/camera-album",
+        "image-crop": "yarn workspace @crawl/image-crop",
         "utils": "yarn workspace @crawl/utils",
         "lint-front": "lint-staged",
         "postinstall": "husky install"

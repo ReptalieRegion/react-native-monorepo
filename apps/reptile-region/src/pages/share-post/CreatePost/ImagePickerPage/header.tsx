@@ -1,8 +1,8 @@
+import { useCameraAlbum } from '@crawl/camera-album';
 import { TouchableTypo } from '@crawl/design-system';
 import React, { useEffect } from 'react';
 
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import { usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 import type { ImagePickChangeHeaderProps } from '@/types/routes/props/share-post/create-post';
 
 export const SharePostImagePickerHeader = createNativeStackHeader({
@@ -11,7 +11,7 @@ export const SharePostImagePickerHeader = createNativeStackHeader({
 });
 
 export default function ChangeHeader({ navigation }: ImagePickChangeHeaderProps) {
-    const { selectedPhotos } = usePhotoSelect();
+    const { selectedPhotos } = useCameraAlbum();
 
     useEffect(() => {
         const isValidate = selectedPhotos.length === 0;

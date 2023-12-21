@@ -2,10 +2,11 @@ import { Typo, color } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { POST_MAX_CONTENT_LENGTH } from '../../constants/post';
-import Title from '../Title';
+import Title from './Title';
 
 import { TagTextInput, useTag } from '@/components/@common/organisms/TagTextInput';
+
+const POST_MAX_CONTENT_LENGTH = 300;
 
 export default function ContentsWriting() {
     const { contents } = useTag();
@@ -20,6 +21,7 @@ export default function ContentsWriting() {
                         style={styles.textarea}
                         placeholder="일상을 공유해 주세요."
                         maxLength={POST_MAX_CONTENT_LENGTH}
+                        onChangeText={console.log}
                         multiline
                     />
                 </View>

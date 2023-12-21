@@ -1,51 +1,59 @@
+import { useCameraAlbum, useCameraAlbumHandler, type Photo } from '@crawl/camera-album';
 import { color } from '@crawl/design-system';
-import ImageEditor from '@react-native-community/image-editor';
+import { cropImage } from '@crawl/image-crop';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, Image, StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-import Title from '../Title';
+import { useCreatePostActions } from '../../context/useCreatePostActions';
+import useCreatePostState from '../../context/useCreatePostState';
+
+import Title from './Title';
 
 import { CancelButton } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ImagePickerIcon from '@/components/@common/molecules/ImagePickerIcon/ImagePickerIcon';
-import { useCameraAlbumHandler, usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
-import type { Photo } from '@/components/@common/organisms/CameraAlbum/types';
 import { useTagSearch } from '@/components/@common/organisms/TagTextInput';
 
 export default function PhotoRegisterCarousel() {
     const { enabled } = useTagSearch();
-    const { deleteSelectedPhoto, setCroppedSelectedPhoto } = useCameraAlbumHandler();
-    const { selectedPhotos, croppedSelectedPhotos } = usePhotoSelect();
+    const { deletePhoto } = useCameraAlbumHandler();
+    const { selectedPhotos } = useCameraAlbum();
+    const { setCroppedPhoto } = useCreatePostActions();
+    const { cropInfoMap, croppedImage } = useCreatePostState();
 
     useEffect(() => {
-        selectedPhotos.forEach(async ({ origin, crop }, index) => {
-            let newOrigin: Photo = origin;
-            if (crop) {
-                const { size, offset } = crop;
-                const uri = await ImageEditor.cropImage(origin.uri, { size, offset });
-                newOrigin = {
-                    uri,
-                    name: origin.name,
-                    width: origin.width,
-                    height: origin.height,
-                };
+        const croppingImage = async () => {
+            let tempCroppedImage: Photo[] = [];
+
+            for (const photo of selectedPhotos) {
+                const cropAbleImage = cropInfoMap[photo.uri];
+                if (cropAbleImage) {
+                    const uri = await cropImage(photo.uri, cropAbleImage);
+                    tempCroppedImage.push({ ...photo, uri });
+                } else {
+                    tempCroppedImage.push({ ...photo });
+                }
             }
 
-            setCroppedSelectedPhoto({ croppedSelectedPhoto: newOrigin, index });
-        });
-    }, [selectedPhotos, setCroppedSelectedPhoto]);
+            return tempCroppedImage;
+        };
 
-    const handelCancelButtonClick = (index: number) => {
+        croppingImage().then(setCroppedPhoto);
+    }, [cropInfoMap, selectedPhotos, setCroppedPhoto]);
+
+    const handelPressCancel = (index: number) => {
         if (selectedPhotos.length === 1) {
             return;
         }
 
         const photo = selectedPhotos[index];
         if (photo) {
-            deleteSelectedPhoto({ uri: photo.origin.uri });
+            deletePhoto(photo.uri);
         }
     };
+
+    const handlePress = () => {};
 
     return (
         <ConditionalRenderer
@@ -55,16 +63,18 @@ export default function PhotoRegisterCarousel() {
                 <View>
                     <Title title="사진 등록" />
                     <ScrollView contentContainerStyle={styles.container} horizontal showsHorizontalScrollIndicator={false}>
-                        <View style={styles.imageContainer}>
-                            <ImagePickerIcon currentSize={croppedSelectedPhotos.length} maxSize={5} />
-                        </View>
-                        {croppedSelectedPhotos.map((item, index) => {
+                        <TouchableOpacity onPress={handlePress}>
+                            <View style={styles.imageContainer}>
+                                <ImagePickerIcon currentSize={croppedImage.length} maxSize={5} />
+                            </View>
+                        </TouchableOpacity>
+                        {croppedImage.map((item, index) => {
                             return (
                                 <View key={index} style={styles.imageContainer}>
                                     <TouchableOpacity
                                         containerStyle={styles.cancelButton}
                                         style={styles.cancelBackground}
-                                        onPress={() => handelCancelButtonClick(index)}
+                                        onPress={() => handelPressCancel(index)}
                                     >
                                         <CancelButton width={16} height={16} fill={color.White.toString()} />
                                     </TouchableOpacity>

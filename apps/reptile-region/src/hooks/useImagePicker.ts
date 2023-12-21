@@ -15,7 +15,7 @@ interface UseImagePickerActions {
 }
 
 export default function useImagePicker({ onError, onSuccess }: UseImagePickerActions) {
-    const handleOpenCamera = useCallback(
+    const openCameraPicker = useCallback(
         async (option?: Options) => {
             const hasPermission = await requestIOSPermissions<['camera']>(['camera']);
             if (!hasPermission) {
@@ -39,7 +39,7 @@ export default function useImagePicker({ onError, onSuccess }: UseImagePickerAct
         [onError, onSuccess],
     );
 
-    const handleOpenPicker = useCallback(() => {
+    const openImagePicker = useCallback(() => {
         openPicker({
             mediaType: 'photo',
             cropping: true,
@@ -65,28 +65,28 @@ export default function useImagePicker({ onError, onSuccess }: UseImagePickerAct
                     case 0:
                         return;
                     case 1:
-                        handleOpenCamera();
+                        openCameraPicker();
                         return;
                     case 2:
-                        handleOpenPicker();
+                        openCameraPicker();
                         return;
                 }
             },
         );
-    }, [handleOpenCamera, handleOpenPicker]);
+    }, [openCameraPicker]);
 
     const handleAndroidPress = useCallback(() => {
         Alert.alert('프로필 사진', '변경', [
             {
                 text: '카메라로 찍기',
-                onPress: () => handleOpenCamera(),
+                onPress: () => openCameraPicker(),
             },
             {
                 text: '앨범에서 선택',
-                onPress: handleOpenPicker,
+                onPress: openImagePicker,
             },
         ]);
-    }, [handleOpenCamera, handleOpenPicker]);
+    }, [openCameraPicker, openImagePicker]);
 
     const handlePressProfileImage = useCallback(async () => {
         const handlePress = Platform.select({
@@ -99,6 +99,6 @@ export default function useImagePicker({ onError, onSuccess }: UseImagePickerAct
 
     return {
         handlePressProfileImage,
-        handleOpenCamera,
+        openCameraPicker,
     };
 }

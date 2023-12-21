@@ -2,10 +2,11 @@ import { TouchableTypo } from '@crawl/design-system';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, Keyboard } from 'react-native';
 
+import useCreatePostState from '../context/useCreatePostState';
+
 import useCreatePost from '@/apis/share-post/post/hooks/mutations/useCreatePost';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import { usePhotoSelect } from '@/components/@common/organisms/CameraAlbum';
 import { useTag } from '@/components/@common/organisms/TagTextInput';
 import type { WritePostChangeHeaderProps } from '@/types/routes/props/share-post/create-post';
 
@@ -15,7 +16,7 @@ export const SharePostWritePostHeader = createNativeStackHeader({
 });
 
 export default function ChangeHeader({ navigation }: WritePostChangeHeaderProps) {
-    const { croppedSelectedPhotos } = usePhotoSelect();
+    const { croppedImage } = useCreatePostState();
     const { contents } = useTag();
     const { isPending, mutate } = useCreatePost({
         onSuccess: () => {
@@ -34,12 +35,12 @@ export default function ChangeHeader({ navigation }: WritePostChangeHeaderProps)
     useEffect(() => {
         const headerRight = () => {
             const handleSubmitSharePost = () => {
-                if (croppedSelectedPhotos.length === 0 || contents.length === 0) {
+                if (croppedImage.length === 0 || contents.length === 0) {
                     return;
                 }
 
                 Keyboard.dismiss();
-                mutate({ contents, selectedPhotos: croppedSelectedPhotos });
+                mutate({ contents, selectedPhotos: croppedImage });
             };
 
             return (
@@ -56,7 +57,7 @@ export default function ChangeHeader({ navigation }: WritePostChangeHeaderProps)
         };
 
         navigation.setOptions({ headerRight });
-    }, [navigation, contents, isPending, croppedSelectedPhotos, mutate]);
+    }, [navigation, contents, isPending, mutate, croppedImage]);
 
     return null;
 }

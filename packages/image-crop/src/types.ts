@@ -37,4 +37,4 @@ interface ImageCropActions {
 
 type ImageCropProps = ImageCropState & ImageCropActions;
 
-export type { ImageCropActions, ImageCropProps, ImageCropState };
+export type { CropInfo, ImageCropActions, ImageCropProps, ImageCropState };

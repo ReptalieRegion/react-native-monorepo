@@ -1,14 +1,21 @@
+import { PhotoList, useCameraAlbum } from '@crawl/camera-album';
 import { TouchableTypo, color } from '@crawl/design-system';
+import { ImageCrop } from '@crawl/image-crop';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
+import { useCreatePostActions } from '../context/useCreatePostActions';
+
 import ChangeHeader from './header';
 
-import { CameraAlbum } from '@/components/@common/organisms/CameraAlbum';
+import useToast from '@/components/overlay/Toast/useToast';
 import useImageCropActions from '@/pages/share-post/CreatePost/ImagePickerPage/@hooks/useImageCropActions';
 import type { ImagePickScreenProp } from '@/types/routes/props/share-post/create-post';
 
+const MAX_SELECT_COUNT = 5;
+
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
+    const openToast = useToast();
     const { width, height } = useWindowDimensions();
     const textHeight = 48;
     const photoEditorHeight = height / 2;
@@ -18,13 +25,49 @@ export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
         <>
             <ChangeHeader navigation={navigation} />
             <View style={{ width, height: photoEditorHeight }}>
-                <CameraAlbum.PhotoEditor width={width} height={photoEditorHeight - textHeight} />
+                <PhotoEditorView size={{ width, height: photoEditorHeight - textHeight }} />
                 <CameraAlbumActions height={textHeight} />
             </View>
             <View style={{ height: photoListHeight }}>
-                <CameraAlbum.PhotoList numColumns={4} loadPhotoLimit={60} />
+                <PhotoList
+                    photoFetchOptions={{ first: 100 }}
+                    maxSelectCount={MAX_SELECT_COUNT}
+                    onMaxSelectCount={() => {
+                        openToast({ contents: `이미지는 최대 ${MAX_SELECT_COUNT}입니다`, severity: 'warning' });
+                    }}
+                />
             </View>
         </>
+    );
+}
+
+function PhotoEditorView(props: { size: { width: number; height: number } }) {
+    const {
+        size: { width, height },
+    } = props;
+
+    const { setCropInfo } = useCreatePostActions();
+    const { currentSelectedPhoto } = useCameraAlbum();
+    const uri = currentSelectedPhoto?.uri ?? '';
+
+    if (!currentSelectedPhoto) {
+        return <View style={props.size} />;
+    }
+
+    return (
+        <ImageCrop
+            key={currentSelectedPhoto?.uri}
+            image={{
+                uri,
+                width: currentSelectedPhoto?.width ?? width,
+                height: currentSelectedPhoto?.height ?? height,
+            }}
+            width={props.size.width}
+            height={props.size.height}
+            minScale={0.5}
+            maxScale={3}
+            getCropInfo={setCropInfo}
+        />
     );
 }
 
