@@ -4,7 +4,6 @@ import { OverlayContext } from './OverlayContext';
 
 export default function OverlayProvider({ children }: PropsWithChildren) {
     const [overlayById, setOverlayById] = useState<Map<string, ReactNode>>(new Map());
-    console.log(overlayById);
 
     const mount = useCallback((id: string, element: ReactNode) => {
         setOverlayById((prevOverlayById) => {

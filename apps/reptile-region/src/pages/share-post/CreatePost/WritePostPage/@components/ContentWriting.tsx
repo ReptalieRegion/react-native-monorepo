@@ -21,7 +21,6 @@ export default function ContentsWriting() {
                         style={styles.textarea}
                         placeholder="일상을 공유해 주세요."
                         maxLength={POST_MAX_CONTENT_LENGTH}
-                        onChangeText={console.log}
                         multiline
                     />
                 </View>

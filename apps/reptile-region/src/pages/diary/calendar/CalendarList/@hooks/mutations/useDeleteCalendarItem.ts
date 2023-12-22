@@ -36,7 +36,6 @@ export default function useDeleteCalendarItem({ searchDate }: UseDeleteCalendarI
             queryClient.invalidateQueries({ queryKey, exact: true });
         },
         onError: (_error, _variables, context) => {
-            console.log(_error);
             if (context) {
                 queryClient.setQueryData<FetchCalendar['Response']>(queryKey, context.prevCalendarList);
             }

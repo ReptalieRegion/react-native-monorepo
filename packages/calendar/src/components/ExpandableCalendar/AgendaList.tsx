@@ -39,7 +39,6 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...pro
     );
 
     const _handleScrollBeginDrag = useCallback(() => {
-        console.log('hi');
         isScrollStart.current = true;
     }, []);
 
