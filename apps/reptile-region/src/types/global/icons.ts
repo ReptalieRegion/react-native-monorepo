@@ -7,6 +7,7 @@ interface IconProps {
     height?: NumberProp;
     fill?: ColorValue;
     stroke?: ColorValue | undefined;
+    strokeWidth?: NumberProp;
 }
 
 type IconFunction = (props: IconProps) => React.JSX.Element;

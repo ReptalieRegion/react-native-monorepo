@@ -17,8 +17,8 @@ interface UseImagePickerActions {
 export default function useImagePicker({ onError, onSuccess }: UseImagePickerActions) {
     const openCameraPicker = useCallback(
         async (option?: Options) => {
-            const hasPermission = await requestIOSPermissions<['camera']>(['camera']);
-            if (!hasPermission) {
+            const { camera } = await requestIOSPermissions<['camera']>(['camera']);
+            if (!camera?.isGranted) {
                 return;
             }
 

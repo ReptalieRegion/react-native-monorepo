@@ -1,23 +1,28 @@
 import { PhotoList, useCameraAlbum } from '@crawl/camera-album';
-import { TouchableTypo, color } from '@crawl/design-system';
+import { color } from '@crawl/design-system';
 import { ImageCrop } from '@crawl/image-crop';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useCreatePostActions } from '../context/useCreatePostActions';
 
 import ChangeHeader from './header';
 
+import { Album, StrokeCamera } from '@/assets/icons';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import useToast from '@/components/overlay/Toast/useToast';
 import useImageCropActions from '@/pages/share-post/CreatePost/ImagePickerPage/@hooks/useImageCropActions';
 import type { ImagePickScreenProp } from '@/types/routes/props/share-post/create-post';
+import { photoPermissionCheck } from '@/utils/permissions/photo-permission';
 
 const MAX_SELECT_COUNT = 5;
 
 export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
     const openToast = useToast();
+
     const { width, height } = useWindowDimensions();
-    const textHeight = 48;
+    const textHeight = 50;
     const photoEditorHeight = height / 2;
     const photoListHeight = height - photoEditorHeight;
 
@@ -38,6 +43,33 @@ export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
                 />
             </View>
         </>
+    );
+}
+
+function CameraAlbumActions({ height }: { height: number }) {
+    const { handleOpenCamera, handleOpenPhotoPicker } = useImageCropActions();
+    const [isLimitedPermission, setIsLimitedPermission] = useState(false);
+
+    useEffect(() => {
+        photoPermissionCheck().then((photo) => {
+            setIsLimitedPermission(photo?.status === 'limited');
+        });
+    }, []);
+
+    return (
+        <View style={[styles.container, { height: height }]}>
+            <ConditionalRenderer
+                condition={isLimitedPermission}
+                trueContent={
+                    <TouchableOpacity onPress={handleOpenPhotoPicker}>
+                        <Album width={22} height={22} stroke={color.DarkGray[400].toString()} strokeWidth={1.8} />
+                    </TouchableOpacity>
+                }
+            />
+            <TouchableOpacity onPress={handleOpenCamera}>
+                <StrokeCamera height={22} stroke={color.DarkGray[400].toString()} strokeWidth={1.8} />
+            </TouchableOpacity>
+        </View>
     );
 }
 
@@ -71,35 +103,15 @@ function PhotoEditorView(props: { size: { width: number; height: number } }) {
     );
 }
 
-function CameraAlbumActions({ height }: { height: number }) {
-    const { handleOpenCamera, handleOpenPhotoPicker } = useImageCropActions();
-
-    return (
-        <View style={[styles.container, { height: height }]}>
-            <TouchableTypo>최근항목</TouchableTypo>
-            <View style={styles.view}>
-                <TouchableTypo onPress={handleOpenPhotoPicker}>앨범</TouchableTypo>
-                <TouchableTypo onPress={handleOpenCamera}>카메라</TouchableTypo>
-            </View>
-        </View>
-    );
-}
-
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        paddingTop: 15,
-        paddingBottom: 15,
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingLeft: 15,
+        paddingRight: 15,
         backgroundColor: color.White.toString(),
-    },
-    view: {
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 10,
+        gap: 30,
     },
 });

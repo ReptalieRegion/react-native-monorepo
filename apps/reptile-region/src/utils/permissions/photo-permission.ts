@@ -19,6 +19,5 @@ const androidPhotoPermissionCheck = async () => {
 };
 
 export const photoPermissionCheck = async () => {
-    const hasPermission = Platform.OS === 'ios' ? await photoPermissionCheckIOS() : await androidPhotoPermissionCheck();
-    return hasPermission;
+    return Platform.OS === 'ios' ? await photoPermissionCheckIOS() : await androidPhotoPermissionCheck();
 };

@@ -1,3 +1,4 @@
+export { default as Album } from './Album';
 export { default as BackButton } from './BackButton';
 export { default as Calendar } from './Calendar';
 export { default as Camera } from './Camera';
@@ -5,6 +6,7 @@ export { default as CancelButton } from './CancelButton';
 export { default as Cart } from './Cart';
 export { default as ChevronRight } from './ChevronRight';
 export { default as Comment } from './Comment';
+export { default as DatePicker } from './DatePicker';
 export { default as Diary } from './Diary';
 export { default as DotIndicator } from './DotIndicator';
 export { default as Error } from './Error';
@@ -27,4 +29,3 @@ export { default as SuccessBadge } from './SuccessBadge';
 export { default as Trash } from './Trash';
 export { default as UpArrow } from './UpArrow';
 export { default as Warning } from './Warning';
-export { default as DatePicker } from './DatePicker';
