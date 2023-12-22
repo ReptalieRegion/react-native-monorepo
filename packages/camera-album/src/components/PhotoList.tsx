@@ -48,7 +48,7 @@ export default function PhotoList({
     const contentContainerStyle: ContentStyle = useMemo(() => ({ paddingBottom: imageWidth + bottom }), [imageWidth, bottom]);
 
     useEffect(() => {
-        addPhotos({ ...photoFetchOptions, assetType: 'Photos' }).then((photoIdentifiersPage) =>
+        addPhotos({ first: 24, assetType: 'Photos' }).then((photoIdentifiersPage) =>
             initSelectedPhoto({
                 photoIdentifier: photoIdentifiersPage.edges[0],
                 minSelectCount,
@@ -85,6 +85,8 @@ export default function PhotoList({
         },
         [itemStyle, selectPhoto],
     );
+
+    console.log('hi');
 
     return (
         <>

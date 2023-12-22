@@ -32,7 +32,7 @@ function addPhotos(state: PhotoState, photoInfo: AddPhotos['photoInfo']): PhotoS
 function savePhotos(state: PhotoState, photo: SavePhotos['photo']): PhotoState {
     return {
         ...state,
-        photos: [...state.photos, _parsingPhoto(photo)],
+        photos: [_parsingPhoto(photo), ...state.photos],
     };
 }
 

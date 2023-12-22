@@ -33,10 +33,11 @@ export default function usePhotoHandler() {
 
     const savePhoto = useCallback(
         async ({ tag, options }: { tag: string; options?: SaveToCameraRollOptions | undefined }) => {
-            CameraRoll.save(tag, options).then(async () => {
-                const photo = await CameraRoll.getPhotos({ first: 1, assetType: 'Photos' });
-                dispatch({ type: 'SAVE_PHOTOS', photo: photo.edges[0] });
-            });
+            await CameraRoll.save(tag, options);
+            const photo = await CameraRoll.getPhotos({ first: 1, assetType: 'Photos' });
+            dispatch({ type: 'SAVE_PHOTOS', photo: photo.edges[0] });
+
+            return photo;
         },
         [dispatch],
     );
