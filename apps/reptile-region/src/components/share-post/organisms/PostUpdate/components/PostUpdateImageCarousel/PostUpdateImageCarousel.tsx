@@ -5,6 +5,7 @@ import usePostUpdateImages from '../../hooks/usePostUpdateImages';
 
 import ImageItemOverlay from './ImageItemOverlay';
 
+import { Divider } from '@/components/@common/atoms/Divider';
 import { ImageCarousel } from '@/components/@common/organisms/ImageCarousel';
 
 export default function PostUpdateImageCarousel() {
@@ -15,7 +16,7 @@ export default function PostUpdateImageCarousel() {
         <ImageCarousel>
             <ImageCarousel.List
                 images={images}
-                height={300}
+                height={width}
                 width={width}
                 keyboardShouldPersistTaps={'always'}
                 ImageItemOverlay={ImageItemOverlay}
@@ -23,6 +24,7 @@ export default function PostUpdateImageCarousel() {
             <View style={styles.imageCarouselIndicatorContainer}>
                 <ImageCarousel.Indicators imageCount={images.length} />
             </View>
+            <Divider />
         </ImageCarousel>
     );
 }

@@ -6,7 +6,7 @@ import { TagTextInput, useTag } from '@/components/@common/organisms/TagTextInpu
 export default function TextEditor() {
     const { contents } = useTag();
 
-    return <TagTextInput style={styles.textInput} value={contents} multiline autoFocus scrollEnabled={false} />;
+    return <TagTextInput style={styles.textInput} value={contents} multiline autoFocus scrollEnabled={false} maxLength={300} />;
 }
 
 const styles = StyleSheet.create({

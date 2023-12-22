@@ -203,7 +203,7 @@ export default function EntityMangerUpdate({
                     </TouchableWithoutFeedback>
                 </ScrollView>
                 <View style={buttonStyles.buttonContainer}>
-                    <ConfirmButton text="수정 완료" disabled={isPending} onPress={handleSubmit} />
+                    <ConfirmButton text="수정 완료" disabled={isPending || name.length === 0} onPress={handleSubmit} />
                 </View>
             </View>
             <DateTimePickerModal

@@ -1,4 +1,6 @@
+import { color } from '@crawl/design-system';
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import ChangeHeader from './header';
 
@@ -23,8 +25,17 @@ export default function SharePostUpdatePage({
 
     return (
         <PostUpdate minImageCountCallback={handleToast}>
-            <ChangeHeader postId={post.id} navigation={navigation} />
-            <PostUpdate.List images={post.images} contents={post.contents} />
+            <View style={styles.wrapper}>
+                <ChangeHeader postId={post.id} navigation={navigation} />
+                <PostUpdate.List images={post.images} contents={post.contents} />
+            </View>
         </PostUpdate>
     );
 }
+
+const styles = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+        backgroundColor: color.White.toString(),
+    },
+});
