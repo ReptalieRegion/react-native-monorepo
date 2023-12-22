@@ -6,7 +6,8 @@ import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-n
 import { ScrollView } from 'react-native-gesture-handler';
 
 import useCreateWeightBottomSheet from './@common/bottom-sheet/CreateWeight/useCreateWeightBottomSheet';
-import useFindEntity from './@common/hooks/useFindEntity';
+import WeightList from './@common/components/WeightList';
+import useFindEntity from './@common/hooks/queries/useFindEntity';
 import { ChangeHeader } from './header';
 
 import { Plus } from '@/assets/icons';
@@ -80,6 +81,7 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                         </View>
                     </View>
                     <InfiniteLineChart entityId={entityId} yAxisSuffix={weightUnit} />
+                    <WeightList entityId={entityId} />
                 </View>
             </ScrollView>
         </>

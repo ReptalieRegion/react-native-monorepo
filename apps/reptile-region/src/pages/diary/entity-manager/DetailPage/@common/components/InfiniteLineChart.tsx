@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-import useInfiniteFetchEntityWeight from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntityWeight';
+import useEntityWeightChartData from '../hooks/queries/useEntityWeightChartData';
 
 type InfiniteLineChartState = {
     entityId: string;
@@ -16,32 +16,17 @@ type InfiniteLineChartProps = InfiniteLineChartState & InfiniteLineChartActions;
 
 export default function InfiniteLineChart({ entityId, yAxisSuffix }: InfiniteLineChartProps) {
     const { width } = useWindowDimensions();
-    const { data } = useInfiniteFetchEntityWeight({ entityId });
-    const newData = data
-        .reverse()
-        .slice(0, 7)
-        .reduce<{ dateList: string[]; weightList: number[] }>(
-            (prev, curr) => {
-                return {
-                    dateList: [...prev.dateList, curr.date],
-                    weightList: [...prev.weightList, Number(curr.weight)],
-                };
-            },
-            {
-                dateList: [],
-                weightList: [],
-            },
-        );
+    const { data } = useEntityWeightChartData(entityId);
 
     return (
         <View style={styles.container}>
             <LineChart
                 segments={5}
                 data={{
-                    labels: newData.dateList ? ['', ...newData.dateList] : [''],
+                    labels: data.dateList ? ['', ...data.dateList] : [''],
                     datasets: [
                         {
-                            data: newData.weightList ? [0, ...newData.weightList] : [0],
+                            data: data.weightList ? [0, ...data.weightList] : [0],
                             color: (opacity = 1) => color.Teal[150].alpha(opacity).toString(), // optional
                             strokeWidth: 1,
                         },

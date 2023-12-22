@@ -20,6 +20,7 @@ interface VarietyModalActions {
 
 type VarietyModalProps = VarietyModalState & VarietyModalActions;
 
+// TODO: useOverlay로 변경 해야함
 export default function VarietyModal({ visible, initialSelected, onComplete, onClose }: VarietyModalProps) {
     const [variety, setVariety] = useState<EntityVariety>(initialSelected);
     const { bottom, left, right, top } = useSafeAreaInsets();

@@ -3,15 +3,14 @@ import { Typo, color } from '@crawl/design-system';
 import { useOnOff } from '@crawl/react-hooks';
 import dayjs from 'dayjs';
 import React, { useCallback, useState } from 'react';
-import { Alert, Keyboard, Modal, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Keyboard, Modal, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import useCreateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/useCreateEntityWeight';
-import useUpdateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/useUpdateEntityWeight';
+import useCreateOrUpdateEntityWeight from '../../hooks/mutations/useCreateOrUpdateEntityWeight';
+
 import { DatePicker } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import useToast from '@/components/overlay/Toast/useToast';
 import type { WeightUnit } from '@/types/apis/diary/entity';
 
 type CreateWeightBottomSheetState = {
@@ -105,55 +104,23 @@ function Header() {
 
 function SubmitButton({ entityId, weight, selectedDate }: { entityId: string; weight: string; selectedDate: Date }) {
     const { bottomSheetClose } = useBottomSheet();
-    const openToast = useToast();
-
-    const updateEntityWeight = useUpdateEntityWeight({
-        onSuccess: () => {
-            bottomSheetClose();
-        },
-        onError: () => {
-            openToast({ contents: '몸무게 수정에 실패했어요', severity: 'error' });
-        },
-    });
-
-    const createEntityWeight = useCreateEntityWeight({
-        onError: (error) => {
-            if (error.statusCode === 417) {
-                Alert.alert('해당 날짜에 이미 무게가 등록되어 있어요', '수정 하시겠어요?', [
-                    {
-                        text: '취소',
-                        style: 'cancel',
-                        onPress: () => {},
-                    },
-                    {
-                        text: '수정',
-                        onPress: () =>
-                            updateEntityWeight.mutate({
-                                entityId: entityId,
-                                date: dayjs(selectedDate).format('YYYY-MM-DD'),
-                                weight: Number(weight),
-                            }),
-                    },
-                ]);
-            }
-        },
-        onSuccess: () => {
-            bottomSheetClose();
-        },
+    const { mutate, isPending } = useCreateOrUpdateEntityWeight({
+        onSuccess: bottomSheetClose,
     });
 
     const handleCreateEntityWeight = () => {
         if (weight !== undefined && weight?.length !== 0) {
-            createEntityWeight.mutate({
+            mutate({
                 entityId: entityId,
                 date: dayjs(selectedDate).format('YYYY-MM-DD'),
                 weight: Number(weight),
             });
         }
     };
+
     return (
         <View style={[{ marginBottom: Platform.select({ android: 20 }) }]}>
-            <ConfirmButton text="등록" onPress={handleCreateEntityWeight} disabled={!weight || createEntityWeight.isPending} />
+            <ConfirmButton text="등록" onPress={handleCreateEntityWeight} disabled={!weight || isPending} />
         </View>
     );
 }
