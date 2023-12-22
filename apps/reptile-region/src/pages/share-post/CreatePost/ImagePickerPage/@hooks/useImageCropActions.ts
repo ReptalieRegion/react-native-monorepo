@@ -30,13 +30,19 @@ export default function useImageCropActions() {
         ),
     });
 
+    /**
+     * 앨범에서 사진 선택하고 바로 다시 사진 불러오면 에러 발생
+     * 일단 임시로 setTimeout를 줌
+     */
     const handleOpenPhotoPicker = useCallback(() => {
-        openPhotoPicker().then(() =>
-            refetchPhoto({
-                first: 100,
-                assetType: 'Photos',
-            }),
-        );
+        openPhotoPicker().then(() => {
+            setTimeout(() => {
+                refetchPhoto({
+                    first: 100,
+                    assetType: 'Photos',
+                });
+            }, 100);
+        });
     }, [refetchPhoto]);
 
     const handleOpenCamera = useCallback(() => {
