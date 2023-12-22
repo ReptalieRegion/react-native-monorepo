@@ -13,7 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { type TitleAndDescriptionProps } from '../../atoms/TitleAndDescription/TitleAndDescription';
 
-import { Header_HEIGHT } from '@/constants/global';
+import { HEADER_HEIGHT } from '@/constants/global';
 import type { EntityManagerCreateNavigationProp } from '@/types/routes/props/diary/entity';
 
 type CreateTemplateState = {
@@ -32,7 +32,7 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
     const gestureStart = useSharedValue(0);
     const keyboardMaxHeight = useSharedValue(0);
     const keyboard = useAnimatedKeyboard();
-    const titleHeight = useSharedValue(32 + Header_HEIGHT);
+    const titleHeight = useSharedValue(32 + HEADER_HEIGHT);
 
     const contentsAnimation = useAnimatedStyle(() => {
         const isCenter = contentsAlign === 'center';

@@ -8,7 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { BackButton, CancelButton, Logo } from '@/assets/icons';
 import MainStatusBar from '@/components/@common/atoms/StatusBar';
-import { Header_HEIGHT } from '@/constants/global';
+import { HEADER_HEIGHT } from '@/constants/global';
 import type { IconFunction } from '@/types/global/icons';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
@@ -78,7 +78,7 @@ export default function BaseHeader({
 
 const styles = StyleSheet.create({
     container: {
-        height: Header_HEIGHT,
+        height: HEADER_HEIGHT,
         position: 'relative',
         flexDirection: 'row',
         justifyContent: 'center',
