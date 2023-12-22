@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useOverlaySelectEntityBottomSheet from '../@common/bottom-sheet/SelectEntity/useOverlaySelectEntityBottomSheet';
 
-import useCreateCalendarActions from './@hooks/useCreateCalendarActions';
+import useCreateCalendarActions from './hooks/useCreateCalendarActions';
 
 import { Avatar } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';

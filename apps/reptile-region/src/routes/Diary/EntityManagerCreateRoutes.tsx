@@ -5,7 +5,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { BackButton, CancelButton } from '@/assets/icons';
-import CreateEntity from '@/components/diary/organisms/CreateEntity/provider/CreateEntity';
+import CreateEntity from '@/pages/diary/entity-manager/create/@common/context/CreateEntity/provider/CreateEntity';
 import EntityManagerCongratsPage from '@/pages/diary/entity-manager/create/CongratsPage/page';
 import EntityManagerGenderPage from '@/pages/diary/entity-manager/create/GenderPage/page';
 import EntityManagerHatchingDayPage from '@/pages/diary/entity-manager/create/HatchingDayPage/page';

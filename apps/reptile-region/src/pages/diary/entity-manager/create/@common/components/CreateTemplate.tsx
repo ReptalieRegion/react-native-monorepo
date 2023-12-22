@@ -11,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { type TitleAndDescriptionProps } from '../../atoms/TitleAndDescription/TitleAndDescription';
+import { type TitleAndDescriptionProps } from '../../../../../../components/diary/atoms/TitleAndDescription/TitleAndDescription';
 
 import { HEADER_HEIGHT } from '@/constants/global';
 import type { EntityManagerCreateNavigationProp } from '@/types/routes/props/diary/entity';

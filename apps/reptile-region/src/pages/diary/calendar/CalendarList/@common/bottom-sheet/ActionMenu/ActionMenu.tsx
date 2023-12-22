@@ -5,7 +5,7 @@ import React from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import useDeleteCalendarItem from '../../@hooks/mutations/useDeleteCalendarItem';
+import useDeleteCalendarItem from '../../hooks/mutations/useDeleteCalendarItem';
 
 type ActionMenuState = {
     calendar: {

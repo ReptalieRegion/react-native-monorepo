@@ -6,9 +6,9 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
 import useKeyboardOpenButtonSize from '@/hooks/useKeyboardOpenButtonSize';
+import CreateTemplate from '@/pages/diary/entity-manager/create/@common/components/CreateTemplate';
+import useCreateEntity from '@/pages/diary/entity-manager/create/@common/context/CreateEntity/hooks/useCreateEntity';
 import type { WeightUnit } from '@/types/apis/diary/entity';
 import type { EntityManagerCreateWeightScreenProps } from '@/types/routes/props/diary/entity';
 
