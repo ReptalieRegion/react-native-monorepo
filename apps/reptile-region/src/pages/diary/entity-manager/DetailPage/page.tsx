@@ -5,14 +5,14 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import useCreateWeightBottomSheet from './bottom-sheet/CreateWeight/useCreateWeightBottomSheet';
+import useCreateWeightBottomSheet from './@common/bottom-sheet/CreateWeight/useCreateWeightBottomSheet';
+import useFindEntity from './@common/hooks/useFindEntity';
 import { ChangeHeader } from './header';
 
-import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
 import { Plus } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import GenderIcon from '@/components/diary/atoms/GenderIcon/GenderIcon';
-import InfiniteLineChart from '@/components/diary/organisms/Chart/components/InfiniteLineChart';
+import InfiniteLineChart from '@/pages/diary/entity-manager/DetailPage/@common/components/InfiniteLineChart';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerDetailPage(props: EntityManagerDetailScreenProps) {
@@ -23,17 +23,16 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
     } = props;
 
     const { width } = useWindowDimensions();
-    const { data } = useInfiniteFetchEntity();
+    const { data } = useFindEntity(entityId);
     const openCreateWeightBottomSheet = useCreateWeightBottomSheet();
 
-    const foundEntity = data.find(({ entity }) => entity.id === entityId);
-    if (foundEntity === undefined) {
+    if (data === undefined) {
         return null;
     }
 
     const {
         entity: { id, gender, hatching, image, name, variety, weightUnit },
-    } = foundEntity;
+    } = data;
 
     const navigateCreateWeight = () => {
         openCreateWeightBottomSheet({ entity: { id, weightUnit } });

@@ -22,7 +22,8 @@
         "stores": "Global",
         "@utils": "Utils",
         "@common": "Shared",
-        "@hooks": "Hook"
+        "@hooks": "Hook",
+        "@components": "Components"
     },
     "cSpell.words": [
         "bootsplash",

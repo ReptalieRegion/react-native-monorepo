@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import type { ReactNode } from 'react';
 import React from 'react';
 import type { TextStyle, ViewStyle } from 'react-native';
-import { StyleSheet, View } from 'react-native';
+import { Keyboard, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { BackButton, CancelButton, Logo } from '@/assets/icons';
@@ -55,6 +55,7 @@ export default function BaseHeader({
             leftIconClick();
             return;
         }
+        Keyboard.dismiss();
         navigation.goBack();
     };
 

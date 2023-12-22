@@ -39,14 +39,14 @@ export default function BottomSheetContainer({
 
     const maxHeight = useMemo(() => dimensions.height - top, [dimensions.height, top]);
 
-    const snapAnimatedStyles = useAnimatedStyle(
-        () => ({
+    const snapAnimatedStyles = useAnimatedStyle(() => {
+        console.log(Math.max(keyboard.height.value, bottom), translateY.value);
+        return {
             height: Math.min(height.value + keyboard.height.value, maxHeight),
             paddingBottom: Math.max(keyboard.height.value, bottom),
             transform: [{ translateY: translateY.value }],
-        }),
-        [keyboard.state.value, keyboard.height.value, bottom, translateY.value],
-    );
+        };
+    }, [keyboard.state.value, keyboard.height.value, bottom, translateY.value]);
 
     const animatedStyle = useMemo(() => [styles.viewContainer, snapAnimatedStyles, border], [snapAnimatedStyles, border]);
 

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import type { EntityManagerOptionsMenuBottomSheetProps } from './bottom-sheet/EntityManagerOptionsMenu/EntityManagerOptionsMenu';
-import useEntityManagerOptionsMenuBottomSheet from './bottom-sheet/EntityManagerOptionsMenu/useEntityManagerOptionsMenuBottomSheet';
+import type { EntityManagerOptionsMenuBottomSheetProps } from './@common/bottom-sheet/EntityManagerOptionsMenu/EntityManagerOptionsMenu';
+import useEntityManagerOptionsMenuBottomSheet from './@common/bottom-sheet/EntityManagerOptionsMenu/useEntityManagerOptionsMenuBottomSheet';
 
 import { KebabMenu } from '@/assets/icons';
 import { createNativeStackHeader } from '@/components/@common/molecules';

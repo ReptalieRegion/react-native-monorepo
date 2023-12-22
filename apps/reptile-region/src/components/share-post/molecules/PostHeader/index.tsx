@@ -75,4 +75,7 @@ const styles = StyleSheet.create({
     paddingBottom: {
         paddingBottom: 10,
     },
+    optionMenuPadding: {
+        paddingBottom: 10,
+    },
 });

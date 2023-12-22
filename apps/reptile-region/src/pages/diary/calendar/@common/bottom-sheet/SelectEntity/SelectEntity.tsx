@@ -5,7 +5,8 @@ import React, { useCallback } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
+import useInfiniteFetchEntity from '../../hooks/queries/useInfiniteFetchEntity';
+
 import { Avatar } from '@/components/@common/atoms';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
