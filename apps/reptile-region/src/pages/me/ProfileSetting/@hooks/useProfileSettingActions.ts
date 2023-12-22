@@ -2,11 +2,11 @@ import { useCallback } from 'react';
 import { Alert } from 'react-native';
 
 import useUpdateProfile from '@/apis/me/profile/hooks/mutations/useUpdateProfile';
-import { useToast } from '@/components/@common/organisms/Toast';
+import useToast from '@/components/overlay/Toast/useToast';
 import useImagePicker from '@/hooks/useImagePicker';
 
 export default function useProfileSettingActions() {
-    const { openToast } = useToast();
+    const openToast = useToast();
     const { mutate } = useUpdateProfile();
 
     const { handlePressProfileImage } = useImagePicker({

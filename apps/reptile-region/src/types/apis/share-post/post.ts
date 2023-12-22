@@ -1,6 +1,7 @@
+import type { Photo } from '@crawl/camera-album';
+
 import type { InfiniteState, ServerAPI } from '../utils';
 
-import type { Photo } from '@/components/@common/organisms/CameraAlbum/types';
 import type { ImageType } from '@/types/global/image';
 
 /**

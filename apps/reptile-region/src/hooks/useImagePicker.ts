@@ -68,12 +68,12 @@ export default function useImagePicker({ onError, onSuccess }: UseImagePickerAct
                         openCameraPicker();
                         return;
                     case 2:
-                        openCameraPicker();
+                        openImagePicker();
                         return;
                 }
             },
         );
-    }, [openCameraPicker]);
+    }, [openCameraPicker, openImagePicker]);
 
     const handleAndroidPress = useCallback(() => {
         Alert.alert('프로필 사진', '변경', [

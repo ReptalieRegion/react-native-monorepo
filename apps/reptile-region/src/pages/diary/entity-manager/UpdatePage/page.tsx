@@ -19,7 +19,7 @@ import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import ImagePickerIcon from '@/components/@common/molecules/ImagePickerIcon/ImagePickerIcon';
 import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
-import { useToast } from '@/components/@common/organisms/Toast';
+import useToast from '@/components/overlay/Toast/useToast';
 import useImagePicker from '@/hooks/useImagePicker';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
 import type { IconFunction } from '@/types/global/icons';
@@ -57,7 +57,7 @@ export default function EntityMangerUpdate({
     const [variety, setVariety] = useState<EntityVariety>(entity.variety);
     const { off: varietyOff, on: varietyOn, state: isVarietyVisible } = useOnOff();
     const { off: datePickerOff, on: datePickerOn, state: isDatePickerVisible } = useOnOff();
-    const { openToast } = useToast();
+    const openToast = useToast();
     const { openLoading, closeLoading } = useGlobalLoading();
 
     const { handlePressProfileImage } = useImagePicker({

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import type { EntityManagerOptionsMenuBottomSheetProps } from './bottom-sheet/EntityManagerOptionsMenu/EntityManagerOptionsMenu';
 import useEntityManagerOptionsMenuBottomSheet from './bottom-sheet/EntityManagerOptionsMenu/useEntityManagerOptionsMenuBottomSheet';
 
 import { KebabMenu } from '@/assets/icons';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import type { EntityOptionsMenuParams } from '@/types/routes/params/diary';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/entity';
 
 export const EntityManagerDetailPageHeader = createNativeStackHeader({
@@ -16,7 +16,7 @@ export const EntityManagerDetailPageHeader = createNativeStackHeader({
 export function ChangeHeader({
     navigation,
     entity,
-}: Pick<EntityManagerDetailScreenProps, 'navigation'> & EntityOptionsMenuParams) {
+}: Pick<EntityManagerDetailScreenProps, 'navigation'> & Pick<EntityManagerOptionsMenuBottomSheetProps, 'entity'>) {
     const openEntityManagerOptionsMenuBottomSheet = useEntityManagerOptionsMenuBottomSheet();
 
     useEffect(() => {

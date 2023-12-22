@@ -6,8 +6,8 @@ import { useAuth } from '../../hooks/useAuth';
 import useAuthCacheInvalidateQueries from '@/apis/@utils/react-query-cache/useAuthCacheInvalidateQueries';
 import useRefresh from '@/apis/auth/hooks/mutations/useRefresh';
 import { deleteAuthTokens, getRefreshToken } from '@/apis/auth/utils/secure-storage-token';
-import { useToast } from '@/components/@common/organisms/Toast';
 import useFCM from '@/components/auth/organisms/Auth/hooks/useFCM';
+import useToast from '@/components/overlay/Toast/useToast';
 
 export default function InitialAuth() {
     const { initializeFCM } = useFCM();
@@ -16,7 +16,7 @@ export default function InitialAuth() {
     const { invalidateAuthQueries } = useAuthCacheInvalidateQueries();
 
     const { isSignIn, signIn } = useAuth();
-    const { openToast } = useToast();
+    const openToast = useToast();
 
     useEffect(() => {
         const initSignIn = async () => {

@@ -4,15 +4,15 @@ import { StyleSheet, View } from 'react-native';
 
 import { StrokeCamera } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import { useToast } from '@/components/@common/organisms/Toast';
 import EntityCard from '@/components/diary/molecules/EntityCard/EntityCard';
 import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
 import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
+import useToast from '@/components/overlay/Toast/useToast';
 import useImagePicker from '@/hooks/useImagePicker';
 import type { EntityManagerCreateImageScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerImagePage({ navigation }: EntityManagerCreateImageScreenProps) {
-    const { openToast } = useToast();
+    const openToast = useToast();
     const {
         entityDate: { image },
         setCreateEntity,

@@ -2,17 +2,17 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { Platform } from 'react-native';
 
-import { useToast } from '@/components/@common/organisms/Toast';
 import SignInLogo from '@/components/auth/atoms/SignInLogo/SignInLogo';
 import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import SignInTemplates, { type SocialButtons } from '@/components/auth/templates/SignInTemplates';
+import useToast from '@/components/overlay/Toast/useToast';
 import type { PostAppleAuth, PostKakaoAuth, SignUpRegister0 } from '@/types/apis/auth';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 type SignInScreenProps = NativeStackScreenProps<RootRoutesParamList, 'sign-in'>;
 
 const SignInPage = ({ navigation, route: { params } }: SignInScreenProps) => {
-    const { openToast } = useToast();
+    const openToast = useToast();
     const { signIn } = useAuth();
 
     const navigateSignUpPage = (data: Omit<SignUpRegister0, 'type'>) => {

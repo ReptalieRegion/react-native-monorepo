@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import HTTPError from '@/apis/@utils/error/HTTPError';
 import { Error } from '@/assets/icons';
-import { useToast } from '@/components/@common/organisms/Toast';
+import useToast from '@/components/overlay/Toast/useToast';
 
 type GlobalErrorState = {
     error: Error | HTTPError;
@@ -19,7 +19,7 @@ type GlobalErrorProps = GlobalErrorState & GlobalErrorActions;
 
 export default function GlobalError({ error, reset }: GlobalErrorProps) {
     const queryClient = useQueryClient();
-    const { openToast } = useToast();
+    const openToast = useToast();
 
     if (__DEV__) {
         console.log(error.message);

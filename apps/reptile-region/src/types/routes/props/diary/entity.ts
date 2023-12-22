@@ -1,4 +1,4 @@
-import type { CompositeNavigationProp, CompositeScreenProps, NavigationProp } from '@react-navigation/native';
+import type { CompositeNavigationProp, CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import type { RootRoutesParamList } from '../../param-list';
@@ -24,37 +24,32 @@ type EntityManagerCreateCongratsScreenProps = CompositeScreenProps<
     NativeStackScreenProps<RootRoutesParamList, 'entity-manager/create'>
 >;
 
+type EntityManagerCreateNavigationProp = NativeStackNavigationProp<RootRoutesParamList, 'calendar/create'>;
+
 // 개체 관리 상세 페이지
 type EntityManagerDetailScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/detail'>;
-type EntityManagerDetailNavigationProp = NavigationProp<RootRoutesParamList, 'entity-manager/detail'>;
-
-// 개체 관리 옵션 바텀시트
-type EntityManagerOptionsMenuScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/options-menu'>;
-
-// 개체 관리 몸무게 등록 바텀시트
-type EntityCreateWeightScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/create-weight'>;
+type EntityManagerDetailNavigationProp = NativeStackNavigationProp<RootRoutesParamList, 'entity-manager/detail'>;
 
 // 개체 관리 수정
 type EntityUpdateScreenProps = NativeStackScreenProps<RootRoutesParamList, 'entity-manager/update'>;
 
 type EntityNavigationProp = CompositeNavigationProp<
-    NavigationProp<EntityManagerParamList, 'entity-manager/list'>,
-    NavigationProp<RootRoutesParamList>
+    NativeStackNavigationProp<EntityManagerParamList, 'entity-manager/list'>,
+    NativeStackNavigationProp<RootRoutesParamList>
 >;
 
 export type {
-    EntityCreateWeightScreenProps,
     EntityManagerCreateCongratsScreenProps,
     EntityManagerCreateGenderScreenProps,
     EntityManagerCreateHatchingScreenProps,
     EntityManagerCreateImageNavigationProps,
     EntityManagerCreateImageScreenProps,
     EntityManagerCreateNameScreenProps,
+    EntityManagerCreateNavigationProp,
     EntityManagerCreateTypeAndMorphScreenProps,
     EntityManagerCreateWeightScreenProps,
     EntityManagerDetailNavigationProp,
     EntityManagerDetailScreenProps,
-    EntityManagerOptionsMenuScreenProps,
     EntityNavigationProp,
     EntityUpdateScreenProps,
 };

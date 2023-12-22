@@ -1,6 +1,7 @@
 import { Typo, color } from '@crawl/design-system';
-import React, { type ReactNode } from 'react';
-import { Platform, StyleSheet, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, type ReactNode } from 'react';
+import { Keyboard, Platform, StyleSheet, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native';
 import Animated, {
     KeyboardState,
     useAnimatedKeyboard,
@@ -13,6 +14,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { type TitleAndDescriptionProps } from '../../atoms/TitleAndDescription/TitleAndDescription';
 
 import { Header_HEIGHT } from '@/constants/global';
+import type { EntityManagerCreateNavigationProp } from '@/types/routes/props/diary/entity';
 
 type CreateTemplateState = {
     contents: ReactNode;
@@ -27,6 +29,8 @@ const paddingHorizontal = 20;
 export default function CreateTemplate({ title, contents, button, contentsAlign = 'center' }: CreateTemplateProps) {
     const dimensions = useWindowDimensions();
     const { bottom } = useSafeAreaInsets();
+    const gestureStart = useSharedValue(0);
+    const keyboardMaxHeight = useSharedValue(0);
     const keyboard = useAnimatedKeyboard();
     const titleHeight = useSharedValue(32 + Header_HEIGHT);
 
@@ -50,11 +54,41 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
         };
     }, [dimensions, titleHeight.value]);
 
+    const navigation = useNavigation<EntityManagerCreateNavigationProp>();
+
+    useEffect(() => {
+        const transitionStart = navigation.addListener('transitionStart', () => {
+            gestureStart.value = 1;
+        });
+        const transitionEnd = navigation.addListener('transitionEnd', () => {
+            gestureStart.value = 0;
+        });
+        const show = Keyboard.addListener('keyboardDidShow', (event) => {
+            keyboardMaxHeight.value = event.endCoordinates.height;
+        });
+
+        return () => {
+            show.remove();
+            transitionStart();
+            transitionEnd();
+        };
+    }, [gestureStart, keyboardMaxHeight, navigation]);
+
     const buttonAnimationIOS = useAnimatedStyle(() => {
         const { height, state } = keyboard;
-        if (state.value === KeyboardState.OPEN || state.value === KeyboardState.OPENING) {
+
+        if (gestureStart.value === 1) {
+            console.log(gestureStart.value);
             return {
-                transform: [{ translateY: -height.value + bottom }],
+                bottom,
+            };
+        }
+
+        if (state.value === KeyboardState.OPEN || state.value === KeyboardState.OPENING) {
+            const newKeyboardHeight =
+                keyboardMaxHeight.value === 0 ? height.value : Math.min(keyboardMaxHeight.value, height.value);
+            return {
+                transform: [{ translateY: -newKeyboardHeight + bottom }],
             };
         }
 

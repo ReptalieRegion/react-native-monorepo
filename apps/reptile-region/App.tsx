@@ -10,7 +10,6 @@ import GlobalError from './error';
 
 import Alert from '@/components/@common/organisms/Alert';
 import Loading from '@/components/@common/organisms/Loading/LoadingProvider';
-import Toast from '@/components/@common/organisms/Toast';
 import { Auth } from '@/components/auth/organisms/Auth';
 import useEffectNotifee from '@/hooks/useEffectNotifee';
 import ReactQueryProvider from '@/providers/ReactQuery';
@@ -26,19 +25,17 @@ export default function App() {
             <ReactQueryProvider>
                 <GestureHandlerRootView style={styles.gestureContainer}>
                     <SafeAreaProvider>
-                        <Toast>
+                        <OverlayProvider>
                             <Alert>
                                 <Auth>
                                     <ErrorBoundary
                                         renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}
                                     >
-                                        <OverlayProvider>
-                                            <RootRoutes navigationRef={navigationRef} />
-                                        </OverlayProvider>
+                                        <RootRoutes navigationRef={navigationRef} />
                                     </ErrorBoundary>
                                 </Auth>
                             </Alert>
-                        </Toast>
+                        </OverlayProvider>
                     </SafeAreaProvider>
                 </GestureHandlerRootView>
             </ReactQueryProvider>

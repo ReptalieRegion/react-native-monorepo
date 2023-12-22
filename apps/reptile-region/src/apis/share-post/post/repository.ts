@@ -1,6 +1,5 @@
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
-import { wait } from '@/mocks/utils/helpers';
 import type {
     CreateLike,
     CreatePost,
@@ -69,7 +68,6 @@ export const getLikes = async ({ pageParam, postId }: WithInfinitePageParam<Fetc
         pageParam,
     });
     const response = await clientFetch(`api/share/posts/${postId}/like/list?${queryString}`);
-    await wait(3000);
 
     return response.json();
 };

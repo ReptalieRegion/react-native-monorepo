@@ -11,7 +11,7 @@ import useCreateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/u
 import useUpdateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/useUpdateEntityWeight';
 import { DatePicker } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import { useToast } from '@/components/@common/organisms/Toast';
+import useToast from '@/components/overlay/Toast/useToast';
 import type { WeightUnit } from '@/types/apis/diary/entity';
 
 type CreateWeightBottomSheetState = {
@@ -105,7 +105,7 @@ function Header() {
 
 function SubmitButton({ entityId, weight, selectedDate }: { entityId: string; weight: string; selectedDate: Date }) {
     const { bottomSheetClose } = useBottomSheet();
-    const { openToast } = useToast();
+    const openToast = useToast();
 
     const updateEntityWeight = useUpdateEntityWeight({
         onSuccess: () => {

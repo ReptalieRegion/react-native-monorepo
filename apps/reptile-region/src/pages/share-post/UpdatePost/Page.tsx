@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import ChangeHeader from './header';
 
-import { useToast } from '@/components/@common/organisms/Toast';
+import useToast from '@/components/overlay/Toast/useToast';
 import PostUpdate from '@/components/share-post/organisms/PostUpdate/providers/PostUpdate';
 import type { SharePostUpdateScreen } from '@/types/routes/props/share-post/update-post';
 
@@ -14,7 +14,7 @@ export default function SharePostUpdatePage({
         params: { post },
     },
 }: SharePostUpdateScreen) {
-    const { openToast } = useToast();
+    const openToast = useToast();
 
     const handleToast = () => {
         openToast({
