@@ -15,7 +15,7 @@ export default function PostingRoutes() {
                 <Stack.Screen
                     name="image-crop"
                     component={SharePostImagePickerPage}
-                    options={{ header: SharePostImagePickerHeader }}
+                    options={{ header: SharePostImagePickerHeader, animation: 'slide_from_bottom' }}
                 />
                 <Stack.Screen name="write" component={SharePostWritePostPage} options={{ header: SharePostWritePostHeader }} />
             </Stack.Navigator>

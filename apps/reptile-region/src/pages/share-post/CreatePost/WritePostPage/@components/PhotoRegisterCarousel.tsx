@@ -1,6 +1,7 @@
 import { useCameraAlbum, useCameraAlbumHandler, type Photo } from '@crawl/camera-album';
 import { color } from '@crawl/design-system';
 import { cropImage } from '@crawl/image-crop';
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { ActivityIndicator, Image, StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -14,6 +15,7 @@ import { CancelButton } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ImagePickerIcon from '@/components/@common/molecules/ImagePickerIcon/ImagePickerIcon';
 import { useTagSearch } from '@/components/@common/organisms/TagTextInput';
+import type { WritePostNavigationProp } from '@/types/routes/props/share-post/create-post';
 
 export default function PhotoRegisterCarousel() {
     const { enabled } = useTagSearch();
@@ -21,6 +23,7 @@ export default function PhotoRegisterCarousel() {
     const { selectedPhotos } = useCameraAlbum();
     const { setCroppedPhoto } = useCreatePostActions();
     const { cropInfoMap, croppedImage } = useCreatePostState();
+    const navigation = useNavigation<WritePostNavigationProp>();
 
     useEffect(() => {
         const croppingImage = async () => {
@@ -53,7 +56,9 @@ export default function PhotoRegisterCarousel() {
         }
     };
 
-    const handlePress = () => {};
+    const navigateImageCrop = () => {
+        navigation.navigate('share-post/modal/posting', { screen: 'image-crop' });
+    };
 
     return (
         <ConditionalRenderer
@@ -63,11 +68,9 @@ export default function PhotoRegisterCarousel() {
                 <View>
                     <Title title="사진 등록" />
                     <ScrollView contentContainerStyle={styles.container} horizontal showsHorizontalScrollIndicator={false}>
-                        <TouchableOpacity onPress={handlePress}>
-                            <View style={styles.imageContainer}>
-                                <ImagePickerIcon currentSize={croppedImage.length} maxSize={5} />
-                            </View>
-                        </TouchableOpacity>
+                        <View style={styles.imageContainer}>
+                            <ImagePickerIcon currentSize={croppedImage.length} maxSize={5} onPress={navigateImageCrop} />
+                        </View>
                         {croppedImage.map((item, index) => {
                             return (
                                 <View key={index} style={styles.imageContainer}>

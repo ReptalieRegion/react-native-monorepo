@@ -62,7 +62,7 @@ function CameraAlbumActions({ height }: { height: number }) {
                 condition={isLimitedPermission}
                 trueContent={
                     <TouchableOpacity onPress={handleOpenPhotoPicker}>
-                        <Album width={22} height={22} stroke={color.DarkGray[400].toString()} strokeWidth={1.8} />
+                        <Album height={22} stroke={color.DarkGray[400].toString()} strokeWidth={1.8} />
                     </TouchableOpacity>
                 }
             />

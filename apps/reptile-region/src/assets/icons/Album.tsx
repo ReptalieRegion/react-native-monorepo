@@ -12,15 +12,15 @@ export default function Album({
     strokeWidth = 1,
 }: IconProps) {
     return (
-        <Svg width={width} height={height} viewBox="0 0 26 26" fill="none">
+        <Svg width={width} height={height} viewBox="0 0 26 24" fill="none">
             <Path
-                d="M17.7143 10.9286C18.9372 10.9286 19.9286 9.9372 19.9286 8.71429C19.9286 7.49137 18.9372 6.5 17.7143 6.5C16.4914 6.5 15.5 7.49137 15.5 8.71429C15.5 9.9372 16.4914 10.9286 17.7143 10.9286Z"
+                d="M17.5 9.75C18.6046 9.75 19.5 8.85457 19.5 7.75C19.5 6.64543 18.6046 5.75 17.5 5.75C16.3954 5.75 15.5 6.64543 15.5 7.75C15.5 8.85457 16.3954 9.75 17.5 9.75Z"
                 fill={fill}
                 stroke={stroke}
                 strokeWidth={strokeWidth}
             />
             <Path
-                d="M1 18.1429V1H25V18.1429M1 18.1429V25H25V18.1429M1 18.1429L9.57143 11.2857L18.1429 18.1429L21.5714 14.7143L25 18.1429"
+                d="M1 16V1H25V16M1 16V22H25V16M1 16L9.57143 10L18.1429 16L21.5714 13L25 16"
                 stroke={stroke}
                 strokeWidth={strokeWidth}
                 strokeLinecap="round"

@@ -70,7 +70,7 @@ export default function BaseHeader({
                         {title}
                     </Typo>
                 </View>
-                <View style={[styles.right]}>{typeof right === 'string' ? <Typo>{right}</Typo> : right}</View>
+                <View style={styles.right}>{typeof right === 'string' ? <Typo>{right}</Typo> : right}</View>
             </View>
         </>
     );
@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
     right: {
         position: 'absolute',
         right: 20,
-        height: 30,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

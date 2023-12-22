@@ -1,4 +1,4 @@
-import type { CompositeNavigationProp, CompositeScreenProps } from '@react-navigation/native';
+import type { CompositeNavigationProp, CompositeScreenProps, NavigationProp } from '@react-navigation/native';
 import type { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 
 import type { RootRoutesParamList } from '@/types/routes/param-list';
@@ -18,6 +18,12 @@ type WritePostScreenProps = CompositeScreenProps<
     NativeStackScreenProps<RootRoutesParamList>
 >;
 
+// 글쓰기 네비게이터
+type WritePostNavigationProp = CompositeNavigationProp<
+    NavigationProp<PostingParamList, 'write'>,
+    NavigationProp<RootRoutesParamList>
+>;
+
 // 글쓰기 페이지 Header 변경할 Props
 type WritePostChangeHeaderProps = {
     navigation: CompositeNavigationProp<
@@ -26,4 +32,10 @@ type WritePostChangeHeaderProps = {
     >;
 };
 
-export type { ImagePickChangeHeaderProps, ImagePickScreenProp, WritePostChangeHeaderProps, WritePostScreenProps };
+export type {
+    ImagePickChangeHeaderProps,
+    ImagePickScreenProp,
+    WritePostChangeHeaderProps,
+    WritePostNavigationProp,
+    WritePostScreenProps,
+};
