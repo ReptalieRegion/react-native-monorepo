@@ -86,8 +86,6 @@ export default function PhotoList({
         [itemStyle, selectPhoto],
     );
 
-    console.log('hi');
-
     return (
         <>
             <ChangeLimitType onMaxSelectCount={onMaxSelectCount} onMinSelectCount={onMinSelectCount} />
