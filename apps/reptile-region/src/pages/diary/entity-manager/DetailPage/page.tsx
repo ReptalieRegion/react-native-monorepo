@@ -1,9 +1,10 @@
-import { TouchableTypo, Typo, color } from '@crawl/design-system';
+import { Typo, color } from '@crawl/design-system';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useCreateWeightBottomSheet from './@common/bottom-sheet/CreateWeight/useCreateWeightBottomSheet';
 import useFindEntity from './@common/hooks/queries/useFindEntity';
@@ -12,23 +13,25 @@ import useInfiniteFetchEntityWeight from './@common/hooks/queries/useInfiniteFet
 import { ChangeHeader } from './header';
 
 import { Plus } from '@/assets/icons';
-import { ConditionalRenderer } from '@/components/@common/atoms';
+import { ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
 import GenderIcon from '@/components/diary/atoms/GenderIcon/GenderIcon';
 import InfiniteLineChart from '@/pages/diary/entity-manager/DetailPage/@common/components/InfiniteLineChart';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/entity';
 
-export default function EntityManagerDetailPage(props: EntityManagerDetailScreenProps) {
-    const {
-        route: {
-            params: { entityId },
-        },
-    } = props;
-
+export default function EntityManagerDetailPage({
+    navigation,
+    route: {
+        params: { entityId },
+    },
+}: EntityManagerDetailScreenProps) {
     const { width } = useWindowDimensions();
+    const { bottom } = useSafeAreaInsets();
+    const wrapperStyle = useMemo(() => [styles.wrapper, { paddingBottom: bottom }], [bottom]);
+
     const {
         data: { entity },
     } = useFindEntity(entityId);
-    const { data: weightData, fetchNextPage } = useInfiniteFetchEntityWeight(entityId);
+    const { data: weightData, isFetchingNextPage, fetchNextPage } = useInfiniteFetchEntityWeight(entityId);
     const openCreateWeightBottomSheet = useCreateWeightBottomSheet();
 
     const renderListHeader = useCallback(() => {
@@ -69,11 +72,6 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                     <TouchableOpacity style={styles.plusContainer} onPress={navigateCreateWeight}>
                         <Plus width={16} height={16} fill={color.White.toString()} />
                     </TouchableOpacity>
-                    <View style={styles.weightDetailButtonContainer}>
-                        <TouchableTypo variant="title5" color="placeholder">
-                            자세히 보기
-                        </TouchableTypo>
-                    </View>
                 </View>
                 <InfiniteLineChart entityId={entity.id} yAxisSuffix={weightUnit} />
             </>
@@ -116,14 +114,15 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
     );
 
     return (
-        <View style={styles.wrapper}>
-            <ChangeHeader navigation={props.navigation} entity={entity} />
+        <View style={wrapperStyle}>
+            <ChangeHeader navigation={navigation} entity={entity} />
             <FlashList
                 data={weightData}
                 renderItem={renderItem}
-                ListHeaderComponent={renderListHeader}
                 onEndReached={fetchNextPage}
                 estimatedItemSize={weightStyles.itemWrapper.height}
+                ListHeaderComponent={renderListHeader}
+                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
             />
         </View>
     );
@@ -133,6 +132,8 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         backgroundColor: color.White.toString(),
+        margin: 0,
+        padding: 0,
     },
     container: {
         padding: 20,
@@ -173,9 +174,6 @@ const styles = StyleSheet.create({
 });
 
 const weightStyles = StyleSheet.create({
-    wrapper: {
-        height: 500,
-    },
     itemWrapper: {
         flexDirection: 'row',
         alignItems: 'center',
