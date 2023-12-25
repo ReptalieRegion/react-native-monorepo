@@ -27,8 +27,8 @@ export default function App() {
 
     return (
         <Loading>
-            <AuthProvider>
-                <ReactQueryProvider>
+            <ReactQueryProvider>
+                <AuthProvider>
                     <GestureHandlerRootView style={styles.gestureContainer}>
                         <SafeAreaProvider>
                             <OverlayProvider>
@@ -43,8 +43,8 @@ export default function App() {
                             </OverlayProvider>
                         </SafeAreaProvider>
                     </GestureHandlerRootView>
-                </ReactQueryProvider>
-            </AuthProvider>
+                </AuthProvider>
+            </ReactQueryProvider>
         </Loading>
     );
 }

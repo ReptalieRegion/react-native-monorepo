@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useCallback, useContext, useMemo } from 'react';
 
 import { AuthActionsContext } from '../context';
@@ -6,7 +7,7 @@ import { deleteAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 
 // 로그인, 로그 아웃 시 캐시 무효화
 export default function useAuthHandler() {
-    // const queryClient = useQueryClient();
+    const queryClient = useQueryClient();
     const dispatch = useContext(AuthActionsContext);
 
     if (dispatch === null) {
@@ -14,14 +15,14 @@ export default function useAuthHandler() {
     }
 
     const signIn = useCallback(() => {
-        // queryClient.invalidateQueries();
+        queryClient.invalidateQueries();
         dispatch({ type: 'SIGN_IN' });
-    }, [dispatch]);
+    }, [dispatch, queryClient]);
 
     const signOut = useCallback(() => {
-        // queryClient.invalidateQueries();
+        queryClient.invalidateQueries();
         deleteAuthTokens().then(() => dispatch({ type: 'SIGN_OUT' }));
-    }, [dispatch]);
+    }, [dispatch, queryClient]);
 
     return useMemo(
         () => ({

@@ -134,11 +134,7 @@ function fetcher() {
          * @description 리프레시 토큰금지갱신 실패시 실행할 함수 초기화 - AuthProvider에서 초기화
          */
         initRefreshFailCallback: (callback: () => void) => {
-            if (failCallback == null) {
-                failCallback = callback;
-            } else {
-                console.log('[fetcher] initRefreshFailCallback은 AuthProvider에서만 호출해주세요');
-            }
+            failCallback = callback;
         },
         clientFetch: async (input: RequestInfo, init?: CustomRequestInit) => {
             const fetchInfo = await generatorFetchInfo(input, init);
