@@ -25,6 +25,7 @@ export default function useCreatePushAgree() {
                 isAgreePostLike: true,
                 isAgreeService: true,
                 isAgreeFollow: true,
+                isAgreeTag: true,
             }));
 
             return { previousPushAgree } as UseCreatePushAgreeContext;

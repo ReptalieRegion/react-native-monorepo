@@ -27,6 +27,11 @@ const PUSH_AGREE_LIST: PushAgreeListType[] = [
                 label: '댓글 알림',
                 dataTarget: 'isAgreeComment',
             },
+            {
+                type: PushAgreeType.Tag,
+                label: '태그 알림',
+                dataTarget: 'isAgreeTag',
+            },
         ],
     },
     {
@@ -73,11 +78,9 @@ export default function NotificationSetting() {
             subscription.remove();
         };
     }, []);
-
     const updatePushNotification = ({ type, isAgree }: UpdatePushAgree['Request']) => {
         mutate({ type, isAgree });
     };
-
     return (
         <View style={styles.container}>
             <ConditionalRenderer
@@ -125,8 +128,8 @@ export default function NotificationSetting() {
 
 const listStyles = {
     paddingLeft: 0,
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingTop: 8,
+    paddingBottom: 8,
 };
 
 const styles = StyleSheet.create({

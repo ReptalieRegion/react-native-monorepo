@@ -21,6 +21,7 @@ enum PushAgreeType {
     Like = '좋아요',
     Follow = '팔로우',
     Notice = '공지사항',
+    Tag = '태그',
 }
 
 interface BasicContents {
@@ -65,6 +66,7 @@ type FetchPushAgreeResponse = {
     isAgreeComment: boolean;
     isAgreePostLike: boolean;
     isAgreeService: boolean;
+    isAgreeTag: boolean;
     isAgreeFollow: boolean;
 };
 
