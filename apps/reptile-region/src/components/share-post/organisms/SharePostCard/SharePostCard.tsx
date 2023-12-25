@@ -19,6 +19,7 @@ type PostCardState = {
         showFollowButton?: boolean;
         isLike: boolean | undefined;
         likeCount: number;
+        createdAt: string;
         commentCount: number;
         user: {
             id: string;
@@ -52,6 +53,7 @@ export default function SharePostCard({
         contents,
         likeCount,
         isMine,
+        createdAt,
         showFollowButton = true,
         user: { isFollow, nickname, profile },
     },
@@ -85,7 +87,7 @@ export default function SharePostCard({
                     onPressHeart={onPressHeart}
                 />
                 <PostContents
-                    post={{ id: postId, commentCount, contents, likeCount }}
+                    post={{ id: postId, commentCount, contents, likeCount, createdAt }}
                     onPressComment={onPressComment}
                     onPressTag={onPressTag}
                     onPressLikeContents={onPressLikeContents}

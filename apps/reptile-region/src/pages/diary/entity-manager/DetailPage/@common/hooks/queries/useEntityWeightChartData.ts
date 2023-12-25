@@ -17,12 +17,13 @@ export default function useEntityWeightChartData(entityId: string) {
         select: useCallback((data: InfiniteData<InfiniteState<FetchEntityWeightListResponse[]>, number>) => {
             return data.pages
                 .flatMap((page) =>
-                    [...page.items].reverse().map((item) => ({
+                    [...page.items].map((item) => ({
                         date: dayjs(item.date).format('MM/DD'),
                         weight: item.weight,
                     })),
                 )
                 .slice(0, 7)
+                .reverse()
                 .reduce<ChartData>(
                     (prev, curr) => {
                         return {

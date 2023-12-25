@@ -23,10 +23,10 @@ export default function InfiniteLineChart({ entityId, yAxisSuffix }: InfiniteLin
             <LineChart
                 segments={5}
                 data={{
-                    labels: data.dateList ? ['', ...data.dateList] : [''],
+                    labels: data?.dateList ? ['', ...data.dateList] : [''],
                     datasets: [
                         {
-                            data: data.weightList ? [0, ...data.weightList] : [0],
+                            data: data?.weightList ? [0, ...data.weightList] : [0],
                             color: (opacity = 1) => color.Teal[150].alpha(opacity).toString(), // optional
                             strokeWidth: 1,
                         },

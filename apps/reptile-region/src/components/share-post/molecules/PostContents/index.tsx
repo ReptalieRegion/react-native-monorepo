@@ -1,9 +1,10 @@
-import { TouchableTypo } from '@crawl/design-system';
+import { TouchableTypo, Typo } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import TaggedContents from '@/components/share-post/molecules/TaggedContents';
+import { calculateTimeAgo } from '@/utils/date/time-ago';
 
 type PostContentsState = {
     post: {
@@ -11,6 +12,7 @@ type PostContentsState = {
         commentCount: number;
         contents: string;
         id: string;
+        createdAt: string;
     };
 };
 
@@ -23,7 +25,7 @@ interface PostContentsActions {
 type PostContentsProps = PostContentsState & PostContentsActions;
 
 export default function PostContents({
-    post: { id: postId, commentCount, contents, likeCount },
+    post: { id: postId, commentCount, contents, likeCount, createdAt },
     onPressComment,
     onPressTag,
     onPressLikeContents,
@@ -49,6 +51,9 @@ export default function PostContents({
                     </TouchableTypo>
                 }
             />
+            <Typo variant="body4" color="placeholder">
+                {calculateTimeAgo(createdAt)}
+            </Typo>
         </View>
     );
 }

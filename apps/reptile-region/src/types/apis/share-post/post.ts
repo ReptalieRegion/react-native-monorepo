@@ -18,6 +18,7 @@ type FetchPostsResponse = {
         isLike: boolean | undefined;
         likeCount: number;
         commentCount: number;
+        createdAt: string;
         user: {
             id: string;
             nickname: string;
@@ -52,6 +53,7 @@ type FetchMePostListResponse = {
         isLike: boolean | undefined;
         likeCount: number;
         commentCount: number;
+        createdAt: string;
     };
 };
 
@@ -71,6 +73,7 @@ type FetchPostResponse = {
         isLike: boolean | undefined;
         likeCount: number;
         commentCount: number;
+        createdAt: string;
         user: {
             id: string;
             nickname: string;
@@ -95,6 +98,7 @@ type FetchDetailUserPostResponse = {
         isMine: boolean;
         isLike: boolean | undefined;
         likeCount: number;
+        createdAt: string;
         commentCount: number;
     };
 };
@@ -137,6 +141,7 @@ type CreatePostResponse = {
         isLike: undefined;
         likeCount: 0;
         commentCount: 0;
+        createdAt: string;
         user: {
             id: string;
             nickname: string;

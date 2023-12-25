@@ -1,4 +1,4 @@
-import { useSuspenseInfiniteQuery, type UseSuspenseInfiniteQueryOptions } from '@tanstack/react-query';
+import { useInfiniteQuery, type UseSuspenseInfiniteQueryOptions } from '@tanstack/react-query';
 
 import { fetchEntityWeightList } from '../../repository';
 
@@ -25,7 +25,7 @@ export default function useBaseInfiniteFetchEntityWeight<TData>({
     entityId,
     ...props
 }: UseBaseInfiniteFetchEntityWeight<TData>) {
-    return useSuspenseInfiniteQuery<FetchEntityWeightList['Response'], HTTPError, TData, CustomQueryKey, number>({
+    return useInfiniteQuery<FetchEntityWeightList['Response'], HTTPError, TData, CustomQueryKey, number>({
         queryKey: DIARY_QUERY_KEYS.weight(entityId),
         initialPageParam: 0,
         gcTime: Infinity,

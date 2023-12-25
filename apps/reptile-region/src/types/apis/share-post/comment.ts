@@ -19,6 +19,7 @@ type FetchCommentResponse = {
         replyCount: number;
         isMine: boolean;
         isModified: boolean;
+        createdAt: string;
         user: {
             id: string;
             profile: ImageType;
@@ -48,6 +49,7 @@ type CreateCommentResponse = {
             replyCount: number;
             isMine: boolean;
             isModified: boolean;
+            createdAt: string;
             user: {
                 id: string;
                 profile: ImageType;

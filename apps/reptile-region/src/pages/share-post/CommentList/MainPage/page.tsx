@@ -28,6 +28,7 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
                     contents,
                     isMine,
                     isModified,
+                    createdAt,
                     user: { id: userId, nickname, profile },
                 },
             } = item;
@@ -47,6 +48,7 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
                                 contents,
                                 isMine,
                                 isModified,
+                                createdAt,
                                 user: { id: userId, nickname, profile },
                             },
                             isFocus: true,
@@ -59,6 +61,7 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
                                 contents,
                                 isMine,
                                 isModified,
+                                createdAt,
                                 user: { id: userId, nickname, profile },
                             },
                             isFocus: false,

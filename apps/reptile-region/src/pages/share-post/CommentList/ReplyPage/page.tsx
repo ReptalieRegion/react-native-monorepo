@@ -71,6 +71,7 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
                 contents,
                 isMine,
                 isModified,
+                createdAt,
                 user: { id: userId, nickname, profile },
             },
         } = params;
@@ -87,6 +88,7 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
                         contents,
                         isMine,
                         isModified,
+                        createdAt,
                         user: { id: userId, nickname, profile },
                     },
                 }}

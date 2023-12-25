@@ -43,13 +43,14 @@ export default function SharePostDetailModalPage({
                 contents,
                 isMine,
                 isModified,
+                createdAt,
                 user: { id: userId, nickname, profile },
             },
         } = item;
 
         const handleNavigateCommentReplyPage = () => {
             navigateCommentReplyPage({
-                comment: { contents, id: commentId, isMine, isModified, user: { id: userId, nickname, profile } },
+                comment: { contents, id: commentId, isMine, isModified, createdAt, user: { id: userId, nickname, profile } },
                 isFocus: false,
             });
         };

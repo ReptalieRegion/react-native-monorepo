@@ -16,6 +16,7 @@ export default function FollowerList({
     },
 }: FollowerPageScreenProps) {
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFollowerList({ userId });
+    console.log(data);
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
     const { navigateImageThumbnail } = useUserProfileNavigation(pageState);
     const { updateOrCreateFollow } = useProfileListActions({ queryKey: SHARE_POST_QUERY_KEYS.followerList(userId) });

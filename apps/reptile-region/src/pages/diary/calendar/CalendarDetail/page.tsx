@@ -17,7 +17,7 @@ export default function CalendarDetailPage({
 
     return (
         <View style={styles.wrapper}>
-            <View style={cardStyles.wrapper}>
+            <View>
                 <View style={cardStyles.container}>
                     <Image source={{ uri: data?.entity.image.src }} style={cardStyles.imageSize} />
                 </View>
@@ -56,9 +56,6 @@ const styles = StyleSheet.create({
 });
 
 const cardStyles = StyleSheet.create({
-    wrapper: {
-        // padding: 20,
-    },
     container: {
         flexDirection: 'row',
         gap: 10,

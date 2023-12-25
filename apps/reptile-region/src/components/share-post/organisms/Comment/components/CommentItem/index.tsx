@@ -9,6 +9,7 @@ import CommentActionButtons from '../ActionButtons';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import TaggedContents from '@/components/share-post/molecules/TaggedContents';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
+import { calculateTimeAgo } from '@/utils/date/time-ago';
 
 type CommentListProps = {
     item: FetchCommentResponse;
@@ -23,6 +24,7 @@ interface CommentListActions extends CommentActionButtonsAction {
 export default function CommentItem({
     item: {
         comment: {
+            createdAt,
             id: commentId,
             contents,
             isMine,
@@ -67,10 +69,13 @@ export default function CommentItem({
                     <TouchableTypo variant="title4" onPress={handlePressNickname}>
                         {nickname}
                     </TouchableTypo>
+                    <Typo variant="body4" color="placeholder">
+                        {calculateTimeAgo(createdAt)}
+                    </Typo>
                     <ConditionalRenderer
                         condition={isModified}
                         trueContent={
-                            <Typo variant="body5" color="placeholder">
+                            <Typo variant="body4" color="placeholder">
                                 (수정됨)
                             </Typo>
                         }

@@ -16,6 +16,7 @@ type CommentReplyParams = {
         contents: string;
         isMine: boolean;
         isModified: boolean;
+        createdAt: string;
         user: {
             id: string;
             profile: ImageType;
