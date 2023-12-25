@@ -1,7 +1,7 @@
 import { color } from '@crawl/design-system';
 import React from 'react';
 
-import type { EntityGender } from '../../../../pages/diary/entity-manager/create/@common/context/CreateEntity/type';
+import type { EntityGender } from '../../../../pages/diary/entity-manager/Create/@common/context/CreateEntity/type';
 
 import Female from '@/assets/icons/Female';
 import Male from '@/assets/icons/Male';

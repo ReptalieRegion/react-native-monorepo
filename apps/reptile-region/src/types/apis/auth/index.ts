@@ -76,11 +76,8 @@ type PostGoogleRequest = {
 type PostGoogleAuth = ServerAPI<PostGoogleRequest, AuthResponse>;
 
 // 리프레시 토큰 갱신
-type RefreshTokenRequest = {
-    refreshToken: string;
-};
 
-type RefreshToken = ServerAPI<RefreshTokenRequest, AuthTokens>;
+type RefreshToken = ServerAPI<void, AuthTokens>;
 
 // 회원가입 진행 단계에 따른 데이터 저장
 type Register0Request = {

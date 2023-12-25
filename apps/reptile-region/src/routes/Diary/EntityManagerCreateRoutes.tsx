@@ -5,14 +5,14 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { BackButton, CancelButton } from '@/assets/icons';
-import CreateEntity from '@/pages/diary/entity-manager/create/@common/context/CreateEntity/provider/CreateEntity';
-import EntityManagerCongratsPage from '@/pages/diary/entity-manager/create/CongratsPage/page';
-import EntityManagerGenderPage from '@/pages/diary/entity-manager/create/GenderPage/page';
-import EntityManagerHatchingDayPage from '@/pages/diary/entity-manager/create/HatchingDayPage/page';
-import EntityManagerImagePage from '@/pages/diary/entity-manager/create/ImagePage/page';
-import EntityManagerNamePage from '@/pages/diary/entity-manager/create/NamePage/page';
-import EntityManagerTypeAndMorphPage from '@/pages/diary/entity-manager/create/TypeAndMorphPage/page';
-import EntityManagerWeightPage from '@/pages/diary/entity-manager/create/WeightPage/page';
+import CreateEntity from '@/pages/diary/entity-manager/Create/@common/context/CreateEntity/provider/CreateEntity';
+import EntityManagerCongratsPage from '@/pages/diary/entity-manager/Create/CongratsPage/page';
+import EntityManagerGenderPage from '@/pages/diary/entity-manager/Create/GenderPage/page';
+import EntityManagerHatchingDayPage from '@/pages/diary/entity-manager/Create/HatchingDayPage/page';
+import EntityManagerImagePage from '@/pages/diary/entity-manager/Create/ImagePage/page';
+import EntityManagerNamePage from '@/pages/diary/entity-manager/Create/NamePage/page';
+import EntityManagerTypeAndMorphPage from '@/pages/diary/entity-manager/Create/TypeAndMorphPage/page';
+import EntityManagerWeightPage from '@/pages/diary/entity-manager/Create/WeightPage/page';
 import type { EntityManagerCreateParamList } from '@/types/routes/param-list/diary';
 
 const Stack = createNativeStackNavigator<EntityManagerCreateParamList>();

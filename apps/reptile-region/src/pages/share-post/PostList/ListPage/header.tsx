@@ -9,8 +9,8 @@ import useFetchPushReadCheck from '@/apis/notification/push/hooks/queries/useFet
 import { NotificationIcon } from '@/assets/icons';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import useAuthNavigation from '@/hooks/useNavigationAuth';
+import { useAuth } from '@/providers/Auth';
 import type { SharePostListPageScreen } from '@/types/routes/props/share-post/post-list';
 
 export function SharePostListHeader(props: NativeStackHeaderProps) {

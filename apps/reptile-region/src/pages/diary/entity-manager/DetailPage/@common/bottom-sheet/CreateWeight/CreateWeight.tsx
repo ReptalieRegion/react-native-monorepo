@@ -36,9 +36,8 @@ export default function CreateWeightBottomSheet({ isOpen, entity, onClose }: Cre
         (date: Date) => {
             setSelectedDate(date);
             datePickerOff();
-            onClose();
         },
-        [datePickerOff, onClose],
+        [datePickerOff],
     );
 
     const handleChangeWeight = useCallback((text: string) => {

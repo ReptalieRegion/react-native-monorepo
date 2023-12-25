@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-import type { AuthActions, AuthState } from '../types';
+import type { AuthActions, AuthState } from './types';
 
 const AuthStateContext = createContext<AuthState | null>(null);
 

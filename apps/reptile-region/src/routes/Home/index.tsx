@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { HomeListHeader } from '@/pages/home/List/header';
 import HomeListPage from '@/pages/home/List/page';
@@ -9,8 +9,10 @@ const Stack = createNativeStackNavigator<HomeBottomTabParamList>();
 
 export default function HomeRoutes() {
     return (
-        <Stack.Navigator initialRouteName="bottom-tab/list">
-            <Stack.Screen name="bottom-tab/list" component={HomeListPage} options={{ header: HomeListHeader }} />
-        </Stack.Navigator>
+        <Suspense fallback={<></>}>
+            <Stack.Navigator initialRouteName="bottom-tab/list">
+                <Stack.Screen name="bottom-tab/list" component={HomeListPage} options={{ header: HomeListHeader }} />
+            </Stack.Navigator>
+        </Suspense>
     );
 }

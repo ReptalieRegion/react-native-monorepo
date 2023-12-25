@@ -4,9 +4,10 @@ import dayjs from 'dayjs';
 import React, { useCallback, useEffect } from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
 
+import CreateTemplate from '../@common/components/CreateTemplate';
+import useCreateEntity from '../@common/context/CreateEntity/hooks/useCreateEntity';
+
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import CreateTemplate from '@/pages/diary/entity-manager/create/@common/components/CreateTemplate';
-import useCreateEntity from '@/pages/diary/entity-manager/create/@common/context/CreateEntity/hooks/useCreateEntity';
 import type { EntityManagerCreateHatchingScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerHatchingDayPage({ navigation }: EntityManagerCreateHatchingScreenProps) {

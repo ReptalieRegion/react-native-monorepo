@@ -10,7 +10,7 @@ const SECURE_STORE_KEYS = {
     REFRESH_TOKEN: 'refreshToken',
 } as const;
 
-export const registerAuthTokens = async ({ accessToken, refreshToken }: RegisterTokenProps) => {
+const registerAuthTokens = async ({ accessToken, refreshToken }: RegisterTokenProps) => {
     if (!!accessToken && !!refreshToken) {
         await Promise.all([
             SecureStore.setItemAsync(SECURE_STORE_KEYS.ACCESS_TOKEN, accessToken),
@@ -22,17 +22,19 @@ export const registerAuthTokens = async ({ accessToken, refreshToken }: Register
     throw new Error('[registerAuthTokens]: accessToken과 refreshToken이 없습니다.');
 };
 
-export const deleteAuthTokens = async () => {
+const deleteAuthTokens = async () => {
     await Promise.all([
         SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ACCESS_TOKEN),
         SecureStore.deleteItemAsync(SECURE_STORE_KEYS.REFRESH_TOKEN),
     ]);
 };
 
-export const getAccessToken = async () => {
+const getAccessToken = async () => {
     return await SecureStore.getItemAsync(SECURE_STORE_KEYS.ACCESS_TOKEN);
 };
 
-export const getRefreshToken = async () => {
+const getRefreshToken = async () => {
     return await SecureStore.getItemAsync(SECURE_STORE_KEYS.REFRESH_TOKEN);
 };
+
+export { deleteAuthTokens, getAccessToken, getRefreshToken, registerAuthTokens };

@@ -12,10 +12,11 @@ import type { SignUpStep1ScreenProps } from './type';
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
 import useSignUpStep1 from '@/apis/auth/hooks/mutations/useSignUpStep1';
 import useNicknameDuplicateCheck from '@/apis/auth/hooks/queries/useNicknameDuplicateCheck';
+import { registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import { SignUpTextField, SignUpTitle } from '@/components/auth/molecules';
-import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import useKeyboardOpenButtonSize from '@/hooks/useKeyboardOpenButtonSize';
+import { useAuthHandler } from '@/providers/Auth';
 
 export default function SignUpStep1({
     navigation,
@@ -29,7 +30,7 @@ export default function SignUpStep1({
     const { loading, startLoading, endLoading } = useLoading();
     const buttonSize = useKeyboardOpenButtonSize();
     const isFocused = useIsFocused();
-    const { signIn } = useAuth();
+    const { signIn } = useAuthHandler();
     const { bottom } = useSafeAreaInsets();
     const debouncedNickname = useDebounceValue(nickname, 500, endLoading);
     const { data, isLoading } = useNicknameDuplicateCheck({
@@ -55,14 +56,14 @@ export default function SignUpStep1({
     const handleNextButton = async () => {
         try {
             const { authToken } = await authTokenAndPublicKeyMutateAsync();
-            const { accessToken, refreshToken } = await signUpSte1MutateAsync({
+            const tokens = await signUpSte1MutateAsync({
                 authToken,
                 joinProgress: 'REGISTER0',
                 nickname,
                 userId,
             });
 
-            await signIn({ accessToken, refreshToken });
+            registerAuthTokens(tokens).then(signIn);
             navigation.popToTop();
         } catch (error) {
             throw error;

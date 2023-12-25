@@ -14,6 +14,7 @@ export default function HomeListPage(props: HomeListPageScreenProp) {
         </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

@@ -2,10 +2,11 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React from 'react';
 import { Platform } from 'react-native';
 
+import { registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 import SignInLogo from '@/components/auth/atoms/SignInLogo/SignInLogo';
-import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import SignInTemplates, { type SocialButtons } from '@/components/auth/templates/SignInTemplates';
 import useToast from '@/components/overlay/Toast/useToast';
+import { useAuthHandler } from '@/providers/Auth';
 import type { PostAppleAuth, PostKakaoAuth, SignUpRegister0 } from '@/types/apis/auth';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 
@@ -13,7 +14,7 @@ type SignInScreenProps = NativeStackScreenProps<RootRoutesParamList, 'sign-in'>;
 
 const SignInPage = ({ navigation, route: { params } }: SignInScreenProps) => {
     const openToast = useToast();
-    const { signIn } = useAuth();
+    const { signIn } = useAuthHandler();
 
     const navigateSignUpPage = (data: Omit<SignUpRegister0, 'type'>) => {
         switch (data.joinProgress) {
@@ -36,7 +37,8 @@ const SignInPage = ({ navigation, route: { params } }: SignInScreenProps) => {
     const handleSuccessAuth = async (data: PostKakaoAuth['Response'] | PostAppleAuth['Response']) => {
         switch (data.type) {
             case 'SIGN_IN':
-                await signIn({ accessToken: data.accessToken, refreshToken: data.refreshToken });
+                await registerAuthTokens(data);
+                signIn();
                 if (params.successNavigate === 'BACK') {
                     navigation.goBack();
                 } else {

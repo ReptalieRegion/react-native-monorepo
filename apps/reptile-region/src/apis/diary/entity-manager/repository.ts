@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 
-import clientFetch, { METHOD } from '../../@utils/fetcher';
-
+import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 import type {
     CreateEntity,

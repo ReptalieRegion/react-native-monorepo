@@ -1,13 +1,14 @@
 import { TouchableTypo, Typo, color } from '@crawl/design-system';
+import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 
 import useCreateWeightBottomSheet from './@common/bottom-sheet/CreateWeight/useCreateWeightBottomSheet';
-import WeightList from './@common/components/WeightList';
 import useFindEntity from './@common/hooks/queries/useFindEntity';
+import type { WeightData } from './@common/hooks/queries/useInfiniteFetchEntityWeight';
+import useInfiniteFetchEntityWeight from './@common/hooks/queries/useInfiniteFetchEntityWeight';
 import { ChangeHeader } from './header';
 
 import { Plus } from '@/assets/icons';
@@ -24,25 +25,20 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
     } = props;
 
     const { width } = useWindowDimensions();
-    const { data } = useFindEntity(entityId);
+    const {
+        data: { entity },
+    } = useFindEntity(entityId);
+    const { data: weightData, fetchNextPage } = useInfiniteFetchEntityWeight(entityId);
     const openCreateWeightBottomSheet = useCreateWeightBottomSheet();
 
-    if (data === undefined) {
-        return null;
-    }
+    const renderListHeader = useCallback(() => {
+        const { id, gender, hatching, image, name, variety, weightUnit } = entity;
+        const navigateCreateWeight = () => {
+            openCreateWeightBottomSheet({ entity: { id, weightUnit } });
+        };
 
-    const {
-        entity: { id, gender, hatching, image, name, variety, weightUnit },
-    } = data;
-
-    const navigateCreateWeight = () => {
-        openCreateWeightBottomSheet({ entity: { id, weightUnit } });
-    };
-
-    return (
-        <>
-            <ChangeHeader navigation={props.navigation} entity={{ hatching, id, image, name, variety, gender }} />
-            <ScrollView style={styles.wrapper} contentContainerStyle={styles.wrapperContent}>
+        return (
+            <>
                 <Image source={{ uri: image.src }} style={{ width, height: width }} />
                 <View style={styles.container}>
                     <View style={styles.topContainer}>
@@ -68,23 +64,68 @@ export default function EntityManagerDetailPage(props: EntityManagerDetailScreen
                         </Typo>
                     </View>
                 </View>
-                <View>
-                    <View style={styles.titleContainer}>
-                        <Typo variant="heading1Bold">최근 무게</Typo>
-                        <TouchableOpacity style={styles.plusContainer} onPress={navigateCreateWeight}>
-                            <Plus width={16} height={16} fill={color.White.toString()} />
-                        </TouchableOpacity>
-                        <View style={styles.weightDetailButtonContainer}>
-                            <TouchableTypo variant="title5" color="placeholder">
-                                자세히 보기
-                            </TouchableTypo>
-                        </View>
+                <View style={styles.titleContainer}>
+                    <Typo variant="heading1Bold">최근 무게</Typo>
+                    <TouchableOpacity style={styles.plusContainer} onPress={navigateCreateWeight}>
+                        <Plus width={16} height={16} fill={color.White.toString()} />
+                    </TouchableOpacity>
+                    <View style={styles.weightDetailButtonContainer}>
+                        <TouchableTypo variant="title5" color="placeholder">
+                            자세히 보기
+                        </TouchableTypo>
                     </View>
-                    <InfiniteLineChart entityId={entityId} yAxisSuffix={weightUnit} />
-                    <WeightList entityId={entityId} />
                 </View>
-            </ScrollView>
-        </>
+                <InfiniteLineChart entityId={entity.id} yAxisSuffix={weightUnit} />
+            </>
+        );
+    }, [entity, width, openCreateWeightBottomSheet]);
+
+    const renderItem: ListRenderItem<WeightData> = useCallback(
+        ({ item: { date, weight, diffWeight }, index }) => {
+            return (
+                <View style={[weightStyles.itemWrapper, index === 0 ? weightStyles.topBoarder : undefined]}>
+                    <Typo>{dayjs(date).format('YYYY.MM.DD')}</Typo>
+                    <View style={weightStyles.weightWrapper}>
+                        <Typo variant="title2" textAlign="right">
+                            {weight + entity.weightUnit}
+                        </Typo>
+                        <ConditionalRenderer
+                            condition={diffWeight === 0}
+                            trueContent={null}
+                            falseContent={
+                                <ConditionalRenderer
+                                    condition={diffWeight > 0}
+                                    trueContent={
+                                        <Typo variant="body3" color="placeholder" textAlign="right">
+                                            +{diffWeight + entity.weightUnit}
+                                        </Typo>
+                                    }
+                                    falseContent={
+                                        <Typo variant="body3" color="error" textAlign="right">
+                                            {diffWeight + entity.weightUnit}
+                                        </Typo>
+                                    }
+                                />
+                            }
+                        />
+                    </View>
+                </View>
+            );
+        },
+        [entity.weightUnit],
+    );
+
+    return (
+        <View style={styles.wrapper}>
+            <ChangeHeader navigation={props.navigation} entity={entity} />
+            <FlashList
+                data={weightData}
+                renderItem={renderItem}
+                ListHeaderComponent={renderListHeader}
+                onEndReached={fetchNextPage}
+                estimatedItemSize={weightStyles.itemWrapper.height}
+            />
+        </View>
     );
 }
 
@@ -93,12 +134,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: color.White.toString(),
     },
-    wrapperContent: {
-        paddingBottom: 160,
-    },
     container: {
         padding: 20,
-        marginBottom: 40,
     },
     topContainer: {
         flexDirection: 'row',
@@ -132,5 +169,26 @@ const styles = StyleSheet.create({
     weightDetailButtonContainer: {
         marginLeft: 'auto',
         marginRight: 20,
+    },
+});
+
+const weightStyles = StyleSheet.create({
+    wrapper: {
+        height: 500,
+    },
+    itemWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        height: 80,
+        borderColor: color.Gray[200].toString(),
+        borderBottomWidth: 1,
+    },
+    topBoarder: {
+        borderTopWidth: 1,
+    },
+    weightWrapper: {
+        marginLeft: 'auto',
+        alignItems: 'flex-end',
     },
 });

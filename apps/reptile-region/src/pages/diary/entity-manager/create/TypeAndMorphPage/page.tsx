@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
 
+import CreateTemplate from '../@common/components/CreateTemplate';
+import useCreateEntity from '../@common/context/CreateEntity/hooks/useCreateEntity';
+
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import Variety from '@/components/diary/organisms/Variety/Variety';
-import CreateTemplate from '@/pages/diary/entity-manager/create/@common/components/CreateTemplate';
-import useCreateEntity from '@/pages/diary/entity-manager/create/@common/context/CreateEntity/hooks/useCreateEntity';
 import type { EntityVariety } from '@/types/apis/diary/entity';
 import type { EntityManagerCreateTypeAndMorphScreenProps } from '@/types/routes/props/diary/entity';
 

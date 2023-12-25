@@ -1,15 +1,16 @@
 import useSignOut from '@/apis/auth/hooks/mutations/useSignOut';
 import useDeleteFCMToken from '@/apis/me/profile/hooks/mutations/useDeleteFCMToken';
-import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
 import useToast from '@/components/overlay/Toast/useToast';
+import { useAuthHandler } from '@/providers/Auth';
 
 export default function useMeActions() {
-    const { signOut } = useAuth();
+    const { signOut } = useAuthHandler();
     const { mutateAsync: signOutMutateAsync } = useSignOut();
     const { mutateAsync: deleteFCMTokenMutateAsync } = useDeleteFCMToken();
     const openToast = useToast();
 
     const logout = async ({ successCallback }: { successCallback: () => void }) => {
+        console.log('로그아웃 버튼 클릭');
         try {
             await deleteFCMTokenMutateAsync();
             signOutMutateAsync().then(() => {

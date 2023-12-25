@@ -1,5 +1,6 @@
 /** Auth */
 export const AUTH_QUERY_KEYS = {
+    signInCheck: ['auth_sign_in_check'],
     duplicateNickname: (nickname: string) => ['user/duplicate/nickname/', nickname],
 } as const;
 

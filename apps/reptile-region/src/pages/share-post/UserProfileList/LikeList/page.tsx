@@ -16,7 +16,6 @@ export default function LikeList({
     },
 }: LikeListPageScreenProps) {
     const { data, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteFetchLikes({ postId });
-    console.log(data);
     const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
     const { navigateImageThumbnail } = useUserProfileNavigation(pageState);
     const { updateOrCreateFollow } = useProfileListActions({ queryKey: SHARE_POST_QUERY_KEYS.likeList(postId) });

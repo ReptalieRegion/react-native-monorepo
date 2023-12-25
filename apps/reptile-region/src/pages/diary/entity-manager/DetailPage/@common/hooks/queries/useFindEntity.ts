@@ -7,7 +7,7 @@ import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 import type { InfiniteState } from '@/types/apis/utils';
 
 export default function useFindEntity(entityId: string) {
-    return useBaseInfiniteFetchEntity<FetchEntityListResponse | undefined>({
+    const entityData = useBaseInfiniteFetchEntity<FetchEntityListResponse | undefined>({
         select: useCallback(
             (data: InfiniteData<InfiniteState<FetchEntityListResponse[]>, number>) =>
                 data.pages
@@ -23,4 +23,13 @@ export default function useFindEntity(entityId: string) {
             [entityId],
         ),
     });
+
+    if (entityData.data === undefined) {
+        throw new Error('not found entity');
+    }
+
+    return {
+        ...entityData,
+        data: entityData.data,
+    };
 }

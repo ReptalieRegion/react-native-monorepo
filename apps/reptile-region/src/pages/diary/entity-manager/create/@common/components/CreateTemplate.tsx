@@ -78,7 +78,6 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
         const { height, state } = keyboard;
 
         if (gestureStart.value === 1) {
-            console.log(gestureStart.value);
             return {
                 bottom,
             };

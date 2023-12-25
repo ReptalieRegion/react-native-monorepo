@@ -2,12 +2,13 @@ import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useRef } from 'react';
 import type { TextInput } from 'react-native-gesture-handler';
 
+import CreateTemplate from '../@common/components/CreateTemplate';
+import useCreateEntityHandler from '../@common/context/CreateEntity/hooks/useCreateEntity';
+
 import useCreateEntity from '@/apis/diary/entity-manager/hooks/mutations/useCreateEntity';
 import { TextField } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import useKeyboardOpenButtonSize from '@/hooks/useKeyboardOpenButtonSize';
-import CreateTemplate from '@/pages/diary/entity-manager/create/@common/components/CreateTemplate';
-import useCreateEntityHandler from '@/pages/diary/entity-manager/create/@common/context/CreateEntity/hooks/useCreateEntity';
 import type { EntityManagerCreateNameScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerNamePage({ navigation }: EntityManagerCreateNameScreenProps) {

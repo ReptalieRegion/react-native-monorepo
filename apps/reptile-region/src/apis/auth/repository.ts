@@ -1,19 +1,23 @@
 import { encryptionRSA } from '@crawl/utils';
 
+import { getRefreshToken } from './utils/secure-storage-token';
+
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
-import type {
-    JoinProgress,
-    NicknameDuplicateCheck,
-    PostAppleAuth,
-    PostGoogleAuth,
-    PostKakaoAuth,
-    RefreshToken,
-} from '@/types/apis/auth';
+import type { JoinProgress, NicknameDuplicateCheck, PostAppleAuth, PostGoogleAuth, PostKakaoAuth } from '@/types/apis/auth';
 
 /** GET */
 // 닉네임 중복 체크
 export const nicknameDuplicateCheck = async ({ nickname }: NicknameDuplicateCheck['Request']) => {
     const response = await clientFetch(`api/users/duplicate/nickname/${nickname}`, {
+        method: METHOD.GET,
+    });
+
+    return response.json();
+};
+
+// 로그인 체크
+export const signInCheck = async () => {
+    const response = await clientFetch('api/auth/sign-in/check', {
         method: METHOD.GET,
     });
 
@@ -34,7 +38,8 @@ export const getAuthTokenAndPublicKey = async () => {
 };
 
 // 리프레시 토큰 갱신
-export const refreshTokenIssued = async ({ refreshToken }: RefreshToken['Request']) => {
+export const refreshTokenIssued = async () => {
+    const refreshToken = await getRefreshToken();
     const response = await clientFetch('api/auth/refresh', {
         method: METHOD.POST,
         headers: {

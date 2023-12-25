@@ -1,7 +1,7 @@
 import { useNavigation, type NavigationProp } from '@react-navigation/native';
 import { useCallback } from 'react';
 
-import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
+import { useAuth } from '@/providers/Auth';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 export default function useAuthNavigation() {

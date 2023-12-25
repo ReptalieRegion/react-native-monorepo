@@ -17,7 +17,7 @@ export default function useEntityWeightChartData(entityId: string) {
         select: useCallback((data: InfiniteData<InfiniteState<FetchEntityWeightListResponse[]>, number>) => {
             return data.pages
                 .flatMap((page) =>
-                    page.items.map((item) => ({
+                    [...page.items].reverse().map((item) => ({
                         date: dayjs(item.date).format('MM/DD'),
                         weight: item.weight,
                     })),
