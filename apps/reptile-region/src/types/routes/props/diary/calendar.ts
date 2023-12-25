@@ -22,7 +22,10 @@ type CalendarItemCreateNavigationProp = NativeStackNavigationProp<RootRoutesPara
 
 type CalendarDetailScreenProps = NativeStackScreenProps<RootRoutesParamList, 'calendar/detail'>;
 
+type CalendarDetailNavigationProp = NativeStackNavigationProp<RootRoutesParamList, 'calendar/detail'>;
+
 export type {
+    CalendarDetailNavigationProp,
     CalendarDetailScreenProps,
     CalendarItemCreateNavigationProp,
     CalendarItemCreateScreenProps,

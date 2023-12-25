@@ -3,12 +3,17 @@ import dayjs from 'dayjs';
 import { Image } from 'expo-image';
 import React from 'react';
 import { Platform, StyleSheet, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
-import useFetchCalendarDetail from './hooks/queries/useFetchCalendarDetail';
+import ListItem from './@common/components/ListItem';
+import TouchableScale from './@common/components/TouchableScale';
+import useFetchCalendarDetail from './@common/hooks/queries/useFetchCalendarDetail';
+import ChangeHeader from './header';
 
 import type { CalendarDetailScreenProps } from '@/types/routes/props/diary/calendar';
 
 export default function CalendarDetailPage({
+    navigation,
     route: {
         params: { calendar, entity, searchDate },
     },
@@ -16,35 +21,35 @@ export default function CalendarDetailPage({
     const { data } = useFetchCalendarDetail({ calendarId: calendar.id, entityId: entity.id, date: searchDate });
 
     return (
-        <View style={styles.wrapper}>
-            <View>
-                <View style={cardStyles.container}>
-                    <Image source={{ uri: data?.entity.image.src }} style={cardStyles.imageSize} />
-                </View>
-            </View>
-            <View style={articleStyles.wrapper}>
-                <View style={articleStyles.itemWrapper}>
-                    <Typo variant="title2">메모</Typo>
-                    <View style={articleStyles.memoContainer}>
-                        <Typo>{data?.calendar.memo}</Typo>
+        <>
+            <ChangeHeader navigation={navigation} searchDate={searchDate} calendarId={calendar.id} />
+            <ScrollView style={styles.wrapper}>
+                <View>
+                    <View style={cardStyles.container}>
+                        <Image source={{ uri: data?.entity.image.src }} style={cardStyles.imageSize} />
                     </View>
                 </View>
-                <View style={articleStyles.itemWrapper}>
-                    <Typo variant="title2">태그</Typo>
-                    <View style={articleStyles.tagWrapper}>
-                        {data?.calendar.markType.map((mark) => (
-                            <Typo key={mark} color="primary" textAlign="left" variant="body1">
-                                #{mark}
-                            </Typo>
-                        ))}
+                <View style={articleStyles.wrapper}>
+                    <TouchableScale containerStyle={articleStyles.padding}>
+                        <ListItem label="메모" content={<Typo textAlign="right">{data?.calendar.memo}</Typo>} />
+                    </TouchableScale>
+                    <TouchableScale containerStyle={articleStyles.padding}>
+                        <ListItem
+                            label="태그"
+                            content={data?.calendar.markType.map((mark) => (
+                                <Typo key={mark} color="primary" textAlign="left" variant="body1">
+                                    #{mark}
+                                </Typo>
+                            ))}
+                        />
+                    </TouchableScale>
+                    <View style={[articleStyles.itemWrapper, articleStyles.padding]}>
+                        <Typo variant="title2">기록날짜</Typo>
+                        <Typo>{dayjs(data?.calendar.date).format('YYYY년 MM월 DD일 HH:mm')}</Typo>
                     </View>
                 </View>
-                <View style={articleStyles.itemWrapper}>
-                    <Typo variant="title2">기록날짜</Typo>
-                    <Typo>{dayjs(data?.calendar.date).format('YYYY년 MM월 DD일 HH:mm')}</Typo>
-                </View>
-            </View>
-        </View>
+            </ScrollView>
+        </>
     );
 }
 
@@ -94,15 +99,17 @@ const cardStyles = StyleSheet.create({
 
 const articleStyles = StyleSheet.create({
     wrapper: {
-        padding: 20,
+        paddingVertical: 20,
         gap: 10,
     },
     itemWrapper: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 10,
         gap: 30,
+    },
+    padding: {
+        padding: 20,
     },
     tagWrapper: {
         flexDirection: 'row',

@@ -1,6 +1,5 @@
 import { color } from '@crawl/design-system';
-import { useOnOff } from '@crawl/react-hooks';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { StyleSheet, type ViewStyle } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import type { GenericTouchableProps } from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
@@ -22,42 +21,38 @@ const userConfig = {
     reduceMotion: ReduceMotion.System,
 };
 
-export default function ScaleListItem({
-    children,
-    pressInBackground,
-    containerStyle,
-    onLongPress,
-    ...props
-}: CalendarListItemProps) {
-    const { state, off, on } = useOnOff();
-    const scale = useSharedValue(1);
+const White = color.White.toString();
+const Gray500 = color.Gray[200].toString();
+
+export default function ScaleListItem({ children, containerStyle, onLongPress, ...props }: CalendarListItemProps) {
+    const scaleX = useSharedValue(1);
+    const scaleY = useSharedValue(1);
+    const [backgroundColor, setBackgroundColor] = useState(White);
 
     const handlePress = () => {
         onLongPress?.();
     };
 
     const handlePressIn = () => {
-        scale.value = withTiming(0.98, userConfig);
-        on();
+        scaleX.value = withTiming(0.97, userConfig);
+        scaleY.value = withTiming(0.97, userConfig);
+        setBackgroundColor(Gray500);
     };
 
     const handlePressOut = () => {
-        scale.value = withTiming(1, userConfig);
-        off();
+        scaleX.value = withTiming(1, userConfig);
+        scaleY.value = withTiming(1, userConfig);
+        setBackgroundColor(White);
     };
 
     const animatedStyle = useAnimatedStyle(() => ({
-        transform: [{ scale: scale.value }],
+        backgroundColor,
+        transform: [{ scaleX: scaleX.value }, { scaleY: scaleY.value }],
     }));
 
     const containerWrapperStyle = useMemo(
-        () => [
-            listStyles.itemContainer,
-            animatedStyle,
-            containerStyle,
-            { backgroundColor: state ? pressInBackground : undefined },
-        ],
-        [animatedStyle, containerStyle, pressInBackground, state],
+        () => [listStyles.itemContainer, animatedStyle, containerStyle],
+        [animatedStyle, containerStyle],
     );
 
     return (
