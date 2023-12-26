@@ -2,7 +2,7 @@ import { Typo, color } from '@crawl/design-system';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import useLogout from './@hooks/mutations/useLogout';
+import useLogout from './hooks/mutations/useLogout';
 import type { SettingList } from './type';
 
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
@@ -11,7 +11,7 @@ import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { Profile } from '@/components/@common/molecules/Profile';
 import VersionCheck from '@/native-modules/version-check/VersionCheck';
-import useMeListNavigation from '@/pages/me/List/@hooks/useMeListNavigation';
+import useMeListNavigation from '@/pages/me/List/hooks/useMeListNavigation';
 
 export default function MyListPage() {
     const { data } = useFetchMeProfile();
