@@ -10,8 +10,8 @@ import useFetchPushReadCheck from '@/apis/notification/push/hooks/queries/useFet
 import { NotificationIcon } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
+import { useAuth } from '@/hooks/auth';
 import useAuthNavigation from '@/hooks/useNavigationAuth';
-import { useAuth } from '@/providers/Auth';
 
 export function HomeListHeader(props: NativeStackHeaderProps) {
     const { requireAuthNavigation } = useAuthNavigation();

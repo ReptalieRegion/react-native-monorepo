@@ -1,7 +1,7 @@
 import messaging from '@react-native-firebase/messaging';
 import { NavigationContainer, type LinkingOptions, type NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Linking } from 'react-native';
 
 import SignUpRoutes from './Auth/SignUpRoutes';
@@ -10,7 +10,8 @@ import EntityManagerCreateRoutes from './Diary/EntityManagerCreateRoutes';
 import SharePostModalRoutes from './SharePost/ModalRoutes';
 import PostingRoutes from './SharePost/PostingRoutes';
 
-import useSignInCheck from '@/apis/auth/hooks/queries/useSignInCheck';
+import useEffectClientFetch from '@/hooks/useEffectClientFetch';
+import useEffectInitial from '@/hooks/useEffectInitial';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
@@ -35,7 +36,6 @@ import { TermsOfUseHeader } from '@/pages/me/Terms/TermsOfUse/header';
 import TermsOfUsePage from '@/pages/me/Terms/TermsOfUse/page';
 import { PushLogList, PushLogListHeader } from '@/pages/notification/PushLogList';
 import { SharePostUpdatePostPage, SharePostUpdatePosteHeader } from '@/pages/share-post/UpdatePost';
-import { useAuthHandler } from '@/providers/Auth';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
 
@@ -89,15 +89,11 @@ type RootRoutesProps = {
 const Stack = createNativeStackNavigator<RootRoutesParamList>();
 
 export default function RootRoutes({ navigationRef }: RootRoutesProps) {
-    const { data, error } = useSignInCheck();
-    const { signIn } = useAuthHandler();
-    console.log(data?.message, error);
+    // clientFetch, refresh 실패 시 실행할 콜백함수 초기화
+    useEffectClientFetch();
 
-    useEffect(() => {
-        if (data?.message === 'success') {
-            signIn();
-        }
-    }, [data?.message, signIn]);
+    // 자동 로그인 및 FCM Token 초기화
+    useEffectInitial();
 
     return (
         <NavigationContainer<RootRoutesParamList> ref={navigationRef} linking={linking}>

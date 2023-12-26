@@ -6,7 +6,7 @@ import { registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 import SignInLogo from '@/components/auth/atoms/SignInLogo/SignInLogo';
 import SignInTemplates, { type SocialButtons } from '@/components/auth/templates/SignInTemplates';
 import useToast from '@/components/overlay/Toast/useToast';
-import { useAuthHandler } from '@/providers/Auth';
+import { useAuthHandler } from '@/hooks/auth';
 import type { PostAppleAuth, PostKakaoAuth, SignUpRegister0 } from '@/types/apis/auth';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 

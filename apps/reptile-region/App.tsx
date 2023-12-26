@@ -11,7 +11,6 @@ import GlobalError from './error';
 
 import Loading from '@/components/@common/organisms/Loading/LoadingProvider';
 import useEffectNotifee from '@/hooks/useEffectNotifee';
-import { AuthProvider } from '@/providers/Auth';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
@@ -28,22 +27,20 @@ export default function App() {
     return (
         <Loading>
             <ReactQueryProvider>
-                <AuthProvider>
-                    <GestureHandlerRootView style={styles.gestureContainer}>
-                        <SafeAreaProvider>
-                            <OverlayProvider>
-                                <ErrorBoundary
-                                    onError={(error) => {
-                                        console.log('error', error);
-                                    }}
-                                    renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}
-                                >
-                                    <RootRoutes navigationRef={navigationRef} />
-                                </ErrorBoundary>
-                            </OverlayProvider>
-                        </SafeAreaProvider>
-                    </GestureHandlerRootView>
-                </AuthProvider>
+                <GestureHandlerRootView style={styles.gestureContainer}>
+                    <SafeAreaProvider>
+                        <OverlayProvider>
+                            <ErrorBoundary
+                                onError={(error) => {
+                                    console.log('error', error);
+                                }}
+                                renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}
+                            >
+                                <RootRoutes navigationRef={navigationRef} />
+                            </ErrorBoundary>
+                        </OverlayProvider>
+                    </SafeAreaProvider>
+                </GestureHandlerRootView>
             </ReactQueryProvider>
         </Loading>
     );

@@ -11,7 +11,7 @@ import SharePostRoutes from './SharePost/BottomTabRoutes';
 
 import { MainBottomBar } from '@/components/@common/molecules';
 import type { MainBottomBarActions } from '@/components/@common/molecules/BottomTabBarMenu/MainBottomBar';
-import { useAuth } from '@/providers/Auth';
+import { useAuth } from '@/hooks/auth';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import type { BottomTabNativeStackParamList, BottomTabParamList } from '@/types/routes/param-list/bottom-tab';
 

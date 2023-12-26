@@ -1,3 +1,4 @@
+import { Typo } from '@crawl/design-system';
 import React from 'react';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
@@ -9,6 +10,7 @@ import { Interactive, PostCardImageCarousel } from './components';
 import PostCard from './providers/PostCard';
 
 import type { ImageType } from '@/types/global/image';
+import { calculateTimeAgo } from '@/utils/date/time-ago';
 
 type PostCardState = {
     post: {
@@ -20,6 +22,7 @@ type PostCardState = {
         isLike: boolean | undefined;
         likeCount: number;
         commentCount: number;
+        createdAt: string;
         user: {
             id: string;
             nickname: string;
@@ -51,6 +54,7 @@ export default function SharePostCardNotification({
         contents,
         likeCount,
         isMine,
+        createdAt,
         showFollowButton = true,
         user: { isFollow, nickname, profile },
     },
@@ -96,6 +100,9 @@ export default function SharePostCardNotification({
                         onPressTag={onPressTag}
                         onPressLikeContents={onPressLikeContents}
                     />
+                    <Typo variant="body4" color="placeholder">
+                        {calculateTimeAgo(createdAt)}
+                    </Typo>
                 </View>
             </PostCard>
         </View>

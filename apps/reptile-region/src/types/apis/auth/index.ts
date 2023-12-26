@@ -44,6 +44,12 @@ type NicknameDuplicateCheckResponse = {
 
 type NicknameDuplicateCheck = ServerAPI<NicknameDuplicateCheckRequest, NicknameDuplicateCheckResponse>;
 
+type SignInCheckResponse = {
+    message: 'success';
+};
+
+type SignInCheck = ServerAPI<void, SignInCheckResponse>;
+
 /**
  *
  * POST
@@ -121,6 +127,8 @@ export type {
     PostKakaoAuthRequest,
     RefreshToken,
     Register0,
+    SignInCheck,
+    SignInCheckResponse,
     SignInResponse,
     SignOut,
     SignOutResponse,

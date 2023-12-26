@@ -127,7 +127,5 @@ const styles = StyleSheet.create({
     postCardContainer: {
         marginTop: 20,
         marginBottom: 20,
-        minHeight: 594,
-        height: 594,
     },
 });

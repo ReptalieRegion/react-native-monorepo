@@ -15,8 +15,8 @@ import useNicknameDuplicateCheck from '@/apis/auth/hooks/queries/useNicknameDupl
 import { registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import { SignUpTextField, SignUpTitle } from '@/components/auth/molecules';
+import { useAuthHandler } from '@/hooks/auth';
 import useKeyboardOpenButtonSize from '@/hooks/useKeyboardOpenButtonSize';
-import { useAuthHandler } from '@/providers/Auth';
 
 export default function SignUpStep1({
     navigation,
