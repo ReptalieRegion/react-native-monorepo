@@ -8,11 +8,12 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 import usePostOptionsMenuBottomSheet from '../../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
 import useSharePostNavigation from '../../../@common/hooks/useSharePostNavigation';
 
+import useOtherUserPostListActions from './hooks/useMeUserPostListActions';
+
 import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteFetchMePostList from '@/apis/share-post/post/hooks/queries/useInfiniteFetchMePostList';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
-import useSharePostActions from '@/pages/share-post/@common/hooks/useSharePostActions';
 import type { FetchMePostListResponse, FetchMeProfile } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
 import type { SharePostListMeModalPageScreen } from '@/types/routes/props/share-post/post-list';
@@ -28,9 +29,7 @@ export default function MeDetailListModalPage({
     const queryClient = useQueryClient();
     const userProfile = queryClient.getQueryData<FetchMeProfile['Response']>(MY_QUERY_KEYS.profile);
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchMePostList();
-    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({
-        type: 'ME_USER_DETAIL',
-    });
+    const { onlyLike, updateOrCreateFollow, updateOrCreateLike } = useOtherUserPostListActions();
     const { navigateComment, navigateImageThumbnail, handlePressLikeContents, handlePressTag } =
         useSharePostNavigation(pageState);
     const openPostOptionsMenuBottomSheet = usePostOptionsMenuBottomSheet();
@@ -61,9 +60,9 @@ export default function MeDetailListModalPage({
                 <SharePostCard
                     containerStyle={styles.postCardContainer}
                     post={post}
-                    onPressHeart={() => handlePressHeart({ postId: post.id, isLike: post.isLike })}
-                    onDoublePressImageCarousel={() => handleDoublePressImageCarousel({ postId: post.id, isLike: post.isLike })}
-                    onPressFollow={() => handlePressFollow({ userId: post.user.id, isFollow: post.user.isFollow })}
+                    onPressHeart={() => updateOrCreateLike({ postId: post.id, isLike: post.isLike })}
+                    onDoublePressImageCarousel={() => onlyLike({ postId: post.id, isLike: post.isLike })}
+                    onPressFollow={() => updateOrCreateFollow({ userId: post.user.id, isFollow: post.user.isFollow })}
                     onPressComment={() => navigateComment({ post: { id: postId } })}
                     onPressPostOptionsMenu={() =>
                         openPostOptionsMenuBottomSheet({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
@@ -75,14 +74,14 @@ export default function MeDetailListModalPage({
             );
         },
         [
-            handleDoublePressImageCarousel,
+            handlePressTag,
+            updateOrCreateLike,
+            onlyLike,
+            updateOrCreateFollow,
             navigateComment,
-            handlePressFollow,
-            handlePressHeart,
-            handlePressLikeContents,
             openPostOptionsMenuBottomSheet,
             navigateImageThumbnail,
-            handlePressTag,
+            handlePressLikeContents,
         ],
     );
 

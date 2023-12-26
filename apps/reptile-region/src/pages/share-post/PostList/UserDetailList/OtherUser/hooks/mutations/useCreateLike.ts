@@ -50,12 +50,12 @@ export default function useCreateLike({ nickname }: { nickname: string }) {
             (_error: HTTPError, _variables: CreateLikeRequest, context: Context | undefined) => {
                 if (context?.prevList) {
                     queryClient.setQueryData<InfiniteData<InfiniteState<FetchDetailUserPostResponse[]>, number>>(
-                        SHARE_POST_QUERY_KEYS.list,
+                        queryKey,
                         context.prevList,
                     );
                 }
             },
-            [queryClient],
+            [queryClient, queryKey],
         ),
     });
 }
