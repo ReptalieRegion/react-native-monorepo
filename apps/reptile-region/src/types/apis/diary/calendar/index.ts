@@ -65,9 +65,8 @@ type CreateCalendar = ServerAPI<CreateCalendarRequest, CreateCalendarResponse>;
  */
 type UpdateCalendarRequest = {
     calendarId: string;
-    memo: string;
-    markType: DiaryCalendarMarkType[];
-    date: string;
+    memo?: string;
+    markType?: DiaryCalendarMarkType[];
 };
 
 type UpdateCalendarResponse = {

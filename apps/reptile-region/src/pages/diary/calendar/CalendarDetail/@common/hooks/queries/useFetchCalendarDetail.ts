@@ -9,13 +9,19 @@ type UseFetchCalendarDetail = FetchCalendar['Request'] & {
 };
 
 export default function useFetchCalendarDetail({ date, calendarId }: UseFetchCalendarDetail) {
-    const select = useCallback(
-        (data: FetchCalendar['Response']) => data.items.find((item) => item.calendar.id === calendarId),
-        [calendarId],
-    );
-
-    return useBaseFetchCalendar({
+    const { data: calendarData, ...rest } = useBaseFetchCalendar({
         data: { date },
-        options: { select },
+        options: {
+            select: useCallback(
+                (data: FetchCalendar['Response']) => data.items.find((item) => item.calendar.id === calendarId),
+                [calendarId],
+            ),
+        },
     });
+
+    if (calendarData === undefined) {
+        throw new Error('Calendar를 찾을 수 없습니다.');
+    }
+
+    return { ...rest, data: calendarData };
 }

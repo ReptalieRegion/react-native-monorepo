@@ -43,12 +43,12 @@ function fetcher() {
 
                 if (!response.ok) {
                     const data = await response.json();
-                    reject(new TokenRefreshError(data.message, response.status));
+                    throw new HTTPError(response.status, data.message);
                 }
 
                 resolve(response);
             } catch (error) {
-                reject(new TokenRefreshError((error as any)?.message ?? 'refresh fail'));
+                reject(error);
             }
         });
         await Promise.all(refetchFunction);

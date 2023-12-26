@@ -6,7 +6,7 @@ import { Switch } from 'react-native-gesture-handler';
 
 import type { PushAgreeListType } from './type';
 
-import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useUpdatePushAgree';
+import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useBaseUpdatePushAgree';
 import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';

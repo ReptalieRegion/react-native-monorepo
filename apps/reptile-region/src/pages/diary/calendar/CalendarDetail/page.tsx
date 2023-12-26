@@ -1,16 +1,30 @@
 import { Typo, color } from '@crawl/design-system';
+import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import dayjs from 'dayjs';
 import { Image } from 'expo-image';
-import React from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import React, { useCallback } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import ListItem from './@common/components/ListItem';
-import TouchableScale from './@common/components/TouchableScale';
+import useMemoUpdateBottomSheet from '../@common/bottom-sheet/MemoUpdate/useMemoUpdateBottomSheet';
+
+import ListItem, { type DisableListItemProps } from './@common/components/ListItem/DisableListItem';
+import EditListItem, { type EditListItemProps } from './@common/components/ListItem/EditListItem';
 import useFetchCalendarDetail from './@common/hooks/queries/useFetchCalendarDetail';
 import ChangeHeader from './header';
 
 import type { CalendarDetailScreenProps } from '@/types/routes/props/diary/calendar';
+
+interface EditListItemType {
+    type: 'EDIT';
+    props: EditListItemProps;
+}
+
+interface DisableListItemType {
+    type: 'DISABLE';
+    props: DisableListItemProps;
+}
+
+type Item = EditListItemType | DisableListItemType;
 
 export default function CalendarDetailPage({
     navigation,
@@ -19,36 +33,70 @@ export default function CalendarDetailPage({
     },
 }: CalendarDetailScreenProps) {
     const { data } = useFetchCalendarDetail({ calendarId: calendar.id, entityId: entity.id, date: searchDate });
+    const openMemoBottomSheet = useMemoUpdateBottomSheet();
+
+    const listItems: Item[] = [
+        {
+            type: 'EDIT',
+            props: {
+                label: '메모',
+                content: <Typo textAlign="right">{data.calendar.memo}</Typo>,
+                onPress: () =>
+                    openMemoBottomSheet({ calendar: { id: data.calendar.id, memo: data.calendar.memo }, searchDate }),
+            },
+        },
+        {
+            type: 'EDIT',
+            props: {
+                label: '태그',
+                content: data.calendar.markType.map((mark) => (
+                    <Typo color="primary" textAlign="right" key={mark}>
+                        #{mark}
+                    </Typo>
+                )),
+            },
+        },
+        {
+            type: 'DISABLE',
+            props: {
+                label: '기록날짜',
+                content: dayjs(data?.calendar.date).format('YYYY년 MM월 DD일 HH:mm'),
+            },
+        },
+    ];
+
+    const keyExtractor = useCallback((item: Item) => item.props.label, []);
+
+    const renderListHeader = useCallback(() => {
+        return (
+            <View style={styles.imageWrapper}>
+                <Image source={{ uri: data?.entity.image.src }} style={styles.imageSize} />
+            </View>
+        );
+    }, [data?.entity.image.src]);
+
+    const renderItem: ListRenderItem<Item> = useCallback(({ item }) => {
+        switch (item.type) {
+            case 'EDIT':
+                return <EditListItem {...item.props} containerStyle={styles.padding} />;
+            case 'DISABLE':
+                return <ListItem {...item.props} containerStyle={styles.padding} />;
+        }
+    }, []);
 
     return (
         <>
             <ChangeHeader navigation={navigation} searchDate={searchDate} calendarId={calendar.id} />
-            <ScrollView style={styles.wrapper}>
-                <View>
-                    <View style={cardStyles.container}>
-                        <Image source={{ uri: data?.entity.image.src }} style={cardStyles.imageSize} />
-                    </View>
-                </View>
-                <View style={articleStyles.wrapper}>
-                    <TouchableScale containerStyle={articleStyles.padding}>
-                        <ListItem label="메모" content={<Typo textAlign="right">{data?.calendar.memo}</Typo>} />
-                    </TouchableScale>
-                    <TouchableScale containerStyle={articleStyles.padding}>
-                        <ListItem
-                            label="태그"
-                            content={data?.calendar.markType.map((mark) => (
-                                <Typo key={mark} color="primary" textAlign="left" variant="body1">
-                                    #{mark}
-                                </Typo>
-                            ))}
-                        />
-                    </TouchableScale>
-                    <View style={[articleStyles.itemWrapper, articleStyles.padding]}>
-                        <Typo variant="title2">기록날짜</Typo>
-                        <Typo>{dayjs(data?.calendar.date).format('YYYY년 MM월 DD일 HH:mm')}</Typo>
-                    </View>
-                </View>
-            </ScrollView>
+            <View style={styles.wrapper}>
+                <FlashList
+                    data={listItems}
+                    keyExtractor={keyExtractor}
+                    renderItem={renderItem}
+                    ListHeaderComponent={renderListHeader}
+                    getItemType={(item) => item.type}
+                    estimatedItemSize={67}
+                />
+            </View>
         </>
     );
 }
@@ -58,67 +106,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: color.White.toString(),
     },
-});
-
-const cardStyles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        gap: 10,
-        alignItems: 'center',
-        backgroundColor: color.White.toString(),
-        ...Platform.select({
-            ios: {
-                shadowColor: color.DarkGray[500].toString(),
-                shadowOpacity: 0.15,
-                shadowRadius: 10,
-                shadowOffset: {
-                    width: 0,
-                    height: 1,
-                },
-            },
-            android: {
-                elevation: 10,
-            },
-        }),
-    },
-    content: {
-        flex: 1,
-        padding: 10,
-        justifyContent: 'space-between',
-    },
-    varietyWrapper: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        gap: 5,
+    imageWrapper: {
+        marginBottom: 10,
     },
     imageSize: {
         width: '100%',
         aspectRatio: '1/1',
     },
-});
-
-const articleStyles = StyleSheet.create({
-    wrapper: {
-        paddingVertical: 20,
-        gap: 10,
-    },
-    itemWrapper: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: 30,
-    },
     padding: {
         padding: 20,
-    },
-    tagWrapper: {
-        flexDirection: 'row',
-        gap: 10,
-        flexWrap: 'wrap',
-        flex: 1,
-        justifyContent: 'flex-end',
-    },
-    memoContainer: {
-        flex: 1,
     },
 });

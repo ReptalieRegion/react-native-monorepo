@@ -6,7 +6,7 @@ import { useAuth, useAuthHandler } from './auth';
 
 import { initRefreshFailCallback } from '@/apis/@utils/fetcher';
 import useUpdateFCMToken from '@/apis/me/profile/hooks/mutations/useUpdateFCMToken';
-import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useUpdatePushAgree';
+import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useBaseUpdatePushAgree';
 import { PushAgreeType } from '@/types/apis/notification';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 

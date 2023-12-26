@@ -46,18 +46,20 @@ export default function BottomSheet({
 
     return (
         <BottomSheetProvider onClose={onClose} snapInfo={snapInfo}>
-            <BackDrop style={backDropStyle} />
-            <BottomSheetContainer>
-                <BottomSheetHeader header={header} />
-                {Platform.select({
-                    ios: (
-                        <GestureDetector gesture={gesture}>
-                            <View style={styles.container}>{children}</View>
-                        </GestureDetector>
-                    ),
-                    android: <View style={styles.container}>{children}</View>,
-                })}
-            </BottomSheetContainer>
+            <View style={styles.wrapper}>
+                <BackDrop style={backDropStyle} />
+                <BottomSheetContainer>
+                    <BottomSheetHeader header={header} />
+                    {Platform.select({
+                        ios: (
+                            <GestureDetector gesture={gesture}>
+                                <View style={styles.container}>{children}</View>
+                            </GestureDetector>
+                        ),
+                        android: <View style={styles.container}>{children}</View>,
+                    })}
+                </BottomSheetContainer>
+            </View>
         </BottomSheetProvider>
     );
 }
@@ -65,5 +67,8 @@ export default function BottomSheet({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    wrapper: {
+        position: 'absolute',
     },
 });
