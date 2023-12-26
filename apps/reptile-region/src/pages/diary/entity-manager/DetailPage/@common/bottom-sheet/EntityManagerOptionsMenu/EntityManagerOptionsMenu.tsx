@@ -2,11 +2,12 @@ import { BottomSheet } from '@crawl/bottom-sheet';
 import { TouchableTypo } from '@crawl/design-system';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { Alert, Modal, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useDeleteEntity from '@/apis/diary/entity-manager/hooks/mutations/useDeleteEntity';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
 import type { ImageType } from '@/types/global/image';
 import type { EntityManagerDetailNavigationProp } from '@/types/routes/props/diary/entity';
@@ -82,19 +83,22 @@ export default function EntityManagerOptionsMenuBottomSheet({
     const bottomSheetHeight = 59 + 38 * listItem.length;
 
     return (
-        <Modal visible={isOpen} transparent={true}>
-            <BottomSheet onClose={onClose} snapInfo={{ startIndex: 0, pointsFromTop: [bottomSheetHeight] }}>
-                <View style={[styles.content, { paddingBottom: bottom }]}>
-                    {listItem.map(({ text, onPress }) => (
-                        <View key={text} style={styles.listItem}>
-                            <TouchableTypo variant="body2" onPress={onPress}>
-                                {text}
-                            </TouchableTypo>
-                        </View>
-                    ))}
-                </View>
-            </BottomSheet>
-        </Modal>
+        <ConditionalRenderer
+            condition={isOpen}
+            trueContent={
+                <BottomSheet onClose={onClose} snapInfo={{ startIndex: 0, pointsFromTop: [bottomSheetHeight] }}>
+                    <View style={[styles.content, { paddingBottom: bottom }]}>
+                        {listItem.map(({ text, onPress }) => (
+                            <View key={text} style={styles.listItem}>
+                                <TouchableTypo variant="body2" onPress={onPress}>
+                                    {text}
+                                </TouchableTypo>
+                            </View>
+                        ))}
+                    </View>
+                </BottomSheet>
+            }
+        />
     );
 }
 

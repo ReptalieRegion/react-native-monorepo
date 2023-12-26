@@ -11,7 +11,7 @@ export default function useOverlayActionMenuBottomSheet() {
                 overlay.open(({ isOpen, close }) => (
                     <ActionMenuBottomSheet
                         calendar={calendar}
-                        isShowBottomSheet={isOpen}
+                        isOpen={isOpen}
                         onClose={() => {
                             resolve(false);
                             close();

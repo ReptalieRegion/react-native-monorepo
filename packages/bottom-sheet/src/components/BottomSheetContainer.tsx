@@ -41,7 +41,7 @@ export default function BottomSheetContainer({
 
     const snapAnimatedStyles = useAnimatedStyle(() => {
         return {
-            height: Math.min(height.value + keyboard.height.value, maxHeight),
+            height: Math.max(height.value, Math.min(height.value + keyboard.height.value - bottom, maxHeight)),
             paddingBottom: Math.max(keyboard.height.value, bottom),
             transform: [{ translateY: translateY.value }],
         };

@@ -2,10 +2,11 @@ import { BottomSheet } from '@crawl/bottom-sheet';
 import { Typo } from '@crawl/design-system';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Alert, Modal, StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import type { ImageType } from '@/types/global/image';
 import type { SharePostListNavigationProp } from '@/types/routes/props/share-post/post-list';
 
@@ -78,17 +79,20 @@ export default function PostOptionsMenu({ isOpen, post, onClose }: PostOptionsMe
     const bottomSheetHeight = 59 + 38 * listItem.length;
 
     return (
-        <Modal transparent={true} visible={isOpen}>
-            <BottomSheet onClose={onClose} snapInfo={{ startIndex: 0, pointsFromTop: [bottomSheetHeight] }}>
-                <View style={[styles.content, { height: bottomSheetHeight }]}>
-                    {listItem.map(({ text, onPress }) => (
-                        <TouchableOpacity key={text} style={styles.listItem} onPress={onPress}>
-                            <Typo>{text}</Typo>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            </BottomSheet>
-        </Modal>
+        <ConditionalRenderer
+            condition={isOpen}
+            trueContent={
+                <BottomSheet onClose={onClose} snapInfo={{ startIndex: 0, pointsFromTop: [bottomSheetHeight] }}>
+                    <View style={[styles.content, { height: bottomSheetHeight }]}>
+                        {listItem.map(({ text, onPress }) => (
+                            <TouchableOpacity key={text} style={styles.listItem} onPress={onPress}>
+                                <Typo>{text}</Typo>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </BottomSheet>
+            }
+        />
     );
 }
 

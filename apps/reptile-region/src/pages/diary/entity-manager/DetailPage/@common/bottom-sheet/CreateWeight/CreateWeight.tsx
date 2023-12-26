@@ -3,13 +3,14 @@ import { Typo, color } from '@crawl/design-system';
 import { useOnOff } from '@crawl/react-hooks';
 import dayjs from 'dayjs';
 import React, { useCallback, useState } from 'react';
-import { Keyboard, Modal, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Keyboard, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import useCreateOrUpdateEntityWeight from '../../hooks/mutations/useCreateOrUpdateEntityWeight';
 
 import { DatePicker } from '@/assets/icons';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import type { WeightUnit } from '@/types/apis/diary/entity';
 
@@ -49,47 +50,53 @@ export default function CreateWeightBottomSheet({ isOpen, entity, onClose }: Cre
     }, []);
 
     return (
-        <Modal visible={isOpen} transparent={true}>
-            <BottomSheet onClose={onClose} snapInfo={{ pointsFromTop: [450], startIndex: 0 }} header={Header}>
-                <Pressable onPress={Keyboard.dismiss} style={[styles.wrapper, styles.modalContainer]}>
-                    <View style={styles.inputGroup}>
-                        <View style={styles.content}>
-                            <Typo variant="title3">{`몸무게 ${entity.weightUnit}`}</Typo>
-                            <View style={styles.inputWrapper}>
-                                <TextInput
-                                    value={weight}
-                                    keyboardType="numeric"
-                                    onChangeText={handleChangeWeight}
-                                    style={styles.input}
-                                    textAlign="center"
-                                />
-                            </View>
-                        </View>
-                        <View style={styles.content}>
-                            <Typo variant="title3">등록일</Typo>
-                            <TouchableOpacity onPress={datePickerOn}>
-                                <View style={styles.inputWrapper}>
-                                    <DatePicker />
-                                    <Typo color="default">{dayjs(selectedDate).format('YYYY.MM.DD')}</Typo>
+        <ConditionalRenderer
+            condition={isOpen}
+            trueContent={
+                <>
+                    <BottomSheet onClose={onClose} snapInfo={{ pointsFromTop: [400], startIndex: 0 }} header={Header}>
+                        <Pressable onPress={Keyboard.dismiss} style={[styles.wrapper, styles.modalContainer]}>
+                            <View style={styles.inputGroup}>
+                                <View style={styles.content}>
+                                    <Typo variant="title3">{`몸무게 ${entity.weightUnit}`}</Typo>
+                                    <View style={styles.inputWrapper}>
+                                        <TextInput
+                                            value={weight}
+                                            keyboardType="numeric"
+                                            onChangeText={handleChangeWeight}
+                                            style={styles.input}
+                                            textAlign="center"
+                                            autoFocus
+                                        />
+                                    </View>
                                 </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <SubmitButton entityId={entity.id} selectedDate={selectedDate} weight={weight} />
-                </Pressable>
-            </BottomSheet>
-            <DateTimePickerModal
-                isVisible={isDatePickerVisible}
-                date={selectedDate}
-                maximumDate={dayjs().toDate()}
-                mode="date"
-                confirmTextIOS="확인"
-                display="inline"
-                cancelTextIOS="취소"
-                onConfirm={handleConfirm}
-                onCancel={datePickerOff}
-            />
-        </Modal>
+                                <View style={styles.content}>
+                                    <Typo variant="title3">등록일</Typo>
+                                    <TouchableOpacity onPress={datePickerOn}>
+                                        <View style={styles.inputWrapper}>
+                                            <DatePicker />
+                                            <Typo color="default">{dayjs(selectedDate).format('YYYY.MM.DD')}</Typo>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <SubmitButton entityId={entity.id} selectedDate={selectedDate} weight={weight} />
+                        </Pressable>
+                    </BottomSheet>
+                    <DateTimePickerModal
+                        isVisible={isDatePickerVisible}
+                        date={selectedDate}
+                        maximumDate={dayjs().toDate()}
+                        mode="date"
+                        confirmTextIOS="확인"
+                        display="inline"
+                        cancelTextIOS="취소"
+                        onConfirm={handleConfirm}
+                        onCancel={datePickerOff}
+                    />
+                </>
+            }
+        />
     );
 }
 
@@ -118,7 +125,7 @@ function SubmitButton({ entityId, weight, selectedDate }: { entityId: string; we
     };
 
     return (
-        <View style={[{ marginBottom: Platform.select({ android: 20 }) }]}>
+        <View style={styles.buttonWrapper}>
             <ConfirmButton text="등록" onPress={handleCreateEntityWeight} disabled={!weight || isPending} />
         </View>
     );
@@ -138,6 +145,7 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         backgroundColor: color.White.toString(),
+        paddingBottom: 10,
     },
     modalContainer: {
         flex: 1,
@@ -148,7 +156,6 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     inputGroup: {
-        flex: 1,
         gap: 20,
     },
     inputWrapper: {
@@ -165,8 +172,11 @@ const styles = StyleSheet.create({
         padding: 0,
         width: '100%',
     },
-
     inputContainer: {
         flexDirection: 'row',
+    },
+    buttonWrapper: {
+        marginTop: 'auto',
+        marginBottom: Platform.select({ android: 20 }),
     },
 });

@@ -2,17 +2,19 @@ import { BottomSheet } from '@crawl/bottom-sheet';
 import { Typo } from '@crawl/design-system';
 import dayjs from 'dayjs';
 import React from 'react';
-import { Modal, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useDeleteCalendarItem from '../../hooks/mutations/useDeleteCalendarItem';
+
+import { ConditionalRenderer } from '@/components/@common/atoms';
 
 type ActionMenuState = {
     calendar: {
         id: string;
         date: string;
     };
-    isShowBottomSheet: boolean;
+    isOpen: boolean;
 };
 
 interface ActionMenuActions {
@@ -21,7 +23,7 @@ interface ActionMenuActions {
 
 export type ActionMenuProps = ActionMenuState & ActionMenuActions;
 
-export default function ActionMenuBottomSheet({ calendar, isShowBottomSheet, onClose }: ActionMenuProps) {
+export default function ActionMenuBottomSheet({ calendar, isOpen, onClose }: ActionMenuProps) {
     const { mutate } = useDeleteCalendarItem({ searchDate: dayjs(calendar.date).startOf('month').format('YYYY-MM-DD') });
 
     const list = [
@@ -39,17 +41,20 @@ export default function ActionMenuBottomSheet({ calendar, isShowBottomSheet, onC
     ];
 
     return (
-        <Modal transparent visible={isShowBottomSheet}>
-            <BottomSheet onClose={onClose} snapInfo={{ pointsFromTop: [59 + 38 * list.length], startIndex: 0 }}>
-                <View style={styles.content}>
-                    {list.map(({ label, onPress }) => (
-                        <TouchableOpacity key={label} style={styles.listItem} onPress={onPress}>
-                            <Typo>{label}</Typo>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            </BottomSheet>
-        </Modal>
+        <ConditionalRenderer
+            condition={isOpen}
+            trueContent={
+                <BottomSheet onClose={onClose} snapInfo={{ pointsFromTop: [59 + 38 * list.length], startIndex: 0 }}>
+                    <View style={styles.content}>
+                        {list.map(({ label, onPress }) => (
+                            <TouchableOpacity key={label} style={styles.listItem} onPress={onPress}>
+                                <Typo>{label}</Typo>
+                            </TouchableOpacity>
+                        ))}
+                    </View>
+                </BottomSheet>
+            }
+        />
     );
 }
 

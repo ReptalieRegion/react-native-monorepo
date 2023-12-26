@@ -2,12 +2,12 @@ import { BottomSheet } from '@crawl/bottom-sheet';
 import { Typo, color } from '@crawl/design-system';
 import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import React, { useCallback } from 'react';
-import { Modal, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useInfiniteFetchEntity from '../../hooks/queries/useInfiniteFetchEntity';
 
-import { Avatar } from '@/components/@common/atoms';
+import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
 type SelectEntityState = {
@@ -46,18 +46,21 @@ export default function SelectEntityBottomSheet({ isOpen, onClose, onSelectEntit
     );
 
     return (
-        <Modal transparent={true} visible={isOpen}>
-            <BottomSheet onClose={onClose} snapInfo={{ pointsFromTop: ['70%'], startIndex: 0 }} header={BottomSheetHeader}>
-                <View style={styles.wrapper}>
-                    <FlashList
-                        data={data}
-                        renderItem={renderItem}
-                        contentContainerStyle={contentContainerStyle}
-                        estimatedItemSize={90}
-                    />
-                </View>
-            </BottomSheet>
-        </Modal>
+        <ConditionalRenderer
+            condition={isOpen}
+            trueContent={
+                <BottomSheet onClose={onClose} snapInfo={{ pointsFromTop: ['70%'], startIndex: 0 }} header={BottomSheetHeader}>
+                    <View style={styles.wrapper}>
+                        <FlashList
+                            data={data}
+                            renderItem={renderItem}
+                            contentContainerStyle={contentContainerStyle}
+                            estimatedItemSize={90}
+                        />
+                    </View>
+                </BottomSheet>
+            }
+        />
     );
 }
 
