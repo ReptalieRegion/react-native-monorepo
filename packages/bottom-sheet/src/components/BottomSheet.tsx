@@ -29,6 +29,7 @@ export default function BottomSheet({
     },
     children,
     snapInfo,
+    headerTitle,
     header,
     onClose,
 }: PropsWithChildren<BottomSheetProps>) {
@@ -49,7 +50,7 @@ export default function BottomSheet({
             <View style={styles.wrapper}>
                 <BackDrop style={backDropStyle} />
                 <BottomSheetContainer>
-                    <BottomSheetHeader header={header} />
+                    <BottomSheetHeader header={header} headerTitle={headerTitle} />
                     {Platform.select({
                         ios: (
                             <GestureDetector gesture={gesture}>

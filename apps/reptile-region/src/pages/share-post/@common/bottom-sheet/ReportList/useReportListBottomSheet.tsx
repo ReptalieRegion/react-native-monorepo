@@ -2,27 +2,29 @@ import { BottomSheet } from '@crawl/bottom-sheet';
 import { useOverlay } from '@crawl/overlay-manager';
 import React, { useCallback } from 'react';
 
-import PostOptionsMenuBottomSheet, { type PostOptionsMenuProps } from './PostOptionsMenu';
+import ReportListBottomSheet, { type ReportListProps } from './ReportList';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 
-export default function usePostOptionsMenuBottomSheet() {
-    const overlay = useOverlay();
-    const openPostOptionsMenuBottomSheet = useCallback(
-        ({ post }: Pick<PostOptionsMenuProps, 'post'>) => {
+export default function useReportListBottomSheet() {
+    const overlay = useOverlay({ exitOnUnmount: false });
+    const openReportListBottomSheet = useCallback(
+        ({ report }: Pick<ReportListProps, 'report'>) => {
             return new Promise<boolean>((resolve) => {
-                overlay.open(({ isOpen, close }) => (
+                overlay.open(({ isOpen, close, exit }) => (
                     <ConditionalRenderer
                         condition={isOpen}
                         trueContent={
                             <BottomSheet
+                                headerTitle="신고"
                                 onClose={() => {
                                     close();
-                                    resolve(false);
+                                    exit();
+                                    resolve(true);
                                 }}
-                                snapInfo={{ startIndex: 0, pointsFromTop: [post.isMine ? 59 + 38 * 2 : 59 + 38 * 1] }}
+                                snapInfo={{ startIndex: 0, pointsFromTop: ['50%'] }}
                             >
-                                <PostOptionsMenuBottomSheet post={post} />
+                                <ReportListBottomSheet report={report} />
                             </BottomSheet>
                         }
                     />
@@ -32,5 +34,5 @@ export default function usePostOptionsMenuBottomSheet() {
         [overlay],
     );
 
-    return openPostOptionsMenuBottomSheet;
+    return openReportListBottomSheet;
 }

@@ -1,12 +1,14 @@
-import { BottomSheet } from '@crawl/bottom-sheet';
+import { useBottomSheet } from '@crawl/bottom-sheet';
 import { Typo } from '@crawl/design-system';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import useReportListBottomSheet from '../ReportList/useReportListBottomSheet';
+
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
-import { ConditionalRenderer } from '@/components/@common/atoms';
+import { ReportType } from '@/types/apis/report';
 import type { ImageType } from '@/types/global/image';
 import type { SharePostListNavigationProp } from '@/types/routes/props/share-post/post-list';
 
@@ -20,17 +22,16 @@ type PostOptionsMenuState = {
             id: string;
         };
     };
-    isOpen: boolean;
 };
 
-interface PostOptionsMenuActions {
-    onClose(): void;
-}
+interface PostOptionsMenuActions {}
 
 export type PostOptionsMenuProps = PostOptionsMenuState & PostOptionsMenuActions;
 
-export default function PostOptionsMenu({ isOpen, post, onClose }: PostOptionsMenuProps) {
+export default function PostOptionsMenu({ post }: PostOptionsMenuProps) {
     const navigation = useNavigation<SharePostListNavigationProp>();
+    const openReportListBottomSheet = useReportListBottomSheet();
+    const { bottomSheetClose } = useBottomSheet();
     const { mutate } = useDeletePost();
 
     const deletePost = () => {
@@ -45,14 +46,14 @@ export default function PostOptionsMenu({ isOpen, post, onClose }: PostOptionsMe
                 style: 'destructive',
                 onPress: () => {
                     mutate({ postId: post.id });
-                    onClose();
+                    bottomSheetClose();
                 },
             },
         ]);
     };
 
-    const navigateUpdatePage = () => {
-        onClose();
+    const navigateUpdatePage = async () => {
+        await bottomSheetClose();
         navigation.push('share-post/post/update', {
             post: { contents: post.contents, id: post.id, images: post.images },
         });
@@ -72,27 +73,25 @@ export default function PostOptionsMenu({ isOpen, post, onClose }: PostOptionsMe
         : [
               {
                   text: '신고하기',
-                  onPress: () => {},
+                  onPress: async () => {
+                      await bottomSheetClose();
+                      openReportListBottomSheet({
+                          report: { type: ReportType.POST, typeId: post.id, reported: post.user.id },
+                      });
+                  },
               },
           ];
 
     const bottomSheetHeight = 59 + 38 * listItem.length;
 
     return (
-        <ConditionalRenderer
-            condition={isOpen}
-            trueContent={
-                <BottomSheet onClose={onClose} snapInfo={{ startIndex: 0, pointsFromTop: [bottomSheetHeight] }}>
-                    <View style={[styles.content, { height: bottomSheetHeight }]}>
-                        {listItem.map(({ text, onPress }) => (
-                            <TouchableOpacity key={text} style={styles.listItem} onPress={onPress}>
-                                <Typo>{text}</Typo>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </BottomSheet>
-            }
-        />
+        <View style={[styles.content, { height: bottomSheetHeight }]}>
+            {listItem.map(({ text, onPress }) => (
+                <TouchableOpacity key={text} style={styles.listItem} onPress={onPress}>
+                    <Typo>{text}</Typo>
+                </TouchableOpacity>
+            ))}
+        </View>
     );
 }
 

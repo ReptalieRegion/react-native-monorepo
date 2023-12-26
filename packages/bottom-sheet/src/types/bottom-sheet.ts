@@ -17,7 +17,7 @@ type BottomSheetAnimationState = {
 };
 
 type BottomSheetAnimationAction = {
-    bottomSheetClose: () => void;
+    bottomSheetClose: () => Promise<void>;
 };
 
 export type { BottomSheetAnimationAction, BottomSheetAnimationState, SnapInfo };
