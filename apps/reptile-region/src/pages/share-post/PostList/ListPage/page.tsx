@@ -5,8 +5,9 @@ import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import usePostOptionsMenuBottomSheet from '../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
-import useInfiniteFetchPosts from '../@hooks/queries/useInfiniteFetchPosts';
-import useSharePostActions from '../@hooks/useSharePostActions';
+
+import useInfiniteFetchPosts from './hooks/queries/useInfiniteFetchPosts';
+import useSharePostActions from './hooks/useSharePostActions';
 
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
@@ -16,7 +17,7 @@ import { ListEmptyComponent } from '@/components/share-post/organisms/SharePostC
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
 import useFlashListScroll from '@/hooks/useFlashListScroll';
-import useSharePostNavigation from '@/pages/share-post/PostList/@hooks/useSharePostNavigation';
+import useSharePostNavigation from '@/pages/share-post/@common/hooks/useSharePostNavigation';
 import type { FetchPostResponse } from '@/types/apis/share-post/post';
 import type { SharePostListPageScreen } from '@/types/routes/props/share-post/post-list';
 

@@ -1,12 +1,12 @@
 import React from 'react';
 
 import usePostOptionsMenuBottomSheet from '../../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
+import useSharePostNavigation from '../../../@common/hooks/useSharePostNavigation';
 import usePostDetailActions from '../../hooks/usePostDetailActions';
 
 import useFetchPost from '@/apis/share-post/post/hooks/queries/useFetchPost';
 import { Divider } from '@/components/@common/atoms/Divider';
 import SharePostCardNotification from '@/components/share-post/organisms/SharePostCard/SharePostCardNotification';
-import useSharePostNavigation from '@/pages/share-post/PostList/@hooks/useSharePostNavigation';
 
 export default function Post({ postId }: { postId: string }) {
     const { data } = useFetchPost({ postId });
