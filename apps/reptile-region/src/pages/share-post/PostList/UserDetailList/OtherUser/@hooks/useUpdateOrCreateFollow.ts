@@ -4,7 +4,7 @@ import * as Haptic from 'react-native-haptic-feedback';
 import useCreateFollow from './mutations/useCreateFollow';
 import useUpdateFollow from './mutations/useUpdateFollow';
 
-import useAuthNavigation from '@/hooks/useNavigationAuth';
+import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
 
 export default function useUpdateOrCreateFollow(nickname: string) {
     const { mutate: createFollowMutate } = useCreateFollow(nickname);

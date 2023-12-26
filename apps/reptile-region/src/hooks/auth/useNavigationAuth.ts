@@ -1,7 +1,7 @@
 import { useNavigation, type NavigationProp } from '@react-navigation/native';
 import { useCallback } from 'react';
 
-import useAuth from './auth/useAuth';
+import useAuth from './useAuth';
 
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 

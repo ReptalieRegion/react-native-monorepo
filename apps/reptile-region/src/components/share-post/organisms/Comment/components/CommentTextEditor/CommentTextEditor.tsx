@@ -8,7 +8,7 @@ import TextInputEditor from '../TextInputEditor';
 import useCreateComment from '@/apis/share-post/comment/hooks/mutations/useCreateComment';
 import useUpdateComment from '@/apis/share-post/comment/hooks/mutations/useUpdateComment';
 import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
-import useAuthNavigation from '@/hooks/useNavigationAuth';
+import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
 
 export default function CommentTextEditor() {
     const { changeText } = useTagHandler();

@@ -11,7 +11,7 @@ import { NotificationIcon } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import { useAuth } from '@/hooks/auth';
-import useAuthNavigation from '@/hooks/useNavigationAuth';
+import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
 
 export function HomeListHeader(props: NativeStackHeaderProps) {
     const { requireAuthNavigation } = useAuthNavigation();
