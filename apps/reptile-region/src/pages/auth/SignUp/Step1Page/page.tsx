@@ -7,18 +7,18 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import SignUpTextField from '../@common/components/SignUpTextField';
+import SignUpTitle from '../@common/components/SignUpTitle';
 import useCreatePushAgree from '../@common/hooks/mutations/useCreatePushAgree';
-
-import type { SignUpStep1ScreenProps } from './type';
 
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
 import useSignUpStep1 from '@/apis/auth/hooks/mutations/useSignUpStep1';
 import useNicknameDuplicateCheck from '@/apis/auth/hooks/queries/useNicknameDuplicateCheck';
 import { registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import { SignUpTextField, SignUpTitle } from '@/components/auth/molecules';
 import { useAuthHandler } from '@/hooks/auth';
 import useKeyboardOpenButtonSize from '@/hooks/useKeyboardOpenButtonSize';
+import type { SignUpStep1ScreenProps } from '@/types/routes/props/auth/sign-up';
 
 export default function SignUpStep1({
     navigation,

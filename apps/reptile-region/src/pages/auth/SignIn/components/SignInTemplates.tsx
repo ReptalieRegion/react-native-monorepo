@@ -2,12 +2,12 @@ import { color } from '@crawl/design-system';
 import React, { type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import type { AppleButtonProps } from '../organisms/AuthButton/AppleButton';
-import AppleButton from '../organisms/AuthButton/AppleButton';
-import type { GoogleButtonProps } from '../organisms/AuthButton/GoogleButton';
-import GoogleButton from '../organisms/AuthButton/GoogleButton';
-import type { KakaoButtonProps } from '../organisms/AuthButton/KakaoButton';
-import KakaoButton from '../organisms/AuthButton/KakaoButton';
+import type { AppleButtonProps } from './AuthButton/AppleButton';
+import AppleButton from './AuthButton/AppleButton';
+import type { GoogleButtonProps } from './AuthButton/GoogleButton';
+import GoogleButton from './AuthButton/GoogleButton';
+import type { KakaoButtonProps } from './AuthButton/KakaoButton';
+import KakaoButton from './AuthButton/KakaoButton';
 
 interface KaKao extends KakaoButtonProps {
     type: 'KAKAO';
