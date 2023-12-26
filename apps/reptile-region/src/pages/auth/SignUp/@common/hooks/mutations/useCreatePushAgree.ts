@@ -1,21 +1,18 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import messaging from '@react-native-firebase/messaging';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { createNotificationPushAgree } from '../../repository';
-
-import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { NOTIFICATION_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import type { CreatePushAgree, FetchPushAgree } from '@/types/apis/notification';
+import useBaseCreatePushAgree from '@/apis/notification/push/hooks/mutations/useBaseCreatePushAgree';
+import type { FetchPushAgree } from '@/types/apis/notification';
 
-// 푸시알림 동의 생성
-type UseCreatePushAgreeContext = {
+type Context = {
     previousPushAgree: FetchPushAgree['Response'];
 };
 
 export default function useCreatePushAgree() {
     const queryClient = useQueryClient();
 
-    return useMutation<CreatePushAgree['Response'], HTTPError, CreatePushAgree['Request'], UseCreatePushAgreeContext>({
-        mutationFn: createNotificationPushAgree,
+    return useBaseCreatePushAgree<Context>({
         onMutate: async () => {
             await queryClient.cancelQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree });
             const previousPushAgree = queryClient.getQueryData<FetchPushAgree['Response']>(NOTIFICATION_QUERY_KEYS.pushAgree);
@@ -26,9 +23,10 @@ export default function useCreatePushAgree() {
                 isAgreeService: true,
                 isAgreeFollow: true,
                 isAgreeTag: true,
+                isAgreeDevice: false,
             }));
 
-            return { previousPushAgree } as UseCreatePushAgreeContext;
+            return { previousPushAgree } as Context;
         },
         onError: (_error, _variables, context) => {
             if (context !== undefined) {
@@ -36,7 +34,15 @@ export default function useCreatePushAgree() {
             }
         },
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree });
+            messaging()
+                .requestPermission()
+                .then((setting) => {
+                    const hasPermission =
+                        setting === messaging.AuthorizationStatus.AUTHORIZED ||
+                        setting === messaging.AuthorizationStatus.PROVISIONAL;
+                    console.log(hasPermission);
+                });
+            queryClient.invalidateQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree, exact: true });
         },
     });
 }

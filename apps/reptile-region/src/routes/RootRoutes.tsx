@@ -10,7 +10,6 @@ import EntityManagerCreateRoutes from './Diary/EntityManagerCreateRoutes';
 import SharePostModalRoutes from './SharePost/ModalRoutes';
 import PostingRoutes from './SharePost/PostingRoutes';
 
-import useEffectClientFetch from '@/hooks/useEffectClientFetch';
 import useEffectInitial from '@/hooks/useEffectInitial';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
@@ -89,11 +88,8 @@ type RootRoutesProps = {
 const Stack = createNativeStackNavigator<RootRoutesParamList>();
 
 export default function RootRoutes({ navigationRef }: RootRoutesProps) {
-    // clientFetch, refresh 실패 시 실행할 콜백함수 초기화
-    useEffectClientFetch();
-
-    // 자동 로그인 및 FCM Token 초기화
-    useEffectInitial();
+    // clientFetch, refresh 실패 시 실행할 콜백함수 초기화, 자동 로그인 및 FCM Token 초기화
+    useEffectInitial({ navigationRef });
 
     return (
         <NavigationContainer<RootRoutesParamList> ref={navigationRef} linking={linking}>

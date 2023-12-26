@@ -9,13 +9,11 @@ import useCreateEntity from '../@common/context/CreateEntity/hooks/useCreateEnti
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import useKeyboardOpenButtonSize from '@/hooks/useKeyboardOpenButtonSize';
 import type { WeightUnit } from '@/types/apis/diary/entity';
 import type { EntityManagerCreateWeightScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerWeightPage({ navigation }: EntityManagerCreateWeightScreenProps) {
     const textFieldRef = useRef<TextInput>(null);
-    const buttonSize = useKeyboardOpenButtonSize();
     const isFocused = useIsFocused();
 
     useFocusEffect(() => {
@@ -73,7 +71,7 @@ export default function EntityManagerWeightPage({ navigation }: EntityManagerCre
             button={
                 <ConditionalRenderer
                     condition={isFocused && !!weightUnit}
-                    trueContent={<ConfirmButton text="다음" size={buttonSize} onPress={nextPage} />}
+                    trueContent={<ConfirmButton text="다음" size={'medium'} onPress={nextPage} />}
                     falseContent={null}
                 />
             }

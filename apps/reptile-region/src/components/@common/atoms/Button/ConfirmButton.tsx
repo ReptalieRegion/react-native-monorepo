@@ -7,7 +7,7 @@ import ConditionalRenderer from '../ConditionalRenderer';
 
 type ConfirmButtonVariant = 'confirm' | 'cancel' | 'text' | 'outline';
 
-type ConfirmButtonSize = 'small' | 'medium' | 'large' | 'full' | 'modal';
+export type ConfirmButtonSize = 'small' | 'medium' | 'large' | 'full' | 'modal';
 
 type ConfirmButtonState = {
     text: string;

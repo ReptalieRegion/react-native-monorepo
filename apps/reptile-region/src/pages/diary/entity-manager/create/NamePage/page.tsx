@@ -1,8 +1,7 @@
-import { useFocusEffect } from '@react-navigation/native';
 import React, { useCallback, useRef } from 'react';
 import type { TextInput } from 'react-native-gesture-handler';
 
-import CreateTemplate from '../@common/components/CreateTemplate';
+import CreateTextFieldTemplate from '../@common/components/CreateTextFieldTemplate';
 import useCreateEntityHandler from '../@common/context/CreateEntity/hooks/useCreateEntity';
 
 import useCreateEntity from '@/apis/diary/entity-manager/hooks/mutations/useCreateEntity';
@@ -50,10 +49,8 @@ export default function EntityManagerNamePage({ navigation }: EntityManagerCreat
         navigation.navigate('congrats');
     }, [entityDate, mutate, navigation]);
 
-    useFocusEffect(() => textFieldRef.current?.focus());
-
     return (
-        <CreateTemplate
+        <CreateTextFieldTemplate
             title="개체의 이름을 등록해주세요."
             description="현재 개체의 이름을 알려주세요."
             contentsAlign="top"
@@ -64,6 +61,7 @@ export default function EntityManagerNamePage({ navigation }: EntityManagerCreat
                     size="large"
                     value={entityDate.name ?? ''}
                     onChangeText={handleChangeName}
+                    autoFocus
                 />
             }
             button={

@@ -39,7 +39,6 @@ function FollowerUserList({ keyword, containerStyles }: FollowerUserListState) {
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
         search: keyword,
     });
-    data.pages.forEach(console.log);
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
     const keyExtractor = useCallback((item: FetchFollowerSearchResponse) => item.user.id, []);

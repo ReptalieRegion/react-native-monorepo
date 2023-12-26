@@ -35,6 +35,8 @@ export default function useUpdatePushAgree() {
                         return { ...prevPushAgree, isAgreeService: isAgree };
                     case PushAgreeType.Tag:
                         return { ...prevPushAgree, isAgreeTag: isAgree };
+                    case PushAgreeType.Device:
+                        return { ...prevPushAgree, isAgreeTag: isAgree };
                 }
             });
 

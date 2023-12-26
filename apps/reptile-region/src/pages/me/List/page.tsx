@@ -2,6 +2,7 @@ import { Typo, color } from '@crawl/design-system';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
+import useLogout from './@hooks/mutations/useLogout';
 import type { SettingList } from './type';
 
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
@@ -10,23 +11,16 @@ import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { Profile } from '@/components/@common/molecules/Profile';
 import VersionCheck from '@/native-modules/version-check/VersionCheck';
-import useMeActions from '@/pages/me/List/@hooks/useMeActions';
 import useMeListNavigation from '@/pages/me/List/@hooks/useMeListNavigation';
 
 export default function MyListPage() {
     const { data } = useFetchMeProfile();
     useFetchPushAgree();
 
-    const { logout } = useMeActions();
+    const logout = useLogout();
 
-    const {
-        navigateHomeList,
-        navigateLicense,
-        navigateNotificationSetting,
-        navigatePrivacyPolicy,
-        navigateProfileSetting,
-        navigateTermsOfUse,
-    } = useMeListNavigation();
+    const { navigateLicense, navigateNotificationSetting, navigatePrivacyPolicy, navigateProfileSetting, navigateTermsOfUse } =
+        useMeListNavigation();
 
     const settingList: SettingList[] = [
         {
@@ -83,9 +77,7 @@ export default function MyListPage() {
                 {
                     title: '로그아웃',
                     rightChildren: 'Chevron',
-                    onPress: async () => {
-                        logout({ successCallback: navigateHomeList });
-                    },
+                    onPress: logout,
                 },
             ],
         },

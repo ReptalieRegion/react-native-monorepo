@@ -7,6 +7,8 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import useCreatePushAgree from '../@common/hooks/mutations/useCreatePushAgree';
+
 import type { SignUpStep1ScreenProps } from './type';
 
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
@@ -40,6 +42,7 @@ export default function SignUpStep1({
 
     const { mutateAsync: authTokenAndPublicKeyMutateAsync } = useAuthTokenAndPublicKey();
     const { mutateAsync: signUpSte1MutateAsync } = useSignUpStep1();
+    const { mutate: createPushAgreeMutate } = useCreatePushAgree();
 
     const errorMessage = nickname === '' ? '닉네임은 필수로 입력해주세요.' : data?.isDuplicate ? '닉네임이 중복되었어요.' : '';
     const disabled = nickname === '' || !!errorMessage;
@@ -64,10 +67,10 @@ export default function SignUpStep1({
             });
 
             registerAuthTokens(tokens).then(signIn);
+            createPushAgreeMutate({ isAgree: true });
             navigation.popToTop();
         } catch (error) {
             throw error;
-        } finally {
         }
     };
 

@@ -22,6 +22,7 @@ enum PushAgreeType {
     Follow = '팔로우',
     Notice = '공지사항',
     Tag = '태그',
+    Device = '기기 알림',
 }
 
 interface BasicContents {
