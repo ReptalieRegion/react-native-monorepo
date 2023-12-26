@@ -60,7 +60,15 @@ export default function ExpandableCalendarScreen() {
                             }
                             onLongPress={() => {
                                 Haptic.trigger('impactLight');
-                                openActionMenuBottomSheet({ calendar: { id: item.calendar.id, date: item.calendar.date } });
+                                openActionMenuBottomSheet({
+                                    calendar: {
+                                        id: item.calendar.id,
+                                        date: item.calendar.date,
+                                        memo: item.calendar.memo,
+                                        markType: item.calendar.markType,
+                                    },
+                                    searchDate: dayjs(item.dateString).startOf('month').format('YYYY-MM-DD'),
+                                });
                             }}
                         >
                             <Avatar image={item.entity.image} size={60} />

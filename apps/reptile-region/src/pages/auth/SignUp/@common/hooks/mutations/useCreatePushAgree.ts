@@ -3,7 +3,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { NOTIFICATION_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useBaseCreatePushAgree from '@/apis/notification/push/hooks/mutations/useBaseCreatePushAgree';
-import type { FetchPushAgree } from '@/types/apis/notification';
+import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useBaseUpdatePushAgree';
+import { PushAgreeType, type FetchPushAgree } from '@/types/apis/notification';
 
 type Context = {
     previousPushAgree: FetchPushAgree['Response'];
@@ -11,6 +12,7 @@ type Context = {
 
 export default function useCreatePushAgree() {
     const queryClient = useQueryClient();
+    const { mutate } = useUpdatePushAgree();
 
     return useBaseCreatePushAgree<Context>({
         onMutate: async () => {
@@ -40,7 +42,7 @@ export default function useCreatePushAgree() {
                     const hasPermission =
                         setting === messaging.AuthorizationStatus.AUTHORIZED ||
                         setting === messaging.AuthorizationStatus.PROVISIONAL;
-                    console.log(hasPermission);
+                    mutate({ type: PushAgreeType.Device, isAgree: hasPermission });
                 });
             queryClient.invalidateQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree, exact: true });
         },
