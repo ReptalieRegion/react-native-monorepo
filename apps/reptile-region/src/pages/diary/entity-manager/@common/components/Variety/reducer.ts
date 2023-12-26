@@ -1,6 +1,6 @@
 import { detailedSpeciesList, morphList, speciesList } from './constants';
-import type { SelectVariety, VarietyActions, VarietyList, VarietyListItem, VarietyState } from './type';
-import { VarietyTypeIndex } from './type';
+import type { SelectVariety, VarietyActions, VarietyList, VarietyListItem, VarietyState } from './types';
+import { VarietyTypeIndex } from './types';
 
 import type { EntityVariety } from '@/types/apis/diary/entity';
 

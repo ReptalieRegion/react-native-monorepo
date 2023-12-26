@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import ChangeHeader from './header';
-import type { HomeListPageScreenProp } from './type';
 
 import { ComingSoonBanner } from '@/components/@common/atoms';
+import type { HomeListPageScreenProp } from '@/types/routes/props/home/list';
 
 export default function HomeListPage(props: HomeListPageScreenProp) {
     return (

@@ -54,7 +54,7 @@ export default function ChangeHeader({ navigation }: SharePostListPageScreen) {
             return (
                 <View style={styles.rightContainer}>
                     <ConditionalRenderer
-                        condition={isSignIn && pushRead?.isReadAllLog !== undefined && !pushRead.isReadAllLog}
+                        condition={!!isSignIn && pushRead?.isReadAllLog !== undefined && !pushRead.isReadAllLog}
                         trueContent={
                             <TouchableOpacity onPress={handlePressNotification}>
                                 <View style={styles.container}>

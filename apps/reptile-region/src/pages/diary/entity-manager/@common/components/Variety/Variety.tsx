@@ -4,8 +4,8 @@ import React, { useEffect, useReducer } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { classificationList, detailedSpeciesList, morphList, speciesList } from './constants';
-import type { VarietyListItem } from './type';
-import varietyReducer from './varietyReducer';
+import varietyReducer from './reducer';
+import type { VarietyListItem } from './types';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import TagView from '@/components/@common/atoms/TagView/TagView';

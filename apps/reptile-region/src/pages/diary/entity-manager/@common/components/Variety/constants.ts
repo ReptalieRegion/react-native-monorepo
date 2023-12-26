@@ -1,4 +1,4 @@
-import type { VarietyState } from './type';
+import type { VarietyState } from './types';
 
 import type { EntityVariety } from '@/types/apis/diary/entity';
 
