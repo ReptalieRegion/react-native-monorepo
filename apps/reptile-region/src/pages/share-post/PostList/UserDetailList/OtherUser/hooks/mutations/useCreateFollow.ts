@@ -3,18 +3,18 @@ import { useCallback } from 'react';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import useBaseUpdateFollow from '@/apis/share-post/user/hooks/mutations/useBaseUpdateFollow';
+import useBaseCreateFollow from '@/apis/share-post/user/hooks/mutations/useBaseCreateFollow';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse, UpdateFollowRequest } from '@/types/apis/share-post/user';
 
 type Context = {
     prevProfile: FetchDetailUserProfileResponse | undefined;
 };
 
-export default function useUpdateFollow(nickname: string) {
+export default function useCreateFollow({ nickname }: { nickname: string }) {
     const queryClient = useQueryClient();
     const queryKey = SHARE_POST_QUERY_KEYS.profileDetail(nickname);
 
-    return useBaseUpdateFollow<Context>({
+    return useBaseCreateFollow<Context>({
         onMutate: useCallback(async () => {
             await queryClient.cancelQueries({ queryKey });
             const prevProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(queryKey);
@@ -26,7 +26,7 @@ export default function useUpdateFollow(nickname: string) {
                 return {
                     user: {
                         ...prevData.user,
-                        isFollow: !prevData.user.isFollow,
+                        isFollow: true,
                     },
                 };
             });

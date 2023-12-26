@@ -7,11 +7,12 @@ import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import usePostOptionsMenuBottomSheet from '../../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
 
+import useOtherUserPostListActions from './hooks/useOtherUserPostListActions';
+
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
-import useSharePostActions from '@/pages/share-post/@common/hooks/useSharePostActions';
 import useSharePostNavigation from '@/pages/share-post/PostList/@hooks/useSharePostNavigation';
 import type { FetchDetailUserPostResponse } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
@@ -35,10 +36,7 @@ export default function UserDetailListPage({
         SHARE_POST_QUERY_KEYS.profileDetail(nickname),
     );
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteUserPosts({ nickname });
-    const { handleDoublePressImageCarousel, handlePressFollow, handlePressHeart } = useSharePostActions({
-        type: 'USER_DETAIL',
-        nickname,
-    });
+    const { onlyLike, updateOrCreateLike, updateOrCreateFollow } = useOtherUserPostListActions({ nickname });
     const { navigateComment, handlePressLikeContents, navigateImageThumbnail, handlePressTag } =
         useSharePostNavigation(pageState);
     const openPostOptionsMenuBottomSheet = usePostOptionsMenuBottomSheet();
@@ -65,9 +63,9 @@ export default function UserDetailListPage({
                 <SharePostCard
                     containerStyle={styles.postCardContainer}
                     post={post}
-                    onPressHeart={() => handlePressHeart({ postId: post.id, isLike: post.isLike })}
-                    onDoublePressImageCarousel={() => handleDoublePressImageCarousel({ postId: post.id, isLike: post.isLike })}
-                    onPressFollow={() => handlePressFollow({ userId: post.user.id, isFollow: post.user.isFollow })}
+                    onPressHeart={() => updateOrCreateLike({ postId: post.id, isLike: post.isLike })}
+                    onDoublePressImageCarousel={() => onlyLike({ postId: post.id, isLike: post.isLike })}
+                    onPressFollow={() => updateOrCreateFollow({ userId: post.user.id, isFollow: post.user.isFollow })}
                     onPressComment={() => navigateComment({ post: { id: post.id } })}
                     onPressPostOptionsMenu={() =>
                         openPostOptionsMenuBottomSheet({
@@ -95,14 +93,14 @@ export default function UserDetailListPage({
             );
         },
         [
-            handleDoublePressImageCarousel,
+            handlePressTag,
+            updateOrCreateLike,
+            onlyLike,
+            updateOrCreateFollow,
             navigateComment,
-            handlePressFollow,
-            handlePressHeart,
-            handlePressLikeContents,
             openPostOptionsMenuBottomSheet,
             navigateImageThumbnail,
-            handlePressTag,
+            handlePressLikeContents,
         ],
     );
 

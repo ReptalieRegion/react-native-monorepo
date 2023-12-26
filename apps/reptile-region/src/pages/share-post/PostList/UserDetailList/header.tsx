@@ -1,9 +1,10 @@
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 
-import useUpdateOrCreateFollow from './OtherUser/@hooks/useUpdateOrCreateFollow';
+import useOtherUserPostListActions from './OtherUser/hooks/useOtherUserPostListActions';
 
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import Follow from '@/components/share-post/atoms/Follow';
 
@@ -19,7 +20,7 @@ export function SharePostUserDetailListHeader(props: NativeStackHeaderProps) {
 export default function ChangeHeader({ nickname, navigation }: ChangeHeaderProps) {
     const { data } = useFetchUserProfile({ nickname });
 
-    const updateOrCreateFollow = useUpdateOrCreateFollow(nickname);
+    const { updateOrCreateFollow } = useOtherUserPostListActions({ nickname });
 
     useEffect(() => {
         const headerRight = () => {
@@ -29,7 +30,12 @@ export default function ChangeHeader({ nickname, navigation }: ChangeHeaderProps
                 }
             };
 
-            return <Follow isFollow={data?.user.isFollow} onPress={handlePressFollow} />;
+            return (
+                <ConditionalRenderer
+                    condition={!data?.user.isMine}
+                    trueContent={<Follow isFollow={data?.user.isFollow} onPress={handlePressFollow} />}
+                />
+            );
         };
 
         navigation.setOptions({ headerRight, headerTitle: nickname });
