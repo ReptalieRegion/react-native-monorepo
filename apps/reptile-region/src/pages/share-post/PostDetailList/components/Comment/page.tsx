@@ -5,13 +5,13 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import useCommentActions from '../../CommentList/@hooks/useCommentActions';
+import useCommentActions from '../../../CommentList/@hooks/useCommentActions';
 
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import Comment, { CommentTextEditor } from '@/components/share-post/organisms/Comment';
 import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
-import usePostDetailNavigation from '@/pages/share-post/PostDetailList/@hooks/usePostDetailNavigation';
+import usePostDetailNavigation from '@/pages/share-post/PostDetailList/hooks/usePostDetailNavigation';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 import type { PostDetailModalListScreenProps } from '@/types/routes/props/share-post/post-detail';
 
