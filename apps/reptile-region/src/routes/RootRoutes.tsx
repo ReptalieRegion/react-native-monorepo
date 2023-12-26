@@ -1,8 +1,9 @@
+import { color } from '@crawl/design-system';
 import messaging from '@react-native-firebase/messaging';
 import { NavigationContainer, type LinkingOptions, type NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { Linking } from 'react-native';
+import { Linking, StyleSheet } from 'react-native';
 
 import SignUpRoutes from './Auth/SignUpRoutes';
 import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
@@ -93,7 +94,7 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
 
     return (
         <NavigationContainer<RootRoutesParamList> ref={navigationRef} linking={linking}>
-            <Stack.Navigator initialRouteName="bottom-tab/routes">
+            <Stack.Navigator initialRouteName="bottom-tab/routes" screenOptions={{ contentStyle: styes.content }}>
                 {/** 바텀 탭 시작 */}
                 <Stack.Screen
                     name="bottom-tab/routes"
@@ -196,3 +197,10 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
         </NavigationContainer>
     );
 }
+
+const styes = StyleSheet.create({
+    content: {
+        flex: 1,
+        backgroundColor: color.White.toString(),
+    },
+});

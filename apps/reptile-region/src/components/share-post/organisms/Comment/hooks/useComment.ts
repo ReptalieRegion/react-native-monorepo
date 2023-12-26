@@ -9,7 +9,7 @@ const useComment = () => {
         throw new Error('Comment Provider를 감싸주세요.');
     }
 
-    return { ...state };
+    return state;
 };
 
 export default useComment;

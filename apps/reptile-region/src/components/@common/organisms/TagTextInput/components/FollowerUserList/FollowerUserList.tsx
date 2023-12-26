@@ -27,7 +27,7 @@ export default function FollowerUserListConditionRender({ containerStyles }: Fol
     return (
         <ConditionalRenderer
             condition={enabled}
-            trueContent={<FollowerUserList keyword={keyword} containerStyles={containerStyles} />}
+            trueContent={<FollowerUserList keyword={keyword.slice(1)} containerStyles={containerStyles} />}
             falseContent={null}
         />
     );

@@ -25,7 +25,7 @@ export default function SharePostCommentRoutes({ navigation }: { navigation: any
         <BottomSheet onClose={handleClose} snapInfo={{ startIndex: 1, pointsFromTop: ['60%', '100%'] }}>
             <Stack.Navigator
                 initialRouteName="main"
-                screenOptions={{ contentStyle: { backgroundColor: color.White.toString() } }}
+                screenOptions={{ contentStyle: { flex: 1, backgroundColor: color.White.toString() } }}
             >
                 <Stack.Screen
                     name="main"
