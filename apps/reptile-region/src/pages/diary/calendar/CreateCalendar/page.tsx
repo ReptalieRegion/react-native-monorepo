@@ -7,12 +7,12 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useOverlaySelectEntityBottomSheet from '../@common/bottom-sheet/SelectEntity/useOverlaySelectEntityBottomSheet';
+import TagTextCheckBox from '../@common/components/TagTextCheckBox';
 
 import useCreateCalendarActions from './hooks/useCreateCalendarActions';
 
 import { Avatar } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import TagTextCheckBox from '@/components/diary/atoms/TagTextCheckBox/index,';
 import type { DiaryCalendarMarkType } from '@/types/apis/diary/calendar';
 
 type MarkTypeArray = {

@@ -4,8 +4,9 @@ import { Modal, StyleSheet, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import Variety from '../../@common/components/Variety/Variety';
+
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import Variety from '@/components/diary/organisms/Variety/Variety';
 import type { EntityVariety } from '@/types/apis/diary/entity';
 
 type VarietyModalState = {

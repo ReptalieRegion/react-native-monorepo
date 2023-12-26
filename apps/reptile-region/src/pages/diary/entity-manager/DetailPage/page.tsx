@@ -6,16 +6,16 @@ import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import useCreateWeightBottomSheet from './@common/bottom-sheet/CreateWeight/useCreateWeightBottomSheet';
-import useFindEntity from './@common/hooks/queries/useFindEntity';
-import type { WeightData } from './@common/hooks/queries/useInfiniteFetchEntityWeight';
-import useInfiniteFetchEntityWeight from './@common/hooks/queries/useInfiniteFetchEntityWeight';
+import useCreateWeightBottomSheet from './bottom-sheet/CreateWeight/useCreateWeightBottomSheet';
 import { ChangeHeader } from './header';
+import useFindEntity from './hooks/queries/useFindEntity';
+import type { WeightData } from './hooks/queries/useInfiniteFetchEntityWeight';
+import useInfiniteFetchEntityWeight from './hooks/queries/useInfiniteFetchEntityWeight';
 
 import { Plus } from '@/assets/icons';
 import { ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
-import GenderIcon from '@/components/diary/atoms/GenderIcon/GenderIcon';
-import InfiniteLineChart from '@/pages/diary/entity-manager/DetailPage/@common/components/InfiniteLineChart';
+import GenderIcon from '@/components/@common/molecules/GenderIcon/GenderIcon';
+import InfiniteLineChart from '@/pages/diary/entity-manager/DetailPage/components/InfiniteLineChart';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerDetailPage({

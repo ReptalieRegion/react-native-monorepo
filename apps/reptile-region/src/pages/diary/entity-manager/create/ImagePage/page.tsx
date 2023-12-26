@@ -7,9 +7,9 @@ import useCreateEntity from '../@common/context/CreateEntity/hooks/useCreateEnti
 
 import { StrokeCamera } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import EntityCard from '@/components/diary/molecules/EntityCard/EntityCard';
 import useToast from '@/components/overlay/Toast/useToast';
 import useImagePicker from '@/hooks/useImagePicker';
+import EntityCard from '@/pages/diary/entity-manager/ListPage/components/EntityCard';
 import type { EntityManagerCreateImageScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerImagePage({ navigation }: EntityManagerCreateImageScreenProps) {

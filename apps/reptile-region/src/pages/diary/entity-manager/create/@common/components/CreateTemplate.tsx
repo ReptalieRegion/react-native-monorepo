@@ -4,7 +4,7 @@ import type { StyleProp, ViewStyle } from 'react-native';
 import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { type TitleAndDescriptionProps } from '../../../../../../components/diary/atoms/TitleAndDescription/TitleAndDescription';
+import { type TitleAndDescriptionProps } from './TitleAndDescription';
 
 import { HEADER_HEIGHT } from '@/constants/global';
 

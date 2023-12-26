@@ -3,7 +3,7 @@ import { Image } from 'expo-image';
 import React, { type ReactNode } from 'react';
 import { Platform, StyleSheet, TouchableOpacity, View, type DimensionValue } from 'react-native';
 
-import GenderIcon from '../../atoms/GenderIcon/GenderIcon';
+import GenderIcon from '../../../../../components/@common/molecules/GenderIcon/GenderIcon';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import TagView from '@/components/@common/atoms/TagView/TagView';

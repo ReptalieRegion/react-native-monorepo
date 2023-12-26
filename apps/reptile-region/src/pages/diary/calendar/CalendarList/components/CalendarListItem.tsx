@@ -24,7 +24,7 @@ const userConfig = {
 const White = color.White.toString();
 const Gray500 = color.Gray[200].toString();
 
-export default function ScaleListItem({ children, containerStyle, onLongPress, ...props }: CalendarListItemProps) {
+export default function CalendarListItem({ children, containerStyle, onLongPress, ...props }: CalendarListItemProps) {
     const scaleX = useSharedValue(1);
     const scaleY = useSharedValue(1);
     const [backgroundColor, setBackgroundColor] = useState(White);

@@ -2,7 +2,7 @@ import { Typo } from '@crawl/design-system';
 import React, { type ReactNode } from 'react';
 import { StyleSheet, View, type ViewStyle } from 'react-native';
 
-import TouchableScale from '../../../../../../../components/@common/atoms/TouchableScale';
+import TouchableScale from '../../../../../../components/@common/atoms/TouchableScale';
 
 import { styles } from './styles';
 

@@ -7,10 +7,10 @@ import { StyleSheet, View } from 'react-native';
 
 import useMemoUpdateBottomSheet from '../@common/bottom-sheet/MemoUpdate/useMemoUpdateBottomSheet';
 
-import ListItem, { type DisableListItemProps } from './@common/components/ListItem/DisableListItem';
-import EditListItem, { type EditListItemProps } from './@common/components/ListItem/EditListItem';
-import useFetchCalendarDetail from './@common/hooks/queries/useFetchCalendarDetail';
+import ListItem, { type DisableListItemProps } from './components/ListItem/DisableListItem';
+import EditListItem, { type EditListItemProps } from './components/ListItem/EditListItem';
 import ChangeHeader from './header';
+import useFetchCalendarDetail from './hooks/queries/useFetchCalendarDetail';
 
 import type { CalendarDetailScreenProps } from '@/types/routes/props/diary/calendar';
 

@@ -4,8 +4,8 @@ import React, { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import type { UseDeleteCalendarItemState } from './@common/hooks/mutations/useDeleteCalendarItem';
-import useDeleteCalendarItem from './@common/hooks/mutations/useDeleteCalendarItem';
+import type { UseDeleteCalendarItemState } from './hooks/mutations/useDeleteCalendarItem';
+import useDeleteCalendarItem from './hooks/mutations/useDeleteCalendarItem';
 
 import { createNativeStackHeader } from '@/components/@common/molecules';
 import type { DeleteCalendar } from '@/types/apis/diary/calendar';

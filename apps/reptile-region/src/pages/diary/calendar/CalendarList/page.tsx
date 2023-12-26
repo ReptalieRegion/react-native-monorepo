@@ -6,14 +6,14 @@ import React, { useCallback, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
 
-import useOverlayActionMenuBottomSheet from './@common/bottom-sheet/ActionMenu/useOverlayActionMenu';
-import type { CalendarFlashListItem, CalendarItem } from './@common/hooks/queries/useFetchCalendarList';
-import useCalendarListActions from './@common/hooks/useCalendarListActions';
+import useOverlayActionMenuBottomSheet from './bottom-sheet/ActionMenu/useOverlayActionMenu';
+import CalendarListItem from './components/CalendarListItem';
+import type { CalendarFlashListItem, CalendarItem } from './hooks/queries/useFetchCalendarList';
+import useCalendarListActions from './hooks/useCalendarListActions';
 
 import { PostWriteIcon } from '@/assets/icons';
 import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import ScaleListItem from '@/components/diary/atoms/CalendarListItem/CalendarListItem';
 import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 
@@ -48,7 +48,7 @@ export default function ExpandableCalendarScreen() {
                     );
                 case 'CALENDAR_ITEM':
                     return (
-                        <ScaleListItem
+                        <CalendarListItem
                             pressInBackground={color.Gray[100].toString()}
                             containerStyle={listStyles.itemContainer}
                             onPress={() =>
@@ -102,7 +102,7 @@ export default function ExpandableCalendarScreen() {
                                     ))}
                                 </View>
                             </View>
-                        </ScaleListItem>
+                        </CalendarListItem>
                     );
             }
         },
