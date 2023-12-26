@@ -6,6 +6,7 @@ import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import useMemoUpdateBottomSheet from '../@common/bottom-sheet/MemoUpdate/useMemoUpdateBottomSheet';
+import useTagUpdateBottomSheet from '../@common/bottom-sheet/TagUpdate/useTagUpdateBottomSheet';
 
 import ListItem, { type DisableListItemProps } from './components/ListItem/DisableListItem';
 import EditListItem, { type EditListItemProps } from './components/ListItem/EditListItem';
@@ -34,6 +35,7 @@ export default function CalendarDetailPage({
 }: CalendarDetailScreenProps) {
     const { data } = useFetchCalendarDetail({ calendarId: calendar.id, entityId: entity.id, date: searchDate });
     const openMemoBottomSheet = useMemoUpdateBottomSheet();
+    const openTagBottomSheet = useTagUpdateBottomSheet();
 
     const listItems: Item[] = [
         {
@@ -54,6 +56,8 @@ export default function CalendarDetailPage({
                         #{mark}
                     </Typo>
                 )),
+                onPress: () =>
+                    openTagBottomSheet({ calendar: { id: data.calendar.id, markType: data.calendar.markType }, searchDate }),
             },
         },
         {

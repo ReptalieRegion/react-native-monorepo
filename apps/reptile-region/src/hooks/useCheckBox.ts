@@ -1,17 +1,17 @@
 import { useCallback, useState } from 'react';
 
 type UseCheckBoxState = {
-    checked?: boolean;
+    initialChecked?: boolean;
 };
 
-export interface UseCheckBoxActions {
+interface UseCheckBoxActions {
     onChangeChecked?(isChecked: boolean): void;
 }
 
-type UseCheckBoxProps = UseCheckBoxState & UseCheckBoxActions;
+export type UseCheckBoxProps = UseCheckBoxState & UseCheckBoxActions;
 
 export default function useCheckBox(props?: UseCheckBoxProps) {
-    const [isChecked, setIsChecked] = useState(props?.checked ?? false);
+    const [isChecked, setIsChecked] = useState(props?.initialChecked ?? false);
 
     const onPress = useCallback(() => {
         const reverseCheck = !isChecked;
