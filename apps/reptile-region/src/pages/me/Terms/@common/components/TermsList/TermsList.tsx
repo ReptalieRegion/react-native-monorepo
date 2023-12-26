@@ -3,7 +3,7 @@ import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { Article, NumberArticle, Title } from '../../atoms';
+import { Article, NumberArticle, Title } from '../TermsItem';
 
 import { TERMS_TYPE, type Terms } from '@/pages/me/Terms/type';
 

@@ -1,8 +1,7 @@
 import React from 'react';
 
+import { TermsList } from '../@common/components/TermsList';
 import { TERMS_TYPE, type Terms } from '../type';
-
-import { TermsList } from '@/components/me/molecules';
 
 const TERMS_OF_USE_MAP: Array<Terms> = [
     {
