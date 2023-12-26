@@ -1,4 +1,4 @@
-import { BottomSheet } from '@crawl/bottom-sheet';
+import { useBottomSheet } from '@crawl/bottom-sheet';
 import { Typo } from '@crawl/design-system';
 import dayjs from 'dayjs';
 import React from 'react';
@@ -9,7 +9,6 @@ import useMemoUpdateBottomSheet from '../../../@common/bottom-sheet/MemoUpdate/u
 import useTagUpdateBottomSheet from '../../../@common/bottom-sheet/TagUpdate/useTagUpdateBottomSheet';
 import useDeleteCalendarItem from '../../hooks/mutations/useDeleteCalendarItem';
 
-import { ConditionalRenderer } from '@/components/@common/atoms';
 import type { DiaryCalendarMarkType } from '@/types/apis/diary/calendar';
 
 type ActionMenuState = {
@@ -20,53 +19,48 @@ type ActionMenuState = {
         markType: DiaryCalendarMarkType[];
     };
     searchDate: string;
-    isOpen: boolean;
 };
 
-interface ActionMenuActions {
-    onClose(): void;
-}
+export type ActionMenuProps = ActionMenuState;
 
-export type ActionMenuProps = ActionMenuState & ActionMenuActions;
-
-export default function ActionMenuBottomSheet({ calendar, isOpen, searchDate, onClose }: ActionMenuProps) {
+export default function ActionMenuBottomSheet({ calendar, searchDate }: ActionMenuProps) {
     const { mutate } = useDeleteCalendarItem({ searchDate: dayjs(calendar.date).startOf('month').format('YYYY-MM-DD') });
     const openMemoBottomSheet = useMemoUpdateBottomSheet();
     const openTagBottomSheet = useTagUpdateBottomSheet();
+    const { bottomSheetClose } = useBottomSheet();
 
     const list = [
         {
             label: '메모 남기기',
-            onPress: () => openMemoBottomSheet({ calendar: { id: calendar.id, memo: calendar.memo }, searchDate }),
+            onPress: async () => {
+                await bottomSheetClose();
+                openMemoBottomSheet({ calendar: { id: calendar.id, memo: calendar.memo }, searchDate });
+            },
         },
         {
             label: '태그 변경하기',
-            onPress: () => openTagBottomSheet({ calendar: { id: calendar.id, markType: calendar.markType }, searchDate }),
+            onPress: async () => {
+                await bottomSheetClose();
+                openTagBottomSheet({ calendar: { id: calendar.id, markType: calendar.markType }, searchDate });
+            },
         },
         {
             label: '삭제',
             onPress: () => {
-                onClose();
                 mutate({ calendarId: calendar.id });
+                bottomSheetClose();
             },
         },
     ];
 
     return (
-        <ConditionalRenderer
-            condition={isOpen}
-            trueContent={
-                <BottomSheet onClose={onClose} snapInfo={{ pointsFromTop: [59 + 38 * list.length], startIndex: 0 }}>
-                    <View style={styles.content}>
-                        {list.map(({ label, onPress }) => (
-                            <TouchableOpacity key={label} style={styles.listItem} onPress={onPress}>
-                                <Typo>{label}</Typo>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                </BottomSheet>
-            }
-        />
+        <View style={styles.content}>
+            {list.map(({ label, onPress }) => (
+                <TouchableOpacity key={label} style={styles.listItem} onPress={onPress}>
+                    <Typo>{label}</Typo>
+                </TouchableOpacity>
+            ))}
+        </View>
     );
 }
 

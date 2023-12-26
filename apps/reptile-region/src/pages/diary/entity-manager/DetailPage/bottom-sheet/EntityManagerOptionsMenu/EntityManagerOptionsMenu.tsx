@@ -1,4 +1,4 @@
-import { BottomSheet } from '@crawl/bottom-sheet';
+import { useBottomSheet } from '@crawl/bottom-sheet';
 import { TouchableTypo } from '@crawl/design-system';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
@@ -7,13 +7,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useDeleteEntity from '@/apis/diary/entity-manager/hooks/mutations/useDeleteEntity';
-import { ConditionalRenderer } from '@/components/@common/atoms';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
 import type { ImageType } from '@/types/global/image';
 import type { EntityManagerDetailNavigationProp } from '@/types/routes/props/diary/entity';
 
 type EntityManagerOptionsMenuBottomSheetState = {
-    isOpen: boolean;
     entity: {
         id: string;
         image: ImageType;
@@ -25,25 +23,16 @@ type EntityManagerOptionsMenuBottomSheetState = {
     navigation: EntityManagerDetailNavigationProp;
 };
 
-interface EntityManagerOptionsMenuBottomSheetActions {
-    onClose(): void;
-}
+export type EntityManagerOptionsMenuBottomSheetProps = EntityManagerOptionsMenuBottomSheetState;
 
-export type EntityManagerOptionsMenuBottomSheetProps = EntityManagerOptionsMenuBottomSheetState &
-    EntityManagerOptionsMenuBottomSheetActions;
-
-export default function EntityManagerOptionsMenuBottomSheet({
-    isOpen,
-    entity,
-    navigation,
-    onClose,
-}: EntityManagerOptionsMenuBottomSheetProps) {
+export default function EntityManagerOptionsMenuBottomSheet({ entity, navigation }: EntityManagerOptionsMenuBottomSheetProps) {
     const { bottom } = useSafeAreaInsets();
     const queryClient = useQueryClient();
+    const { bottomSheetClose } = useBottomSheet();
     const { mutate } = useDeleteEntity({
         onSuccess: () => {
             queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.list });
-            onClose();
+            bottomSheetClose();
         },
     });
 
@@ -64,8 +53,8 @@ export default function EntityManagerOptionsMenuBottomSheet({
         ]);
     };
 
-    const navigateUpdatePage = () => {
-        onClose();
+    const navigateUpdatePage = async () => {
+        await bottomSheetClose();
         navigation.navigate('entity-manager/update', { entity });
     };
 
@@ -80,25 +69,16 @@ export default function EntityManagerOptionsMenuBottomSheet({
         },
     ];
 
-    const bottomSheetHeight = 59 + 38 * listItem.length;
-
     return (
-        <ConditionalRenderer
-            condition={isOpen}
-            trueContent={
-                <BottomSheet onClose={onClose} snapInfo={{ startIndex: 0, pointsFromTop: [bottomSheetHeight] }}>
-                    <View style={[styles.content, { paddingBottom: bottom }]}>
-                        {listItem.map(({ text, onPress }) => (
-                            <View key={text} style={styles.listItem}>
-                                <TouchableTypo variant="body2" onPress={onPress}>
-                                    {text}
-                                </TouchableTypo>
-                            </View>
-                        ))}
-                    </View>
-                </BottomSheet>
-            }
-        />
+        <View style={[styles.content, { paddingBottom: bottom }]}>
+            {listItem.map(({ text, onPress }) => (
+                <View key={text} style={styles.listItem}>
+                    <TouchableTypo variant="body2" onPress={onPress}>
+                        {text}
+                    </TouchableTypo>
+                </View>
+            ))}
+        </View>
     );
 }
 
