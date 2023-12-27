@@ -15,6 +15,8 @@ import useCreateCalendarActions from './hooks/useCreateCalendarActions';
 import { Avatar } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 
+const MAX_MEMO_LENGTH = 300;
+
 export default function CalendarItemCreatePage() {
     const {
         disabledSubmit,
@@ -57,9 +59,19 @@ export default function CalendarItemCreatePage() {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.selection}>
-                        <Typo variant="title2">메모</Typo>
+                        <View style={styles.labelContainer}>
+                            <Typo variant="title2">메모</Typo>
+                            <Typo color="placeholder">
+                                {memo.length}/{MAX_MEMO_LENGTH}
+                            </Typo>
+                        </View>
                         <View style={styles.actionWrapper}>
-                            <TextInput style={styles.textInput} value={memo} onChangeText={handleChangeMemo} />
+                            <TextInput
+                                style={styles.textInput}
+                                value={memo}
+                                onChangeText={handleChangeMemo}
+                                maxLength={MAX_MEMO_LENGTH}
+                            />
                         </View>
                     </View>
                     <View style={styles.selection}>
