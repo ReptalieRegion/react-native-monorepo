@@ -64,7 +64,17 @@ export default function NotificationSetting() {
     useEffect(() => {
         const notificationPermissionCheck = async () => {
             const notificationPermission = await messaging().hasPermission();
-            setNotNotificationPermission(notificationPermission !== messaging.AuthorizationStatus.AUTHORIZED);
+
+            setNotNotificationPermission(
+                notificationPermission !== messaging.AuthorizationStatus.AUTHORIZED &&
+                    notificationPermission !== messaging.AuthorizationStatus.PROVISIONAL,
+            );
+            mutate({
+                type: PushAgreeType.Device,
+                isAgree:
+                    notificationPermission === messaging.AuthorizationStatus.AUTHORIZED ||
+                    notificationPermission === messaging.AuthorizationStatus.PROVISIONAL,
+            });
         };
 
         const subscription = AppState.addEventListener('change', (nextAppState) => {
@@ -77,7 +87,7 @@ export default function NotificationSetting() {
         return () => {
             subscription.remove();
         };
-    }, []);
+    }, [mutate]);
     const updatePushNotification = ({ type, isAgree }: UpdatePushAgree['Request']) => {
         mutate({ type, isAgree });
     };

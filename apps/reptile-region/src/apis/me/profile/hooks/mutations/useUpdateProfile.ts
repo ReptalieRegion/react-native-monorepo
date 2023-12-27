@@ -45,7 +45,7 @@ export default function useUpdateProfile() {
             }
         },
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: queryKey });
+            queryClient.invalidateQueries({ queryKey });
         },
     });
 }

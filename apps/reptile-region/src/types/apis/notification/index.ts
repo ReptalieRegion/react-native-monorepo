@@ -22,7 +22,7 @@ enum PushAgreeType {
     Follow = '팔로우',
     Notice = '공지사항',
     Tag = '태그',
-    Device = '기기 알림',
+    Device = '기기',
 }
 
 interface BasicContents {
@@ -69,7 +69,6 @@ type FetchPushAgreeResponse = {
     isAgreeService: boolean;
     isAgreeTag: boolean;
     isAgreeFollow: boolean;
-    isAgreeDevice: boolean;
 };
 
 type FetchPushAgree = ServerAPI<void, FetchPushAgreeResponse>;

@@ -51,8 +51,8 @@ function FollowerUserList({ keyword, containerStyles }: FollowerUserListState) {
             return (
                 <TouchableOpacity onPress={handlePressItem}>
                     <View style={styles.renderItem}>
-                        <Avatar recyclingKey={item.user.profile.src} image={{ src: item.user.profile.src }} size={30} />
-                        <Typo variant="title5">{item.user.nickname}</Typo>
+                        <Avatar recyclingKey={item.user.profile.src} image={{ src: item.user.profile.src }} size={40} />
+                        <Typo variant="title3">{item.user.nickname}</Typo>
                     </View>
                 </TouchableOpacity>
             );
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     renderItem: {
         alignItems: 'center',
         flexDirection: 'row',
-        marginBottom: 7,
+        marginBottom: 10,
         gap: 12,
     },
 });

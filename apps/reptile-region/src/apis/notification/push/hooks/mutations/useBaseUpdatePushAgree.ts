@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
 
 import { updateNotificationPushAgree } from '../../repository';
 
@@ -7,48 +8,59 @@ import { NOTIFICATION_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import { PushAgreeType, type FetchPushAgree, type UpdatePushAgree } from '@/types/apis/notification';
 
 // 푸시알림 동의 수정
-type UseUpdatePushAgreeContext = {
-    previousPushAgree: FetchPushAgree['Response'];
+type Context = {
+    previousPushAgree: FetchPushAgree['Response'] | undefined;
 };
 
 export default function useUpdatePushAgree() {
     const queryClient = useQueryClient();
+    const queryKey = NOTIFICATION_QUERY_KEYS.pushAgree;
 
-    return useMutation<UpdatePushAgree['Response'], HTTPError, UpdatePushAgree['Request'], UseUpdatePushAgreeContext>({
+    return useMutation<UpdatePushAgree['Response'], HTTPError, UpdatePushAgree['Request'], Context>({
         mutationFn: updateNotificationPushAgree,
-        onMutate: async ({ type, isAgree }) => {
-            await queryClient.cancelQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree });
-            const previousPushAgree = queryClient.getQueryData<FetchPushAgree['Response']>(NOTIFICATION_QUERY_KEYS.pushAgree);
-            queryClient.setQueryData<FetchPushAgree['Response']>(NOTIFICATION_QUERY_KEYS.pushAgree, (prevPushAgree) => {
-                if (prevPushAgree === undefined) {
-                    return prevPushAgree;
-                }
+        onMutate: useCallback(
+            async ({ type, isAgree }: UpdatePushAgree['Request']) => {
+                await queryClient.cancelQueries({ queryKey });
+                const previousPushAgree = queryClient.getQueryData<FetchPushAgree['Response']>(queryKey);
+                queryClient.setQueryData<FetchPushAgree['Response']>(queryKey, (prevPushAgree) => {
+                    if (prevPushAgree === undefined) {
+                        return prevPushAgree;
+                    }
 
-                switch (type) {
-                    case PushAgreeType.Comment:
-                        return { ...prevPushAgree, isAgreeComment: isAgree };
-                    case PushAgreeType.Like:
-                        return { ...prevPushAgree, isAgreePostLike: isAgree };
-                    case PushAgreeType.Follow:
-                        return { ...prevPushAgree, isAgreeFollow: isAgree };
-                    case PushAgreeType.Notice:
-                        return { ...prevPushAgree, isAgreeService: isAgree };
-                    case PushAgreeType.Tag:
-                        return { ...prevPushAgree, isAgreeTag: isAgree };
-                    case PushAgreeType.Device:
-                        return { ...prevPushAgree, isAgreeTag: isAgree };
-                }
-            });
+                    switch (type) {
+                        case PushAgreeType.Comment:
+                            return { ...prevPushAgree, isAgreeComment: isAgree };
+                        case PushAgreeType.Like:
+                            return { ...prevPushAgree, isAgreePostLike: isAgree };
+                        case PushAgreeType.Follow:
+                            return { ...prevPushAgree, isAgreeFollow: isAgree };
+                        case PushAgreeType.Notice:
+                            return { ...prevPushAgree, isAgreeService: isAgree };
+                        case PushAgreeType.Tag:
+                            return { ...prevPushAgree, isAgreeTag: isAgree };
+                        case PushAgreeType.Device:
+                            return { ...prevPushAgree, isAgreeDevice: isAgree };
+                    }
+                });
 
-            return { previousPushAgree } as UseUpdatePushAgreeContext;
-        },
-        onError: (_error, _variables, context) => {
-            if (context !== undefined) {
-                queryClient.setQueryData(NOTIFICATION_QUERY_KEYS.pushAgree, context.previousPushAgree);
-            }
-        },
-        onSettled: () => {
-            setTimeout(() => queryClient.invalidateQueries({ queryKey: NOTIFICATION_QUERY_KEYS.pushAgree }), 1 * 60 * 1000);
-        },
+                return { previousPushAgree };
+            },
+            [queryClient, queryKey],
+        ),
+        onError: useCallback(
+            (_error: HTTPError, _variables: UpdatePushAgree['Request'], context: Context | undefined) => {
+                if (context?.previousPushAgree) {
+                    queryClient.setQueryData(queryKey, context.previousPushAgree);
+                }
+            },
+            [queryClient, queryKey],
+        ),
+        /**
+         * TODO 바로 무효화 하면 이전 데이터로 패치해옴 - 추후 원인 파악해야함
+         * 의심 - mongo lock, 캐싱
+         */
+        onSettled: useCallback(() => {
+            setTimeout(() => queryClient.invalidateQueries({ queryKey, exact: true }), 100);
+        }, [queryClient, queryKey]),
     });
 }
