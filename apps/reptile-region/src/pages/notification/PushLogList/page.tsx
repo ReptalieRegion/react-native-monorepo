@@ -14,6 +14,7 @@ import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';
 import { navigateLinking } from '@/routes/@utils/linking';
 import { ContentType, type FetchPushLogResponse } from '@/types/apis/notification';
+import { calculateTimeAgo } from '@/utils/date/time-ago';
 
 export default function PushLogList({ navigation }: PushLogListScreenProp) {
     const { bottom } = useSafeAreaInsets();
@@ -29,6 +30,8 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
             navigateLinking(navigation, item.contents.deepLink);
         };
 
+        const timeAgo = calculateTimeAgo(item.createdAt);
+
         switch (item.contents.type) {
             case ContentType.Profile:
                 return (
@@ -36,8 +39,12 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                         <View style={styles.row}>
                             <Avatar image={{ src: item.contents.profileThumbnail }} size={40} />
                             <View>
-                                <Typo variant="title5" color="placeholder">
+                                <Typo variant="title4">
                                     {item.contents.title}
+                                    <Typo color="placeholder" variant="body3">
+                                        {' '}
+                                        {timeAgo}
+                                    </Typo>
                                 </Typo>
                                 <Typo>{item.contents.article}</Typo>
                             </View>
@@ -50,8 +57,12 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                         <View style={styles.row}>
                             <Avatar image={{ src: item.contents.profileThumbnail }} size={40} />
                             <View style={styles.text}>
-                                <Typo variant="title5" color="placeholder">
+                                <Typo variant="title4">
                                     {item.contents.title}
+                                    <Typo color="placeholder" variant="body3">
+                                        {' '}
+                                        {timeAgo}
+                                    </Typo>
                                 </Typo>
                                 <Typo variant="body2">{item.contents.article}</Typo>
                             </View>
@@ -64,8 +75,12 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                     <TouchableOpacity key={item.contents.article} onPress={handlePressLog}>
                         <View style={styles.row}>
                             <View>
-                                <Typo variant="title5" color="placeholder">
+                                <Typo variant="title4">
                                     {item.contents.title}
+                                    <Typo color="placeholder" variant="body3">
+                                        {' '}
+                                        {timeAgo}
+                                    </Typo>
                                 </Typo>
                                 <Typo>{item.contents.article}</Typo>
                             </View>
