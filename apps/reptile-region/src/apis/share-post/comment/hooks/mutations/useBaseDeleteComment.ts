@@ -1,4 +1,4 @@
-import type { InfiniteData } from '@tanstack/react-query';
+import type { InfiniteData, UseMutationOptions } from '@tanstack/react-query';
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deleteComment } from '../../repository';
@@ -9,14 +9,21 @@ import type { DeleteComment, FetchComment } from '@/types/apis/share-post/commen
 import type { FetchPosts } from '@/types/apis/share-post/post';
 
 // 댓글 삭제
-export default function useDeleteComment() {
+export default function useBaseDeleteComment(
+    props?: Pick<
+        UseMutationOptions<DeleteComment['Response'], HTTPError, DeleteComment['Request']>,
+        'onMutate' | 'onSettled' | 'onSuccess'
+    >,
+) {
     const queryClient = useQueryClient();
 
     return useMutation<DeleteComment['Response'], HTTPError, DeleteComment['Request']>({
         mutationFn: ({ commentId }) => deleteComment({ commentId }),
-        onSuccess: (data) => {
+        ...props,
+        onSuccess: (data, variables, context) => {
             deleteCommentCache({ queryClient, data });
             updateSharePostListCache({ queryClient, data });
+            props?.onSuccess?.(data, variables, context);
         },
     });
 }

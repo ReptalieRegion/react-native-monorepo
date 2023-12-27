@@ -10,7 +10,6 @@ import SharePostCardNotification from '@/components/share-post/organisms/SharePo
 
 export default function Post({ postId }: { postId: string }) {
     const { data } = useFetchPost({ postId });
-
     const {
         post: {
             contents,

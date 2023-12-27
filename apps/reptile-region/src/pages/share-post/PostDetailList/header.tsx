@@ -4,7 +4,11 @@ import { createNativeStackHeader } from '@/components/@common/molecules';
 
 export function SharePostDetailListHeader(props: NativeStackHeaderProps) {
     const handleLeftIconClick = () => {
-        props.navigation.navigate('bottom-tab/routes');
+        if (props.navigation.canGoBack()) {
+            props.navigation.goBack();
+        } else {
+            props.navigation.navigate('bottom-tab/routes');
+        }
     };
     return createNativeStackHeader({
         leftIcon: 'back',

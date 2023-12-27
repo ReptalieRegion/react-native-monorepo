@@ -12,7 +12,7 @@ const CommentList = React.lazy(() => import('./page'));
 export default function CommentPage(props: CommentScreenProps) {
     return (
         <Comment id={props.route.params.post.id}>
-            <View style={styles.container} onLayout={(e) => console.log(e.nativeEvent)}>
+            <View style={styles.container}>
                 <Suspense fallback={<CommentSkeleton />}>
                     <CommentList {...props} />
                 </Suspense>

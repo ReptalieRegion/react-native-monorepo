@@ -4,12 +4,15 @@ import { FlashList } from '@shopify/flash-list';
 import React, { useCallback, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import useReportListBottomSheet from '../../@common/bottom-sheet/ReportList/useReportListBottomSheet';
+
+import useCommentReplyActions from './hooks/useCommentReplyActions';
+
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import CommentReplyItem from '@/components/share-post/organisms/Comment/components/CommentReplyItem';
-import useCommentActions from '@/pages/share-post/CommentList/@hooks/useCommentActions';
 import useCommentNavigation from '@/pages/share-post/CommentList/@hooks/useCommentNavigation';
-import useCommentReplyActions from '@/pages/share-post/CommentList/@hooks/useCommentReplyActions';
+import { ReportType } from '@/types/apis/report';
 import type { FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
 import type { CommentReplyScreenProps } from '@/types/routes/props/share-post/comment';
 
@@ -20,13 +23,9 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
     });
 
     const { navigateDetailPage } = useCommentNavigation();
-    const { handleDeleteButton: handleCommentDeleteButton } = useCommentActions();
-    const {
-        handleDeleteButton: handleCommentReplyDeleteButton,
-        handlePressDeclarationButton,
-        handlePressUpdateButton,
-        handlePressWriteButton,
-    } = useCommentReplyActions();
+    const openReportListBottomSheet = useReportListBottomSheet();
+
+    const { deleteComment, deleteCommentReply, handlePressWriteButton } = useCommentReplyActions();
 
     const keyExtractor = useCallback((item: FetchCommentReplyResponse) => item.commentReply.id, []);
 
@@ -47,21 +46,22 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
                         onPressTag={(tag) =>
                             navigateDetailPage({ user: { isFollow: false, nickname: tag, profile: { src: '' } } })
                         }
-                        onPressDeclarationButton={handlePressDeclarationButton}
-                        onPressDeleteButton={() => handleCommentReplyDeleteButton(commentReplyId)}
-                        onPressUpdateButton={handlePressUpdateButton}
+                        onPressDeclarationButton={() =>
+                            openReportListBottomSheet({
+                                report: {
+                                    reported: item.commentReply.user.id,
+                                    type: ReportType.REPLY,
+                                    typeId: item.commentReply.id,
+                                },
+                            })
+                        }
+                        onPressDeleteButton={() => deleteCommentReply(commentReplyId)}
                         onPressWriteButton={() => handlePressWriteButton(nickname)}
                     />
                 </View>
             );
         },
-        [
-            handlePressDeclarationButton,
-            handlePressUpdateButton,
-            navigateDetailPage,
-            handleCommentReplyDeleteButton,
-            handlePressWriteButton,
-        ],
+        [navigateDetailPage, openReportListBottomSheet, deleteCommentReply, handlePressWriteButton],
     );
 
     const ListHeaderComponent = useCallback(() => {
@@ -92,24 +92,27 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
                         user: { id: userId, nickname, profile },
                     },
                 }}
-                onPressDeclarationButton={handlePressDeclarationButton}
-                onPressDeleteButton={() => handleCommentDeleteButton(commentId)}
+                onPressDeclarationButton={() =>
+                    openReportListBottomSheet({
+                        report: {
+                            reported: userId,
+                            type: ReportType.COMMENT,
+                            typeId: commentId,
+                        },
+                    })
+                }
+                onPressDeleteButton={() => deleteComment(commentId)}
                 onPressNickname={handleNavigateDetailPage}
                 onPressTag={handleNavigateDetailPage}
-                onPressUpdateButton={handlePressUpdateButton}
                 onPressWriteButton={() => handlePressWriteButton(nickname)}
             />
         );
-    }, [
-        handleCommentDeleteButton,
-        handlePressDeclarationButton,
-        handlePressUpdateButton,
-        handlePressWriteButton,
-        navigateDetailPage,
-        params,
-    ]);
+    }, [deleteComment, handlePressWriteButton, navigateDetailPage, openReportListBottomSheet, params]);
 
-    const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
+    const onEndReached = useCallback(
+        () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
+        [fetchNextPage, hasNextPage, isFetchingNextPage],
+    );
 
     return (
         <FlashList
@@ -121,7 +124,7 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
             scrollEventThrottle={16}
             keyExtractor={keyExtractor}
             onEndReached={onEndReached}
-            ListHeaderComponent={<ListHeaderComponent />}
+            ListHeaderComponent={ListHeaderComponent}
             ListHeaderComponentStyle={styles.listHeader}
             ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
         />

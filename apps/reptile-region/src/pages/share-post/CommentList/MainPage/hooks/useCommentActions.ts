@@ -1,11 +1,11 @@
-import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
+import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useBaseDeleteComment';
 import useAlert from '@/components/overlay/Alert/useAlert';
 
 export default function useCommentActions() {
     const deleteMutate = useDeleteComment();
     const openAlert = useAlert();
 
-    const handleDeleteButton = (commentId: string) => {
+    const deleteComment = (commentId: string) => {
         openAlert({
             contents: '정말로 삭제하시겠어요?',
             buttons: [
@@ -21,15 +21,7 @@ export default function useCommentActions() {
         });
     };
 
-    // TODO 신고하기
-    const handlePressDeclarationButton = () => {};
-
-    // TODO 수정하기
-    const handlePressUpdateButton = () => {};
-
     return {
-        handleDeleteButton,
-        handlePressDeclarationButton,
-        handlePressUpdateButton,
+        deleteComment,
     };
 }

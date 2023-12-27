@@ -1,17 +1,19 @@
 import { color } from '@crawl/design-system';
 import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import useCommentActions from '../../../CommentList/@hooks/useCommentActions';
+import usePostDetailCommentActions from '../../hooks/usePostDetailCommentActions';
 
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import Comment, { CommentTextEditor } from '@/components/share-post/organisms/Comment';
 import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
+import useReportListBottomSheet from '@/pages/share-post/@common/bottom-sheet/ReportList/useReportListBottomSheet';
 import usePostDetailNavigation from '@/pages/share-post/PostDetailList/hooks/usePostDetailNavigation';
+import { ReportType } from '@/types/apis/report';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 import type { PostDetailModalListScreenProps } from '@/types/routes/props/share-post/post-detail';
 
@@ -26,56 +28,76 @@ export default function SharePostDetailModalPage({
     ListHeaderComponent,
 }: SharePostDetailModalPageState) {
     const { data: comments, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteComment({ postId });
+    const { deleteComment } = usePostDetailCommentActions();
+    const { navigateCommentReplyPage, navigateDetailPage } = usePostDetailNavigation();
+    const openReportListBottomSheet = useReportListBottomSheet();
+
+    const renderItem: ListRenderItem<FetchCommentResponse> = useCallback(
+        ({ item }) => {
+            const {
+                comment: {
+                    id: commentId,
+                    contents,
+                    isMine,
+                    isModified,
+                    createdAt,
+                    user: { id: userId, nickname, profile },
+                },
+            } = item;
+
+            const handleNavigateCommentReplyPage = () => {
+                navigateCommentReplyPage({
+                    comment: {
+                        contents,
+                        id: commentId,
+                        isMine,
+                        isModified,
+                        createdAt,
+                        user: { id: userId, nickname, profile },
+                    },
+                    isFocus: false,
+                });
+            };
+
+            const handleNavigateDetailPage = () => {
+                navigateDetailPage({ user: { isFollow: false, nickname, profile } });
+            };
+
+            return (
+                <View style={styles.commentContainer}>
+                    <CommentItem
+                        item={item}
+                        onPressNickname={handleNavigateDetailPage}
+                        onPressTag={handleNavigateDetailPage}
+                        onPressShowCommentReplyButton={handleNavigateCommentReplyPage}
+                        onPressDeleteButton={() => deleteComment(commentId)}
+                        onPressWriteButton={handleNavigateCommentReplyPage}
+                        onPressDeclarationButton={() =>
+                            openReportListBottomSheet({
+                                report: {
+                                    reported: userId,
+                                    type: ReportType.COMMENT,
+                                    typeId: userId,
+                                },
+                            })
+                        }
+                    />
+                </View>
+            );
+        },
+        [deleteComment, navigateCommentReplyPage, navigateDetailPage, openReportListBottomSheet],
+    );
+
+    const handleFetchNextPage = useCallback(
+        () => !isFetchingNextPage && hasNextPage && fetchNextPage(),
+        [fetchNextPage, hasNextPage, isFetchingNextPage],
+    );
+
     const { bottom } = useSafeAreaInsets();
     const { height } = useAnimatedKeyboard();
-    const animatedKeyboard = useAnimatedStyle(() => {
-        return {
-            paddingBottom: Math.max(height.value, bottom),
-        };
-    });
-    const { handleDeleteButton, handlePressDeclarationButton, handlePressUpdateButton } = useCommentActions();
-    const { navigateCommentReplyPage, navigateDetailPage } = usePostDetailNavigation();
-
-    const renderItem: ListRenderItem<FetchCommentResponse> = ({ item }) => {
-        const {
-            comment: {
-                id: commentId,
-                contents,
-                isMine,
-                isModified,
-                createdAt,
-                user: { id: userId, nickname, profile },
-            },
-        } = item;
-
-        const handleNavigateCommentReplyPage = () => {
-            navigateCommentReplyPage({
-                comment: { contents, id: commentId, isMine, isModified, createdAt, user: { id: userId, nickname, profile } },
-                isFocus: false,
-            });
-        };
-
-        const handleNavigateDetailPage = () => {
-            navigateDetailPage({ user: { isFollow: false, nickname, profile } });
-        };
-
-        return (
-            <View style={styles.commentContainer}>
-                <CommentItem
-                    item={item}
-                    onPressNickname={handleNavigateDetailPage}
-                    onPressTag={handleNavigateDetailPage}
-                    onPressShowCommentReplyButton={handleNavigateCommentReplyPage}
-                    onPressUpdateButton={handlePressUpdateButton}
-                    onPressDeleteButton={() => handleDeleteButton(commentId)}
-                    onPressWriteButton={handleNavigateCommentReplyPage}
-                    onPressDeclarationButton={handlePressDeclarationButton}
-                />
-            </View>
-        );
-    };
-
-    const handleFetchNextPage = () => !isFetchingNextPage && hasNextPage && fetchNextPage();
+    const animatedKeyboard = useAnimatedStyle(() => ({
+        paddingBottom: Math.max(height.value, bottom),
+    }));
 
     return (
         <Comment id={postId}>
@@ -96,14 +118,13 @@ export default function SharePostDetailModalPage({
 }
 
 const contentContainerStyle: ContentStyle = {
+    paddingTop: 10,
     paddingBottom: 20,
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 10,
-        paddingBottom: 20,
         backgroundColor: color.White.toString(),
     },
     paddingView: {
