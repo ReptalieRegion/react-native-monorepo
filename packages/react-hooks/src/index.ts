@@ -1,5 +1,6 @@
 export * from './useDebounce';
 export * from './useDebounceValue';
+export * from './useInterval';
 export * from './useIsMounted';
 export * from './useLoading';
 export * from './useOnOff';
