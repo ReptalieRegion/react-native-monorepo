@@ -18,7 +18,7 @@ export type UseDeleteCalendarItemState = {
 export default function useDeleteCalendarItem({ searchDate }: UseDeleteCalendarItemState) {
     const navigation = useNavigation<CalendarDetailNavigationProp>();
     const queryClient = useQueryClient();
-    const queryKey = DIARY_QUERY_KEYS.calendar(searchDate);
+    const queryKey = DIARY_QUERY_KEYS.calendarDate(searchDate);
     const openToast = useToast();
 
     return useBaseDeleteCalendarItem<Context>({

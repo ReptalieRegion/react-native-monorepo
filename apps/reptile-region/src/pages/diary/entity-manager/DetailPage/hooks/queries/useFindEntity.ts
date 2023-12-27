@@ -24,12 +24,5 @@ export default function useFindEntity(entityId: string) {
         ),
     });
 
-    if (entityData.data === undefined) {
-        throw new Error('not found entity');
-    }
-
-    return {
-        ...entityData,
-        data: entityData.data,
-    };
+    return entityData;
 }

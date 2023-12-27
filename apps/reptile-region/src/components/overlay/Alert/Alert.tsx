@@ -49,7 +49,7 @@ export default function Alert({ title, contents, buttons, onClose }: AlertProps)
                 <Animated.View style={[styles.container, containerStyles]}>
                     <View style={styles.titleWrapper}>
                         <ConditionalRenderer condition={!!title} trueContent={<Typo variant="title3">{title}</Typo>} />
-                        <ConditionalRenderer condition={!!contents} trueContent={<Typo>{contents}</Typo>} />
+                        <ConditionalRenderer condition={!!contents} trueContent={<Typo variant="body2">{contents}</Typo>} />
                     </View>
                     <View style={styles.buttonWrapper}>
                         {buttons.map(({ text, style, onPress }) => {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        paddingTop: 20,
+        paddingTop: 25,
         gap: 25,
     },
 });

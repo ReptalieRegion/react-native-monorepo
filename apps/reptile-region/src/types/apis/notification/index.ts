@@ -69,6 +69,7 @@ type FetchPushAgreeResponse = {
     isAgreeService: boolean;
     isAgreeTag: boolean;
     isAgreeFollow: boolean;
+    isAgreeDevice: boolean;
 };
 
 type FetchPushAgree = ServerAPI<void, FetchPushAgreeResponse>;
@@ -85,11 +86,7 @@ type FetchPushReadCheck = ServerAPI<void, FetchPushReadCheckResponse>;
  * POST
  */
 // 푸시알림 동의 생성
-type CreatePushAgreeRequest = {
-    isAgree: boolean;
-};
-
-type CreatePushAgree = ServerAPI<CreatePushAgreeRequest, void>;
+type CreatePushAgree = ServerAPI<void, void>;
 
 /**
  * PUT

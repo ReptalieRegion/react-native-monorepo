@@ -8,7 +8,8 @@ export const AUTH_QUERY_KEYS = {
 export const DIARY_QUERY_KEYS = {
     list: ['diary', 'entity'],
     weight: (entityId: string) => ['diary', 'entity', entityId, { type: 'weight' }],
-    calendar: (date: string) => ['diary', 'calendar', { date }],
+    calendar: ['diary', 'calendar'],
+    calendarDate: (date: string) => ['diary', 'calendar', { date }],
 } as const;
 
 /** My */

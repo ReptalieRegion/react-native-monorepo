@@ -22,7 +22,7 @@ export default function useBaseFetchCalendar<TData = FetchCalendar['Response']>(
     options,
 }: UseFetchCalendar<TData>) {
     return useQuery<FetchCalendar['Response'], HTTPError, TData, CustomQueryKey>({
-        queryKey: DIARY_QUERY_KEYS.calendar(date),
+        queryKey: DIARY_QUERY_KEYS.calendarDate(date),
         queryFn: useCallback(() => fetchCalendar({ date }), [date]),
         staleTime: 4 * 60 * 1000,
         gcTime: 5 * 60 * 1000,

@@ -14,7 +14,7 @@ export type UseDeleteCalendarItemState = {
 
 export default function useDeleteCalendarItem({ searchDate }: UseDeleteCalendarItemState) {
     const queryClient = useQueryClient();
-    const queryKey = DIARY_QUERY_KEYS.calendar(searchDate);
+    const queryKey = DIARY_QUERY_KEYS.calendarDate(searchDate);
 
     return useBaseDeleteCalendarItem<Context>({
         onMutate: async (variables: DeleteCalendar['Request']) => {

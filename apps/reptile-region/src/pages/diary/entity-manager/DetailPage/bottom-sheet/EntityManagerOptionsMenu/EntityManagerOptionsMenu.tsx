@@ -6,7 +6,8 @@ import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import useDeleteEntity from '@/apis/diary/entity-manager/hooks/mutations/useDeleteEntity';
+import useBaseDeleteEntity from '@/apis/diary/entity-manager/hooks/mutations/useBaseDeleteEntity';
+import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import useAlert from '@/components/overlay/Alert/useAlert';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
 import type { ImageType } from '@/types/global/image';
@@ -30,10 +31,15 @@ export default function EntityManagerOptionsMenuBottomSheet({ entity, navigation
     const { bottom } = useSafeAreaInsets();
     const queryClient = useQueryClient();
     const { bottomSheetClose } = useBottomSheet();
-    const { mutate } = useDeleteEntity({
+    const { closeLoading, openLoading } = useGlobalLoading();
+    const { mutate } = useBaseDeleteEntity({
+        onMutate: openLoading,
+        onSettled: closeLoading,
         onSuccess: () => {
-            queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.list });
             bottomSheetClose();
+            navigation.goBack();
+            queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.list, exact: true });
+            queryClient.invalidateQueries({ queryKey: DIARY_QUERY_KEYS.calendar });
         },
     });
 

@@ -23,7 +23,7 @@ export type UseUpdateCalendarItemProps = UseUpdateCalendarItemState & UseUpdateC
 
 export default function useUpdateCalendarItem({ searchDate, onSuccess }: UseUpdateCalendarItemProps) {
     const queryClient = useQueryClient();
-    const queryKey = DIARY_QUERY_KEYS.calendar(searchDate);
+    const queryKey = DIARY_QUERY_KEYS.calendarDate(searchDate);
     const openToast = useToast();
 
     return useBaseUpdateCalendarItem<Context>({
@@ -38,7 +38,7 @@ export default function useUpdateCalendarItem({ searchDate, onSuccess }: UseUpda
 
                     return {
                         items: prevData.items.map((item) => {
-                            if (item.calendar.id !== variables.calendarId) {
+                            if (item.calendar.id === variables.calendarId) {
                                 return {
                                     ...item,
                                     calendar: {

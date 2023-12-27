@@ -67,7 +67,7 @@ export default function SignUpStep1({
             });
 
             registerAuthTokens(tokens).then(signIn);
-            createPushAgreeMutate({ isAgree: true });
+            createPushAgreeMutate();
             navigation.popToTop();
         } catch (error) {
             throw error;
