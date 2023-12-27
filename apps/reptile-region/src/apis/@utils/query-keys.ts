@@ -13,9 +13,10 @@ export const DIARY_QUERY_KEYS = {
 } as const;
 
 /** My */
-export const MY_QUERY_KEYS = {
-    profile: ['me_profile'],
-    post: ['me_post'],
+export const ME_QUERY_KEYS = {
+    me: ['me'],
+    profile: ['me', { type: 'profile' }],
+    post: ['me', { type: 'post' }],
 } as const;
 
 /** Notification */

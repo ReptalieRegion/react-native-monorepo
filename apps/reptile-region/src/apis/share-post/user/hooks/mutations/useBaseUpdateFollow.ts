@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import { updateFollow } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { MY_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { ME_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchLike } from '@/types/apis/share-post/post';
 import type { FetchFollowerList, UpdateFollow, UpdateFollowResponse } from '@/types/apis/share-post/user';
 
@@ -23,12 +23,18 @@ export default function useBaseUpdateFollow<TContext = unknown>(props?: UseUpdat
             (data: UpdateFollowResponse | undefined) => {
                 if (data) {
                     // 일상 공유 리스트, 특정 유저 일상 공유 리스트, 사용자 프로필 무효화
-                    queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.list, exact: true });
+                    queryClient.invalidateQueries({
+                        queryKey: SHARE_POST_QUERY_KEYS.list,
+                        exact: true,
+                    });
                     queryClient.invalidateQueries({
                         queryKey: SHARE_POST_QUERY_KEYS.profileDetail(data.user.nickname),
                         exact: true,
                     });
-                    queryClient.invalidateQueries({ queryKey: MY_QUERY_KEYS.profile });
+                    queryClient.invalidateQueries({
+                        queryKey: ME_QUERY_KEYS.profile,
+                        exact: true,
+                    });
 
                     // 팔로우, 팔로잉, 좋아요 리스트에서 팔로우 당한 유저 아이디 있는 키값 추출
                     const userIdSet = new Set();
@@ -60,12 +66,17 @@ export default function useBaseUpdateFollow<TContext = unknown>(props?: UseUpdat
 
                     // 팔로우, 팔로잉, 좋아요 리스트 무효화
                     userIdSet.forEach((id) => {
-                        queryClient.invalidateQueries({ queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'follower', id] });
+                        queryClient.invalidateQueries({
+                            queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'follower', id],
+                            exact: true,
+                        });
                         queryClient.invalidateQueries({
                             queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'following', id],
+                            exact: true,
                         });
                         queryClient.invalidateQueries({
                             queryKey: [...SHARE_POST_QUERY_KEYS.profileList, 'like', id],
+                            exact: true,
                         });
                     });
                 }

@@ -10,7 +10,7 @@ import useSharePostNavigation from '../../../@common/hooks/useSharePostNavigatio
 
 import useOtherUserPostListActions from './hooks/useMeUserPostListActions';
 
-import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { ME_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteFetchMePostList from '@/apis/share-post/post/hooks/queries/useInfiniteFetchMePostList';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
@@ -27,7 +27,7 @@ export default function MeDetailListModalPage({
 
     /** Data 시작 */
     const queryClient = useQueryClient();
-    const userProfile = queryClient.getQueryData<FetchMeProfile['Response']>(MY_QUERY_KEYS.profile);
+    const userProfile = queryClient.getQueryData<FetchMeProfile['Response']>(ME_QUERY_KEYS.profile);
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchMePostList();
     const { onlyLike, updateOrCreateFollow, updateOrCreateLike } = useOtherUserPostListActions();
     const { navigateComment, navigateImageThumbnail, handlePressLikeContents, handlePressTag } =

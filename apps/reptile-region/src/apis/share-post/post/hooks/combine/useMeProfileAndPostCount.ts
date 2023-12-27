@@ -1,13 +1,13 @@
 import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 
-import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { ME_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
 import type { FetchMePostList } from '@/types/apis/share-post/post';
 
 export default function useMeProfileAndPostCount() {
     const meProfileQuery = useFetchMeProfile();
     const queryClient = useQueryClient();
-    const post = queryClient.getQueryData<InfiniteData<FetchMePostList['Response']>>(MY_QUERY_KEYS.post);
+    const post = queryClient.getQueryData<InfiniteData<FetchMePostList['Response']>>(ME_QUERY_KEYS.post);
 
     const data = {
         user: {

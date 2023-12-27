@@ -46,8 +46,10 @@ export default function ChangeHeader({ navigation }: SharePostListPageScreen) {
             };
 
             const handlePressProfile = () => {
-                navigation.navigate('share-post/modal', {
-                    screen: 'modal/image-thumbnail/me',
+                requireAuthNavigation(() => {
+                    navigation.navigate('share-post/modal', {
+                        screen: 'modal/image-thumbnail/me',
+                    });
                 });
             };
 

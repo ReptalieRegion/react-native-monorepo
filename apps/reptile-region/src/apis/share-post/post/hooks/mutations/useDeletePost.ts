@@ -4,7 +4,7 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { deletePost } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { MY_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { ME_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { DeletePost, FetchMePostList, FetchPosts } from '@/types/apis/share-post/post';
 
 // 사용자의 일상공유 게시물 삭제
@@ -47,7 +47,7 @@ function deletePostListCache({ queryClient, data }: { queryClient: QueryClient; 
 
 // 특정 유저의 게시글 리스트 무한 스크롤 게시물 삭제
 function deleteDetailUserPostCache({ queryClient, data }: { queryClient: QueryClient; data: DeletePost['Response'] }) {
-    const queryKey = MY_QUERY_KEYS.post;
+    const queryKey = ME_QUERY_KEYS.post;
 
     queryClient.setQueryData<InfiniteData<FetchMePostList['Response']>>(queryKey, (prevDetailUserPostList) => {
         if (prevDetailUserPostList === undefined) {

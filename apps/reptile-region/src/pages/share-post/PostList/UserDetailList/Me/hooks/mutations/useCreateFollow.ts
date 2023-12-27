@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { ME_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useBaseCreateFollow from '@/apis/share-post/user/hooks/mutations/useBaseCreateFollow';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse, UpdateFollowRequest } from '@/types/apis/share-post/user';
 
@@ -15,9 +15,9 @@ export default function useCreateFollow() {
 
     return useBaseCreateFollow<Context>({
         onMutate: useCallback(async () => {
-            await queryClient.cancelQueries({ queryKey: MY_QUERY_KEYS.post });
-            const prevProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(MY_QUERY_KEYS.post);
-            queryClient.setQueryData<FetchDetailUserProfile['Response']>(MY_QUERY_KEYS.post, (prevData) => {
+            await queryClient.cancelQueries({ queryKey: ME_QUERY_KEYS.post });
+            const prevProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(ME_QUERY_KEYS.post);
+            queryClient.setQueryData<FetchDetailUserProfile['Response']>(ME_QUERY_KEYS.post, (prevData) => {
                 if (prevData === undefined) {
                     return prevData;
                 }
@@ -36,7 +36,7 @@ export default function useCreateFollow() {
             (_error: HTTPError, _variables: UpdateFollowRequest, context: Context | undefined) => {
                 if (context?.prevProfile) {
                     queryClient.setQueryData<FetchDetailUserProfileResponse | undefined>(
-                        MY_QUERY_KEYS.post,
+                        ME_QUERY_KEYS.post,
                         context.prevProfile,
                     );
                 }
