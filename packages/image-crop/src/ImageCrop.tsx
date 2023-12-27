@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect } from 'react';
 import React, { Image, StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
@@ -6,7 +6,6 @@ import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 
 import type { ImageCropProps } from './types';
 
 export default function ImageCrop({ image, width, height, maxScale, initPosition, getCropInfo }: ImageCropProps) {
-    const lastImage = useRef(image.uri);
     const imageRatio = image.height / image.width;
     const viewRatio = height / width;
     const imageWidth = imageRatio > viewRatio ? width : height / imageRatio;
@@ -18,12 +17,13 @@ export default function ImageCrop({ image, width, height, maxScale, initPosition
         scale: useSharedValue(1),
     };
 
-    if (initPosition && lastImage.current !== image.uri) {
-        lastImage.current = image.uri;
-        translation.x.value = initPosition.x;
-        translation.y.value = initPosition.y;
-        translation.scale.value = initPosition.scale;
-    }
+    useEffect(() => {
+        if (initPosition) {
+            translation.x.value = initPosition.x;
+            translation.y.value = initPosition.y;
+            translation.scale.value = initPosition.scale;
+        }
+    }, [initPosition, translation.scale, translation.x, translation.y]);
 
     const handleEnd = async () => {
         if (!width || !height || !maxScale) {

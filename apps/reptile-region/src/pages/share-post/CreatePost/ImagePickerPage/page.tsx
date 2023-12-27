@@ -1,18 +1,19 @@
 import { PhotoList, useCameraAlbum } from '@crawl/camera-album';
 import { color } from '@crawl/design-system';
 import { ImageCrop } from '@crawl/image-crop';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useCreatePostActions } from '../context/useCreatePostActions';
+import useCreatePostState from '../context/useCreatePostState';
 
 import ChangeHeader from './header';
 
 import { Album, StrokeCamera } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import useToast from '@/components/overlay/Toast/useToast';
-import useImageCropActions from '@/pages/share-post/CreatePost/ImagePickerPage/@hooks/useImageCropActions';
+import useImageCropActions from '@/pages/share-post/CreatePost/ImagePickerPage/hooks/useImageCropActions';
 import type { ImagePickScreenProp } from '@/types/routes/props/share-post/create-post';
 import { photoPermissionCheck } from '@/utils/permissions/photo-permission';
 
@@ -27,7 +28,7 @@ export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
     const photoListHeight = height - photoEditorHeight;
 
     return (
-        <>
+        <View style={styles.wrapper}>
             <ChangeHeader navigation={navigation} />
             <View style={{ width, height: photoEditorHeight }}>
                 <PhotoEditorView size={{ width, height: photoEditorHeight - textHeight }} />
@@ -42,7 +43,7 @@ export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
                     }}
                 />
             </View>
-        </>
+        </View>
     );
 }
 
@@ -57,7 +58,7 @@ function CameraAlbumActions({ height }: { height: number }) {
     }, []);
 
     return (
-        <View style={[styles.container, { height: height }]}>
+        <View style={[styles.actionsWrapper, { height }]}>
             <ConditionalRenderer
                 condition={isLimitedPermission}
                 trueContent={
@@ -78,33 +79,46 @@ function PhotoEditorView(props: { size: { width: number; height: number } }) {
         size: { width, height },
     } = props;
 
+    const { cropInfoMap } = useCreatePostState();
     const { setCropInfo } = useCreatePostActions();
     const { currentSelectedPhoto } = useCameraAlbum();
     const uri = currentSelectedPhoto?.uri ?? '';
 
-    if (!currentSelectedPhoto) {
-        return <View style={props.size} />;
+    /**
+     * @description 이미지 선택 후 -> 크롭 -> 다른 이미지 -> 이전에 크롭한 이미지 순으로 왔을 때, 이전 position 초기화
+     */
+    const lastImageUri = useRef(uri);
+    const isDifferentImageUri = lastImageUri.current !== uri;
+    const initPosition = isDifferentImageUri ? cropInfoMap[uri]?.translation : undefined;
+    if (isDifferentImageUri) {
+        lastImageUri.current = uri;
     }
 
-    return (
+    return currentSelectedPhoto ? (
         <ImageCrop
-            key={currentSelectedPhoto?.uri}
+            key={currentSelectedPhoto.uri}
             image={{
                 uri,
-                width: currentSelectedPhoto?.width ?? width,
-                height: currentSelectedPhoto?.height ?? height,
+                width: currentSelectedPhoto.width ?? width,
+                height: currentSelectedPhoto.height ?? height,
             }}
+            initPosition={initPosition}
             width={props.size.width}
             height={props.size.height}
             minScale={0.5}
             maxScale={3}
             getCropInfo={setCropInfo}
         />
+    ) : (
+        <View style={props.size} />
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    wrapper: {
+        backgroundColor: color.White.toString(),
+    },
+    actionsWrapper: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end',
@@ -113,5 +127,7 @@ const styles = StyleSheet.create({
         paddingRight: 15,
         backgroundColor: color.White.toString(),
         gap: 30,
+        borderTopWidth: 1,
+        borderTopColor: color.Gray[200].toString(),
     },
 });
