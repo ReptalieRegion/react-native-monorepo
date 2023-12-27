@@ -2,11 +2,12 @@ import { useBottomSheet } from '@crawl/bottom-sheet';
 import { TouchableTypo } from '@crawl/design-system';
 import { useQueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useDeleteEntity from '@/apis/diary/entity-manager/hooks/mutations/useDeleteEntity';
+import useAlert from '@/components/overlay/Alert/useAlert';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
 import type { ImageType } from '@/types/global/image';
 import type { EntityManagerDetailNavigationProp } from '@/types/routes/props/diary/entity';
@@ -36,21 +37,26 @@ export default function EntityManagerOptionsMenuBottomSheet({ entity, navigation
         },
     });
 
-    const deletePost = () => {
-        Alert.alert('정말로 삭제 하시겠어요?', '', [
-            {
-                text: '취소',
-                style: 'cancel',
-                onPress: () => {},
-            },
-            {
-                text: '삭제',
-                style: 'destructive',
-                onPress: () => {
-                    mutate({ entityId: entity.id });
+    const openAlert = useAlert();
+
+    const deletePost = async () => {
+        await bottomSheetClose();
+        openAlert({
+            title: '정말로 삭제하시겠어요?',
+            contents: '캘린더에 등록된 내용도 같이 사라져요',
+            buttons: [
+                {
+                    text: '취소',
+                    style: 'cancel',
                 },
-            },
-        ]);
+                {
+                    text: '삭제',
+                    onPress: () => {
+                        mutate({ entityId: entity.id });
+                    },
+                },
+            ],
+        });
     };
 
     const navigateUpdatePage = async () => {

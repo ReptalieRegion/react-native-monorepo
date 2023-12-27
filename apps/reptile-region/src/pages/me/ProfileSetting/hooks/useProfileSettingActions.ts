@@ -1,12 +1,13 @@
 import { useCallback } from 'react';
-import { Alert } from 'react-native';
 
 import useUpdateProfile from '@/apis/me/profile/hooks/mutations/useUpdateProfile';
+import useAlert from '@/components/overlay/Alert/useAlert';
 import useToast from '@/components/overlay/Toast/useToast';
 import useImagePicker from '@/hooks/useImagePicker';
 
 export default function useProfileSettingActions() {
     const openToast = useToast();
+    const openAlert = useAlert();
     const { mutate } = useUpdateProfile();
 
     const { handlePressProfileImage } = useImagePicker({
@@ -31,18 +32,20 @@ export default function useProfileSettingActions() {
     });
 
     const handlePressWithdrawal = () => {
-        Alert.alert('정말로 탈퇴 하시겠어요?', '', [
-            {
-                text: '취소',
-                onPress: () => {},
-                style: 'cancel',
-            },
-            {
-                text: '탈퇴',
-                style: 'destructive',
-                onPress: () => {},
-            },
-        ]);
+        openAlert({
+            title: '정말로 탈퇴 하시겠어요?',
+            contents: '탈퇴 시 복구가 불가능해요',
+            buttons: [
+                {
+                    text: '취소',
+                    style: 'cancel',
+                },
+                {
+                    text: '탈퇴',
+                    style: 'danger',
+                },
+            ],
+        });
     };
 
     return { handlePressProfileImage, handlePressWithdrawal };

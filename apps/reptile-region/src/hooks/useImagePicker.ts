@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
-import { ActionSheetIOS, Alert, Platform } from 'react-native';
+import { ActionSheetIOS, Platform } from 'react-native';
 import { openCamera, openPicker, type Image, type Options, type PickerErrorCode } from 'react-native-image-crop-picker';
 
-import { requestIOSPermissions } from '@/utils/permissions/request-permissions';
+import useAlert from '@/components/overlay/Alert/useAlert';
+import { requestAndroidPermissions, requestIOSPermissions } from '@/utils/permissions/request-permissions';
 
 type ImagePickerError = {
     message: string;
@@ -15,10 +16,15 @@ interface UseImagePickerActions {
 }
 
 export default function useImagePicker({ onError, onSuccess }: UseImagePickerActions) {
+    const openAlert = useAlert();
     const openCameraPicker = useCallback(
         async (option?: Options) => {
-            const { camera } = await requestIOSPermissions<['camera']>(['camera']);
-            if (!camera?.isGranted) {
+            const result = await Platform.select({
+                ios: requestIOSPermissions<['camera']>(['camera']),
+                android: requestAndroidPermissions<['camera']>(['camera']),
+            });
+
+            if (!result?.camera?.isGranted) {
                 return;
             }
 
@@ -76,17 +82,20 @@ export default function useImagePicker({ onError, onSuccess }: UseImagePickerAct
     }, [openCameraPicker, openImagePicker]);
 
     const handleAndroidPress = useCallback(() => {
-        Alert.alert('프로필 사진', '변경', [
-            {
-                text: '카메라로 찍기',
-                onPress: () => openCameraPicker(),
-            },
-            {
-                text: '앨범에서 선택',
-                onPress: openImagePicker,
-            },
-        ]);
-    }, [openCameraPicker, openImagePicker]);
+        openAlert({
+            title: '프로필 사진 변경',
+            buttons: [
+                {
+                    text: '카메라로 찍기',
+                    onPress: openCameraPicker,
+                },
+                {
+                    text: '앨범에서 선택',
+                    onPress: openImagePicker,
+                },
+            ],
+        });
+    }, [openAlert, openCameraPicker, openImagePicker]);
 
     const handlePressProfileImage = useCallback(async () => {
         const handlePress = Platform.select({

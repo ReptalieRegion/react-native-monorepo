@@ -1,6 +1,6 @@
 import { TouchableTypo, color } from '@crawl/design-system';
 import React, { useEffect } from 'react';
-import { ActivityIndicator, Alert, Keyboard, Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Keyboard, Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 
 import type { SubmitType } from '../../contexts/CommentContext';
@@ -9,6 +9,7 @@ import useCommentActions from '../../hooks/useCommentActions';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { TagTextInput, useTag, useTagHandler } from '@/components/@common/organisms/TagTextInput';
+import useAlert from '@/components/overlay/Alert/useAlert';
 
 export type CommentTextInputProps = {
     maxLength: number;
@@ -33,6 +34,7 @@ export default function CommentTextInputEditor({
     const { id, submitType } = useComment();
     const { tagTextInputFocus, changeText } = useTagHandler();
     const { setCreateCommentSubmitType } = useCommentActions();
+    const openAlert = useAlert();
 
     useEffect(() => {
         const resetSubmitType = () => {
@@ -51,17 +53,20 @@ export default function CommentTextInputEditor({
 
         const keyboard = Keyboard.addListener('keyboardDidHide', () => {
             if (submitType === 'UPDATE') {
-                Alert.alert('계속 작성할까요?', '', [
-                    {
-                        text: '삭제',
-                        onPress: resetSubmitType,
-                        style: 'cancel',
-                    },
-                    {
-                        text: '계속 작성',
-                        onPress: tagTextInputFocus,
-                    },
-                ]);
+                openAlert({
+                    contents: '수정사항을 삭제할까요?',
+                    buttons: [
+                        {
+                            text: '계속 작성',
+                            style: 'cancel',
+                            onPress: tagTextInputFocus,
+                        },
+                        {
+                            text: '삭제',
+                            onPress: resetSubmitType,
+                        },
+                    ],
+                });
             }
         });
 
@@ -69,7 +74,7 @@ export default function CommentTextInputEditor({
             keyboard.remove();
             keyboardShow?.remove();
         };
-    }, [submitType, paddingBottom, setCreateCommentSubmitType, tagTextInputFocus, changeText]);
+    }, [submitType, paddingBottom, setCreateCommentSubmitType, tagTextInputFocus, changeText, openAlert]);
 
     const handleSubmit = () => {
         onSubmit({ id, submitType, contents });

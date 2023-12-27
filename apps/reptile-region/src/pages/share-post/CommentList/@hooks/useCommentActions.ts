@@ -1,23 +1,24 @@
-import { Alert } from 'react-native';
-
 import useDeleteComment from '@/apis/share-post/comment/hooks/mutations/useDeleteComment';
+import useAlert from '@/components/overlay/Alert/useAlert';
 
 export default function useCommentActions() {
     const deleteMutate = useDeleteComment();
+    const openAlert = useAlert();
 
     const handleDeleteButton = (commentId: string) => {
-        Alert.alert('정말로 삭제 하시겠어요?', '', [
-            {
-                text: '취소',
-                style: 'cancel',
-                onPress: () => {},
-            },
-            {
-                text: '삭제',
-                style: 'destructive',
-                onPress: () => deleteMutate.mutate({ commentId }),
-            },
-        ]);
+        openAlert({
+            contents: '정말로 삭제하시겠어요?',
+            buttons: [
+                {
+                    text: '취소',
+                    style: 'cancel',
+                },
+                {
+                    text: '삭제',
+                    onPress: () => deleteMutate.mutate({ commentId }),
+                },
+            ],
+        });
     };
 
     // TODO 신고하기

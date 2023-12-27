@@ -2,12 +2,13 @@ import { useBottomSheet } from '@crawl/bottom-sheet';
 import { Typo } from '@crawl/design-system';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useReportListBottomSheet from '../ReportList/useReportListBottomSheet';
 
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
+import useAlert from '@/components/overlay/Alert/useAlert';
 import { ReportType } from '@/types/apis/report';
 import type { ImageType } from '@/types/global/image';
 import type { SharePostListNavigationProp } from '@/types/routes/props/share-post/post-list';
@@ -33,23 +34,25 @@ export default function PostOptionsMenu({ post }: PostOptionsMenuProps) {
     const openReportListBottomSheet = useReportListBottomSheet();
     const { bottomSheetClose } = useBottomSheet();
     const { mutate } = useDeletePost();
+    const openAlert = useAlert();
 
-    const deletePost = () => {
-        Alert.alert('정말로 삭제 하시겠어요?', '', [
-            {
-                text: '취소',
-                style: 'cancel',
-                onPress: () => {},
-            },
-            {
-                text: '삭제',
-                style: 'destructive',
-                onPress: () => {
-                    mutate({ postId: post.id });
-                    bottomSheetClose();
+    const deletePost = async () => {
+        await bottomSheetClose();
+        openAlert({
+            contents: '정말로 삭제하시겠어요?',
+            buttons: [
+                {
+                    text: '취소',
+                    style: 'cancel',
                 },
-            },
-        ]);
+                {
+                    text: '삭제',
+                    onPress: () => {
+                        mutate({ postId: post.id });
+                    },
+                },
+            ],
+        });
     };
 
     const navigateUpdatePage = async () => {
