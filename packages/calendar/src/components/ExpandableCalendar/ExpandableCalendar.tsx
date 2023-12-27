@@ -42,6 +42,7 @@ export default function ExpandableCalendar<TData>({ calendarProps, listProps }: 
         closeCalendar,
         handleGetLayoutHeight,
         handleChangeCalendarTranslateY,
+        handleDayPress,
     } = useExpandableAnimation(useExpandableAnimationProps);
 
     const weekCalendarWrapperStyle = useMemo(() => [styles.weekWrapper, weekAnimatedStyle], [weekAnimatedStyle]);
@@ -58,8 +59,9 @@ export default function ExpandableCalendar<TData>({ calendarProps, listProps }: 
             maxDate: calendarProps.maxDate,
             markedDates: calendarProps.markedDates,
             hideHeader: true,
+            onPressDay: handleDayPress,
         }),
-        [calendarProps.date, calendarProps.markedDates, calendarProps.maxDate, calendarProps.minDate],
+        [calendarProps.date, calendarProps.markedDates, calendarProps.maxDate, calendarProps.minDate, handleDayPress],
     );
 
     const weekCalendarProps: WeekCalendarProps = useMemo(
