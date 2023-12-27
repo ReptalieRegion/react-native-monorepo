@@ -77,7 +77,7 @@ export default function SharePostDetailModalPage({
                                 report: {
                                     reported: userId,
                                     type: ReportType.COMMENT,
-                                    typeId: userId,
+                                    typeId: commentId,
                                 },
                             })
                         }
