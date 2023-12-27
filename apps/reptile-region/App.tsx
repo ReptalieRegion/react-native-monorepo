@@ -1,9 +1,8 @@
 import { ErrorBoundary } from '@crawl/error-boundary';
 import { OverlayProvider } from '@crawl/overlay-manager';
 import { useNavigationContainerRef } from '@react-navigation/native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
-import BootSplash from 'react-native-bootsplash';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -18,11 +17,6 @@ import type { RootRoutesParamList } from '@/types/routes/param-list';
 export default function App() {
     const navigationRef = useNavigationContainerRef<RootRoutesParamList>();
     useEffectNotifee(navigationRef);
-
-    // 스플레쉬
-    useEffect(() => {
-        BootSplash.hide({ fade: true });
-    }, []);
 
     return (
         <Loading>

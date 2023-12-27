@@ -1,6 +1,7 @@
 import messaging from '@react-native-firebase/messaging';
 import type { NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { useEffect } from 'react';
+import BootSplash from 'react-native-bootsplash';
 
 import { useAuth, useAuthHandler } from './auth';
 
@@ -62,4 +63,13 @@ export default function useEffectInitial({ navigationRef }: UseEffectInitialProp
                 });
         }
     }, [isLoading, isSignIn, updateFCMTokenMutate, updatePushAgreeMutate]);
+
+    /**
+     * 로그인 체크 완료 시, 스플레쉬 닫기
+     */
+    useEffect(() => {
+        if (!isLoading) {
+            BootSplash.hide({ fade: true });
+        }
+    }, [isLoading]);
 }
