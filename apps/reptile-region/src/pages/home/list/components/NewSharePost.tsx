@@ -2,7 +2,7 @@ import { Typo } from '@crawl/design-system';
 import type { ListRenderItem } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import BasicImageCarousel from '@/components/@common/molecules/BasicImageCarousel/BasicImageCarousel';
 import useInfiniteFetchPosts from '@/pages/share-post/PostList/ListPage/hooks/queries/useInfiniteFetchPosts';
@@ -25,9 +25,8 @@ type NewSharePostProps = NewSharePostState & NewSharePostActions;
 export default function NewSharePost({ carouselProps }: NewSharePostProps) {
     const { data } = useInfiniteFetchPosts();
 
-    const { width } = useWindowDimensions();
     const wrapperStyle = [styles.itemWrapper, { marginHorizontal: carouselProps.marginHorizontal }];
-    const imageStyle = { width: width / 2 - 40, height: carouselProps.height };
+    const imageStyle = { width: carouselProps.width, height: carouselProps.height };
 
     const keyExtractor = (item: FetchPostsResponse) => item.post.id;
     const renderItem: ListRenderItem<FetchPostsResponse> = ({ item }) => {
