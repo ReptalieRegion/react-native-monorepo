@@ -71,7 +71,7 @@ export default function EntityMangerList() {
 
 const cardContainerStyles = {
     marginRight: 5,
-    marginBottom: 5,
+    marginBottom: 8,
 };
 
 const primaryIcon = {

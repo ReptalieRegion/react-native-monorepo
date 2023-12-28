@@ -48,14 +48,14 @@ export default function NoticeImageCarousel({ onPressIndicator }: NoticeImageCar
 
 const styles = StyleSheet.create({
     wrapper: {
-        marginTop: 20,
+        marginVertical: 20,
         paddingHorizontal: 20,
     },
     itemWrapper: {
         backgroundColor: color.Gray[200].toString(),
         alignItems: 'center',
         justifyContent: 'center',
-        height: 200,
+        height: 250,
     },
     indicatorWrapper: {
         position: 'absolute',

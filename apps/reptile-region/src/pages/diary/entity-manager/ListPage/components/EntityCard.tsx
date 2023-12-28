@@ -76,11 +76,11 @@ const styles = StyleSheet.create({
         ...Platform.select({
             ios: {
                 shadowColor: color.DarkGray[500].toString(),
-                shadowOpacity: 0.15,
-                shadowRadius: 10,
+                shadowOpacity: 0.12,
+                shadowRadius: 5,
                 shadowOffset: {
                     width: 0,
-                    height: 1,
+                    height: -1,
                 },
             },
             android: {
