@@ -94,10 +94,6 @@ export default function EntityList({ carouselProps }: EntityListProps) {
 }
 
 const styles = StyleSheet.create({
-    title: {
-        paddingVertical: 20,
-        paddingHorizontal: 20,
-    },
     shadowWrapper: {
         flex: 1,
         backgroundColor: color.White.toString(),

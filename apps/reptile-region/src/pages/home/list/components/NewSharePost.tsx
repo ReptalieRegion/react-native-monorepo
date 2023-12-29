@@ -25,7 +25,13 @@ type NewSharePostProps = NewSharePostState & NewSharePostActions;
 export default function NewSharePost({ carouselProps }: NewSharePostProps) {
     const { data } = useInfiniteFetchPosts();
 
-    const wrapperStyle = [styles.itemWrapper, { marginHorizontal: carouselProps.marginHorizontal }];
+    const wrapperStyle = [
+        styles.itemWrapper,
+        {
+            marginHorizontal: carouselProps.marginHorizontal,
+            width: carouselProps.width,
+        },
+    ];
     const imageStyle = { width: carouselProps.width, height: carouselProps.height };
 
     const keyExtractor = (item: FetchPostsResponse) => item.post.id;
@@ -38,7 +44,7 @@ export default function NewSharePost({ carouselProps }: NewSharePostProps) {
                     textBreakStrategy="highQuality"
                     lineBreakMode="clip"
                     lineBreakStrategyIOS="hangul-word"
-                    numberOfLines={2}
+                    numberOfLines={1}
                 >
                     {item.post.contents}
                 </Typo>
@@ -61,11 +67,7 @@ export default function NewSharePost({ carouselProps }: NewSharePostProps) {
 }
 
 const styles = StyleSheet.create({
-    title: {
-        paddingVertical: 20,
-        paddingHorizontal: 20,
-    },
     itemWrapper: {
-        gap: 10,
+        gap: 15,
     },
 });

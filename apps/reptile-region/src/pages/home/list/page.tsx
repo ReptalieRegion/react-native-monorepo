@@ -1,22 +1,52 @@
 import { Typo, color } from '@crawl/design-system';
 import React, { Suspense } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 import EntityList from './components/EntityList';
 import NewSharePost from './components/NewSharePost';
 import NoticeImageCarousel from './components/NoticeImageCarousel';
 import ChangeHeader from './header';
+import EntityListSkeleton from './loading/EntitySkeleton';
+import SharePostSkeleton from './loading/SharePostSkeleton';
 
 import type { HomeListPageScreenProp } from '@/types/routes/props/home/list';
 
 const gap = 10;
 const marginHorizontal = gap / 2;
+const sharePostHeight = 250;
 
 export default function HomeListPage(props: HomeListPageScreenProp) {
     const { width } = useWindowDimensions();
     const imageWidth = width / 2 - 40;
     const offset = styles.title.paddingHorizontal - marginHorizontal;
+
+    const navigateSharePost = () => {
+        props.navigation.navigate('bottom-tab/routes', {
+            screen: 'tab',
+            params: {
+                screen: 'share-post/routes',
+                params: {
+                    screen: 'bottom-tab/list',
+                },
+            },
+        });
+    };
+
+    const navigateDiary = () => {
+        props.navigation.navigate('bottom-tab/routes', {
+            screen: 'tab',
+            params: {
+                screen: 'diary/routes',
+                params: {
+                    screen: 'entity-manager',
+                    params: {
+                        screen: 'entity-manager/list',
+                    },
+                },
+            },
+        });
+    };
 
     return (
         <>
@@ -27,18 +57,20 @@ export default function HomeListPage(props: HomeListPageScreenProp) {
                     <View>
                         <View style={styles.title}>
                             <Typo variant="title2">최근 일상 🔥</Typo>
-                            <Typo variant="title4" color="primary">
-                                전체보기
-                            </Typo>
+                            <TouchableOpacity onPress={navigateSharePost}>
+                                <Typo variant="title3" color="primary">
+                                    전체보기
+                                </Typo>
+                            </TouchableOpacity>
                         </View>
-                        <Suspense fallback={<></>}>
+                        <Suspense fallback={<SharePostSkeleton width={imageWidth} height={sharePostHeight} offset={offset} />}>
                             <NewSharePost
                                 carouselProps={{
                                     gap,
                                     offset,
                                     marginHorizontal,
                                     width: imageWidth,
-                                    height: 200,
+                                    height: sharePostHeight,
                                 }}
                             />
                         </Suspense>
@@ -46,11 +78,22 @@ export default function HomeListPage(props: HomeListPageScreenProp) {
                     <View>
                         <View style={styles.title}>
                             <Typo variant="title2">개체 관리 🦎</Typo>
-                            <Typo variant="title4" color="primary">
-                                전체보기
-                            </Typo>
+                            <TouchableOpacity onPress={navigateDiary}>
+                                <Typo variant="title3" color="primary">
+                                    전체보기
+                                </Typo>
+                            </TouchableOpacity>
                         </View>
-                        <Suspense fallback={<></>}>
+                        <Suspense
+                            fallback={
+                                <EntityListSkeleton
+                                    width={imageWidth}
+                                    height={imageWidth}
+                                    offset={offset}
+                                    marginVertical={marginHorizontal}
+                                />
+                            }
+                        >
                             <EntityList
                                 carouselProps={{
                                     gap,
@@ -78,7 +121,7 @@ const styles = StyleSheet.create({
         paddingBottom: 40,
     },
     container: {
-        gap: 40,
+        gap: 30,
     },
     title: {
         flexDirection: 'row',

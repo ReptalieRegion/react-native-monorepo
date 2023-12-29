@@ -20,7 +20,7 @@ const data = range(5).map((_, index) => index);
 export default function NoticeImageCarousel({ onPressIndicator }: NoticeImageCarouselProps) {
     const { width } = useWindowDimensions();
     const imageWidth = width - styles.wrapper.paddingHorizontal * 2;
-    const cardStyle = { width: imageWidth, height: 200 };
+    const cardStyle = { width: imageWidth, height: 220 };
     const itemStyle = [styles.itemWrapper, cardStyle];
 
     return (

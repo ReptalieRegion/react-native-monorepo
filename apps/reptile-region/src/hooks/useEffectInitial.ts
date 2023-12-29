@@ -69,7 +69,9 @@ export default function useEffectInitial({ navigationRef }: UseEffectInitialProp
      */
     useEffect(() => {
         if (!isLoading) {
-            BootSplash.hide({ fade: true });
+            setTimeout(() => {
+                BootSplash.hide({ fade: true });
+            }, 500);
         }
     }, [isLoading]);
 }
