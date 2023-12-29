@@ -41,3 +41,7 @@ export const SHARE_POST_QUERY_KEYS = {
     followingList: (userId: string) => ['user', 'profile', 'list', 'following', userId],
     searchUser: (search: string) => ['user', 'search', search],
 } as const;
+
+export const WEB_VIEW = {
+    webview: (path: string) => ['webview', path],
+};

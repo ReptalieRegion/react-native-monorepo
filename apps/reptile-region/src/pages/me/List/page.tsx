@@ -19,8 +19,14 @@ export default function MyListPage() {
 
     const logout = useLogout();
 
-    const { navigateLicense, navigateNotificationSetting, navigatePrivacyPolicy, navigateProfileSetting, navigateTermsOfUse } =
-        useMeListNavigation();
+    const {
+        navigateNotice,
+        navigateLicense,
+        navigateNotificationSetting,
+        navigatePrivacyPolicy,
+        navigateProfileSetting,
+        navigateTermsOfUse,
+    } = useMeListNavigation();
 
     const settingList: SettingList[] = [
         {
@@ -44,6 +50,7 @@ export default function MyListPage() {
                 {
                     title: '공지사항',
                     rightChildren: 'Chevron',
+                    onPress: navigateNotice,
                 },
                 {
                     title: '이용약관',

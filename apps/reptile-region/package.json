@@ -70,7 +70,8 @@
         "react-native-screens": "^3.27.0",
         "react-native-skeleton-placeholder": "^5.2.4",
         "react-native-svg": "^14.1.0",
-        "react-native-tab-view": "^3.5.2"
+        "react-native-tab-view": "^3.5.2",
+        "react-native-webview": "^13.6.3"
     },
     "devDependencies": {
         "@babel/core": "^7.23.2",

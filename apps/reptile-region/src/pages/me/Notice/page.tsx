@@ -3,11 +3,12 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import WebView from 'react-native-webview';
 
-import useFetchWebView from '@/apis/web/queries/useFetchWebView';
-
-export default function TermsOfUsePage() {
-    const { data } = useFetchWebView('terms-of-use');
-    return <View style={styles.wrapper}>{data ? <WebView source={{ html: data }} /> : null}</View>;
+export default function NoticePage() {
+    return (
+        <View style={styles.wrapper}>
+            <WebView source={{ uri: 'https://nextjs-abrowdnu2a-de.a.run.app/notion/3ce984c24a8848de829e245c31b6da86' }} />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({

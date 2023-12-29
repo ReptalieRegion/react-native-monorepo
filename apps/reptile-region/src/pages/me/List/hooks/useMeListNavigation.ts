@@ -50,7 +50,12 @@ export default function useMeListNavigation() {
         });
     };
 
+    const navigateNotice = () => {
+        navigation.navigate('me/notice');
+    };
+
     return {
+        navigateNotice,
         navigateSharePostMe,
         navigateTermsOfUse,
         navigatePrivacyPolicy,

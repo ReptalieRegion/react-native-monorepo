@@ -26,6 +26,8 @@ import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
 import LicenseContentsPage from '@/pages/me/License/ContentsPage/page';
 import { LicenseListHeader } from '@/pages/me/License/ListPage/header';
 import LicenseListPage from '@/pages/me/License/ListPage/page';
+import { NoticeHeader } from '@/pages/me/Notice/header';
+import NoticePage from '@/pages/me/Notice/page';
 import { NotificationSettingHeader } from '@/pages/me/NotificationSetting/header';
 import NotificationSetting from '@/pages/me/NotificationSetting/page';
 import { ProfileSettingHeader } from '@/pages/me/ProfileSetting/header';
@@ -158,6 +160,11 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     options={{ header: NotificationSettingHeader }}
                 />
                 <Stack.Screen name="me/notification-log" component={PushLogList} options={{ header: PushLogListHeader }} />
+                <Stack.Screen
+                    name="me/notice"
+                    component={NoticePage}
+                    options={{ header: NoticeHeader, gestureEnabled: false }}
+                />
                 {/** 내 정보 끝 */}
 
                 {/* 다이어리 시작 */}

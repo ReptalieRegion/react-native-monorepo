@@ -7,7 +7,6 @@ import type { UpdateFCMToken, UpdateProfileImage } from '@/types/apis/me';
  */
 // 사용자 프로필 조회
 export const fetchMeProfile = async () => {
-    console.log('profile refetch');
     const response = await clientFetch('api/users/me/profile', {
         method: METHOD.GET,
     });
