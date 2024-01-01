@@ -10,11 +10,10 @@ import Header from '../@common/Header';
 import Calendar from '../Calendar/Calendar';
 import type { CalendarProps } from '../Calendar/type';
 import type { WeekCalendarProps } from '../WeekCalendar/type';
+import WeekCalendar from '../WeekCalendar/WeekCalendar';
 
 import AgendaList from './AgendaList';
 import type { AgendaListProps, ExpandableCalendarProps } from './type';
-
-const WeekCalendar = React.lazy(() => import('../WeekCalendar/WeekCalendar'));
 
 export default function ExpandableCalendar<TData>({ calendarProps, listProps }: ExpandableCalendarProps<TData>) {
     const weekCalendarRef = useRef<FlashList<DateType[]>>(null);

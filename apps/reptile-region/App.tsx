@@ -14,7 +14,7 @@ import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 
-export default function App() {
+export default function App(): React.JSX.Element {
     const navigationRef = useNavigationContainerRef<RootRoutesParamList>();
     useEffectNotifee(navigationRef);
 

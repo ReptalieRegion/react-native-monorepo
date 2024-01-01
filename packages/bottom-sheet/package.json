@@ -28,7 +28,7 @@
     "peerDependencies": {
         "@crawl/design-system": "1.0.0",
         "react": "*",
-        "react-native": "*",
+        "react-native": "0.73.1",
         "react-native-gesture-handler": ">=2.12.0",
         "react-native-reanimated": ">=3.4.2",
         "react-native-safe-area-context": "*"

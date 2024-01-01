@@ -80,8 +80,8 @@ function WeekCalendar(
                         const typoColor: TextColorType = isDisableDay
                             ? 'light-placeholder'
                             : isSameMonth
-                            ? 'default'
-                            : 'light-placeholder';
+                              ? 'default'
+                              : 'light-placeholder';
                         const isDot = markedDates?.[dayInfo.dayString]?.marked;
 
                         return (

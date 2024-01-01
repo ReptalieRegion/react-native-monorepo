@@ -10,11 +10,11 @@ import com.facebook.react.uimanager.ViewManager
 import java.util.Collections
 
 class RNVersionCheckPackage: ReactPackage {
-    override fun createNativeModules(reactContext: ReactApplicationContext):  MutableList<NativeModule> {
-        return mutableListOf(RNVersionCheckModule(reactContext)).toMutableList()
-    }
+    override fun createNativeModules(
+            reactContext: ReactApplicationContext
+    ):  MutableList<NativeModule> = listOf(RNVersionCheckModule(reactContext)).toMutableList()
 
-    override fun createViewManagers(reactContext: ReactApplicationContext): MutableList<ViewManager<View, ReactShadowNode<*>>> {
-        return Collections.emptyList()
-    }
+    override fun createViewManagers(
+            reactContext: ReactApplicationContext
+    ): MutableList<ViewManager<View, ReactShadowNode<*>>> = mutableListOf()
 }
