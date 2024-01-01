@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
-import { AUTH_QUERY_KEYS, ME_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { AUTH_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import { deleteAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 
 export default function useAuthHandler() {
@@ -9,8 +9,7 @@ export default function useAuthHandler() {
 
     const signOut = useCallback(async () => {
         await deleteAuthTokens();
-        queryClient.removeQueries({ queryKey: ME_QUERY_KEYS.me });
-        queryClient.invalidateQueries();
+        queryClient.removeQueries();
         queryClient.setQueryData(AUTH_QUERY_KEYS.signInCheck, () => {
             return { message: 'fail' };
         });

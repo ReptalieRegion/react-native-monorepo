@@ -66,16 +66,12 @@ export default function useEffectInitial({ navigationRef }: UseEffectInitialProp
      * 로그인 체크 완료 시, 스플레쉬 닫기
      */
     useEffect(() => {
-        if (!isLoading) {
-            const id = setTimeout(() => {
-                BootSplash.hide({ fade: true });
-            }, 500);
+        const id = setTimeout(() => {
+            BootSplash.hide({ fade: true });
+        }, 1500);
 
-            return () => {
-                clearTimeout(id);
-            };
-        }
-
-        return;
+        return () => {
+            clearTimeout(id);
+        };
     }, [isLoading]);
 }

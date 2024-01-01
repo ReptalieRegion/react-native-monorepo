@@ -4,6 +4,7 @@ import { FlashList } from '@shopify/flash-list';
 import { useQueryClient } from '@tanstack/react-query';
 import React, { useCallback, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import usePostOptionsMenuBottomSheet from '../../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
 import useSharePostNavigation from '../../../@common/hooks/useSharePostNavigation';
@@ -14,6 +15,7 @@ import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
+import useFlashListScroll from '@/hooks/useFlashListScroll';
 import type { FetchDetailUserPostResponse } from '@/types/apis/share-post/post';
 import type { FetchDetailUserProfile, FetchDetailUserProfileResponse } from '@/types/apis/share-post/user';
 import type {
@@ -42,6 +44,8 @@ export default function UserDetailListPage({
     const openPostOptionsMenuBottomSheet = usePostOptionsMenuBottomSheet();
 
     const keyExtractor = (item: FetchDetailUserPostResponse) => item.post.id;
+
+    const { flashListRef, scrollToIndex } = useFlashListScroll<FetchDetailUserPostResponse>();
 
     const renderItem = useCallback(
         ({ item, extraData }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
@@ -112,21 +116,41 @@ export default function UserDetailListPage({
 
     const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
 
+    const [isFirstRender, setIsFirstRender] = useState(true);
+    const opacity = useSharedValue(0);
+    const animatedStyled = useAnimatedStyle(() => ({
+        opacity: opacity.value,
+    }));
+
     return (
         <View style={styles.container}>
-            <FlashList
-                contentContainerStyle={styles.listContainer}
-                data={userPost}
-                extraData={userProfile}
-                keyExtractor={keyExtractor}
-                renderItem={renderItem}
-                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
-                onEndReached={onEndReached}
-                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-                scrollEventThrottle={16}
-                estimatedItemSize={594}
-                initialScrollIndex={startIndex}
-            />
+            <Animated.View style={[styles.container, animatedStyled]}>
+                <FlashList
+                    ref={flashListRef}
+                    contentContainerStyle={styles.listContainer}
+                    data={userPost}
+                    extraData={userProfile}
+                    keyExtractor={keyExtractor}
+                    renderItem={renderItem}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
+                    onEndReached={onEndReached}
+                    ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+                    scrollEventThrottle={16}
+                    estimatedItemSize={594}
+                    onContentSizeChange={
+                        // TODO 리스트의 특정 인덱스 offset 찾기 임시 적용
+                        isFirstRender
+                            ? () => {
+                                  scrollToIndex({ index: startIndex });
+                                  setTimeout(() => {
+                                      opacity.value = withTiming(1);
+                                      setIsFirstRender(false);
+                                  }, 400);
+                              }
+                            : undefined
+                    }
+                />
+            </Animated.View>
         </View>
     );
 }

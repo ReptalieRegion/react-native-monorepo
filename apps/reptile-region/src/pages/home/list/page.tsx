@@ -1,4 +1,5 @@
 import { Typo, color } from '@crawl/design-system';
+import { ErrorBoundary } from '@crawl/error-boundary';
 import React, { Suspense } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -75,37 +76,39 @@ export default function HomeListPage(props: HomeListPageScreenProp) {
                             />
                         </Suspense>
                     </View>
-                    <View>
-                        <View style={styles.title}>
-                            <Typo variant="title2">개체 관리 🦎</Typo>
-                            <TouchableOpacity onPress={navigateDiary}>
-                                <Typo variant="title3" color="primary">
-                                    전체보기
-                                </Typo>
-                            </TouchableOpacity>
-                        </View>
-                        <Suspense
-                            fallback={
-                                <EntityListSkeleton
-                                    width={imageWidth}
-                                    height={imageWidth}
-                                    offset={offset}
-                                    marginVertical={marginHorizontal}
+                    <ErrorBoundary renderFallback={() => <Typo>hi</Typo>}>
+                        <View>
+                            <View style={styles.title}>
+                                <Typo variant="title2">개체 관리 🦎</Typo>
+                                <TouchableOpacity onPress={navigateDiary}>
+                                    <Typo variant="title3" color="primary">
+                                        전체보기
+                                    </Typo>
+                                </TouchableOpacity>
+                            </View>
+                            <Suspense
+                                fallback={
+                                    <EntityListSkeleton
+                                        width={imageWidth}
+                                        height={imageWidth}
+                                        offset={offset}
+                                        marginVertical={marginHorizontal}
+                                    />
+                                }
+                            >
+                                <EntityList
+                                    carouselProps={{
+                                        gap,
+                                        offset,
+                                        marginVertical: marginHorizontal,
+                                        marginHorizontal,
+                                        width: imageWidth,
+                                        height: imageWidth,
+                                    }}
                                 />
-                            }
-                        >
-                            <EntityList
-                                carouselProps={{
-                                    gap,
-                                    offset,
-                                    marginVertical: marginHorizontal,
-                                    marginHorizontal,
-                                    width: imageWidth,
-                                    height: imageWidth,
-                                }}
-                            />
-                        </Suspense>
-                    </View>
+                            </Suspense>
+                        </View>
+                    </ErrorBoundary>
                 </View>
             </ScrollView>
         </>
