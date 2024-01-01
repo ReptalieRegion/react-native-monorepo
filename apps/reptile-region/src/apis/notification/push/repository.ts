@@ -28,7 +28,6 @@ export const fetchNotificationLog = async ({ pageParam }: WithInfinitePageParam<
 
 // 푸시알림 읽음 여부 조회
 export const fetchNotificationPushReadCheck = async () => {
-    console.log('refetch');
     const response = await clientFetch('api/notification/push/read-check', {
         method: METHOD.GET,
     });

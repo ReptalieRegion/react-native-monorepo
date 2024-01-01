@@ -93,6 +93,8 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
             applyContext.calendarTranslateY.value = calendarGoalTranslateY;
             applyContext.listTranslateY.value = listMinTranslateY;
             startContext.weekPageIndex.value = -1;
+            applyContext.weekCalendarTranslateY.value = withTiming(0);
+            applyContext.listHeight.value = startContext.layoutHeight.value - headerHeight - dayHeight;
         } else {
             applyContext.listHeight.value = startContext.layoutHeight.value - headerHeight - calendarHeight;
         }

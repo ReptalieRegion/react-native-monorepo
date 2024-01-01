@@ -23,8 +23,6 @@ export default function OverlayProvider({ children }: PropsWithChildren) {
 
     const context = useMemo(() => ({ mount, unmount }), [mount, unmount]);
 
-    console.log(overlayById);
-
     return (
         <OverlayContext.Provider value={context}>
             {children}

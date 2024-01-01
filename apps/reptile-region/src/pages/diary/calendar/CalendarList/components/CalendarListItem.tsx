@@ -71,13 +71,14 @@ export default function CalendarListItem({ children, containerStyle, onLongPress
 const listStyles = StyleSheet.create({
     item: {
         width: '100%',
+        height: 91,
     },
     itemContainer: {
-        flex: 1,
         alignItems: 'center',
         flexDirection: 'row',
         gap: 20,
         borderRadius: 20,
+        height: 91,
         backgroundColor: color.White.toString(),
     },
 });

@@ -35,20 +35,24 @@ export default function ExpandableCalendarScreen() {
         [],
     );
 
-    const getItemType = useCallback((item: CalendarFlashListItem) => (typeof item === 'string' ? 'title' : 'content'), []);
+    const getItemType = useCallback((item: CalendarFlashListItem) => item.type, []);
 
     const renderItem: ListRenderItem<CalendarFlashListItem> = useCallback(
         ({ item }) => {
             switch (item.type) {
                 case 'TITLE':
                     return (
-                        <View style={listStyles.title}>
+                        <View
+                            style={listStyles.title}
+                            onLayout={(event) => console.log(item.label, event.nativeEvent.layout.height)}
+                        >
                             <Typo color="sub-placeholder">{item.label}</Typo>
                         </View>
                     );
                 case 'CALENDAR_ITEM':
                     return (
                         <CalendarListItem
+                            onLayout={(event) => console.log(item.entity.name, event.nativeEvent.layout.height)}
                             pressInBackground={color.Gray[100].toString()}
                             containerStyle={listStyles.itemContainer}
                             onPress={() =>
@@ -151,7 +155,7 @@ export default function ExpandableCalendarScreen() {
                 listProps={{
                     data: calendarListData?.list,
                     contentContainerStyle: contentContainerStyle,
-                    estimatedItemSize: 50,
+                    estimatedItemSize: 40,
                     CellRendererComponent: FadeInCellRenderComponent,
                     renderItem: renderItem,
                     keyExtractor: keyExtractor,

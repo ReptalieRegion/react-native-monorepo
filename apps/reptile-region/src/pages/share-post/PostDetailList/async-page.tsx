@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useMemo } from 'react';
+import React, { Suspense, useMemo } from 'react';
 
 import CommentSkeleton from './components/Comment/loading';
 import PostListSkeleton from './components/Post/loading';
@@ -19,10 +19,6 @@ export default function PostDetailModalListPage(props: PostDetailModalListScreen
         ),
         [postId],
     );
-
-    useEffect(() => {
-        console.log('first');
-    }, []);
 
     return (
         <Suspense

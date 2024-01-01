@@ -24,12 +24,7 @@ export default function App() {
                 <GestureHandlerRootView style={styles.gestureContainer}>
                     <SafeAreaProvider>
                         <OverlayProvider>
-                            <ErrorBoundary
-                                onError={(error) => {
-                                    console.log('error', error);
-                                }}
-                                renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}
-                            >
+                            <ErrorBoundary renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}>
                                 <RootRoutes navigationRef={navigationRef} />
                             </ErrorBoundary>
                         </OverlayProvider>
