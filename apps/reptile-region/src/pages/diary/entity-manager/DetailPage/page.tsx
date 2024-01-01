@@ -17,12 +17,10 @@ import { Plus } from '@/assets/icons';
 import { ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
 import GenderIcon from '@/components/@common/molecules/GenderIcon/GenderIcon';
 import InfiniteLineChart from '@/pages/diary/entity-manager/DetailPage/components/InfiniteLineChart';
-import type { WeightUnit } from '@/types/apis/diary/entity';
+import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/entity';
 
-type ExtraData = {
-    weightUnit: WeightUnit;
-};
+type ExtraData = Pick<FetchEntityListResponse['entity'], 'weightUnit' | 'id'>;
 
 export default function EntityManagerDetailPage({
     navigation,
@@ -87,14 +85,15 @@ export default function EntityManagerDetailPage({
     }, [data?.entity, width, openCreateWeightBottomSheet]);
 
     const renderItem: ListRenderItem<WeightData> = useCallback(({ item, index, extraData }) => {
-        return <WeightListItem weightInfo={item} index={index} weightUnit={(extraData as ExtraData).weightUnit} />;
+        return <WeightListItem weightInfo={item} index={index} entityInfo={extraData as ExtraData} />;
     }, []);
 
     const extraData: ExtraData = useMemo(
         () => ({
+            id: data?.entity.id ?? '',
             weightUnit: data?.entity.weightUnit ?? 'g',
         }),
-        [data?.entity.weightUnit],
+        [data?.entity.id, data?.entity.weightUnit],
     );
 
     return data?.entity ? (

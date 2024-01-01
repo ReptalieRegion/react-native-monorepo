@@ -146,7 +146,6 @@ type DeleteEntity = ServerAPI<DeleteEntityRequest, DeleteEntityResponse>;
 // 다이어리 개체 몸무게 삭제
 type DeleteEntityWeightRequest = {
     weightId: string;
-    date: string;
 };
 
 type DeleteEntityWeightResponse = {
