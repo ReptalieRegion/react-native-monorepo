@@ -9,6 +9,7 @@ export { default as Comment } from './Comment';
 export { default as DatePicker } from './DatePicker';
 export { default as Diary } from './Diary';
 export { default as DotIndicator } from './DotIndicator';
+export { default as Edit } from './Edit';
 export { default as Error } from './Error';
 export { default as Home } from './Home';
 export { default as Info } from './Info';

@@ -7,6 +7,7 @@ import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-n
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useCreateWeightBottomSheet from './bottom-sheet/CreateWeight/useCreateWeightBottomSheet';
+import WeightListItem from './components/WeightListItem';
 import { ChangeHeader } from './header';
 import useFindEntity from './hooks/queries/useFindEntity';
 import type { WeightData } from './hooks/queries/useInfiniteFetchEntityWeight';
@@ -16,7 +17,12 @@ import { Plus } from '@/assets/icons';
 import { ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
 import GenderIcon from '@/components/@common/molecules/GenderIcon/GenderIcon';
 import InfiniteLineChart from '@/pages/diary/entity-manager/DetailPage/components/InfiniteLineChart';
+import type { WeightUnit } from '@/types/apis/diary/entity';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/entity';
+
+type ExtraData = {
+    weightUnit: WeightUnit;
+};
 
 export default function EntityManagerDetailPage({
     navigation,
@@ -80,41 +86,15 @@ export default function EntityManagerDetailPage({
         );
     }, [data?.entity, width, openCreateWeightBottomSheet]);
 
-    const weightUnit = data?.entity.weightUnit ?? 'g';
+    const renderItem: ListRenderItem<WeightData> = useCallback(({ item, index, extraData }) => {
+        return <WeightListItem weightInfo={item} index={index} weightUnit={(extraData as ExtraData).weightUnit} />;
+    }, []);
 
-    const renderItem: ListRenderItem<WeightData> = useCallback(
-        ({ item: { date, weight, diffWeight }, index }) => {
-            return (
-                <View style={[weightStyles.itemWrapper, index === 0 ? weightStyles.topBoarder : undefined]}>
-                    <Typo>{dayjs(date).format('YYYY.MM.DD')}</Typo>
-                    <View style={weightStyles.weightWrapper}>
-                        <Typo variant="title2" textAlign="right">
-                            {weight + weightUnit}
-                        </Typo>
-                        <ConditionalRenderer
-                            condition={diffWeight === 0}
-                            trueContent={null}
-                            falseContent={
-                                <ConditionalRenderer
-                                    condition={diffWeight > 0}
-                                    trueContent={
-                                        <Typo variant="body3" color="placeholder" textAlign="right">
-                                            +{diffWeight + weightUnit}
-                                        </Typo>
-                                    }
-                                    falseContent={
-                                        <Typo variant="body3" color="error" textAlign="right">
-                                            {diffWeight + weightUnit}
-                                        </Typo>
-                                    }
-                                />
-                            }
-                        />
-                    </View>
-                </View>
-            );
-        },
-        [weightUnit],
+    const extraData: ExtraData = useMemo(
+        () => ({
+            weightUnit: data?.entity.weightUnit ?? 'g',
+        }),
+        [data?.entity.weightUnit],
     );
 
     return data?.entity ? (
@@ -122,6 +102,7 @@ export default function EntityManagerDetailPage({
             <ChangeHeader navigation={navigation} entity={data.entity} />
             <FlashList
                 data={weightData}
+                extraData={extraData}
                 renderItem={renderItem}
                 onEndReached={fetchNextPage}
                 estimatedItemSize={weightStyles.itemWrapper.height}
@@ -192,5 +173,10 @@ const weightStyles = StyleSheet.create({
     weightWrapper: {
         marginLeft: 'auto',
         alignItems: 'flex-end',
+    },
+    actions: {
+        flexDirection: 'row',
+        gap: 10,
+        marginLeft: 10,
     },
 });

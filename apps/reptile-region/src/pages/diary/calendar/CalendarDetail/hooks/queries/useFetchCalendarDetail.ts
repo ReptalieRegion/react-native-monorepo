@@ -19,9 +19,5 @@ export default function useFetchCalendarDetail({ date, calendarId }: UseFetchCal
         },
     });
 
-    if (calendarData === undefined) {
-        throw new Error('Calendar를 찾을 수 없습니다.');
-    }
-
     return { ...rest, data: calendarData };
 }

@@ -37,38 +37,6 @@ export default function CalendarDetailPage({
     const openMemoBottomSheet = useMemoUpdateBottomSheet();
     const openTagBottomSheet = useTagUpdateBottomSheet();
 
-    const listItems: Item[] = [
-        {
-            type: 'EDIT',
-            props: {
-                label: '메모',
-                content: <Typo textAlign="right">{data.calendar.memo}</Typo>,
-                onPress: () =>
-                    openMemoBottomSheet({ calendar: { id: data.calendar.id, memo: data.calendar.memo }, searchDate }),
-            },
-        },
-        {
-            type: 'EDIT',
-            props: {
-                label: '태그',
-                content: data.calendar.markType.map((mark) => (
-                    <Typo color="primary" textAlign="right" key={mark}>
-                        #{mark}
-                    </Typo>
-                )),
-                onPress: () =>
-                    openTagBottomSheet({ calendar: { id: data.calendar.id, markType: data.calendar.markType }, searchDate }),
-            },
-        },
-        {
-            type: 'DISABLE',
-            props: {
-                label: '기록날짜',
-                content: dayjs(data?.calendar.date).format('YYYY년 MM월 DD일 HH:mm'),
-            },
-        },
-    ];
-
     const keyExtractor = useCallback((item: Item) => item.props.label, []);
 
     const renderListHeader = useCallback(() => {
@@ -87,6 +55,54 @@ export default function CalendarDetailPage({
                 return <ListItem {...item.props} containerStyle={styles.padding} />;
         }
     }, []);
+
+    const listItems: Item[] = [
+        {
+            type: 'EDIT',
+            props: {
+                label: '메모',
+                content: <Typo textAlign="right">{data?.calendar.memo}</Typo>,
+                onPress: () => {
+                    if (data) {
+                        openMemoBottomSheet({
+                            calendar: { id: data.calendar.id, memo: data.calendar.memo },
+                            searchDate,
+                        });
+                    }
+                },
+            },
+        },
+        {
+            type: 'EDIT',
+            props: {
+                label: '태그',
+                content: (
+                    <>
+                        {data?.calendar.markType.map((mark) => (
+                            <Typo color="primary" textAlign="right" key={mark}>
+                                #{mark}
+                            </Typo>
+                        ))}
+                    </>
+                ),
+                onPress: () => {
+                    if (data) {
+                        openTagBottomSheet({
+                            calendar: { id: data.calendar.id, markType: data.calendar.markType },
+                            searchDate,
+                        });
+                    }
+                },
+            },
+        },
+        {
+            type: 'DISABLE',
+            props: {
+                label: '기록날짜',
+                content: dayjs(data?.calendar.date).format('YYYY년 MM월 DD일 HH:mm'),
+            },
+        },
+    ];
 
     return (
         <>

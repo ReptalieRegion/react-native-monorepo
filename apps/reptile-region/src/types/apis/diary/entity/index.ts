@@ -12,12 +12,6 @@ type EntityGender = 'Male' | 'Female' | 'Uncategorized';
 // 개체 무게 단위
 type WeightUnit = 'g' | 'kg';
 
-// 개체 무게
-type EntityWeight = {
-    date: string;
-    weight: string;
-};
-
 type EntityVariety = {
     classification: string;
     species: string;
@@ -49,7 +43,13 @@ type FetchEntityWeightListRequest = {
     entityId: string;
 };
 
-type FetchEntityWeightListResponse = EntityWeight;
+type FetchEntityWeightListResponse = {
+    entityWeight: {
+        id: string;
+        date: string;
+        weight: string;
+    };
+};
 
 type FetchEntityWeightList = ServerAPI<FetchEntityWeightListRequest, InfiniteState<FetchEntityWeightListResponse[]>>;
 
@@ -145,8 +145,8 @@ type DeleteEntity = ServerAPI<DeleteEntityRequest, DeleteEntityResponse>;
 
 // 다이어리 개체 몸무게 삭제
 type DeleteEntityWeightRequest = {
-    entityId: string;
-    date: Date;
+    weightId: string;
+    date: string;
 };
 
 type DeleteEntityWeightResponse = {
@@ -170,7 +170,6 @@ export type {
     DeleteEntityWeightResponse,
     EntityGender,
     EntityVariety,
-    EntityWeight,
     FetchEntityList,
     FetchEntityListResponse,
     FetchEntityWeightList,

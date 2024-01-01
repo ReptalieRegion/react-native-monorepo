@@ -18,8 +18,8 @@ export default function useEntityWeightChartData(entityId: string) {
             return data.pages
                 .flatMap((page) =>
                     [...page.items].map((item) => ({
-                        date: dayjs(item.date).format('MM/DD'),
-                        weight: item.weight,
+                        date: dayjs(item.entityWeight.date).format('MM/DD'),
+                        weight: item.entityWeight.weight,
                     })),
                 )
                 .slice(0, 7)
