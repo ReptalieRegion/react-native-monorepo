@@ -42,17 +42,13 @@ export default function ExpandableCalendarScreen() {
             switch (item.type) {
                 case 'TITLE':
                     return (
-                        <View
-                            style={listStyles.title}
-                            onLayout={(event) => console.log(item.label, event.nativeEvent.layout.height)}
-                        >
+                        <View style={listStyles.title}>
                             <Typo color="sub-placeholder">{item.label}</Typo>
                         </View>
                     );
                 case 'CALENDAR_ITEM':
                     return (
                         <CalendarListItem
-                            onLayout={(event) => console.log(item.entity.name, event.nativeEvent.layout.height)}
                             pressInBackground={color.Gray[100].toString()}
                             containerStyle={listStyles.itemContainer}
                             onPress={() =>

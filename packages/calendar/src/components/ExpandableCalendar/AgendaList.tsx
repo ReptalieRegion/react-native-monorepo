@@ -70,7 +70,6 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...pro
         <FlashList
             {...props}
             ref={agendaListRef}
-            onContentSizeChange={console.log}
             data={data}
             viewabilityConfig={viewabilityConfig}
             onScroll={_handleScroll}

@@ -27,7 +27,6 @@ export default function useEffectInitial({ navigationRef }: UseEffectInitialProp
      * clientFetch에서 refresh 실패했을 때 실행할 로직 초기화
      */
     useEffect(() => {
-        console.log('[init] clientFetch');
         initRefreshFailCallback(() => {
             navigationRef.navigate('bottom-tab/routes', {
                 screen: 'tab',
@@ -47,7 +46,6 @@ export default function useEffectInitial({ navigationRef }: UseEffectInitialProp
      */
     useEffect(() => {
         if (!isLoading && isSignIn) {
-            console.log('[init] FCM Token');
             messaging()
                 .requestPermission()
                 .then(async (setting) => {
