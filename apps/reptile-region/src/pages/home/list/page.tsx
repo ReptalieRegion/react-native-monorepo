@@ -76,16 +76,16 @@ export default function HomeListPage(props: HomeListPageScreenProp) {
                             />
                         </Suspense>
                     </View>
-                    <ErrorBoundary renderFallback={() => <Typo>hi</Typo>}>
-                        <View>
-                            <View style={styles.title}>
-                                <Typo variant="title2">개체 관리 🦎</Typo>
-                                <TouchableOpacity onPress={navigateDiary}>
-                                    <Typo variant="title3" color="primary">
-                                        전체보기
-                                    </Typo>
-                                </TouchableOpacity>
-                            </View>
+                    <View>
+                        <View style={styles.title}>
+                            <Typo variant="title2">개체 관리 🦎</Typo>
+                            <TouchableOpacity onPress={navigateDiary}>
+                                <Typo variant="title3" color="primary">
+                                    전체보기
+                                </Typo>
+                            </TouchableOpacity>
+                        </View>
+                        <ErrorBoundary renderFallback={() => <Typo>hi</Typo>}>
                             <Suspense
                                 fallback={
                                     <EntityListSkeleton
@@ -107,8 +107,8 @@ export default function HomeListPage(props: HomeListPageScreenProp) {
                                     }}
                                 />
                             </Suspense>
-                        </View>
-                    </ErrorBoundary>
+                        </ErrorBoundary>
+                    </View>
                 </View>
             </ScrollView>
         </>

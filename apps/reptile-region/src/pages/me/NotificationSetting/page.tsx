@@ -88,9 +88,11 @@ export default function NotificationSetting() {
             subscription.remove();
         };
     }, [mutate]);
+
     const updatePushNotification = ({ type, isAgree }: UpdatePushAgree['Request']) => {
         mutate({ type, isAgree });
     };
+
     return (
         <View style={styles.container}>
             <ConditionalRenderer

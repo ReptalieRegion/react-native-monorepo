@@ -255,13 +255,8 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
             const isDownSwipe = event.velocityY > 0;
             if (isDownSwipe) {
                 openCalendar();
-                return;
-            }
-
-            const isUpSwipe = event.velocityY < 0;
-            if (isUpSwipe) {
+            } else {
                 closeCalendar();
-                return;
             }
         });
 
@@ -269,13 +264,17 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         (_dateString: string, index: number) => {
             const weekPageIndex = Math.floor(index / 7);
             startContext.weekPageIndex.value = weekPageIndex;
-            startContext.changeWeekCalendarGoalTranslateY.value = dayHeight * index;
+            startContext.changeWeekCalendarGoalTranslateY.value = dayHeight * weekPageIndex;
+
             if (applyContext.weekCalendarZIndex.value === 1) {
-                applyContext.calendarTranslateY.value = -dayHeight * index;
+                applyContext.calendarTranslateY.value = -dayHeight * weekPageIndex;
+            } else {
+                applyContext.weekCalendarTranslateY.value = dayHeight * weekPageIndex;
             }
         },
         [
             applyContext.calendarTranslateY,
+            applyContext.weekCalendarTranslateY,
             applyContext.weekCalendarZIndex.value,
             dayHeight,
             startContext.changeWeekCalendarGoalTranslateY,
@@ -283,11 +282,12 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         ],
     );
 
-    // 주간 캘린더 스크롤 변경될 때마다, 웤간 캘린더 위치 변경
+    // 주간 캘린더 스크롤 변경될 때마다, 월간 캘린더 위치 변경
     const handleChangeCalendarTranslateY = useCallback(
         (index: number) => {
             startContext.weekPageIndex.value = index;
             startContext.changeWeekCalendarGoalTranslateY.value = dayHeight * index;
+
             if (applyContext.weekCalendarZIndex.value === 1) {
                 applyContext.calendarTranslateY.value = -dayHeight * index;
             }

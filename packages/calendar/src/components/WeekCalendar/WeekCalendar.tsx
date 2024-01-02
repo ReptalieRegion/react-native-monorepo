@@ -128,9 +128,9 @@ function WeekCalendar(
                 renderItem={renderItem}
                 estimatedItemSize={weekSize.width}
                 estimatedListSize={weekSize}
-                onMomentumScrollEnd={handleChangePage}
                 showsHorizontalScrollIndicator={false}
                 renderScrollComponent={ScrollView}
+                onMomentumScrollBegin={handleChangePage}
                 pagingEnabled
                 horizontal
             />

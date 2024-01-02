@@ -3,12 +3,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import WebView from 'react-native-webview';
 
-import useFetchWebView from '@/apis/web/queries/useFetchWebView';
+import ENV from '@/env';
 
 export default function PrivacyPolicyPage() {
-    const { data } = useFetchWebView('privacy-policy');
-
-    return <View style={styles.wrapper}>{data ? <WebView source={{ html: data }} /> : null}</View>;
+    return (
+        <View style={styles.wrapper}>
+            <WebView source={{ uri: ENV.WEB_PAGE_URI + 'terms-of-use' }} />
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
