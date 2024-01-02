@@ -1,15 +1,14 @@
 import { Typo, color } from '@crawl/design-system';
 import dayjs from 'dayjs';
 import React from 'react';
-import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import useDeleteEntityWeight from '../hooks/mutations/useDeleteEntityWeight';
+import type { UpdateWeightBottomSheetProps } from '../bottom-sheet/UpdateWeight/UpdateWeight';
 import type { WeightData } from '../hooks/queries/useInfiniteFetchEntityWeight';
 
 import { Edit } from '@/assets/icons';
 import Delete from '@/assets/icons/Delete';
 import { ConditionalRenderer } from '@/components/@common/atoms';
-import useAlert from '@/components/overlay/Alert/useAlert';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
 type WeightListItemState = {
@@ -18,7 +17,10 @@ type WeightListItemState = {
     weightInfo: WeightData;
 };
 
-interface WeightListItemActions {}
+interface WeightListItemActions {
+    onPressDelete(weightId: string): void;
+    onPressEdit(props: Pick<UpdateWeightBottomSheetProps, 'entity'>): void;
+}
 
 type WeightListItemProps = WeightListItemState & WeightListItemActions;
 
@@ -26,11 +28,12 @@ export default function WeightListItem({
     index,
     weightInfo: { id: weightId, date, diffWeight, weight },
     entityInfo: { id: entityId, weightUnit },
+    onPressDelete,
+    onPressEdit,
 }: WeightListItemProps) {
     return (
         <View style={[styles.itemWrapper, index === 0 ? styles.topBoarder : undefined]}>
             <Typo>{dayjs(date).format('YYYY.MM.DD')}</Typo>
-
             <View style={styles.weightWrapper}>
                 <Typo variant="title2" textAlign="right">
                     {weight + weightUnit}
@@ -56,51 +59,14 @@ export default function WeightListItem({
                 />
             </View>
             <View style={styles.actions}>
-                <EditButton />
-                <DeleteButton entityId={entityId} weightId={weightId} />
-            </View>
-        </View>
-    );
-}
-
-function EditButton() {
-    return (
-        <TouchableOpacity>
-            <Edit />
-        </TouchableOpacity>
-    );
-}
-
-function DeleteButton({ entityId, weightId }: { entityId: string; weightId: string }) {
-    const { mutate, isPending } = useDeleteEntityWeight({ entityId });
-    const openAlert = useAlert();
-
-    const deleteWeight = () => {
-        openAlert({
-            contents: '정말로 삭제하시겠어요?',
-            buttons: [
-                {
-                    text: '취소',
-                    style: 'cancel',
-                },
-                {
-                    text: '삭제',
-                    onPress: () => mutate({ weightId }),
-                },
-            ],
-        });
-    };
-
-    return (
-        <ConditionalRenderer
-            condition={isPending}
-            trueContent={<ActivityIndicator />}
-            falseContent={
-                <TouchableOpacity onPress={deleteWeight}>
+                <TouchableOpacity onPress={() => onPressEdit({ entity: { id: entityId, date, weight, weightUnit } })}>
+                    <Edit />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => onPressDelete(weightId)}>
                     <Delete />
                 </TouchableOpacity>
-            }
-        />
+            </View>
+        </View>
     );
 }
 

@@ -45,8 +45,6 @@ export default function UserDetailListPage({
 
     const keyExtractor = (item: FetchDetailUserPostResponse) => item.post.id;
 
-    const { flashListRef, scrollToIndex } = useFlashListScroll<FetchDetailUserPostResponse>();
-
     const renderItem = useCallback(
         ({ item, extraData }: ListRenderItemInfo<FetchDetailUserPostResponse>) => {
             const { user } = (extraData as FetchDetailUserProfileResponse | undefined) ?? {
@@ -116,6 +114,7 @@ export default function UserDetailListPage({
 
     const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
 
+    const { flashListRef, scrollToIndex } = useFlashListScroll<FetchDetailUserPostResponse>();
     const [isFirstRender, setIsFirstRender] = useState(true);
     const opacity = useSharedValue(0);
     const animatedStyled = useAnimatedStyle(() => ({

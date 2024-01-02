@@ -6,28 +6,30 @@ import React, { useCallback, useReducer } from 'react';
 import { Keyboard, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
 import DatePickerTextField from '../../components/DatePickerTextField';
-import useCreateOrUpdateEntityWeight from '../../hooks/mutations/useCreateOrUpdateEntityWeight';
+import useUpdateEntityWeight from '../../hooks/mutations/useUpdateEntityWeight';
 import weightReducer from '../../reducer/weight-reducer';
 
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import type { WeightUnit } from '@/types/apis/diary/entity';
 
-type CreateWeightBottomSheetState = {
+type UpdateWeightBottomSheetState = {
     entity: {
         id: string;
         weightUnit: WeightUnit;
+        weight: number;
+        date: string;
     };
 };
 
-export type CreateWeightBottomSheetProps = CreateWeightBottomSheetState;
+export type UpdateWeightBottomSheetProps = UpdateWeightBottomSheetState;
 
-export default function CreateWeightBottomSheet({ entity }: CreateWeightBottomSheetProps) {
+export default function UpdateWeightBottomSheet({ entity }: UpdateWeightBottomSheetProps) {
     const { bottomSheetClose } = useBottomSheet();
-    const { mutate, isPending } = useCreateOrUpdateEntityWeight({
+    const { mutate, isPending } = useUpdateEntityWeight({
         onSuccess: bottomSheetClose,
     });
 
-    const [state, dispatch] = useReducer(weightReducer, { weight: '', date: dayjs().toDate() });
+    const [state, dispatch] = useReducer(weightReducer, { weight: String(entity.weight), date: dayjs(entity.date).toDate() });
     const { off: datePickerOff, on: datePickerOn, state: isDatePickerVisible } = useOnOff();
 
     const handleConfirm = useCallback(
@@ -70,6 +72,7 @@ export default function CreateWeightBottomSheet({ entity }: CreateWeightBottomSh
                 </View>
                 <DatePickerTextField
                     date={state.date}
+                    disabled={true}
                     isDatePickerVisible={isDatePickerVisible}
                     onPress={datePickerOn}
                     onConfirm={handleConfirm}

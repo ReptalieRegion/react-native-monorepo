@@ -1,7 +1,7 @@
+import useUpdateEntityWeight from './useUpdateEntityWeight';
+
 import useBaseCreateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/useBaseCreateEntityWeight';
-import useBaseUpdateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/useBaseUpdateEntityWeight';
 import useAlert from '@/components/overlay/Alert/useAlert';
-import useToast from '@/components/overlay/Toast/useToast';
 
 interface UseCreateOrUpdateEntityWeightActions {
     onSuccess(): void;
@@ -10,14 +10,8 @@ interface UseCreateOrUpdateEntityWeightActions {
 type UseCreateOrUpdateEntityWeightProps = UseCreateOrUpdateEntityWeightActions;
 
 export default function useCreateOrUpdateEntityWeight({ onSuccess }: UseCreateOrUpdateEntityWeightProps) {
-    const openToast = useToast();
     const openAlert = useAlert();
-    const updateEntityWeight = useBaseUpdateEntityWeight({
-        onError: () => {
-            openToast({ contents: '몸무게 수정에 실패했어요', severity: 'error' });
-        },
-        onSuccess,
-    });
+    const updateEntityWeight = useUpdateEntityWeight({ onSuccess });
 
     const createEntityWeight = useBaseCreateEntityWeight({
         onError: (error, variables) => {

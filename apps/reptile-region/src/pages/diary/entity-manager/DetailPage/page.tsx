@@ -7,8 +7,10 @@ import { StyleSheet, TouchableOpacity, View, useWindowDimensions } from 'react-n
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useCreateWeightBottomSheet from './bottom-sheet/CreateWeight/useCreateWeightBottomSheet';
+import useUpdateWeightBottomSheet from './bottom-sheet/UpdateWeight/useUpdateWeightBottomSheet';
 import WeightListItem from './components/WeightListItem';
 import { ChangeHeader } from './header';
+import useDeleteEntityWeight from './hooks/mutations/useDeleteEntityWeight';
 import useFindEntity from './hooks/queries/useFindEntity';
 import type { WeightData } from './hooks/queries/useInfiniteFetchEntityWeight';
 import useInfiniteFetchEntityWeight from './hooks/queries/useInfiniteFetchEntityWeight';
@@ -16,6 +18,7 @@ import useInfiniteFetchEntityWeight from './hooks/queries/useInfiniteFetchEntity
 import { Plus } from '@/assets/icons';
 import { ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
 import GenderIcon from '@/components/@common/molecules/GenderIcon/GenderIcon';
+import useAlert from '@/components/overlay/Alert/useAlert';
 import InfiniteLineChart from '@/pages/diary/entity-manager/DetailPage/components/InfiniteLineChart';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/entity';
@@ -35,58 +38,95 @@ export default function EntityManagerDetailPage({
     const { data } = useFindEntity(entityId);
     const { data: weightData, isFetchingNextPage, fetchNextPage } = useInfiniteFetchEntityWeight(entityId);
     const openCreateWeightBottomSheet = useCreateWeightBottomSheet();
+    const openUpdateWeightBottomSheet = useUpdateWeightBottomSheet();
+    const openAlert = useAlert();
+    const { mutate } = useDeleteEntityWeight({ entityId });
 
-    const renderListHeader = useCallback(() => {
-        if (!data?.entity) {
-            return null;
-        }
+    const openAlertDeleteWeight = useCallback(
+        (weightId: string) => {
+            openAlert({
+                contents: '정말로 삭제하시겠어요?',
+                buttons: [
+                    {
+                        text: '취소',
+                        style: 'cancel',
+                    },
+                    {
+                        text: '삭제',
+                        onPress: () => mutate({ weightId }),
+                    },
+                ],
+            });
+        },
+        [mutate, openAlert],
+    );
 
-        const { id, gender, hatching, image, name, variety, weightUnit } = data.entity;
-        const navigateCreateWeight = () => {
-            openCreateWeightBottomSheet({ entity: { id, weightUnit } });
-        };
-
-        return (
-            <>
-                <Image source={{ uri: image.src }} style={{ width, height: width }} />
-                <View style={styles.container}>
-                    <View style={styles.topContainer}>
-                        <Typo variant="title1">
-                            {name} <GenderIcon gender={gender} size={31} />
-                        </Typo>
-                        <View style={styles.hatchingContainer}>
-                            <ConditionalRenderer
-                                condition={!!hatching}
-                                trueContent={<Typo color="placeholder">{dayjs(hatching).format('YYYY-MM-DD')}</Typo>}
-                                falseContent={null}
-                            />
+    const renderListHeader = useCallback(
+        () =>
+            data?.entity ? (
+                <>
+                    <Image source={{ uri: data.entity.image.src }} style={{ width, height: width }} />
+                    <View style={styles.container}>
+                        <View style={styles.topContainer}>
+                            <Typo variant="title1">
+                                {data.entity.name} <GenderIcon gender={data.entity.gender} size={31} />
+                            </Typo>
+                            <View style={styles.hatchingContainer}>
+                                <ConditionalRenderer
+                                    condition={!!data.entity.hatching}
+                                    trueContent={
+                                        <Typo color="placeholder">{dayjs(data.entity.hatching).format('YYYY-MM-DD')}</Typo>
+                                    }
+                                    falseContent={null}
+                                />
+                            </View>
+                        </View>
+                        <View style={styles.tagContainer}>
+                            <Typo variant="body1" color="primary">
+                                {data.entity.variety.classification} · {data.entity.variety.species}
+                            </Typo>
+                        </View>
+                        <View style={styles.tagContainer}>
+                            <Typo variant="body1" color="primary">
+                                {data.entity.variety.detailedSpecies}{' '}
+                                {data.entity.variety.morph ? `· ${data.entity.variety.morph?.join(', ')}` : ''}
+                            </Typo>
                         </View>
                     </View>
-                    <View style={styles.tagContainer}>
-                        <Typo variant="body1" color="primary">
-                            {variety.classification} · {variety.species}
-                        </Typo>
+                    <View style={styles.titleContainer}>
+                        <Typo variant="heading1Bold">최근 무게</Typo>
+                        <TouchableOpacity
+                            style={styles.plusContainer}
+                            onPress={() =>
+                                openCreateWeightBottomSheet({
+                                    entity: {
+                                        id: data.entity.id,
+                                        weightUnit: data.entity.weightUnit,
+                                    },
+                                })
+                            }
+                        >
+                            <Plus width={16} height={16} fill={color.White.toString()} />
+                        </TouchableOpacity>
                     </View>
-                    <View style={styles.tagContainer}>
-                        <Typo variant="body1" color="primary">
-                            {variety.detailedSpecies} {variety.morph ? `· ${variety.morph?.join(', ')}` : ''}
-                        </Typo>
-                    </View>
-                </View>
-                <View style={styles.titleContainer}>
-                    <Typo variant="heading1Bold">최근 무게</Typo>
-                    <TouchableOpacity style={styles.plusContainer} onPress={navigateCreateWeight}>
-                        <Plus width={16} height={16} fill={color.White.toString()} />
-                    </TouchableOpacity>
-                </View>
-                <InfiniteLineChart entityId={id} yAxisSuffix={weightUnit} />
-            </>
-        );
-    }, [data?.entity, width, openCreateWeightBottomSheet]);
+                    <InfiniteLineChart entityId={data.entity.id} yAxisSuffix={data.entity.weightUnit} />
+                </>
+            ) : null,
+        [data?.entity, width, openCreateWeightBottomSheet],
+    );
 
-    const renderItem: ListRenderItem<WeightData> = useCallback(({ item, index, extraData }) => {
-        return <WeightListItem weightInfo={item} index={index} entityInfo={extraData as ExtraData} />;
-    }, []);
+    const renderItem: ListRenderItem<WeightData> = useCallback(
+        ({ item, index, extraData }) => (
+            <WeightListItem
+                weightInfo={item}
+                index={index}
+                entityInfo={extraData as ExtraData}
+                onPressEdit={openUpdateWeightBottomSheet}
+                onPressDelete={openAlertDeleteWeight}
+            />
+        ),
+        [openUpdateWeightBottomSheet, openAlertDeleteWeight],
+    );
 
     const extraData: ExtraData = useMemo(
         () => ({
