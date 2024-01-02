@@ -197,7 +197,6 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
                     ),
                     0,
                 );
-                console.log(startContext.changeWeekCalendarGoalTranslateY.value);
                 applyContext.calendarTranslateY.value = Math.max(
                     Math.min(startContext.calendarTranslateY.value + event.translationY * upSpeedPercent, 0),
                     startContext.weekPageIndex.value === -1
