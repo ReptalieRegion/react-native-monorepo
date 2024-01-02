@@ -6,14 +6,10 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useCreateReport from '../../hooks/mutations/useCreateReport';
 
-import { ReportDetailsType, ReportType } from '@/types/apis/report';
+import { ReportDetailsType, type CommentReplyReport, type CommentReport, type PostReport } from '@/types/apis/report';
 
 type ReportListState = {
-    report: {
-        reported: string;
-        type: ReportType;
-        typeId: string;
-    };
+    report: Omit<CommentReplyReport, 'details'> | Omit<CommentReport, 'details'> | Omit<PostReport, 'details'>;
 };
 
 export type ReportListProps = ReportListState;
@@ -26,11 +22,11 @@ const listItem = [
     ReportDetailsType.PRIVACY_EXPOSURE,
 ];
 
-export default function ReportListBottomSheet({ report: { reported, type, typeId } }: ReportListProps) {
+export default function ReportListBottomSheet({ report }: ReportListProps) {
     const { mutate } = useCreateReport();
 
     const handlerPressReport = (details: ReportDetailsType) => {
-        mutate({ type, details, reported, typeId });
+        mutate({ ...report, details });
     };
 
     return (

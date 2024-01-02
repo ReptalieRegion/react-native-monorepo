@@ -76,7 +76,7 @@ export default function UserDetailListPage({
                                 contents: post.contents,
                                 images: post.images,
                                 isMine: post.isMine,
-                                user: { id: post.user.id },
+                                user: { id: post.user.id, nickname },
                             },
                         })
                     }
@@ -101,6 +101,7 @@ export default function UserDetailListPage({
             updateOrCreateFollow,
             navigateComment,
             openPostOptionsMenuBottomSheet,
+            nickname,
             navigateImageThumbnail,
             handlePressLikeContents,
         ],

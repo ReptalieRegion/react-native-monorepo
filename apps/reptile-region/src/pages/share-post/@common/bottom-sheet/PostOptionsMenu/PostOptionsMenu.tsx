@@ -9,7 +9,6 @@ import useReportListBottomSheet from '../ReportList/useReportListBottomSheet';
 
 import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
 import useAlert from '@/components/overlay/Alert/useAlert';
-import { ReportType } from '@/types/apis/report';
 import type { ImageType } from '@/types/global/image';
 import type { SharePostListNavigationProp } from '@/types/routes/props/share-post/post-list';
 
@@ -21,6 +20,7 @@ type PostOptionsMenuState = {
         isMine: boolean;
         user: {
             id: string;
+            nickname: string;
         };
     };
 };
@@ -79,7 +79,12 @@ export default function PostOptionsMenu({ post }: PostOptionsMenuProps) {
                   onPress: async () => {
                       await bottomSheetClose();
                       openReportListBottomSheet({
-                          report: { type: ReportType.POST, typeId: post.id, reported: post.user.id },
+                          report: {
+                              type: '게시글',
+                              nickname: post.user.nickname,
+                              typeId: post.id,
+                              reported: post.user.id,
+                          },
                       });
                   },
               },

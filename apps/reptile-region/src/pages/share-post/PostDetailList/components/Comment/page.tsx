@@ -13,7 +13,6 @@ import Comment, { CommentTextEditor } from '@/components/share-post/organisms/Co
 import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
 import useReportListBottomSheet from '@/pages/share-post/@common/bottom-sheet/ReportList/useReportListBottomSheet';
 import usePostDetailNavigation from '@/pages/share-post/PostDetailList/hooks/usePostDetailNavigation';
-import { ReportType } from '@/types/apis/report';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 import type { PostDetailModalListScreenProps } from '@/types/routes/props/share-post/post-detail';
 
@@ -47,13 +46,16 @@ export default function SharePostDetailModalPage({
 
             const handleNavigateCommentReplyPage = () => {
                 navigateCommentReplyPage({
-                    comment: {
-                        contents,
-                        id: commentId,
-                        isMine,
-                        isModified,
-                        createdAt,
-                        user: { id: userId, nickname, profile },
+                    post: {
+                        id: postId,
+                        comment: {
+                            contents,
+                            id: commentId,
+                            isMine,
+                            isModified,
+                            createdAt,
+                            user: { id: userId, nickname, profile },
+                        },
                     },
                     isFocus: false,
                 });
@@ -75,8 +77,9 @@ export default function SharePostDetailModalPage({
                         onPressDeclarationButton={() =>
                             openReportListBottomSheet({
                                 report: {
+                                    type: '댓글',
+                                    postId,
                                     reported: userId,
-                                    type: ReportType.COMMENT,
                                     typeId: commentId,
                                 },
                             })
@@ -85,7 +88,7 @@ export default function SharePostDetailModalPage({
                 </View>
             );
         },
-        [deleteComment, navigateCommentReplyPage, navigateDetailPage, openReportListBottomSheet],
+        [deleteComment, navigateCommentReplyPage, navigateDetailPage, openReportListBottomSheet, postId],
     );
 
     const handleFetchNextPage = useCallback(

@@ -67,7 +67,9 @@ export default function MeDetailListModalPage({
                     onPressFollow={() => updateOrCreateFollow({ userId: post.user.id, isFollow: post.user.isFollow })}
                     onPressComment={() => navigateComment({ post: { id: postId } })}
                     onPressPostOptionsMenu={() =>
-                        openPostOptionsMenuBottomSheet({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
+                        openPostOptionsMenuBottomSheet({
+                            post: { id: postId, contents, images, isMine, user: { id: userId, nickname } },
+                        })
                     }
                     onPressProfile={() => navigateImageThumbnail({ user: { isFollow, nickname, profile } })}
                     onPressLikeContents={() => handlePressLikeContents({ post: { id: postId } })}

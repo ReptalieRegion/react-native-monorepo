@@ -11,7 +11,7 @@ const CommentReplyList = React.lazy(() => import('./page'));
 
 export default function CommentReplyPage(props: CommentReplyScreenProps) {
     return (
-        <Comment id={props.route.params.comment.id}>
+        <Comment id={props.route.params.post.comment.id}>
             <View style={styles.container}>
                 <Suspense fallback={<CommentReplySkeleton />}>
                     <CommentReplyList {...props} />

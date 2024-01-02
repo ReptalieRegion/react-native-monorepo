@@ -12,14 +12,19 @@ import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queri
 import { ListFooterLoading } from '@/components/@common/atoms';
 import CommentReplyItem from '@/components/share-post/organisms/Comment/components/CommentReplyItem';
 import useCommentNavigation from '@/pages/share-post/CommentList/@hooks/useCommentNavigation';
-import { ReportType } from '@/types/apis/report';
 import type { FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
 import type { CommentReplyScreenProps } from '@/types/routes/props/share-post/comment';
 
-export default function CommentReplyList({ route: { params } }: CommentReplyScreenProps) {
+export default function CommentReplyList({
+    route: {
+        params: {
+            post: { id: postId, comment },
+        },
+    },
+}: CommentReplyScreenProps) {
     const flashListRef = useRef<FlashList<FetchCommentReplyResponse>>(null);
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteCommentReply({
-        commentId: params.comment.id,
+        commentId: comment.id,
     });
 
     const { navigateDetailPage } = useCommentNavigation();
@@ -49,8 +54,9 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
                         onPressDeclarationButton={() =>
                             openReportListBottomSheet({
                                 report: {
+                                    type: '대댓글',
+                                    commentId: comment.id,
                                     reported: item.commentReply.user.id,
-                                    type: ReportType.REPLY,
                                     typeId: item.commentReply.id,
                                 },
                             })
@@ -61,20 +67,18 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
                 </View>
             );
         },
-        [navigateDetailPage, openReportListBottomSheet, deleteCommentReply, handlePressWriteButton],
+        [comment.id, navigateDetailPage, openReportListBottomSheet, deleteCommentReply, handlePressWriteButton],
     );
 
     const ListHeaderComponent = useCallback(() => {
         const {
-            comment: {
-                id: commentId,
-                contents,
-                isMine,
-                isModified,
-                createdAt,
-                user: { id: userId, nickname, profile },
-            },
-        } = params;
+            id: commentId,
+            contents,
+            isMine,
+            isModified,
+            createdAt,
+            user: { id: userId, nickname, profile },
+        } = comment;
 
         const handleNavigateDetailPage = () => {
             navigateDetailPage({ user: { isFollow: false, nickname, profile } });
@@ -95,8 +99,9 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
                 onPressDeclarationButton={() =>
                     openReportListBottomSheet({
                         report: {
+                            type: '댓글',
+                            postId,
                             reported: userId,
-                            type: ReportType.COMMENT,
                             typeId: commentId,
                         },
                     })
@@ -107,7 +112,7 @@ export default function CommentReplyList({ route: { params } }: CommentReplyScre
                 onPressWriteButton={() => handlePressWriteButton(nickname)}
             />
         );
-    }, [deleteComment, handlePressWriteButton, navigateDetailPage, openReportListBottomSheet, params]);
+    }, [postId, comment, navigateDetailPage, openReportListBottomSheet, deleteComment, handlePressWriteButton]);
 
     const onEndReached = useCallback(
         () => hasNextPage && !isFetchingNextPage && fetchNextPage(),

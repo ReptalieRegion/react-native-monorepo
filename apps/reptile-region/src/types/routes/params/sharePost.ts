@@ -11,16 +11,19 @@ type CommentParams = {
 
 // 대댓글 페이지
 type CommentReplyParams = {
-    comment: {
+    post: {
         id: string;
-        contents: string;
-        isMine: boolean;
-        isModified: boolean;
-        createdAt: string;
-        user: {
+        comment: {
             id: string;
-            profile: ImageType;
-            nickname: string;
+            contents: string;
+            isMine: boolean;
+            isModified: boolean;
+            createdAt: string;
+            user: {
+                id: string;
+                profile: ImageType;
+                nickname: string;
+            };
         };
     };
     isFocus: boolean;

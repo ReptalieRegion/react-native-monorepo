@@ -12,14 +12,19 @@ import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfin
 import { ListFooterLoading } from '@/components/@common/atoms';
 import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
 import useCommentNavigation from '@/pages/share-post/CommentList/@hooks/useCommentNavigation';
-import { ReportType } from '@/types/apis/report';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 import type { CommentScreenProps } from '@/types/routes/props/share-post/comment';
 
-export default function CommentList({ route: { params } }: CommentScreenProps) {
+export default function CommentList({
+    route: {
+        params: {
+            post: { id: postId },
+        },
+    },
+}: CommentScreenProps) {
     const flashListRef = useRef<FlashList<FetchCommentResponse>>(null);
     const [refreshing, setRefreshing] = useState<boolean>(false);
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteComment({ postId: params.post.id });
+    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteComment({ postId });
     const { deleteComment } = useCommentActions();
     const { navigateCommentReplyPage, navigateDetailPage } = useCommentNavigation();
     const openReportListBottomSheet = useReportListBottomSheet();
@@ -45,8 +50,9 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
                     onPressDeclarationButton={() =>
                         openReportListBottomSheet({
                             report: {
+                                type: '댓글',
+                                postId,
                                 reported: userId,
-                                type: ReportType.COMMENT,
                                 typeId: commentId,
                             },
                         })
@@ -54,26 +60,32 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
                     onPressDeleteButton={() => deleteComment(commentId)}
                     onPressWriteButton={() =>
                         navigateCommentReplyPage({
-                            comment: {
-                                id: commentId,
-                                contents,
-                                isMine,
-                                isModified,
-                                createdAt,
-                                user: { id: userId, nickname, profile },
+                            post: {
+                                id: '',
+                                comment: {
+                                    id: commentId,
+                                    contents,
+                                    isMine,
+                                    isModified,
+                                    createdAt,
+                                    user: { id: userId, nickname, profile },
+                                },
                             },
                             isFocus: true,
                         })
                     }
                     onPressShowCommentReplyButton={() =>
                         navigateCommentReplyPage({
-                            comment: {
-                                id: commentId,
-                                contents,
-                                isMine,
-                                isModified,
-                                createdAt,
-                                user: { id: userId, nickname, profile },
+                            post: {
+                                id: postId,
+                                comment: {
+                                    id: commentId,
+                                    contents,
+                                    isMine,
+                                    isModified,
+                                    createdAt,
+                                    user: { id: userId, nickname, profile },
+                                },
                             },
                             isFocus: false,
                         })
@@ -81,7 +93,7 @@ export default function CommentList({ route: { params } }: CommentScreenProps) {
                 />
             );
         },
-        [navigateDetailPage, openReportListBottomSheet, deleteComment, navigateCommentReplyPage],
+        [postId, navigateDetailPage, openReportListBottomSheet, deleteComment, navigateCommentReplyPage],
     );
 
     const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();

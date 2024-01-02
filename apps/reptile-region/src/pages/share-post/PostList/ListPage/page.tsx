@@ -83,7 +83,9 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
                     onPressFollow={() => updateOrCreateFollow({ userId, isFollow })}
                     onPressComment={() => navigateComment({ post: { id: postId } })}
                     onPressPostOptionsMenu={() =>
-                        openPostOptionsMenuBottomSheet({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
+                        openPostOptionsMenuBottomSheet({
+                            post: { id: postId, contents, images, isMine, user: { id: userId, nickname } },
+                        })
                     }
                     onPressProfile={() => navigateImageThumbnail({ user: { isFollow, nickname, profile } })}
                     onPressTag={handlePressTag}

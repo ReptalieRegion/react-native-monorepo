@@ -32,7 +32,9 @@ export default function Post({ postId }: { postId: string }) {
                 onDoublePressImageCarousel={() => onlyLike({ postId, isLike })}
                 onPressFollow={() => updateOrCreateFollow({ userId, isFollow })}
                 onPressPostOptionsMenu={() =>
-                    openPostOptionsMenuBottomSheet({ post: { id: postId, contents, images, isMine, user: { id: userId } } })
+                    openPostOptionsMenuBottomSheet({
+                        post: { id: postId, contents, images, isMine, user: { id: userId, nickname } },
+                    })
                 }
                 onPressProfile={() => navigateImageThumbnail({ user: { isFollow, nickname, profile } })}
                 onPressComment={() => navigateComment({ post: { id: postId } })}
