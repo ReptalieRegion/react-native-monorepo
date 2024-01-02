@@ -92,7 +92,6 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         if (isShowWeek) {
             applyContext.calendarTranslateY.value = calendarGoalTranslateY;
             applyContext.listTranslateY.value = listMinTranslateY;
-            startContext.weekPageIndex.value = -1;
             applyContext.weekCalendarTranslateY.value = withTiming(0);
             applyContext.listHeight.value = startContext.layoutHeight.value - headerHeight - dayHeight;
         } else {
@@ -128,20 +127,20 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         applyContext.calendarOpacity.value = 1;
         runOnJS(handleScrollToIndex)();
     }, [
+        applyContext.listHeight,
         applyContext.weekCalendarZIndex,
         applyContext.calendarZIndex,
         applyContext.listTranslateY,
         applyContext.calendarTranslateY,
         applyContext.weekCalendarTranslateY,
         applyContext.calendarOpacity,
-        applyContext.listHeight,
-        listGoalTranslateY,
-        weekCalendarGoalTranslateY,
+        startContext.layoutHeight.value,
         startContext.changeWeekCalendarGoalTranslateY,
         startContext.weekPageIndex,
-        startContext.layoutHeight,
         headerHeight,
         calendarHeight,
+        listGoalTranslateY,
+        weekCalendarGoalTranslateY,
         handleScrollToIndex,
     ]);
 
@@ -156,7 +155,6 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
                 applyContext.calendarZIndex.value = 0;
             }
         });
-
         applyContext.calendarTranslateY.value = withTiming(
             startContext.weekPageIndex.value === -1 ? calendarGoalTranslateY : -dayHeight * startContext.weekPageIndex.value,
         );
@@ -173,8 +171,8 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         dayHeight,
         headerHeight,
         listMinTranslateY,
-        startContext.layoutHeight,
-        startContext.weekPageIndex,
+        startContext.layoutHeight.value,
+        startContext.weekPageIndex.value,
     ]);
 
     // 캘린더 제스쳐
@@ -199,6 +197,7 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
                     ),
                     0,
                 );
+                console.log(startContext.changeWeekCalendarGoalTranslateY.value);
                 applyContext.calendarTranslateY.value = Math.max(
                     Math.min(startContext.calendarTranslateY.value + event.translationY * upSpeedPercent, 0),
                     startContext.weekPageIndex.value === -1
@@ -268,13 +267,10 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
 
             if (applyContext.weekCalendarZIndex.value === 1) {
                 applyContext.calendarTranslateY.value = -dayHeight * weekPageIndex;
-            } else {
-                applyContext.weekCalendarTranslateY.value = dayHeight * weekPageIndex;
             }
         },
         [
             applyContext.calendarTranslateY,
-            applyContext.weekCalendarTranslateY,
             applyContext.weekCalendarZIndex.value,
             dayHeight,
             startContext.changeWeekCalendarGoalTranslateY,
