@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { MAX_SELECT_COUNT } from '../constants/image';
+import { MAX_SELECT_COUNT } from '../@common/constants';
 
 import CameraAlbumActions from './components/CameraAlbumActions';
 import PhotoEditorView from './components/PhotoEditorView';

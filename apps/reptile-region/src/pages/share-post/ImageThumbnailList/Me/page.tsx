@@ -1,14 +1,13 @@
-import { color } from '@crawl/design-system';
 import React, { Suspense } from 'react';
-import { StyleSheet, View } from 'react-native';
 
 import SharePostsDetailListSkeleton from '../loading';
 
-import ListHeaderComponent from './ListHeaderComponent';
+import ListHeaderComponent from './components/ListHeaderComponent';
 
-import useMeImageThumbnailNavigation from '@/pages/share-post/ImageThumbnailList/Me/@hooks/useMeImageThumbnailNavigation';
+import PageWrapper from '@/components/PageWrapper';
+import useMeImageThumbnailNavigation from '@/pages/share-post/ImageThumbnailList/Me/hooks/useMeImageThumbnailNavigation';
 
-const PostImageList = React.lazy(() => import('./PostImageList'));
+const PostImageList = React.lazy(() => import('./components/PostImageList'));
 
 export default function SharePostMeImageThumbnailListPage() {
     const { navigateFollowerPage, navigateListUser } = useMeImageThumbnailNavigation();
@@ -18,11 +17,11 @@ export default function SharePostMeImageThumbnailListPage() {
     };
 
     return (
-        <View style={styles.container}>
+        <PageWrapper>
             <Suspense
                 fallback={
                     <>
-                        {<ListHeaderComponent navigateFollowerPage={navigateFollowerPage} />}
+                        <ListHeaderComponent navigateFollowerPage={navigateFollowerPage} />
                         <SharePostsDetailListSkeleton />
                     </>
                 }
@@ -33,13 +32,6 @@ export default function SharePostMeImageThumbnailListPage() {
                     handleImagePress={handleImagePress}
                 />
             </Suspense>
-        </View>
+        </PageWrapper>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White.toString(),
-    },
-});

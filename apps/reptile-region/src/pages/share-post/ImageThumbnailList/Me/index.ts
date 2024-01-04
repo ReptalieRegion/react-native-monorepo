@@ -1,2 +1,2 @@
-export { default as SharePostMeImageThumbnailList } from './async-page';
 export { SharePostMeImageThumbnailListHeader } from './header';
+export { default as SharePostMeImageThumbnailList } from './page';

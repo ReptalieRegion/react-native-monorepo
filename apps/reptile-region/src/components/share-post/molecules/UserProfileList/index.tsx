@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
-import Follow from '@/components/share-post/atoms/Follow';
+import Follow from '@/pages/share-post/@common/components/Follow';
 import type { FetchFollowerListResponse } from '@/types/apis/share-post/user';
 import type { ImageType } from '@/types/global/image';
 import type { ImageThumbnailParams } from '@/types/routes/params/sharePost';

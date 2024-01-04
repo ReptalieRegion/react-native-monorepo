@@ -6,7 +6,7 @@ import useOtherUserPostListActions from './OtherUser/hooks/useOtherUserPostListA
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import Follow from '@/components/share-post/atoms/Follow';
+import Follow from '@/pages/share-post/@common/components/Follow';
 
 type ChangeHeaderProps = {
     nickname: string;

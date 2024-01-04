@@ -6,8 +6,8 @@ import React, { useEffect } from 'react';
 import { ActivityIndicator, Image, StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
-import { useCreatePostActions } from '../../context/useCreatePostActions';
-import useCreatePostState from '../../context/useCreatePostState';
+import { useCreatePostActions } from '../../@common/context/useCreatePostActions';
+import useCreatePostState from '../../@common/context/useCreatePostState';
 
 import Title from './Title';
 

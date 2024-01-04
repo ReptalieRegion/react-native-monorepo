@@ -3,12 +3,11 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
-import Follow from '@/components/share-post/atoms/Follow';
-import type {
-    ActivitySummaryItemActions,
-    ActivitySummaryItemProps,
+import UserActivitySummaryItem, {
+    type ActivitySummaryItemActions,
+    type ActivitySummaryItemProps,
 } from '@/components/share-post/molecules/UserActivitySummaryItem';
-import UserActivitySummaryItem from '@/components/share-post/molecules/UserActivitySummaryItem';
+import Follow from '@/pages/share-post/@common/components/Follow';
 import type { ImageType } from '@/types/global/image';
 import type { FollowRouterParams } from '@/types/routes/params/sharePost';
 

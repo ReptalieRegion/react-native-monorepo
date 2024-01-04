@@ -2,7 +2,7 @@ import { useCameraAlbumHandler } from '@crawl/camera-album';
 import { useCallback } from 'react';
 import { openPhotoPicker } from 'react-native-permissions';
 
-import { useCreatePostActions } from '../../context/useCreatePostActions';
+import { useCreatePostActions } from '../../@common/context/useCreatePostActions';
 
 import useToast from '@/components/overlay/Toast/useToast';
 import useImagePicker from '@/hooks/useImagePicker';

@@ -2,7 +2,7 @@ import { TouchableTypo } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import Follow from '../../atoms/Follow';
+import Follow from '../../../../pages/share-post/@common/components/Follow';
 
 import { KebabMenu } from '@/assets/icons';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';

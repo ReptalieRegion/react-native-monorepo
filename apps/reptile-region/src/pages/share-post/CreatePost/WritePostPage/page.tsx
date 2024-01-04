@@ -1,19 +1,23 @@
 import { Typo } from '@crawl/design-system';
-import React, { Suspense, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, Keyboard, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import useCreatePostState from '../context/useCreatePostState';
+import useCreatePostState from '../@common/context/useCreatePostState';
 
-import { PhotoRegisterCarousel } from './@components';
-import ContentsWriting from './@components/ContentWriting';
-import useCreatePost from './@hooks/mutations/useCreatePost';
+import { PhotoRegisterCarousel } from './components';
+import ContentsWriting from './components/ContentWriting';
+import useCreatePost from './hooks/mutations/useCreatePost';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import PageWrapper from '@/components/PageWrapper';
 import withPageHeaderUpdate from '@/components/withPageHeaderUpdate';
-import { FollowerUserList, FollowerUserListSkeleton, useTag } from '@/pages/share-post/@common/contexts/TagTextInput';
+import { useTag } from '@/pages/share-post/@common/contexts/TagTextInput';
 import type { WritePostScreenProps } from '@/types/routes/props/share-post/create-post';
+
+const FollowerUserList = React.lazy(
+    () => import('@/pages/share-post/@common/contexts/TagTextInput/components/FollowerUserList'),
+);
 
 const WritePostPage = withPageHeaderUpdate<WritePostScreenProps>(
     () => {
@@ -21,9 +25,7 @@ const WritePostPage = withPageHeaderUpdate<WritePostScreenProps>(
             <PageWrapper style={styles.wrapper}>
                 <ContentsWriting />
                 <View style={styles.relative}>
-                    <Suspense fallback={<FollowerUserListSkeleton />}>
-                        <FollowerUserList containerStyles={styles.followerUserListContainer} />
-                    </Suspense>
+                    <FollowerUserList containerStyles={styles.followerUserListContainer} />
                     <PhotoRegisterCarousel />
                 </View>
             </PageWrapper>

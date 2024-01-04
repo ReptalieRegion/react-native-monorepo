@@ -2,10 +2,9 @@ import { TouchableTypo, Typo } from '@crawl/design-system';
 import React, { useRef, useState } from 'react';
 import type { NativeSyntheticEvent, TextLayoutEventData } from 'react-native';
 
-import type { TagActions } from '../../atoms/Tag';
-import Tag from '../../atoms/Tag';
-
 import { ConditionalRenderer } from '@/components/@common/atoms';
+import type { TagActions } from '@/pages/share-post/@common/components/Tag';
+import Tag from '@/pages/share-post/@common/components/Tag';
 
 type TaggedContentProps = {
     uuid: string;

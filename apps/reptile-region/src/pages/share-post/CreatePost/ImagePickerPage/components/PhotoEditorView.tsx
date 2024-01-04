@@ -3,8 +3,8 @@ import { ImageCrop } from '@crawl/image-crop';
 import React, { useRef } from 'react';
 import { View } from 'react-native';
 
-import { useCreatePostActions } from '../../context/useCreatePostActions';
-import useCreatePostState from '../../context/useCreatePostState';
+import { useCreatePostActions } from '../../@common/context/useCreatePostActions';
+import useCreatePostState from '../../@common/context/useCreatePostState';
 
 export default function PhotoEditorView(props: { size: { width: number; height: number } }) {
     const {

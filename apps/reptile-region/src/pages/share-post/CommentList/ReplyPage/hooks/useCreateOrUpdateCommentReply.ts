@@ -9,7 +9,7 @@ import useComment from '@/pages/share-post/@common/contexts/Comment/hooks/useCom
 export default function useCreateOrUpdateCommentReply(postId: string) {
     const { id, submitType } = useComment();
     const createCommentReplyAPI = useCreateCommentReply(postId);
-    const updateCommentReplyAPI = useUpdateCommentReply(postId);
+    const updateCommentReplyAPI = useUpdateCommentReply();
 
     const { requireAuthNavigation } = useAuthNavigation();
 

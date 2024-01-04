@@ -2,7 +2,7 @@ import { useCameraAlbum, useCameraAlbumHandler } from '@crawl/camera-album';
 import { cropImage } from '@crawl/image-crop';
 import { useEffect } from 'react';
 
-import useCreatePostState from '../../context/useCreatePostState';
+import useCreatePostState from '../../@common/context/useCreatePostState';
 
 export default function useWritePostActions() {
     const { deletePhoto } = useCameraAlbumHandler();

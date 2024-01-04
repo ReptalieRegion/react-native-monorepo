@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 import type { WithTimingConfig } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated';
 
 import useHeartAnimation from '../../hooks/useHeartAnimation';
 
-import LikeIcon from '@/components/share-post/atoms/Like';
+import LikeIcon from '@/pages/share-post/@common/components/Like';
 
 type InteractiveHeartState = {
     isLike: boolean | undefined;

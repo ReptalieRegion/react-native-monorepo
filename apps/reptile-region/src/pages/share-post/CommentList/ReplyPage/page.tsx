@@ -4,7 +4,6 @@ import React, { Suspense } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import CommentProvider from '../../@common/contexts/Comment/CommentProvider';
-import { FollowerUserList } from '../../@common/contexts/TagTextInput';
 
 import CommentReplyTextEditor from './components/CommentReplyTextEditor';
 import CommentReplySkeleton from './loading';
@@ -12,6 +11,7 @@ import CommentReplySkeleton from './loading';
 import HTTPError from '@/apis/@utils/error/HTTPError';
 import type { CommentReplyScreenProps } from '@/types/routes/props/share-post/comment';
 
+const FollowerUserList = React.lazy(() => import('../../@common/contexts/TagTextInput/components/FollowerUserList'));
 const CommentReplyList = React.lazy(() => import('./components/CommentReplyList'));
 
 const CommentReplyListPage = withErrorBoundary<CommentReplyScreenProps>(
@@ -29,7 +29,7 @@ const CommentReplyListPage = withErrorBoundary<CommentReplyScreenProps>(
         );
     },
     {
-        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== -1001,
+        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== -2302,
         renderFallback: () => <Typo>삭제된 댓글입니다</Typo>,
     },
 );

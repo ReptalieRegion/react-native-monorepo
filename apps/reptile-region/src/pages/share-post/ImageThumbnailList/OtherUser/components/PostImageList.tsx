@@ -2,8 +2,8 @@ import React, { useMemo } from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { LIST_HEADER_HEIGHT, LIST_HEADER_PADDING } from '../constants';
-import ImageThumbnailEmptyList from '../empty-list';
+import { LIST_HEADER_HEIGHT, LIST_HEADER_PADDING } from '../../@common/constants';
+import ImageThumbnailEmptyList from '../../empty-list';
 
 import useInfiniteUserPosts from '@/apis/share-post/post/hooks/queries/useInfiniteUserPosts';
 import { ListFooterLoading } from '@/components/@common/atoms';

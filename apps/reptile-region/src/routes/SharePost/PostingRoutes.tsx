@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import CreatePostProvider from '@/pages/share-post/CreatePost/context/Provider';
+import CreatePostProvider from '@/pages/share-post/CreatePost/@common/context/Provider';
 import { SharePostImagePickerHeader, SharePostImagePickerPage } from '@/pages/share-post/CreatePost/ImagePickerPage';
 import { SharePostWritePostHeader, SharePostWritePostPage } from '@/pages/share-post/CreatePost/WritePostPage';
 import type { PostingParamList } from '@/types/routes/param-list/sharePost';
