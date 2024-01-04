@@ -4,7 +4,7 @@ import ChangeHeader from './header';
 
 import useToast from '@/components/overlay/Toast/useToast';
 import PageWrapper from '@/components/PageWrapper';
-import PostUpdate from '@/components/share-post/organisms/PostUpdate/providers/PostUpdate';
+import PostUpdate from '@/pages/share-post/UpdatePost/context/providers/PostUpdate';
 import type { SharePostUpdateScreen } from '@/types/routes/props/share-post/update-post';
 
 export default function SharePostUpdatePage({

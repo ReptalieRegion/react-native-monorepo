@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import useUpdatePost from '@/apis/share-post/post/hooks/mutations/useUpdatePost';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import { usePostUpdate } from '@/components/share-post/organisms/PostUpdate';
+import { usePostUpdate } from '@/pages/share-post/UpdatePost/context';
 import type { SharePostUpdateNavigationProp } from '@/types/routes/props/share-post/update-post';
 
 type ChangeHeaderProps = {
