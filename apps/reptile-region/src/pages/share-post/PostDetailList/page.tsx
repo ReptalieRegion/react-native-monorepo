@@ -43,7 +43,7 @@ const PostDetailModalListPage = withAsyncBoundary(
             </>
         ),
         rejectedFallback: PostDetailError,
-        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== -1000,
+        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== -2301,
     },
 );
 

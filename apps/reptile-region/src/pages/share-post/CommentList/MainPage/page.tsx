@@ -10,8 +10,11 @@ import CommentTextEditor from './components/CommentTextEditor';
 import CommentSkeleton from './loading';
 
 import HTTPError from '@/apis/@utils/error/HTTPError';
-import { FollowerUserList } from '@/pages/share-post/@common/contexts/TagTextInput';
 import type { CommentScreenProps } from '@/types/routes/props/share-post/comment';
+
+const FollowerUserList = React.lazy(
+    () => import('@/pages/share-post/@common/contexts/TagTextInput/components/FollowerUserList'),
+);
 
 const CommentListPage = withErrorBoundary<CommentScreenProps>(
     (props) => {

@@ -20,22 +20,26 @@ type FollowerUserListProps = {
 };
 
 export default function FollowerUserList(props: FollowerUserListProps) {
+    const { keyword, enabled } = useTagSearch();
+
     return (
-        <Suspense fallback={<FollowerUserListSkeleton />}>
-            <FollowerUserListInner {...props} />
-        </Suspense>
+        <ConditionalRenderer
+            condition={enabled}
+            trueContent={
+                <Suspense fallback={<FollowerUserListSkeleton />}>
+                    <FollowerUserListInner {...props} keyword={keyword} />
+                </Suspense>
+            }
+        />
     );
 }
 
-function FollowerUserListInner({ containerStyles }: FollowerUserListProps) {
-    const { keyword, enabled } = useTagSearch();
+function FollowerUserListInner({ keyword, containerStyles }: FollowerUserListProps & { keyword: string }) {
     const { handleSelectTag } = useTagHandler();
 
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
         search: keyword.slice(1),
     });
-
-    const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
 
     const keyExtractor = useCallback((item: FetchFollowerSearchResponse) => item.user.id, []);
 
@@ -66,11 +70,11 @@ function FollowerUserListInner({ containerStyles }: FollowerUserListProps) {
 
     return (
         <ConditionalRenderer
-            condition={enabled && !!newData && newData?.length !== 0}
+            condition={!!data && data?.length !== 0}
             trueContent={
                 <View style={wrapperStyle}>
                     <FlashList
-                        data={newData}
+                        data={data}
                         keyExtractor={keyExtractor}
                         renderItem={renderItem}
                         ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}

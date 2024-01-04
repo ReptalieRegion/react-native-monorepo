@@ -5,6 +5,7 @@ import { deleteComment } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import useToast from '@/components/overlay/Toast/useToast';
 import type { DeleteComment, FetchComment } from '@/types/apis/share-post/comment';
 import type { FetchPosts } from '@/types/apis/share-post/post';
 
@@ -12,10 +13,11 @@ import type { FetchPosts } from '@/types/apis/share-post/post';
 export default function useBaseDeleteComment(
     props?: Pick<
         UseMutationOptions<DeleteComment['Response'], HTTPError, DeleteComment['Request']>,
-        'onMutate' | 'onSettled' | 'onSuccess'
+        'onMutate' | 'onSettled' | 'onSuccess' | 'onError'
     >,
 ) {
     const queryClient = useQueryClient();
+    const openToast = useToast();
 
     return useMutation<DeleteComment['Response'], HTTPError, DeleteComment['Request']>({
         mutationFn: ({ commentId }) => deleteComment({ commentId }),
@@ -24,6 +26,9 @@ export default function useBaseDeleteComment(
             deleteCommentCache({ queryClient, data });
             updateSharePostListCache({ queryClient, data });
             props?.onSuccess?.(data, variables, context);
+        },
+        onError: () => {
+            openToast({ contents: '댓글 삭제에 실패했어요', severity: 'error' });
         },
     });
 }
