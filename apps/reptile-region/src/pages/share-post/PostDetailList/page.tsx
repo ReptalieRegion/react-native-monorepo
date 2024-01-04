@@ -10,7 +10,7 @@ import HTTPError from '@/apis/@utils/error/HTTPError';
 import type { PostDetailModalListScreenProps, PostDetailRouteProp } from '@/types/routes/props/share-post/post-detail';
 
 const Post = React.lazy(() => import('./components/Post/page'));
-const Comment = React.lazy(() => import('@/components/share-post/organisms/Comment'));
+const CommentProvider = React.lazy(() => import('@/pages/share-post/@common/contexts/Comment/CommentProvider'));
 const SharePostDetailModalPage = React.lazy(() => import('./components/Comment/page'));
 
 const ListHeaderComponent = () => {
@@ -30,9 +30,9 @@ const PostDetailModalListPage = withAsyncBoundary(
         const postId = props.route.params.postId;
 
         return (
-            <Comment id={postId}>
+            <CommentProvider id={postId}>
                 <SharePostDetailModalPage {...props} ListHeaderComponent={<ListHeaderComponent />} />
-            </Comment>
+            </CommentProvider>
         );
     },
     {

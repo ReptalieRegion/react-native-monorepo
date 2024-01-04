@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { ImageStateContext } from '../contexts/ImageContext';
 
-import { useTag } from '@/components/@common/organisms/TagTextInput';
+import { useTag } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 const usePostUpdate = () => {
     const { contents } = useTag();

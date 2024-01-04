@@ -7,9 +7,10 @@ import React, {
     type ComponentType,
 } from 'react';
 
-import { ErrorBoundaryGroupContext } from '../../contexts/ErrorBoundaryGroupContext';
-import type { ComponentPropsWithoutChildren } from '../../types';
-import BaseErrorBoundary from '../BaseErrorBoundary/BaseErrorBoundary';
+import { ErrorBoundaryGroupContext } from '../contexts/ErrorBoundaryGroupContext';
+import type { ComponentPropsWithoutChildren } from '../types';
+
+import BaseErrorBoundary from './BaseErrorBoundary';
 
 type ErrorBoundaryProps = {
     reset(): void;

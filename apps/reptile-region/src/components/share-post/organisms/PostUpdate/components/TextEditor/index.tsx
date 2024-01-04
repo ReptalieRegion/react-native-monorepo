@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
-import { TagTextInput, useTag } from '@/components/@common/organisms/TagTextInput';
+import { TagTextInput, useTag } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 export default function TextEditor() {
     const { contents } = useTag();

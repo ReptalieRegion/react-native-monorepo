@@ -5,7 +5,7 @@ import { CreatePostActionsContext, CreatePostStateContext } from './context';
 import createPostReducer from './reducer';
 import type { CreatePostState } from './type';
 
-import { TagProvider } from '@/components/@common/organisms/TagTextInput';
+import { TagProvider } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 const initialState: CreatePostState = {
     croppedImage: [],

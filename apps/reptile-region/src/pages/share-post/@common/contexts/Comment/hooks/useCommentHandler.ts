@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import type { CommentState } from '../contexts/CommentContext';
-import { CommentActionContext, CommentDefaultIdState } from '../contexts/CommentContext';
+import { CommentActionContext, CommentDefaultIdState } from '../CommentContext';
+import type { CommentState } from '../types';
 
-const useCommentActions = () => {
+export default function useCommentHandler() {
     const defaultId = useContext(CommentDefaultIdState);
     const dispatch = useContext(CommentActionContext);
 
@@ -24,6 +24,4 @@ const useCommentActions = () => {
     };
 
     return { changeCommentSubmitType, setCreateCommentSubmitType };
-};
-
-export default useCommentActions;
+}

@@ -10,8 +10,8 @@ import useCommentReplyActions from './hooks/useCommentReplyActions';
 
 import useInfiniteCommentReply from '@/apis/share-post/comment-reply/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
-import CommentReplyItem from '@/components/share-post/organisms/Comment/components/CommentReplyItem';
-import useCommentNavigation from '@/pages/share-post/CommentList/@hooks/useCommentNavigation';
+import useCommentNavigation from '@/pages/share-post/CommentList/@common/hooks/useCommentNavigation';
+import CommentReplyItem from '@/pages/share-post/CommentList/ReplyPage/components/CommentReplyItem';
 import type { FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
 import type { CommentReplyScreenProps } from '@/types/routes/props/share-post/comment';
 

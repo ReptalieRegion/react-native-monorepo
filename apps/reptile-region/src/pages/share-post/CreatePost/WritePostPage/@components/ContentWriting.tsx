@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import Title from './Title';
 
-import { TagTextInput, useTag } from '@/components/@common/organisms/TagTextInput';
+import { TagTextInput, useTag } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 const POST_MAX_CONTENT_LENGTH = 300;
 

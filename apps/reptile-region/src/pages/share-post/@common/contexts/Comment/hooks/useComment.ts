@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { CommentStateContext } from '../contexts/CommentContext';
+import { CommentStateContext } from '../CommentContext';
 
 const useComment = () => {
     const state = useContext(CommentStateContext);

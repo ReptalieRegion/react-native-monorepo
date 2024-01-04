@@ -14,8 +14,8 @@ import useCalendarListActions from './hooks/useCalendarListActions';
 import { PostWriteIcon } from '@/assets/icons';
 import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
-import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
+import FloatingActionButtonGroup from '@/components/@common/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
+import FloatingActionButtons from '@/components/@common/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 
 export default function ExpandableCalendarScreen() {
     const openActionMenuBottomSheet = useOverlayActionMenuBottomSheet();

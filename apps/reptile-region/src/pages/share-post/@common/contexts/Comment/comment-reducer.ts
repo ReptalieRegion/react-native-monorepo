@@ -1,4 +1,4 @@
-import type { CommentActions, CommentState } from '../contexts/CommentContext';
+import type { CommentActions, CommentState } from './types';
 
 const commentReducer = (state: CommentState, actions: CommentActions): CommentState => {
     switch (actions.type) {

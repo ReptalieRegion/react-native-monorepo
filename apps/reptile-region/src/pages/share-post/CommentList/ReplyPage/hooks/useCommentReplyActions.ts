@@ -4,8 +4,8 @@ import { useCallback, useMemo } from 'react';
 import useBaseDeleteComment from '@/apis/share-post/comment/hooks/mutations/useBaseDeleteComment';
 import useDeleteCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useDeleteCommentReply';
 import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
-import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
 import useAlert from '@/components/overlay/Alert/useAlert';
+import { useTagHandler } from '@/pages/share-post/@common/contexts/TagTextInput';
 import type { CommentReplyNavigationProp } from '@/types/routes/props/share-post/comment';
 
 export default function useCommentReplyActions() {

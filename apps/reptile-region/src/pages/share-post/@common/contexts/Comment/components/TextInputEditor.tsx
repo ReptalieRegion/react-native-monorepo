@@ -3,13 +3,13 @@ import React, { useEffect } from 'react';
 import { ActivityIndicator, Keyboard, Platform, StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 
-import type { SubmitType } from '../../contexts/CommentContext';
-import useComment from '../../hooks/useComment';
-import useCommentActions from '../../hooks/useCommentActions';
+import useComment from '../hooks/useComment';
+import useCommentActions from '../hooks/useCommentHandler';
+import type { SubmitType } from '../types';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
-import { TagTextInput, useTag, useTagHandler } from '@/components/@common/organisms/TagTextInput';
 import useAlert from '@/components/overlay/Alert/useAlert';
+import { TagTextInput, useTag, useTagHandler } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 export type CommentTextInputProps = {
     maxLength: number;
@@ -51,7 +51,7 @@ export default function CommentTextInputEditor({
             }),
         });
 
-        const keyboard = Keyboard.addListener('keyboardDidHide', () => {
+        const keyboardHide = Keyboard.addListener('keyboardDidHide', () => {
             if (submitType === 'UPDATE') {
                 openAlert({
                     contents: '수정사항을 삭제할까요?',
@@ -71,7 +71,7 @@ export default function CommentTextInputEditor({
         });
 
         return () => {
-            keyboard.remove();
+            keyboardHide.remove();
             keyboardShow?.remove();
         };
     }, [submitType, paddingBottom, setCreateCommentSubmitType, tagTextInputFocus, changeText, openAlert]);

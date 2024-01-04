@@ -1,18 +1,17 @@
 import type { ReactNode } from 'react';
 import React, { useReducer } from 'react';
 
-import CommentTextInputEditor from '../components/TextInputEditor';
-import { CommentActionContext, CommentDefaultIdState, CommentStateContext } from '../contexts/CommentContext';
-import commentReducer from '../reducer/comment-reducer';
+import commentReducer from './comment-reducer';
+import { CommentActionContext, CommentDefaultIdState, CommentStateContext } from './CommentContext';
 
-import { TagProvider } from '@/components/@common/organisms/TagTextInput';
+import { TagProvider } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 type CommentProps = {
     id: string;
     children: ReactNode;
 };
 
-export default function Comment({ id, children }: CommentProps) {
+export default function CommentProvider({ id, children }: CommentProps) {
     const [state, dispatch] = useReducer(commentReducer, { id, submitType: 'CREATE' });
 
     return (
@@ -25,5 +24,3 @@ export default function Comment({ id, children }: CommentProps) {
         </CommentDefaultIdState.Provider>
     );
 }
-
-Comment.TextInputEditor = CommentTextInputEditor;

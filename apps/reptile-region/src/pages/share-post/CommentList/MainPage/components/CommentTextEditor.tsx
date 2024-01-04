@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
 import { Keyboard } from 'react-native';
 
-import useCommentActions from '../../hooks/useCommentActions';
-import type { CommentTextInputActions } from '../TextInputEditor';
-import TextInputEditor from '../TextInputEditor';
+import type { CommentTextInputActions } from '../../../@common/contexts/Comment/components/TextInputEditor';
+import TextInputEditor from '../../../@common/contexts/Comment/components/TextInputEditor';
+import useCommentActions from '../../../@common/contexts/Comment/hooks/useCommentHandler';
 
-import useCreateComment from '@/apis/share-post/comment/hooks/mutations/useCreateComment';
+import useCreateComment from '@/apis/share-post/comment/hooks/mutations/useBaseCreateComment';
 import useUpdateComment from '@/apis/share-post/comment/hooks/mutations/useUpdateComment';
-import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
 import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
+import { useTagHandler } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 export default function CommentTextEditor() {
     const { changeText } = useTagHandler();
@@ -18,13 +18,14 @@ export default function CommentTextEditor() {
         changeText('');
     };
     const createMutate = useCreateComment({ onSuccess: handleSuccess });
-    const { requireAuthNavigation } = useAuthNavigation();
     const updateMutate = useUpdateComment({
         onSuccess: () => {
             setCreateCommentSubmitType();
             handleSuccess();
         },
     });
+
+    const { requireAuthNavigation } = useAuthNavigation();
 
     const handleSubmit: CommentTextInputActions['onSubmit'] = useCallback(
         ({ id, submitType, contents }) => {

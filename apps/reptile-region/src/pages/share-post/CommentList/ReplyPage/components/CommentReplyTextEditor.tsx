@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
 import { Keyboard } from 'react-native';
 
-import useCommentActions from '../../hooks/useCommentActions';
-import type { CommentTextInputActions } from '../TextInputEditor';
-import TextInputEditor from '../TextInputEditor';
+import TextInputEditor, { type CommentTextInputActions } from '../../../@common/contexts/Comment/components/TextInputEditor';
+import useCommentActions from '../../../@common/contexts/Comment/hooks/useCommentHandler';
 
 import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
 import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useUpdateCommentReply';
-import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
 import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
+import { useTagHandler } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 type CommentReplyTextEditorProps = {
     isFocus: boolean;

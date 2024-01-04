@@ -1,4 +1,4 @@
-import useFloatingHandler from '@/components/share-post/organisms/FloatingActionButtons/hooks/useFloatingHandler';
+import useFloatingHandler from '@/components/@common/organisms/FloatingActionButtons/hooks/useFloatingHandler';
 import useFlashListScroll from '@/hooks/useFlashListScroll';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 

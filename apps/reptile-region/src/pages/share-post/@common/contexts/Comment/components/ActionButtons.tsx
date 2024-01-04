@@ -2,9 +2,9 @@ import { TouchableTypo } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import useCommentActions from '../../hooks/useCommentActions';
+import useCommentActions from '../hooks/useCommentHandler';
 
-import { useTagHandler } from '@/components/@common/organisms/TagTextInput';
+import { useTagHandler } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 type ActionButton = {
     label: string;

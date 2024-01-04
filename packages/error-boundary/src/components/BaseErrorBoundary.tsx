@@ -2,7 +2,7 @@ import { isDifferentArray } from '@crawl/utils';
 import type { ErrorInfo, PropsWithChildren, PropsWithRef } from 'react';
 import React from 'react';
 
-import type { IgnoreErrorType, RenderFallbackType } from '../../types';
+import type { IgnoreErrorType, RenderFallbackType } from '../types';
 
 type Props<ErrorType extends Error = Error> = {
     resetKeys?: unknown[];

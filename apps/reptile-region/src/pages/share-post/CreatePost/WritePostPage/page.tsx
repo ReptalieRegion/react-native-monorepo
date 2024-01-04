@@ -10,9 +10,9 @@ import ContentsWriting from './@components/ContentWriting';
 import useCreatePost from './@hooks/mutations/useCreatePost';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
-import { FollowerUserList, FollowerUserListSkeleton, useTag } from '@/components/@common/organisms/TagTextInput';
 import PageWrapper from '@/components/PageWrapper';
 import withPageHeaderUpdate from '@/components/withPageHeaderUpdate';
+import { FollowerUserList, FollowerUserListSkeleton, useTag } from '@/pages/share-post/@common/contexts/TagTextInput';
 import type { WritePostScreenProps } from '@/types/routes/props/share-post/create-post';
 
 const WritePostPage = withPageHeaderUpdate<WritePostScreenProps>(

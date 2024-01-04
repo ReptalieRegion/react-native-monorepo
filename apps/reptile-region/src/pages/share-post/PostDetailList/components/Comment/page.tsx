@@ -9,9 +9,10 @@ import usePostDetailCommentActions from '../../hooks/usePostDetailCommentActions
 
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
-import Comment, { CommentTextEditor } from '@/components/share-post/organisms/Comment';
-import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
 import useReportListBottomSheet from '@/pages/share-post/@common/bottom-sheet/ReportList/useReportListBottomSheet';
+import CommentProvider from '@/pages/share-post/@common/contexts/Comment/CommentProvider';
+import CommentItem from '@/pages/share-post/CommentList/MainPage/components/CommentItem';
+import CommentTextEditor from '@/pages/share-post/CommentList/MainPage/components/CommentTextEditor';
 import usePostDetailNavigation from '@/pages/share-post/PostDetailList/hooks/usePostDetailNavigation';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 import type { PostDetailModalListScreenProps } from '@/types/routes/props/share-post/post-detail';
@@ -103,7 +104,7 @@ export default function SharePostDetailModalPage({
     }));
 
     return (
-        <Comment id={postId}>
+        <CommentProvider id={postId}>
             <Animated.View style={[styles.container, animatedKeyboard]}>
                 <FlashList
                     data={comments}
@@ -116,7 +117,7 @@ export default function SharePostDetailModalPage({
                 />
                 <CommentTextEditor />
             </Animated.View>
-        </Comment>
+        </CommentProvider>
     );
 }
 

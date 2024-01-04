@@ -3,39 +3,34 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import type { CommentActionButtonsAction } from '../ActionButtons';
-import CommentActionButtons from '../ActionButtons';
+import type { CommentActionButtonsAction } from '../../../@common/contexts/Comment/components/ActionButtons';
+import CommentActionButtons from '../../../@common/contexts/Comment/components/ActionButtons';
 
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import TaggedContents from '@/components/share-post/molecules/TaggedContents';
-import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
-import { calculateTimeAgo } from '@/utils/date/time-ago';
+import type { FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
 
 type CommentListProps = {
-    item: FetchCommentResponse;
+    item: FetchCommentReplyResponse;
 };
 
 interface CommentListActions extends CommentActionButtonsAction {
     onPressNickname(nickname: string): void;
     onPressTag(nickname: string): void;
-    onPressShowCommentReplyButton(commentId: string): void;
 }
 
 export default function CommentItem({
     item: {
-        comment: {
-            createdAt,
+        commentReply: {
             id: commentId,
             contents,
             isMine,
             isModified,
-            replyCount,
             user: { nickname, profile },
         },
     },
     onPressNickname,
     onPressTag,
-    onPressShowCommentReplyButton,
     onPressDeclarationButton,
     onPressDeleteButton,
     onPressUpdateButton,
@@ -47,10 +42,6 @@ export default function CommentItem({
 
     const handlePressTag = (tag: string) => {
         onPressTag(tag);
-    };
-
-    const handlePressShowReplyButton = () => {
-        onPressShowCommentReplyButton(commentId);
     };
 
     return (
@@ -69,13 +60,10 @@ export default function CommentItem({
                     <TouchableTypo variant="title4" onPress={handlePressNickname}>
                         {nickname}
                     </TouchableTypo>
-                    <Typo variant="body4" color="placeholder">
-                        {calculateTimeAgo(createdAt)}
-                    </Typo>
                     <ConditionalRenderer
                         condition={isModified}
                         trueContent={
-                            <Typo variant="body4" color="placeholder">
+                            <Typo variant="body5" color="placeholder">
                                 (수정됨)
                             </Typo>
                         }
@@ -93,17 +81,6 @@ export default function CommentItem({
                     onPressUpdateButton={onPressUpdateButton}
                     onPressDeleteButton={onPressDeleteButton}
                     onPressDeclarationButton={onPressDeclarationButton}
-                />
-                <ConditionalRenderer
-                    condition={replyCount !== 0}
-                    trueContent={
-                        <View style={styles.container}>
-                            <TouchableTypo variant="body4" color="secondary" onPress={handlePressShowReplyButton}>
-                                답글 {replyCount}개보기
-                            </TouchableTypo>
-                        </View>
-                    }
-                    falseContent={null}
                 />
             </View>
         </Animated.View>

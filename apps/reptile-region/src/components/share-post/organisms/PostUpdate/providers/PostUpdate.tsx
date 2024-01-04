@@ -5,7 +5,7 @@ import PostUpdateList from '../components/PostUpdateList';
 import { ImageActionsContext, ImageStateContext } from '../contexts/ImageContext';
 import imageReducer from '../reducer/image-reducer';
 
-import { TagProvider } from '@/components/@common/organisms/TagTextInput';
+import { TagProvider } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 type PostUpdateProps = {
     children: ReactNode;

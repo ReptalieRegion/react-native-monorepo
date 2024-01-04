@@ -11,8 +11,8 @@ import useSharePostActions from './hooks/useSharePostActions';
 
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
-import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
-import useFloatingHandler from '@/components/share-post/organisms/FloatingActionButtons/hooks/useFloatingHandler';
+import FloatingActionButtonGroup from '@/components/@common/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
+import useFloatingHandler from '@/components/@common/organisms/FloatingActionButtons/hooks/useFloatingHandler';
 import { ListEmptyComponent } from '@/components/share-post/organisms/SharePostCard/components';
 import SharePostCard from '@/components/share-post/organisms/SharePostCard/SharePostCard';
 import useAuthNavigation from '@/hooks/auth/useNavigationAuth';

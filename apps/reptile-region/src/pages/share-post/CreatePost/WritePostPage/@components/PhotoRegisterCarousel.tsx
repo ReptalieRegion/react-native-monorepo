@@ -14,7 +14,7 @@ import Title from './Title';
 import { CancelButton } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ImagePickerIcon from '@/components/@common/molecules/ImagePickerIcon/ImagePickerIcon';
-import { useTagSearch } from '@/components/@common/organisms/TagTextInput';
+import { useTagSearch } from '@/pages/share-post/@common/contexts/TagTextInput';
 import type { WritePostNavigationProp } from '@/types/routes/props/share-post/create-post';
 
 export default function PhotoRegisterCarousel() {

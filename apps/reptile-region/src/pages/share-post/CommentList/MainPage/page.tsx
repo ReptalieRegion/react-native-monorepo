@@ -1,128 +1,56 @@
-import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
-import { FlashList } from '@shopify/flash-list';
-import React, { useCallback, useRef, useState } from 'react';
-import { RefreshControl } from 'react-native';
+import { Typo } from '@crawl/design-system';
+import { withErrorBoundary } from '@crawl/error-boundary';
+import React, { Suspense } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import useReportListBottomSheet from '../../@common/bottom-sheet/ReportList/useReportListBottomSheet';
-import EmptyComment from '../empty';
+import CommentProvider from '../../@common/contexts/Comment/CommentProvider';
 
-import useCommentActions from './hooks/useCommentActions';
+import CommentList from './components/CommentList';
+import CommentTextEditor from './components/CommentTextEditor';
+import CommentSkeleton from './loading';
 
-import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
-import { ListFooterLoading } from '@/components/@common/atoms';
-import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
-import useCommentNavigation from '@/pages/share-post/CommentList/@hooks/useCommentNavigation';
-import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
+import HTTPError from '@/apis/@utils/error/HTTPError';
+import { FollowerUserList, FollowerUserListSkeleton } from '@/pages/share-post/@common/contexts/TagTextInput';
 import type { CommentScreenProps } from '@/types/routes/props/share-post/comment';
 
-export default function CommentList({
-    route: {
-        params: {
-            post: { id: postId },
-        },
+const CommentListPage = withErrorBoundary<CommentScreenProps>(
+    (props) => {
+        return (
+            <CommentProvider id={props.route.params.post.id}>
+                <View style={styles.container}>
+                    <Suspense fallback={<CommentSkeleton />}>
+                        <CommentList {...props} />
+                    </Suspense>
+                    <Suspense fallback={<FollowerUserListSkeleton />}>
+                        <FollowerUserList containerStyles={styles.followerUserListContainer} />
+                    </Suspense>
+                </View>
+                <CommentTextEditor />
+            </CommentProvider>
+        );
     },
-}: CommentScreenProps) {
-    const flashListRef = useRef<FlashList<FetchCommentResponse>>(null);
-    const [refreshing, setRefreshing] = useState<boolean>(false);
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteComment({ postId });
-    const { deleteComment } = useCommentActions();
-    const { navigateCommentReplyPage, navigateDetailPage } = useCommentNavigation();
-    const openReportListBottomSheet = useReportListBottomSheet();
+    {
+        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== -1001,
+        renderFallback: () => <Typo>삭제된 게시물입니다</Typo>,
+    },
+);
 
-    const renderItem: ListRenderItem<FetchCommentResponse> = useCallback(
-        ({ item }) => {
-            const {
-                comment: {
-                    id: commentId,
-                    contents,
-                    isMine,
-                    isModified,
-                    createdAt,
-                    user: { id: userId, nickname, profile },
-                },
-            } = item;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        position: 'relative',
+        minHeight: 2,
+    },
+    followerUserListContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        paddingLeft: 20,
+        paddingTop: 10,
+        backgroundColor: 'white',
+    },
+});
 
-            return (
-                <CommentItem
-                    item={item}
-                    onPressNickname={() => navigateDetailPage({ user: { isFollow: false, nickname, profile } })}
-                    onPressTag={(tag) => navigateDetailPage({ user: { isFollow: false, nickname: tag, profile: { src: '' } } })}
-                    onPressDeclarationButton={() =>
-                        openReportListBottomSheet({
-                            report: {
-                                type: '댓글',
-                                postId,
-                                reported: userId,
-                                typeId: commentId,
-                            },
-                        })
-                    }
-                    onPressDeleteButton={() => deleteComment(commentId)}
-                    onPressWriteButton={() =>
-                        navigateCommentReplyPage({
-                            post: {
-                                id: '',
-                                comment: {
-                                    id: commentId,
-                                    contents,
-                                    isMine,
-                                    isModified,
-                                    createdAt,
-                                    user: { id: userId, nickname, profile },
-                                },
-                            },
-                            isFocus: true,
-                        })
-                    }
-                    onPressShowCommentReplyButton={() =>
-                        navigateCommentReplyPage({
-                            post: {
-                                id: postId,
-                                comment: {
-                                    id: commentId,
-                                    contents,
-                                    isMine,
-                                    isModified,
-                                    createdAt,
-                                    user: { id: userId, nickname, profile },
-                                },
-                            },
-                            isFocus: false,
-                        })
-                    }
-                />
-            );
-        },
-        [postId, navigateDetailPage, openReportListBottomSheet, deleteComment, navigateCommentReplyPage],
-    );
-
-    const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
-
-    const asyncOnRefresh = useCallback(async () => {
-        setRefreshing(true);
-        await refetch();
-        setRefreshing(false);
-    }, [refetch]);
-
-    return (
-        <FlashList
-            ref={flashListRef}
-            data={data}
-            contentContainerStyle={contentContainerStyle}
-            keyExtractor={(item: FetchCommentResponse) => item.comment.id}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
-            renderItem={renderItem}
-            estimatedItemSize={100}
-            scrollEventThrottle={16}
-            onEndReached={onEndReached}
-            ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-            ListEmptyComponent={<EmptyComment />}
-        />
-    );
-}
-
-const contentContainerStyle: ContentStyle = {
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 20,
-};
+export default CommentListPage;

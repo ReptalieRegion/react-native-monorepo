@@ -7,7 +7,7 @@ import useInfiniteFetchEntity from './hooks/queries/useInfiniteFetchEntity';
 
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
-import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
+import FloatingActionButtonGroup from '@/components/@common/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import EntityCard from '@/pages/diary/entity-manager/ListPage/components/EntityCard';
 import useEntityMangerActions from '@/pages/diary/entity-manager/ListPage/hooks/useEntityMangerActions';
 import useEntityMangerNavigation from '@/pages/diary/entity-manager/ListPage/hooks/useEntityMangerNavigation';
