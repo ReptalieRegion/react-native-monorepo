@@ -11,6 +11,7 @@ import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPu
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
+import PageWrapper from '@/components/PageWrapper';
 import { PushAgreeType, type UpdatePushAgree } from '@/types/apis/notification';
 
 const PUSH_AGREE_LIST: PushAgreeListType[] = [
@@ -94,7 +95,7 @@ export default function NotificationSetting() {
     };
 
     return (
-        <View style={styles.container}>
+        <PageWrapper>
             <ConditionalRenderer
                 condition={notNotificationPermission}
                 trueContent={
@@ -134,7 +135,7 @@ export default function NotificationSetting() {
                     <ConditionalRenderer condition={index < 2} trueContent={<Divider height={10} />} />
                 </View>
             ))}
-        </View>
+        </PageWrapper>
     );
 }
 
@@ -145,10 +146,6 @@ const listStyles = {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White.toString(),
-    },
     list: {
         padding: 20,
         gap: 10,

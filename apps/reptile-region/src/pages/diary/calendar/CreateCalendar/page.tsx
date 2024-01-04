@@ -1,7 +1,7 @@
 import { Typo, color } from '@crawl/design-system';
 import dayjs from 'dayjs';
 import React, { useMemo } from 'react';
-import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { StyleSheet, View, type ViewStyle } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,6 +14,7 @@ import useCreateCalendarActions from './hooks/useCreateCalendarActions';
 
 import { Avatar } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
+import PageWrapper from '@/components/PageWrapper';
 
 const MAX_MEMO_LENGTH = 300;
 
@@ -41,10 +42,10 @@ export default function CalendarItemCreatePage() {
 
     const { bottom } = useSafeAreaInsets();
 
-    const wrapperStyle: StyleProp<ViewStyle> = useMemo(() => [styles.wrapper, { paddingBottom: bottom }], [bottom]);
+    const wrapperStyle: ViewStyle = useMemo(() => ({ paddingBottom: bottom }), [bottom]);
 
     return (
-        <View style={wrapperStyle}>
+        <PageWrapper style={wrapperStyle}>
             <ScrollView contentContainerStyle={styles.scrollWrapper}>
                 <View style={styles.allWrapper}>
                     <View style={styles.selection}>
@@ -119,17 +120,11 @@ export default function CalendarItemCreatePage() {
                 onConfirm={handleChangeDate}
                 onCancel={datePickerOff}
             />
-        </View>
+        </PageWrapper>
     );
 }
 
-const White = color.White.toString();
-
 const styles = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-        backgroundColor: White,
-    },
     scrollWrapper: {
         flex: 1,
         position: 'relative',
@@ -151,7 +146,7 @@ const styles = StyleSheet.create({
     },
     allWrapper: {
         flex: 1,
-        backgroundColor: White,
+        backgroundColor: color.White.toString(),
         paddingHorizontal: 20,
         paddingTop: 20,
         gap: 40,
@@ -180,7 +175,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         zIndex: 1,
-        backgroundColor: White,
+        backgroundColor: color.White.toString(),
         gap: 8,
     },
     buttonWrapper: {

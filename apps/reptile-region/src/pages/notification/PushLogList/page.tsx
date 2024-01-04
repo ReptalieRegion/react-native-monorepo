@@ -1,4 +1,4 @@
-import { Typo, color } from '@crawl/design-system';
+import { Typo } from '@crawl/design-system';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React, { useEffect } from 'react';
@@ -12,6 +12,7 @@ import useReadPushLog from '@/apis/notification/push/hooks/mutations/useReadPush
 import useInfinitePushLog from '@/apis/notification/push/hooks/queries/useInfinitePushLog';
 import { Avatar, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';
+import PageWrapper from '@/components/PageWrapper';
 import { navigateLinking } from '@/routes/@utils/linking';
 import { ContentType, type FetchPushLogResponse } from '@/types/apis/notification';
 import { calculateTimeAgo } from '@/utils/date/time-ago';
@@ -91,7 +92,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
     };
 
     return (
-        <View style={styles.container}>
+        <PageWrapper>
             <FlashList
                 data={data}
                 contentContainerStyle={{ paddingBottom: bottom }}
@@ -102,7 +103,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                 ListFooterComponent={ListFooterComponent}
                 estimatedItemSize={80}
             />
-        </View>
+        </PageWrapper>
     );
 }
 
@@ -120,10 +121,6 @@ function ListFooterComponent() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White.toString(),
-    },
     row: {
         paddingHorizontal: 20,
         flexDirection: 'row',

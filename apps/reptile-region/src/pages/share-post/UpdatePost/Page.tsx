@@ -1,10 +1,9 @@
-import { color } from '@crawl/design-system';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
 
 import ChangeHeader from './header';
 
 import useToast from '@/components/overlay/Toast/useToast';
+import PageWrapper from '@/components/PageWrapper';
 import PostUpdate from '@/components/share-post/organisms/PostUpdate/providers/PostUpdate';
 import type { SharePostUpdateScreen } from '@/types/routes/props/share-post/update-post';
 
@@ -25,17 +24,10 @@ export default function SharePostUpdatePage({
 
     return (
         <PostUpdate minImageCountCallback={handleToast}>
-            <View style={styles.wrapper}>
+            <PageWrapper>
                 <ChangeHeader postId={post.id} navigation={navigation} />
                 <PostUpdate.List images={post.images} contents={post.contents} />
-            </View>
+            </PageWrapper>
         </PostUpdate>
     );
 }
-
-const styles = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-        backgroundColor: color.White.toString(),
-    },
-});

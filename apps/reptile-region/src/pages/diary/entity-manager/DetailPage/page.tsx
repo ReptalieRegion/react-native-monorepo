@@ -19,6 +19,7 @@ import { Plus } from '@/assets/icons';
 import { ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
 import GenderIcon from '@/components/@common/molecules/GenderIcon/GenderIcon';
 import useAlert from '@/components/overlay/Alert/useAlert';
+import PageWrapper from '@/components/PageWrapper';
 import InfiniteLineChart from '@/pages/diary/entity-manager/DetailPage/components/InfiniteLineChart';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 import type { EntityManagerDetailScreenProps } from '@/types/routes/props/diary/entity';
@@ -33,7 +34,7 @@ export default function EntityManagerDetailPage({
 }: EntityManagerDetailScreenProps) {
     const { width } = useWindowDimensions();
     const { bottom } = useSafeAreaInsets();
-    const wrapperStyle = useMemo(() => [styles.wrapper, { paddingBottom: bottom }], [bottom]);
+    const wrapperStyle = useMemo(() => ({ paddingBottom: bottom }), [bottom]);
 
     const { data } = useFindEntity(entityId);
     const { data: weightData, isFetchingNextPage, fetchNextPage } = useInfiniteFetchEntityWeight(entityId);
@@ -137,7 +138,7 @@ export default function EntityManagerDetailPage({
     );
 
     return data?.entity ? (
-        <View style={wrapperStyle}>
+        <PageWrapper style={wrapperStyle}>
             <ChangeHeader navigation={navigation} entity={data.entity} />
             <FlashList
                 data={weightData}
@@ -148,17 +149,11 @@ export default function EntityManagerDetailPage({
                 ListHeaderComponent={renderListHeader}
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
             />
-        </View>
+        </PageWrapper>
     ) : null;
 }
 
 const styles = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-        backgroundColor: color.White.toString(),
-        margin: 0,
-        padding: 0,
-    },
     container: {
         padding: 20,
     },

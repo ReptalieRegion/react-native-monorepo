@@ -16,6 +16,7 @@ import useSignUpStep1 from '@/apis/auth/hooks/mutations/useSignUpStep1';
 import useNicknameDuplicateCheck from '@/apis/auth/hooks/queries/useNicknameDuplicateCheck';
 import { registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
+import PageWrapper from '@/components/PageWrapper';
 import { useAuthHandler } from '@/hooks/auth';
 import useKeyboardOpenButtonSize from '@/hooks/useKeyboardOpenButtonSize';
 import type { SignUpStep1ScreenProps } from '@/types/routes/props/auth/sign-up';
@@ -98,7 +99,7 @@ export default function SignUpStep1({
     });
 
     return (
-        <View style={styles.wrapper}>
+        <PageWrapper>
             <TouchableWithoutFeedback style={styles.wrapper} containerStyle={styles.wrapper} onPress={Keyboard.dismiss}>
                 <View style={styles.contents}>
                     <SignUpTitle
@@ -127,7 +128,7 @@ export default function SignUpStep1({
                     />
                 </Animated.View>
             </TouchableWithoutFeedback>
-        </View>
+        </PageWrapper>
     );
 }
 

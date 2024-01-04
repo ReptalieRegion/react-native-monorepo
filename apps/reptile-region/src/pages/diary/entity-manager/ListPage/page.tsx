@@ -1,13 +1,13 @@
 import { color } from '@crawl/design-system';
 import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import React, { useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
 
 import useInfiniteFetchEntity from './hooks/queries/useInfiniteFetchEntity';
 
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
 import FloatingActionButtonGroup from '@/components/@common/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
+import PageWrapper from '@/components/PageWrapper';
 import EntityCard from '@/pages/diary/entity-manager/ListPage/components/EntityCard';
 import useEntityMangerActions from '@/pages/diary/entity-manager/ListPage/hooks/useEntityMangerActions';
 import useEntityMangerNavigation from '@/pages/diary/entity-manager/ListPage/hooks/useEntityMangerNavigation';
@@ -36,7 +36,7 @@ export default function EntityMangerList() {
     const handleEndReached = () => isFetchingNextPage && hasNextPage && fetchNextPage();
 
     return (
-        <View style={styles.container}>
+        <PageWrapper>
             <FlashList
                 ref={flashListRef}
                 data={data}
@@ -65,7 +65,7 @@ export default function EntityMangerList() {
                     onPress={handlePressUpFloatingButton}
                 />
             </FloatingActionButtonGroup>
-        </View>
+        </PageWrapper>
     );
 }
 
@@ -92,10 +92,3 @@ const contentStyle: ContentStyle = {
     paddingVertical: 5,
     paddingHorizontal: 5,
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White.toString(),
-    },
-});

@@ -16,6 +16,7 @@ import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/compon
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import FloatingActionButtonGroup from '@/components/@common/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
 import FloatingActionButtons from '@/components/@common/organisms/FloatingActionButtons/providers/FloatingActionButtons';
+import PageWrapper from '@/components/PageWrapper';
 
 export default function ExpandableCalendarScreen() {
     const openActionMenuBottomSheet = useOverlayActionMenuBottomSheet();
@@ -174,7 +175,7 @@ export default function ExpandableCalendarScreen() {
     ]);
 
     return (
-        <View style={styles.wrapper}>
+        <PageWrapper style={styles.wrapper}>
             {memoizedExpandableCalendar}
             <FloatingActionButtons>
                 <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>
@@ -186,7 +187,7 @@ export default function ExpandableCalendarScreen() {
                     />
                 </FloatingActionButtonGroup>
             </FloatingActionButtons>
-        </View>
+        </PageWrapper>
     );
 }
 
@@ -204,9 +205,7 @@ const primaryIcon = {
 
 const styles = StyleSheet.create({
     wrapper: {
-        flex: 1,
         position: 'relative',
-        backgroundColor: color.White.toString(),
     },
     calendarHeader: {
         flexDirection: 'row',
