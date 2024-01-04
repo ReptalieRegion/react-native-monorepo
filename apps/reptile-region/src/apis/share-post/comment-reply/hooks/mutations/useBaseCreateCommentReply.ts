@@ -14,6 +14,7 @@ export default function useBaseCreateCommentReply<TContext = unknown>(
     const queryClient = useQueryClient();
     return useMutation<CreateCommentReply['Response'], HTTPError, CreateCommentReply['Request'], TContext>({
         mutationFn: ({ commentId, contents }) => createCommentReply({ commentId, contents }),
+        ...props,
         onSuccess: (data, variables, context) => {
             props?.onSuccess?.(data, variables, context);
             updateCommentListCache({ queryClient, data });

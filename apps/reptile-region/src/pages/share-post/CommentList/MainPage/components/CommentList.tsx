@@ -59,7 +59,7 @@ export default function CommentList({
                     onPressWriteButton={() =>
                         navigateCommentReplyPage({
                             post: {
-                                id: '',
+                                id: postId,
                                 comment: {
                                     id: commentId,
                                     contents,

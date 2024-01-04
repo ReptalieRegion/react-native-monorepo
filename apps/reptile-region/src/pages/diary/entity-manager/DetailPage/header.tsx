@@ -17,7 +17,7 @@ export function ChangeHeader({
     navigation,
     entity,
 }: Pick<EntityManagerDetailScreenProps, 'navigation'> & Pick<EntityManagerOptionsMenuBottomSheetProps, 'entity'>) {
-    const openEntityManagerOptionsMenuBottomSheet = useEntityManagerOptionsMenuBottomSheet();
+    const openEntityManagerOptionsMenuBottomSheet = useEntityManagerOptionsMenuBottomSheet(navigation);
 
     useEffect(() => {
         const headerRight = () => {

@@ -6,10 +6,10 @@ import useUpdateCommentReply from './mutations/useUpdateCommentReply';
 import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
 import useComment from '@/pages/share-post/@common/contexts/Comment/hooks/useComment';
 
-export default function useCreateOrUpdateCommentReply() {
+export default function useCreateOrUpdateCommentReply(postId: string) {
     const { id, submitType } = useComment();
-    const createCommentReplyAPI = useCreateCommentReply();
-    const updateCommentReplyAPI = useUpdateCommentReply();
+    const createCommentReplyAPI = useCreateCommentReply(postId);
+    const updateCommentReplyAPI = useUpdateCommentReply(postId);
 
     const { requireAuthNavigation } = useAuthNavigation();
 

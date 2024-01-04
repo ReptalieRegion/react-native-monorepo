@@ -4,11 +4,12 @@ import React, { useCallback } from 'react';
 import Toast, { type ToastProps } from './Toast';
 
 export default function useToast() {
-    const overlay = useOverlay();
+    const overlay = useOverlay({ exitOnUnmount: false });
+
     const openToast = useCallback(
         ({ severity, contents }: Pick<ToastProps, 'severity' | 'contents'>) => {
             return new Promise<boolean>((resolve) => {
-                overlay.open(({ isOpen, close }) => (
+                overlay.open(({ isOpen, close, exit }) => (
                     <Toast
                         isOpen={isOpen}
                         severity={severity}
@@ -16,6 +17,7 @@ export default function useToast() {
                         onClose={() => {
                             resolve(false);
                             close();
+                            exit();
                         }}
                     />
                 ));

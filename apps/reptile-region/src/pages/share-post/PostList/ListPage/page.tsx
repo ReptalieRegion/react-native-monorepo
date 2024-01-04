@@ -67,6 +67,7 @@ export default function PostList({ navigation, route: { params } }: SharePostLis
     const { onlyLike, updateOrCreateFollow, updateOrCreateLike } = useSharePostActions();
     const { navigateComment, handlePressLikeContents, navigateImageThumbnail, handlePressTag } =
         useSharePostNavigation('BOTTOM_TAB');
+
     const openPostOptionsMenuBottomSheet = usePostOptionsMenuBottomSheet();
 
     const renderItem = useCallback(

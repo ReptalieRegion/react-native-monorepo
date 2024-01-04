@@ -2,12 +2,13 @@ import { BottomSheetAnimatedGesture } from '@crawl/bottom-sheet';
 import { Typo, color } from '@crawl/design-system';
 import { getHeaderTitle } from '@react-navigation/elements';
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import React, { StyleSheet, View } from 'react-native';
+import React, { Keyboard, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { ConditionalRenderer } from '../../atoms';
 
 import { BackButton } from '@/assets/icons';
+import useKeyboardState, { UseKeyboardState } from '@/hooks/useKeyboardState';
 
 type LeftIcon = 'none' | 'back';
 
@@ -18,9 +19,16 @@ export type BottomSheetHeaderProps = {
 
 export default function BottomSheetHeader({ navigation, route, options }: NativeStackHeaderProps) {
     const title = getHeaderTitle(options, route.name);
+    const keyboardState = useKeyboardState();
+
     const handleLeftPress = () => {
         if (options.headerBackVisible && navigation.canGoBack()) {
-            navigation.goBack();
+            if (keyboardState === UseKeyboardState.CLOSE) {
+                navigation.goBack();
+            } else {
+                Keyboard.dismiss();
+                setTimeout(navigation.goBack, 400);
+            }
         }
     };
 

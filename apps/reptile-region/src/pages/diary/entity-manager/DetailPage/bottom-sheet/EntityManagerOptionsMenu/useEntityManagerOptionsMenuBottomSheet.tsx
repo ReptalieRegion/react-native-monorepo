@@ -1,6 +1,5 @@
 import { BottomSheet } from '@crawl/bottom-sheet';
 import { useOverlay } from '@crawl/overlay-manager';
-import { useNavigation } from '@react-navigation/native';
 import React, { useCallback } from 'react';
 
 import EntityManagerOptionsMenuBottomSheet, { type EntityManagerOptionsMenuBottomSheetProps } from './EntityManagerOptionsMenu';
@@ -8,9 +7,8 @@ import EntityManagerOptionsMenuBottomSheet, { type EntityManagerOptionsMenuBotto
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import type { EntityManagerDetailNavigationProp } from '@/types/routes/props/diary/entity';
 
-export default function useEntityManagerOptionsMenuBottomSheet() {
+export default function useEntityManagerOptionsMenuBottomSheet(navigation: EntityManagerDetailNavigationProp) {
     const overlay = useOverlay();
-    const navigation = useNavigation<EntityManagerDetailNavigationProp>();
 
     const openEntityManagerOptionsMenuBottomSheet = useCallback(
         ({ entity }: Pick<EntityManagerOptionsMenuBottomSheetProps, 'entity'>) => {

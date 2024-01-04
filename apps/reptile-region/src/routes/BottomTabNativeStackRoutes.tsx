@@ -1,4 +1,3 @@
-import { OverlayProvider } from '@crawl/overlay-manager';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
@@ -11,18 +10,16 @@ const Stack = createNativeStackNavigator<BottomTabNativeStackParamList>();
 
 export default function BottomTabNativeStackRoutes() {
     return (
-        <OverlayProvider>
-            <Stack.Navigator initialRouteName="tab" screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="tab" component={BottomTabRoutes} />
-                <Stack.Screen
-                    name="bottom-tab/modal/comment"
-                    component={CommentRoutes}
-                    options={{
-                        presentation: 'containedTransparentModal',
-                        animation: 'none',
-                    }}
-                />
-            </Stack.Navigator>
-        </OverlayProvider>
+        <Stack.Navigator initialRouteName="tab" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="tab" component={BottomTabRoutes} />
+            <Stack.Screen
+                name="bottom-tab/modal/comment"
+                component={CommentRoutes}
+                options={{
+                    presentation: 'containedTransparentModal',
+                    animation: 'none',
+                }}
+            />
+        </Stack.Navigator>
     );
 }

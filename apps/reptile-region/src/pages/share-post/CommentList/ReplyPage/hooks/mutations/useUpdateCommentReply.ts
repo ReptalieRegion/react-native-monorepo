@@ -2,6 +2,7 @@ import { QueryClient, useQueryClient, type InfiniteData } from '@tanstack/react-
 import { useCallback } from 'react';
 import { Keyboard } from 'react-native';
 
+import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useBaseUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useBaseUpdateCommentReply';
 import useToast from '@/components/overlay/Toast/useToast';
@@ -25,9 +26,16 @@ export default function useUpdateCommentReply() {
             },
             [changeCommentSubmitType, changeText, queryClient],
         ),
-        onError: useCallback(() => {
-            openToast({ contents: '댓글 수정에 실패했어요.', severity: 'error' });
-        }, [openToast]),
+        onError: useCallback(
+            (error: HTTPError) => {
+                if (error.code === -2301) {
+                    openToast({ contents: '현재 댓글이 삭제되어서 수정할 수 없어요', severity: 'error' });
+                } else {
+                    openToast({ contents: '댓글 수정에 실패했어요', severity: 'error' });
+                }
+            },
+            [openToast],
+        ),
     });
 }
 

@@ -1,6 +1,5 @@
 import { useBottomSheet } from '@crawl/bottom-sheet';
 import { Typo } from '@crawl/design-system';
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -12,7 +11,7 @@ import useAlert from '@/components/overlay/Alert/useAlert';
 import type { ImageType } from '@/types/global/image';
 import type { SharePostListNavigationProp } from '@/types/routes/props/share-post/post-list';
 
-type PostOptionsMenuState = {
+export type PostOptionsMenuProps = {
     post: {
         id: string;
         images: ImageType[];
@@ -23,14 +22,10 @@ type PostOptionsMenuState = {
             nickname: string;
         };
     };
+    navigation: SharePostListNavigationProp;
 };
 
-interface PostOptionsMenuActions {}
-
-export type PostOptionsMenuProps = PostOptionsMenuState & PostOptionsMenuActions;
-
-export default function PostOptionsMenu({ post }: PostOptionsMenuProps) {
-    const navigation = useNavigation<SharePostListNavigationProp>();
+export default function PostOptionsMenu({ post, navigation }: PostOptionsMenuProps) {
     const openReportListBottomSheet = useReportListBottomSheet();
     const { bottomSheetClose } = useBottomSheet();
     const { mutate } = useDeletePost();
