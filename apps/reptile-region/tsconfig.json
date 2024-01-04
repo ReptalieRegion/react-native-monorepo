@@ -13,6 +13,7 @@
         { "path": "../../packages/error-boundary" },
         { "path": "../../packages/overlay-manager" },
         { "path": "../../packages/react-hooks" },
-        { "path": "../../packages/utils" }
+        { "path": "../../packages/utils" },
+        { "path": "../../packages/async-boundary" }
     ]
 }

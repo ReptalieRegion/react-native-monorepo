@@ -21,6 +21,7 @@
         "postinstall": "pod-install"
     },
     "dependencies": {
+        "@crawl/async-boundary": "1.0.0",
         "@crawl/bottom-sheet": "1.0.0",
         "@crawl/calendar": "1.0.0",
         "@crawl/camera-album": "1.0.0",

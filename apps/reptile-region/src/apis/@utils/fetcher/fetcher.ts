@@ -1,7 +1,7 @@
 import { METHOD } from './constants';
 import type { CustomRequestInit, FetchInfo, RefreshItem } from './types';
 
-import HTTPError from '@/apis/@utils/error/HTTPError';
+import HTTPError, { type HTTPErrorField } from '@/apis/@utils/error/HTTPError';
 import TokenRefreshError from '@/apis/@utils/error/TokenRefreshError';
 import { deleteAuthTokens, getAccessToken, getRefreshToken, registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 import ENV from '@/env';
@@ -42,8 +42,8 @@ function fetcher() {
                 });
 
                 if (!response.ok) {
-                    const data = await response.json();
-                    throw new HTTPError(response.status, data.message);
+                    const error = (await response.json()) as HTTPErrorField;
+                    throw new HTTPError(error.msg, response.status, error.code, error.path, error.timestamp);
                 }
 
                 resolve(response);
@@ -145,8 +145,8 @@ function fetcher() {
             }
 
             if (!response.ok) {
-                const error = await response.json();
-                throw new HTTPError(response.status, error.message);
+                const error = (await response.json()) as HTTPErrorField;
+                throw new HTTPError(error.msg, response.status, error.code, error.path, error.timestamp);
             }
 
             return response;

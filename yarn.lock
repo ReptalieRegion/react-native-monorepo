@@ -1760,6 +1760,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@crawl/async-boundary@1.0.0, @crawl/async-boundary@workspace:packages/async-boundary":
+  version: 0.0.0-use.local
+  resolution: "@crawl/async-boundary@workspace:packages/async-boundary"
+  dependencies:
+    "@crawl/async-boundary": 1.0.0
+    react-native-builder-bob: ^0.23.1
+    typescript: 5.2.2
+  languageName: unknown
+  linkType: soft
+
 "@crawl/bottom-sheet@1.0.0, @crawl/bottom-sheet@workspace:packages/bottom-sheet":
   version: 0.0.0-use.local
   resolution: "@crawl/bottom-sheet@workspace:packages/bottom-sheet"
@@ -12637,6 +12647,7 @@ __metadata:
     "@babel/core": ^7.23.2
     "@babel/preset-env": ^7.22.5
     "@babel/runtime": ^7.20.0
+    "@crawl/async-boundary": 1.0.0
     "@crawl/bottom-sheet": 1.0.0
     "@crawl/calendar": 1.0.0
     "@crawl/camera-album": 1.0.0
