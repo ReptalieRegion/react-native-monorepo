@@ -10,6 +10,7 @@ import type {
     ImageThumbnailParams,
     LikeParams,
     MeUserDetailParams,
+    PostListParams,
     PostingUpdateParams,
     UserDetailParams,
 } from '../params/sharePost';
@@ -47,7 +48,7 @@ type SharePostModalParamList = {
 
 // 바텀 탭 관련 라우터
 type SharePostBottomTabParamList = {
-    'bottom-tab/list': undefined;
+    'bottom-tab/list'?: PostListParams;
     'bottom-tab/image-thumbnail': ImageThumbnailParams;
     'bottom-tab/user/detail/list': UserDetailParams;
     'bottom-tab/follow/list': FollowRouterParams;

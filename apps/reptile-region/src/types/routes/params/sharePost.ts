@@ -2,6 +2,10 @@ import type { PageState } from '../@common/enum';
 
 import type { ImageType } from '@/types/global/image';
 
+type PostListParams = {
+    isScrollToTop: boolean;
+};
+
 // 댓글 페이지
 type CommentParams = {
     post: {
@@ -117,6 +121,7 @@ export type {
     ImageThumbnailParams,
     LikeParams,
     MeUserDetailParams,
+    PostListParams,
     PostingUpdateParams,
     UserDetailParams,
 };

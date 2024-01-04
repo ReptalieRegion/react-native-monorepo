@@ -1,133 +1,88 @@
 import { PhotoList, useCameraAlbum } from '@crawl/camera-album';
-import { color } from '@crawl/design-system';
-import { ImageCrop } from '@crawl/image-crop';
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Typo } from '@crawl/design-system';
+import React, { useEffect } from 'react';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { useCreatePostActions } from '../context/useCreatePostActions';
-import useCreatePostState from '../context/useCreatePostState';
+import { MAX_SELECT_COUNT } from '../constants/image';
 
-import ChangeHeader from './header';
+import CameraAlbumActions from './components/CameraAlbumActions';
+import PhotoEditorView from './components/PhotoEditorView';
 
-import { Album, StrokeCamera } from '@/assets/icons';
-import { ConditionalRenderer } from '@/components/@common/atoms';
 import useToast from '@/components/overlay/Toast/useToast';
-import useImageCropActions from '@/pages/share-post/CreatePost/ImagePickerPage/hooks/useImageCropActions';
+import PageWrapper from '@/components/PageWrapper';
+import withPageHeaderUpdate from '@/components/withPageHeaderUpdate';
 import type { ImagePickScreenProp } from '@/types/routes/props/share-post/create-post';
-import { photoPermissionCheck } from '@/utils/permissions/photo-permission';
 
-const MAX_SELECT_COUNT = 5;
+const ImagePickerPage = withPageHeaderUpdate<ImagePickScreenProp>(
+    () => {
+        const openToast = useToast();
 
-export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
-    const openToast = useToast();
+        const { width, height } = useWindowDimensions();
+        const textHeight = 50;
+        const photoEditorHeight = height / 2;
+        const photoListHeight = height - photoEditorHeight;
 
-    const { width, height } = useWindowDimensions();
-    const textHeight = 50;
-    const photoEditorHeight = height / 2;
-    const photoListHeight = height - photoEditorHeight;
-
-    return (
-        <View style={styles.wrapper}>
-            <ChangeHeader navigation={navigation} />
-            <View style={{ width, height: photoEditorHeight }}>
-                <PhotoEditorView size={{ width, height: photoEditorHeight - textHeight }} />
-                <CameraAlbumActions height={textHeight} />
-            </View>
-            <View style={{ height: photoListHeight }}>
-                <PhotoList
-                    photoFetchOptions={{ first: 100 }}
-                    maxSelectCount={MAX_SELECT_COUNT}
-                    onMaxSelectCount={() => {
-                        openToast({ contents: `이미지는 최대 ${MAX_SELECT_COUNT}입니다`, severity: 'warning' });
-                    }}
-                />
-            </View>
-        </View>
-    );
-}
-
-function CameraAlbumActions({ height }: { height: number }) {
-    const { handleOpenCamera, handleOpenPhotoPicker } = useImageCropActions();
-    const [isLimitedPermission, setIsLimitedPermission] = useState(false);
-
-    useEffect(() => {
-        photoPermissionCheck().then((photo) => {
-            setIsLimitedPermission(photo?.status === 'limited');
-        });
-    }, []);
-
-    return (
-        <View style={[styles.actionsWrapper, { height }]}>
-            <ConditionalRenderer
-                condition={isLimitedPermission}
-                trueContent={
-                    <TouchableOpacity onPress={handleOpenPhotoPicker}>
-                        <Album height={22} stroke={color.DarkGray[400].toString()} strokeWidth={1.8} />
-                    </TouchableOpacity>
-                }
-            />
-            <TouchableOpacity onPress={handleOpenCamera}>
-                <StrokeCamera height={22} stroke={color.DarkGray[400].toString()} strokeWidth={1.8} />
-            </TouchableOpacity>
-        </View>
-    );
-}
-
-function PhotoEditorView(props: { size: { width: number; height: number } }) {
-    const {
-        size: { width, height },
-    } = props;
-
-    const { cropInfoMap } = useCreatePostState();
-    const { setCropInfo } = useCreatePostActions();
-    const { currentSelectedPhoto } = useCameraAlbum();
-    const uri = currentSelectedPhoto?.uri ?? '';
-
-    /**
-     * @description 이미지 선택 후 -> 크롭 -> 다른 이미지 -> 이전에 크롭한 이미지 순으로 왔을 때, 이전 position 초기화
-     */
-    const lastImageUri = useRef(uri);
-    const isDifferentImageUri = lastImageUri.current !== uri;
-    const initPosition = isDifferentImageUri ? cropInfoMap[uri]?.translation : undefined;
-    if (isDifferentImageUri) {
-        lastImageUri.current = uri;
-    }
-
-    return currentSelectedPhoto ? (
-        <ImageCrop
-            key={currentSelectedPhoto.uri}
-            image={{
-                uri,
-                width: currentSelectedPhoto.width ?? width,
-                height: currentSelectedPhoto.height ?? height,
-            }}
-            initPosition={initPosition}
-            width={props.size.width}
-            height={props.size.height}
-            minScale={0.5}
-            maxScale={3}
-            getCropInfo={setCropInfo}
-        />
-    ) : (
-        <View style={props.size} />
-    );
-}
-
-const styles = StyleSheet.create({
-    wrapper: {
-        backgroundColor: color.White.toString(),
+        return (
+            <PageWrapper>
+                <View style={{ width, height: photoEditorHeight }}>
+                    <PhotoEditorView size={{ width, height: photoEditorHeight - textHeight }} />
+                    <CameraAlbumActions height={textHeight} />
+                </View>
+                <View style={{ height: photoListHeight }}>
+                    <PhotoList
+                        photoFetchOptions={{ first: 100 }}
+                        maxSelectCount={MAX_SELECT_COUNT}
+                        onMaxSelectCount={() => {
+                            openToast({ contents: `이미지는 최대 ${MAX_SELECT_COUNT}입니다`, severity: 'warning' });
+                        }}
+                    />
+                </View>
+            </PageWrapper>
+        );
     },
-    actionsWrapper: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
+    ({ navigation }) => {
+        const { selectedPhotos } = useCameraAlbum();
+
+        useEffect(() => {
+            const isValidate = selectedPhotos.length === 0;
+
+            const headerRight = () => {
+                const handlePress = () => {
+                    navigation.navigate('write');
+                };
+
+                return (
+                    <TouchableOpacity
+                        onPress={handlePress}
+                        style={style.wrapper}
+                        containerStyle={style.container}
+                        disabled={isValidate}
+                    >
+                        <Typo color={isValidate ? 'placeholder' : 'default'} disabled={isValidate}>
+                            다음
+                        </Typo>
+                    </TouchableOpacity>
+                );
+            };
+
+            navigation.setOptions({ headerRight });
+        }, [navigation, selectedPhotos.length]);
+        return null;
+    },
+);
+
+// TODO: 터치 영역 넓히기 위해 임시 방편으로 막음 수정 필요
+const style = StyleSheet.create({
+    wrapper: {
         alignItems: 'center',
-        paddingLeft: 15,
-        paddingRight: 15,
-        backgroundColor: color.White.toString(),
-        gap: 30,
-        borderTopWidth: 1,
-        borderTopColor: color.Gray[200].toString(),
+        justifyContent: 'center',
+    },
+    container: {
+        marginRight: -20,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
     },
 });
+
+export default ImagePickerPage;

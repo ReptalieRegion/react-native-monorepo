@@ -1,7 +1,7 @@
 import { color } from '@crawl/design-system';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, StyleSheet, View } from 'react-native';
 
 import usePostOptionsMenuBottomSheet from '../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
@@ -22,7 +22,7 @@ import type { FetchPostResponse } from '@/types/apis/share-post/post';
 import type { SharePostListPageScreen } from '@/types/routes/props/share-post/post-list';
 
 // 일상공유 조회 페이지
-export default function PostList({ navigation }: SharePostListPageScreen) {
+export default function PostList({ navigation, route: { params } }: SharePostListPageScreen) {
     // 일상 공유 패칭
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
 
@@ -55,6 +55,13 @@ export default function PostList({ navigation }: SharePostListPageScreen) {
         onScrollDown: secondaryIconDownAnimation,
         onScrollUp: secondaryIconUpAnimation,
     });
+
+    useEffect(() => {
+        if (params?.isScrollToTop) {
+            scrollToTop(true);
+        }
+    }, [params?.isScrollToTop, scrollToTop]);
+
     /** Floating 관련 액션 끝 */
 
     const { onlyLike, updateOrCreateFollow, updateOrCreateLike } = useSharePostActions();
