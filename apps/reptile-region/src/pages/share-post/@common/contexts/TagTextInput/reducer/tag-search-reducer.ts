@@ -1,6 +1,17 @@
 import { DEFAULT_SEARCH } from '../constants/tag-search';
 import type { TagContentsState, TagSearchActions, TagSearchState } from '../types';
 
+export default function tagSearchReducer(state: TagSearchState, action: TagSearchActions) {
+    switch (action.type) {
+        case 'UPDATE_SEARCH':
+            return extractTagFromIndex(action.contentInfo);
+        case 'RESET_SEARCH':
+            return { ...DEFAULT_SEARCH };
+        default:
+            return state;
+    }
+}
+
 const extractTagFromIndex = (contentInfo: TagContentsState): TagSearchState => {
     const { selection, contents } = contentInfo;
     const isNotOneSelect = selection.start !== selection.end;
@@ -34,16 +45,3 @@ const extractTagFromIndex = (contentInfo: TagContentsState): TagSearchState => {
 
     return defaultState;
 };
-
-const tagSearchReducer = (state: TagSearchState, action: TagSearchActions) => {
-    switch (action.type) {
-        case 'UPDATE_SEARCH':
-            return extractTagFromIndex(action.contentInfo);
-        case 'RESET_SEARCH':
-            return { ...DEFAULT_SEARCH };
-        default:
-            return state;
-    }
-};
-
-export default tagSearchReducer;

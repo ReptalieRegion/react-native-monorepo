@@ -1,7 +1,7 @@
 import { Typo } from '@crawl/design-system';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
-import React, { useCallback, useMemo } from 'react';
+import React, { Suspense, useCallback, useMemo } from 'react';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -9,39 +9,36 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import useTagHandler from '../../hooks/useTagHandler';
 import useTagSearch from '../../hooks/useTagSearch';
 
+import FollowerUserListSkeleton from './loading';
+
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import { Avatar, ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';
 import type { FetchFollowerSearchResponse } from '@/types/apis/share-post/user';
 
-type FollowerUserListConditionRenderState = {
+type FollowerUserListProps = {
     containerStyles?: ViewStyle;
 };
 
-type FollowerUserListState = {
-    keyword: string;
-} & FollowerUserListConditionRenderState;
-
-export default function FollowerUserListConditionRender({ containerStyles }: FollowerUserListConditionRenderState) {
-    const { keyword, enabled } = useTagSearch();
-
+export default function FollowerUserList(props: FollowerUserListProps) {
     return (
-        <ConditionalRenderer
-            condition={enabled}
-            trueContent={<FollowerUserList keyword={keyword.slice(1)} containerStyles={containerStyles} />}
-            falseContent={null}
-        />
+        <Suspense fallback={<FollowerUserListSkeleton />}>
+            <FollowerUserListInner {...props} />
+        </Suspense>
     );
 }
 
-function FollowerUserList({ keyword, containerStyles }: FollowerUserListState) {
+function FollowerUserListInner({ containerStyles }: FollowerUserListProps) {
+    const { keyword, enabled } = useTagSearch();
     const { handleSelectTag } = useTagHandler();
 
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteSearchFollowerUser({
-        search: keyword,
+        search: keyword.slice(1),
     });
 
     const newData = useMemo(() => data?.pages.flatMap((page) => page.items), [data?.pages]);
+
     const keyExtractor = useCallback((item: FetchFollowerSearchResponse) => item.user.id, []);
+
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<FetchFollowerSearchResponse>) => {
             const handlePressItem = () => {
@@ -59,27 +56,27 @@ function FollowerUserList({ keyword, containerStyles }: FollowerUserListState) {
         },
         [handleSelectTag],
     );
-    const onEndReached = useCallback(() => {
-        if (hasNextPage && !isFetchingNextPage) {
-            fetchNextPage();
-        }
-    }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+    const handleEndReached = useCallback(
+        () => hasNextPage && !isFetchingNextPage && fetchNextPage(),
+        [fetchNextPage, hasNextPage, isFetchingNextPage],
+    );
+
+    const wrapperStyle = useMemo(() => [styles.container, containerStyles], [containerStyles]);
 
     return (
         <ConditionalRenderer
-            condition={!!newData && newData?.length !== 0}
+            condition={enabled && !!newData && newData?.length !== 0}
             trueContent={
-                <View style={containerStyles}>
-                    <View style={styles.container}>
-                        <FlashList
-                            data={newData}
-                            keyExtractor={keyExtractor}
-                            renderItem={renderItem}
-                            ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-                            onEndReached={onEndReached}
-                            estimatedItemSize={30}
-                        />
-                    </View>
+                <View style={wrapperStyle}>
+                    <FlashList
+                        data={newData}
+                        keyExtractor={keyExtractor}
+                        renderItem={renderItem}
+                        ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+                        onEndReached={handleEndReached}
+                        estimatedItemSize={30}
+                    />
                 </View>
             }
             falseContent={null}

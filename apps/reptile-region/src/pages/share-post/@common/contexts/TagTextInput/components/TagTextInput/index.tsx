@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
-import { TextInput } from 'react-native';
 import type { TextInputProps } from 'react-native';
+import { TextInput } from 'react-native';
 
 import { TagTextInputStateContext } from '../../contexts/TagTextInputContext';
 import useTag from '../../hooks/useTag';
@@ -18,6 +18,8 @@ export default function TagTextInput({ onChangeText, onSelectionChange, ...props
     return (
         <TextInput
             ref={state?.textInputRef}
+            value={contentsInfo.contents}
+            selection={contentsInfo.selection}
             onChangeText={(text) => {
                 onChangeText?.(text);
                 changeText(text);

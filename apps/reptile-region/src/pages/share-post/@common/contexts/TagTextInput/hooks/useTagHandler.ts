@@ -5,7 +5,7 @@ import { TagSearchActionsContext } from '../contexts/TagSearchContext';
 import { TagTextInputActionsContext } from '../contexts/TagTextInputContext';
 import type { SelectionType, TagContentsState } from '../types';
 
-const useTagHandler = () => {
+export default function useTagHandler() {
     const textInputDispatch = useContext(TagTextInputActionsContext);
     const searchDispatch = useContext(TagSearchActionsContext);
     const contentDispatch = useContext(TagContentActionsContext);
@@ -55,6 +55,4 @@ const useTagHandler = () => {
         handleSelectTag,
         tagTextInputFocus: textInputDispatch.focus,
     };
-};
-
-export default useTagHandler;
+}

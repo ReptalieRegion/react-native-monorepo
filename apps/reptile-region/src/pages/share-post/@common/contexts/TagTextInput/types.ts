@@ -1,11 +1,13 @@
 import { TextInput } from 'react-native';
 
-export type SelectionType = {
+/** 공통 타입 */
+type SelectionType = {
     start: number;
     end: number;
 };
 
-export type TagContentsState = {
+/** 상태 */
+type TagContentsState = {
     contents: string;
     selection: SelectionType;
 };
@@ -30,10 +32,10 @@ interface UpdateContentSelectTag {
     tag: string;
 }
 
-export type TagContentsActions = ChangeContentsContents | ChangeContentsSelection | UpdateContentSelectTag | RegisterContents;
+type TagContentsActions = ChangeContentsContents | ChangeContentsSelection | UpdateContentSelectTag | RegisterContents;
 
 /** 현재 커서 위치에 있는 태그 정보 */
-export type TagSearchState = {
+type TagSearchState = {
     keyword: string;
     selection: SelectionType | undefined;
     enabled: boolean;
@@ -48,13 +50,29 @@ interface ResetSearch {
     type: 'RESET_SEARCH';
 }
 
-export type TagSearchActions = UpdateSearch | ResetSearch;
+type TagSearchActions = UpdateSearch | ResetSearch;
 
 /** TextInput Ref 및 focus */
-export type TagTextInputState = {
+type TagTextInputState = {
     textInputRef: React.RefObject<TextInput>;
 };
 
-export interface TagTextInputActions {
+interface TagTextInputActions {
     focus(): void;
 }
+
+export type {
+    ChangeContentsContents,
+    ChangeContentsSelection,
+    RegisterContents,
+    ResetSearch,
+    SelectionType,
+    TagContentsActions,
+    TagContentsState,
+    TagSearchActions,
+    TagSearchState,
+    TagTextInputActions,
+    TagTextInputState,
+    UpdateContentSelectTag,
+    UpdateSearch,
+};

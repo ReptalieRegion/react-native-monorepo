@@ -10,7 +10,7 @@ import CommentTextEditor from './components/CommentTextEditor';
 import CommentSkeleton from './loading';
 
 import HTTPError from '@/apis/@utils/error/HTTPError';
-import { FollowerUserList, FollowerUserListSkeleton } from '@/pages/share-post/@common/contexts/TagTextInput';
+import { FollowerUserList } from '@/pages/share-post/@common/contexts/TagTextInput';
 import type { CommentScreenProps } from '@/types/routes/props/share-post/comment';
 
 const CommentListPage = withErrorBoundary<CommentScreenProps>(
@@ -21,9 +21,7 @@ const CommentListPage = withErrorBoundary<CommentScreenProps>(
                     <Suspense fallback={<CommentSkeleton />}>
                         <CommentList {...props} />
                     </Suspense>
-                    <Suspense fallback={<FollowerUserListSkeleton />}>
-                        <FollowerUserList containerStyles={styles.followerUserListContainer} />
-                    </Suspense>
+                    <FollowerUserList containerStyles={styles.followerUserListContainer} />
                 </View>
                 <CommentTextEditor />
             </CommentProvider>
