@@ -2,9 +2,9 @@ import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flas
 import React, { useCallback, useRef, useState } from 'react';
 import { RefreshControl } from 'react-native-gesture-handler';
 
-import useCommentNavigation from '../../@common/hooks/useCommentNavigation';
 import EmptyComment from '../../empty';
 import useCommentActions from '../hooks/useCommentActions';
+import useCommentNavigation from '../hooks/useCommentNavigation';
 
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';

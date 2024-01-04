@@ -1,47 +1,56 @@
+import { TouchableTypo } from '@crawl/design-system';
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import type { CommentActionButtonsAction } from '../../../@common/contexts/Comment/components/ActionButtons';
 import CommentActionButtons from '../../../@common/contexts/Comment/components/ActionButtons';
 
-import { Avatar } from '@/components/@common/atoms';
+import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import TaggedContents from '@/components/share-post/molecules/TaggedContents';
-import CommentHeader from '@/pages/share-post/@common/contexts/Comment/components/CommentHeader';
+import CommentHeader, { type CommentHeaderProps } from '@/pages/share-post/@common/contexts/Comment/components/CommentHeader';
 import CommentTemplate from '@/pages/share-post/@common/contexts/Comment/components/CommentTemplate';
-import type { FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
+import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
 
 type CommentListProps = {
-    item: FetchCommentReplyResponse;
+    item: FetchCommentResponse;
 };
 
 interface CommentListActions extends CommentActionButtonsAction {
     onPressNickname(nickname: string): void;
     onPressTag(nickname: string): void;
+    onPressShowCommentReplyButton(commentId: string): void;
 }
 
 export default function CommentItem({
     item: {
-        commentReply: {
+        comment: {
+            createdAt,
             id: commentId,
             contents,
             isMine,
             isModified,
-            createdAt,
+            replyCount,
             user: { nickname, profile },
         },
     },
     onPressNickname,
     onPressTag,
+    onPressShowCommentReplyButton,
     onPressDeclarationButton,
     onPressDeleteButton,
     onPressUpdateButton,
     onPressWriteButton,
-}: CommentListProps & CommentListActions) {
+}: CommentListProps & CommentListActions & Pick<CommentHeaderProps, 'onPressNickname'>) {
     const handlePressNickname = () => {
         onPressNickname(nickname);
     };
 
     const handlePressTag = (tag: string) => {
         onPressTag(tag);
+    };
+
+    const handlePressShowReplyButton = () => {
+        onPressShowCommentReplyButton(commentId);
     };
 
     return (
@@ -75,8 +84,27 @@ export default function CommentItem({
                         onPressDeleteButton={onPressDeleteButton}
                         onPressDeclarationButton={onPressDeclarationButton}
                     />
+                    <ConditionalRenderer
+                        condition={replyCount !== 0}
+                        trueContent={
+                            <View style={styles.container}>
+                                <TouchableTypo variant="body4" color="secondary" onPress={handlePressShowReplyButton}>
+                                    답글 {replyCount}개보기
+                                </TouchableTypo>
+                            </View>
+                        }
+                        falseContent={null}
+                    />
                 </>
             }
         />
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        gap: 10,
+        paddingTop: 10,
+    },
+});

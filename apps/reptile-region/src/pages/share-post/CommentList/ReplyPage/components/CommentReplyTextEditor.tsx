@@ -1,12 +1,8 @@
-import React, { useCallback, useEffect } from 'react';
-import { Keyboard } from 'react-native';
+import React, { useEffect } from 'react';
 
-import TextInputEditor, { type CommentTextInputActions } from '../../../@common/contexts/Comment/components/TextInputEditor';
-import useCommentActions from '../../../@common/contexts/Comment/hooks/useCommentHandler';
+import TextInputEditor from '../../../@common/contexts/Comment/components/TextInputEditor';
+import useCreateOrUpdateCommentReply from '../hooks/useCreateOrUpdateCommentReply';
 
-import useCreateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useCreateCommentReply';
-import useUpdateCommentReply from '@/apis/share-post/comment-reply/hooks/mutations/useUpdateCommentReply';
-import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
 import { useTagHandler } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 type CommentReplyTextEditorProps = {
@@ -14,36 +10,8 @@ type CommentReplyTextEditorProps = {
 };
 
 export default function CommentReplyTextEditor({ isFocus }: CommentReplyTextEditorProps) {
-    const { changeText, tagTextInputFocus } = useTagHandler();
-    const { setCreateCommentSubmitType } = useCommentActions();
-    const handleSuccess = () => {
-        setTimeout(Keyboard.dismiss, 500);
-        changeText('');
-    };
-    const { requireAuthNavigation } = useAuthNavigation();
-    const createCommentReply = useCreateCommentReply({ onSuccess: handleSuccess });
-    const updateCommentReply = useUpdateCommentReply({
-        onSuccess: () => {
-            setCreateCommentSubmitType();
-            handleSuccess();
-        },
-    });
-
-    const handleSubmit: CommentTextInputActions['onSubmit'] = useCallback(
-        ({ id, submitType, contents }) => {
-            requireAuthNavigation(() => {
-                switch (submitType) {
-                    case 'UPDATE':
-                        updateCommentReply.mutate({ commentReplyId: id, contents });
-                        return;
-                    case 'CREATE':
-                        createCommentReply.mutate({ commentId: id, contents });
-                        return;
-                }
-            });
-        },
-        [createCommentReply, updateCommentReply, requireAuthNavigation],
-    );
+    const { tagTextInputFocus } = useTagHandler();
+    const { mutate, isPending } = useCreateOrUpdateCommentReply();
 
     useEffect(() => {
         if (isFocus) {
@@ -59,11 +27,5 @@ export default function CommentReplyTextEditor({ isFocus }: CommentReplyTextEdit
         return;
     }, [isFocus, tagTextInputFocus]);
 
-    return (
-        <TextInputEditor
-            maxLength={500}
-            onSubmit={handleSubmit}
-            isLoadingSubmit={createCommentReply.isPending || updateCommentReply.isPending}
-        />
-    );
+    return <TextInputEditor maxLength={500} onSubmit={mutate} isLoadingSubmit={isPending} />;
 }

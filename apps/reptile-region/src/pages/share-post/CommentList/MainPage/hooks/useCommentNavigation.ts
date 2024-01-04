@@ -2,10 +2,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useCallback, useMemo } from 'react';
 
 import type { CommentReplyParams, ImageThumbnailParams } from '@/types/routes/params/sharePost';
-import type { CommentNavigationNavigationProp, CommentReplyNavigationProp } from '@/types/routes/props/share-post/comment';
+import type { CommentNavigationProp } from '@/types/routes/props/share-post/comment';
 
 export default function useCommentNavigation() {
-    const navigation = useNavigation<CommentNavigationNavigationProp | CommentReplyNavigationProp>();
+    const navigation = useNavigation<CommentNavigationProp>();
 
     const navigateDetailPage = useCallback(
         (params: Omit<ImageThumbnailParams, 'pageState'>) => {

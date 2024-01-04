@@ -1,7 +1,6 @@
 import React from 'react';
 
-import TextInputEditor from '../../../@common/contexts/Comment/components/TextInputEditor';
-
+import TextInputEditor from '@/pages/share-post/@common/contexts/Comment/components/TextInputEditor';
 import useCreateOrUpdateComment from '@/pages/share-post/@common/hooks/useCreateOrUpdateComment';
 
 export default function CommentTextEditor() {

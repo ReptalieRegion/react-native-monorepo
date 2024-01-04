@@ -11,7 +11,7 @@ type CommentScreenProps = CompositeScreenProps<
 >;
 
 // 댓글 Navigation
-type CommentNavigationNavigationProp = CompositeNavigationProp<
+type CommentNavigationProp = CompositeNavigationProp<
     NativeStackNavigationProp<CommentParamList, 'main'>,
     NativeStackNavigationProp<RootRoutesParamList>
 >;
@@ -28,4 +28,4 @@ type CommentReplyNavigationProp = CompositeNavigationProp<
     NativeStackNavigationProp<RootRoutesParamList>
 >;
 
-export type { CommentNavigationNavigationProp, CommentReplyNavigationProp, CommentReplyScreenProps, CommentScreenProps };
+export type { CommentNavigationProp, CommentReplyNavigationProp, CommentReplyScreenProps, CommentScreenProps };

@@ -5,7 +5,6 @@ import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } fr
 
 import useComment from '../hooks/useComment';
 import useCommentActions from '../hooks/useCommentHandler';
-import type { SubmitType } from '../types';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import useAlert from '@/components/overlay/Alert/useAlert';
@@ -17,7 +16,7 @@ export type CommentTextInputProps = {
 };
 
 export interface CommentTextInputActions {
-    onSubmit({ id, submitType, contents }: { id: string; submitType: SubmitType; contents: string }): void;
+    onSubmit(contents: string): void;
 }
 
 export default function CommentTextInputEditor({
@@ -31,7 +30,7 @@ export default function CommentTextInputEditor({
         paddingBottom: paddingBottom.value,
     }));
     const { contents, selection } = useTag();
-    const { id, submitType } = useComment();
+    const { submitType } = useComment();
     const { tagTextInputFocus, changeText } = useTagHandler();
     const { setCreateCommentSubmitType } = useCommentActions();
     const openAlert = useAlert();
@@ -77,7 +76,7 @@ export default function CommentTextInputEditor({
     }, [submitType, paddingBottom, setCreateCommentSubmitType, tagTextInputFocus, changeText, openAlert]);
 
     const handleSubmit = () => {
-        onSubmit({ id, submitType, contents });
+        onSubmit(contents);
     };
 
     return (

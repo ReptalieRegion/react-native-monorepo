@@ -1,4 +1,4 @@
-import type { InfiniteData } from '@tanstack/react-query';
+import type { InfiniteData, UseMutationOptions } from '@tanstack/react-query';
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createCommentReply } from '../../repository';
@@ -8,21 +8,17 @@ import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchComment } from '@/types/apis/share-post/comment';
 import type { CreateCommentReply, FetchCommentReply } from '@/types/apis/share-post/comment-reply';
 
-// 대댓글 생성
-interface UseCreateCommentReplyActions {
-    onSuccess(): void;
-}
-
-type UseCreateCommentReplyProps = UseCreateCommentReplyActions;
-
-export default function useCreateCommentReply({ onSuccess }: UseCreateCommentReplyProps) {
+export default function useBaseCreateCommentReply<TContext = unknown>(
+    props?: UseMutationOptions<CreateCommentReply['Response'], HTTPError, CreateCommentReply['Request'], TContext>,
+) {
     const queryClient = useQueryClient();
-    return useMutation<CreateCommentReply['Response'], HTTPError, CreateCommentReply['Request']>({
+    return useMutation<CreateCommentReply['Response'], HTTPError, CreateCommentReply['Request'], TContext>({
         mutationFn: ({ commentId, contents }) => createCommentReply({ commentId, contents }),
-        onSuccess: (data) => {
-            onSuccess();
+        onSuccess: (data, variables, context) => {
+            props?.onSuccess?.(data, variables, context);
             updateCommentListCache({ queryClient, data });
             updateCommentReplyListCache({ queryClient, data });
+            queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.commentReply(data.post.comment.id) });
         },
     });
 }

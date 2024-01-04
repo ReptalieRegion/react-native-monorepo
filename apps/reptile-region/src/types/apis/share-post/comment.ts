@@ -109,4 +109,16 @@ type DeleteCommentResponse = {
 
 type DeleteComment = ServerAPI<DeleteCommentRequest, DeleteCommentResponse>;
 
-export type { CreateComment, DeleteComment, FetchComment, FetchCommentResponse, UpdateComment };
+export type {
+    CreateComment,
+    CreateCommentRequest,
+    DeleteComment,
+    DeleteCommentRequest,
+    DeleteCommentResponse,
+    FetchComment,
+    FetchCommentRequest,
+    FetchCommentResponse,
+    UpdateComment,
+    UpdateCommentRequest,
+    UpdateCommentResponse,
+};
