@@ -71,5 +71,6 @@ const styles = StyleSheet.create({
     },
     wrapper: {
         position: 'absolute',
+        flex: 1,
     },
 });

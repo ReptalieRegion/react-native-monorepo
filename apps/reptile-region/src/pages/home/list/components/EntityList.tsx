@@ -6,6 +6,7 @@ import React from 'react';
 import { Platform, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import EntityListError from '../error/EntityListError';
 import EntityListSkeleton from '../loading/EntitySkeleton';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
@@ -111,11 +112,7 @@ const EntityList = withAsyncBoundary<EntityListProps>(
     },
     {
         pendingFallback: <EntityListSkeleton />,
-        rejectedFallback: () => (
-            <View>
-                <Typo>hi</Typo>
-            </View>
-        ),
+        rejectedFallback: EntityListError,
     },
 );
 
@@ -134,7 +131,7 @@ const styles = StyleSheet.create({
                 },
             },
             android: {
-                elevation: 3,
+                elevation: 1,
             },
         }),
         borderTopRightRadius: 10,

@@ -55,12 +55,12 @@ function selectPhoto(state: PhotoSelectState, photo: Photo): PhotoSelectState {
         selectedPhotos.length !== 0 && currentSelectedPhoto?.uri === photo.uri
             ? 'DELETE'
             : selectedPhotos.find((prevPhoto) => prevPhoto.uri === photo.uri) !== undefined
-            ? 'CHANGE_CURRENT_SELECTED_PHOTO'
-            : minSelectCount && selectedPhotos.length <= minSelectCount
-            ? 'MIN'
-            : maxSelectCount && selectedPhotos.length >= maxSelectCount
-            ? 'MAX'
-            : 'ADD';
+              ? 'CHANGE_CURRENT_SELECTED_PHOTO'
+              : minSelectCount && selectedPhotos.length <= minSelectCount
+                ? 'MIN'
+                : maxSelectCount && selectedPhotos.length >= maxSelectCount
+                  ? 'MAX'
+                  : 'ADD';
 
     switch (actionType) {
         case 'ADD':

@@ -1,7 +1,7 @@
 import { Typo, color } from '@crawl/design-system';
 import React, { useCallback, useMemo, useState, type ReactNode } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
-import { StyleSheet, View, type LayoutChangeEvent } from 'react-native';
+import { Platform, StyleSheet, View, type LayoutChangeEvent } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { type TitleAndDescriptionProps } from './TitleAndDescription';
@@ -20,7 +20,10 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
     const { bottom } = useSafeAreaInsets();
     const [titleHeight, setTitleHeight] = useState(bottom + HEADER_HEIGHT);
 
-    const buttonStyle = useMemo(() => [styles.button, { bottom }], [bottom]);
+    const buttonStyle = useMemo(
+        () => [styles.button, { bottom: Platform.select({ ios: bottom, android: bottom + 10 }) }],
+        [bottom],
+    );
 
     const contentsStyle: StyleProp<ViewStyle> = useMemo(
         () => [contentsAlign === 'center' ? styles.contentCenter : styles.contentTop, { paddingBottom: titleHeight }],

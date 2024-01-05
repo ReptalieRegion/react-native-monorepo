@@ -127,6 +127,6 @@ const styles = StyleSheet.create({
         gap: 15,
     },
     textContainer: {
-        height: 20,
+        height: 23,
     },
 });

@@ -3,7 +3,7 @@ import { Typo, color } from '@crawl/design-system';
 import { useOnOff } from '@crawl/react-hooks';
 import dayjs from 'dayjs';
 import React, { useCallback, useReducer } from 'react';
-import { Keyboard, Platform, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { Keyboard, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
 import DatePickerTextField from '../../components/DatePickerTextField';
 import useCreateOrUpdateEntityWeight from '../../hooks/mutations/useCreateOrUpdateEntityWeight';
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: color.White.toString(),
         paddingBottom: 10,
+        justifyContent: 'flex-end',
     },
     modalContainer: {
         flex: 1,
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     inputGroup: {
+        flex: 1,
         gap: 20,
     },
     inputWrapper: {
@@ -119,6 +121,5 @@ const styles = StyleSheet.create({
     },
     buttonWrapper: {
         marginTop: 'auto',
-        marginBottom: Platform.select({ android: 20 }),
     },
 });

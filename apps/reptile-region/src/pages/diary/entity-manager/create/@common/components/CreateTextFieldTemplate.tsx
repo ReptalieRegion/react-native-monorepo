@@ -94,9 +94,10 @@ export default function CreateTextFieldTemplate({ title, contents, button, conte
 
     const buttonAnimationAndroid = useAnimatedStyle(() => {
         const { height, state } = keyboard;
+
         if (state.value === KeyboardState.OPEN || state.value === KeyboardState.OPENING) {
             return {
-                transform: [{ translateY: -height.value + bottom }],
+                bottom: height.value + bottom,
             };
         }
 
@@ -106,10 +107,10 @@ export default function CreateTextFieldTemplate({ title, contents, button, conte
             state.value === KeyboardState.CLOSING
         ) {
             return {
-                bottom: 0,
-                transform: [{ translateY: -20 }],
+                bottom: bottom + 10,
             };
         }
+
         return {
             bottom,
         };

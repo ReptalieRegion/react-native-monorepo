@@ -1,7 +1,7 @@
 import { Typo, color } from '@crawl/design-system';
 import dayjs from 'dayjs';
 import React, { useMemo } from 'react';
-import { StyleSheet, View, type ViewStyle } from 'react-native';
+import { Platform, StyleSheet, View, type ViewStyle } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -42,7 +42,7 @@ export default function CalendarItemCreatePage() {
 
     const { bottom } = useSafeAreaInsets();
 
-    const wrapperStyle: ViewStyle = useMemo(() => ({ paddingBottom: bottom }), [bottom]);
+    const wrapperStyle: ViewStyle = useMemo(() => ({ paddingBottom: Platform.select({ ios: bottom, android: 10 }) }), [bottom]);
 
     return (
         <PageWrapper style={wrapperStyle}>
@@ -181,5 +181,6 @@ const styles = StyleSheet.create({
     buttonWrapper: {
         marginHorizontal: 20,
         marginTop: 'auto',
+        paddingTop: 10,
     },
 });
