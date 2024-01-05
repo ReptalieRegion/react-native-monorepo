@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
-import TaggedContents from '@/components/share-post/molecules/TaggedContents';
+import TaggedContents from '@/pages/share-post/@common/components/TaggedContents';
 import { calculateTimeAgo } from '@/utils/date/time-ago';
 
 type PostContentsState = {
@@ -24,7 +24,7 @@ interface PostContentsActions {
 
 type PostContentsProps = PostContentsState & PostContentsActions;
 
-export default function PostContents({
+export default function PostCardContents({
     post: { id: postId, commentCount, contents, likeCount, createdAt },
     onPressComment,
     onPressTag,

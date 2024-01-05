@@ -6,7 +6,7 @@ import type { CommentActionButtonsAction } from '../../../@common/contexts/Comme
 import CommentActionButtons from '../../../@common/contexts/Comment/components/ActionButtons';
 
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
-import TaggedContents from '@/components/share-post/molecules/TaggedContents';
+import TaggedContents from '@/pages/share-post/@common/components/TaggedContents';
 import CommentHeader, { type CommentHeaderProps } from '@/pages/share-post/@common/contexts/Comment/components/CommentHeader';
 import CommentTemplate from '@/pages/share-post/@common/contexts/Comment/components/CommentTemplate';
 import type { FetchCommentResponse } from '@/types/apis/share-post/comment';

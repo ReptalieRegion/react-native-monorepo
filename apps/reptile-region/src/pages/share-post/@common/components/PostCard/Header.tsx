@@ -2,7 +2,7 @@ import { TouchableTypo } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-import Follow from '../../../../pages/share-post/@common/components/Follow';
+import Follow from '../Follow';
 
 import { KebabMenu } from '@/assets/icons';
 import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
@@ -23,7 +23,7 @@ interface PostHeaderActions {
 
 type PostHeaderProps = PostHeaderState & PostHeaderActions;
 
-export default function PostHeader({
+export default function PostCardHeader({
     isFollow,
     nickname,
     profileImage,

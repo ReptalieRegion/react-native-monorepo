@@ -1,7 +1,7 @@
 import React from 'react';
 
 import useMeProfileAndPostCount from '@/apis/share-post/post/hooks/combine/useMeProfileAndPostCount';
-import UserProfile from '@/components/share-post/molecules/UserProfile/UserProfile';
+import UserProfile from '@/pages/share-post/ImageThumbnailList/@common/components/UserProfile';
 import type { FollowRouterParams } from '@/types/routes/params/sharePost';
 
 interface ListHeaderComponentActions {

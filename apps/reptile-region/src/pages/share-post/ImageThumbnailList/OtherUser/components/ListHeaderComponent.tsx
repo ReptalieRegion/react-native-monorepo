@@ -2,7 +2,7 @@ import { useRoute } from '@react-navigation/native';
 import React from 'react';
 
 import useUserProfileAndPostCount from '@/apis/share-post/post/hooks/combine/useUserProfileAndPostCount';
-import UserProfile, { type UserDetailPanelActions } from '@/components/share-post/molecules/UserProfile/UserProfile';
+import UserProfile, { type UserDetailPanelActions } from '@/pages/share-post/ImageThumbnailList/@common/components/UserProfile';
 import type { SharePostImageThumbnailListModalRouteProp } from '@/types/routes/props/share-post/image-thumbnail';
 
 type ListHeaderComponentState = {

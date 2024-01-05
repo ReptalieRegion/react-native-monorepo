@@ -3,8 +3,8 @@ import React from 'react';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
+import PostHeader from '../../../../pages/share-post/@common/components/PostCard/Header';
 import NotificationPostContents from '../../molecules/NotificationPostContents';
-import PostHeader from '../../molecules/PostHeader';
 
 import { Interactive, PostCardImageCarousel } from './components';
 import PostCard from './providers/PostCard';

@@ -2,8 +2,8 @@ import React from 'react';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 
-import PostContents from '../../molecules/PostContents';
-import PostHeader from '../../molecules/PostHeader';
+import PostCardContents from '../../../../pages/share-post/@common/components/PostCard/Contents';
+import PostCardHeader from '../../../../pages/share-post/@common/components/PostCard/Header';
 
 import { Interactive, PostCardImageCarousel } from './components';
 import PostCard from './providers/PostCard';
@@ -70,7 +70,7 @@ export default function SharePostCard({
     return (
         <View style={[styles.container, containerStyle]}>
             <PostCard uuid={postId}>
-                <PostHeader
+                <PostCardHeader
                     profileImage={profile}
                     isFollow={isFollow}
                     nickname={nickname}
@@ -86,7 +86,7 @@ export default function SharePostCard({
                     onPressComment={onPressComment}
                     onPressHeart={onPressHeart}
                 />
-                <PostContents
+                <PostCardContents
                     post={{ id: postId, commentCount, contents, likeCount, createdAt }}
                     onPressComment={onPressComment}
                     onPressTag={onPressTag}
