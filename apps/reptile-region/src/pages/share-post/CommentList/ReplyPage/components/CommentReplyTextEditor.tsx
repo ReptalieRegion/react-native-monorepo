@@ -6,13 +6,12 @@ import useCreateOrUpdateCommentReply from '../hooks/useCreateOrUpdateCommentRepl
 import { useTagHandler } from '@/pages/share-post/@common/contexts/TagTextInput';
 
 type CommentReplyTextEditorProps = {
-    postId: string;
     isFocus: boolean;
 };
 
-export default function CommentReplyTextEditor({ postId, isFocus }: CommentReplyTextEditorProps) {
+export default function CommentReplyTextEditor({ isFocus }: CommentReplyTextEditorProps) {
     const { tagTextInputFocus } = useTagHandler();
-    const { mutate, isPending } = useCreateOrUpdateCommentReply(postId);
+    const { mutate, isPending } = useCreateOrUpdateCommentReply();
 
     useEffect(() => {
         if (isFocus) {

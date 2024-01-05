@@ -1,8 +1,12 @@
+import { withAsyncBoundary } from '@crawl/async-boundary';
 import { Typo, color } from '@crawl/design-system';
 import type { ListRenderItem } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React from 'react';
-import { Platform, StyleSheet, TouchableOpacity, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Platform, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import EntityListSkeleton from '../loading/EntitySkeleton';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import TagView from '@/components/@common/atoms/TagView/TagView';
@@ -10,6 +14,7 @@ import BasicImageCarousel from '@/components/@common/molecules/BasicImageCarouse
 import GenderIcon from '@/components/@common/molecules/GenderIcon/GenderIcon';
 import useInfiniteFetchEntity from '@/pages/diary/entity-manager/ListPage/hooks/queries/useInfiniteFetchEntity';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
+import type { EntityDetailParams } from '@/types/routes/params/diary';
 
 type EntityListState = {
     carouselProps: {
@@ -22,76 +27,97 @@ type EntityListState = {
     };
 };
 
-interface EntityListActions {}
+type EntityListActions = {
+    navigateEntityDetail(params: EntityDetailParams): void;
+};
 
 type EntityListProps = EntityListState & EntityListActions;
 
-export default function EntityList({ carouselProps }: EntityListProps) {
-    const { data } = useInfiniteFetchEntity();
+const EntityList = withAsyncBoundary<EntityListProps>(
+    ({ carouselProps, navigateEntityDetail }) => {
+        const { data } = useInfiniteFetchEntity();
 
-    const wrapperStyle: StyleProp<ViewStyle> = [
-        styles.shadowWrapper,
-        { marginHorizontal: carouselProps.marginHorizontal, marginVertical: carouselProps.marginVertical },
-    ];
-    const imageStyle = {
-        width: carouselProps.width,
-        height: carouselProps.height,
-        borderTopRightRadius: 10,
-        borderTopLeftRadius: 10,
-    };
+        const wrapperStyle: StyleProp<ViewStyle> = [
+            styles.shadowWrapper,
+            {
+                marginHorizontal: carouselProps.marginHorizontal,
+                marginVertical: carouselProps.marginVertical,
+            },
+        ];
 
-    const keyExtractor = (item: FetchEntityListResponse) => item.entity.id;
-    const renderItem: ListRenderItem<FetchEntityListResponse> = ({
-        item: {
-            entity: { gender, hatching, image, name, variety },
-        },
-    }) => {
-        return (
-            <TouchableOpacity style={wrapperStyle}>
-                <View style={styles.itemWrapper}>
-                    <Image source={{ uri: image.src }} style={imageStyle} />
-                    <View style={styles.textContainer}>
-                        <View style={styles.topWrapper}>
-                            <TagView label={variety.detailedSpecies} />
-                            <GenderIcon gender={gender} />
+        const imageStyle = {
+            width: carouselProps.width,
+            height: carouselProps.height,
+            borderTopRightRadius: 10,
+            borderTopLeftRadius: 10,
+        };
+
+        const keyExtractor = (item: FetchEntityListResponse) => item.entity.id;
+
+        const renderItem: ListRenderItem<FetchEntityListResponse> = ({
+            item: {
+                entity: { id, gender, hatching, image, name, variety },
+            },
+        }) => {
+            return (
+                <TouchableOpacity
+                    style={wrapperStyle}
+                    containerStyle={styles.container}
+                    onPress={() => navigateEntityDetail({ entityId: id })}
+                >
+                    <View style={styles.itemWrapper}>
+                        <Image source={{ uri: image.src }} style={imageStyle} />
+                        <View style={styles.textContainer}>
+                            <View style={styles.topWrapper}>
+                                <TagView label={variety.detailedSpecies} />
+                                <GenderIcon gender={gender} />
+                            </View>
+                            <Typo
+                                variant="body1"
+                                textBreakStrategy="highQuality"
+                                lineBreakMode="clip"
+                                lineBreakStrategyIOS="hangul-word"
+                                numberOfLines={1}
+                            >
+                                {name}
+                            </Typo>
+                            <ConditionalRenderer
+                                condition={!!hatching}
+                                trueContent={
+                                    <Typo variant="body3" color="placeholder">
+                                        {hatching}
+                                    </Typo>
+                                }
+                                falseContent={null}
+                            />
                         </View>
-                        <Typo
-                            variant="body1"
-                            textBreakStrategy="highQuality"
-                            lineBreakMode="clip"
-                            lineBreakStrategyIOS="hangul-word"
-                            numberOfLines={1}
-                        >
-                            {name}
-                        </Typo>
-                        <ConditionalRenderer
-                            condition={!!hatching}
-                            trueContent={
-                                <Typo variant="body3" color="placeholder">
-                                    {hatching}
-                                </Typo>
-                            }
-                            falseContent={null}
-                        />
                     </View>
-                </View>
-            </TouchableOpacity>
-        );
-    };
+                </TouchableOpacity>
+            );
+        };
 
-    return (
-        <BasicImageCarousel
-            carouselProps={carouselProps}
-            listProps={{
-                data: data.slice(0, 10),
-                keyExtractor,
-                renderItem,
-                estimatedItemSize: imageStyle.width,
-                estimatedListSize: imageStyle,
-            }}
-        />
-    );
-}
+        return (
+            <BasicImageCarousel
+                carouselProps={carouselProps}
+                listProps={{
+                    data: data.slice(0, 10),
+                    keyExtractor,
+                    renderItem,
+                    estimatedItemSize: imageStyle.width,
+                    estimatedListSize: imageStyle,
+                }}
+            />
+        );
+    },
+    {
+        pendingFallback: <EntityListSkeleton />,
+        rejectedFallback: () => (
+            <View>
+                <Typo>hi</Typo>
+            </View>
+        ),
+    },
+);
 
 const styles = StyleSheet.create({
     shadowWrapper: {
@@ -115,6 +141,10 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         paddingHorizontal: 5,
         paddingBottom: 5,
+        height: 260,
+    },
+    container: {
+        flex: 1,
     },
     itemWrapper: {
         flex: 1,
@@ -134,3 +164,5 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
     },
 });
+
+export default EntityList;

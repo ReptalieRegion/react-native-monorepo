@@ -4,23 +4,16 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-export default function EntityListSkeleton({
-    width,
-    height,
-    offset,
-    marginVertical,
-}: {
-    width: number;
-    height: number;
-    offset: number;
-    marginVertical: number;
-}) {
+import useCalcCarouselSize from '../hooks/useCalcCarouselSize';
+
+export default function EntityListSkeleton() {
+    const { offset, marginHorizontal, imageWidth } = useCalcCarouselSize();
     return (
-        <View style={{ paddingLeft: offset, marginVertical, ...styles.wrapper }}>
+        <View style={{ paddingLeft: offset, marginVertical: marginHorizontal, ...styles.wrapper }}>
             {range(3).map((_, index) => (
                 <SkeletonPlaceholder key={index} direction="right">
                     <View style={styles.container}>
-                        <View style={{ ...styles.image, width, height }} />
+                        <View style={{ ...styles.image, width: imageWidth, height: imageWidth }} />
                         <View style={styles.textContainer}>
                             <View style={styles.textTop}>
                                 <View style={{ ...styles.text, ...styles.tag }} />

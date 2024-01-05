@@ -7,6 +7,7 @@ import PostListSkeleton from './components/Post/loading';
 import PostDetailError from './error';
 
 import HTTPError from '@/apis/@utils/error/HTTPError';
+import PageWrapper from '@/components/PageWrapper';
 import type { PostDetailModalListScreenProps, PostDetailRouteProp } from '@/types/routes/props/share-post/post-detail';
 
 const Post = React.lazy(() => import('./components/Post/page'));
@@ -37,10 +38,10 @@ const PostDetailModalListPage = withAsyncBoundary(
     },
     {
         pendingFallback: (
-            <>
+            <PageWrapper>
                 <ListHeaderComponent />
                 <CommentSkeleton />
-            </>
+            </PageWrapper>
         ),
         rejectedFallback: PostDetailError,
         ignoreError: (error) => !(error instanceof HTTPError) || error.code !== -2301,

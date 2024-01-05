@@ -18,7 +18,9 @@ type NewSharePostState = {
     };
 };
 
-interface NewSharePostActions {}
+type NewSharePostActions = {
+    navigationPostDetail(): void;
+};
 
 type NewSharePostProps = NewSharePostState & NewSharePostActions;
 

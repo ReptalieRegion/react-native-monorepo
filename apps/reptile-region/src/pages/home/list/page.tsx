@@ -1,57 +1,30 @@
 import { Typo, color } from '@crawl/design-system';
-import { ErrorBoundary } from '@crawl/error-boundary';
-import React, { Suspense } from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import React, { Suspense, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 import EntityList from './components/EntityList';
 import NewSharePost from './components/NewSharePost';
 import NoticeImageCarousel from './components/NoticeImageCarousel';
-import ChangeHeader from './header';
-import EntityListSkeleton from './loading/EntitySkeleton';
+import useCalcCarouselSize from './hooks/useCalcCarouselSize';
+import useHomeListNavigation from './hooks/useHomeListNavigation';
 import SharePostSkeleton from './loading/SharePostSkeleton';
 
+import useFetchPushReadCheck from '@/apis/notification/push/hooks/queries/useFetchPushReadCheck';
+import { NotificationIcon } from '@/assets/icons';
+import { ConditionalRenderer } from '@/components/@common/atoms';
+import withPageHeaderUpdate from '@/components/withPageHeaderUpdate';
+import { useAuth } from '@/hooks/auth';
+import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
 import type { HomeListPageScreenProp } from '@/types/routes/props/home/list';
 
-const gap = 10;
-const marginHorizontal = gap / 2;
-const sharePostHeight = 250;
+const HomeListPage = withPageHeaderUpdate<HomeListPageScreenProp>(
+    () => {
+        const { imageWidth, marginHorizontal, offset, sharePostHeight, gap } = useCalcCarouselSize();
 
-export default function HomeListPage(props: HomeListPageScreenProp) {
-    const { width } = useWindowDimensions();
-    const imageWidth = width / 2 - 40;
-    const offset = styles.title.paddingHorizontal - marginHorizontal;
+        const { navigateDiary, navigateEntityDetail, navigateSharePost, navigationPostDetail } = useHomeListNavigation();
 
-    const navigateSharePost = () => {
-        props.navigation.navigate('bottom-tab/routes', {
-            screen: 'tab',
-            params: {
-                screen: 'share-post/routes',
-                params: {
-                    screen: 'bottom-tab/list',
-                },
-            },
-        });
-    };
-
-    const navigateDiary = () => {
-        props.navigation.navigate('bottom-tab/routes', {
-            screen: 'tab',
-            params: {
-                screen: 'diary/routes',
-                params: {
-                    screen: 'entity-manager',
-                    params: {
-                        screen: 'entity-manager/list',
-                    },
-                },
-            },
-        });
-    };
-
-    return (
-        <>
-            <ChangeHeader {...props} />
+        return (
             <ScrollView style={styles.wrapper} contentContainerStyle={styles.contentContainer}>
                 <NoticeImageCarousel />
                 <View style={styles.container}>
@@ -73,6 +46,7 @@ export default function HomeListPage(props: HomeListPageScreenProp) {
                                     width: imageWidth,
                                     height: sharePostHeight,
                                 }}
+                                navigationPostDetail={navigationPostDetail}
                             />
                         </Suspense>
                     </View>
@@ -85,35 +59,61 @@ export default function HomeListPage(props: HomeListPageScreenProp) {
                                 </Typo>
                             </TouchableOpacity>
                         </View>
-                        <ErrorBoundary renderFallback={() => <Typo>hi</Typo>}>
-                            <Suspense
-                                fallback={
-                                    <EntityListSkeleton
-                                        width={imageWidth}
-                                        height={imageWidth}
-                                        offset={offset}
-                                        marginVertical={marginHorizontal}
-                                    />
-                                }
-                            >
-                                <EntityList
-                                    carouselProps={{
-                                        gap,
-                                        offset,
-                                        marginVertical: marginHorizontal,
-                                        marginHorizontal,
-                                        width: imageWidth,
-                                        height: imageWidth,
-                                    }}
-                                />
-                            </Suspense>
-                        </ErrorBoundary>
+                        <EntityList
+                            carouselProps={{
+                                gap,
+                                offset,
+                                marginVertical: marginHorizontal,
+                                marginHorizontal,
+                                width: imageWidth,
+                                height: imageWidth,
+                            }}
+                            navigateEntityDetail={navigateEntityDetail}
+                        />
                     </View>
                 </View>
             </ScrollView>
-        </>
-    );
-}
+        );
+    },
+    ({ navigation }) => {
+        const { isSignIn } = useAuth();
+        const { requireAuthNavigation } = useAuthNavigation();
+        const { data } = useFetchPushReadCheck();
+
+        useEffect(() => {
+            const headerRight = () => {
+                const handlePressNotification = () => {
+                    requireAuthNavigation(() => {
+                        navigation.navigate('me/notification-log');
+                    });
+                };
+
+                return (
+                    <ConditionalRenderer
+                        condition={!!isSignIn && data?.isReadAllLog !== undefined && !data.isReadAllLog}
+                        trueContent={
+                            <TouchableOpacity onPress={handlePressNotification}>
+                                <View style={styles.container}>
+                                    <NotificationIcon />
+                                    <View style={styles.circle} />
+                                </View>
+                            </TouchableOpacity>
+                        }
+                        falseContent={
+                            <TouchableOpacity onPress={handlePressNotification}>
+                                <NotificationIcon />
+                            </TouchableOpacity>
+                        }
+                    />
+                );
+            };
+
+            navigation.setOptions({ headerRight });
+        }, [data?.isReadAllLog, isSignIn, navigation, requireAuthNavigation]);
+
+        return null;
+    },
+);
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -137,4 +137,17 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
     },
+    circle: {
+        backgroundColor: color.Red[500].toString(),
+        position: 'absolute',
+        borderRadius: 9999,
+        borderWidth: 1,
+        borderColor: color.White.toString(),
+        height: 8,
+        width: 8,
+        top: 0,
+        right: 1,
+    },
 });
+
+export default HomeListPage;

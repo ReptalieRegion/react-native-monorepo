@@ -24,7 +24,7 @@ const CommentReplyListPage = withErrorBoundary<CommentReplyScreenProps>(
                     </Suspense>
                     <FollowerUserList containerStyles={styles.followerUserListContainer} />
                 </View>
-                <CommentReplyTextEditor postId={props.route.params.post.id} isFocus={props.route.params.isFocus} />
+                <CommentReplyTextEditor isFocus={props.route.params.isFocus} />
             </CommentProvider>
         );
     },

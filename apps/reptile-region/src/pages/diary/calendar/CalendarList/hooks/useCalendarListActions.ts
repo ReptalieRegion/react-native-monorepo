@@ -34,7 +34,6 @@ export default function useCalendarListActions() {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        console.log(isFocused, fetchedCalendarList.isLoading);
         if (isFocused && fetchedCalendarList.isLoading) {
             openLoading();
         } else if (isGlobalLoading) {

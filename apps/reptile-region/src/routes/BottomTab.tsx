@@ -24,6 +24,7 @@ const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabRoutes({ navigation }: BottomTabScreenProps) {
     const { isSignIn } = useAuth();
+
     const tabBar = useCallback(
         (props: BottomTabBarProps) => {
             const handleTabPressNavigate: MainBottomBarActions['onPressNavigate'] = async ({
