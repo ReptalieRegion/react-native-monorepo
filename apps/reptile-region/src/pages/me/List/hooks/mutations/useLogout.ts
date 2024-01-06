@@ -22,8 +22,8 @@ export default function useLogout() {
 
     // 로그아웃 - DB Refresh Token 삭제
     const signOutAPI = useBaseSignOut({
-        onSuccess: () => {
-            signOut();
+        onSuccess: async () => {
+            await signOut();
             navigateHomeList();
             successSignOutToast();
         },

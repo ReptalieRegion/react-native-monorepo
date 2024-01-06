@@ -14,7 +14,6 @@ import useCreatePushAgree from '../@common/hooks/mutations/useCreatePushAgree';
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
 import useSignUpStep1 from '@/apis/auth/hooks/mutations/useSignUpStep1';
 import useNicknameDuplicateCheck from '@/apis/auth/hooks/queries/useNicknameDuplicateCheck';
-import { registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import PageWrapper from '@/components/PageWrapper';
 import { useAuthHandler } from '@/hooks/auth';
@@ -67,7 +66,7 @@ export default function SignUpStep1({
                 userId,
             });
 
-            registerAuthTokens(tokens).then(signIn);
+            await signIn(tokens);
             createPushAgreeMutate();
             navigation.popToTop();
         } catch (error) {

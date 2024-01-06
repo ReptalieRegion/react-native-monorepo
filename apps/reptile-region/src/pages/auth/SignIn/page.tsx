@@ -5,7 +5,6 @@ import { Platform } from 'react-native';
 import SignInLogo from './components/SignInLogo';
 import SignInTemplates, { type SocialButtons } from './components/SignInTemplates';
 
-import { registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
 import useToast from '@/components/overlay/Toast/useToast';
 import { useAuthHandler } from '@/hooks/auth';
 import type { PostAppleAuth, PostKakaoAuth, SignUpRegister0 } from '@/types/apis/auth';
@@ -38,8 +37,7 @@ const SignInPage = ({ navigation, route: { params } }: SignInScreenProps) => {
     const handleSuccessAuth = async (data: PostKakaoAuth['Response'] | PostAppleAuth['Response']) => {
         switch (data.type) {
             case 'SIGN_IN':
-                await registerAuthTokens(data);
-                signIn();
+                await signIn(data);
                 if (params.successNavigate === 'BACK') {
                     navigation.goBack();
                 } else {

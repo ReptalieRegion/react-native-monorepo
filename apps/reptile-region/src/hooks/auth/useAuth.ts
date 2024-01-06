@@ -5,7 +5,9 @@ import type { SignInCheck } from '@/types/apis/auth';
 
 export default function useAuth() {
     const { data, isLoading } = useBaseSignInCheck<boolean>({
-        select: useCallback((selectData: SignInCheck['Response']) => selectData?.message === 'success', []),
+        select: useCallback((selectData: SignInCheck['Response']) => {
+            return selectData?.message === 'success';
+        }, []),
     });
 
     return {

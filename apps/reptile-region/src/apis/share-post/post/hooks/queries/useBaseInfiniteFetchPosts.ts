@@ -1,4 +1,9 @@
-import { useSuspenseInfiniteQuery, type UseSuspenseInfiniteQueryOptions } from '@tanstack/react-query';
+import {
+    useSuspenseInfiniteQuery,
+    type QueryFunctionContext,
+    type UseSuspenseInfiniteQueryOptions,
+} from '@tanstack/react-query';
+import { useCallback } from 'react';
 
 import { getPosts } from '../../repository';
 
@@ -18,8 +23,8 @@ export default function useBaseInfiniteFetchPosts<TData = FetchPosts['Response']
     return useSuspenseInfiniteQuery<FetchPosts['Response'], HTTPError, TData, CustomQueryKey, number>({
         queryKey: SHARE_POST_QUERY_KEYS.list,
         initialPageParam: 0,
-        queryFn: ({ pageParam }) => getPosts({ pageParam }),
-        getNextPageParam: (lastPage) => lastPage.nextPage,
+        queryFn: useCallback(({ pageParam }: QueryFunctionContext<CustomQueryKey, number>) => getPosts({ pageParam }), []),
+        getNextPageParam: useCallback((lastPage) => lastPage.nextPage, []),
         ...props,
     });
 }

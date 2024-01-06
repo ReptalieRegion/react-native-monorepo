@@ -23,18 +23,18 @@ const registerAuthTokens = async ({ accessToken, refreshToken }: RegisterTokenPr
 };
 
 const deleteAuthTokens = async () => {
-    await Promise.all([
+    return Promise.all([
         SecureStore.deleteItemAsync(SECURE_STORE_KEYS.ACCESS_TOKEN),
         SecureStore.deleteItemAsync(SECURE_STORE_KEYS.REFRESH_TOKEN),
     ]);
 };
 
 const getAccessToken = async () => {
-    return await SecureStore.getItemAsync(SECURE_STORE_KEYS.ACCESS_TOKEN);
+    return SecureStore.getItemAsync(SECURE_STORE_KEYS.ACCESS_TOKEN);
 };
 
 const getRefreshToken = async () => {
-    return await SecureStore.getItemAsync(SECURE_STORE_KEYS.REFRESH_TOKEN);
+    return SecureStore.getItemAsync(SECURE_STORE_KEYS.REFRESH_TOKEN);
 };
 
 export { deleteAuthTokens, getAccessToken, getRefreshToken, registerAuthTokens };
