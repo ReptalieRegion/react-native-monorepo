@@ -9,7 +9,7 @@ export default function useAuthHandler() {
     const queryClient = useQueryClient();
 
     const signOut = useCallback(async () => {
-        await deleteAuthTokens();
+        deleteAuthTokens();
         queryClient.removeQueries({
             predicate: (query) => query.queryKey !== AUTH_QUERY_KEYS.signInCheck,
         });
@@ -20,7 +20,12 @@ export default function useAuthHandler() {
 
     const signIn = useCallback(
         async (tokens: RefreshToken['Response']) => {
-            await registerAuthTokens(tokens);
+            registerAuthTokens(tokens);
+            queryClient.removeQueries({
+                predicate: (query) => {
+                    return query.queryKey[0] !== AUTH_QUERY_KEYS.signInCheck[0] && query.queryKey[0] !== 'me';
+                },
+            });
             queryClient.invalidateQueries();
             queryClient.setQueryData(AUTH_QUERY_KEYS.signInCheck, () => {
                 return { message: 'success' };
