@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 5,
-        width: 60,
+        minWidth: 60,
         justifyContent: 'center',
     },
 });
