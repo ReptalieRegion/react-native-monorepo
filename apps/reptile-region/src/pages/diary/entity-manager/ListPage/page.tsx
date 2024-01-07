@@ -2,6 +2,7 @@ import { color } from '@crawl/design-system';
 import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import React, { useCallback } from 'react';
 
+import EntityEmpty from './components/EntityEmpty';
 import useInfiniteFetchEntity from './hooks/queries/useInfiniteFetchEntity';
 
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
@@ -46,6 +47,7 @@ export default function EntityMangerList() {
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 keyExtractor={keyExtractor}
                 onEndReached={handleEndReached}
+                ListEmptyComponent={EntityEmpty}
                 CellRendererComponent={FadeInCellRenderComponent}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}

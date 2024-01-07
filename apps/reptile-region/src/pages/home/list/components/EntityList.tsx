@@ -10,6 +10,7 @@ import TagView from '@/components/@common/atoms/TagView/TagView';
 import BasicImageCarousel from '@/components/@common/molecules/BasicImageCarousel/BasicImageCarousel';
 import GenderIcon from '@/components/@common/molecules/GenderIcon/GenderIcon';
 import useInfiniteFetchEntity from '@/pages/diary/entity-manager/ListPage/hooks/queries/useInfiniteFetchEntity';
+import EntityEmpty from '@/pages/home/List/components/EntityEmpty';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 import type { EntityDetailParams } from '@/types/routes/params/diary';
 
@@ -36,6 +37,7 @@ export default function EntityList({ carouselProps, navigateEntityDetail }: Enti
     const wrapperStyle: StyleProp<ViewStyle> = [
         styles.shadowWrapper,
         {
+            width: carouselProps.width,
             marginHorizontal: carouselProps.marginHorizontal,
             marginVertical: carouselProps.marginVertical,
         },
@@ -101,11 +103,7 @@ export default function EntityList({ carouselProps, navigateEntityDetail }: Enti
                 renderItem,
                 estimatedItemSize: imageStyle.width,
                 estimatedListSize: imageStyle,
-                ListEmptyComponent: () => (
-                    <View>
-                        <Typo>jom</Typo>
-                    </View>
-                ),
+                ListEmptyComponent: EntityEmpty({ containerStyle: wrapperStyle }),
             }}
         />
     );
@@ -133,7 +131,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         paddingHorizontal: 5,
         paddingBottom: 5,
-        height: 260,
+        height: 280,
     },
     container: {
         flex: 1,
