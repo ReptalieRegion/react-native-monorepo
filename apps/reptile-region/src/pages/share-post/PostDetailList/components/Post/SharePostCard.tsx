@@ -1,14 +1,14 @@
-import { Typo } from '@crawl/design-system';
+import { TouchableTypo, Typo } from '@crawl/design-system';
 import React from 'react';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
-import PostHeader from '../../../../pages/share-post/@common/components/PostCard/Header';
-import NotificationPostContents from '../../molecules/NotificationPostContents';
+import PostHeader from '../../../@common/components/PostCard/Header';
+import { Interactive, PostCardImageCarousel } from '../../../@common/contexts/SharePostCard/components';
+import PostCard from '../../../@common/contexts/SharePostCard/providers/PostCard';
 
-import { Interactive, PostCardImageCarousel } from './components';
-import PostCard from './providers/PostCard';
-
+import { ConditionalRenderer } from '@/components/@common/atoms';
+import TaggedContents from '@/pages/share-post/@common/components/TaggedContents';
 import type { ImageType } from '@/types/global/image';
 import { calculateTimeAgo } from '@/utils/date/time-ago';
 
@@ -46,7 +46,7 @@ interface PostCardActions {
 
 type PostCardProps = PostCardState & PostCardActions;
 
-export default function SharePostCardNotification({
+export default function SharePostCard({
     post: {
         id: postId,
         images,
@@ -95,11 +95,18 @@ export default function SharePostCardNotification({
                         onPressComment={onPressComment}
                         onPressHeart={onPressHeart}
                     />
-                    <NotificationPostContents
-                        post={{ id: postId, contents, likeCount }}
-                        onPressTag={onPressTag}
-                        onPressLikeContents={onPressLikeContents}
-                    />
+                    <View style={styles.contentsWrapper}>
+                        <ConditionalRenderer
+                            condition={likeCount === 0}
+                            trueContent={null}
+                            falseContent={
+                                <TouchableTypo variant="heading2" onPress={onPressLikeContents}>
+                                    {likeCount}명이 좋아합니다.
+                                </TouchableTypo>
+                            }
+                        />
+                        <TaggedContents uuid={postId} contents={contents} onPressTag={onPressTag} />
+                    </View>
                     <Typo variant="body4" color="placeholder">
                         {calculateTimeAgo(createdAt)}
                     </Typo>
@@ -115,5 +122,9 @@ const styles = StyleSheet.create({
     },
     paddingView: {
         paddingHorizontal: 15,
+    },
+    contentsWrapper: {
+        flexDirection: 'column',
+        gap: 5,
     },
 });

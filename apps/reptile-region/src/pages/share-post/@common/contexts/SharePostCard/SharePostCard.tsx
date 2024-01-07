@@ -2,8 +2,8 @@ import React from 'react';
 import type { ViewStyle } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 
-import PostCardContents from '../../../../pages/share-post/@common/components/PostCard/Contents';
-import PostCardHeader from '../../../../pages/share-post/@common/components/PostCard/Header';
+import PostCardContents from '../../components/PostCard/Contents';
+import PostCardHeader from '../../components/PostCard/Header';
 
 import { Interactive, PostCardImageCarousel } from './components';
 import PostCard from './providers/PostCard';

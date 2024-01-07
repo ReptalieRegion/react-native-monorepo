@@ -8,6 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import usePostDetailCommentActions from '../../hooks/usePostDetailCommentActions';
 
 import CommentItem from './CommentItem';
+import EmptyComment from './empty';
 
 import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
 import { ListFooterLoading } from '@/components/@common/atoms';
@@ -113,6 +114,7 @@ export default function SharePostDetailModalPage({
                     renderItem={renderItem}
                     estimatedItemSize={150}
                     onEndReached={handleFetchNextPage}
+                    ListEmptyComponent={EmptyComment}
                     ListHeaderComponent={ListHeaderComponent}
                     ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 />

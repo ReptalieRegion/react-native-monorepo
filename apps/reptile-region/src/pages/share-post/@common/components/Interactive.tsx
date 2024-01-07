@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import InteractiveHeart from '../../../../components/share-post/organisms/SharePostCard/components/InteractiveHeart';
+import InteractiveHeart from '../contexts/SharePostCard/components/InteractiveHeart';
 
 import { Comment } from '@/assets/icons';
 import { ImageCarousel } from '@/components/@common/organisms/ImageCarousel';

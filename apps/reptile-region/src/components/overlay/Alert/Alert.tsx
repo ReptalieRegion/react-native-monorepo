@@ -1,7 +1,7 @@
 import { Typo, color } from '@crawl/design-system';
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, { FadeOut, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { ALERT_STYLES } from './token';
@@ -44,8 +44,11 @@ export default function Alert({ title, contents, buttons, onClose }: AlertProps)
     }));
 
     return (
-        <TouchableWithoutFeedback style={styles.wrapper} containerStyle={styles.wrapper} onPress={onClose}>
-            <Animated.View style={[styles.wrapper, wrapperStyles]} exiting={FadeOut}>
+        <View style={styles.touchWrapper}>
+            <TouchableOpacity style={styles.touchContainer} containerStyle={styles.touchContainer} onPress={onClose}>
+                <Animated.View style={wrapperStyles} />
+            </TouchableOpacity>
+            <Animated.View style={styles.wrapper} exiting={FadeOut}>
                 <Animated.View style={[styles.container, containerStyles]}>
                     <View style={styles.titleWrapper}>
                         <ConditionalRenderer condition={!!title} trueContent={<Typo variant="title3">{title}</Typo>} />
@@ -71,19 +74,30 @@ export default function Alert({ title, contents, buttons, onClose }: AlertProps)
                     </View>
                 </Animated.View>
             </Animated.View>
-        </TouchableWithoutFeedback>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    wrapper: {
+    touchWrapper: {
+        position: 'absolute',
         flex: 1,
+        width: '100%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    touchContainer: {
+        flex: 1,
         position: 'absolute',
         width: '100%',
         height: '100%',
         backgroundColor: color.DarkGray[500].alpha(0.3).toString(),
+    },
+    wrapper: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
     },
     container: {
         width: '85%',

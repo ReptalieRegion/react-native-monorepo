@@ -45,7 +45,7 @@ type NicknameDuplicateCheckResponse = {
 type NicknameDuplicateCheck = ServerAPI<NicknameDuplicateCheckRequest, NicknameDuplicateCheckResponse>;
 
 type SignInCheckResponse = {
-    message: 'success';
+    message: 'success' | 'fail';
 };
 
 type SignInCheck = ServerAPI<void, SignInCheckResponse>;

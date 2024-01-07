@@ -2,11 +2,13 @@ import { Typo } from '@crawl/design-system';
 import type { ListRenderItem } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import BasicImageCarousel from '@/components/@common/molecules/BasicImageCarousel/BasicImageCarousel';
 import useInfiniteFetchPosts from '@/pages/share-post/PostList/ListPage/hooks/queries/useInfiniteFetchPosts';
 import type { FetchPostsResponse } from '@/types/apis/share-post/post';
+import type { DetailPostParams } from '@/types/routes/params/sharePost';
 
 type NewSharePostState = {
     carouselProps: {
@@ -19,12 +21,12 @@ type NewSharePostState = {
 };
 
 type NewSharePostActions = {
-    navigationPostDetail(): void;
+    navigationPostDetail(params: DetailPostParams): void;
 };
 
 type NewSharePostProps = NewSharePostState & NewSharePostActions;
 
-export default function NewSharePost({ carouselProps }: NewSharePostProps) {
+export default function NewSharePost({ carouselProps, navigationPostDetail }: NewSharePostProps) {
     const { data } = useInfiniteFetchPosts();
 
     const wrapperStyle = [
@@ -37,9 +39,10 @@ export default function NewSharePost({ carouselProps }: NewSharePostProps) {
     const imageStyle = { width: carouselProps.width, height: carouselProps.height };
 
     const keyExtractor = (item: FetchPostsResponse) => item.post.id;
+
     const renderItem: ListRenderItem<FetchPostsResponse> = ({ item }) => {
         return (
-            <View style={wrapperStyle}>
+            <TouchableOpacity style={wrapperStyle} onPress={() => navigationPostDetail({ postId: item.post.id, type: 'like' })}>
                 <Image source={{ uri: item.post.images[0].src }} style={imageStyle} />
                 <Typo
                     color="placeholder"
@@ -50,7 +53,7 @@ export default function NewSharePost({ carouselProps }: NewSharePostProps) {
                 >
                     {item.post.contents}
                 </Typo>
-            </View>
+            </TouchableOpacity>
         );
     };
 

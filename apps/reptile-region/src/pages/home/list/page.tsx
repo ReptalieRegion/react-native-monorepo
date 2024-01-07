@@ -1,4 +1,5 @@
 import { Typo, color } from '@crawl/design-system';
+import { ErrorBoundary } from '@crawl/error-boundary';
 import React, { Suspense, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -6,8 +7,10 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import EntityList from './components/EntityList';
 import NewSharePost from './components/NewSharePost';
 import NoticeImageCarousel from './components/NoticeImageCarousel';
+import EntityListError from './error/EntityListError';
 import useCalcCarouselSize from './hooks/useCalcCarouselSize';
 import useHomeListNavigation from './hooks/useHomeListNavigation';
+import EntityListSkeleton from './loading/EntitySkeleton';
 import SharePostSkeleton from './loading/SharePostSkeleton';
 
 import useFetchPushReadCheck from '@/apis/notification/push/hooks/queries/useFetchPushReadCheck';
@@ -59,17 +62,21 @@ const HomeListPage = withPageHeaderUpdate<HomeListPageScreenProp>(
                                 </Typo>
                             </TouchableOpacity>
                         </View>
-                        <EntityList
-                            carouselProps={{
-                                gap,
-                                offset,
-                                marginVertical: marginHorizontal,
-                                marginHorizontal,
-                                width: imageWidth,
-                                height: imageWidth,
-                            }}
-                            navigateEntityDetail={navigateEntityDetail}
-                        />
+                        <ErrorBoundary renderFallback={EntityListError} onReset={navigateDiary}>
+                            <Suspense fallback={<EntityListSkeleton />}>
+                                <EntityList
+                                    carouselProps={{
+                                        gap,
+                                        offset,
+                                        marginVertical: marginHorizontal,
+                                        marginHorizontal,
+                                        width: imageWidth,
+                                        height: imageWidth,
+                                    }}
+                                    navigateEntityDetail={navigateEntityDetail}
+                                />
+                            </Suspense>
+                        </ErrorBoundary>
                     </View>
                 </View>
             </ScrollView>

@@ -6,7 +6,7 @@ import usePostDetailActions from '../../hooks/usePostDetailActions';
 
 import useFetchPost from '@/apis/share-post/post/hooks/queries/useFetchPost';
 import { Divider } from '@/components/@common/atoms/Divider';
-import SharePostCardNotification from '@/components/share-post/organisms/SharePostCard/SharePostCardNotification';
+import SharePostCard from '@/pages/share-post/PostDetailList/components/Post/SharePostCard';
 
 export default function Post({ postId }: { postId: string }) {
     const { data } = useFetchPost({ postId });
@@ -26,7 +26,7 @@ export default function Post({ postId }: { postId: string }) {
 
     return (
         <>
-            <SharePostCardNotification
+            <SharePostCard
                 post={data.post}
                 onPressHeart={() => updateOrCreateLike({ postId, isLike })}
                 onDoublePressImageCarousel={() => onlyLike({ postId, isLike })}
