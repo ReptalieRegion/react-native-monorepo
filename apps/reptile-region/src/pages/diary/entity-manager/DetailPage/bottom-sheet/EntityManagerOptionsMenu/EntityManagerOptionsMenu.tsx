@@ -38,7 +38,7 @@ export default function EntityManagerOptionsMenuBottomSheet({ entity, navigation
         onSuccess: () => {
             bottomSheetClose();
             navigation.goBack();
-            queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.list, exact: true });
+            queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.entityList, exact: true });
             queryClient.invalidateQueries({ queryKey: DIARY_QUERY_KEYS.calendar });
         },
     });

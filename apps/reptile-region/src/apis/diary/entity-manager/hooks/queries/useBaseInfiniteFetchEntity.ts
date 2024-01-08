@@ -22,7 +22,7 @@ type UseInfiniteFetchEntityProps<TData> = Pick<
 // 다이어리 개체조회
 export default function useBaseInfiniteFetchEntity<TData>(props?: UseInfiniteFetchEntityProps<TData>) {
     return useSuspenseInfiniteQuery<FetchEntityList['Response'], HTTPError, TData, CustomQueryKey, number>({
-        queryKey: DIARY_QUERY_KEYS.list,
+        queryKey: DIARY_QUERY_KEYS.entityList,
         initialPageParam: 0,
         gcTime: Infinity,
         queryFn: ({ pageParam }) => fetchEntityList({ pageParam }),

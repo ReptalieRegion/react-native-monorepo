@@ -6,7 +6,7 @@ export const AUTH_QUERY_KEYS = {
 
 /** Diary */
 export const DIARY_QUERY_KEYS = {
-    list: ['diary_entity'],
+    entityList: ['diary_entity'],
     weight: (entityId: string) => ['diary_entity_weight', entityId],
     calendar: ['diary_calendar'],
     calendarDate: (date: string) => ['diary_calendar', { date }],
