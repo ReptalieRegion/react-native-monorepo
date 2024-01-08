@@ -1014,6 +1014,8 @@ PODS:
     - React-debug
   - react-native-cameraroll (7.3.0):
     - React-Core
+  - react-native-date-picker (4.3.5):
+    - React-Core
   - react-native-image-editor (2.3.0):
     - React
     - React-RCTImage
@@ -1303,6 +1305,7 @@ DEPENDENCIES:
   - React-logger (from `../../../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../../../node_modules/react-native/ReactCommon`)
   - "react-native-cameraroll (from `../../../node_modules/@react-native-camera-roll/camera-roll`)"
+  - react-native-date-picker (from `../../../node_modules/react-native-date-picker`)
   - "react-native-image-editor (from `../../../node_modules/@react-native-community/image-editor`)"
   - react-native-pager-view (from `../../../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
@@ -1446,6 +1449,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/ReactCommon"
   react-native-cameraroll:
     :path: "../../../node_modules/@react-native-camera-roll/camera-roll"
+  react-native-date-picker:
+    :path: "../../../node_modules/react-native-date-picker"
   react-native-image-editor:
     :path: "../../../node_modules/@react-native-community/image-editor"
   react-native-pager-view:
@@ -1585,6 +1590,7 @@ SPEC CHECKSUMS:
   React-logger: e0c1e918d9588a9f39c9bc62d9d6bfe9ca238d9d
   React-Mapbuffer: 9731a0a63ebaf8976014623c4d637744d7353a7c
   react-native-cameraroll: 5282b6b4451cfed2afa19b9088d4b1e5f2bf9d88
+  react-native-date-picker: 90d1d60802a20085125657940b944f2bb4e5c113
   react-native-image-editor: 9361a215c3991cafbe5e7f28cbbad6e72c9c2705
   react-native-pager-view: d81ab2060b9caf57ca8c3a0d57467ff407cdb825
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89

@@ -120,7 +120,6 @@ function styleSizeGenerator(size: ConfirmButtonSize): { view: ViewStyle; text: P
                     borderRadius: 15,
                     paddingHorizontal: 15,
                     paddingVertical: 10,
-                    maxWidth: 140,
                 },
                 text: {
                     variant: 'title3',

@@ -12165,6 +12165,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-date-picker@npm:^4.3.5":
+  version: 4.3.5
+  resolution: "react-native-date-picker@npm:4.3.5"
+  peerDependencies:
+    react: ">= 17.0.1"
+    react-native: ">= 0.64.3"
+  checksum: 5d9c0e7d89d4165b6552cf887b8e501b8b225bbba3791210e6b53f17d807dbe11d3dcfbfa6f2ced22fb3d64ae0eb12b066934ca5590772c571460bbbfef8dd09
+  languageName: node
+  linkType: hard
+
 "react-native-dotenv@npm:^3.4.9":
   version: 3.4.9
   resolution: "react-native-dotenv@npm:3.4.9"
@@ -12705,6 +12715,7 @@ __metadata:
     react-native-asset: ^2.1.1
     react-native-bootsplash: ^5.1.3
     react-native-chart-kit: ^6.12.0
+    react-native-date-picker: ^4.3.5
     react-native-dotenv: ^3.4.9
     react-native-gesture-handler: ^2.14.0
     react-native-haptic-feedback: ^2.2.0
