@@ -107,12 +107,14 @@ export const useGallery = ({
                     },
                 });
             }
+
+            photoSelectDispatch({ type: 'REFETCH_SELECTED_PHOTO', photos: edges });
         } catch (error) {
             console.error('useGallery getNewPhotos error:', error);
         } finally {
             setIsReloading(false);
         }
-    }, [mimeTypeFilter, pageSize, state.photos, setIsReloading, photoDispatch]);
+    }, [state.photos, pageSize, mimeTypeFilter, setIsReloading, photoSelectDispatch, photoDispatch]);
 
     const initSelectedPhoto = useCallback(async () => {
         const { edges } = await CameraRoll.getPhotos({
@@ -150,6 +152,7 @@ export const useGallery = ({
         let subscription: EmitterSubscription;
         if (isAboveIOS14) {
             subscription = cameraRollEventEmitter.addListener('onLibrarySelectionChange', (_event) => {
+                console.log('hi');
                 getUnloadedPictures();
             });
         }

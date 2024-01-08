@@ -78,6 +78,11 @@ type PhotoSelectState = {
     limitType: 'MIN' | 'MAX' | 'NONE';
 };
 
+interface RefetchSelectedPhoto {
+    type: 'REFETCH_SELECTED_PHOTO';
+    photos: PhotoIdentifier[];
+}
+
 interface InitSelectedPhoto {
     type: 'INIT_SELECTED_PHOTO';
     photoIdentifier: PhotoIdentifier;
@@ -101,7 +106,7 @@ interface SetNoneLimit {
     type: 'SET_NONE_LIMIT';
 }
 
-type PhotoSelectedActions = SelectPhoto | DeleteSelectPhoto | InitSelectedPhoto | SetNoneLimit;
+type PhotoSelectedActions = SelectPhoto | DeleteSelectPhoto | InitSelectedPhoto | SetNoneLimit | RefetchSelectedPhoto;
 
 export type {
     AddPhotos,
@@ -114,6 +119,7 @@ export type {
     PhotoSelectedActions,
     PhotoState,
     RefetchPhotos,
+    RefetchSelectedPhoto,
     SavePhotos,
     SelectActionType,
     SelectPhoto,

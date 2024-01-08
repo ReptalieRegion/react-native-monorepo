@@ -1,4 +1,11 @@
-import type { InitSelectedPhoto, Photo, PhotoSelectState, PhotoSelectedActions, SelectActionType } from '../types';
+import type {
+    InitSelectedPhoto,
+    Photo,
+    PhotoSelectState,
+    PhotoSelectedActions,
+    RefetchSelectedPhoto,
+    SelectActionType,
+} from '../types';
 import { convertPhoto } from '../utils/photo-parsing';
 
 export default function photoSelectReducer(state: PhotoSelectState, actions: PhotoSelectedActions): PhotoSelectState {
@@ -15,9 +22,38 @@ export default function photoSelectReducer(state: PhotoSelectState, actions: Pho
                 maxSelectCount: actions.maxSelectCount,
                 minSelectCount: actions.minSelectCount,
             });
+        case 'REFETCH_SELECTED_PHOTO':
+            return refetchSelectedPhoto(state, actions.photos);
         default:
             return state;
     }
+}
+
+function refetchSelectedPhoto(state: PhotoSelectState, photos: RefetchSelectedPhoto['photos']): PhotoSelectState {
+    let selectedPhotos = [...state.selectedPhotos];
+    const newSelectedPhotos: Photo[] = [];
+
+    for (const photo of photos) {
+        if (selectedPhotos.length === 0) {
+            break;
+        }
+
+        for (let i = 0; i < selectedPhotos.length; i++) {
+            const prevSelectedPhoto = selectedPhotos[i];
+            if (prevSelectedPhoto.uri === photo.node.image.uri) {
+                selectedPhotos = selectedPhotos.filter((_, index) => index !== i);
+                newSelectedPhotos.push(prevSelectedPhoto);
+            }
+        }
+    }
+
+    const lastPhoto = newSelectedPhotos.at(-1);
+
+    return {
+        ...state,
+        selectedPhotos: newSelectedPhotos,
+        currentSelectedPhoto: lastPhoto ?? convertPhoto(photos[0]),
+    };
 }
 
 // 현재 선택된 사진 세팅

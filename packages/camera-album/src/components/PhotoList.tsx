@@ -49,7 +49,7 @@ export default function PhotoList({
 
     const renderItem: ListRenderItem<Photo> = useCallback(
         ({ item }) => {
-            const uri = item.uri;
+            const { uri } = item;
 
             const handlePressPhoto = () => {
                 selectPhoto(item);
@@ -58,7 +58,13 @@ export default function PhotoList({
             return (
                 <TouchableOpacity activeOpacity={0.5} onPress={handlePressPhoto}>
                     <View style={styles.wrapper}>
-                        <Image style={itemStyle} recyclingKey={uri} source={{ uri }} priority="high" contentFit="cover" />
+                        <Image
+                            style={itemStyle}
+                            recyclingKey={uri}
+                            source={{ uri, width: 200, height: 200 }}
+                            priority="high"
+                            contentFit="cover"
+                        />
                         <View style={styles.photoIndicators}>
                             <PhotoIndicators uri={uri} />
                         </View>
