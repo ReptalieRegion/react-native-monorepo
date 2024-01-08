@@ -39,7 +39,7 @@ export default function PushLogList({ navigation }: PushLogListScreenProp) {
                     <TouchableOpacity key={item.contents.article} onPress={handlePressLog}>
                         <View style={styles.row}>
                             <Avatar image={{ src: item.contents.profileThumbnail }} size={40} />
-                            <View>
+                            <View style={styles.profileContent}>
                                 <Typo variant="title4">
                                     {item.contents.title}
                                     <Typo color="placeholder" variant="body3">
@@ -126,7 +126,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 15,
-        height: 80,
+        paddingVertical: 10,
+    },
+    profileContent: {
+        flex: 1,
     },
     text: {
         gap: 5,

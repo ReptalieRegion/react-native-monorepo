@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         paddingHorizontal: 5,
         paddingBottom: 5,
-        height: 280,
     },
     container: {
         flex: 1,

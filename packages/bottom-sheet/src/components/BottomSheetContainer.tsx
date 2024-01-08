@@ -1,14 +1,13 @@
 import { color } from '@crawl/design-system';
 import React, { useEffect, useMemo, type PropsWithChildren } from 'react';
 import type { ViewStyle } from 'react-native';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Platform, StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, { useAnimatedKeyboard, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useBottomSheetAnimatedState from '../hooks/useBottomSheetAnimatedState';
 
 export type BottomSheetContainerProps = {
-    style?: ViewStyle;
     border?: Pick<
         ViewStyle,
         | 'borderTopRightRadius'
@@ -24,7 +23,6 @@ export type BottomSheetContainerProps = {
 
 export default function BottomSheetContainer({
     children,
-    style,
     border = { borderTopRightRadius: 16, borderTopEndRadius: 16, borderTopLeftRadius: 16, borderTopStartRadius: 16 },
 }: PropsWithChildren<BottomSheetContainerProps>) {
     const dimensions = useWindowDimensions();
@@ -39,13 +37,22 @@ export default function BottomSheetContainer({
 
     const maxHeight = useMemo(() => dimensions.height - top, [dimensions.height, top]);
 
-    const snapAnimatedStyles = useAnimatedStyle(() => {
-        return {
-            height: Math.max(height.value, Math.min(height.value + keyboard.height.value - bottom, maxHeight)),
-            paddingBottom: Math.max(keyboard.height.value, bottom),
-            transform: [{ translateY: translateY.value }],
-        };
-    }, [keyboard.state.value, keyboard.height.value, bottom, translateY.value]);
+    const snapAnimatedStyles = Platform.select({
+        ios: useAnimatedStyle(() => {
+            return {
+                height: Math.max(height.value, Math.min(height.value + keyboard.height.value - bottom, maxHeight)),
+                paddingBottom: Math.max(keyboard.height.value, bottom),
+                transform: [{ translateY: translateY.value }],
+            };
+        }, [keyboard.state.value, keyboard.height.value, bottom, translateY.value]),
+        android: useAnimatedStyle(() => {
+            return {
+                height: Math.max(height.value, Math.min(height.value + keyboard.height.value + bottom, maxHeight)),
+                paddingBottom: keyboard.height.value + bottom,
+                transform: [{ translateY: translateY.value }],
+            };
+        }, [keyboard.state.value, keyboard.height.value, bottom, translateY.value]),
+    });
 
     const animatedStyle = useMemo(() => [styles.viewContainer, snapAnimatedStyles, border], [snapAnimatedStyles, border]);
 
@@ -56,11 +63,7 @@ export default function BottomSheetContainer({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return (
-        <View style={style}>
-            <Animated.View style={animatedStyle}>{children}</Animated.View>
-        </View>
-    );
+    return <Animated.View style={animatedStyle}>{children}</Animated.View>;
 }
 
 const styles = StyleSheet.create({

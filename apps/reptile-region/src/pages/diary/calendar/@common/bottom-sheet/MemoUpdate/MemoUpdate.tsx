@@ -1,7 +1,7 @@
 import { useBottomSheet } from '@crawl/bottom-sheet';
 import { color } from '@crawl/design-system';
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Platform, StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 import useUpdateCalendarItem from '../../hooks/mutations/useUpdateCalendarItem';
@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         paddingHorizontal: 20,
+        paddingBottom: Platform.select({ ios: 0, android: 10 }),
     },
     textInputWrapper: {
         height: 50,

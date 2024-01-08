@@ -31,11 +31,11 @@ const ImagePickerPage = withPageHeaderUpdate<ImagePickScreenProp>(
                 </View>
                 <View style={{ height: photoListHeight }}>
                     <PhotoList
-                        photoFetchOptions={{ first: 100 }}
                         maxSelectCount={MAX_SELECT_COUNT}
                         onMaxSelectCount={() => {
                             openToast({ contents: `이미지는 최대 ${MAX_SELECT_COUNT}입니다`, severity: 'warning' });
                         }}
+                        pageSize={52}
                     />
                 </View>
             </PageWrapper>

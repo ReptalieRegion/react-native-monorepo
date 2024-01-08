@@ -1,7 +1,7 @@
 import { color } from '@crawl/design-system';
 import type { PropsWithChildren } from 'react';
 import React, { useCallback } from 'react';
-import { Keyboard, Platform, StyleSheet, View } from 'react-native';
+import { Keyboard, Platform } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { KeyboardState, runOnJS, useAnimatedKeyboard } from 'react-native-reanimated';
 
@@ -46,31 +46,17 @@ export default function BottomSheet({
     });
 
     return (
-        <BottomSheetProvider onClose={onClose} snapInfo={snapInfo}>
-            <View style={styles.wrapper}>
+        <>
+            <BottomSheetProvider onClose={onClose} snapInfo={snapInfo}>
                 <BackDrop style={backDropStyle} />
                 <BottomSheetContainer>
                     <BottomSheetHeader header={header} headerTitle={headerTitle} />
                     {Platform.select({
-                        ios: (
-                            <GestureDetector gesture={gesture}>
-                                <View style={styles.container}>{children}</View>
-                            </GestureDetector>
-                        ),
-                        android: <View style={styles.container}>{children}</View>,
+                        ios: <GestureDetector gesture={gesture}>{children}</GestureDetector>,
+                        android: <>{children}</>,
                     })}
                 </BottomSheetContainer>
-            </View>
-        </BottomSheetProvider>
+            </BottomSheetProvider>
+        </>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    wrapper: {
-        position: 'absolute',
-        flex: 1,
-    },
-});
