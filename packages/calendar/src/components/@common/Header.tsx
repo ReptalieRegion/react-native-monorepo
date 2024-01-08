@@ -31,8 +31,8 @@ export default function Header({
     const label = monthFormat
         ? monthFormat(selectedDate.toDate())
         : isSameYear
-        ? selectedDate.format('MM월')
-        : selectedDate.format('YY년 MM월');
+          ? selectedDate.format('MM월')
+          : selectedDate.format('YY년 MM월');
 
     const headerWrapperStyle = useMemo(() => [containerStyle, headerStyles.wrapper], [containerStyle]);
 

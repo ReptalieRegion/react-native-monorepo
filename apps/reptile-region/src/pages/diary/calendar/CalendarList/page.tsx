@@ -119,13 +119,22 @@ export default function ExpandableCalendarScreen() {
     );
 
     const renderListFooterComponent = useCallback(() => {
+        const prevMonth = searchDate.subtract(1, 'month');
+        const isPrevMonthYearSameCurrentYear = dayjs().year() === prevMonth.year();
+        const label = isPrevMonthYearSameCurrentYear
+            ? prevMonth.format('M월 기록 더보기')
+            : prevMonth.format('YY년 M월 기록 더보기');
+
         return (
             <View style={listStyles.buttonWrapper}>
                 <ConfirmButton
-                    text={searchDate.subtract(1, 'month').format('M월 기록 더보기')}
+                    text={label}
                     size="small"
                     variant="cancel"
-                    onPress={subMonth}
+                    onPress={() => {
+                        Haptic.trigger('impactLight');
+                        subMonth();
+                    }}
                 />
             </View>
         );
