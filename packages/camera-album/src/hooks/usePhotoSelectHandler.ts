@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
 
 import { PhotoSelectActionsContext } from '../contexts/PhotoSelectContext';
-import type { InitSelectedPhoto, Photo } from '../types';
+import type { Photo } from '../types';
 
 export default function usePhotoSelectHandler() {
     const dispatch = useContext(PhotoSelectActionsContext);
@@ -24,13 +24,6 @@ export default function usePhotoSelectHandler() {
         [dispatch],
     );
 
-    const initSelectedPhoto = useCallback(
-        (props: Omit<InitSelectedPhoto, 'type'>) => {
-            dispatch({ type: 'INIT_SELECTED_PHOTO', ...props });
-        },
-        [dispatch],
-    );
-
     const setNoneLimitType = useCallback(() => {
         dispatch({ type: 'SET_NONE_LIMIT' });
     }, [dispatch]);
@@ -38,7 +31,6 @@ export default function usePhotoSelectHandler() {
     return {
         selectPhoto,
         deletePhoto,
-        initSelectedPhoto,
         setNoneLimitType,
     };
 }

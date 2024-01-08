@@ -5,8 +5,7 @@ import { StyleSheet, View, useWindowDimensions, type ImageStyle } from 'react-na
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import usePhoto from '../hooks/usePhoto';
-import usePhotoHandler from '../hooks/usePhotoHandler';
+import { useGallery } from '../hooks/useGalley';
 import usePhotoSelect from '../hooks/usePhotoSelect';
 import usePhotoSelectHandler from '../hooks/usePhotoSelectHandler';
 import type { Photo } from '../types';
@@ -14,9 +13,7 @@ import type { Photo } from '../types';
 import PhotoIndicators from './PhotoIndicators';
 
 type PhotoListState = {
-    photoFetchOptions: {
-        first: number;
-    };
+    pageSize: number;
     minSelectCount?: number;
     maxSelectCount?: number;
 };
@@ -34,35 +31,21 @@ export default function PhotoList({
     onMaxSelectCount,
     onMinSelectCount,
     numColumns = 4,
-    photoFetchOptions = { first: 100 },
+    pageSize = 96,
 }: PhotoListProps) {
-    const { photos, pageInfo } = usePhoto();
-    const { addPhotos } = usePhotoHandler();
+    const { photos, hasNextPage, isLoadingNextPage, isLoading, loadNextPagePictures } = useGallery({
+        pageSize,
+        maxSelectCount,
+        minSelectCount,
+    });
 
-    const { initSelectedPhoto, selectPhoto } = usePhotoSelectHandler();
+    const { selectPhoto } = usePhotoSelectHandler();
 
     const { width } = useWindowDimensions();
     const { bottom } = useSafeAreaInsets();
     const imageWidth = useMemo(() => width / numColumns - 2, [width, numColumns]);
     const itemStyle: ImageStyle = useMemo(() => ({ width: imageWidth, aspectRatio: '1/1' }), [imageWidth]);
     const contentContainerStyle: ContentStyle = useMemo(() => ({ paddingBottom: imageWidth + bottom }), [imageWidth, bottom]);
-
-    useEffect(() => {
-        addPhotos({ first: 24, assetType: 'Photos' }).then((photoIdentifiersPage) =>
-            initSelectedPhoto({
-                photoIdentifier: photoIdentifiersPage.edges[0],
-                minSelectCount,
-                maxSelectCount,
-            }),
-        );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const handleEndReached = useCallback(() => {
-        if (pageInfo.hasNextPage) {
-            addPhotos({ ...photoFetchOptions, assetType: 'Photos', after: pageInfo.endCursor });
-        }
-    }, [pageInfo.hasNextPage, pageInfo.endCursor, photoFetchOptions, addPhotos]);
 
     const renderItem: ListRenderItem<Photo> = useCallback(
         ({ item }) => {
@@ -93,7 +76,7 @@ export default function PhotoList({
                 <FlashList
                     data={photos}
                     renderItem={renderItem}
-                    onEndReached={handleEndReached}
+                    onEndReached={() => !isLoadingNextPage && !isLoading && hasNextPage && loadNextPagePictures()}
                     contentContainerStyle={contentContainerStyle}
                     numColumns={numColumns}
                     estimatedItemSize={imageWidth}

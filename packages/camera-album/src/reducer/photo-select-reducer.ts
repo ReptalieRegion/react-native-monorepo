@@ -1,5 +1,5 @@
 import type { InitSelectedPhoto, Photo, PhotoSelectState, PhotoSelectedActions, SelectActionType } from '../types';
-import { _parsingPhoto } from '../utils/photo-parsing';
+import { convertPhoto } from '../utils/photo-parsing';
 
 export default function photoSelectReducer(state: PhotoSelectState, actions: PhotoSelectedActions): PhotoSelectState {
     switch (actions.type) {
@@ -29,7 +29,7 @@ function setCurrentSelectedPhoto(
         ...state,
         maxSelectCount,
         minSelectCount,
-        currentSelectedPhoto: _parsingPhoto(photoIdentifier),
+        currentSelectedPhoto: convertPhoto(photoIdentifier),
     };
 }
 

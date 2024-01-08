@@ -33,7 +33,7 @@
         "@crawl/utils": "1.0.0",
         "@invertase/react-native-apple-authentication": "^2.3.0",
         "@notifee/react-native": "^7.8.0",
-        "@react-native-camera-roll/camera-roll": "^7.2.2",
+        "@react-native-camera-roll/camera-roll": "^7.3.0",
         "@react-native-community/datetimepicker": "^7.6.2",
         "@react-native-community/image-editor": "^2.3.0",
         "@react-native-firebase/app": "^18.7.1",

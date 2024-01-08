@@ -10,12 +10,12 @@ PODS:
     - ExpoModulesCore
   - ExpoFileSystem (16.0.2):
     - ExpoModulesCore
-  - ExpoImage (1.3.5):
+  - ExpoImage (1.5.2):
     - ExpoModulesCore
-    - SDWebImage (~> 5.15.8)
-    - SDWebImageAVIFCoder (~> 0.10.0)
+    - SDWebImage (~> 5.17.0)
+    - SDWebImageAVIFCoder (~> 0.10.1)
     - SDWebImageSVGCoder (~> 1.7.0)
-    - SDWebImageWebPCoder (~> 0.11.0)
+    - SDWebImageWebPCoder (~> 0.13.0)
   - ExpoModulesCore (1.11.4):
     - glog
     - RCT-Folly (= 2022.05.16.00)
@@ -1012,7 +1012,7 @@ PODS:
   - React-Mapbuffer (0.73.1):
     - glog
     - React-debug
-  - react-native-cameraroll (7.2.2):
+  - react-native-cameraroll (7.3.0):
     - React-Core
   - react-native-image-editor (2.3.0):
     - React
@@ -1244,17 +1244,17 @@ PODS:
     - React-Core
   - RNSVG (14.1.0):
     - React-Core
-  - SDWebImage (5.15.8):
-    - SDWebImage/Core (= 5.15.8)
-  - SDWebImage/Core (5.15.8)
+  - SDWebImage (5.17.0):
+    - SDWebImage/Core (= 5.17.0)
+  - SDWebImage/Core (5.17.0)
   - SDWebImageAVIFCoder (0.10.1):
     - libavif (>= 0.11.0)
     - SDWebImage (~> 5.10)
   - SDWebImageSVGCoder (1.7.0):
     - SDWebImage/Core (~> 5.6)
-  - SDWebImageWebPCoder (0.11.0):
+  - SDWebImageWebPCoder (0.13.0):
     - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.15)
+    - SDWebImage/Core (~> 5.17)
   - SocketRocket (0.6.1)
   - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
@@ -1537,7 +1537,7 @@ SPEC CHECKSUMS:
   EXConstants: e77cccf9afb245a6fb2ea917fe5f45f0e1d8b841
   Expo: cd2dc043dd1cc3d9e8e4e035fb9a41b421e8f13f
   ExpoFileSystem: fb4c94cc5ec5c50cb2663d2f6d503a1960b95a1d
-  ExpoImage: 723efcb8d9377ae8645a6f7a1579305f5b80a76f
+  ExpoImage: 2674cbdeaf6292b065727fdeacf78104b486dc58
   ExpoModulesCore: 01c0abfa6cd9c41c4bd76d8a1a079e6b591db10f
   ExpoSecureStore: 5372610a4bbcf5e50fafbe6f38f8d9c22edf8253
   FBLazyVector: 2296bacb2fa157a43991048b0a9d71c1c8b65083
@@ -1584,7 +1584,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 369048694e39942063c5d08e9580b43e2edd379a
   React-logger: e0c1e918d9588a9f39c9bc62d9d6bfe9ca238d9d
   React-Mapbuffer: 9731a0a63ebaf8976014623c4d637744d7353a7c
-  react-native-cameraroll: 8acc1cf2c31d38992222fd08c7041691fc98dce3
+  react-native-cameraroll: 5282b6b4451cfed2afa19b9088d4b1e5f2bf9d88
   react-native-image-editor: 9361a215c3991cafbe5e7f28cbbad6e72c9c2705
   react-native-pager-view: d81ab2060b9caf57ca8c3a0d57467ff407cdb825
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
@@ -1625,10 +1625,10 @@ SPEC CHECKSUMS:
   RNReanimated: 18faeee6e1d8eb9a60f1a62488bb357354569051
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
-  SDWebImage: cb032eba469c54e0000e78bcb0a13cdde0a52798
+  SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
   SDWebImageAVIFCoder: 8348fef6d0ec69e129c66c9fe4d74fbfbf366112
   SDWebImageSVGCoder: 15a300a97ec1c8ac958f009c02220ac0402e936c
-  SDWebImageWebPCoder: 295a6573c512f54ad2dd58098e64e17dcf008499
+  SDWebImageWebPCoder: af09429398d99d524cae2fe00f6f0f6e491ed102
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: 2b33a7ac96c58cdaa7b810948fc6a2a76ed2d108

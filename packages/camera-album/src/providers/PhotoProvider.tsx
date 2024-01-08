@@ -11,7 +11,9 @@ const initialState: PhotoState = {
         endCursor: undefined,
         startCursor: undefined,
     },
-    isFeting: false,
+    isLoading: false,
+    isLoadingNextPage: false,
+    isReloading: false,
 };
 
 export default function PhotoProvider({ children }: PropsWithChildren) {

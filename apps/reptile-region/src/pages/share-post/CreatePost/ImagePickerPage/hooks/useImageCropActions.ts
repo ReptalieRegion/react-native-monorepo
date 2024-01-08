@@ -8,7 +8,7 @@ import useToast from '@/components/overlay/Toast/useToast';
 import useImagePicker from '@/hooks/useImagePicker';
 
 export default function useImageCropActions() {
-    const { savePhoto, refetchPhoto } = useCameraAlbumHandler();
+    const { savePhoto } = useCameraAlbumHandler();
     const { setCropInfo } = useCreatePostActions();
     const openToast = useToast();
 
@@ -35,15 +35,8 @@ export default function useImageCropActions() {
      * 일단 임시로 setTimeout를 줌
      */
     const handleOpenPhotoPicker = useCallback(() => {
-        openPhotoPicker().then(() => {
-            setTimeout(() => {
-                refetchPhoto({
-                    first: 100,
-                    assetType: 'Photos',
-                });
-            }, 100);
-        });
-    }, [refetchPhoto]);
+        openPhotoPicker();
+    }, []);
 
     const handleOpenCamera = useCallback(() => {
         openCameraPicker({

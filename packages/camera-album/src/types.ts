@@ -18,8 +18,33 @@ type PageInfo = {
 type PhotoState = {
     photos: Photo[];
     pageInfo: PageInfo;
-    isFeting: boolean;
+    isLoadingNextPage: boolean;
+    isLoading: boolean;
+    isReloading: boolean;
 };
+
+interface SetIsLoading {
+    type: 'SET_IS_LOADING';
+    isLoading: boolean;
+}
+
+interface SetIsLoadingNextPage {
+    type: 'SET_IS_LOADING_NEXT_PAGE';
+    isLoadingNextPage: boolean;
+}
+
+interface SetIsReloading {
+    type: 'SET_IS_RELOADING';
+    isReloading: boolean;
+}
+
+interface InitPhotos {
+    type: 'INIT_PHOTOS';
+    photoInfo: {
+        photos: PhotoIdentifier[];
+        pageInfo: PageInfo;
+    };
+}
 
 interface RefetchPhotos {
     type: 'REFETCH_PHOTOS';
@@ -42,7 +67,7 @@ interface SavePhotos {
     photo: PhotoIdentifier;
 }
 
-type PhotoActions = AddPhotos | SavePhotos | RefetchPhotos;
+type PhotoActions = InitPhotos | AddPhotos | SavePhotos | RefetchPhotos | SetIsLoadingNextPage | SetIsLoading | SetIsReloading;
 
 /** 사진 선택 Context */
 type PhotoSelectState = {

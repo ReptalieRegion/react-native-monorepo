@@ -1779,6 +1779,7 @@ __metadata:
     typescript: 5.2.2
   peerDependencies:
     "@crawl/design-system": 1.0.0
+    "@shopify/flash-list": ^1.6.3
     react: "*"
     react-native: 0.73.1
     react-native-gesture-handler: ">=2.12.0"
@@ -1811,7 +1812,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@crawl/camera-album@workspace:packages/camera-album"
   dependencies:
-    "@react-native-camera-roll/camera-roll": ^7.2.2
+    "@react-native-camera-roll/camera-roll": ^7.3.0
     react-native-builder-bob: ^0.23.1
     typescript: 5.2.2
   peerDependencies:
@@ -3089,12 +3090,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-camera-roll/camera-roll@npm:^7.2.2":
-  version: 7.2.2
-  resolution: "@react-native-camera-roll/camera-roll@npm:7.2.2"
+"@react-native-camera-roll/camera-roll@npm:^7.3.0":
+  version: 7.3.0
+  resolution: "@react-native-camera-roll/camera-roll@npm:7.3.0"
   peerDependencies:
     react-native: ">=0.59"
-  checksum: aace168125ac07777a85be433cc7b197b52e7e18ef07b53c2fa19df87f83249da661d63c0de5eef24bdb68868fc1188411424088142183acf80e698dd1455ad1
+  checksum: 2595eb5ab8e3aa558267700afcb09abbf0db693196c0b5cc8813b3dbef9d4475d0c2a64163dd081e4523c537995e943d08bd6c34ed85692a50a2ca4337dcbd8a
   languageName: node
   linkType: hard
 
@@ -12661,7 +12662,7 @@ __metadata:
     "@invertase/react-native-apple-authentication": ^2.3.0
     "@mswjs/data": ^0.13.0
     "@notifee/react-native": ^7.8.0
-    "@react-native-camera-roll/camera-roll": ^7.2.2
+    "@react-native-camera-roll/camera-roll": ^7.3.0
     "@react-native-community/datetimepicker": ^7.6.2
     "@react-native-community/image-editor": ^2.3.0
     "@react-native-firebase/app": ^18.7.1
