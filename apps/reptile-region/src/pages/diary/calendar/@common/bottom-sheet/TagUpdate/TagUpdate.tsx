@@ -1,7 +1,7 @@
 import { useBottomSheet } from '@crawl/bottom-sheet';
 import { color } from '@crawl/design-system';
 import React, { useCallback, useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import TagTextCheckBox from '../../components/TagTextCheckBox';
 import { markTypeArray } from '../../constants';
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 20,
         paddingHorizontal: 20,
-        paddingBottom: Platform.select({ ios: 0, android: 10 }),
+        paddingBottom: 10,
     },
     actionWrapper: {
         flexDirection: 'row',

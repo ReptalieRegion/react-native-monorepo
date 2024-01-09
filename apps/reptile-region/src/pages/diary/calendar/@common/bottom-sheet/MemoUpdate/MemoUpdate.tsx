@@ -1,7 +1,7 @@
 import { useBottomSheet } from '@crawl/bottom-sheet';
 import { color } from '@crawl/design-system';
 import React, { useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 import useUpdateCalendarItem from '../../hooks/mutations/useUpdateCalendarItem';
@@ -29,7 +29,13 @@ export default function MemoUpdateBottomSheet({ calendar, searchDate }: MemoUpda
 
     return (
         <View style={styles.wrapper}>
-            <TextInput style={styles.textInputWrapper} defaultValue={calendar.memo} value={memo} onChangeText={setMemo} />
+            <TextInput
+                style={styles.textInputWrapper}
+                defaultValue={calendar.memo}
+                value={memo}
+                onChangeText={setMemo}
+                autoFocus
+            />
             <View style={styles.buttonWrapper}>
                 <ConfirmButton size="modal" text="수정하기" onPress={handleSubmit} />
             </View>
@@ -41,7 +47,7 @@ const styles = StyleSheet.create({
     wrapper: {
         flex: 1,
         paddingHorizontal: 20,
-        paddingBottom: Platform.select({ ios: 0, android: 10 }),
+        paddingBottom: 10,
     },
     textInputWrapper: {
         height: 50,
