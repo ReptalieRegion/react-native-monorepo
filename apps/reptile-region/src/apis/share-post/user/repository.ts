@@ -2,6 +2,7 @@ import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 import type {
     CreateFollow,
+    FetchActivitySummary,
     FetchDetailUserProfile,
     FetchFollowerList,
     FetchFollowerSearch,
@@ -44,6 +45,13 @@ export const getFollowerList = async ({ pageParam, userId }: WithInfinitePagePar
 export const getFollowingList = async ({ pageParam, userId }: WithInfinitePageParam<FetchFollowerList['Request']>) => {
     const queryString = objectToQueryString({ pageParam });
     const response = await clientFetch(`api/users/${userId}/following/list?${queryString}`);
+
+    return response.json();
+};
+
+// 일상공유 사용자 활동 정보 조회
+export const getActivitySummary = async ({ nickname }: FetchActivitySummary['Request']) => {
+    const response = await clientFetch(`api/share/posts/users/${nickname}/activity-summary`);
 
     return response.json();
 };

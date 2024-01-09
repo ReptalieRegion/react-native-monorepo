@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { createFollow } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { ME_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchLike } from '@/types/apis/share-post/post';
 import type { CreateFollow, CreateFollowResponse, FetchFollowerList } from '@/types/apis/share-post/user';
 
@@ -27,7 +27,10 @@ export default function useBaseCreateFollow<TContext = unknown>(props?: UseCreat
                         queryKey: SHARE_POST_QUERY_KEYS.profileDetail(data.user.nickname),
                         exact: true,
                     });
-                    queryClient.invalidateQueries({ queryKey: ME_QUERY_KEYS.profile });
+                    queryClient.invalidateQueries({
+                        queryKey: SHARE_POST_QUERY_KEYS.activitySummary(data.user.nickname),
+                        exact: true,
+                    });
 
                     // 팔로우, 팔로잉, 좋아요 리스트에서 팔로우 당한 유저 아이디 있는 키값 추출
                     const userIdSet = new Set();

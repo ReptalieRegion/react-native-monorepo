@@ -36,8 +36,6 @@ type FetchMeProfileResponse = {
         id: string;
         profile: ImageType;
         nickname: string;
-        followerCount: number;
-        followingCount: number;
     };
 };
 

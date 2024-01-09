@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import { updateFollow } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { ME_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchLike } from '@/types/apis/share-post/post';
 import type { FetchFollowerList, UpdateFollow, UpdateFollowResponse } from '@/types/apis/share-post/user';
 
@@ -32,7 +32,7 @@ export default function useBaseUpdateFollow<TContext = unknown>(props?: UseUpdat
                         exact: true,
                     });
                     queryClient.invalidateQueries({
-                        queryKey: ME_QUERY_KEYS.profile,
+                        queryKey: SHARE_POST_QUERY_KEYS.activitySummary(data.user.nickname),
                         exact: true,
                     });
 
