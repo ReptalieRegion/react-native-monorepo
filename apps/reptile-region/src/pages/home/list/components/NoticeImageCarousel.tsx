@@ -19,7 +19,7 @@ const data = [{ key: '크롤 오픈 축하 공지사항', source: require('@/ass
 
 export default function NoticeImageCarousel({ onPressIndicator }: NoticeImageCarouselProps) {
     const { width } = useWindowDimensions();
-    const cardStyle = { width: width, height: 190 };
+    const cardStyle = { width: width, height: 200 };
     const itemStyle = [styles.itemWrapper, cardStyle];
 
     return (
