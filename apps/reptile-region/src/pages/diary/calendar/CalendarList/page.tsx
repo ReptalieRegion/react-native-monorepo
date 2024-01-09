@@ -7,6 +7,7 @@ import { StyleSheet, View } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
 
 import useOverlayActionMenuBottomSheet from './bottom-sheet/ActionMenu/useOverlayActionMenu';
+import useOverlaySelectDate from './bottom-sheet/SelectDate/useOverlaySelectDate';
 import CalendarListItem from './components/CalendarListItem';
 import type { CalendarFlashListItem, CalendarItem } from './hooks/queries/useFetchCalendarList';
 import useCalendarListActions from './hooks/useCalendarListActions';
@@ -19,7 +20,6 @@ import FloatingActionButtons from '@/components/@common/organisms/FloatingAction
 import PageWrapper from '@/components/PageWrapper';
 
 export default function ExpandableCalendarScreen() {
-    const openActionMenuBottomSheet = useOverlayActionMenuBottomSheet();
     const {
         calendarListData,
         searchDate,
@@ -29,6 +29,8 @@ export default function ExpandableCalendarScreen() {
         handlePressWriteFloatingButton,
         subMonth,
     } = useCalendarListActions();
+    const openSelectDateBottomSheet = useOverlaySelectDate();
+    const openActionMenuBottomSheet = useOverlayActionMenuBottomSheet();
 
     const keyExtractor = useCallback(
         (item: CalendarFlashListItem) =>
@@ -157,6 +159,7 @@ export default function ExpandableCalendarScreen() {
                     maxDate: todayString,
                     markedDates: calendarListData?.markedDates,
                     onChangeMonth: handleChangeMonth,
+                    onPressMonth: () => openSelectDateBottomSheet({ searchDate }),
                 }}
                 listProps={{
                     data: calendarListData?.list,
@@ -172,15 +175,17 @@ export default function ExpandableCalendarScreen() {
             />
         );
     }, [
-        calendarListData?.list,
+        todayString,
         calendarListData?.markedDates,
-        getItemType,
+        calendarListData?.list,
         handleChangeMonth,
-        keyExtractor,
         renderItem,
+        keyExtractor,
+        getItemType,
         renderListEmptyComponent,
         renderListFooterComponent,
-        todayString,
+        openSelectDateBottomSheet,
+        searchDate,
     ]);
 
     return (

@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
-import { calculateTimeAgo } from '@/utils/date/time-ago';
+import { calculateTimeAgo } from '@/utils/date';
 
 type CommentHeaderState = {
     comment: {

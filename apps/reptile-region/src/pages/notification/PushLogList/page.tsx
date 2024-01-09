@@ -15,7 +15,7 @@ import { Divider } from '@/components/@common/atoms/Divider';
 import PageWrapper from '@/components/PageWrapper';
 import { navigateLinking } from '@/routes/@utils/linking';
 import { ContentType, type FetchPushLogResponse } from '@/types/apis/notification';
-import { calculateTimeAgo } from '@/utils/date/time-ago';
+import { calculateTimeAgo } from '@/utils/date';
 
 export default function PushLogList({ navigation }: PushLogListScreenProp) {
     const { bottom } = useSafeAreaInsets();

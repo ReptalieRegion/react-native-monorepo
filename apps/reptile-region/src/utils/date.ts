@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 dayjs.locale('ko');
 
-export const calculateTimeAgo = (postDate: string) => {
+export function calculateTimeAgo(postDate: string) {
     const now = dayjs();
     const date = dayjs(postDate);
 
@@ -25,4 +25,23 @@ export const calculateTimeAgo = (postDate: string) => {
     } else {
         return `${diffInYears}년`;
     }
-};
+}
+
+/**
+ *
+ * @param startDate string - format YYYY-MM-DD
+ * @returns string[]
+ */
+export function generateMonthList(startDate: string) {
+    const today = dayjs();
+    const monthList = [];
+
+    let currentMonth = today;
+    while (currentMonth.isAfter(startDate) || currentMonth.isSame(startDate, 'month')) {
+        const monthString = currentMonth.format('YYYY-MM');
+        monthList.push(monthString);
+        currentMonth = currentMonth.subtract(1, 'month');
+    }
+
+    return monthList;
+}

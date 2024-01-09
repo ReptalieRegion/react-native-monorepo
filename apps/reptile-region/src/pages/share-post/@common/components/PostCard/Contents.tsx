@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import TaggedContents from '@/pages/share-post/@common/components/TaggedContents';
-import { calculateTimeAgo } from '@/utils/date/time-ago';
+import { calculateTimeAgo } from '@/utils/date';
 
 type PostContentsState = {
     post: {

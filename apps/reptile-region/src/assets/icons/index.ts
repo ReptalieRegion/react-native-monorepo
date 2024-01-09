@@ -4,6 +4,7 @@ export { default as Calendar } from './Calendar';
 export { default as Camera } from './Camera';
 export { default as CancelButton } from './CancelButton';
 export { default as Cart } from './Cart';
+export { default as Check } from './Check';
 export { default as ChevronRight } from './ChevronRight';
 export { default as Comment } from './Comment';
 export { default as DatePicker } from './DatePicker';

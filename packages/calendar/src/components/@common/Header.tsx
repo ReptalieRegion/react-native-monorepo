@@ -20,6 +20,7 @@ export default function Header({
         color: 'default',
     },
     monthFormat,
+    onPressMonth,
     onPressLeft,
     onPressRight,
 }: HeaderProps) {
@@ -68,9 +69,11 @@ export default function Header({
                 <TouchableOpacity onPress={handlePressPrevMonth}>
                     <LeftArrow fill={isPossiblePrevMonth ? color.DarkGray[500].toString() : color.Gray[500].toString()} />
                 </TouchableOpacity>
-                <Typo variant={labelStyle.variant} color={labelStyle.color}>
-                    {label}
-                </Typo>
+                <TouchableOpacity onPress={onPressMonth}>
+                    <Typo variant={labelStyle.variant} color={labelStyle.color}>
+                        {label}
+                    </Typo>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={handlePressNextMonth}>
                     <RightArrow fill={isPossibleNextMonth ? color.DarkGray[500].toString() : color.Gray[500].toString()} />
                 </TouchableOpacity>

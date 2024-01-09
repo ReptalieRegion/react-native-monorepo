@@ -10,7 +10,7 @@ import PostCard from '../../../@common/contexts/SharePostCard/providers/PostCard
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import TaggedContents from '@/pages/share-post/@common/components/TaggedContents';
 import type { ImageType } from '@/types/global/image';
-import { calculateTimeAgo } from '@/utils/date/time-ago';
+import { calculateTimeAgo } from '@/utils/date';
 
 type PostCardState = {
     post: {

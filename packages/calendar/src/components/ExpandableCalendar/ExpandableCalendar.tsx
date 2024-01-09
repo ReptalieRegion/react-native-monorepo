@@ -49,7 +49,7 @@ export default function ExpandableCalendar<TData>({ calendarProps, listProps }: 
     const calendarWrapperStyle = useMemo(() => [styles.calendarWrapper, calendarAnimatedStyle], [calendarAnimatedStyle]);
     const listWrapperStyle = useMemo(() => [styles.listWrapper, listAnimatedStyle], [listAnimatedStyle]);
 
-    const memoizedHeader = useMemo(() => <Header />, []);
+    const memoizedHeader = useMemo(() => <Header onPressMonth={calendarProps.onPressMonth} />, [calendarProps.onPressMonth]);
 
     const calendarComponentProps: CalendarProps = useMemo(
         () => ({
