@@ -19,9 +19,6 @@ export default function useCreatePost() {
                     screen: 'share-post/routes',
                     params: {
                         screen: 'bottom-tab/list',
-                        params: {
-                            isScrollToTop: true,
-                        },
                     },
                 },
             });

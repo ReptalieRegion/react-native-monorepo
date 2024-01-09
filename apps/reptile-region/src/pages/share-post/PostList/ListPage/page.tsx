@@ -29,7 +29,7 @@ import type { FetchPostResponse } from '@/types/apis/share-post/post';
 import type { SharePostListPageScreen } from '@/types/routes/props/share-post/post-list';
 
 // 일상공유 조회 페이지
-function PostList({ navigation, route: { params } }: SharePostListPageScreen) {
+function PostList({ navigation }: SharePostListPageScreen) {
     // 일상 공유 패칭
     const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchPosts();
 
@@ -50,12 +50,6 @@ function PostList({ navigation, route: { params } }: SharePostListPageScreen) {
         onScrollDown: secondaryIconDownAnimation,
         onScrollUp: secondaryIconUpAnimation,
     });
-
-    useEffect(() => {
-        if (params?.isScrollToTop) {
-            scrollToTop(true);
-        }
-    }, [params?.isScrollToTop, scrollToTop]);
 
     /** Floating 관련 액션 끝 */
 
@@ -123,7 +117,7 @@ function PostList({ navigation, route: { params } }: SharePostListPageScreen) {
 
     return (
         <View style={styles.container}>
-            <TopProgress />
+            <TopProgress onStartMutating={() => scrollToTop()} />
             <FlashList
                 ref={flashListRef}
                 data={data}
@@ -156,7 +150,7 @@ function PostList({ navigation, route: { params } }: SharePostListPageScreen) {
     );
 }
 
-function TopProgress() {
+function TopProgress({ onStartMutating }: { onStartMutating: () => void }) {
     const { width } = useWindowDimensions();
     const isMutating = useIsMutating({
         mutationKey: SHARE_POST_MUTATION_KEYS.create,
@@ -169,6 +163,7 @@ function TopProgress() {
         let timers: NodeJS.Timeout[] = [];
         if (isMutating) {
             timers = [
+                setTimeout(() => onStartMutating(), 250),
                 setTimeout(() => setPercent((prevPercent) => Math.min(prevPercent + Math.random() / 3, 0.8)), 500),
                 setTimeout(() => setPercent((prevPercent) => Math.min(prevPercent + Math.random() / 3, 0.8)), 1000),
                 setTimeout(() => setPercent((prevPercent) => Math.min(prevPercent + Math.random() / 3, 0.8)), 1500),
@@ -183,7 +178,7 @@ function TopProgress() {
         return () => {
             timers.map((timer) => clearTimeout(timer));
         };
-    }, [isMutating, percent]);
+    }, [isMutating, percent, onStartMutating]);
 
     useEffect(() => {
         let timer: NodeJS.Timeout;
