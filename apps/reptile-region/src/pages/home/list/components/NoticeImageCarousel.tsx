@@ -36,7 +36,7 @@ export default function NoticeImageCarousel({ onPressIndicator }: NoticeImageCar
                 renderIndicator={(currentIndex) => (
                     <TouchableWithoutFeedback style={styles.indicatorWrapper} onPress={onPressIndicator}>
                         <Typo variant="body4" color="surface" textAlign="right">
-                            {currentIndex + 1} / {data.length} 전체보기
+                            {currentIndex + 1} / {data.length}
                         </Typo>
                     </TouchableWithoutFeedback>
                 )}
@@ -61,6 +61,5 @@ const styles = StyleSheet.create({
         padding: 5,
         bottom: 0,
         right: 0,
-        minWidth: 80,
     },
 });

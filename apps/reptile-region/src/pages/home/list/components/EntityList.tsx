@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 10,
         paddingHorizontal: 5,
         paddingBottom: 5,
+        minHeight: 286,
     },
     container: {
         flex: 1,
