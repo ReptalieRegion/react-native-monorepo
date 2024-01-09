@@ -11,6 +11,7 @@ import EntityManagerCreateRoutes from './Diary/EntityManagerCreateRoutes';
 import SharePostModalRoutes from './SharePost/ModalRoutes';
 import PostingRoutes from './SharePost/PostingRoutes';
 
+import { NativeStackDefaultBackHeader } from '@/components/@common/molecules';
 import useEffectInitial from '@/hooks/useEffectInitial';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
@@ -22,6 +23,7 @@ import { EntityManagerDetailPageHeader } from '@/pages/diary/entity-manager/Deta
 import EntityMangerDetailPage from '@/pages/diary/entity-manager/DetailPage/page';
 import { EntityMangerUpdateHeader } from '@/pages/diary/entity-manager/UpdatePage/header';
 import EntityMangerUpdate from '@/pages/diary/entity-manager/UpdatePage/page';
+import HomePage from '@/pages/home/HomePage/page';
 import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
 import LicenseContentsPage from '@/pages/me/License/ContentsPage/page';
 import { LicenseListHeader } from '@/pages/me/License/ListPage/header';
@@ -106,6 +108,10 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     }}
                 />
                 {/** 바텀 탭 끝 */}
+
+                {/** 홈 시작 */}
+                <Stack.Screen name="homepage" component={HomePage} options={{ header: NativeStackDefaultBackHeader }} />
+                {/** 홈 끝 */}
 
                 {/** 인증 시작 */}
                 <Stack.Screen

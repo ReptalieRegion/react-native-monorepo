@@ -1,26 +1,40 @@
 import { Typo, color } from '@crawl/design-system';
+import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import AutoImageCarousel from '@/components/@common/molecules/AutoImageCarousel/AutoImageCarousel';
-
-type NoticeImageCarouselState = {};
+import type { HomeListPageNavigationProp } from '@/types/routes/props/home/list';
 
 interface NoticeImageCarouselActions {
     onPressImage?(): void;
     onPressIndicator?(): void;
 }
 
-type NoticeImageCarouselProps = NoticeImageCarouselState & NoticeImageCarouselActions;
+type NoticeImageCarouselProps = NoticeImageCarouselActions;
 
-const data = [{ key: '크롤 오픈 축하 공지사항', source: require('@/assets/images/notice_open.png') }];
+type ListData = {
+    key: string;
+    source: any;
+    onPress(): void;
+};
 
 export default function NoticeImageCarousel({ onPressIndicator }: NoticeImageCarouselProps) {
+    const navigation = useNavigation<HomeListPageNavigationProp>();
     const { width } = useWindowDimensions();
     const cardStyle = { width: width, height: 200 };
     const itemStyle = [styles.itemWrapper, cardStyle];
+    const data: ListData[] = [
+        {
+            key: '크롤 오픈 축하 공지사항',
+            source: require('@/assets/images/notice_open.png'),
+            onPress: () => {
+                navigation.navigate('homepage');
+            },
+        },
+    ];
 
     return (
         <View style={styles.wrapper}>
@@ -29,9 +43,11 @@ export default function NoticeImageCarousel({ onPressIndicator }: NoticeImageCar
                 keyExtractor={(item) => item.toString()}
                 cardStyle={cardStyle}
                 renderItem={({ item }) => (
-                    <View style={itemStyle}>
-                        <Image key={item.key} source={item.source} style={itemStyle} contentFit="cover" />
-                    </View>
+                    <TouchableOpacity onPress={item.onPress}>
+                        <View style={itemStyle}>
+                            <Image key={item.key} source={item.source} style={itemStyle} contentFit="cover" />
+                        </View>
+                    </TouchableOpacity>
                 )}
                 renderIndicator={(currentIndex) => (
                     <TouchableWithoutFeedback style={styles.indicatorWrapper} onPress={onPressIndicator}>

@@ -14,6 +14,9 @@ type RootRoutesParamList = {
     // 바텀 탭
     'bottom-tab/routes': NavigatorScreenParams<BottomTabNativeStackParamList>;
 
+    //Home
+    homepage: undefined;
+
     // Auth
     'sign-in': SignInParams;
     'sign-up': NavigatorScreenParams<SignUpParamList>;

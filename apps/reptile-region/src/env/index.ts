@@ -1,7 +1,7 @@
 import type { ModeType } from '@env';
 import { END_POINT_URI, HOME_PAGE_URI, WEB_PAGE_URI } from '@env';
 
-import { CURRENT_IP, REACT_NATIVE_ENV } from './config';
+import { REACT_NATIVE_ENV } from './config';
 
 const currentMode = (mode: ModeType) => REACT_NATIVE_ENV === mode;
 
@@ -14,13 +14,9 @@ const defaultEnv = {
     WEB_PAGE_URI,
 };
 
-const localEnv = {
-    HOME_PAGE_URI: 'http://' + CURRENT_IP + ':3000',
-};
+const localEnv = {};
 
-const developmentEnv = {
-    HOME_PAGE_URI: 'http://' + CURRENT_IP + ':3000',
-};
+const developmentEnv = {};
 
 const ENV = currentMode('production')
     ? defaultEnv
