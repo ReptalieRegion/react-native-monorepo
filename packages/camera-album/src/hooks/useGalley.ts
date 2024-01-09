@@ -152,7 +152,6 @@ export const useGallery = ({
         let subscription: EmitterSubscription;
         if (isAboveIOS14) {
             subscription = cameraRollEventEmitter.addListener('onLibrarySelectionChange', (_event) => {
-                console.log('hi');
                 getUnloadedPictures();
             });
         }

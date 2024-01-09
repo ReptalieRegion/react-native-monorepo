@@ -32,7 +32,7 @@ export default function ListHeaderComponent({
         <UserProfile
             style={containerStyle}
             user={{
-                ...data.user,
+                ...data!.user,
                 followerCount: activitySummary.followerCount,
                 followingCount: activitySummary.followingCount,
             }}

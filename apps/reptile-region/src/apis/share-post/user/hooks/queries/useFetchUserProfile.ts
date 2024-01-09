@@ -11,7 +11,7 @@ import type { FetchDetailUserProfile } from '@/types/apis/share-post/user';
 export default function useFetchUserProfile({
     nickname,
     initialData,
-}: FetchDetailUserProfile['Request'] & { initialData: FetchDetailUserProfile['Response'] }) {
+}: FetchDetailUserProfile['Request'] & { initialData?: FetchDetailUserProfile['Response'] }) {
     return useQuery<FetchDetailUserProfile['Response'], HTTPError, FetchDetailUserProfile['Response'], CustomQueryKey>({
         initialData,
         queryKey: SHARE_POST_QUERY_KEYS.profileDetail(nickname),

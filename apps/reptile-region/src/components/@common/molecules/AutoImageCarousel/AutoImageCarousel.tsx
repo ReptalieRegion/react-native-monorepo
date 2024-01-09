@@ -25,7 +25,6 @@ export default function AutoImageCarousel<TData>({
     const ref = useRef<FlashList<TData>>(null);
 
     const { pause, resume } = useInterval(() => {
-        console.log('hi');
         setCurrentIndex((prev) => (prev === (props.data?.length ?? 0) - 1 ? 0 : prev + 1));
     }, 4000);
 

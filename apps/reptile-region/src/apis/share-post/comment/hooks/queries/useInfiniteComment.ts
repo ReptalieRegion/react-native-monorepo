@@ -14,10 +14,7 @@ export default function useInfiniteComment({ postId }: FetchComment['Request']) 
         queryKey: SHARE_POST_QUERY_KEYS.comment(postId),
         initialPageParam: 0,
         queryFn: ({ pageParam }) => getComments({ pageParam, postId }),
-        getNextPageParam: useCallback((lastPage) => {
-            console.log(lastPage.nextPage);
-            return lastPage.nextPage;
-        }, []),
+        getNextPageParam: useCallback((lastPage) => lastPage.nextPage, []),
         select: useCallback(
             (data: InfiniteData<InfiniteState<FetchCommentResponse[]>, number>) => data.pages.flatMap((page) => page.items),
             [],
