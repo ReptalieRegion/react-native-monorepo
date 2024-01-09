@@ -1,5 +1,5 @@
 import { Typo, color } from '@crawl/design-system';
-import { range } from 'lodash-es';
+import { Image } from 'expo-image';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -15,12 +15,11 @@ interface NoticeImageCarouselActions {
 
 type NoticeImageCarouselProps = NoticeImageCarouselState & NoticeImageCarouselActions;
 
-const data = range(5).map((_, index) => index);
+const data = [{ key: '크롤 오픈 축하 공지사항', source: require('@/assets/images/notice_open.png') }];
 
 export default function NoticeImageCarousel({ onPressIndicator }: NoticeImageCarouselProps) {
     const { width } = useWindowDimensions();
-    const imageWidth = width - styles.wrapper.paddingHorizontal * 2;
-    const cardStyle = { width: imageWidth, height: 220 };
+    const cardStyle = { width: width, height: 190 };
     const itemStyle = [styles.itemWrapper, cardStyle];
 
     return (
@@ -29,9 +28,9 @@ export default function NoticeImageCarousel({ onPressIndicator }: NoticeImageCar
                 data={data}
                 keyExtractor={(item) => item.toString()}
                 cardStyle={cardStyle}
-                renderItem={({ index }) => (
+                renderItem={({ item }) => (
                     <View style={itemStyle}>
-                        <Typo>{index + 1}</Typo>
+                        <Image key={item.key} source={item.source} style={itemStyle} contentFit="cover" />
                     </View>
                 )}
                 renderIndicator={(currentIndex) => (
@@ -48,8 +47,7 @@ export default function NoticeImageCarousel({ onPressIndicator }: NoticeImageCar
 
 const styles = StyleSheet.create({
     wrapper: {
-        marginVertical: 20,
-        paddingHorizontal: 20,
+        marginBottom: 20,
     },
     itemWrapper: {
         backgroundColor: color.Gray[200].toString(),

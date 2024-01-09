@@ -25,10 +25,12 @@ export default function AutoImageCarousel<TData>({
     const ref = useRef<FlashList<TData>>(null);
 
     const { pause, resume } = useInterval(() => {
+        console.log('hi');
         setCurrentIndex((prev) => (prev === (props.data?.length ?? 0) - 1 ? 0 : prev + 1));
     }, 4000);
 
     const isFocused = useIsFocused();
+    const isStopAutoCarousel = props.data?.length === 1;
 
     useEffect(() => {
         if (!isFocused) {
@@ -37,6 +39,12 @@ export default function AutoImageCarousel<TData>({
             resume();
         }
     }, [isFocused, pause, resume]);
+
+    useEffect(() => {
+        if (isStopAutoCarousel) {
+            pause();
+        }
+    }, [isStopAutoCarousel, pause]);
 
     useEffect(() => {
         ref.current?.scrollToIndex({
@@ -58,8 +66,8 @@ export default function AutoImageCarousel<TData>({
                 ref={ref}
                 {...props}
                 onTouchStart={pause}
-                onTouchEnd={resume}
-                onTouchCancel={resume}
+                onTouchEnd={isStopAutoCarousel ? undefined : resume}
+                onTouchCancel={isStopAutoCarousel ? undefined : resume}
                 estimatedItemSize={cardStyle.width}
                 estimatedListSize={cardStyle}
                 onMomentumScrollEnd={calcCurrentIndex}
