@@ -1,3 +1,4 @@
+import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import { useCallback, useMemo } from 'react';
 import * as Haptic from 'react-native-haptic-feedback';
 
@@ -6,7 +7,10 @@ import useCreateLike from './mutations/useCreateLike';
 import useUpdateFollow from './mutations/useUpdateFollow';
 import useUpdateLike from './mutations/useUpdateLike';
 
+import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
+import type { FetchPostsResponse } from '@/types/apis/share-post/post';
+import type { InfiniteState } from '@/types/apis/utils';
 
 export default function useSharePostActions() {
     const { mutate: createLikeMutate } = useCreateLike();
@@ -14,6 +18,26 @@ export default function useSharePostActions() {
     const { mutate: createFollowMutate } = useCreateFollow();
     const { mutate: updateFollowMutate } = useUpdateFollow();
     const { requireAuthNavigation } = useAuthNavigation();
+    const queryClient = useQueryClient();
+
+    // 동기적으로 처리하기 위해 먼저 cache조회 후 팔처링
+    const removePostList = useCallback(() => {
+        const postList = queryClient.getQueryData<InfiniteData<InfiniteState<FetchPostsResponse[]>, number>>(
+            SHARE_POST_QUERY_KEYS.list,
+        );
+
+        const newPostList: InfiniteData<InfiniteState<FetchPostsResponse[]>, number> | undefined = postList
+            ? {
+                  pages: postList.pages.slice(0, 1),
+                  pageParams: postList.pageParams.slice(0, 1),
+              }
+            : postList;
+
+        queryClient.setQueryData<InfiniteData<InfiniteState<FetchPostsResponse[]>, number>>(
+            SHARE_POST_QUERY_KEYS.list,
+            () => newPostList,
+        );
+    }, [queryClient]);
 
     const onlyLike = useCallback(
         (props: { isLike: boolean | undefined; postId: string }) =>
@@ -56,10 +80,11 @@ export default function useSharePostActions() {
 
     return useMemo(
         () => ({
+            removePostList,
             onlyLike,
             updateOrCreateLike,
             updateOrCreateFollow,
         }),
-        [onlyLike, updateOrCreateFollow, updateOrCreateLike],
+        [onlyLike, removePostList, updateOrCreateFollow, updateOrCreateLike],
     );
 }

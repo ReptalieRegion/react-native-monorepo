@@ -99,6 +99,8 @@ export default function SharePostCard({
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 40,
+        marginBottom: 20,
+        paddingTop: 20,
+        paddingHorizontal: 20,
     },
 });

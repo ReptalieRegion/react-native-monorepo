@@ -43,6 +43,11 @@ export const SHARE_POST_QUERY_KEYS = {
     activitySummary: (nickname: string) => ['user', 'activity_summary', nickname],
 } as const;
 
+/** Web View */
 export const WEB_VIEW = {
     webview: (path: string) => ['webview', path],
+};
+
+export const SHARE_POST_MUTATION_KEYS = {
+    create: ['share-post', 'create'],
 };

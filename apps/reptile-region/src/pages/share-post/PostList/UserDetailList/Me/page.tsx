@@ -1,10 +1,12 @@
 import { color } from '@crawl/design-system';
+import { useDebounce } from '@crawl/react-hooks';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
 import { FlashList } from '@shopify/flash-list';
 import { useQueryClient } from '@tanstack/react-query';
-import React, { useCallback, useState } from 'react';
-import { RefreshControl, StyleSheet, View } from 'react-native';
+import React, { useCallback, useMemo, useState } from 'react';
+import { RefreshControl, StyleSheet } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import usePostOptionsMenuBottomSheet from '../../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
 import useSharePostNavigation from '../../../@common/hooks/useSharePostNavigation';
@@ -25,13 +27,14 @@ export default function MeDetailListModalPage({
         params: { startIndex, pageState },
     },
 }: SharePostListMeModalPageScreen) {
+    const { bottom } = useSafeAreaInsets();
     const [refreshing, setRefreshing] = useState<boolean>(false);
 
     /** Data 시작 */
     const queryClient = useQueryClient();
     const userProfile = queryClient.getQueryData<FetchMeProfile['Response']>(ME_QUERY_KEYS.profile);
     const { data: userPost, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteFetchMePostList();
-    const { onlyLike, updateOrCreateFollow, updateOrCreateLike } = useOtherUserPostListActions();
+    const { onlyLike, updateOrCreateFollow, updateOrCreateLike, removePostList } = useOtherUserPostListActions();
     const { navigateComment, navigateImageThumbnail, handlePressLikeContents, handlePressTag } =
         useSharePostNavigation(pageState);
     const openPostOptionsMenuBottomSheet = usePostOptionsMenuBottomSheet();
@@ -60,7 +63,6 @@ export default function MeDetailListModalPage({
 
             return (
                 <SharePostCard
-                    containerStyle={styles.postCardContainer}
                     post={post}
                     onPressHeart={() => updateOrCreateLike({ postId: post.id, isLike: post.isLike })}
                     onDoublePressImageCarousel={() => onlyLike({ postId: post.id, isLike: post.isLike })}
@@ -91,12 +93,21 @@ export default function MeDetailListModalPage({
 
     const asyncOnRefresh = useCallback(async () => {
         setRefreshing(true);
+        removePostList();
         await refetch();
         setRefreshing(false);
-    }, [refetch]);
+    }, [refetch, removePostList]);
 
     const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
     /** Data 시작 */
+
+    const handleFirstRender = useDebounce(() => {
+        if (isFirstRender) {
+            scrollToIndex({ index: startIndex });
+            opacity.value = withTiming(1);
+            setIsFirstRender(false);
+        }
+    }, 300);
 
     const { flashListRef, scrollToIndex } = useFlashListScroll<FetchMePostListResponse>();
     const [isFirstRender, setIsFirstRender] = useState(true);
@@ -105,37 +116,25 @@ export default function MeDetailListModalPage({
         opacity: opacity.value,
     }));
 
+    const wrapperStyle = useMemo(() => [styles.container, animatedStyled, { paddingBottom: bottom }], [animatedStyled, bottom]);
+
     return (
-        <View style={styles.container}>
-            <Animated.View style={[styles.container, animatedStyled]}>
-                <FlashList
-                    ref={flashListRef}
-                    contentContainerStyle={styles.listContainer}
-                    data={userPost}
-                    extraData={userProfile}
-                    keyExtractor={keyExtractor}
-                    renderItem={renderItem}
-                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
-                    onEndReached={onEndReached}
-                    ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-                    scrollEventThrottle={16}
-                    estimatedItemSize={594}
-                    initialScrollIndex={startIndex}
-                    onContentSizeChange={
-                        // TODO 리스트의 특정 인덱스 offset 찾기 임시 적용
-                        isFirstRender
-                            ? () => {
-                                  scrollToIndex({ index: startIndex });
-                                  setTimeout(() => {
-                                      opacity.value = withTiming(1);
-                                      setIsFirstRender(false);
-                                  }, 400);
-                              }
-                            : undefined
-                    }
-                />
-            </Animated.View>
-        </View>
+        <Animated.View style={wrapperStyle}>
+            <FlashList
+                ref={flashListRef}
+                data={userPost}
+                extraData={userProfile}
+                keyExtractor={keyExtractor}
+                renderItem={renderItem}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
+                onEndReached={onEndReached}
+                ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+                scrollEventThrottle={16}
+                estimatedItemSize={537}
+                initialScrollIndex={startIndex}
+                onContentSizeChange={handleFirstRender}
+            />
+        </Animated.View>
     );
 }
 
@@ -143,14 +142,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: color.White.toString(),
-    },
-    listContainer: {
-        paddingLeft: 20,
-        paddingRight: 20,
-        paddingBottom: 20,
-    },
-    postCardContainer: {
-        marginTop: 20,
-        marginBottom: 20,
     },
 });
