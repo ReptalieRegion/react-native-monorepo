@@ -31,33 +31,21 @@ type SignInTemplatesProps = {
 export default function SignInTemplates({ logo, buttons }: SignInTemplatesProps) {
     return (
         <View style={styles.container}>
-            <View style={styles.logoContainer}>{logo}</View>
-            <View style={styles.loginContainer}>
+            <View style={styles.logoWrapper}>{logo}</View>
+            <View style={styles.buttonWrapper}>
                 {buttons.map((button) => {
                     const key = button.type;
                     switch (button.type) {
                         case 'KAKAO':
                             return (
-                                <KakaoButton
-                                    key={key}
-                                    height={button.height}
-                                    width={button.width}
-                                    onSuccess={button.onSuccess}
-                                    onError={button.onError}
-                                />
+                                <KakaoButton key={key} height={button.height} width={button.width} onError={button.onError} />
                             );
                         case 'APPLE':
                             return (
-                                <AppleButton
-                                    key={key}
-                                    height={button.height}
-                                    width={button.width}
-                                    onSuccess={button.onSuccess}
-                                    onError={button.onError}
-                                />
+                                <AppleButton key={key} height={button.height} width={button.width} onError={button.onError} />
                             );
                         case 'GOOGLE':
-                            return <GoogleButton key={key} onError={button.onError} onSuccess={button.onSuccess} />;
+                            return <GoogleButton key={key} onError={button.onError} />;
                     }
                 })}
             </View>
@@ -70,11 +58,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: color.White.toString(),
     },
-    logoContainer: {
+    logoWrapper: {
         flex: 1,
         justifyContent: 'center',
     },
-    loginContainer: {
+    buttonWrapper: {
         width: '100%',
         alignItems: 'center',
         gap: 15,

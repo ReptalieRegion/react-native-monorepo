@@ -12,7 +12,7 @@ export default function useBaseSignInCheck<TData>(
 ) {
     return useQuery<SignInCheck['Response'], HTTPError, TData, CustomQueryKey>({
         queryKey: AUTH_QUERY_KEYS.signInCheck,
-        queryFn: () => signInCheck(),
+        queryFn: signInCheck,
         staleTime: Infinity,
         gcTime: Infinity,
         ...props,

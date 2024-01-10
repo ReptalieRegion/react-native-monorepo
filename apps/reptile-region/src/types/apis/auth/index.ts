@@ -29,6 +29,8 @@ interface SignUpRegister0 {
 
 type AuthResponse = SignInResponse | SignUpRegister0;
 
+type AuthProviderType = 'kakao' | 'apple' | 'google';
+
 /**
  *
  * GET
@@ -61,6 +63,16 @@ type FetchAuthTokenAndPublicKeyResponse = {
 };
 
 type FetchAuthTokenAndPublicKey = ServerAPI<undefined, FetchAuthTokenAndPublicKeyResponse>;
+
+// 탈퇴회원 복구
+type RestoreRequest = {
+    authToken: string;
+    socialId: string;
+    publicKey: string;
+    provider: AuthProviderType;
+};
+
+type Restore = ServerAPI<RestoreRequest, SignInResponse>;
 
 // 카카오 로그인
 type PostKakaoAuthRequest = {
@@ -116,6 +128,7 @@ type SignOutResponse = {
 type SignOut = ServerAPI<void, SignInResponse>;
 
 export type {
+    AuthProviderType,
     AuthResponse,
     AuthTokens,
     FetchAuthTokenAndPublicKey,
@@ -127,6 +140,8 @@ export type {
     PostKakaoAuthRequest,
     RefreshToken,
     Register0,
+    Restore,
+    RestoreRequest,
     SignInCheck,
     SignInCheckResponse,
     SignInResponse,

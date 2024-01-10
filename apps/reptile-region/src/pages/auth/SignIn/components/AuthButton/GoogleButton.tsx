@@ -3,22 +3,21 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
-import useGoogleAuth from '@/apis/auth/hooks/mutations/useGoogleAuth';
+import useGoogleAuth from '../../hooks/mutations/useGoogleAuth';
+
 import GoogleSymbol from '@/assets/icons/GoogleSymbol';
 import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import { GoogleAuth } from '@/native-modules/google-auth/RNGoogleAuthModule';
-import type { PostGoogleAuth } from '@/types/apis/auth';
 
 interface GoogleButtonActions {
-    onSuccess(props: PostGoogleAuth['Response']): void;
     onError(error: unknown): void;
 }
 
 export type GoogleButtonProps = GoogleButtonActions;
 
-export default function GoogleButton({ onSuccess, onError }: GoogleButtonProps) {
+export default function GoogleButton({ onError }: GoogleButtonProps) {
     const { openLoading, closeLoading } = useGlobalLoading();
-    const { mutate } = useGoogleAuth({ onSuccess, onError });
+    const { mutate } = useGoogleAuth();
 
     const handlePress = async () => {
         try {

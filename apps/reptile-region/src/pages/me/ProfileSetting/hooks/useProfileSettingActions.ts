@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 
+import useWithdrawal from './mutations/useWithdrawal';
+
 import useUpdateProfile from '@/apis/me/profile/hooks/mutations/useUpdateProfile';
 import useAlert from '@/components/overlay/Alert/useAlert';
 import useToast from '@/components/overlay/Toast/useToast';
@@ -8,7 +10,8 @@ import useImagePicker from '@/hooks/useImagePicker';
 export default function useProfileSettingActions() {
     const openToast = useToast();
     const openAlert = useAlert();
-    const { mutate } = useUpdateProfile();
+    const updateProfileAPI = useUpdateProfile();
+    const withdrawalAPI = useWithdrawal();
 
     const { handlePressProfileImage } = useImagePicker({
         onSuccess: useCallback(
@@ -17,9 +20,9 @@ export default function useProfileSettingActions() {
                 const randomNumber = Math.floor(Math.random() * 9999);
                 const name = `image_${randomNumber}_${new Date().getTime()}.jpg`;
                 const type = imageInfo.mime;
-                mutate({ uri, name, type });
+                updateProfileAPI.mutate({ uri, name, type });
             },
-            [mutate],
+            [updateProfileAPI],
         ),
         onError: useCallback(
             (error) => {
@@ -34,7 +37,7 @@ export default function useProfileSettingActions() {
     const handlePressWithdrawal = () => {
         openAlert({
             title: '정말로 탈퇴 하시겠어요?',
-            contents: '탈퇴 시 복구가 불가능해요',
+            contents: '탈퇴 시 7일 후 복구가 불가능해요',
             buttons: [
                 {
                     text: '취소',
@@ -43,6 +46,7 @@ export default function useProfileSettingActions() {
                 {
                     text: '탈퇴',
                     style: 'danger',
+                    onPress: withdrawalAPI.mutate,
                 },
             ],
         });

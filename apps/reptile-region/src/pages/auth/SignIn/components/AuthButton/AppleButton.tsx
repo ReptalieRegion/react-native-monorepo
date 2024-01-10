@@ -2,10 +2,10 @@ import appleAuth, { AppleError, AppleButton as RNAppleButton } from '@invertase/
 import React from 'react';
 import { type DimensionValue } from 'react-native';
 
-import useAppleAuth from '@/apis/auth/hooks/mutations/useAppleAuth';
+import useAppleAuth from '../../hooks/mutations/useAppleAuth';
+
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
 import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
-import type { PostAppleAuth } from '@/types/apis/auth';
 
 type AppleButtonState = {
     height?: DimensionValue;
@@ -13,15 +13,14 @@ type AppleButtonState = {
 };
 
 interface AppleButtonActions {
-    onSuccess(props: PostAppleAuth['Response']): void;
     onError(error: unknown): void;
 }
 
 export type AppleButtonProps = AppleButtonState & AppleButtonActions;
 
-export default function AppleButton({ width = '90%', height = 44, onSuccess, onError }: AppleButtonProps) {
+export default function AppleButton({ width = '90%', height = 44, onError }: AppleButtonProps) {
     const { mutateAsync: AuthTokenAndPublicKeyMutateAsync } = useAuthTokenAndPublicKey();
-    const { mutate: appleMutate } = useAppleAuth({ onSuccess, onError });
+    const { mutate: appleMutate } = useAppleAuth();
     const { openLoading, closeLoading } = useGlobalLoading();
 
     const handlePress = async () => {

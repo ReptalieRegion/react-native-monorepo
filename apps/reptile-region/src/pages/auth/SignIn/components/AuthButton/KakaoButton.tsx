@@ -3,12 +3,12 @@ import React from 'react';
 import { StyleSheet, View, type DimensionValue } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
+import useKakaoAuth from '../../hooks/mutations/useKakaoAuth';
+
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
-import useKakaoAuth from '@/apis/auth/hooks/mutations/useKakaoAuth';
 import KakaoSymbol from '@/assets/icons/KakaoSymbol';
 import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import KakaoAuth from '@/native-modules/kakao-auth/KakaoAuth';
-import type { PostKakaoAuth } from '@/types/apis/auth';
 
 type KakaoButtonState = {
     height?: DimensionValue;
@@ -16,16 +16,15 @@ type KakaoButtonState = {
 };
 
 interface KakaoButtonActions {
-    onSuccess(data: PostKakaoAuth['Response']): void;
     onError(error: unknown): void;
 }
 
 export type KakaoButtonProps = KakaoButtonState & KakaoButtonActions;
 
-export default function KakaoButton({ height = 44, width = '90%', onSuccess, onError }: KakaoButtonProps) {
+export default function KakaoButton({ height = 44, width = '90%', onError }: KakaoButtonProps) {
     const { openLoading, closeLoading } = useGlobalLoading();
     const { mutateAsync: AuthTokenAndPublicKeyMutateAsync } = useAuthTokenAndPublicKey();
-    const { mutate: kakaoAuthMutate } = useKakaoAuth({ onSuccess, onError });
+    const { mutate: kakaoAuthMutate } = useKakaoAuth();
 
     const handlePress = async () => {
         try {
