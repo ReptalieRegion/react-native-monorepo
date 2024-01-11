@@ -1,3 +1,4 @@
+import { useErrorBoundaryGroup } from '@crawl/error-boundary';
 import messaging from '@react-native-firebase/messaging';
 import type { NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { useEffect } from 'react';
@@ -18,10 +19,20 @@ type RootRoutesProps = {
 type UseEffectInitialProps = RootRoutesProps;
 
 export default function useEffectInitial({ navigationRef }: UseEffectInitialProps) {
+    const { reset } = useErrorBoundaryGroup();
     const { isSignIn, isLoading } = useAuth();
     const { mutate: updateFCMTokenMutate } = useUpdateFCMToken();
     const { mutate: updatePushAgreeMutate } = useUpdatePushAgree();
     const { signOut } = useAuthHandler();
+
+    /**
+     * 로그인 시 ErrorBoundary reset
+     */
+    useEffect(() => {
+        if (isSignIn) {
+            reset();
+        }
+    }, [isSignIn, reset]);
 
     /**
      * clientFetch에서 refresh 실패했을 때 실행할 로직 초기화

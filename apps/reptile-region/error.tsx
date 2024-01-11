@@ -20,14 +20,9 @@ export default function GlobalError({ reset }: GlobalErrorProps) {
     const queryClient = useQueryClient();
 
     const handleReset = () => {
-        const errorKeys = queryClient
-            .getQueryCache()
-            .getAll()
-            .filter((q) => q.state.status === 'error')
-            .map((e) => e.queryKey);
-
-        errorKeys.forEach((errorKey) => {
-            queryClient.removeQueries({ queryKey: errorKey, exact: true });
+        queryClient.removeQueries({
+            predicate: (query) => query.state.status === 'error',
+            exact: true,
         });
         reset();
     };

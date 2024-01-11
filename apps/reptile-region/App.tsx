@@ -1,4 +1,4 @@
-import { ErrorBoundary } from '@crawl/error-boundary';
+import { ErrorBoundary, ErrorBoundaryGroup } from '@crawl/error-boundary';
 import { OverlayProvider } from '@crawl/overlay-manager';
 import { useNavigationContainerRef } from '@react-navigation/native';
 import React from 'react';
@@ -24,9 +24,13 @@ export default function App(): React.JSX.Element {
                 <GestureHandlerRootView style={styles.gestureContainer}>
                     <SafeAreaProvider>
                         <OverlayProvider>
-                            <ErrorBoundary renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}>
-                                <RootRoutes navigationRef={navigationRef} />
-                            </ErrorBoundary>
+                            <ErrorBoundaryGroup blockOutside={false}>
+                                <ErrorBoundary
+                                    renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}
+                                >
+                                    <RootRoutes navigationRef={navigationRef} />
+                                </ErrorBoundary>
+                            </ErrorBoundaryGroup>
                         </OverlayProvider>
                     </SafeAreaProvider>
                 </GestureHandlerRootView>

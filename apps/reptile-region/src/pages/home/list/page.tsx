@@ -62,7 +62,7 @@ const HomeListPage = withPageHeaderUpdate<HomeListPageScreenProp>(
                                 </Typo>
                             </TouchableOpacity>
                         </View>
-                        <ErrorBoundary renderFallback={EntityListError} onReset={navigateDiary}>
+                        <ErrorBoundary renderFallback={(props) => <EntityListError {...props} onPress={navigateDiary} />}>
                             <Suspense fallback={<EntityListSkeleton />}>
                                 <EntityList
                                     carouselProps={{
