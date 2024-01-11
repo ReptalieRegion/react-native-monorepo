@@ -28,7 +28,11 @@ const HomeListPage = withPageHeaderUpdate<HomeListPageScreenProp>(
         const { navigateDiary, navigateEntityDetail, navigateSharePost, navigationPostDetail } = useHomeListNavigation();
 
         return (
-            <ScrollView style={styles.wrapper} contentContainerStyle={styles.contentContainer}>
+            <ScrollView
+                style={styles.wrapper}
+                contentContainerStyle={styles.contentContainer}
+                showsVerticalScrollIndicator={false}
+            >
                 <NoticeImageCarousel />
                 <View style={styles.container}>
                     <View>

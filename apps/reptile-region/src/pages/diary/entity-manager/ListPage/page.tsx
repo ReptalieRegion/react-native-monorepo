@@ -52,6 +52,7 @@ export default function EntityMangerList() {
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
                 estimatedItemSize={212}
+                showsVerticalScrollIndicator={false}
             />
             <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>
                 <FloatingActionButtonGroup.Button
