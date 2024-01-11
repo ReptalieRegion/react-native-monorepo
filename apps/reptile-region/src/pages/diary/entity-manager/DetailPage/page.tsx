@@ -148,6 +148,7 @@ export default function EntityManagerDetailPage({
                 estimatedItemSize={weightStyles.itemWrapper.height}
                 ListHeaderComponent={renderListHeader}
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
+                showsVerticalScrollIndicator={false}
             />
         </PageWrapper>
     ) : null;
