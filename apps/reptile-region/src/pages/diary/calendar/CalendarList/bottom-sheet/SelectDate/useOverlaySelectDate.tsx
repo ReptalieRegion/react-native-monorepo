@@ -2,6 +2,7 @@ import { BottomSheet, useBottomSheet } from '@crawl/bottom-sheet';
 import { useCalendar } from '@crawl/calendar';
 import { Typo } from '@crawl/design-system';
 import { useOverlay } from '@crawl/overlay-manager';
+import dayjs from 'dayjs';
 import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -30,7 +31,10 @@ export default function useOverlaySelectDate() {
                                 header={Header}
                                 snapInfo={{ pointsFromTop: [533, '85%'], startIndex: 0 }}
                             >
-                                <SelectDateBottomSheet searchDate={searchDate} onPressMonth={(date) => setDate(date)} />
+                                <SelectDateBottomSheet
+                                    searchDate={searchDate}
+                                    onPressMonth={(date) => setDate(dayjs(date).endOf('month').format('YYYY-MM-DD'))}
+                                />
                             </BottomSheet>
                         }
                     />
