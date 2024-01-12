@@ -25,9 +25,7 @@ export default function App(): React.JSX.Element {
                     <SafeAreaProvider>
                         <OverlayProvider>
                             <ErrorBoundaryGroup blockOutside={false}>
-                                <ErrorBoundary
-                                    renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}
-                                >
+                                <ErrorBoundary renderFallback={GlobalError}>
                                     <RootRoutes navigationRef={navigationRef} />
                                 </ErrorBoundary>
                             </ErrorBoundaryGroup>

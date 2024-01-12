@@ -43,6 +43,11 @@ function fetcher() {
 
                 if (!response.ok) {
                     const error = (await response.json()) as HTTPErrorField;
+
+                    if (error.code === -1304) {
+                        failCallback?.();
+                    }
+
                     throw new HTTPError(error.msg, response.status, error.code, error.path, error.timestamp);
                 }
 
@@ -146,6 +151,11 @@ function fetcher() {
 
             if (!response.ok) {
                 const error = (await response.json()) as HTTPErrorField;
+
+                if (error.code === -1304) {
+                    failCallback?.();
+                }
+
                 throw new HTTPError(error.msg, response.status, error.code, error.path, error.timestamp);
             }
 
