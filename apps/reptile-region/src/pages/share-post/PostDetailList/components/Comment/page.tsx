@@ -112,7 +112,7 @@ export default function SharePostDetailModalPage({
                     data={comments}
                     contentContainerStyle={contentContainerStyle}
                     renderItem={renderItem}
-                    estimatedItemSize={150}
+                    estimatedItemSize={80}
                     onEndReached={handleFetchNextPage}
                     ListEmptyComponent={EmptyComment}
                     ListHeaderComponent={ListHeaderComponent}

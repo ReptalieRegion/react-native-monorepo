@@ -6,12 +6,13 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useReportListBottomSheet from '../ReportList/useReportListBottomSheet';
 
-import useDeletePost from '@/apis/share-post/post/hooks/mutations/useDeletePost';
+import useDeletePost from './hooks/muations/useDeletePost';
+
 import useAlert from '@/components/overlay/Alert/useAlert';
 import type { ImageType } from '@/types/global/image';
 import type { SharePostListNavigationProp } from '@/types/routes/props/share-post/post-list';
 
-export type PostOptionsMenuProps = {
+type PostOptionsMenuState = {
     post: {
         id: string;
         images: ImageType[];
@@ -25,10 +26,16 @@ export type PostOptionsMenuProps = {
     navigation: SharePostListNavigationProp;
 };
 
-export default function PostOptionsMenu({ post, navigation }: PostOptionsMenuProps) {
+interface PostOptionsMenuActions {
+    onSuccessDelete?(): void;
+}
+
+export type PostOptionsMenuProps = PostOptionsMenuState & PostOptionsMenuActions;
+
+export default function PostOptionsMenu({ post, navigation, onSuccessDelete }: PostOptionsMenuProps) {
     const openReportListBottomSheet = useReportListBottomSheet();
     const { bottomSheetClose } = useBottomSheet();
-    const { mutate } = useDeletePost();
+    const { mutate } = useDeletePost({ onSuccess: onSuccessDelete });
     const openAlert = useAlert();
 
     const deletePost = async () => {

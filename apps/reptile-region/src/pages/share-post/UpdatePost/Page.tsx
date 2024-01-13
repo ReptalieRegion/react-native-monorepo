@@ -25,7 +25,7 @@ export default function SharePostUpdatePage({
     return (
         <PostUpdate minImageCountCallback={handleToast}>
             <PageWrapper>
-                <ChangeHeader postId={post.id} navigation={navigation} />
+                <ChangeHeader navigation={navigation} postId={post.id} />
                 <PostUpdate.List images={post.images} contents={post.contents} />
             </PageWrapper>
         </PostUpdate>

@@ -13,7 +13,7 @@ export default function usePostOptionsMenuBottomSheet() {
     const navigation = useNavigation<SharePostListNavigationProp>();
 
     const openPostOptionsMenuBottomSheet = useCallback(
-        ({ post }: Pick<PostOptionsMenuProps, 'post'>) => {
+        ({ post, onSuccessDelete }: Pick<PostOptionsMenuProps, 'post' | 'onSuccessDelete'>) => {
             return new Promise<boolean>((resolve) => {
                 overlay.open(({ isOpen, close }) => (
                     <ConditionalRenderer
@@ -26,7 +26,11 @@ export default function usePostOptionsMenuBottomSheet() {
                                 }}
                                 snapInfo={{ startIndex: 0, pointsFromTop: [post.isMine ? 59 + 38 * 2 : 59 + 38 * 1] }}
                             >
-                                <PostOptionsMenuBottomSheet navigation={navigation} post={post} />
+                                <PostOptionsMenuBottomSheet
+                                    navigation={navigation}
+                                    post={post}
+                                    onSuccessDelete={onSuccessDelete}
+                                />
                             </BottomSheet>
                         }
                     />

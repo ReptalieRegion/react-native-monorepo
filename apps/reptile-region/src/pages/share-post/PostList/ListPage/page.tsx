@@ -8,6 +8,7 @@ import * as Progress from 'react-native-progress';
 
 import usePostOptionsMenuBottomSheet from '../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
 
+import EmptyPost from './empty';
 import useInfiniteFetchPosts from './hooks/queries/useInfiniteFetchPosts';
 import useSharePostActions from './hooks/useSharePostActions';
 
@@ -22,7 +23,6 @@ import withPageHeaderUpdate from '@/components/withPageHeaderUpdate';
 import { useAuth } from '@/hooks/auth';
 import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
 import useFlashListScroll from '@/hooks/useFlashListScroll';
-import { ListEmptyComponent } from '@/pages/share-post/@common/contexts/SharePostCard/components';
 import SharePostCard from '@/pages/share-post/@common/contexts/SharePostCard/SharePostCard';
 import useSharePostNavigation from '@/pages/share-post/@common/hooks/useSharePostNavigation';
 import type { FetchPostResponse } from '@/types/apis/share-post/post';
@@ -127,7 +127,7 @@ function PostList({ navigation }: SharePostListPageScreen) {
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
                 onEndReached={handleEndReached}
                 CellRendererComponent={FadeInCellRenderComponent}
-                ListEmptyComponent={ListEmptyComponent}
+                ListEmptyComponent={EmptyPost}
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 scrollEventThrottle={16}
                 onScroll={determineScrollDirection}
@@ -212,6 +212,7 @@ function TopProgress({ onStartMutating }: { onStartMutating: () => void }) {
     );
 }
 
+/** Header 변경 HOC */
 export default withPageHeaderUpdate<SharePostListPageScreen>(PostList, ({ navigation }) => {
     const { isSignIn } = useAuth();
     const { requireAuthNavigation } = useAuthNavigation();

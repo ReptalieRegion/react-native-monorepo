@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 
 import usePostOptionsMenuBottomSheet from '../../../@common/bottom-sheet/PostOptionsMenu/usePostOptionsMenuBottomSheet';
@@ -8,7 +9,11 @@ import useFetchPost from '@/apis/share-post/post/hooks/queries/useFetchPost';
 import { Divider } from '@/components/@common/atoms/Divider';
 import SharePostCard from '@/pages/share-post/PostDetailList/components/Post/SharePostCard';
 
-export default function Post({ postId }: { postId: string }) {
+type PostProps = {
+    postId: string;
+};
+
+export default function Post({ postId }: PostProps) {
     const { data } = useFetchPost({ postId });
     const {
         post: {
@@ -24,6 +29,13 @@ export default function Post({ postId }: { postId: string }) {
         useSharePostNavigation('MODAL');
     const openPostOptionsMenuBottomSheet = usePostOptionsMenuBottomSheet();
 
+    const navigation = useNavigation();
+    const navigationBack = () => {
+        if (navigation.canGoBack()) {
+            navigation.goBack();
+        }
+    };
+
     return (
         <>
             <SharePostCard
@@ -34,6 +46,7 @@ export default function Post({ postId }: { postId: string }) {
                 onPressPostOptionsMenu={() =>
                     openPostOptionsMenuBottomSheet({
                         post: { id: postId, contents, images, isMine, user: { id: userId, nickname } },
+                        onSuccessDelete: navigationBack,
                     })
                 }
                 onPressProfile={() => navigateImageThumbnail({ user: { isFollow, nickname, profile } })}

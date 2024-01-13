@@ -2,8 +2,10 @@ import { Typo } from '@crawl/design-system';
 import type { ListRenderItem } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+
+import useHomeListNavigation from '../hooks/useHomeListNavigation';
 
 import BasicImageCarousel from '@/components/@common/molecules/BasicImageCarousel/BasicImageCarousel';
 import useInfiniteFetchPosts from '@/pages/share-post/PostList/ListPage/hooks/queries/useInfiniteFetchPosts';
@@ -36,14 +38,19 @@ export default function NewSharePost({ carouselProps, navigationPostDetail }: Ne
             width: carouselProps.width,
         },
     ];
-    const imageStyle = { width: carouselProps.width, height: carouselProps.height };
-
+    const imageStyle = { width: carouselProps.width, height: data.length !== 0 ? carouselProps.height : 0 };
     const keyExtractor = (item: FetchPostsResponse) => item.post.id;
 
     const renderItem: ListRenderItem<FetchPostsResponse> = ({ item }) => {
+        const uri = item.post.images[0].src;
+
+        const handlePressImage = () => {
+            navigationPostDetail({ postId: item.post.id, type: 'like' });
+        };
+
         return (
-            <TouchableOpacity style={wrapperStyle} onPress={() => navigationPostDetail({ postId: item.post.id, type: 'like' })}>
-                <Image source={{ uri: item.post.images[0].src }} style={imageStyle} />
+            <TouchableOpacity style={wrapperStyle} onPress={handlePressImage}>
+                <Image source={{ uri }} recyclingKey={uri} style={imageStyle} />
                 <Typo
                     color="placeholder"
                     textBreakStrategy="highQuality"
@@ -61,9 +68,10 @@ export default function NewSharePost({ carouselProps, navigationPostDetail }: Ne
         <BasicImageCarousel
             carouselProps={carouselProps}
             listProps={{
-                data: data.slice(0, 10),
+                data,
                 keyExtractor: keyExtractor,
                 renderItem: renderItem,
+                ListEmptyComponent: Empty,
                 estimatedItemSize: imageStyle.width,
                 estimatedListSize: imageStyle,
             }}
@@ -71,8 +79,29 @@ export default function NewSharePost({ carouselProps, navigationPostDetail }: Ne
     );
 }
 
+function Empty() {
+    const { navigateSharePost } = useHomeListNavigation();
+
+    return (
+        <TouchableOpacity style={emptyStyles.wrapper} onPress={navigateSharePost}>
+            <Typo variant="body2" color="placeholder">
+                아직 게시물이 없어요
+            </Typo>
+        </TouchableOpacity>
+    );
+}
+
 const styles = StyleSheet.create({
     itemWrapper: {
         gap: 15,
+    },
+});
+
+const emptyStyles = StyleSheet.create({
+    wrapper: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: Dimensions.get('screen').width - 40,
+        height: 80,
     },
 });

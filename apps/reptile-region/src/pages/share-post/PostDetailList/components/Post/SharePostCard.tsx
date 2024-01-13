@@ -73,6 +73,7 @@ export default function SharePostCard({
         width,
         borderRadius: 0,
     };
+
     return (
         <View style={[styles.container, containerStyle]}>
             <PostCard uuid={postId}>
