@@ -56,13 +56,20 @@ export default function useHomeListNavigation() {
         [navigation],
     );
 
+    const navigationEntityCreate = useCallback(() => {
+        navigation.navigate('entity-manager/create', {
+            screen: 'image',
+        });
+    }, [navigation]);
+
     return useMemo(
         () => ({
             navigateSharePost,
             navigateDiary,
             navigateEntityDetail,
             navigationPostDetail,
+            navigationEntityCreate,
         }),
-        [navigateDiary, navigateEntityDetail, navigateSharePost, navigationPostDetail],
+        [navigateDiary, navigateEntityDetail, navigateSharePost, navigationEntityCreate, navigationPostDetail],
     );
 }

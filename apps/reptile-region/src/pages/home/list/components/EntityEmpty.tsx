@@ -3,6 +3,8 @@ import React from 'react';
 import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import useHomeListNavigation from '../hooks/useHomeListNavigation';
+
 import { Plus } from '@/assets/icons';
 
 type EntityEmptyItemProps = {
@@ -10,8 +12,10 @@ type EntityEmptyItemProps = {
 };
 
 export default function EntityEmpty({ containerStyle }: EntityEmptyItemProps) {
+    const { navigationEntityCreate } = useHomeListNavigation();
+
     return (
-        <TouchableOpacity style={containerStyle} containerStyle={styles.container}>
+        <TouchableOpacity style={containerStyle} containerStyle={styles.container} onPress={navigationEntityCreate}>
             <View style={styles.wrapper}>
                 <Plus fill={color.Green[750].toString()} />
                 <Typo textAlign="center" color="primary">

@@ -1016,8 +1016,10 @@ PODS:
     - React-Core
   - react-native-date-picker (4.3.5):
     - React-Core
-  - react-native-image-editor (2.3.0):
-    - React
+  - react-native-image-editor (3.0.0):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
     - React-RCTImage
   - react-native-pager-view (6.2.3):
     - glog
@@ -1591,7 +1593,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 9731a0a63ebaf8976014623c4d637744d7353a7c
   react-native-cameraroll: 5282b6b4451cfed2afa19b9088d4b1e5f2bf9d88
   react-native-date-picker: 90d1d60802a20085125657940b944f2bb4e5c113
-  react-native-image-editor: 9361a215c3991cafbe5e7f28cbbad6e72c9c2705
+  react-native-image-editor: c3b5ea080ff0ed2621f1127cebb10d366e233f3c
   react-native-pager-view: d81ab2060b9caf57ca8c3a0d57467ff407cdb825
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   react-native-webview: 88293a0f23eca8465c0433c023ec632930e644d0

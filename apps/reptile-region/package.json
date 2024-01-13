@@ -35,7 +35,7 @@
         "@notifee/react-native": "^7.8.0",
         "@react-native-camera-roll/camera-roll": "^7.3.0",
         "@react-native-community/datetimepicker": "^7.6.2",
-        "@react-native-community/image-editor": "^2.3.0",
+        "@react-native-community/image-editor": "^3.0.0",
         "@react-native-firebase/app": "^18.7.1",
         "@react-native-firebase/messaging": "^18.7.1",
         "@react-native-masked-view/masked-view": "^0.3.0",

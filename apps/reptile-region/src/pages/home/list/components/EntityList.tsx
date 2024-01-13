@@ -44,8 +44,8 @@ export default function EntityList({ carouselProps, navigateEntityDetail }: Enti
     ];
 
     const imageStyle = {
-        width: carouselProps.width,
-        height: carouselProps.height,
+        width: carouselProps.width - styles.shadowWrapper.paddingHorizontal * 2,
+        height: carouselProps.height - styles.shadowWrapper.paddingHorizontal * 2,
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
     };

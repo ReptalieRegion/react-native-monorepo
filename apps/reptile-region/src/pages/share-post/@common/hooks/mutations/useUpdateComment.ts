@@ -5,21 +5,10 @@ import { Keyboard } from 'react-native';
 import useCommentHandler from '../../contexts/Comment/hooks/useCommentHandler';
 import { useTagHandler } from '../../contexts/TagTextInput';
 
-import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useBaseUpdateComment from '@/apis/share-post/comment/hooks/mutations/useBaseUpdateComment';
 import useToast from '@/components/overlay/Toast/useToast';
-import type {
-    FetchComment,
-    FetchCommentResponse,
-    UpdateCommentRequest,
-    UpdateCommentResponse,
-} from '@/types/apis/share-post/comment';
-import type { InfiniteState } from '@/types/apis/utils';
-
-type Context = {
-    prevComment: InfiniteData<InfiniteState<FetchCommentResponse[]>, number> | undefined;
-};
+import type { FetchComment, UpdateCommentResponse } from '@/types/apis/share-post/comment';
 
 export default function useUpdateComment() {
     const queryClient = useQueryClient();
@@ -27,7 +16,7 @@ export default function useUpdateComment() {
     const { changeText } = useTagHandler();
     const { changeCommentSubmitType } = useCommentHandler();
 
-    return useBaseUpdateComment<Context>({
+    return useBaseUpdateComment({
         onSuccess: useCallback(
             (data: UpdateCommentResponse) => {
                 setTimeout(Keyboard.dismiss, 500);
@@ -37,12 +26,9 @@ export default function useUpdateComment() {
             },
             [changeText, changeCommentSubmitType, queryClient],
         ),
-        onError: useCallback(
-            (_error: HTTPError, _variables: UpdateCommentRequest, _context: Context | undefined) => {
-                openToast({ contents: '댓글 수정에 실패했어요', severity: 'error' });
-            },
-            [openToast],
-        ),
+        onError: useCallback(() => {
+            openToast({ contents: '댓글 수정에 실패했어요', severity: 'error' });
+        }, [openToast]),
     });
 }
 

@@ -1857,7 +1857,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@crawl/image-crop@workspace:packages/image-crop"
   dependencies:
-    "@react-native-community/image-editor": ^2.3.0
+    "@react-native-community/image-editor": ^3.0.0
     react-native-builder-bob: ^0.23.1
     typescript: 5.2.2
   peerDependencies:
@@ -3287,13 +3287,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/image-editor@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "@react-native-community/image-editor@npm:2.3.0"
+"@react-native-community/image-editor@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "@react-native-community/image-editor@npm:3.0.0"
   peerDependencies:
-    react: ^16.0
-    react-native: ">=0.57 <0.62"
-  checksum: 081b435d00f273d650957dbd7b719c6540a57d70a15958969bdcb96a7a85bfac8bd11a77391d94d961ca24fd91b277920518dac7b0231c55c66474ea2c1f9063
+    react-native: ">=0.57.0"
+  peerDependenciesMeta:
+    react-native:
+      optional: true
+  checksum: 04570f0427256fd1d7e4dfecde05ce4021b8b7b839379dd3243948c73e757ab17d4d372fea682d3d89d6257e5ad6a00d5dfd4cb95f514b93b8d5671f93fb8f62
   languageName: node
   linkType: hard
 
@@ -12703,7 +12705,7 @@ __metadata:
     "@notifee/react-native": ^7.8.0
     "@react-native-camera-roll/camera-roll": ^7.3.0
     "@react-native-community/datetimepicker": ^7.6.2
-    "@react-native-community/image-editor": ^2.3.0
+    "@react-native-community/image-editor": ^3.0.0
     "@react-native-firebase/app": ^18.7.1
     "@react-native-firebase/messaging": ^18.7.1
     "@react-native-masked-view/masked-view": ^0.3.0

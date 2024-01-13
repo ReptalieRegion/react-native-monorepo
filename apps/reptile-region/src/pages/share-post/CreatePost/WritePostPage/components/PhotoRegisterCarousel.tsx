@@ -31,8 +31,12 @@ export default function PhotoRegisterCarousel() {
 
             for (const photo of selectedPhotos) {
                 const cropAbleImage = cropInfoMap[photo.uri];
+
                 if (cropAbleImage) {
-                    const uri = await cropImage(photo.uri, cropAbleImage);
+                    const uri = await cropImage(photo.uri, {
+                        offset: cropAbleImage.offset,
+                        size: cropAbleImage.size,
+                    });
                     tempCroppedImage.push({ ...photo, uri });
                 } else {
                     tempCroppedImage.push({ ...photo });

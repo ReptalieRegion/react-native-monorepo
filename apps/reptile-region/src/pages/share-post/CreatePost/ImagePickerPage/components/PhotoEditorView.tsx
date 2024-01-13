@@ -1,6 +1,6 @@
 import { useCameraAlbum } from '@crawl/camera-album';
-import { ImageCrop } from '@crawl/image-crop';
-import React, { useRef } from 'react';
+import { ImageZoom } from '@crawl/image-crop';
+import React from 'react';
 import { View } from 'react-native';
 
 import { useCreatePostActions } from '../../@common/context/useCreatePostActions';
@@ -15,31 +15,21 @@ export default function PhotoEditorView(props: { size: { width: number; height: 
     const { setCropInfo } = useCreatePostActions();
     const { currentSelectedPhoto } = useCameraAlbum();
     const uri = currentSelectedPhoto?.uri ?? '';
-
-    /**
-     * @description 이미지 선택 후 -> 크롭 -> 다른 이미지 -> 이전에 크롭한 이미지 순으로 왔을 때, 이전 position 초기화
-     */
-    const lastImageUri = useRef(uri);
-    const isDifferentImageUri = lastImageUri.current !== uri;
-    const initPosition = isDifferentImageUri ? cropInfoMap[uri]?.translation : undefined;
-    if (isDifferentImageUri) {
-        lastImageUri.current = uri;
-    }
+    const initPosition = cropInfoMap[uri]?.translation;
 
     return currentSelectedPhoto ? (
-        <ImageCrop
-            key={currentSelectedPhoto.uri}
-            image={{
-                uri,
+        <ImageZoom
+            uri={uri}
+            minScale={0.6}
+            maxScale={3}
+            minPanPointers={1}
+            containerStyle={props.size}
+            initial={initPosition}
+            imageStyle={{
                 width: currentSelectedPhoto.width ?? width,
                 height: currentSelectedPhoto.height ?? height,
             }}
-            initPosition={initPosition}
-            width={props.size.width}
-            height={props.size.height}
-            minScale={0.5}
-            maxScale={3}
-            getCropInfo={setCropInfo}
+            onInteractionEnd={setCropInfo}
         />
     ) : (
         <View style={props.size} />
