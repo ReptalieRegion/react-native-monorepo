@@ -75,14 +75,13 @@ export default function EntityMangerUpdate({
     });
 
     const { mutate, isPending } = useUpdateEntity({
-        onMutate: () => {
-            openLoading();
-        },
-        onSettled: () => {
-            closeLoading();
-        },
+        onMutate: openLoading,
+        onSettled: closeLoading,
         onSuccess: () => {
-            navigation.pop();
+            console.log('hi');
+            if (navigation.canGoBack()) {
+                navigation.goBack();
+            }
         },
         onError: () => {
             openToast({ contents: '수정에 실패했어요. 잠시후에 다시 시도해주세요.', severity: 'error' });

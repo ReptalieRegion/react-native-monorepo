@@ -1,6 +1,8 @@
 import { color } from '@crawl/design-system';
 import React, { createContext, useState, type ReactNode } from 'react';
-import { ActivityIndicator, Modal, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, useWindowDimensions } from 'react-native';
+
+import { ConditionalRenderer } from '../../atoms';
 
 type LoadingProviderState = {
     children: ReactNode;
@@ -17,6 +19,7 @@ type LoadingContextActions = {
 export const LoadingContext = createContext<LoadingContextActions | null>(null);
 
 export default function GlobalLoading({ children }: LoadingProviderProps) {
+    const { width, height } = useWindowDimensions();
     const [isShow, setIsShow] = useState(false);
 
     const openLoading = () => {
@@ -32,18 +35,21 @@ export default function GlobalLoading({ children }: LoadingProviderProps) {
     return (
         <LoadingContext.Provider value={{ isLoading: isShow, closeLoading, openLoading }}>
             {children}
-            <Modal visible={isShow} transparent={true}>
-                <View style={styles.container}>
-                    <ActivityIndicator color={color.Teal[150].toString()} size={'large'} />
-                </View>
-            </Modal>
+            <ConditionalRenderer
+                condition={isShow}
+                trueContent={
+                    <View style={[styles.container, { width, height }]}>
+                        <ActivityIndicator color={color.Teal[150].toString()} size={'large'} />
+                    </View>
+                }
+            />
         </LoadingContext.Provider>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
     },

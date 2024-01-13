@@ -8,7 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import GlobalError from './error';
 
-import Loading from '@/components/@common/organisms/Loading/LoadingProvider';
+import GlobalLoading from '@/components/@common/organisms/Loading/LoadingProvider';
 import useEffectNotifee from '@/hooks/useEffectNotifee';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
@@ -19,7 +19,7 @@ export default function App(): React.JSX.Element {
     useEffectNotifee(navigationRef);
 
     return (
-        <Loading>
+        <GlobalLoading>
             <ReactQueryProvider>
                 <GestureHandlerRootView style={styles.gestureContainer}>
                     <SafeAreaProvider>
@@ -33,7 +33,7 @@ export default function App(): React.JSX.Element {
                     </SafeAreaProvider>
                 </GestureHandlerRootView>
             </ReactQueryProvider>
-        </Loading>
+        </GlobalLoading>
     );
 }
 

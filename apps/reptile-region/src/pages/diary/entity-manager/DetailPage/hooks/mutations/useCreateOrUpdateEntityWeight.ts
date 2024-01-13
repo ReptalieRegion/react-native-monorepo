@@ -1,6 +1,7 @@
 import useUpdateEntityWeight from './useUpdateEntityWeight';
 
 import useBaseCreateEntityWeight from '@/apis/diary/entity-manager/hooks/mutations/useBaseCreateEntityWeight';
+import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
 import useAlert from '@/components/overlay/Alert/useAlert';
 
 interface UseCreateOrUpdateEntityWeightActions {
@@ -10,10 +11,13 @@ interface UseCreateOrUpdateEntityWeightActions {
 type UseCreateOrUpdateEntityWeightProps = UseCreateOrUpdateEntityWeightActions;
 
 export default function useCreateOrUpdateEntityWeight({ onSuccess }: UseCreateOrUpdateEntityWeightProps) {
+    const { openLoading, closeLoading } = useGlobalLoading();
     const openAlert = useAlert();
     const updateEntityWeight = useUpdateEntityWeight({ onSuccess });
 
     const createEntityWeight = useBaseCreateEntityWeight({
+        onMutate: openLoading,
+        onSettled: closeLoading,
         onError: (error, variables) => {
             if (error.statusCode === 417) {
                 openAlert({

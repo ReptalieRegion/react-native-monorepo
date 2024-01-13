@@ -24,6 +24,7 @@ export default function useBaseDeletePost<Context = unknown>(
             deletePostListCache({ queryClient, data });
             deleteMePostCache({ queryClient, data });
             deleteDetailUserPostCache({ queryClient, data });
+            deletePostCache({ queryClient, data });
         },
     });
 }
@@ -100,5 +101,11 @@ function deleteDetailUserPostCache({ queryClient, data }: { queryClient: QueryCl
             pageParams,
             pages: updatePages,
         };
+    });
+}
+
+function deletePostCache({ queryClient, data }: { queryClient: QueryClient; data: DeletePost['Response'] }) {
+    queryClient.removeQueries({
+        queryKey: SHARE_POST_QUERY_KEYS.post(data.post.id),
     });
 }

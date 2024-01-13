@@ -44,6 +44,7 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
                 <DatePicker
                     date={hatchingDate ?? currentDate}
                     mode="date"
+                    theme="light"
                     androidVariant="nativeAndroid"
                     maximumDate={currentDate}
                     minimumDate={dayjs(currentDate).subtract(50, 'year').toDate()}

@@ -10,15 +10,17 @@ import type { CreateEntityWeight } from '@/types/apis/diary/entity';
 export default function useBaseCreateEntityWeight(
     props?: Pick<
         UseMutationOptions<CreateEntityWeight['Response'], HTTPError, CreateEntityWeight['Request']>,
-        'onError' | 'onSuccess' | 'onMutate'
+        'onError' | 'onSuccess' | 'onMutate' | 'onSettled'
     >,
 ) {
     const queryClient = useQueryClient();
     return useMutation<CreateEntityWeight['Response'], HTTPError, CreateEntityWeight['Request']>({
         mutationFn: createEntityWeight,
-        onSettled: (_data, _error, variables) => {
+        ...props,
+        onSettled: (data, error, variables, context) => {
+            console.log('hihi');
+            props?.onSettled?.(data, error, variables, context);
             queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.weight(variables.entityId) });
         },
-        ...props,
     });
 }
