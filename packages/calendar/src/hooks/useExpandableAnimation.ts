@@ -85,13 +85,15 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
             onChangeMonth?.(calendarState.selectedDateString);
         }
     }, [calendarState.selectedDateString, isNotSameMonth, onChangeMonth]);
+
     if (isNotSameMonth) {
         lastDate.current = calendarState.selectedDateString;
 
         if (isShowWeek) {
             applyContext.calendarTranslateY.value = calendarGoalTranslateY;
             applyContext.listTranslateY.value = listMinTranslateY;
-            startContext.weekPageIndex.value = -1;
+            applyContext.weekCalendarTranslateY.value = withTiming(0);
+            applyContext.listHeight.value = startContext.layoutHeight.value - headerHeight - dayHeight;
         } else {
             applyContext.listHeight.value = startContext.layoutHeight.value - headerHeight - calendarHeight;
         }
@@ -99,11 +101,6 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         if (applyContext.listTranslateY.value !== listGoalTranslateY && !isShowWeek) {
             applyContext.listTranslateY.value = listGoalTranslateY;
         }
-    }
-
-    // 날짜 선택 주 위치 변경 시 주간 캘린더 위치 변경
-    if (applyContext.weekCalendarTranslateY.value !== weekCalendarGoalTranslateY && !isShowWeek) {
-        applyContext.weekCalendarTranslateY.value = weekCalendarGoalTranslateY;
     }
 
     // 캘린더 위에 접기 속도
@@ -130,20 +127,20 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         applyContext.calendarOpacity.value = 1;
         runOnJS(handleScrollToIndex)();
     }, [
+        applyContext.listHeight,
         applyContext.weekCalendarZIndex,
         applyContext.calendarZIndex,
         applyContext.listTranslateY,
         applyContext.calendarTranslateY,
         applyContext.weekCalendarTranslateY,
         applyContext.calendarOpacity,
-        applyContext.listHeight,
-        listGoalTranslateY,
-        weekCalendarGoalTranslateY,
+        startContext.layoutHeight.value,
         startContext.changeWeekCalendarGoalTranslateY,
         startContext.weekPageIndex,
-        startContext.layoutHeight,
         headerHeight,
         calendarHeight,
+        listGoalTranslateY,
+        weekCalendarGoalTranslateY,
         handleScrollToIndex,
     ]);
 
@@ -174,8 +171,8 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         dayHeight,
         headerHeight,
         listMinTranslateY,
-        startContext.layoutHeight,
-        startContext.weekPageIndex,
+        startContext.layoutHeight.value,
+        startContext.weekPageIndex.value,
     ]);
 
     // 캘린더 제스쳐
@@ -253,24 +250,39 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
                 -(applyContext.listTranslateY.value - headerHeight - calendarHeight) / (listGoalTranslateY - listMinTranslateY);
         })
         .onEnd((event) => {
-            const isDownSwipe = event.velocityY > -50;
+            const isDownSwipe = event.velocityY > 0;
             if (isDownSwipe) {
                 openCalendar();
-                return;
-            }
-
-            const isUpSwipe = event.velocityY < 50;
-            if (isUpSwipe) {
+            } else {
                 closeCalendar();
-                return;
             }
         });
 
-    // 주간 캘린더 스크롤 변경될 때마다, 웤간 캘린더 위치 변경, 락 해제
+    const handleDayPress = useCallback(
+        (_dateString: string, index: number) => {
+            const weekPageIndex = Math.floor(index / 7);
+            startContext.weekPageIndex.value = weekPageIndex;
+            startContext.changeWeekCalendarGoalTranslateY.value = dayHeight * weekPageIndex;
+
+            if (applyContext.weekCalendarZIndex.value === 1) {
+                applyContext.calendarTranslateY.value = -dayHeight * weekPageIndex;
+            }
+        },
+        [
+            applyContext.calendarTranslateY,
+            applyContext.weekCalendarZIndex.value,
+            dayHeight,
+            startContext.changeWeekCalendarGoalTranslateY,
+            startContext.weekPageIndex,
+        ],
+    );
+
+    // 주간 캘린더 스크롤 변경될 때마다, 월간 캘린더 위치 변경
     const handleChangeCalendarTranslateY = useCallback(
         (index: number) => {
             startContext.weekPageIndex.value = index;
             startContext.changeWeekCalendarGoalTranslateY.value = dayHeight * index;
+
             if (applyContext.weekCalendarZIndex.value === 1) {
                 applyContext.calendarTranslateY.value = -dayHeight * index;
             }
@@ -326,6 +338,7 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         calendarAnimatedStyle,
         weekAnimatedStyle,
         listAnimatedStyle,
+        handleDayPress,
         openCalendar,
         closeCalendar,
         handleGetLayoutHeight,

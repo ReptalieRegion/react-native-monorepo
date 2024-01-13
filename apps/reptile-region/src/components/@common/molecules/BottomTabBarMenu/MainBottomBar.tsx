@@ -59,7 +59,7 @@ export default function MainBottomBar({
     insets,
     onPressNavigate,
 }: BottomTabBarProps & MainBottomBarActions) {
-    const paddingBottom = insets.bottom === 0 ? 10 : insets.bottom;
+    const paddingBottom = Math.max(10, insets.bottom);
 
     return (
         <View style={styles.wrapper}>

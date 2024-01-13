@@ -23,7 +23,7 @@ export default function Profile({ user }: ProfileProps) {
 
     return (
         <View style={styles.container}>
-            <Avatar image={user.profile} size={80} />
+            <Avatar recyclingKey={user.profile.src} image={user.profile} size={80} />
             <Typo variant="title2">{user.nickname}</Typo>
         </View>
     );

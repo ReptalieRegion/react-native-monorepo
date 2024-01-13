@@ -18,7 +18,7 @@ export default function useUpdateEntity(
         mutationFn: updateEntity,
         onSuccess: (data, variables, context) => {
             props?.onSuccess?.(data, variables, context);
-            queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.list });
+            queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.entityList });
         },
         onError: props?.onError,
         onMutate: props?.onMutate,

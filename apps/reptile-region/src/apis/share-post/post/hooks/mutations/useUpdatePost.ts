@@ -4,8 +4,8 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import { updatePost } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import type { FetchDetailUserPost, FetchPosts, UpdatePost } from '@/types/apis/share-post/post';
+import { ME_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import type { FetchDetailUserPost, FetchMePostList, FetchPost, FetchPosts, UpdatePost } from '@/types/apis/share-post/post';
 
 interface UseUpdatePostActions {
     onSuccess(): void;
@@ -20,7 +20,9 @@ export default function useUpdatePost({ onSuccess }: UseUpdatePostProps) {
         onSuccess: (data) => {
             onSuccess();
             updateSharePostListCache({ queryClient, data });
+            updateMePostCache({ queryClient, data });
             updateSharePostDetailUserListCache({ queryClient, data });
+            updateSharePostCache({ queryClient, data });
         },
     });
 }
@@ -30,6 +32,37 @@ function updateSharePostListCache({ queryClient, data }: { queryClient: QueryCli
     const queryKey = SHARE_POST_QUERY_KEYS.list;
 
     queryClient.setQueryData<InfiniteData<FetchPosts['Response']>>(queryKey, (prevPostList) => {
+        if (prevPostList === undefined) {
+            return prevPostList;
+        }
+
+        const { pageParams, pages } = prevPostList;
+
+        const updatePages = [...pages].map((page) => {
+            const { items, nextPage } = page;
+            return {
+                nextPage,
+                items: items.map((item) => {
+                    const isTargetPost = item.post.id === data.post.id;
+                    return isTargetPost
+                        ? { post: { ...item.post, images: data.post.images, contents: data.post.contents } }
+                        : item;
+                }),
+            };
+        });
+
+        return {
+            pageParams,
+            pages: updatePages,
+        };
+    });
+}
+
+// 자기 자신 게시물 삭제
+function updateMePostCache({ queryClient, data }: { queryClient: QueryClient; data: UpdatePost['Response'] }) {
+    const queryKey = ME_QUERY_KEYS.post;
+
+    queryClient.setQueryData<InfiniteData<FetchMePostList['Response']>>(queryKey, (prevPostList) => {
         if (prevPostList === undefined) {
             return prevPostList;
         }
@@ -83,6 +116,24 @@ function updateSharePostDetailUserListCache({ queryClient, data }: { queryClient
         return {
             pageParams,
             pages: updatePages,
+        };
+    });
+}
+
+function updateSharePostCache({ queryClient, data }: { queryClient: QueryClient; data: UpdatePost['Response'] }) {
+    const queryKey = SHARE_POST_QUERY_KEYS.post(data.post.id);
+
+    queryClient.setQueryData<FetchPost['Response']>(queryKey, (prevPost) => {
+        if (prevPost === undefined) {
+            return prevPost;
+        }
+
+        return {
+            post: {
+                ...prevPost.post,
+                images: data.post.images,
+                contents: data.post.contents,
+            },
         };
     });
 }

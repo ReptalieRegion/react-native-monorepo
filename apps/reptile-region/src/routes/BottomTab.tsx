@@ -11,7 +11,7 @@ import SharePostRoutes from './SharePost/BottomTabRoutes';
 
 import { MainBottomBar } from '@/components/@common/molecules';
 import type { MainBottomBarActions } from '@/components/@common/molecules/BottomTabBarMenu/MainBottomBar';
-import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
+import { useAuth } from '@/hooks/auth';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import type { BottomTabNativeStackParamList, BottomTabParamList } from '@/types/routes/param-list/bottom-tab';
 
@@ -27,7 +27,7 @@ export default function BottomTabRoutes({ navigation }: BottomTabScreenProps) {
 
     const tabBar = useCallback(
         (props: BottomTabBarProps) => {
-            const handleTabPressNavigate: MainBottomBarActions['onPressNavigate'] = ({
+            const handleTabPressNavigate: MainBottomBarActions['onPressNavigate'] = async ({
                 navigation: tabNavigation,
                 routeName,
             }) => {
@@ -41,7 +41,7 @@ export default function BottomTabRoutes({ navigation }: BottomTabScreenProps) {
 
             return <MainBottomBar {...props} onPressNavigate={handleTabPressNavigate} />;
         },
-        [isSignIn, navigation],
+        [navigation, isSignIn],
     );
 
     return (

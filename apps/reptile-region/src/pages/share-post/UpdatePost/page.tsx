@@ -2,8 +2,9 @@ import React from 'react';
 
 import ChangeHeader from './header';
 
-import { useToast } from '@/components/@common/organisms/Toast';
-import PostUpdate from '@/components/share-post/organisms/PostUpdate/providers/PostUpdate';
+import useToast from '@/components/overlay/Toast/useToast';
+import PageWrapper from '@/components/PageWrapper';
+import PostUpdate from '@/pages/share-post/UpdatePost/context/providers/PostUpdate';
 import type { SharePostUpdateScreen } from '@/types/routes/props/share-post/update-post';
 
 export default function SharePostUpdatePage({
@@ -12,7 +13,7 @@ export default function SharePostUpdatePage({
         params: { post },
     },
 }: SharePostUpdateScreen) {
-    const { openToast } = useToast();
+    const openToast = useToast();
 
     const handleToast = () => {
         openToast({
@@ -23,8 +24,10 @@ export default function SharePostUpdatePage({
 
     return (
         <PostUpdate minImageCountCallback={handleToast}>
-            <ChangeHeader postId={post.id} navigation={navigation} />
-            <PostUpdate.List images={post.images} contents={post.contents} />
+            <PageWrapper>
+                <ChangeHeader navigation={navigation} postId={post.id} />
+                <PostUpdate.List images={post.images} contents={post.contents} />
+            </PageWrapper>
         </PostUpdate>
     );
 }

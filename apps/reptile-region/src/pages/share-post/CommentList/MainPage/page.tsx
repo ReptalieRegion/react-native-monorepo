@@ -1,112 +1,57 @@
-import type { ContentStyle, ListRenderItem } from '@shopify/flash-list';
-import { FlashList } from '@shopify/flash-list';
-import React, { useCallback, useRef, useState } from 'react';
-import { RefreshControl } from 'react-native';
+import { Typo } from '@crawl/design-system';
+import { withErrorBoundary } from '@crawl/error-boundary';
+import React, { Suspense } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import EmptyComment from '../empty';
+import CommentProvider from '../../@common/contexts/Comment/CommentProvider';
 
-import useInfiniteComment from '@/apis/share-post/comment/hooks/queries/useInfiniteComment';
-import { ListFooterLoading } from '@/components/@common/atoms';
-import CommentItem from '@/components/share-post/organisms/Comment/components/CommentItem';
-import useCommentActions from '@/hooks/share-post/actions/useCommentActions';
-import useCommentNavigation from '@/hooks/share-post/navigation/useCommentNavigation';
-import type { FetchCommentResponse } from '@/types/apis/share-post/comment';
+import CommentList from './components/CommentList';
+import CommentTextEditor from './components/CommentTextEditor';
+import CommentSkeleton from './loading';
+
+import HTTPError from '@/apis/@utils/error/HTTPError';
 import type { CommentScreenProps } from '@/types/routes/props/share-post/comment';
 
-export default function CommentList({ route: { params } }: CommentScreenProps) {
-    const flashListRef = useRef<FlashList<FetchCommentResponse>>(null);
-    const [refreshing, setRefreshing] = useState<boolean>(false);
-    const { data, hasNextPage, isFetchingNextPage, fetchNextPage, refetch } = useInfiniteComment({ postId: params.post.id });
-    const { handleDeleteButton, handlePressDeclarationButton, handlePressUpdateButton } = useCommentActions();
-    const { navigateCommentReplyPage, navigateDetailPage } = useCommentNavigation();
+const FollowerUserList = React.lazy(
+    () => import('@/pages/share-post/@common/contexts/TagTextInput/components/FollowerUserList'),
+);
 
-    const renderItem: ListRenderItem<FetchCommentResponse> = useCallback(
-        ({ item }) => {
-            const {
-                comment: {
-                    id: commentId,
-                    contents,
-                    isMine,
-                    isModified,
-                    user: { id: userId, nickname, profile },
-                },
-            } = item;
+const CommentListPage = withErrorBoundary<CommentScreenProps>(
+    (props) => {
+        return (
+            <CommentProvider id={props.route.params.post.id}>
+                <View style={styles.container}>
+                    <Suspense fallback={<CommentSkeleton />}>
+                        <CommentList {...props} />
+                    </Suspense>
+                    <FollowerUserList containerStyles={styles.followerUserListContainer} />
+                </View>
+                <CommentTextEditor />
+            </CommentProvider>
+        );
+    },
+    {
+        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== -1001,
+        renderFallback: () => <Typo>삭제된 게시물입니다</Typo>,
+    },
+);
 
-            const handleNavigateDetailPage = () => {
-                navigateDetailPage({ user: { isFollow: false, nickname, profile } });
-            };
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        position: 'relative',
+        minHeight: 2,
+    },
+    followerUserListContainer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        paddingLeft: 20,
+        paddingTop: 10,
+        backgroundColor: 'white',
+    },
+});
 
-            return (
-                <CommentItem
-                    item={item}
-                    onPressNickname={handleNavigateDetailPage}
-                    onPressTag={handleNavigateDetailPage}
-                    onPressDeclarationButton={handlePressDeclarationButton}
-                    onPressDeleteButton={() => handleDeleteButton(commentId)}
-                    onPressUpdateButton={handlePressUpdateButton}
-                    onPressWriteButton={() =>
-                        navigateCommentReplyPage({
-                            comment: {
-                                id: commentId,
-                                contents,
-                                isMine,
-                                isModified,
-                                user: { id: userId, nickname, profile },
-                            },
-                            isFocus: true,
-                        })
-                    }
-                    onPressShowCommentReplyButton={() =>
-                        navigateCommentReplyPage({
-                            comment: {
-                                id: commentId,
-                                contents,
-                                isMine,
-                                isModified,
-                                user: { id: userId, nickname, profile },
-                            },
-                            isFocus: false,
-                        })
-                    }
-                />
-            );
-        },
-        [
-            handleDeleteButton,
-            handlePressDeclarationButton,
-            handlePressUpdateButton,
-            navigateCommentReplyPage,
-            navigateDetailPage,
-        ],
-    );
-
-    const onEndReached = () => hasNextPage && !isFetchingNextPage && fetchNextPage();
-
-    const asyncOnRefresh = useCallback(async () => {
-        setRefreshing(true);
-        await refetch();
-        setRefreshing(false);
-    }, [refetch]);
-
-    return (
-        <FlashList
-            ref={flashListRef}
-            data={data}
-            contentContainerStyle={contentContainerStyle}
-            keyExtractor={(item: FetchCommentResponse) => item.comment.id}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
-            renderItem={renderItem}
-            estimatedItemSize={100}
-            scrollEventThrottle={16}
-            onEndReached={onEndReached}
-            ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
-            ListEmptyComponent={<EmptyComment />}
-        />
-    );
-}
-
-const contentContainerStyle: ContentStyle = {
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingBottom: 20,
-};
+export default CommentListPage;

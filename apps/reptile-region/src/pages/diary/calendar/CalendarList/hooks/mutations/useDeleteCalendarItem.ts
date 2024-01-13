@@ -4,17 +4,17 @@ import { DIARY_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useBaseDeleteCalendarItem from '@/apis/diary/calendar/hooks/mutations/useBaseDeleteCalendarItem';
 import type { DeleteCalendar, FetchCalendar } from '@/types/apis/diary/calendar';
 
-type UseDeleteCalendarItemState = {
-    searchDate: string;
-};
-
 type Context = {
     prevCalendarList: FetchCalendar['Response'] | undefined;
 };
 
+export type UseDeleteCalendarItemState = {
+    searchDate: string;
+};
+
 export default function useDeleteCalendarItem({ searchDate }: UseDeleteCalendarItemState) {
     const queryClient = useQueryClient();
-    const queryKey = DIARY_QUERY_KEYS.calendar(searchDate);
+    const queryKey = DIARY_QUERY_KEYS.calendarDate(searchDate);
 
     return useBaseDeleteCalendarItem<Context>({
         onMutate: async (variables: DeleteCalendar['Request']) => {
@@ -36,7 +36,6 @@ export default function useDeleteCalendarItem({ searchDate }: UseDeleteCalendarI
             queryClient.invalidateQueries({ queryKey, exact: true });
         },
         onError: (_error, _variables, context) => {
-            console.log(_error);
             if (context) {
                 queryClient.setQueryData<FetchCalendar['Response']>(queryKey, context.prevCalendarList);
             }

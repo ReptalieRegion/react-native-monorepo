@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import CreateTemplate from '../@common/components/CreateTemplate';
+
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
 import type { EntityManagerCreateCongratsScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerCongratsPage({ navigation }: EntityManagerCreateCongratsScreenProps) {

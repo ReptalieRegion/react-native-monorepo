@@ -9,11 +9,11 @@ import com.facebook.react.uimanager.ViewManager
 import java.util.*
 
 class RNKakaoAuthPackage : ReactPackage {
-    override fun createNativeModules(reactContext: ReactApplicationContext):  MutableList<NativeModule> {
-        return mutableListOf(RNKakaoAuthModule(reactContext)).toMutableList()
-    }
+    override fun createNativeModules(
+            reactContext: ReactApplicationContext
+    ):  MutableList<NativeModule> = listOf(RNKakaoAuthModule(reactContext)).toMutableList()
 
-    override fun createViewManagers(reactContext: ReactApplicationContext): MutableList<ViewManager<View, ReactShadowNode<*>>> {
-        return Collections.emptyList()
-    }
+    override fun createViewManagers(
+            reactContext: ReactApplicationContext
+    ): MutableList<ViewManager<View, ReactShadowNode<*>>> = mutableListOf()
 }

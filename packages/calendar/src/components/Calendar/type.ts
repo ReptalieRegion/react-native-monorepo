@@ -11,7 +11,7 @@ type CalendarState = {
 };
 
 interface CalendarActions {
-    onPressDay?(dateString: string): void;
+    onPressDay?(dateString: string, index: number): void;
     onPressLeft?(): void;
     onPressRight?(): void;
 }

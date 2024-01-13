@@ -38,19 +38,19 @@ function Calendar({
     const { setDate } = useCalendarHandler(initData);
 
     const renderDay = useCallback(
-        (dayInfo: DateType) => {
+        (dayInfo: DateType, index: number) => {
             const isSameDay = calendarState.selectedDate.isSame(dayInfo.dayString, 'day');
             const isSameMonth = calendarState.selectedDate.isSame(dayInfo.dayString, 'month');
 
             const currentDayjs = dayjs(dayInfo.dayString);
             const isDisableMaxDay = calendarState.maxDate ? currentDayjs.isAfter(calendarState.maxDate) : false;
             const isDisableMinDay = calendarState.minDate ? currentDayjs.isBefore(calendarState.minDate) : false;
-            const isDisableDay = isDisableMaxDay || isDisableMinDay;
+            const isDisableDay = isDisableMaxDay || isDisableMinDay || !isSameMonth;
 
             const typoColor: TextColorType = isDisableDay ? 'light-placeholder' : isSameMonth ? 'default' : 'light-placeholder';
             const isDot = markedDates?.[dayInfo.dayString]?.marked;
 
-            return (
+            return isSameMonth ? (
                 <View key={dayInfo.dayString} style={dayStyle.wrapper}>
                     <Day
                         key={dayInfo.dayString}
@@ -61,13 +61,15 @@ function Calendar({
                         onPress={
                             !isDisableDay
                                 ? () => {
-                                      onPressDay?.(dayInfo.dayString);
+                                      onPressDay?.(dayInfo.dayString, index);
                                       setDate(dayInfo.dayString);
                                   }
                                 : undefined
                         }
                     />
                 </View>
+            ) : (
+                <View key={dayInfo.dayString} style={dayStyle.wrapper} />
             );
         },
         [calendarState.selectedDate, calendarState.maxDate, calendarState.minDate, markedDates, onPressDay, setDate],

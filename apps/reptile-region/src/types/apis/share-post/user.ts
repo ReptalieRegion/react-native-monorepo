@@ -18,8 +18,6 @@ type FetchDetailUserProfileResponse = {
         nickname: string;
         profile: ImageType;
         isFollow: boolean | undefined;
-        followerCount: number;
-        followingCount: number;
     };
 };
 
@@ -75,6 +73,18 @@ type FetchFollowingListResponse = {
 
 type FetchFollowingList = ServerAPI<FetchFollowerListRequest, InfiniteState<FetchFollowerListResponse[]>>;
 
+type FetchActivitySummaryRequest = {
+    nickname: string;
+};
+
+type FetchActivitySummaryResponse = {
+    followerCount: number;
+    followingCount: number;
+    postCount: number;
+};
+
+type FetchActivitySummary = ServerAPI<FetchActivitySummaryRequest, FetchActivitySummaryResponse>;
+
 /**
  *
  * POST
@@ -114,6 +124,10 @@ type UpdateFollow = ServerAPI<UpdateFollowRequest, UpdateFollowResponse>;
 export type {
     CreateFollow,
     CreateFollowRequest,
+    CreateFollowResponse,
+    FetchActivitySummary,
+    FetchActivitySummaryRequest,
+    FetchActivitySummaryResponse,
     FetchDetailUserProfile,
     FetchDetailUserProfileResponse,
     FetchFollowerList,
@@ -125,4 +139,5 @@ export type {
     FetchFollowingListResponse,
     UpdateFollow,
     UpdateFollowRequest,
+    UpdateFollowResponse,
 };

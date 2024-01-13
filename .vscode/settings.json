@@ -8,8 +8,7 @@
      */
     "prettier.prettierPath": "node_modules/prettier/index.cjs",
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit",
-        "source.organizeImports": "explicit"
+        "source.fixAll.eslint": "explicit"
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.rulers": [120],
@@ -22,7 +21,8 @@
         "stores": "Global",
         "@utils": "Utils",
         "@common": "Shared",
-        "@hooks": "Hook"
+        "@hooks": "Hook",
+        "@components": "Components"
     },
     "cSpell.words": [
         "bootsplash",
@@ -31,6 +31,7 @@
         "Kakao",
         "mswjs",
         "Notifee",
+        "Pressable",
         "Roboto",
         "tanstack",
         "typecheck",

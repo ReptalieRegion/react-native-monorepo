@@ -16,7 +16,12 @@ export type PermissionsPerIOS = keyof typeof IOS_PERMISSION;
 
 export type PermissionsPerAndroid = keyof typeof ANDROID_PERMISSION;
 
-type PermissionStatus<T extends string[]> = { [K in T[number]]?: boolean };
+type PermissionStatus<T extends string[]> = {
+    [K in T[number]]?: {
+        isGranted: boolean;
+        status: 'unavailable' | 'blocked' | 'granted' | 'limited';
+    };
+};
 
 export const requestIOSPermissions = async <T extends PermissionsPerIOS[]>(
     permissionKeys: PermissionsPerIOS[],
@@ -39,7 +44,15 @@ export const requestIOSPermissions = async <T extends PermissionsPerIOS[]>(
         }),
     );
 
-    return Object.fromEntries(statuses.map(({ key, status }) => [key, status === RESULTS.GRANTED])) as PermissionStatus<T>;
+    return Object.fromEntries(
+        statuses.map(({ key, status }) => [
+            key,
+            {
+                isGranted: status === RESULTS.GRANTED,
+                status,
+            },
+        ]),
+    ) as PermissionStatus<T>;
 };
 
 export const requestAndroidPermissions = async <T extends PermissionsPerAndroid[]>(
@@ -59,5 +72,13 @@ export const requestAndroidPermissions = async <T extends PermissionsPerAndroid[
         }),
     );
 
-    return Object.fromEntries(statuses.map(({ key, status }) => [key, status === RESULTS.GRANTED])) as PermissionStatus<T>;
+    return Object.fromEntries(
+        statuses.map(({ key, status }) => [
+            key,
+            {
+                isGranted: status === RESULTS.GRANTED,
+                status,
+            },
+        ]),
+    ) as PermissionStatus<T>;
 };

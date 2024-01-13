@@ -21,6 +21,8 @@ enum PushAgreeType {
     Like = '좋아요',
     Follow = '팔로우',
     Notice = '공지사항',
+    Tag = '태그',
+    Device = '기기',
 }
 
 interface BasicContents {
@@ -65,6 +67,7 @@ type FetchPushAgreeResponse = {
     isAgreeComment: boolean;
     isAgreePostLike: boolean;
     isAgreeService: boolean;
+    isAgreeTag: boolean;
     isAgreeFollow: boolean;
 };
 
@@ -82,11 +85,7 @@ type FetchPushReadCheck = ServerAPI<void, FetchPushReadCheckResponse>;
  * POST
  */
 // 푸시알림 동의 생성
-type CreatePushAgreeRequest = {
-    isAgree: boolean;
-};
-
-type CreatePushAgree = ServerAPI<CreatePushAgreeRequest, void>;
+type CreatePushAgree = ServerAPI<void, void>;
 
 /**
  * PUT

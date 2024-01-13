@@ -1,15 +1,17 @@
 import { color } from '@crawl/design-system';
 import { FlashList, type ContentStyle, type ListRenderItem } from '@shopify/flash-list';
 import React, { useCallback } from 'react';
-import { StyleSheet, View } from 'react-native';
 
-import useInfiniteFetchEntity from '@/apis/diary/entity-manager/hooks/queries/useInfiniteFetchEntity';
+import EntityEmpty from './components/EntityEmpty';
+import useInfiniteFetchEntity from './hooks/queries/useInfiniteFetchEntity';
+
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
 import { FadeInCellRenderComponent, ListFooterLoading } from '@/components/@common/atoms';
-import EntityCard from '@/components/diary/molecules/EntityCard/EntityCard';
-import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
-import useEntityMangerActions from '@/hooks/diary/actions/useEntityMangerActions';
-import useEntityMangerNavigation from '@/hooks/diary/navigation/useEntityMangerNavigation';
+import FloatingActionButtonGroup from '@/components/@common/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
+import PageWrapper from '@/components/PageWrapper';
+import EntityCard from '@/pages/diary/entity-manager/ListPage/components/EntityCard';
+import useEntityMangerActions from '@/pages/diary/entity-manager/ListPage/hooks/useEntityMangerActions';
+import useEntityMangerNavigation from '@/pages/diary/entity-manager/ListPage/hooks/useEntityMangerNavigation';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 
 export default function EntityMangerList() {
@@ -35,7 +37,7 @@ export default function EntityMangerList() {
     const handleEndReached = () => isFetchingNextPage && hasNextPage && fetchNextPage();
 
     return (
-        <View style={styles.container}>
+        <PageWrapper>
             <FlashList
                 ref={flashListRef}
                 data={data}
@@ -45,10 +47,12 @@ export default function EntityMangerList() {
                 ListFooterComponent={<ListFooterLoading isLoading={isFetchingNextPage} />}
                 keyExtractor={keyExtractor}
                 onEndReached={handleEndReached}
+                ListEmptyComponent={EntityEmpty}
                 CellRendererComponent={FadeInCellRenderComponent}
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
                 estimatedItemSize={212}
+                showsVerticalScrollIndicator={false}
             />
             <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>
                 <FloatingActionButtonGroup.Button
@@ -64,13 +68,13 @@ export default function EntityMangerList() {
                     onPress={handlePressUpFloatingButton}
                 />
             </FloatingActionButtonGroup>
-        </View>
+        </PageWrapper>
     );
 }
 
 const cardContainerStyles = {
     marginRight: 5,
-    marginBottom: 5,
+    marginBottom: 8,
 };
 
 const primaryIcon = {
@@ -91,10 +95,3 @@ const contentStyle: ContentStyle = {
     paddingVertical: 5,
     paddingHorizontal: 5,
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White.toString(),
-    },
-});

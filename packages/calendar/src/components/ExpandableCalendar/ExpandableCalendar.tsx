@@ -10,11 +10,10 @@ import Header from '../@common/Header';
 import Calendar from '../Calendar/Calendar';
 import type { CalendarProps } from '../Calendar/type';
 import type { WeekCalendarProps } from '../WeekCalendar/type';
+import WeekCalendar from '../WeekCalendar/WeekCalendar';
 
 import AgendaList from './AgendaList';
 import type { AgendaListProps, ExpandableCalendarProps } from './type';
-
-const WeekCalendar = React.lazy(() => import('../WeekCalendar/WeekCalendar'));
 
 export default function ExpandableCalendar<TData>({ calendarProps, listProps }: ExpandableCalendarProps<TData>) {
     const weekCalendarRef = useRef<FlashList<DateType[]>>(null);
@@ -42,6 +41,7 @@ export default function ExpandableCalendar<TData>({ calendarProps, listProps }: 
         closeCalendar,
         handleGetLayoutHeight,
         handleChangeCalendarTranslateY,
+        handleDayPress,
     } = useExpandableAnimation(useExpandableAnimationProps);
 
     const weekCalendarWrapperStyle = useMemo(() => [styles.weekWrapper, weekAnimatedStyle], [weekAnimatedStyle]);
@@ -49,7 +49,7 @@ export default function ExpandableCalendar<TData>({ calendarProps, listProps }: 
     const calendarWrapperStyle = useMemo(() => [styles.calendarWrapper, calendarAnimatedStyle], [calendarAnimatedStyle]);
     const listWrapperStyle = useMemo(() => [styles.listWrapper, listAnimatedStyle], [listAnimatedStyle]);
 
-    const memoizedHeader = useMemo(() => <Header />, []);
+    const memoizedHeader = useMemo(() => <Header onPressMonth={calendarProps.onPressMonth} />, [calendarProps.onPressMonth]);
 
     const calendarComponentProps: CalendarProps = useMemo(
         () => ({
@@ -58,8 +58,9 @@ export default function ExpandableCalendar<TData>({ calendarProps, listProps }: 
             maxDate: calendarProps.maxDate,
             markedDates: calendarProps.markedDates,
             hideHeader: true,
+            onPressDay: handleDayPress,
         }),
-        [calendarProps.date, calendarProps.markedDates, calendarProps.maxDate, calendarProps.minDate],
+        [calendarProps.date, calendarProps.markedDates, calendarProps.maxDate, calendarProps.minDate, handleDayPress],
     );
 
     const weekCalendarProps: WeekCalendarProps = useMemo(
@@ -109,7 +110,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         width: '100%',
-        flex: 1,
     },
     weekWrapper: {
         position: 'absolute',

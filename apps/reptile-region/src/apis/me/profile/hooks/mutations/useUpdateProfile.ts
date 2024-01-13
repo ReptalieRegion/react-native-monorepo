@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateMeProfile } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { ME_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { UpdateProfileImage } from '@/types/apis/me';
 import type { FetchMeProfile } from '@/types/apis/share-post/post';
 import type { ImageType } from '@/types/global/image';
@@ -14,7 +14,7 @@ type UseUpdateProfileContext = {
 };
 
 export default function useUpdateProfile() {
-    const queryKey = MY_QUERY_KEYS.profile;
+    const queryKey = ME_QUERY_KEYS.profile;
     const queryClient = useQueryClient();
 
     return useMutation<UpdateProfileImage['Response'], HTTPError, UpdateProfileImage['Request'], UseUpdateProfileContext>({
@@ -45,7 +45,7 @@ export default function useUpdateProfile() {
             }
         },
         onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: queryKey });
+            queryClient.invalidateQueries({ queryKey });
         },
     });
 }

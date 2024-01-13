@@ -1,8 +1,9 @@
+import { color } from '@crawl/design-system';
 import messaging from '@react-native-firebase/messaging';
 import { NavigationContainer, type LinkingOptions, type NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { Linking } from 'react-native';
+import { Linking, StyleSheet } from 'react-native';
 
 import SignUpRoutes from './Auth/SignUpRoutes';
 import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
@@ -10,22 +11,25 @@ import EntityManagerCreateRoutes from './Diary/EntityManagerCreateRoutes';
 import SharePostModalRoutes from './SharePost/ModalRoutes';
 import PostingRoutes from './SharePost/PostingRoutes';
 
+import { NativeStackDefaultBackHeader } from '@/components/@common/molecules';
+import useEffectInitial from '@/hooks/useEffectInitial';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
 import { CalendarDetailHeader } from '@/pages/diary/calendar/CalendarDetail/header';
 import CalendarDetailPage from '@/pages/diary/calendar/CalendarDetail/page';
 import { CalendarItemCreateHeader, CalendarItemCreatePage } from '@/pages/diary/calendar/CreateCalendar';
-import EntityManagerOptionsMenuPage from '@/pages/diary/entity-manager/bottom-sheet/EntityManagerOptionsMenu';
-import CreateWeightBottomSheet from '@/pages/diary/entity-manager/DetailPage/bottom-sheet/CreateWeight';
 import { EntityManagerDetailPageHeader } from '@/pages/diary/entity-manager/DetailPage/header';
 import EntityMangerDetailPage from '@/pages/diary/entity-manager/DetailPage/page';
 import { EntityMangerUpdateHeader } from '@/pages/diary/entity-manager/UpdatePage/header';
 import EntityMangerUpdate from '@/pages/diary/entity-manager/UpdatePage/page';
+import HomePage from '@/pages/home/HomePage/page';
 import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
 import LicenseContentsPage from '@/pages/me/License/ContentsPage/page';
 import { LicenseListHeader } from '@/pages/me/License/ListPage/header';
 import LicenseListPage from '@/pages/me/License/ListPage/page';
+import { NoticeHeader } from '@/pages/me/Notice/header';
+import NoticePage from '@/pages/me/Notice/page';
 import { NotificationSettingHeader } from '@/pages/me/NotificationSetting/header';
 import NotificationSetting from '@/pages/me/NotificationSetting/page';
 import { ProfileSettingHeader } from '@/pages/me/ProfileSetting/header';
@@ -35,8 +39,7 @@ import PrivacyPolicyPage from '@/pages/me/Terms/PrivacyPolicy/page';
 import { TermsOfUseHeader } from '@/pages/me/Terms/TermsOfUse/header';
 import TermsOfUsePage from '@/pages/me/Terms/TermsOfUse/page';
 import { PushLogList, PushLogListHeader } from '@/pages/notification/PushLogList';
-import PostOptionsMenu from '@/pages/share-post/PostList/BottomSheet/PostOptionsMenu';
-import { SharePostUpdatePosteHeader, SharePostUpdatePostPage } from '@/pages/share-post/UpdatePost';
+import { SharePostUpdatePostPage, SharePostUpdatePosteHeader } from '@/pages/share-post/UpdatePost';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
 
@@ -90,9 +93,12 @@ type RootRoutesProps = {
 const Stack = createNativeStackNavigator<RootRoutesParamList>();
 
 export default function RootRoutes({ navigationRef }: RootRoutesProps) {
+    // clientFetch, refresh 실패 시 실행할 콜백함수 초기화, 자동 로그인 및 FCM Token 초기화
+    useEffectInitial({ navigationRef });
+
     return (
         <NavigationContainer<RootRoutesParamList> ref={navigationRef} linking={linking}>
-            <Stack.Navigator initialRouteName="bottom-tab/routes">
+            <Stack.Navigator initialRouteName="bottom-tab/routes" screenOptions={{ contentStyle: styes.content }}>
                 {/** 바텀 탭 시작 */}
                 <Stack.Screen
                     name="bottom-tab/routes"
@@ -102,6 +108,10 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     }}
                 />
                 {/** 바텀 탭 끝 */}
+
+                {/** 홈 시작 */}
+                <Stack.Screen name="homepage" component={HomePage} options={{ header: NativeStackDefaultBackHeader }} />
+                {/** 홈 끝 */}
 
                 {/** 인증 시작 */}
                 <Stack.Screen
@@ -130,16 +140,6 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     options={{ animation: 'slide_from_bottom', headerShown: false, gestureEnabled: false }}
                 />
                 <Stack.Screen
-                    name="share-post/bottom-sheet/post-options-menu"
-                    component={PostOptionsMenu}
-                    options={{
-                        header: SignInHeader,
-                        presentation: 'containedTransparentModal',
-                        animation: 'none',
-                        headerShown: false,
-                    }}
-                />
-                <Stack.Screen
                     name="share-post/post/update"
                     component={SharePostUpdatePostPage}
                     options={{ header: SharePostUpdatePosteHeader, animation: 'slide_from_bottom' }}
@@ -166,6 +166,11 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     options={{ header: NotificationSettingHeader }}
                 />
                 <Stack.Screen name="me/notification-log" component={PushLogList} options={{ header: PushLogListHeader }} />
+                <Stack.Screen
+                    name="me/notice"
+                    component={NoticePage}
+                    options={{ header: NoticeHeader, gestureEnabled: false }}
+                />
                 {/** 내 정보 끝 */}
 
                 {/* 다이어리 시작 */}
@@ -178,24 +183,6 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     name="entity-manager/detail"
                     component={EntityMangerDetailPage}
                     options={{ header: EntityManagerDetailPageHeader }}
-                />
-                <Stack.Screen
-                    name="entity-manager/options-menu"
-                    component={EntityManagerOptionsMenuPage}
-                    options={{
-                        presentation: 'containedTransparentModal',
-                        animation: 'none',
-                        headerShown: false,
-                    }}
-                />
-                <Stack.Screen
-                    name="entity-manager/create-weight"
-                    component={CreateWeightBottomSheet}
-                    options={{
-                        presentation: 'containedTransparentModal',
-                        animation: 'none',
-                        headerShown: false,
-                    }}
                 />
                 <Stack.Screen
                     name="entity-manager/update"
@@ -223,3 +210,10 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
         </NavigationContainer>
     );
 }
+
+const styes = StyleSheet.create({
+    content: {
+        flex: 1,
+        backgroundColor: color.White.toString(),
+    },
+});

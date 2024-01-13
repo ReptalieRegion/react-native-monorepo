@@ -3,6 +3,7 @@ const path = require('path');
 
 const glob = require('glob');
 
+const expoLicenseMap = require('./expo.json');
 const homepageParse = require('./homepageParse');
 
 // 모노레포 루트 디렉토리
@@ -44,6 +45,17 @@ const license = modules.map((module) => {
             description,
             licenseType,
             licenseContent,
+            homepage,
+        };
+    }
+
+    if (libraryName.startsWith('expo')) {
+        const licenseContent = expoLicenseMap.expo;
+        return {
+            libraryName,
+            licenseContent,
+            description,
+            licenseType,
             homepage,
         };
     }

@@ -2,17 +2,18 @@ import dayjs from 'dayjs';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import CreateTemplate from '../@common/components/CreateTemplate';
+import useCreateEntity from '../@common/context/CreateEntity/hooks/useCreateEntity';
+
 import { StrokeCamera } from '@/assets/icons';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import { useToast } from '@/components/@common/organisms/Toast';
-import EntityCard from '@/components/diary/molecules/EntityCard/EntityCard';
-import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
-import useImagePicker from '@/hooks/@common/useImagePicker';
+import useToast from '@/components/overlay/Toast/useToast';
+import useImagePicker from '@/hooks/useImagePicker';
+import EntityCard from '@/pages/diary/entity-manager/ListPage/components/EntityCard';
 import type { EntityManagerCreateImageScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerImagePage({ navigation }: EntityManagerCreateImageScreenProps) {
-    const { openToast } = useToast();
+    const openToast = useToast();
     const {
         entityDate: { image },
         setCreateEntity,

@@ -1,12 +1,13 @@
-import { Typo, color } from '@crawl/design-system';
+import { Typo } from '@crawl/design-system';
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import type { License } from './type';
 
 import { Divider } from '@/components/@common/atoms/Divider';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
+import PageWrapper from '@/components/PageWrapper';
 import type { LicenseListScreenProps } from '@/types/routes/props/me/license';
 
 const licenseList = require('@/json/license.json');
@@ -29,25 +30,14 @@ export default function LicenseListPage({ navigation }: LicenseListScreenProps) 
     };
 
     return (
-        <View style={styles.container}>
-            <FlashList
-                data={data}
-                renderItem={renderItem}
-                estimatedItemSize={50}
-                ItemSeparatorComponent={ItemSeparatorComponent}
-            />
-        </View>
+        <PageWrapper style={styles.wrapper}>
+            <FlashList data={data} renderItem={renderItem} estimatedItemSize={50} ItemSeparatorComponent={Divider} />
+        </PageWrapper>
     );
 }
 
-function ItemSeparatorComponent() {
-    return <Divider />;
-}
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White.toString(),
+    wrapper: {
         paddingBottom: 25,
     },
 });

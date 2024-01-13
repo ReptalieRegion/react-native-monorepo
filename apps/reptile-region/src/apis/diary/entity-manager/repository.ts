@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 
-import clientFetch, { METHOD } from '../../@utils/fetcher';
-
+import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
 import type {
     CreateEntity,
@@ -157,10 +156,9 @@ export const updateEntityWeight = async ({ entityId, date, weight }: UpdateEntit
  * DELETE
  */
 // 다이어리 개체 몸무게 삭제
-export const deleteEntityWeight = async ({ entityId, date }: DeleteEntityWeight['Request']) => {
-    const response = await clientFetch(`api/diary/entity/${entityId}/weight`, {
+export const deleteEntityWeight = async ({ weightId }: DeleteEntityWeight['Request']) => {
+    const response = await clientFetch(`api/diary/entity/weight/${weightId}`, {
         method: METHOD.DELETE,
-        body: { date },
     });
 
     return response.json();

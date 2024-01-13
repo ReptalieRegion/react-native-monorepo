@@ -8,7 +8,7 @@ type ErrorBoundaryGroupProps = {
     blockOutside: boolean;
 };
 
-const ErrorBoundaryGroup = ({ blockOutside = false, children }: PropsWithChildren<ErrorBoundaryGroupProps>) => {
+export default function ErrorBoundaryGroup({ blockOutside = false, children }: PropsWithChildren<ErrorBoundaryGroupProps>) {
     const blockOutsideRef = useRef(blockOutside);
     const isMounted = useIsMounted();
     const group = useContext(ErrorBoundaryGroupContext);
@@ -23,6 +23,4 @@ const ErrorBoundaryGroup = ({ blockOutside = false, children }: PropsWithChildre
     const value = useMemo(() => ({ resetKey, reset }), [resetKey, reset]);
 
     return <ErrorBoundaryGroupContext.Provider value={value}>{children}</ErrorBoundaryGroupContext.Provider>;
-};
-
-export default ErrorBoundaryGroup;
+}

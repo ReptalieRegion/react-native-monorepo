@@ -20,6 +20,7 @@ export default function Header({
         color: 'default',
     },
     monthFormat,
+    onPressMonth,
     onPressLeft,
     onPressRight,
 }: HeaderProps) {
@@ -31,8 +32,8 @@ export default function Header({
     const label = monthFormat
         ? monthFormat(selectedDate.toDate())
         : isSameYear
-        ? selectedDate.format('MM월')
-        : selectedDate.format('YY년 MM월');
+          ? selectedDate.format('MM월')
+          : selectedDate.format('YY년 MM월');
 
     const headerWrapperStyle = useMemo(() => [containerStyle, headerStyles.wrapper], [containerStyle]);
 
@@ -68,9 +69,11 @@ export default function Header({
                 <TouchableOpacity onPress={handlePressPrevMonth}>
                     <LeftArrow fill={isPossiblePrevMonth ? color.DarkGray[500].toString() : color.Gray[500].toString()} />
                 </TouchableOpacity>
-                <Typo variant={labelStyle.variant} color={labelStyle.color}>
-                    {label}
-                </Typo>
+                <TouchableOpacity onPress={onPressMonth}>
+                    <Typo variant={labelStyle.variant} color={labelStyle.color}>
+                        {label}
+                    </Typo>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={handlePressNextMonth}>
                     <RightArrow fill={isPossibleNextMonth ? color.DarkGray[500].toString() : color.Gray[500].toString()} />
                 </TouchableOpacity>

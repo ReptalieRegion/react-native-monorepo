@@ -80,8 +80,8 @@ function WeekCalendar(
                         const typoColor: TextColorType = isDisableDay
                             ? 'light-placeholder'
                             : isSameMonth
-                            ? 'default'
-                            : 'light-placeholder';
+                              ? 'default'
+                              : 'light-placeholder';
                         const isDot = markedDates?.[dayInfo.dayString]?.marked;
 
                         return (
@@ -128,9 +128,9 @@ function WeekCalendar(
                 renderItem={renderItem}
                 estimatedItemSize={weekSize.width}
                 estimatedListSize={weekSize}
-                onMomentumScrollEnd={handleChangePage}
                 showsHorizontalScrollIndicator={false}
                 renderScrollComponent={ScrollView}
+                onMomentumScrollEnd={handleChangePage}
                 pagingEnabled
                 horizontal
             />

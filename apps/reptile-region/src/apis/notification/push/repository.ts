@@ -1,6 +1,6 @@
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import { objectToQueryString } from '@/apis/@utils/parser/query-string';
-import type { CreatePushAgree, FetchPushLog, UpdatePushAgree, UpdatePushClickedRequest } from '@/types/apis/notification';
+import type { FetchPushLog, UpdatePushAgree, UpdatePushClickedRequest } from '@/types/apis/notification';
 import type { WithInfinitePageParam } from '@/types/apis/utils';
 
 /**
@@ -40,12 +40,9 @@ export const fetchNotificationPushReadCheck = async () => {
  * POST
  */
 // 푸시알림 동의 생성
-export const createNotificationPushAgree = async ({ isAgree }: CreatePushAgree['Request']) => {
+export const createNotificationPushAgree = async () => {
     const response = await clientFetch('api/notification/push/agree', {
         method: METHOD.POST,
-        body: {
-            isAgree,
-        },
     });
 
     return response.json();

@@ -4,14 +4,13 @@ import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import type { HomeListPageScreenProp } from './type';
-
 import useFetchPushReadCheck from '@/apis/notification/push/hooks/queries/useFetchPushReadCheck';
 import { NotificationIcon } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
-import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
+import { useAuth } from '@/hooks/auth';
+import useAuthNavigation from '@/hooks/auth/useNavigationAuth';
+import type { HomeListPageScreenProp } from '@/types/routes/props/home/list';
 
 export function HomeListHeader(props: NativeStackHeaderProps) {
     const { requireAuthNavigation } = useAuthNavigation();
@@ -46,7 +45,7 @@ export default function ChangeHeader({ navigation }: HomeListPageScreenProp) {
 
             return (
                 <ConditionalRenderer
-                    condition={isSignIn && data?.isReadAllLog !== undefined && !data.isReadAllLog}
+                    condition={!!isSignIn && data?.isReadAllLog !== undefined && !data.isReadAllLog}
                     trueContent={
                         <TouchableOpacity onPress={handlePressNotification}>
                             <View style={styles.container}>

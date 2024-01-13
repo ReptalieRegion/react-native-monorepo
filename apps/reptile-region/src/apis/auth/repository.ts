@@ -1,5 +1,7 @@
 import { encryptionRSA } from '@crawl/utils';
 
+import { getRefreshToken } from './utils/secure-storage-token';
+
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
 import type {
     JoinProgress,
@@ -7,13 +9,22 @@ import type {
     PostAppleAuth,
     PostGoogleAuth,
     PostKakaoAuth,
-    RefreshToken,
+    Restore,
 } from '@/types/apis/auth';
 
 /** GET */
 // 닉네임 중복 체크
 export const nicknameDuplicateCheck = async ({ nickname }: NicknameDuplicateCheck['Request']) => {
     const response = await clientFetch(`api/users/duplicate/nickname/${nickname}`, {
+        method: METHOD.GET,
+    });
+
+    return response.json();
+};
+
+// 로그인 체크
+export const signInCheck = async () => {
+    const response = await clientFetch('api/auth/sign-in/check', {
         method: METHOD.GET,
     });
 
@@ -33,8 +44,26 @@ export const getAuthTokenAndPublicKey = async () => {
     return response.json();
 };
 
+export const restore = async ({ publicKey, socialId, authToken, provider }: Restore['Request']) => {
+    const encryptedData = encryptionRSA(publicKey, socialId);
+
+    const response = await clientFetch('api/auth/restore', {
+        method: METHOD.POST,
+        headers: {
+            Authorization: `Bearer ${authToken}`,
+        },
+        body: {
+            encryptedData,
+            provider,
+        },
+    });
+
+    return response.json();
+};
+
 // 리프레시 토큰 갱신
-export const refreshTokenIssued = async ({ refreshToken }: RefreshToken['Request']) => {
+export const refreshTokenIssued = async () => {
+    const refreshToken = await getRefreshToken();
     const response = await clientFetch('api/auth/refresh', {
         method: METHOD.POST,
         headers: {
@@ -124,6 +153,14 @@ const _joinProgressBodyGenerator = (data: JoinProgress['Request']) => {
  * */
 export const signOut = async () => {
     const response = await clientFetch('api/auth/sign-out', {
+        method: METHOD.DELETE,
+    });
+
+    return response.json();
+};
+
+export const withdrawal = async () => {
+    const response = await clientFetch('api/auth/withdrawal', {
         method: METHOD.DELETE,
     });
 

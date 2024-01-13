@@ -1,11 +1,10 @@
 import { Typo, color } from '@crawl/design-system';
 import { useQueryClient } from '@tanstack/react-query';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 import HTTPError from '@/apis/@utils/error/HTTPError';
 import { Error } from '@/assets/icons';
-import { useToast } from '@/components/@common/organisms/Toast';
 
 type GlobalErrorState = {
     error: Error | HTTPError;
@@ -17,25 +16,13 @@ interface GlobalErrorActions {
 
 type GlobalErrorProps = GlobalErrorState & GlobalErrorActions;
 
-export default function GlobalError({ error, reset }: GlobalErrorProps) {
+export default function GlobalError({ reset }: GlobalErrorProps) {
     const queryClient = useQueryClient();
-    const { openToast } = useToast();
-
-    useEffect(() => {
-        if (__DEV__) {
-            openToast({ contents: error.message, severity: 'error' });
-        }
-    }, [error.message, openToast]);
 
     const handleReset = () => {
-        const errorKeys = queryClient
-            .getQueryCache()
-            .getAll()
-            .filter((q) => q.state.status === 'error')
-            .map((e) => e.queryKey);
-
-        errorKeys.forEach((errorKey) => {
-            queryClient.removeQueries({ queryKey: errorKey, exact: true });
+        queryClient.removeQueries({
+            predicate: (query) => query.state.status === 'error',
+            exact: true,
         });
         reset();
     };

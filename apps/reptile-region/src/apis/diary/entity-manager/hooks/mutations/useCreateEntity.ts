@@ -12,7 +12,7 @@ export default function useCreateEntity() {
     return useMutation<CreateEntity['Response'], HTTPError, CreateEntity['Request']>({
         mutationFn: createEntity,
         onSuccess: () => {
-            queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.list, exact: true });
+            queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.entityList, exact: true });
         },
     });
 }

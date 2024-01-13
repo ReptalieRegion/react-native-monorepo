@@ -4,7 +4,7 @@ import { createNativeStackHeader } from '@/components/@common/molecules';
 
 export function CalendarDetailHeader(props: NativeStackHeaderProps) {
     return createNativeStackHeader({
-        leftIcon: 'cancel',
+        leftIcon: 'back',
         title: '상세 보기',
     })(props);
 }

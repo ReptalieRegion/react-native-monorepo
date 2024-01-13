@@ -63,8 +63,9 @@ export default function useCalendarListActions() {
             handleChangeMonth,
             handlePressCalendarItem: navigateCalendarDetail,
             subMonth,
+            setDate,
         }),
-        [handleChangeMonth, navigateCalendarCreate, navigateCalendarDetail, subMonth],
+        [handleChangeMonth, navigateCalendarCreate, navigateCalendarDetail, setDate, subMonth],
     );
 
     const state = {

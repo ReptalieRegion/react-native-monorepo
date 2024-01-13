@@ -19,8 +19,8 @@ import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
 import ImagePickerIcon from '@/components/@common/molecules/ImagePickerIcon/ImagePickerIcon';
 import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
-import { useToast } from '@/components/@common/organisms/Toast';
-import useImagePicker from '@/hooks/@common/useImagePicker';
+import useToast from '@/components/overlay/Toast/useToast';
+import useImagePicker from '@/hooks/useImagePicker';
 import type { EntityGender, EntityVariety } from '@/types/apis/diary/entity';
 import type { IconFunction } from '@/types/global/icons';
 import type { EntityUpdateScreenProps } from '@/types/routes/props/diary/entity';
@@ -57,7 +57,7 @@ export default function EntityMangerUpdate({
     const [variety, setVariety] = useState<EntityVariety>(entity.variety);
     const { off: varietyOff, on: varietyOn, state: isVarietyVisible } = useOnOff();
     const { off: datePickerOff, on: datePickerOn, state: isDatePickerVisible } = useOnOff();
-    const { openToast } = useToast();
+    const openToast = useToast();
     const { openLoading, closeLoading } = useGlobalLoading();
 
     const { handlePressProfileImage } = useImagePicker({
@@ -75,14 +75,12 @@ export default function EntityMangerUpdate({
     });
 
     const { mutate, isPending } = useUpdateEntity({
-        onMutate: () => {
-            openLoading();
-        },
-        onSettled: () => {
-            closeLoading();
-        },
+        onMutate: openLoading,
+        onSettled: closeLoading,
         onSuccess: () => {
-            navigation.pop();
+            if (navigation.canGoBack()) {
+                navigation.goBack();
+            }
         },
         onError: () => {
             openToast({ contents: '수정에 실패했어요. 잠시후에 다시 시도해주세요.', severity: 'error' });
@@ -203,7 +201,7 @@ export default function EntityMangerUpdate({
                     </TouchableWithoutFeedback>
                 </ScrollView>
                 <View style={buttonStyles.buttonContainer}>
-                    <ConfirmButton text="수정 완료" disabled={isPending} onPress={handleSubmit} />
+                    <ConfirmButton text="수정 완료" disabled={isPending || name.length === 0} onPress={handleSubmit} />
                 </View>
             </View>
             <DateTimePickerModal

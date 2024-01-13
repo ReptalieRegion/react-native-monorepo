@@ -1,33 +1,22 @@
 import { Typo, color } from '@crawl/design-system';
 import dayjs from 'dayjs';
 import React, { useMemo } from 'react';
-import { StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
+import { Platform, StyleSheet, View, type ViewStyle } from 'react-native';
 import { ScrollView, TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import useOverlaySelectEntityBottomSheet from '../bottom-sheet/SelectEntity/useOverlaySelectEntityBottomSheet';
+import useOverlaySelectEntityBottomSheet from '../@common/bottom-sheet/SelectEntity/useOverlaySelectEntityBottomSheet';
+import TagTextCheckBox from '../@common/components/TagTextCheckBox';
+import { markTypeArray } from '../@common/constants';
 
 import useCreateCalendarActions from './hooks/useCreateCalendarActions';
 
 import { Avatar } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import TagTextCheckBox from '@/components/diary/atoms/TagTextCheckBox/index,';
-import type { DiaryCalendarMarkType } from '@/types/apis/diary/calendar';
+import PageWrapper from '@/components/PageWrapper';
 
-type MarkTypeArray = {
-    label: string;
-    markType: DiaryCalendarMarkType;
-};
-
-const markTypeArray: MarkTypeArray[] = [
-    { label: '#먹이', markType: '먹이급여' },
-    { label: '#청소', markType: '청소' },
-    { label: '#탈피', markType: '탈피' },
-    { label: '#온욕', markType: '온욕' },
-    { label: '#배변', markType: '배변' },
-    { label: '#메이팅', markType: '메이팅' },
-];
+const MAX_MEMO_LENGTH = 300;
 
 export default function CalendarItemCreatePage() {
     const {
@@ -53,49 +42,59 @@ export default function CalendarItemCreatePage() {
 
     const { bottom } = useSafeAreaInsets();
 
-    const wrapperStyle: StyleProp<ViewStyle> = useMemo(() => [styes.wrapper, { paddingBottom: bottom }], [bottom]);
+    const wrapperStyle: ViewStyle = useMemo(() => ({ paddingBottom: Platform.select({ ios: bottom, android: 10 }) }), [bottom]);
 
     return (
-        <View style={wrapperStyle}>
-            <ScrollView contentContainerStyle={styes.scrollWrapper}>
-                <View style={styes.allWrapper}>
-                    <View style={styes.selection}>
+        <PageWrapper style={wrapperStyle}>
+            <ScrollView contentContainerStyle={styles.scrollWrapper}>
+                <View style={styles.allWrapper}>
+                    <View style={styles.selection}>
                         <Typo variant="title2">개체 선택</Typo>
                         <TouchableOpacity onPress={() => openSelectEntityBottomSheet()}>
-                            <View style={styes.entityWrapper}>
+                            <View style={styles.entityWrapper}>
                                 <Avatar image={entity?.image} size={80} />
-                                <View style={styes.entityTextWrapper}>
+                                <View style={styles.entityTextWrapper}>
                                     <Typo variant="title3">{entity?.name}</Typo>
                                 </View>
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <View style={styes.selection}>
-                        <Typo variant="title2">메모</Typo>
-                        <View style={styes.actionWrapper}>
-                            <TextInput style={styes.textInput} value={memo} onChangeText={handleChangeMemo} />
+                    <View style={styles.selection}>
+                        <View style={styles.labelContainer}>
+                            <Typo variant="title2">메모</Typo>
+                            <Typo color="placeholder">
+                                {memo.length}/{MAX_MEMO_LENGTH}
+                            </Typo>
+                        </View>
+                        <View style={styles.actionWrapper}>
+                            <TextInput
+                                style={styles.textInput}
+                                value={memo}
+                                onChangeText={handleChangeMemo}
+                                maxLength={MAX_MEMO_LENGTH}
+                            />
                         </View>
                     </View>
-                    <View style={styes.selection}>
-                        <View style={styes.labelContainer}>
+                    <View style={styles.selection}>
+                        <View style={styles.labelContainer}>
                             <Typo variant="title2">등록일시</Typo>
                         </View>
-                        <View style={styes.actionWrapper}>
+                        <View style={styles.actionWrapper}>
                             <TouchableOpacity onPress={datePickerOn}>
                                 <Typo color="primary" variant="title4">
-                                    {dayjs(today).format('YYYY-MM-DD A HH:mm ')}
+                                    {dayjs(createDate).format('YYYY-MM-DD A HH:mm ')}
                                 </Typo>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={styes.selection}>
-                        <View style={styes.labelContainer}>
+                    <View style={styles.selection}>
+                        <View style={styles.labelContainer}>
                             <Typo variant="title2">태그 선택</Typo>
                             <Typo color="placeholder">
                                 {markTypeCheckedArray.length}/{markTypeArray.length}
                             </Typo>
                         </View>
-                        <View style={styes.actionWrapper}>
+                        <View style={styles.actionWrapper}>
                             {markTypeArray.map(({ label, markType }) => (
                                 <TagTextCheckBox
                                     key={label}
@@ -107,7 +106,7 @@ export default function CalendarItemCreatePage() {
                     </View>
                 </View>
             </ScrollView>
-            <View style={styes.buttonWrapper}>
+            <View style={styles.buttonWrapper}>
                 <ConfirmButton text="등록" disabled={disabledSubmit} onPress={handlePressSubmit} />
             </View>
             <DateTimePickerModal
@@ -121,17 +120,11 @@ export default function CalendarItemCreatePage() {
                 onConfirm={handleChangeDate}
                 onCancel={datePickerOff}
             />
-        </View>
+        </PageWrapper>
     );
 }
 
-const White = color.White.toString();
-
-const styes = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-        backgroundColor: White,
-    },
+const styles = StyleSheet.create({
     scrollWrapper: {
         flex: 1,
         position: 'relative',
@@ -153,7 +146,7 @@ const styes = StyleSheet.create({
     },
     allWrapper: {
         flex: 1,
-        backgroundColor: White,
+        backgroundColor: color.White.toString(),
         paddingHorizontal: 20,
         paddingTop: 20,
         gap: 40,
@@ -182,11 +175,12 @@ const styes = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         zIndex: 1,
-        backgroundColor: White,
+        backgroundColor: color.White.toString(),
         gap: 8,
     },
     buttonWrapper: {
         marginHorizontal: 20,
         marginTop: 'auto',
+        paddingTop: 10,
     },
 });

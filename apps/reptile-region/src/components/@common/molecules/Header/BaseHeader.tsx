@@ -3,12 +3,12 @@ import { useNavigation } from '@react-navigation/native';
 import type { ReactNode } from 'react';
 import React from 'react';
 import type { TextStyle, ViewStyle } from 'react-native';
-import { StyleSheet, View } from 'react-native';
+import { Keyboard, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { BackButton, CancelButton, Logo } from '@/assets/icons';
 import MainStatusBar from '@/components/@common/atoms/StatusBar';
-import { Header_HEIGHT } from '@/constants/global';
+import { HEADER_HEIGHT } from '@/constants/global';
 import type { IconFunction } from '@/types/global/icons';
 
 type LeftIconType = 'cancel' | 'back' | 'logo';
@@ -55,6 +55,7 @@ export default function BaseHeader({
             leftIconClick();
             return;
         }
+        Keyboard.dismiss();
         navigation.goBack();
     };
 
@@ -70,7 +71,7 @@ export default function BaseHeader({
                         {title}
                     </Typo>
                 </View>
-                <View style={[styles.right]}>{typeof right === 'string' ? <Typo>{right}</Typo> : right}</View>
+                <View style={styles.right}>{typeof right === 'string' ? <Typo>{right}</Typo> : right}</View>
             </View>
         </>
     );
@@ -78,7 +79,7 @@ export default function BaseHeader({
 
 const styles = StyleSheet.create({
     container: {
-        height: Header_HEIGHT,
+        height: HEADER_HEIGHT,
         position: 'relative',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -96,7 +97,6 @@ const styles = StyleSheet.create({
     right: {
         position: 'absolute',
         right: 20,
-        height: 30,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',

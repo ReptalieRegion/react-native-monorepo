@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { fetchMePostList } from '../../repository';
 
 import type HTTPError from '@/apis/@utils/error/HTTPError';
-import { MY_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { ME_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchMePostList, FetchMePostListResponse } from '@/types/apis/share-post/post';
 import type { InfiniteState } from '@/types/apis/utils';
 
@@ -18,7 +18,7 @@ export default function useInfiniteFetchMePostList() {
         readonly QueryKey[],
         number
     >({
-        queryKey: MY_QUERY_KEYS.post,
+        queryKey: ME_QUERY_KEYS.post,
         initialPageParam: 0,
         queryFn: ({ pageParam }) => fetchMePostList({ pageParam }),
         getNextPageParam: (lastPage) => lastPage.nextPage,

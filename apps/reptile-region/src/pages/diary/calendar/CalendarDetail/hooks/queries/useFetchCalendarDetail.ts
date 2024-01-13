@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import useFetchCalendar from '@/apis/diary/calendar/hooks/queries/useFetchCalendar';
+import useBaseFetchCalendar from '@/apis/diary/calendar/hooks/queries/useBaseFetchCalendar';
 import type { FetchCalendar } from '@/types/apis/diary/calendar';
 
 type UseFetchCalendarDetail = FetchCalendar['Request'] & {
@@ -9,13 +9,15 @@ type UseFetchCalendarDetail = FetchCalendar['Request'] & {
 };
 
 export default function useFetchCalendarDetail({ date, calendarId }: UseFetchCalendarDetail) {
-    const select = useCallback(
-        (data: FetchCalendar['Response']) => data.items.find((item) => item.calendar.id === calendarId),
-        [calendarId],
-    );
-
-    return useFetchCalendar({
+    const { data: calendarData, ...rest } = useBaseFetchCalendar({
         data: { date },
-        options: { select },
+        options: {
+            select: useCallback(
+                (data: FetchCalendar['Response']) => data.items.find((item) => item.calendar.id === calendarId),
+                [calendarId],
+            ),
+        },
     });
+
+    return { ...rest, data: calendarData };
 }

@@ -1,62 +1,88 @@
-import { TouchableTypo, color } from '@crawl/design-system';
-import React from 'react';
-import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { PhotoList, useCameraAlbum } from '@crawl/camera-album';
+import { Typo } from '@crawl/design-system';
+import React, { useEffect } from 'react';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import ChangeHeader from './header';
+import { MAX_SELECT_COUNT } from '../@common/constants';
 
-import { CameraAlbum } from '@/components/@common/organisms/CameraAlbum';
-import useImageCropActions from '@/hooks/share-post/actions/useImageCropActions';
+import CameraAlbumActions from './components/CameraAlbumActions';
+import PhotoEditorView from './components/PhotoEditorView';
+
+import useToast from '@/components/overlay/Toast/useToast';
+import PageWrapper from '@/components/PageWrapper';
+import withPageHeaderUpdate from '@/components/withPageHeaderUpdate';
 import type { ImagePickScreenProp } from '@/types/routes/props/share-post/create-post';
 
-export default function ImagePickerPage({ navigation }: ImagePickScreenProp) {
-    const { width, height } = useWindowDimensions();
-    const textHeight = 48;
-    const photoEditorHeight = height / 2;
-    const photoListHeight = height - photoEditorHeight;
+const ImagePickerPage = withPageHeaderUpdate<ImagePickScreenProp>(
+    () => {
+        const openToast = useToast();
 
-    return (
-        <>
-            <ChangeHeader navigation={navigation} />
-            <View style={{ width, height: photoEditorHeight }}>
-                <CameraAlbum.PhotoEditor width={width} height={photoEditorHeight - textHeight} />
-                <CameraAlbumActions height={textHeight} />
-            </View>
-            <View style={{ height: photoListHeight }}>
-                <CameraAlbum.PhotoList numColumns={4} loadPhotoLimit={60} />
-            </View>
-        </>
-    );
-}
+        const { width, height } = useWindowDimensions();
+        const textHeight = 50;
+        const photoEditorHeight = height / 2;
+        const photoListHeight = height - photoEditorHeight;
 
-function CameraAlbumActions({ height }: { height: number }) {
-    const { handleOpenCamera, handleOpenPhotoPicker } = useImageCropActions();
-
-    return (
-        <View style={[styles.container, { height: height }]}>
-            <TouchableTypo>최근항목</TouchableTypo>
-            <View style={styles.view}>
-                <TouchableTypo onPress={handleOpenPhotoPicker}>앨범</TouchableTypo>
-                <TouchableTypo onPress={handleOpenCamera}>카메라</TouchableTypo>
-            </View>
-        </View>
-    );
-}
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingTop: 15,
-        paddingBottom: 15,
-        paddingLeft: 10,
-        paddingRight: 10,
-        backgroundColor: color.White.toString(),
+        return (
+            <PageWrapper>
+                <View style={{ width, height: photoEditorHeight }}>
+                    <PhotoEditorView size={{ width, height: photoEditorHeight - textHeight }} />
+                    <CameraAlbumActions height={textHeight} />
+                </View>
+                <View style={{ height: photoListHeight }}>
+                    <PhotoList
+                        maxSelectCount={MAX_SELECT_COUNT}
+                        onMaxSelectCount={() => {
+                            openToast({ contents: `이미지는 최대 ${MAX_SELECT_COUNT}입니다`, severity: 'warning' });
+                        }}
+                        pageSize={52}
+                    />
+                </View>
+            </PageWrapper>
+        );
     },
-    view: {
-        display: 'flex',
-        flexDirection: 'row',
-        gap: 10,
+    ({ navigation }) => {
+        const { selectedPhotos } = useCameraAlbum();
+
+        useEffect(() => {
+            const isValidate = selectedPhotos.length === 0;
+
+            const headerRight = () => {
+                const handlePress = () => {
+                    navigation.navigate('write');
+                };
+
+                return (
+                    <TouchableOpacity
+                        onPress={handlePress}
+                        style={style.wrapper}
+                        containerStyle={style.container}
+                        disabled={isValidate}
+                    >
+                        <Typo color={isValidate ? 'placeholder' : 'default'} disabled={isValidate}>
+                            다음
+                        </Typo>
+                    </TouchableOpacity>
+                );
+            };
+
+            navigation.setOptions({ headerRight });
+        }, [navigation, selectedPhotos.length]);
+        return null;
+    },
+);
+
+// TODO: 터치 영역 넓히기 위해 임시 방편으로 막음 수정 필요
+const style = StyleSheet.create({
+    wrapper: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    container: {
+        marginRight: -20,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
     },
 });
+
+export default ImagePickerPage;

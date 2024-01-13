@@ -1,26 +1,29 @@
 /** Auth */
 export const AUTH_QUERY_KEYS = {
-    duplicateNickname: (nickname: string) => ['user/duplicate/nickname/', nickname],
+    signInCheck: ['auth_sign_in_check'],
+    duplicateNickname: (nickname: string) => ['auth_duplicateNickname', nickname],
 } as const;
 
 /** Diary */
 export const DIARY_QUERY_KEYS = {
-    list: ['diary', 'entity'],
-    weight: (entityId: string) => ['diary', 'entity', entityId, { type: 'weight' }],
-    calendar: (date: string) => ['diary', 'calendar', { date }],
+    entityList: ['diary_entity'],
+    weight: (entityId: string) => ['diary_entity_weight', entityId],
+    calendar: ['diary_calendar'],
+    calendarDate: (date: string) => ['diary_calendar', { date }],
 } as const;
 
 /** My */
-export const MY_QUERY_KEYS = {
+export const ME_QUERY_KEYS = {
+    me: ['me'],
     profile: ['me', { type: 'profile' }],
     post: ['me', { type: 'post' }],
 } as const;
 
 /** Notification */
 export const NOTIFICATION_QUERY_KEYS = {
-    pushLog: ['notification', 'push', 'log'],
-    pushAgree: ['notification', 'push', 'agree'],
-    pushReadCheck: ['notification', 'push', 'read-check'],
+    pushLog: ['notification_push', { type: 'log' }],
+    pushAgree: ['notification_push', { type: 'agree' }],
+    pushReadCheck: ['notification_push', { type: 'read-check' }],
 } as const;
 
 /** SharePost */
@@ -37,4 +40,14 @@ export const SHARE_POST_QUERY_KEYS = {
     followerList: (userId: string) => ['user', 'profile', 'list', 'follower', userId],
     followingList: (userId: string) => ['user', 'profile', 'list', 'following', userId],
     searchUser: (search: string) => ['user', 'search', search],
+    activitySummary: (nickname: string) => ['user', 'activity_summary', nickname],
 } as const;
+
+/** Web View */
+export const WEB_VIEW = {
+    webview: (path: string) => ['webview', path],
+};
+
+export const SHARE_POST_MUTATION_KEYS = {
+    create: ['share-post', 'create'],
+};

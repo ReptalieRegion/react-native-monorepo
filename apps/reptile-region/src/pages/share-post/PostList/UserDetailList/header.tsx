@@ -1,15 +1,12 @@
 import type { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import { useQueryClient } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
-import * as Haptic from 'react-native-haptic-feedback';
 
-import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import useCreateOrUpdateFollow from '@/apis/share-post/user/hooks/combine/useCreateOrUpdateFollow';
+import useOtherUserPostListActions from './OtherUser/hooks/useOtherUserPostListActions';
+
 import useFetchUserProfile from '@/apis/share-post/user/hooks/queries/useFetchUserProfile';
+import { ConditionalRenderer } from '@/components/@common/atoms';
 import { createNativeStackHeader } from '@/components/@common/molecules';
-import Follow from '@/components/share-post/atoms/Follow';
-import useAuthNavigation from '@/hooks/@common/useNavigationAuth';
-import type { FetchDetailUserProfile } from '@/types/apis/share-post/user';
+import Follow from '@/pages/share-post/@common/components/Follow';
 
 type ChangeHeaderProps = {
     nickname: string;
@@ -22,87 +19,27 @@ export function SharePostUserDetailListHeader(props: NativeStackHeaderProps) {
 
 export default function ChangeHeader({ nickname, navigation }: ChangeHeaderProps) {
     const { data } = useFetchUserProfile({ nickname });
-    const { requireAuthNavigation } = useAuthNavigation();
-    const queryKey = SHARE_POST_QUERY_KEYS.profileDetail(nickname);
-    const queryClient = useQueryClient();
-    const { mutateFollow } = useCreateOrUpdateFollow({
-        create: {
-            onMutate: async () => {
-                await queryClient.cancelQueries({ queryKey });
-                const prevProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(queryKey);
-                queryClient.setQueryData<FetchDetailUserProfile['Response']>(queryKey, (prevData) => {
-                    if (prevData === undefined) {
-                        return prevData;
-                    }
 
-                    return {
-                        user: {
-                            ...prevData.user,
-                            isFollow: true,
-                        },
-                    };
-                });
-
-                return { prevProfile };
-            },
-            onError: (_error, _variables, context) => {
-                if (context) {
-                    queryClient.setQueryData(
-                        queryKey,
-                        (context as { prevProfile: FetchDetailUserProfile['Response'] }).prevProfile,
-                    );
-                }
-            },
-        },
-        update: {
-            onMutate: async () => {
-                await queryClient.cancelQueries({ queryKey });
-                const prevProfile = queryClient.getQueryData<FetchDetailUserProfile['Response']>(queryKey);
-                queryClient.setQueryData<FetchDetailUserProfile['Response']>(queryKey, (prevData) => {
-                    if (prevData === undefined) {
-                        return prevData;
-                    }
-
-                    return {
-                        user: {
-                            ...prevData.user,
-                            isFollow: !prevData.user.isFollow,
-                        },
-                    };
-                });
-
-                return { prevProfile };
-            },
-            onError: (_error, _variables, context) => {
-                if (context) {
-                    queryClient.setQueryData(
-                        queryKey,
-                        (context as { prevProfile: FetchDetailUserProfile['Response'] }).prevProfile,
-                    );
-                }
-            },
-        },
-    });
+    const { updateOrCreateFollow } = useOtherUserPostListActions({ nickname });
 
     useEffect(() => {
         const headerRight = () => {
             const handlePressFollow = () => {
-                if (data === undefined) {
-                    return;
+                if (data !== undefined) {
+                    updateOrCreateFollow({ userId: data?.user.id, isFollow: data?.user.isFollow });
                 }
-
-                const {
-                    user: { id: userId, isFollow },
-                } = data;
-                Haptic.trigger('impactLight');
-                requireAuthNavigation(() => mutateFollow({ userId, isFollow }));
             };
 
-            return <Follow isFollow={data?.user.isFollow} onPress={handlePressFollow} />;
+            return (
+                <ConditionalRenderer
+                    condition={!data?.user.isMine}
+                    trueContent={<Follow isFollow={data?.user.isFollow} onPress={handlePressFollow} />}
+                />
+            );
         };
 
         navigation.setOptions({ headerRight, headerTitle: nickname });
-    }, [data, navigation, nickname, mutateFollow, requireAuthNavigation]);
+    }, [data, navigation, nickname, updateOrCreateFollow]);
 
     return null;
 }

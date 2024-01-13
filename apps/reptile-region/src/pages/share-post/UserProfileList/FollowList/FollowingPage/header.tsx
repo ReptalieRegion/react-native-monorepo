@@ -1,8 +1,6 @@
-import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
-import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
-import type { FetchFollowingList } from '@/types/apis/share-post/user';
+import useInfiniteFollowingList from '@/apis/share-post/user/hooks/queries/useInfiniteFollowingList';
 import type { FollowingPageScreenProps } from '@/types/routes/props/share-post/user-profile';
 
 export default function FollowingChangeHeader({
@@ -13,11 +11,8 @@ export default function FollowingChangeHeader({
         },
     },
 }: FollowingPageScreenProps) {
-    const queryClient = useQueryClient();
-    const followingList = queryClient.getQueryData<InfiniteData<FetchFollowingList['Response']>>(
-        SHARE_POST_QUERY_KEYS.followingList(userId),
-    );
-    const newFollowingCount = followingList?.pages.reduce((prev, page) => prev + page.items.length, 0) ?? followingCount;
+    const { data } = useInfiniteFollowingList({ userId });
+    const newFollowingCount = data.length ?? followingCount;
 
     useEffect(() => {
         navigation.setOptions({

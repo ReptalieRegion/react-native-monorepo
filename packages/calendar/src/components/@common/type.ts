@@ -30,6 +30,7 @@ interface HeaderActions {
     monthFormat?(date: Date): string;
     onPressLeft?(): void;
     onPressRight?(): void;
+    onPressMonth?(): void;
 }
 
 type HeaderProps = HeaderState & HeaderActions;

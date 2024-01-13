@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="32"/>
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
@@ -14,13 +14,14 @@
       android:icon="@drawable/ic_launcher"
       android:roundIcon="@drawable/ic_launcher_round"
       android:allowBackup="false"
+      android:requestLegacyExternalStorage="true"
       android:theme="@style/BootTheme">
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
         android:launchMode="singleTask"
-        android:windowSoftInputMode="adjustNothing"
+        android:windowSoftInputMode="adjustResize"
         android:screenOrientation="portrait"
         android:exported="true">
         <intent-filter>

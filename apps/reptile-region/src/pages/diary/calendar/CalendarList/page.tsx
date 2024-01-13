@@ -7,18 +7,19 @@ import { StyleSheet, View } from 'react-native';
 import * as Haptic from 'react-native-haptic-feedback';
 
 import useOverlayActionMenuBottomSheet from './bottom-sheet/ActionMenu/useOverlayActionMenu';
-import { type CalendarFlashListItem, type CalendarItem } from './hooks/queries/useFetchCalendarList';
+import useOverlaySelectDate from './bottom-sheet/SelectDate/useOverlaySelectDate';
+import CalendarListItem from './components/CalendarListItem';
+import type { CalendarFlashListItem, CalendarItem } from './hooks/queries/useFetchCalendarList';
 import useCalendarListActions from './hooks/useCalendarListActions';
 
 import { PostWriteIcon } from '@/assets/icons';
 import { Avatar, ConditionalRenderer, FadeInCellRenderComponent } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import ScaleListItem from '@/components/diary/atoms/CalendarListItem/CalendarListItem';
-import FloatingActionButtonGroup from '@/components/share-post/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
-import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
+import FloatingActionButtonGroup from '@/components/@common/organisms/FloatingActionButtons/components/FloatingActionButtonGroup';
+import FloatingActionButtons from '@/components/@common/organisms/FloatingActionButtons/providers/FloatingActionButtons';
+import PageWrapper from '@/components/PageWrapper';
 
 export default function ExpandableCalendarScreen() {
-    const openActionMenuBottomSheet = useOverlayActionMenuBottomSheet();
     const {
         calendarListData,
         searchDate,
@@ -28,6 +29,8 @@ export default function ExpandableCalendarScreen() {
         handlePressWriteFloatingButton,
         subMonth,
     } = useCalendarListActions();
+    const openSelectDateBottomSheet = useOverlaySelectDate();
+    const openActionMenuBottomSheet = useOverlayActionMenuBottomSheet();
 
     const keyExtractor = useCallback(
         (item: CalendarFlashListItem) =>
@@ -35,7 +38,7 @@ export default function ExpandableCalendarScreen() {
         [],
     );
 
-    const getItemType = useCallback((item: CalendarFlashListItem) => (typeof item === 'string' ? 'title' : 'content'), []);
+    const getItemType = useCallback((item: CalendarFlashListItem) => item.type, []);
 
     const renderItem: ListRenderItem<CalendarFlashListItem> = useCallback(
         ({ item }) => {
@@ -48,7 +51,7 @@ export default function ExpandableCalendarScreen() {
                     );
                 case 'CALENDAR_ITEM':
                     return (
-                        <ScaleListItem
+                        <CalendarListItem
                             pressInBackground={color.Gray[100].toString()}
                             containerStyle={listStyles.itemContainer}
                             onPress={() =>
@@ -60,7 +63,15 @@ export default function ExpandableCalendarScreen() {
                             }
                             onLongPress={() => {
                                 Haptic.trigger('impactLight');
-                                openActionMenuBottomSheet({ calendar: { id: item.calendar.id, date: item.calendar.date } });
+                                openActionMenuBottomSheet({
+                                    calendar: {
+                                        id: item.calendar.id,
+                                        date: item.calendar.date,
+                                        memo: item.calendar.memo,
+                                        markType: item.calendar.markType,
+                                    },
+                                    searchDate: dayjs(item.dateString).startOf('month').format('YYYY-MM-DD'),
+                                });
                             }}
                         >
                             <Avatar image={item.entity.image} size={60} />
@@ -102,7 +113,7 @@ export default function ExpandableCalendarScreen() {
                                     ))}
                                 </View>
                             </View>
-                        </ScaleListItem>
+                        </CalendarListItem>
                     );
             }
         },
@@ -110,13 +121,22 @@ export default function ExpandableCalendarScreen() {
     );
 
     const renderListFooterComponent = useCallback(() => {
+        const prevMonth = searchDate.subtract(1, 'month');
+        const isPrevMonthYearSameCurrentYear = dayjs().year() === prevMonth.year();
+        const label = isPrevMonthYearSameCurrentYear
+            ? prevMonth.format('M월 기록 더보기')
+            : prevMonth.format('YY년 M월 기록 더보기');
+
         return (
             <View style={listStyles.buttonWrapper}>
                 <ConfirmButton
-                    text={searchDate.subtract(1, 'month').format('M월 기록 더보기')}
+                    text={label}
                     size="small"
                     variant="cancel"
-                    onPress={subMonth}
+                    onPress={() => {
+                        Haptic.trigger('impactLight');
+                        subMonth();
+                    }}
                 />
             </View>
         );
@@ -139,11 +159,12 @@ export default function ExpandableCalendarScreen() {
                     maxDate: todayString,
                     markedDates: calendarListData?.markedDates,
                     onChangeMonth: handleChangeMonth,
+                    onPressMonth: () => openSelectDateBottomSheet({ searchDate }),
                 }}
                 listProps={{
                     data: calendarListData?.list,
                     contentContainerStyle: contentContainerStyle,
-                    estimatedItemSize: 50,
+                    estimatedItemSize: 40,
                     CellRendererComponent: FadeInCellRenderComponent,
                     renderItem: renderItem,
                     keyExtractor: keyExtractor,
@@ -154,19 +175,21 @@ export default function ExpandableCalendarScreen() {
             />
         );
     }, [
-        calendarListData?.list,
+        todayString,
         calendarListData?.markedDates,
-        getItemType,
+        calendarListData?.list,
         handleChangeMonth,
-        keyExtractor,
         renderItem,
+        keyExtractor,
+        getItemType,
         renderListEmptyComponent,
         renderListFooterComponent,
-        todayString,
+        openSelectDateBottomSheet,
+        searchDate,
     ]);
 
     return (
-        <View style={styles.wrapper}>
+        <PageWrapper style={styles.wrapper}>
             {memoizedExpandableCalendar}
             <FloatingActionButtons>
                 <FloatingActionButtonGroup position={{ right: 70, bottom: 70 }}>
@@ -178,7 +201,7 @@ export default function ExpandableCalendarScreen() {
                     />
                 </FloatingActionButtonGroup>
             </FloatingActionButtons>
-        </View>
+        </PageWrapper>
     );
 }
 
@@ -196,9 +219,7 @@ const primaryIcon = {
 
 const styles = StyleSheet.create({
     wrapper: {
-        flex: 1,
         position: 'relative',
-        backgroundColor: color.White.toString(),
     },
     calendarHeader: {
         flexDirection: 'row',

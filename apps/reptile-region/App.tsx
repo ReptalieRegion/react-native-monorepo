@@ -1,4 +1,4 @@
-import { ErrorBoundary } from '@crawl/error-boundary';
+import { ErrorBoundary, ErrorBoundaryGroup } from '@crawl/error-boundary';
 import { OverlayProvider } from '@crawl/overlay-manager';
 import { useNavigationContainerRef } from '@react-navigation/native';
 import React from 'react';
@@ -8,41 +8,32 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import GlobalError from './error';
 
-import Alert from '@/components/@common/organisms/Alert';
-import Loading from '@/components/@common/organisms/Loading/LoadingProvider';
-import Toast from '@/components/@common/organisms/Toast';
-import { Auth } from '@/components/auth/organisms/Auth';
-import useEffectNotifee from '@/hooks/notification/useEffectNotifee';
+import GlobalLoading from '@/components/@common/organisms/Loading/LoadingProvider';
+import useEffectNotifee from '@/hooks/useEffectNotifee';
 import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 
-export default function App() {
+export default function App(): React.JSX.Element {
     const navigationRef = useNavigationContainerRef<RootRoutesParamList>();
     useEffectNotifee(navigationRef);
 
     return (
-        <Loading>
+        <GlobalLoading>
             <ReactQueryProvider>
                 <GestureHandlerRootView style={styles.gestureContainer}>
                     <SafeAreaProvider>
-                        <Toast>
-                            <Alert>
-                                <Auth>
-                                    <ErrorBoundary
-                                        renderFallback={({ error, reset }) => <GlobalError error={error} reset={reset} />}
-                                    >
-                                        <OverlayProvider>
-                                            <RootRoutes navigationRef={navigationRef} />
-                                        </OverlayProvider>
-                                    </ErrorBoundary>
-                                </Auth>
-                            </Alert>
-                        </Toast>
+                        <OverlayProvider>
+                            <ErrorBoundaryGroup blockOutside={false}>
+                                <ErrorBoundary renderFallback={GlobalError}>
+                                    <RootRoutes navigationRef={navigationRef} />
+                                </ErrorBoundary>
+                            </ErrorBoundaryGroup>
+                        </OverlayProvider>
                     </SafeAreaProvider>
                 </GestureHandlerRootView>
             </ReactQueryProvider>
-        </Loading>
+        </GlobalLoading>
     );
 }
 

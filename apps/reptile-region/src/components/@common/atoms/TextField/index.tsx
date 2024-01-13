@@ -1,4 +1,5 @@
 import { Typo, color } from '@crawl/design-system';
+import { useFocusEffect } from '@react-navigation/native';
 import React, { forwardRef, useEffect, useRef } from 'react';
 import type { ColorValue, DimensionValue, KeyboardType, TextInputProps } from 'react-native';
 import { Platform, StyleSheet, View } from 'react-native';
@@ -71,12 +72,31 @@ export default forwardRef<TextInput, TextFieldProps>(function TextField(
         borderWidth = 1,
         borderRadius,
         keyboardType,
+        autoFocus,
         errorMessColor = color.Red[500].toString(),
         labelColor = color.Gray[400].toString(),
         focusColor = color.Teal[150].toString(),
     },
     ref,
 ) {
+    const textRef = useRef<TextInput>(null);
+
+    useEffect(() => {
+        if (ref !== null) {
+            if (typeof ref === 'function') {
+                ref(textRef.current);
+            } else {
+                ref.current = textRef.current;
+            }
+        }
+    }, [ref]);
+
+    useFocusEffect(() => {
+        if (autoFocus) {
+            textRef.current?.focus();
+        }
+    });
+
     const isExistsText = useRef<boolean>(false);
     const fieldColor = useSharedValue<ColorValue | undefined>(labelColor);
     const labelFontSize = useSharedValue<number>(LABEL_FONT_SIZE[size].blur);
@@ -153,7 +173,7 @@ export default forwardRef<TextInput, TextFieldProps>(function TextField(
                 <Animated.View style={[styles.container, borderAnimated, { paddingVertical, paddingHorizontal }]}>
                     <TextInput
                         aria-labelledby={label}
-                        ref={ref}
+                        ref={textRef}
                         keyboardType={keyboardType}
                         style={styles.textInput}
                         value={value}

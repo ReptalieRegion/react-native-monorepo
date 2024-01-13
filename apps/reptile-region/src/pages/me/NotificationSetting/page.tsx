@@ -6,11 +6,12 @@ import { Switch } from 'react-native-gesture-handler';
 
 import type { PushAgreeListType } from './type';
 
-import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useUpdatePushAgree';
+import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useBaseUpdatePushAgree';
 import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPushAgree';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import { Divider } from '@/components/@common/atoms/Divider';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
+import PageWrapper from '@/components/PageWrapper';
 import { PushAgreeType, type UpdatePushAgree } from '@/types/apis/notification';
 
 const PUSH_AGREE_LIST: PushAgreeListType[] = [
@@ -26,6 +27,11 @@ const PUSH_AGREE_LIST: PushAgreeListType[] = [
                 type: PushAgreeType.Comment,
                 label: '댓글 알림',
                 dataTarget: 'isAgreeComment',
+            },
+            {
+                type: PushAgreeType.Tag,
+                label: '태그 알림',
+                dataTarget: 'isAgreeTag',
             },
         ],
     },
@@ -59,7 +65,17 @@ export default function NotificationSetting() {
     useEffect(() => {
         const notificationPermissionCheck = async () => {
             const notificationPermission = await messaging().hasPermission();
-            setNotNotificationPermission(notificationPermission !== messaging.AuthorizationStatus.AUTHORIZED);
+
+            setNotNotificationPermission(
+                notificationPermission !== messaging.AuthorizationStatus.AUTHORIZED &&
+                    notificationPermission !== messaging.AuthorizationStatus.PROVISIONAL,
+            );
+            mutate({
+                type: PushAgreeType.Device,
+                isAgree:
+                    notificationPermission === messaging.AuthorizationStatus.AUTHORIZED ||
+                    notificationPermission === messaging.AuthorizationStatus.PROVISIONAL,
+            });
         };
 
         const subscription = AppState.addEventListener('change', (nextAppState) => {
@@ -72,14 +88,14 @@ export default function NotificationSetting() {
         return () => {
             subscription.remove();
         };
-    }, []);
+    }, [mutate]);
 
     const updatePushNotification = ({ type, isAgree }: UpdatePushAgree['Request']) => {
         mutate({ type, isAgree });
     };
 
     return (
-        <View style={styles.container}>
+        <PageWrapper>
             <ConditionalRenderer
                 condition={notNotificationPermission}
                 trueContent={
@@ -119,21 +135,17 @@ export default function NotificationSetting() {
                     <ConditionalRenderer condition={index < 2} trueContent={<Divider height={10} />} />
                 </View>
             ))}
-        </View>
+        </PageWrapper>
     );
 }
 
 const listStyles = {
     paddingLeft: 0,
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingTop: 8,
+    paddingBottom: 8,
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: color.White.toString(),
-    },
     list: {
         padding: 20,
         gap: 10,

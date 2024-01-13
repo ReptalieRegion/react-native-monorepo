@@ -1,4 +1,11 @@
-export { ErrorBoundary, withErrorBoundary } from './components';
+export * from './components';
 export { useErrorBoundary, useErrorBoundaryGroup } from './hooks';
 export { ErrorBoundaryGroup } from './providers';
-export type { ErrorBoundaryRef, IgnoreErrorType, OnError, RenderFallbackType } from './types';
+export type {
+    ComponentPropsWithoutChildren,
+    ErrorBoundaryRef,
+    IgnoreErrorType,
+    OnError,
+    RenderFallbackProps,
+    RenderFallbackType,
+} from './types';

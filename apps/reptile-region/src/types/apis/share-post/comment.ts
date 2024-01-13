@@ -19,6 +19,7 @@ type FetchCommentResponse = {
         replyCount: number;
         isMine: boolean;
         isModified: boolean;
+        createdAt: string;
         user: {
             id: string;
             profile: ImageType;
@@ -48,6 +49,7 @@ type CreateCommentResponse = {
             replyCount: number;
             isMine: boolean;
             isModified: boolean;
+            createdAt: string;
             user: {
                 id: string;
                 profile: ImageType;
@@ -107,4 +109,16 @@ type DeleteCommentResponse = {
 
 type DeleteComment = ServerAPI<DeleteCommentRequest, DeleteCommentResponse>;
 
-export type { CreateComment, DeleteComment, FetchComment, FetchCommentResponse, UpdateComment };
+export type {
+    CreateComment,
+    CreateCommentRequest,
+    DeleteComment,
+    DeleteCommentRequest,
+    DeleteCommentResponse,
+    FetchComment,
+    FetchCommentRequest,
+    FetchCommentResponse,
+    UpdateComment,
+    UpdateCommentRequest,
+    UpdateCommentResponse,
+};

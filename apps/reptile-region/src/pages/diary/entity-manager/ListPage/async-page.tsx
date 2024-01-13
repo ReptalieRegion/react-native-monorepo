@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 
 import EntityListSkeleton from './loading';
 
-import FloatingActionButtons from '@/components/share-post/organisms/FloatingActionButtons/providers/FloatingActionButtons';
+import FloatingActionButtons from '@/components/@common/organisms/FloatingActionButtons/providers/FloatingActionButtons';
 
 const EntityMangerList = React.lazy(() => import('./page'));
 

@@ -12,7 +12,7 @@ const queryClient = new QueryClient({
                     return false;
                 }
 
-                if (error instanceof HTTPError && error.statusCode === 401) {
+                if (error instanceof HTTPError && (error.statusCode === 401 || error.statusCode === 403)) {
                     return false;
                 }
 

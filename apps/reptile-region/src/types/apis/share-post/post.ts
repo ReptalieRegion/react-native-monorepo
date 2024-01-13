@@ -1,6 +1,7 @@
+import type { Photo } from '@crawl/camera-album';
+
 import type { InfiniteState, ServerAPI } from '../utils';
 
-import type { Photo } from '@/components/@common/organisms/CameraAlbum/types';
 import type { ImageType } from '@/types/global/image';
 
 /**
@@ -17,6 +18,7 @@ type FetchPostsResponse = {
         isLike: boolean | undefined;
         likeCount: number;
         commentCount: number;
+        createdAt: string;
         user: {
             id: string;
             nickname: string;
@@ -34,8 +36,6 @@ type FetchMeProfileResponse = {
         id: string;
         profile: ImageType;
         nickname: string;
-        followerCount: number;
-        followingCount: number;
     };
 };
 
@@ -51,6 +51,7 @@ type FetchMePostListResponse = {
         isLike: boolean | undefined;
         likeCount: number;
         commentCount: number;
+        createdAt: string;
     };
 };
 
@@ -70,6 +71,7 @@ type FetchPostResponse = {
         isLike: boolean | undefined;
         likeCount: number;
         commentCount: number;
+        createdAt: string;
         user: {
             id: string;
             nickname: string;
@@ -94,6 +96,7 @@ type FetchDetailUserPostResponse = {
         isMine: boolean;
         isLike: boolean | undefined;
         likeCount: number;
+        createdAt: string;
         commentCount: number;
     };
 };
@@ -136,6 +139,7 @@ type CreatePostResponse = {
         isLike: undefined;
         likeCount: 0;
         commentCount: 0;
+        createdAt: string;
         user: {
             id: string;
             nickname: string;
@@ -225,6 +229,8 @@ type DeletePost = ServerAPI<DeletePostRequest, DeletePostResponse>;
 
 export type {
     CreateLike,
+    CreateLikeRequest,
+    CreateLikeResponse,
     CreatePost,
     DeletePost,
     FetchDetailUserPost,
@@ -239,5 +245,7 @@ export type {
     FetchPosts,
     FetchPostsResponse,
     UpdateLike,
+    UpdateLikeRequest,
+    UpdateLikeResponse,
     UpdatePost,
 };

@@ -24,7 +24,7 @@
     },
     "peerDependencies": {
         "react": "*",
-        "react-native": "*"
+        "react-native": "0.73.1"
     },
     "react-native-builder-bob": {
         "source": "src",

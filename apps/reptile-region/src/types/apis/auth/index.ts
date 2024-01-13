@@ -29,6 +29,8 @@ interface SignUpRegister0 {
 
 type AuthResponse = SignInResponse | SignUpRegister0;
 
+type AuthProviderType = 'kakao' | 'apple' | 'google';
+
 /**
  *
  * GET
@@ -44,6 +46,12 @@ type NicknameDuplicateCheckResponse = {
 
 type NicknameDuplicateCheck = ServerAPI<NicknameDuplicateCheckRequest, NicknameDuplicateCheckResponse>;
 
+type SignInCheckResponse = {
+    message: 'success' | 'fail';
+};
+
+type SignInCheck = ServerAPI<void, SignInCheckResponse>;
+
 /**
  *
  * POST
@@ -55,6 +63,16 @@ type FetchAuthTokenAndPublicKeyResponse = {
 };
 
 type FetchAuthTokenAndPublicKey = ServerAPI<undefined, FetchAuthTokenAndPublicKeyResponse>;
+
+// 탈퇴회원 복구
+type RestoreRequest = {
+    authToken: string;
+    socialId: string;
+    publicKey: string;
+    provider: AuthProviderType;
+};
+
+type Restore = ServerAPI<RestoreRequest, SignInResponse>;
 
 // 카카오 로그인
 type PostKakaoAuthRequest = {
@@ -76,11 +94,8 @@ type PostGoogleRequest = {
 type PostGoogleAuth = ServerAPI<PostGoogleRequest, AuthResponse>;
 
 // 리프레시 토큰 갱신
-type RefreshTokenRequest = {
-    refreshToken: string;
-};
 
-type RefreshToken = ServerAPI<RefreshTokenRequest, AuthTokens>;
+type RefreshToken = ServerAPI<void, AuthTokens>;
 
 // 회원가입 진행 단계에 따른 데이터 저장
 type Register0Request = {
@@ -113,6 +128,7 @@ type SignOutResponse = {
 type SignOut = ServerAPI<void, SignInResponse>;
 
 export type {
+    AuthProviderType,
     AuthResponse,
     AuthTokens,
     FetchAuthTokenAndPublicKey,
@@ -124,6 +140,10 @@ export type {
     PostKakaoAuthRequest,
     RefreshToken,
     Register0,
+    Restore,
+    RestoreRequest,
+    SignInCheck,
+    SignInCheckResponse,
     SignInResponse,
     SignOut,
     SignOutResponse,

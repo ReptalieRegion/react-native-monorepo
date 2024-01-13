@@ -17,7 +17,7 @@ export default function useCreateCalendarItem() {
         onSettled: closeLoading,
         onSuccess: (_data, variables) => {
             queryClient.invalidateQueries({
-                queryKey: DIARY_QUERY_KEYS.calendar(dayjs(variables.date).startOf('month').format('YYYY-MM-DD')),
+                queryKey: DIARY_QUERY_KEYS.calendarDate(dayjs(variables.date).startOf('month').format('YYYY-MM-DD')),
                 exact: true,
             });
             navigation.navigate('bottom-tab/routes', {

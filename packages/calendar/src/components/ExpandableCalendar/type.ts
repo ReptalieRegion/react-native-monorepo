@@ -32,6 +32,7 @@ type ExpandableCalendarState = {
 
 interface ExpandableCalendarActions {
     onChangeMonth?(dateString: string): void;
+    onPressMonth?(): void;
 }
 
 type ExpandableCalendarProps<TData> = {

@@ -4,14 +4,15 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import CreateTemplate from '../@common/components/CreateTemplate';
+import useCreateEntity from '../@common/context/CreateEntity/hooks/useCreateEntity';
+import type { EntityGender } from '../@common/context/CreateEntity/type';
+
 import Female from '@/assets/icons/Female';
 import Male from '@/assets/icons/Male';
 import Question from '@/assets/icons/Question';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import type { EntityGender } from '@/components/diary/organisms/CreateEntity/type';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
 import type { IconFunction } from '@/types/global/icons';
 import type { EntityManagerCreateGenderScreenProps } from '@/types/routes/props/diary/entity';
 

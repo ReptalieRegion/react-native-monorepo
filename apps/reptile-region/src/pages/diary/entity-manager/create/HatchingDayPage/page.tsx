@@ -1,12 +1,12 @@
-import RNDateTimePicker, { DateTimePickerAndroid } from '@react-native-community/datetimepicker';
-import { useFocusEffect } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import React, { useCallback, useEffect } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import DatePicker from 'react-native-date-picker';
+
+import CreateTemplate from '../@common/components/CreateTemplate';
+import useCreateEntity from '../@common/context/CreateEntity/hooks/useCreateEntity';
 
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
 import type { EntityManagerCreateHatchingScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerHatchingDayPage({ navigation }: EntityManagerCreateHatchingScreenProps) {
@@ -32,21 +32,6 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
         nextPage();
     }, [handleChangeDate, nextPage]);
 
-    useFocusEffect(() => {
-        if (Platform.OS === 'android') {
-            DateTimePickerAndroid.open({
-                value: dayjs().toDate(),
-                onChange: (event, date) => {
-                    if (event.type === 'set') {
-                        handleChangeDate(date);
-                        nextPage();
-                        DateTimePickerAndroid.dismiss('date');
-                    }
-                },
-            });
-        }
-    });
-
     useEffect(() => {
         setCreateEntity({ type: 'SET_HATCHING_DATE', hatchingDate: dayjs().toDate() });
     }, [setCreateEntity]);
@@ -55,28 +40,23 @@ export default function EntityManagerHatchingDayPage({ navigation }: EntityManag
         <CreateTemplate
             title="해칭일을 등록해주세요"
             description="등록할 개체의 해칭일을 선택해주세요."
-            contents={Platform.select({
-                ios: (
-                    <RNDateTimePicker
-                        display={Platform.select({ ios: 'spinner', android: 'default' })}
-                        timeZoneName="Asia/Seoul"
-                        themeVariant="light"
-                        value={hatchingDate ?? currentDate}
-                        maximumDate={currentDate}
-                        minimumDate={dayjs(currentDate).subtract(50, 'year').toDate()}
-                        onChange={(_, date) => handleChangeDate(date)}
-                    />
-                ),
-            })}
-            button={Platform.select({
-                ios: (
-                    <View style={styles.buttonContainer}>
-                        <ConfirmButton variant="text" text="건너뛰기" onPress={handleSkipDate} />
-                        <ConfirmButton size="medium" variant="confirm" text="다음" onPress={nextPage} />
-                    </View>
-                ),
-                android: <ConfirmButton variant="text" text="건너뛰기" onPress={handleSkipDate} />,
-            })}
+            contents={
+                <DatePicker
+                    date={hatchingDate ?? currentDate}
+                    mode="date"
+                    theme="light"
+                    androidVariant="nativeAndroid"
+                    maximumDate={currentDate}
+                    minimumDate={dayjs(currentDate).subtract(50, 'year').toDate()}
+                    onDateChange={(date) => handleChangeDate(date)}
+                />
+            }
+            button={
+                <View style={styles.buttonContainer}>
+                    <ConfirmButton variant="text" text="건너뛰기" onPress={handleSkipDate} />
+                    <ConfirmButton size="medium" variant="confirm" text="다음" onPress={nextPage} />
+                </View>
+            }
         />
     );
 }

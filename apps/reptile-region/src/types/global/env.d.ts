@@ -3,4 +3,5 @@ declare module '@env' {
     export const NODE_ENV: ModeType;
     export const HOME_PAGE_URI: string;
     export const END_POINT_URI: string;
+    export const WEB_PAGE_URI: string;
 }

@@ -11,31 +11,22 @@ type CommentParams = {
 
 // 대댓글 페이지
 type CommentReplyParams = {
-    comment: {
+    post: {
         id: string;
-        contents: string;
-        isMine: boolean;
-        isModified: boolean;
-        user: {
+        comment: {
             id: string;
-            profile: ImageType;
-            nickname: string;
+            contents: string;
+            isMine: boolean;
+            isModified: boolean;
+            createdAt: string;
+            user: {
+                id: string;
+                profile: ImageType;
+                nickname: string;
+            };
         };
     };
     isFocus: boolean;
-};
-
-// 게시물 더보기 메뉴 바텀 시트
-type OptionsMenuParams = {
-    post: {
-        id: string;
-        images: ImageType[];
-        contents: string;
-        isMine: boolean;
-        user: {
-            id: string;
-        };
-    };
 };
 
 // 특정 사용자 이미지 썸네일 페이지
@@ -126,7 +117,6 @@ export type {
     ImageThumbnailParams,
     LikeParams,
     MeUserDetailParams,
-    OptionsMenuParams,
     PostingUpdateParams,
     UserDetailParams,
 };

@@ -2,6 +2,7 @@ import { Typo, color } from '@crawl/design-system';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 
+import useLogout from './hooks/mutations/useLogout';
 import type { SettingList } from './type';
 
 import useFetchMeProfile from '@/apis/me/profile/hooks/queries/useFetchMeProfile';
@@ -9,18 +10,23 @@ import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPu
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { Profile } from '@/components/@common/molecules/Profile';
-import useMeActions from '@/hooks/me/actions/useMeActions';
-import useMeListNavigation from '@/hooks/me/navigation/useMeListNavigation';
 import VersionCheck from '@/native-modules/version-check/VersionCheck';
+import useMeListNavigation from '@/pages/me/List/hooks/useMeListNavigation';
 
 export default function MyListPage() {
     const { data } = useFetchMeProfile();
     useFetchPushAgree();
 
-    const { logout } = useMeActions();
+    const logout = useLogout();
 
-    const { navigateLicense, navigateNotificationSetting, navigatePrivacyPolicy, navigateProfileSetting, navigateTermsOfUse } =
-        useMeListNavigation();
+    const {
+        navigateNotice,
+        navigateLicense,
+        navigateNotificationSetting,
+        navigatePrivacyPolicy,
+        navigateProfileSetting,
+        navigateTermsOfUse,
+    } = useMeListNavigation();
 
     const settingList: SettingList[] = [
         {
@@ -44,6 +50,7 @@ export default function MyListPage() {
                 {
                     title: '공지사항',
                     rightChildren: 'Chevron',
+                    onPress: navigateNotice,
                 },
                 {
                     title: '이용약관',

@@ -32,8 +32,15 @@ export default function BottomSheetProvider({ children, snapInfo, onClose }: Pro
     const opacity = useSharedValue(0);
 
     const bottomSheetClose = useCallback(() => {
-        translateY.value = withTiming(height.value);
-        opacity.value = withTiming(0, { duration: 250 }, (finished) => finished && runOnJS(onClose)());
+        return new Promise<void>((resolve) => {
+            translateY.value = withTiming(height.value);
+            opacity.value = withTiming(0, { duration: 250 }, (finished) => {
+                if (finished) {
+                    runOnJS(resolve)();
+                    runOnJS(onClose)();
+                }
+            });
+        });
     }, [height.value, onClose, opacity, translateY]);
 
     const animationState: BottomSheetAnimationState = {

@@ -1,15 +1,9 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
 import type { SignInParams } from '../params/auth';
-import type {
-    CalendarDetailParams,
-    EntityCreateWeightParams,
-    EntityDetailParams,
-    EntityOptionsMenuParams,
-    EntityUpdateParams,
-} from '../params/diary';
+import type { CalendarDetailParams, EntityDetailParams, EntityUpdateParams } from '../params/diary';
 import type { LicenseContentsParams } from '../params/me';
-import type { OptionsMenuParams, PostingUpdateParams } from '../params/sharePost';
+import type { PostingUpdateParams } from '../params/sharePost';
 
 import type { SignUpParamList } from './auth';
 import type { BottomTabNativeStackParamList } from './bottom-tab';
@@ -19,6 +13,9 @@ import type { PostingParamList, SharePostModalParamList } from './sharePost';
 type RootRoutesParamList = {
     // 바텀 탭
     'bottom-tab/routes': NavigatorScreenParams<BottomTabNativeStackParamList>;
+
+    //Home
+    homepage: undefined;
 
     // Auth
     'sign-in': SignInParams;
@@ -32,18 +29,16 @@ type RootRoutesParamList = {
     'me/profile': undefined;
     'me/notification-setting': undefined;
     'me/notification-log': undefined;
+    'me/notice': undefined;
 
     // SharePost
     'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;
     'share-post/modal/posting': NavigatorScreenParams<PostingParamList>;
-    'share-post/bottom-sheet/post-options-menu': OptionsMenuParams;
     'share-post/post/update': PostingUpdateParams;
 
     // Entity
     'entity-manager/create': NavigatorScreenParams<EntityManagerCreateParamList>;
     'entity-manager/detail': EntityDetailParams;
-    'entity-manager/options-menu': EntityOptionsMenuParams;
-    'entity-manager/create-weight': EntityCreateWeightParams;
     'entity-manager/update': EntityUpdateParams;
 
     // Calendar

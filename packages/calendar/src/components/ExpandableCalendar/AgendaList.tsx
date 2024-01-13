@@ -1,5 +1,6 @@
 import { useDebounce } from '@crawl/react-hooks';
 import { FlashList, type ViewToken } from '@shopify/flash-list';
+import dayjs from 'dayjs';
 import React, { memo, useCallback, useEffect, useRef } from 'react';
 import type { NativeScrollEvent, NativeSyntheticEvent, ViewabilityConfig } from 'react-native';
 
@@ -8,11 +9,6 @@ import useCalendarState from '../../hooks/useCalendarState';
 
 import type { AgendaListProps, ContentData, TitleData } from './type';
 
-const viewabilityConfig: ViewabilityConfig = {
-    itemVisiblePercentThreshold: 20,
-    waitForInteraction: true,
-};
-
 function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...props }: AgendaListProps<TData>) {
     const { selectedDateString } = useCalendarState();
     const { setDate } = useCalendarHandler();
@@ -20,6 +16,14 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...pro
     const isScrollStart = useRef(false);
     const startScrollY = useRef(0);
     const agendaListRef = useRef<FlashList<ContentData<TData> | TitleData>>(null);
+    const viewabilityConfig = useRef<ViewabilityConfig>({
+        waitForInteraction: true,
+        itemVisiblePercentThreshold: 50,
+    }).current;
+
+    if (dayjs(selectedDateString).endOf('month').isSame(selectedDateString, 'day')) {
+        agendaListRef.current?.scrollToIndex({ index: 0 });
+    }
 
     const _handleScroll = useCallback(
         (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -39,7 +43,6 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...pro
     );
 
     const _handleScrollBeginDrag = useCallback(() => {
-        console.log('hi');
         isScrollStart.current = true;
     }, []);
 
@@ -47,7 +50,9 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...pro
         if (isScrollStart.current) {
             viewingDate.current = info.viewableItems.find((viewToken) => viewToken.item.type === 'TITLE')?.item.dateString;
             isScrollStart.current = false;
-            setDate(viewingDate.current);
+            if (viewingDate.current) {
+                setDate(viewingDate.current);
+            }
         }
     }, 500);
 
@@ -63,8 +68,8 @@ function AgendaList<TData>({ onScroll, openCalendar, closeCalendar, data, ...pro
 
     return (
         <FlashList
-            ref={agendaListRef}
             {...props}
+            ref={agendaListRef}
             data={data}
             viewabilityConfig={viewabilityConfig}
             onScroll={_handleScroll}

@@ -4,17 +4,16 @@ import React, { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 
+import CreateTemplate from '../@common/components/CreateTemplate';
+import useCreateEntity from '../@common/context/CreateEntity/hooks/useCreateEntity';
+
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import useCreateEntity from '@/components/diary/organisms/CreateEntity/hooks/useCreateEntity';
-import CreateTemplate from '@/components/diary/templates/CreateTemplate/CreateTemplate';
-import useKeyboardOpenButtonSize from '@/hooks/@common/useKeyboardOpenButtonSize';
 import type { WeightUnit } from '@/types/apis/diary/entity';
 import type { EntityManagerCreateWeightScreenProps } from '@/types/routes/props/diary/entity';
 
 export default function EntityManagerWeightPage({ navigation }: EntityManagerCreateWeightScreenProps) {
     const textFieldRef = useRef<TextInput>(null);
-    const buttonSize = useKeyboardOpenButtonSize();
     const isFocused = useIsFocused();
 
     useFocusEffect(() => {
@@ -72,7 +71,7 @@ export default function EntityManagerWeightPage({ navigation }: EntityManagerCre
             button={
                 <ConditionalRenderer
                     condition={isFocused && !!weightUnit}
-                    trueContent={<ConfirmButton text="다음" size={buttonSize} onPress={nextPage} />}
+                    trueContent={<ConfirmButton text="다음" size={'medium'} onPress={nextPage} />}
                     falseContent={null}
                 />
             }

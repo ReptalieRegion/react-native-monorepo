@@ -2,7 +2,7 @@ import { fakerKO } from '@faker-js/faker';
 
 import { createContents } from './createTagIdsAndContent';
 
-import { fakerBoolean } from '@/mocks/utils/customFaker';
+import { fakerBoolean, fakerCreatedAt } from '@/mocks/utils/customFaker';
 import type { FetchCommentReplyResponse } from '@/types/apis/share-post/comment-reply';
 
 export type CreateCommentReplyProps = {
@@ -21,6 +21,7 @@ const createCommentReply = (props?: CreateCommentReplyProps): FetchCommentReplyR
             contents,
             isMine: fakerBoolean(),
             isModified: fakerBoolean(),
+            createdAt: fakerCreatedAt(),
             user: {
                 id: fakerKO.string.uuid(),
                 profile: {

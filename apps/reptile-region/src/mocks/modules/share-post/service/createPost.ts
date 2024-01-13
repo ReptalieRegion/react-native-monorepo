@@ -3,7 +3,7 @@ import { fakerKO } from '@faker-js/faker';
 
 import { createContents } from './createTagIdsAndContent';
 
-import { fakerBoolean } from '@/mocks/utils/customFaker';
+import { fakerBoolean, fakerCreatedAt } from '@/mocks/utils/customFaker';
 import type { FetchDetailUserPostResponse } from '@/types/apis/share-post/post';
 
 const createPost = (): FetchDetailUserPostResponse => {
@@ -18,6 +18,7 @@ const createPost = (): FetchDetailUserPostResponse => {
             }),
             isLike: fakerBoolean(),
             isMine: fakerBoolean(),
+            createdAt: fakerCreatedAt(),
             commentCount: fakerKO.number.int({ min: 0, max: 200 }),
             likeCount: fakerKO.number.int({ min: 0, max: 200 }),
         },

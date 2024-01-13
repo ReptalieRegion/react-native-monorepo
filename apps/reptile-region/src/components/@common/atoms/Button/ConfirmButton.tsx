@@ -7,7 +7,7 @@ import ConditionalRenderer from '../ConditionalRenderer';
 
 type ConfirmButtonVariant = 'confirm' | 'cancel' | 'text' | 'outline';
 
-type ConfirmButtonSize = 'small' | 'medium' | 'large' | 'full' | 'modal';
+export type ConfirmButtonSize = 'small' | 'medium' | 'large' | 'full' | 'modal';
 
 type ConfirmButtonState = {
     text: string;
@@ -120,7 +120,6 @@ function styleSizeGenerator(size: ConfirmButtonSize): { view: ViewStyle; text: P
                     borderRadius: 15,
                     paddingHorizontal: 15,
                     paddingVertical: 10,
-                    maxWidth: 140,
                 },
                 text: {
                     variant: 'title3',

@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
-import React, { TouchableWithoutFeedback, useWindowDimensions, type ViewStyle } from 'react-native';
+import { useCallback, useMemo } from 'react';
+import React, { StyleSheet, TouchableWithoutFeedback, useWindowDimensions, type ViewStyle } from 'react-native';
 import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 
 import useBottomSheetAnimatedAction from '../hooks/useBottomSheetAnimatedAction';
@@ -25,9 +25,20 @@ export default function BackDrop({ style }: BackDropProps) {
         }
     }, [bottomSheetClose, state.value]);
 
+    const wrapperStyle = useMemo(
+        () => [{ width, height }, style, closeAnimatedStyle, styles.wrapper],
+        [closeAnimatedStyle, height, style, width],
+    );
+
     return (
         <TouchableWithoutFeedback onPress={close}>
-            <Animated.View style={[{ width, height }, style, closeAnimatedStyle]} />
+            <Animated.View style={wrapperStyle} />
         </TouchableWithoutFeedback>
     );
 }
+
+const styles = StyleSheet.create({
+    wrapper: {
+        position: 'absolute',
+    },
+});

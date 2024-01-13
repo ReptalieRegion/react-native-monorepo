@@ -4,8 +4,8 @@ import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import useImageCarouselHandler from '../../hooks/useImageCarouselHandler';
 import useImageCarouselRef from '../../hooks/useImageCarouselRef';
 
-import BaseImageCarousel from '@/components/@common/molecules/BaseImageCarousel';
 import type { BaseImageCarouselProps } from '@/components/@common/molecules/BaseImageCarousel';
+import BaseImageCarousel from '@/components/@common/molecules/BaseImageCarousel';
 
 export type ImageCarouselListProps = BaseImageCarouselProps;
 

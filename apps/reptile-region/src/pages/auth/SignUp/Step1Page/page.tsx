@@ -7,15 +7,18 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import type { SignUpStep1ScreenProps } from './type';
+import SignUpTextField from '../@common/components/SignUpTextField';
+import SignUpTitle from '../@common/components/SignUpTitle';
+import useCreatePushAgree from '../@common/hooks/mutations/useCreatePushAgree';
 
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
 import useSignUpStep1 from '@/apis/auth/hooks/mutations/useSignUpStep1';
 import useNicknameDuplicateCheck from '@/apis/auth/hooks/queries/useNicknameDuplicateCheck';
 import ConfirmButton from '@/components/@common/atoms/Button/ConfirmButton';
-import { SignUpTextField, SignUpTitle } from '@/components/auth/molecules';
-import { useAuth } from '@/components/auth/organisms/Auth/hooks/useAuth';
-import useKeyboardOpenButtonSize from '@/hooks/@common/useKeyboardOpenButtonSize';
+import PageWrapper from '@/components/PageWrapper';
+import { useAuthHandler } from '@/hooks/auth';
+import useKeyboardOpenButtonSize from '@/hooks/useKeyboardOpenButtonSize';
+import type { SignUpStep1ScreenProps } from '@/types/routes/props/auth/sign-up';
 
 export default function SignUpStep1({
     navigation,
@@ -29,7 +32,7 @@ export default function SignUpStep1({
     const { loading, startLoading, endLoading } = useLoading();
     const buttonSize = useKeyboardOpenButtonSize();
     const isFocused = useIsFocused();
-    const { signIn } = useAuth();
+    const { signIn } = useAuthHandler();
     const { bottom } = useSafeAreaInsets();
     const debouncedNickname = useDebounceValue(nickname, 500, endLoading);
     const { data, isLoading } = useNicknameDuplicateCheck({
@@ -39,6 +42,7 @@ export default function SignUpStep1({
 
     const { mutateAsync: authTokenAndPublicKeyMutateAsync } = useAuthTokenAndPublicKey();
     const { mutateAsync: signUpSte1MutateAsync } = useSignUpStep1();
+    const { mutate: createPushAgreeMutate } = useCreatePushAgree();
 
     const errorMessage = nickname === '' ? '닉네임은 필수로 입력해주세요.' : data?.isDuplicate ? '닉네임이 중복되었어요.' : '';
     const disabled = nickname === '' || !!errorMessage;
@@ -55,18 +59,18 @@ export default function SignUpStep1({
     const handleNextButton = async () => {
         try {
             const { authToken } = await authTokenAndPublicKeyMutateAsync();
-            const { accessToken, refreshToken } = await signUpSte1MutateAsync({
+            const tokens = await signUpSte1MutateAsync({
                 authToken,
                 joinProgress: 'REGISTER0',
                 nickname,
                 userId,
             });
 
-            await signIn({ accessToken, refreshToken });
+            await signIn(tokens);
+            createPushAgreeMutate();
             navigation.popToTop();
         } catch (error) {
             throw error;
-        } finally {
         }
     };
 
@@ -94,7 +98,7 @@ export default function SignUpStep1({
     });
 
     return (
-        <View style={styles.wrapper}>
+        <PageWrapper>
             <TouchableWithoutFeedback style={styles.wrapper} containerStyle={styles.wrapper} onPress={Keyboard.dismiss}>
                 <View style={styles.contents}>
                     <SignUpTitle
@@ -123,7 +127,7 @@ export default function SignUpStep1({
                     />
                 </Animated.View>
             </TouchableWithoutFeedback>
-        </View>
+        </PageWrapper>
     );
 }
 
