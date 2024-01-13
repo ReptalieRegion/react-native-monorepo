@@ -221,7 +221,6 @@ export const useGestures = ({
             prevScale.value = scale.value;
             initialFocal.x.value = event.focalX;
             initialFocal.y.value = event.focalY;
-            console.log(event.focalX, event.focalY);
         })
         .onUpdate((event: GestureUpdateEvent<PinchGestureHandlerEventPayload>) => {
             const { changeFocal, changeTranslateX, changeTranslateY } = getTranslate({

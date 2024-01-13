@@ -78,7 +78,6 @@ export default function EntityMangerUpdate({
         onMutate: openLoading,
         onSettled: closeLoading,
         onSuccess: () => {
-            console.log('hi');
             if (navigation.canGoBack()) {
                 navigation.goBack();
             }

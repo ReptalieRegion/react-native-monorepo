@@ -30,8 +30,6 @@ export default function GlobalLoading({ children }: LoadingProviderProps) {
         setIsShow(false);
     };
 
-    console.log(isShow);
-
     return (
         <LoadingContext.Provider value={{ isLoading: isShow, closeLoading, openLoading }}>
             {children}

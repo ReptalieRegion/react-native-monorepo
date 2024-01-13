@@ -18,7 +18,6 @@ export default function useBaseCreateEntityWeight(
         mutationFn: createEntityWeight,
         ...props,
         onSettled: (data, error, variables, context) => {
-            console.log('hihi');
             props?.onSettled?.(data, error, variables, context);
             queryClient.refetchQueries({ queryKey: DIARY_QUERY_KEYS.weight(variables.entityId) });
         },
