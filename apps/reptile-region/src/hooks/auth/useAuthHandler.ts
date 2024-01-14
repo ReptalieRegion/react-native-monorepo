@@ -20,7 +20,7 @@ export default function useAuthHandler() {
 
     const signIn = useCallback(
         async (tokens: RefreshToken['Response']) => {
-            registerAuthTokens(tokens);
+            await registerAuthTokens(tokens);
             queryClient.removeQueries({
                 predicate: (query) => {
                     return query.queryKey[0] !== AUTH_QUERY_KEYS.signInCheck[0] && query.queryKey[0] !== 'me';

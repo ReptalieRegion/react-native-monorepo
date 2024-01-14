@@ -31,6 +31,12 @@ export default function ChangeHeader({ postId, navigation }: ChangeHeaderProps) 
 
     useEffect(() => {
         const isValidate = contents.length === 0;
+        const headerRight = () => {
+            const handleSubmitUpdatePost = () => {
+                mutate({ postId, contents, remainingImages: images.map((image) => image.src) });
+            };
+
+            return (
                 <ConditionalRenderer
                     condition={isPending}
                     trueContent={<ActivityIndicator />}
