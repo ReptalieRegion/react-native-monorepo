@@ -19,8 +19,8 @@ export default function useKeyboardOpenButtonSize() {
         const newButtonSize = isSwipeStart
             ? lastButtonSize.current
             : keyboardState === UseKeyboardState.OPEN || keyboardState === UseKeyboardState.OPENING
-            ? 'full'
-            : 'medium';
+              ? 'full'
+              : 'medium';
         setButtonSize(newButtonSize);
         lastButtonSize.current = newButtonSize;
     }, [isSwipeStart, keyboardState]);

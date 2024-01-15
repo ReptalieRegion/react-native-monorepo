@@ -3,7 +3,8 @@ import { ActionSheetIOS, Platform } from 'react-native';
 import { openCamera, openPicker, type Image, type Options, type PickerErrorCode } from 'react-native-image-crop-picker';
 
 import useAlert from '@/components/overlay/Alert/useAlert';
-import { requestAndroidPermissions, requestIOSPermissions } from '@/utils/permissions/request-permissions';
+import cameraPermission from '@/utils/permissions/camera-permission';
+import photoPermission from '@/utils/permissions/photo-permission';
 
 type ImagePickerError = {
     message: string;
@@ -17,47 +18,48 @@ interface UseImagePickerActions {
 
 export default function useImagePicker({ onError, onSuccess }: UseImagePickerActions) {
     const openAlert = useAlert();
+
+    const checkAndRequestPhotoPermission = photoPermission();
+    const checkAndRequestCameraPermission = cameraPermission();
+
     const openCameraPicker = useCallback(
         async (option?: Options) => {
-            const result = await Platform.select({
-                ios: requestIOSPermissions<['camera']>(['camera']),
-                android: requestAndroidPermissions<['camera']>(['camera']),
-            });
+            const isGranted = await checkAndRequestCameraPermission?.();
+            if (isGranted) {
+                const newOption: Options = option
+                    ? option
+                    : {
+                          mediaType: 'photo',
+                          cropping: true,
+                          cropperCancelText: '취소',
+                          cropperChooseText: '완료',
+                          width: 1200,
+                          height: 1200,
+                          cropperRotateButtonsHidden: true,
+                      };
 
-            if (!result?.camera?.isGranted) {
-                return;
+                openCamera(newOption).then(onSuccess).catch(onError);
             }
-
-            const newOption: Options = option
-                ? option
-                : {
-                      mediaType: 'photo',
-                      cropping: true,
-                      cropperCancelText: '취소',
-                      cropperChooseText: '완료',
-                      width: 1200,
-                      height: 1200,
-                      cropperRotateButtonsHidden: true,
-                  };
-
-            openCamera(newOption).then(onSuccess).catch(onError);
         },
-        [onError, onSuccess],
+        [checkAndRequestCameraPermission, onError, onSuccess],
     );
 
-    const openImagePicker = useCallback(() => {
-        openPicker({
-            mediaType: 'photo',
-            cropping: true,
-            cropperCancelText: '취소',
-            cropperChooseText: '완료',
-            width: 1200,
-            height: 1200,
-            cropperRotateButtonsHidden: true,
-        })
-            .then(onSuccess)
-            .catch(onError);
-    }, [onError, onSuccess]);
+    const openImagePicker = useCallback(async () => {
+        const isGranted = await checkAndRequestPhotoPermission?.();
+        if (isGranted) {
+            openPicker({
+                mediaType: 'photo',
+                cropping: true,
+                cropperCancelText: '취소',
+                cropperChooseText: '완료',
+                width: 1200,
+                height: 1200,
+                cropperRotateButtonsHidden: true,
+            })
+                .then(onSuccess)
+                .catch(onError);
+        }
+    }, [checkAndRequestPhotoPermission, onError, onSuccess]);
 
     const handleIosPress = useCallback(() => {
         ActionSheetIOS.showActionSheetWithOptions(

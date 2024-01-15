@@ -1,4 +1,3 @@
-import { Linking } from 'react-native';
 import { PERMISSIONS, RESULTS, check, request } from 'react-native-permissions';
 
 export const IOS_PERMISSION = {
@@ -34,10 +33,6 @@ export const requestIOSPermissions = async <T extends PermissionsPerIOS[]>(
             if (checkResult === RESULTS.DENIED) {
                 const requestResult = await request(permission);
                 return { key, status: requestResult };
-            }
-
-            if (checkResult === RESULTS.BLOCKED) {
-                Linking.openSettings();
             }
 
             return { key, status: checkResult };
