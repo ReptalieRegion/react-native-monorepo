@@ -1,3 +1,5 @@
+import { USER_ERROR_CODE } from '../error/code';
+
 import { METHOD } from './constants';
 import type { CustomRequestInit, FetchInfo, RefreshItem } from './types';
 
@@ -44,7 +46,7 @@ function fetcher() {
                 if (!response.ok) {
                     const error = (await response.json()) as HTTPErrorField;
 
-                    if (error.code === -1304) {
+                    if (error.code === USER_ERROR_CODE.NOT_FOUND_USER_INFO_TO_AUTH_GUARD) {
                         failCallback?.();
                     }
 
@@ -152,7 +154,7 @@ function fetcher() {
             if (!response.ok) {
                 const error = (await response.json()) as HTTPErrorField;
 
-                if (error.code === -1304) {
+                if (error.code === USER_ERROR_CODE.NOT_FOUND_USER_INFO_TO_AUTH_GUARD) {
                     failCallback?.();
                 }
 

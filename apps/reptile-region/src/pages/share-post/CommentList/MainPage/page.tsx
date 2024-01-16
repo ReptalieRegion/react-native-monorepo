@@ -9,6 +9,7 @@ import CommentList from './components/CommentList';
 import CommentTextEditor from './components/CommentTextEditor';
 import CommentSkeleton from './loading';
 
+import { SHARE_POST_ERROR_CODE } from '@/apis/@utils/error/code';
 import HTTPError from '@/apis/@utils/error/HTTPError';
 import type { CommentScreenProps } from '@/types/routes/props/share-post/comment';
 
@@ -31,7 +32,7 @@ const CommentListPage = withErrorBoundary<CommentScreenProps>(
         );
     },
     {
-        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== -1001,
+        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== SHARE_POST_ERROR_CODE.NOT_FOUND_SHARE_POST,
         renderFallback: () => <Typo>삭제된 게시물입니다</Typo>,
     },
 );

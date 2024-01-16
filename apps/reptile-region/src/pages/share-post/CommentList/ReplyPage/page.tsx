@@ -8,6 +8,7 @@ import CommentProvider from '../../@common/contexts/Comment/CommentProvider';
 import CommentReplyTextEditor from './components/CommentReplyTextEditor';
 import CommentReplySkeleton from './loading';
 
+import { SHARE_POST_ERROR_CODE } from '@/apis/@utils/error/code';
 import HTTPError from '@/apis/@utils/error/HTTPError';
 import type { CommentReplyScreenProps } from '@/types/routes/props/share-post/comment';
 
@@ -29,7 +30,7 @@ const CommentReplyListPage = withErrorBoundary<CommentReplyScreenProps>(
         );
     },
     {
-        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== -2302,
+        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== SHARE_POST_ERROR_CODE.NOT_FOUND_COMMENT,
         renderFallback: () => <Typo>삭제된 댓글입니다</Typo>,
     },
 );

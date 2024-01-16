@@ -6,6 +6,7 @@ import CommentSkeleton from './components/Comment/loading';
 import PostListSkeleton from './components/Post/loading';
 import PostDetailError from './error';
 
+import { SHARE_POST_ERROR_CODE } from '@/apis/@utils/error/code';
 import HTTPError from '@/apis/@utils/error/HTTPError';
 import PageWrapper from '@/components/PageWrapper';
 import type { PostDetailModalListScreenProps, PostDetailRouteProp } from '@/types/routes/props/share-post/post-detail';
@@ -44,7 +45,7 @@ const PostDetailModalListPage = withAsyncBoundary(
             </PageWrapper>
         ),
         rejectedFallback: PostDetailError,
-        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== -2301,
+        ignoreError: (error) => !(error instanceof HTTPError) || error.code !== SHARE_POST_ERROR_CODE.NOT_FOUND_SHARE_POST,
     },
 );
 

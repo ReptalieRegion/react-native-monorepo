@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 
 import useRestore from './mutations/useRestore';
 
+import { USER_ERROR_CODE } from '@/apis/@utils/error/code';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import useAuthTokenAndPublicKey from '@/apis/auth/hooks/mutations/useAuthTokenAndPublicKey';
 import useAlert from '@/components/overlay/Alert/useAlert';
@@ -67,7 +68,7 @@ export default function useAuthOptions(provider: AuthProviderType) {
 
     const authError = useCallback(
         (error: HTTPError, variables: PostGoogleAuth['Request'] | PostAppleAuth['Request'] | PostKakaoAuth['Request']) => {
-            if (error.code === -1401) {
+            if (error.code === USER_ERROR_CODE.SIGN_IN_WITHDRAWN) {
                 openAlert({
                     title: '회원탈퇴한 아이디예요',
                     contents: '복구를 진행할까요?',
