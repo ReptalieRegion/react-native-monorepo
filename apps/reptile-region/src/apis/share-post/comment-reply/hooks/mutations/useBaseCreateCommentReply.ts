@@ -7,6 +7,7 @@ import { createCommentReply } from '../../repository';
 import { SHARE_POST_ERROR_CODE } from '@/apis/@utils/error/code';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { 이메일_1대1문의 } from '@/env/constants';
 import type { FetchComment } from '@/types/apis/share-post/comment';
 import type { CreateCommentReply, FetchCommentReply } from '@/types/apis/share-post/comment-reply';
 
@@ -26,7 +27,7 @@ export default function useBaseCreateCommentReply<TContext = unknown>(
         onError: (error, variables, context) => {
             props?.onError?.(error, variables, context);
             if (error.code === SHARE_POST_ERROR_CODE.ACCUMULATED_REPORTS) {
-                Alert.alert('누적 신고 5회로 인해 댓글 생성이 차단되었어요.', 'crawl.privacy@gmail.com으로 문의해주세요.');
+                Alert.alert('누적 신고 5회로 인해 댓글 생성이 차단되었어요.', `${이메일_1대1문의}으로 문의해주세요.`);
             }
         },
     });
