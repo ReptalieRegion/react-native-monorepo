@@ -42,7 +42,10 @@ export default function CalendarItemCreatePage() {
 
     const { bottom } = useSafeAreaInsets();
 
-    const wrapperStyle: ViewStyle = useMemo(() => ({ paddingBottom: Platform.select({ ios: bottom, android: 10 }) }), [bottom]);
+    const wrapperStyle: ViewStyle = useMemo(
+        () => ({ paddingBottom: Platform.select({ ios: bottom === 0 ? 10 : bottom, android: 10 }) }),
+        [bottom],
+    );
 
     return (
         <PageWrapper style={wrapperStyle}>

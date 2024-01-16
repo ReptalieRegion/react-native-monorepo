@@ -19,7 +19,36 @@ const Header = (headerProps: StackHeaderProps) => {
         <ProgressHeader
             {...headerProps}
             titleShown={false}
-            steps={['이미지', '성별', '해칭일', '모프', '몸무게', '이름', '완료']}
+            steps={[
+                {
+                    name: '이미지',
+                    leftIcon: 'cancel',
+                },
+                {
+                    name: '성별',
+                    leftIcon: 'back',
+                },
+                {
+                    name: '해칭일',
+                    leftIcon: 'back',
+                },
+                {
+                    name: '모프',
+                    leftIcon: 'back',
+                },
+                {
+                    name: '몸무게',
+                    leftIcon: 'back',
+                },
+                {
+                    name: '이름',
+                    leftIcon: 'back',
+                },
+                {
+                    name: '완료',
+                    leftIcon: 'back',
+                },
+            ]}
         />
     );
 };

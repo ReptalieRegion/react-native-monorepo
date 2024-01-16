@@ -80,7 +80,7 @@ export default function EntityManagerImagePage({ navigation }: EntityManagerCrea
 const styles = StyleSheet.create({
     container: {
         width: '90%',
-        height: 450,
+        height: 430,
     },
     placeholderImage: {
         width: '100%',

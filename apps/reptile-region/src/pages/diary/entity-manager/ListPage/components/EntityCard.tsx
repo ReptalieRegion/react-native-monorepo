@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         }),
         borderTopRightRadius: 10,
         borderTopLeftRadius: 10,
-        minHeight: 281,
+        minHeight: 281.7,
     },
     image: {
         borderTopRightRadius: 10,

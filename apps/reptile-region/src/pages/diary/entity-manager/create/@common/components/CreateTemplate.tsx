@@ -21,7 +21,7 @@ export default function CreateTemplate({ title, contents, button, contentsAlign 
     const [titleHeight, setTitleHeight] = useState(bottom + HEADER_HEIGHT);
 
     const buttonStyle = useMemo(
-        () => [styles.button, { bottom: Platform.select({ ios: bottom, android: bottom + 10 }) }],
+        () => [styles.button, { bottom: Platform.select({ ios: bottom === 0 ? 10 : bottom, android: bottom + 10 }) }],
         [bottom],
     );
 
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         backgroundColor: color.White.toString(),
     },
     title: {
-        paddingVertical: 40,
+        paddingVertical: 20,
         paddingHorizontal: 20,
     },
     contentCenter: {

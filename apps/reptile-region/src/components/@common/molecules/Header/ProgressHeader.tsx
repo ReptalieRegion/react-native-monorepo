@@ -20,10 +20,12 @@ type LeftIconMapType = {
 };
 
 export type HeaderProps = {
-    steps: string[];
+    steps: {
+        name: string;
+        leftIcon: LeftIconType;
+    }[];
     rightTitle?: string;
     leftIconClick?: () => void;
-    leftIcon?: LeftIconType;
     containerStyle?: ViewStyle;
     titleStyle?: TextStyle;
     titleShown?: boolean;
@@ -42,7 +44,6 @@ export default function ProgressHeader({
     steps,
     rightTitle,
     leftIconClick,
-    leftIcon = 'back',
     titleStyle,
     containerStyle,
     navigation,
@@ -57,7 +58,7 @@ export default function ProgressHeader({
     const title = options.title;
     const right = options.headerRight?.({ canGoBack: navigation.canGoBack() }) ?? rightTitle;
     const stepSize = steps.length;
-    const currentIndex = steps.findIndex((value) => value === title) ?? 0;
+    const currentIndex = steps.findIndex((value) => value.name === title) ?? 0;
     const [percent, setPercent] = useState(currentIndex / stepSize);
 
     useEffect(() => {
@@ -75,7 +76,7 @@ export default function ProgressHeader({
         title: titleStyle ?? {},
     });
 
-    const Icon = LEFT_ICON[leftIcon];
+    const Icon = LEFT_ICON[steps[currentIndex].leftIcon];
 
     const handleBackButtonClick = () => {
         if (leftIconClick) {

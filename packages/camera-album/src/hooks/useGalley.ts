@@ -1,6 +1,6 @@
 import { CameraRoll, cameraRollEventEmitter } from '@react-native-camera-roll/camera-roll';
 import { useCallback, useContext, useEffect } from 'react';
-import { AppState, type EmitterSubscription } from 'react-native';
+import { type EmitterSubscription } from 'react-native';
 
 import { supportedMimeTypesByTheBackEnd } from '../constants/photo';
 import { isAboveIOS14, isAndroid } from '../constants/platform';
@@ -135,18 +135,6 @@ export const useGallery = ({
             loadNextPagePictures();
         }
     }, [initSelectedPhoto, loadNextPagePictures, state.photos]);
-
-    useEffect(() => {
-        const subscription = AppState.addEventListener('change', async (nextAppState) => {
-            if (nextAppState === 'active') {
-                getUnloadedPictures();
-            }
-        });
-
-        return () => {
-            subscription.remove();
-        };
-    }, [getUnloadedPictures]);
 
     useEffect(() => {
         let subscription: EmitterSubscription;

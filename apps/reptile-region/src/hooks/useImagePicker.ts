@@ -45,8 +45,8 @@ export default function useImagePicker({ onError, onSuccess }: UseImagePickerAct
     );
 
     const openImagePicker = useCallback(async () => {
-        const isGranted = await checkAndRequestPhotoPermission?.();
-        if (isGranted) {
+        const result = await checkAndRequestPhotoPermission?.();
+        if (result && result.isGranted) {
             openPicker({
                 mediaType: 'photo',
                 cropping: true,

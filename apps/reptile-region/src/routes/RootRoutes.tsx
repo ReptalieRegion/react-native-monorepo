@@ -197,6 +197,7 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     component={CalendarItemCreatePage}
                     options={{
                         animation: 'slide_from_bottom',
+                        gestureEnabled: false,
                         header: CalendarItemCreateHeader,
                     }}
                 />

@@ -6,17 +6,18 @@ import useImageCropActions from '../hooks/useImageCropActions';
 
 import { Album, StrokeCamera } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
-import { photoPermissionCheck } from '@/utils/permissions/photo-permission';
+import photoPermission from '@/utils/permissions/photo-permission';
 
 export default function CameraAlbumActions({ height }: { height: number }) {
     const { handleOpenCamera, handleOpenPhotoPicker } = useImageCropActions();
     const [isLimitedPermission, setIsLimitedPermission] = useState(false);
+    const checkAndRequestPhotoPermission = photoPermission();
 
     useEffect(() => {
-        photoPermissionCheck().then((photo) => {
-            setIsLimitedPermission(photo?.status === 'limited');
+        checkAndRequestPhotoPermission?.().then(({ status }) => {
+            setIsLimitedPermission(status === 'limited');
         });
-    }, []);
+    }, [checkAndRequestPhotoPermission]);
 
     return (
         <View style={[styles.wrapper, { height }]}>
