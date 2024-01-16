@@ -2,7 +2,7 @@ import { Typo } from '@crawl/design-system';
 import type { ListRenderItem } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useHomeListNavigation from '../hooks/useHomeListNavigation';
@@ -69,11 +69,10 @@ export default function NewSharePost({ carouselProps, navigationPostDetail }: Ne
             carouselProps={carouselProps}
             listProps={{
                 data,
-                keyExtractor: keyExtractor,
-                renderItem: renderItem,
-                ListEmptyComponent: Empty,
+                keyExtractor,
+                renderItem,
+                ListEmptyComponent: <Empty />,
                 estimatedItemSize: imageStyle.width,
-                estimatedListSize: imageStyle,
             }}
         />
     );
@@ -83,11 +82,13 @@ function Empty() {
     const { navigateSharePost } = useHomeListNavigation();
 
     return (
-        <TouchableOpacity style={emptyStyles.wrapper} onPress={navigateSharePost}>
-            <Typo variant="body2" color="placeholder">
-                아직 게시물이 없어요
-            </Typo>
-        </TouchableOpacity>
+        <View>
+            <TouchableOpacity style={emptyStyles.wrapper} onPress={navigateSharePost}>
+                <Typo variant="body2" color="placeholder">
+                    아직 게시물이 없어요
+                </Typo>
+            </TouchableOpacity>
+        </View>
     );
 }
 

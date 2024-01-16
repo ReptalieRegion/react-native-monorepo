@@ -1,5 +1,5 @@
 import { color } from '@crawl/design-system';
-import React, { createContext, useState, type ReactNode } from 'react';
+import React, { createContext, useState, type ReactNode, useCallback } from 'react';
 import { ActivityIndicator, StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import { ConditionalRenderer } from '../../atoms';
@@ -22,13 +22,13 @@ export default function GlobalLoading({ children }: LoadingProviderProps) {
     const { width, height } = useWindowDimensions();
     const [isShow, setIsShow] = useState(false);
 
-    const openLoading = () => {
+    const openLoading = useCallback(() => {
         setIsShow(true);
-    };
+    }, []);
 
-    const closeLoading = () => {
+    const closeLoading = useCallback(() => {
         setIsShow(false);
-    };
+    }, []);
 
     return (
         <LoadingContext.Provider value={{ isLoading: isShow, closeLoading, openLoading }}>

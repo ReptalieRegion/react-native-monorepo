@@ -1,6 +1,8 @@
 import { FlashList, type FlashListProps } from '@shopify/flash-list';
 import React, { useCallback, useState } from 'react';
-import type { NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { type NativeScrollEvent, type NativeSyntheticEvent } from 'react-native';
+
+import { ConditionalRenderer } from '../../atoms';
 
 type BasicImageCarouselState<TData> = {
     carouselProps: {
@@ -18,7 +20,10 @@ type BasicImageCarouselState<TData> = {
         | 'snapToInterval'
         | 'snapToAlignment'
         | 'showsHorizontalScrollIndicator'
-    >;
+        | 'ListEmptyComponent'
+    > & {
+        ListEmptyComponent: React.ReactNode;
+    };
 };
 
 interface BasicImageCarouselActions {}
@@ -27,7 +32,7 @@ type BasicImageCarouselProps<TData> = BasicImageCarouselState<TData> & BasicImag
 
 export default function BasicImageCarousel<TData>({
     carouselProps: { gap, offset, width },
-    listProps,
+    listProps: { ListEmptyComponent, ...restListProps },
 }: BasicImageCarouselProps<TData>) {
     const [_, setCurrentIndex] = useState(0);
 
@@ -39,17 +44,27 @@ export default function BasicImageCarousel<TData>({
     );
 
     return (
-        <FlashList
-            {...listProps}
-            automaticallyAdjustContentInsets={false}
-            contentContainerStyle={{ paddingHorizontal: offset + gap / 2 }}
-            onScroll={calcCurrentIndex}
-            decelerationRate="fast"
-            horizontal
-            pagingEnabled
-            snapToInterval={width + gap}
-            snapToAlignment="start"
-            showsHorizontalScrollIndicator={false}
+        /**
+         * TODO: data없다가 추가 되었을 때, ListEmptyComponent 컴포넌트와 크기가 다르면 렌더링이 안되서 임시 적용
+         * https://github.com/Shopify/flash-list/issues/784
+         */
+        <ConditionalRenderer
+            condition={restListProps.data?.length === 0}
+            trueContent={ListEmptyComponent ? ListEmptyComponent : null}
+            falseContent={
+                <FlashList
+                    {...restListProps}
+                    contentContainerStyle={{ paddingHorizontal: offset + gap / 2 }}
+                    onScroll={calcCurrentIndex}
+                    horizontal
+                    pagingEnabled
+                    decelerationRate="fast"
+                    snapToAlignment="start"
+                    snapToInterval={width + gap}
+                    automaticallyAdjustContentInsets={false}
+                    showsHorizontalScrollIndicator={false}
+                />
+            }
         />
     );
 }
