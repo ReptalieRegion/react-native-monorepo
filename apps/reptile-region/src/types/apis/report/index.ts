@@ -15,7 +15,6 @@ const enum ReportDetailsType {
  *
  * POST
  */
-// 푸시알림 동의 생성
 interface ReportInfo {
     reported: string;
     typeId: string;
