@@ -2,10 +2,19 @@ import clientFetch, { METHOD } from '../@utils/fetcher';
 import { objectToQueryString } from '../@utils/parser/query-string';
 
 import type { CreateReport } from '@/types/apis/report';
-import type { CreateBlockUser, DeleteBlockUser, FetchBlockUserList } from '@/types/apis/report/block-user';
+import type { CheckBlockUser, CreateBlockUser, DeleteBlockUser, FetchBlockUserList } from '@/types/apis/report/block-user';
 import type { WithInfinitePageParam } from '@/types/apis/utils';
 
 /** GET */
+// 차단 사용자 리스트 조회
+export const checkBlockingUser = async ({ nickname }: CheckBlockUser['Request']) => {
+    const response = await clientFetch(`api/report/users/${nickname}/blocking/check`, {
+        method: METHOD.GET,
+    });
+
+    return response.json();
+};
+
 // 차단 사용자 리스트 조회
 export const getBlockUserList = async ({ pageParam }: WithInfinitePageParam<FetchBlockUserList['Request']>) => {
     const queryString = objectToQueryString({ pageParam });

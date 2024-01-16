@@ -10,6 +10,8 @@ import SharePostsDetailListSkeleton from '../loading';
 
 import useUserOptionsMenuBottomSheet from './bottom-sheet/UserOptionsMenu/useUserOptionsMenuBottomSheet';
 import ListHeaderComponent from './components/ListHeaderComponent';
+import useSuspenseCheckBlockUser from './hooks/queries/useCheckBlockUser';
+import useUserProfile from './hooks/queries/useUserProfile';
 import useUpdateOrCreateFollow from './hooks/useUpdateOrCreateFollow';
 
 import { Meatballs, Warning } from '@/assets/icons';
@@ -33,6 +35,9 @@ const SharePostImageThumbnailListPage = withAsyncBoundary<
             },
         },
     }) => {
+        // 차단한 유저인지 체크
+        useSuspenseCheckBlockUser({ nickname });
+
         const { navigateFollowerPage, navigateListUser } = useImageThumbnailNavigation(pageState);
         const updateOrCreateFollow = useUpdateOrCreateFollow(nickname);
         const handleImagePress = (index: number) => {
@@ -65,12 +70,14 @@ const SharePostImageThumbnailListPage = withAsyncBoundary<
         );
     },
     {
-        rejectedFallback: () => (
-            <PageWrapper style={errorStyle.wrapper}>
-                <Warning width={50} height={50} fill={color.Orange[750].toString()} />
-                <Typo variant="heading1">존재하지 않는 회원이예요</Typo>
-            </PageWrapper>
-        ),
+        rejectedFallback: () => {
+            return (
+                <PageWrapper style={errorStyle.wrapper}>
+                    <Warning width={50} height={50} fill={color.Orange[750].toString()} />
+                    <Typo variant="heading1">존재하지 않는 회원이예요</Typo>
+                </PageWrapper>
+            );
+        },
         pendingFallback: (
             <PageWrapper>
                 <ListHeaderComponent
@@ -100,11 +107,12 @@ export default withPageHeaderUpdate<SharePostImageThumbnailListModalScreenProps 
         navigation,
         route: {
             params: {
-                user: { nickname },
+                user: { nickname, isFollow, profile },
             },
         },
     }) => {
         const openUserOptionsMenu = useUserOptionsMenuBottomSheet();
+        const { data } = useUserProfile({ isFollow, nickname, profile });
 
         useEffect(() => {
             const headerRight = () => {
@@ -119,8 +127,8 @@ export default withPageHeaderUpdate<SharePostImageThumbnailListModalScreenProps 
                 );
             };
 
-            navigation.setOptions({ headerRight });
-        }, [navigation, nickname, openUserOptionsMenu]);
+            navigation.setOptions({ headerRight: data?.user.isMine ? () => null : headerRight });
+        }, [data?.user.isMine, navigation, nickname, openUserOptionsMenu]);
 
         return null;
     },

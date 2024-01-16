@@ -18,6 +18,17 @@ type FetchBlockUserListResponse = {
 
 type FetchBlockUserList = ServerAPI<void, InfiniteState<FetchBlockUserListResponse[]>>;
 
+// 차단 유저 확인
+type CheckBlockUserRequest = {
+    nickname: string;
+};
+
+type CheckBlockUserResponse = {
+    isBlockedUser: boolean;
+};
+
+type CheckBlockUser = ServerAPI<CheckBlockUserRequest, CheckBlockUserResponse>;
+
 /**
  * POST
  */
@@ -48,6 +59,8 @@ type DeleteBlockUser = ServerAPI<DeleteBlockUserRequest, DeleteBlockUserResponse
 
 export type {
     FetchBlockUserListResponse,
+    CheckBlockUserRequest,
+    CheckBlockUser,
     FetchBlockUserList,
     CreateBlockUser,
     DeleteBlockUserResponse,

@@ -52,6 +52,7 @@ export const SHARE_POST_MUTATION_KEYS = {
 /** Report */
 export const REPORT_QUERY_KEYS = {
     blockUser: ['report_block-user'],
+    isBlockedUser: (nickname: string) => ['report_blocked-user', nickname],
 };
 
 /** Web View */
