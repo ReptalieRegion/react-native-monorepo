@@ -5,6 +5,6 @@ import { createNativeStackHeader } from '@/components/@common/molecules';
 export function PrivacyPolicyHeader(props: NativeStackHeaderProps) {
     return createNativeStackHeader({
         leftIcon: 'back',
-        title: '개인정보 취급방침',
+        title: '개인정보 처리방침',
     })(props);
 }

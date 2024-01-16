@@ -64,7 +64,7 @@ export default function MyListPage() {
                     onPress: navigateTermsOfUse,
                 },
                 {
-                    title: '개인정보 취급방침',
+                    title: '개인정보 처리방침',
                     rightChildren: 'Chevron',
                     onPress: navigatePrivacyPolicy,
                 },
