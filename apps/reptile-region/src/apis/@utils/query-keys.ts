@@ -31,7 +31,9 @@ export const SHARE_POST_QUERY_KEYS = {
     list: ['share-post'],
     post: (postId: string) => ['share-post', postId],
     detailUserPosts: (nickname: string) => ['share-post', 'detail', nickname],
+    defaultComment: ['share-post', 'comment'],
     comment: (postId: string) => ['share-post', 'comment', postId],
+    defaultCommentReply: ['share-post', 'comment'],
     commentReply: (commentId: string) => ['share-post', 'comment-reply', commentId],
     profile: ['user', 'profile'],
     profileDetail: (nickname: string) => ['user', 'profile', nickname],
@@ -43,11 +45,16 @@ export const SHARE_POST_QUERY_KEYS = {
     activitySummary: (nickname: string) => ['user', 'activity_summary', nickname],
 } as const;
 
+export const SHARE_POST_MUTATION_KEYS = {
+    create: ['share-post', 'create'],
+};
+
+/** Report */
+export const REPORT_QUERY_KEYS = {
+    blockUser: ['report_block-user'],
+};
+
 /** Web View */
 export const WEB_VIEW = {
     webview: (path: string) => ['webview', path],
-};
-
-export const SHARE_POST_MUTATION_KEYS = {
-    create: ['share-post', 'create'],
 };

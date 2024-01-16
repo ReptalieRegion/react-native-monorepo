@@ -1,17 +1,20 @@
 import { withAsyncBoundary } from '@crawl/async-boundary';
 import { Typo, color } from '@crawl/design-system';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { LIST_HEADER_HEIGHT, LIST_HEADER_PADDING } from '../@common/constants';
 import useImageThumbnailNavigation from '../@common/hooks/useImageThumbnailNavigation';
 import SharePostsDetailListSkeleton from '../loading';
 
+import useUserOptionsMenuBottomSheet from './bottom-sheet/UserOptionsMenu/useUserOptionsMenuBottomSheet';
 import ListHeaderComponent from './components/ListHeaderComponent';
 import useUpdateOrCreateFollow from './hooks/useUpdateOrCreateFollow';
 
-import { Warning } from '@/assets/icons';
+import { Meatballs, Warning } from '@/assets/icons';
 import PageWrapper from '@/components/PageWrapper';
+import withPageHeaderUpdate from '@/components/withPageHeaderUpdate';
 import type {
     SharePostImageThumbnailListModalScreenProps,
     SharePostImageThumbnailListScreenProps,
@@ -91,4 +94,47 @@ const errorStyle = StyleSheet.create({
     },
 });
 
-export default SharePostImageThumbnailListPage;
+export default withPageHeaderUpdate<SharePostImageThumbnailListModalScreenProps | SharePostImageThumbnailListScreenProps>(
+    SharePostImageThumbnailListPage,
+    ({
+        navigation,
+        route: {
+            params: {
+                user: { nickname },
+            },
+        },
+    }) => {
+        const openUserOptionsMenu = useUserOptionsMenuBottomSheet();
+
+        useEffect(() => {
+            const headerRight = () => {
+                return (
+                    <TouchableOpacity
+                        style={style.wrapper}
+                        containerStyle={style.container}
+                        onPress={() => openUserOptionsMenu({ nickname })}
+                    >
+                        <Meatballs />
+                    </TouchableOpacity>
+                );
+            };
+
+            navigation.setOptions({ headerRight });
+        }, [navigation, nickname, openUserOptionsMenu]);
+
+        return null;
+    },
+);
+
+// TODO: 터치 영역 넓히기 위해 임시 방편으로 막음 수정 필요
+const style = StyleSheet.create({
+    wrapper: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    container: {
+        marginRight: -20,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+    },
+});
