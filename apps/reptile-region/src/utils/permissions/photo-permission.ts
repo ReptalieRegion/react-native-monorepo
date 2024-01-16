@@ -7,7 +7,7 @@ export default function photoPermission() {
             const checkResult = await check(PERMISSIONS.IOS.PHOTO_LIBRARY);
 
             if (checkResult === RESULTS.DENIED) {
-                const requestResult = await request(PERMISSIONS.IOS.CAMERA);
+                const requestResult = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
 
                 return { isGranted: requestResult === RESULTS.GRANTED, status: requestResult };
             } else if (!(checkResult === RESULTS.GRANTED) && !(checkResult === RESULTS.LIMITED)) {
