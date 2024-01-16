@@ -1,8 +1,10 @@
 import type { InfiniteData, UseMutationOptions } from '@tanstack/react-query';
 import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Alert } from 'react-native';
 
 import { createCommentReply } from '../../repository';
 
+import { SHARE_POST_ERROR_CODE } from '@/apis/@utils/error/code';
 import type HTTPError from '@/apis/@utils/error/HTTPError';
 import { SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import type { FetchComment } from '@/types/apis/share-post/comment';
@@ -20,6 +22,12 @@ export default function useBaseCreateCommentReply<TContext = unknown>(
             updateCommentListCache({ queryClient, data });
             updateCommentReplyListCache({ queryClient, data });
             queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.commentReply(data.post.comment.id) });
+        },
+        onError: (error, variables, context) => {
+            props?.onError?.(error, variables, context);
+            if (error.code === SHARE_POST_ERROR_CODE.ACCUMULATED_REPORTS) {
+                Alert.alert('누적 신고 5회로 인해 댓글 생성이 차단되었어요.', 'crawl.privacy@gmail.com으로 문의해주세요.');
+            }
         },
     });
 }
