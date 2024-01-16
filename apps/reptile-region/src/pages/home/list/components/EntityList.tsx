@@ -103,7 +103,9 @@ export default function EntityList({ carouselProps, navigateEntityDetail }: Enti
                 renderItem,
                 estimatedItemSize: imageStyle.width,
                 estimatedListSize: imageStyle,
-                ListEmptyComponent: EntityEmpty({ containerStyle: wrapperStyle }),
+                ListEmptyComponent: EntityEmpty({
+                    containerStyle: [...wrapperStyle, { marginLeft: 20 }],
+                }),
             }}
         />
     );

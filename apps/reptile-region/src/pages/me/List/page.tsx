@@ -26,6 +26,7 @@ export default function MyListPage() {
         navigatePrivacyPolicy,
         navigateProfileSetting,
         navigateTermsOfUse,
+        navigateBlockUserList,
     } = useMeListNavigation();
 
     const settingList: SettingList[] = [
@@ -33,14 +34,19 @@ export default function MyListPage() {
             title: '설정',
             items: [
                 {
-                    title: '푸시 알림 설정',
+                    title: '내 프로필 설정',
+                    rightChildren: 'Chevron',
+                    onPress: navigateProfileSetting,
+                },
+                {
+                    title: '푸시 알림',
                     rightChildren: 'Chevron',
                     onPress: navigateNotificationSetting,
                 },
                 {
-                    title: '내 프로필 설정',
+                    title: '차단 관리',
                     rightChildren: 'Chevron',
-                    onPress: navigateProfileSetting,
+                    onPress: navigateBlockUserList,
                 },
             ],
         },

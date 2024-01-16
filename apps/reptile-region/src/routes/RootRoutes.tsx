@@ -24,6 +24,8 @@ import EntityMangerDetailPage from '@/pages/diary/entity-manager/DetailPage/page
 import { EntityMangerUpdateHeader } from '@/pages/diary/entity-manager/UpdatePage/header';
 import EntityMangerUpdate from '@/pages/diary/entity-manager/UpdatePage/page';
 import HomePage from '@/pages/home/HomePage/page';
+import { BlockUserListHeader } from '@/pages/me/BlockUserList/header';
+import BlockUserListPage from '@/pages/me/BlockUserList/page';
 import { LicenseContentsHeader } from '@/pages/me/License/ContentsPage/header';
 import LicenseContentsPage from '@/pages/me/License/ContentsPage/page';
 import { LicenseListHeader } from '@/pages/me/License/ListPage/header';
@@ -170,6 +172,11 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     name="me/notice"
                     component={NoticePage}
                     options={{ header: NoticeHeader, gestureEnabled: false }}
+                />
+                <Stack.Screen
+                    name="me/block-user/list"
+                    component={BlockUserListPage}
+                    options={{ header: BlockUserListHeader }}
                 />
                 {/** 내 정보 끝 */}
 

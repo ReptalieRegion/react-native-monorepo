@@ -30,6 +30,7 @@ type RootRoutesParamList = {
     'me/notification-setting': undefined;
     'me/notification-log': undefined;
     'me/notice': undefined;
+    'me/block-user/list': undefined;
 
     // SharePost
     'share-post/modal': NavigatorScreenParams<SharePostModalParamList>;

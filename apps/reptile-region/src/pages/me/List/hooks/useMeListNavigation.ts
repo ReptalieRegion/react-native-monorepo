@@ -22,6 +22,10 @@ export default function useMeListNavigation() {
         navigation.navigate('me/terms-of-use');
     };
 
+    const navigateBlockUserList = () => {
+        navigation.navigate('me/block-user/list');
+    };
+
     const navigatePrivacyPolicy = () => {
         navigation.navigate('me/terms-privacy-policy');
     };
@@ -55,6 +59,7 @@ export default function useMeListNavigation() {
     };
 
     return {
+        navigateBlockUserList,
         navigateNotice,
         navigateSharePostMe,
         navigateTermsOfUse,

@@ -56,7 +56,9 @@ export default function BaseHeader({
             return;
         }
         Keyboard.dismiss();
-        navigation.goBack();
+        if (navigation.canGoBack()) {
+            navigation.goBack();
+        }
     };
 
     return (

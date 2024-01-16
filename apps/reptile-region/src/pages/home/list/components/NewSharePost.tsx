@@ -102,7 +102,7 @@ const emptyStyles = StyleSheet.create({
     wrapper: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: Dimensions.get('screen').width - 40,
+        width: Dimensions.get('screen').width,
         height: 80,
     },
 });
