@@ -36,7 +36,7 @@ export default withAsyncBoundary(
                             {
                                 text: '해제',
                                 style: 'danger',
-                                onPress: () => mutate({ blockingId: item.blocking.id }),
+                                onPress: () => mutate({ blockingId: item.blocking.id, nickname: item.blocking.user.nickname }),
                             },
                         ],
                     });

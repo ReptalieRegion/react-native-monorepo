@@ -14,6 +14,7 @@ import useSuspenseCheckBlockUser from './hooks/queries/useCheckBlockUser';
 import useUserProfile from './hooks/queries/useUserProfile';
 import useUpdateOrCreateFollow from './hooks/useUpdateOrCreateFollow';
 
+import HTTPError from '@/apis/@utils/error/HTTPError';
 import { Meatballs, Warning } from '@/assets/icons';
 import PageWrapper from '@/components/PageWrapper';
 import withPageHeaderUpdate from '@/components/withPageHeaderUpdate';
@@ -70,11 +71,13 @@ const SharePostImageThumbnailListPage = withAsyncBoundary<
         );
     },
     {
-        rejectedFallback: () => {
+        rejectedFallback: (error) => {
             return (
                 <PageWrapper style={errorStyle.wrapper}>
                     <Warning width={50} height={50} fill={color.Orange[750].toString()} />
-                    <Typo variant="heading1">존재하지 않는 회원이예요</Typo>
+                    <Typo variant="heading1">
+                        {error instanceof HTTPError ? '존재하지 않는 회원이예요' : '차단한 회원이예요'}
+                    </Typo>
                 </PageWrapper>
             );
         },

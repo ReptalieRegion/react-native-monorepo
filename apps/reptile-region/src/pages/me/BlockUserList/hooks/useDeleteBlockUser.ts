@@ -1,6 +1,6 @@
 import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 
-import { REPORT_QUERY_KEYS } from '@/apis/@utils/query-keys';
+import { REPORT_QUERY_KEYS, SHARE_POST_QUERY_KEYS } from '@/apis/@utils/query-keys';
 import useBaseDeleteBlockUser from '@/apis/report/mutations/useBaseDeleteBlockUser';
 import useToast from '@/components/overlay/Toast/useToast';
 import type { FetchBlockUserListResponse } from '@/types/apis/report/block-user';
@@ -48,8 +48,18 @@ export default function useDeleteBlockUser() {
 
             return { prevBlockUserList };
         },
-        onError: () => {
+        onSuccess: (_data, variables) => {
+            queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.list, exact: true });
+            queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.profileDetail(variables.nickname), exact: true });
+            queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.detailUserPosts(variables.nickname), exact: true });
+            queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.defaultComment });
+            queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.defaultCommentReply });
+        },
+        onError: (_error, _variables, context) => {
             openToast({ contents: '차단 해제에 실패했어요.', severity: 'error' });
+            if (context?.prevBlockUserList) {
+                queryClient.setQueryData(REPORT_QUERY_KEYS.blockUser, context.prevBlockUserList);
+            }
         },
     });
 }

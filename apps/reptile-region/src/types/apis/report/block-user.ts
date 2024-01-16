@@ -48,6 +48,7 @@ type CreateBlockUser = ServerAPI<CreateBlockUserRequest, CreateBlockUserResponse
  */
 // 차단 유저 삭제
 type DeleteBlockUserRequest = {
+    nickname: string;
     blockingId: string;
 };
 
