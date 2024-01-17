@@ -1,4 +1,3 @@
-import { Typo } from '@crawl/design-system';
 import React from 'react';
 import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
@@ -11,9 +10,6 @@ export default function SignInLogo() {
     return (
         <View style={styles.container}>
             <Logo width={LogoSize} height={LogoSize} />
-            <Typo variant="body2" color="primary">
-                Reptile Region
-            </Typo>
         </View>
     );
 }
