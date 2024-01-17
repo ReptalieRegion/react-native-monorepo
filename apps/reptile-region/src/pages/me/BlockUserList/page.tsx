@@ -12,7 +12,7 @@ import BlockUserListSkeleton from './loading';
 
 import useInfiniteBlockUser from '@/apis/report/queries/useInfiniteBlockUser';
 import Delete from '@/assets/icons/Delete';
-import { Avatar } from '@/components/@common/atoms';
+import { Avatar, ConditionalRenderer } from '@/components/@common/atoms';
 import useAlert from '@/components/overlay/Alert/useAlert';
 import PageWrapper from '@/components/PageWrapper';
 import type { FetchBlockUserListResponse } from '@/types/apis/report/block-user';
@@ -62,11 +62,17 @@ export default withAsyncBoundary(
 
         return (
             <PageWrapper style={wrapperStyle}>
-                <FlashList
-                    data={data}
-                    renderItem={renderItem}
-                    contentContainerStyle={contentContainerStyle}
-                    estimatedItemSize={70}
+                <ConditionalRenderer
+                    condition={data.length === 0}
+                    trueContent={<Empty />}
+                    falseContent={
+                        <FlashList
+                            data={data}
+                            renderItem={renderItem}
+                            contentContainerStyle={contentContainerStyle}
+                            estimatedItemSize={70}
+                        />
+                    }
                 />
             </PageWrapper>
         );
@@ -76,6 +82,17 @@ export default withAsyncBoundary(
         rejectedFallback: BlockUserListError,
     },
 );
+
+function Empty() {
+    const { bottom } = useSafeAreaInsets();
+    return (
+        <View style={[styles.emptyWrapper, { paddingBottom: bottom }]}>
+            <Typo variant="heading2" textAlign="center">
+                차단한 사용자가 없어요
+            </Typo>
+        </View>
+    );
+}
 
 const contentContainerStyle: ContentStyle = {
     padding: 20,
@@ -90,5 +107,9 @@ const styles = StyleSheet.create({
     },
     actionWrapper: {
         marginLeft: 'auto',
+    },
+    emptyWrapper: {
+        flex: 1,
+        justifyContent: 'center',
     },
 });
