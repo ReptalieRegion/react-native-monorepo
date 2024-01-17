@@ -1,15 +1,32 @@
 import { BottomSheet } from '@crawl/bottom-sheet';
 import { useOverlay } from '@crawl/overlay-manager';
+import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback } from 'react';
 
-import useCreateBlockUser from './hooks/useCreateBlockUser';
+import useBlockAlert from '../../../../@common/hooks/useBlockAlert';
+
 import UserOptionsMenuBottomSheet from './UserOptionsMenu';
 
 import { ConditionalRenderer } from '@/components/@common/atoms';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 export default function useUserOptionsMenuBottomSheet() {
     const overlay = useOverlay();
-    const { mutate } = useCreateBlockUser();
+    const navigation = useNavigation<NativeStackNavigationProp<RootRoutesParamList>>();
+    const openAlert = useBlockAlert({
+        onSuccess: () => {
+            navigation.navigate('bottom-tab/routes', {
+                screen: 'tab',
+                params: {
+                    screen: 'share-post/routes',
+                    params: {
+                        screen: 'bottom-tab/list',
+                    },
+                },
+            });
+        },
+    });
 
     const openUserOptionsMenuBottomSheet = useCallback(
         ({ nickname }: { nickname: string }) => {
@@ -17,7 +34,7 @@ export default function useUserOptionsMenuBottomSheet() {
                 {
                     text: '차단하기',
                     onPress: () => {
-                        mutate({ nickname });
+                        openAlert(nickname);
                     },
                 },
             ];
@@ -43,7 +60,7 @@ export default function useUserOptionsMenuBottomSheet() {
                 ));
             });
         },
-        [mutate, overlay],
+        [openAlert, overlay],
     );
 
     return openUserOptionsMenuBottomSheet;

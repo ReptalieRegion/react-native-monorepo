@@ -24,7 +24,7 @@ export default function usePostOptionsMenuBottomSheet() {
                                     close();
                                     resolve(false);
                                 }}
-                                snapInfo={{ startIndex: 0, pointsFromTop: [post.isMine ? 59 + 38 * 2 : 59 + 38 * 1] }}
+                                snapInfo={{ startIndex: 0, pointsFromTop: [59 + 38 * 2] }}
                             >
                                 <PostOptionsMenuBottomSheet
                                     navigation={navigation}

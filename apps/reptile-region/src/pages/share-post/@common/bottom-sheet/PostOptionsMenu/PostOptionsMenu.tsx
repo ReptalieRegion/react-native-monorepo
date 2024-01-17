@@ -4,6 +4,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import useBlockAlert from '../../hooks/useBlockAlert';
 import useReportListBottomSheet from '../ReportList/useReportListBottomSheet';
 
 import useDeletePost from './hooks/muations/useDeletePost';
@@ -36,6 +37,10 @@ export default function PostOptionsMenu({ post, navigation, onSuccessDelete }: P
     const openReportListBottomSheet = useReportListBottomSheet();
     const { bottomSheetClose } = useBottomSheet();
     const { mutate } = useDeletePost({ onSuccess: onSuccessDelete });
+    const openBlockAlert = useBlockAlert({
+        onSuccess: bottomSheetClose,
+    });
+
     const openAlert = useAlert();
 
     const deletePost = async () => {
@@ -88,6 +93,12 @@ export default function PostOptionsMenu({ post, navigation, onSuccessDelete }: P
                               reported: post.user.id,
                           },
                       });
+                  },
+              },
+              {
+                  text: '이 작성자 차단하기',
+                  onPress: async () => {
+                      openBlockAlert(post.user.nickname);
                   },
               },
           ];
