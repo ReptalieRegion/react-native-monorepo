@@ -28,7 +28,7 @@ export const getBlockUserList = async ({ pageParam }: WithInfinitePageParam<Fetc
 /** POST */
 // 신고하기
 export const createReport = async ({ details, reported, type, typeId }: CreateReport['Request']) => {
-    const response = await clientFetch('api/report/share-contents', {
+    const response = await clientFetch('api/report/share-content', {
         method: METHOD.POST,
         body: {
             details,

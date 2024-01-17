@@ -123,7 +123,7 @@ function PostList({ navigation }: SharePostListPageScreen) {
                 data={data}
                 keyExtractor={(item) => item.post.id}
                 renderItem={renderItem}
-                estimatedItemSize={400}
+                estimatedItemSize={537}
                 refreshControl={<RefreshControl refreshing={refreshing} onRefresh={asyncOnRefresh} />}
                 onEndReached={handleEndReached}
                 CellRendererComponent={FadeInCellRenderComponent}

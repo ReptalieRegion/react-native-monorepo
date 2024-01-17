@@ -1,7 +1,7 @@
 import { color } from '@crawl/design-system';
 import { useDebounceValue, useLoading } from '@crawl/react-hooks';
 import { useIsFocused } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Keyboard, Platform, StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { KeyboardState, useAnimatedKeyboard, useAnimatedStyle } from 'react-native-reanimated';
@@ -29,6 +29,7 @@ export default function SignUpStep1({
     },
 }: SignUpStep1ScreenProps) {
     const [nickname, setNickname] = useState(recommendNickname);
+    const [errorMessage, setErrorMessage] = useState('');
     const { loading, startLoading, endLoading } = useLoading();
     const buttonSize = useKeyboardOpenButtonSize();
     const isFocused = useIsFocused();
@@ -44,8 +45,29 @@ export default function SignUpStep1({
     const { mutateAsync: signUpSte1MutateAsync } = useSignUpStep1();
     const { mutate: createPushAgreeMutate } = useCreatePushAgree();
 
-    const errorMessage = nickname === '' ? '닉네임은 필수로 입력해주세요.' : data?.isDuplicate ? '닉네임이 중복되었어요.' : '';
     const disabled = nickname === '' || !!errorMessage;
+
+    useEffect(() => {
+        const isEmptyNickname = nickname === '';
+        if (isEmptyNickname) {
+            setErrorMessage('닉네임은 필수로 입력해주세요');
+            return;
+        }
+
+        const isDuplicateNickname = data?.isDuplicate;
+        if (isDuplicateNickname) {
+            setErrorMessage('닉네임이 중복되었어요');
+            return;
+        }
+
+        const isInvalidNickname = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]{1,10}$/.test(nickname);
+        if (!isInvalidNickname) {
+            setErrorMessage('닉네임은 한글, 영문, 숫자로 10자까지 가능합니다.');
+            return;
+        }
+
+        setErrorMessage('');
+    }, [data?.isDuplicate, nickname]);
 
     const handleChangeText = (text: string) => {
         startLoading();

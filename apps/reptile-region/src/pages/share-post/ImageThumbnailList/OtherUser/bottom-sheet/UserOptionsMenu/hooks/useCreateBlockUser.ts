@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useQueryClient, type InfiniteData } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
@@ -9,7 +10,7 @@ import useToast from '@/components/overlay/Toast/useToast';
 import type { CreateBlockUserRequest, CreateBlockUserResponse } from '@/types/apis/report/block-user';
 import type { FetchPostsResponse } from '@/types/apis/share-post/post';
 import type { InfiniteState } from '@/types/apis/utils';
-import type { SharePostListNavigationProp } from '@/types/routes/props/share-post/post-list';
+import type { RootRoutesParamList } from '@/types/routes/param-list';
 
 type Context = {
     prevList: InfiniteData<InfiniteState<FetchPostsResponse[]>, number> | undefined;
@@ -17,7 +18,7 @@ type Context = {
 
 export default function useCreateBlockUser() {
     const queryClient = useQueryClient();
-    const navigation = useNavigation<SharePostListNavigationProp>();
+    const navigation = useNavigation<NativeStackNavigationProp<RootRoutesParamList>>();
     const openToast = useToast();
 
     return useBaseCreateBlockUser<Context>({
@@ -60,15 +61,24 @@ export default function useCreateBlockUser() {
         ),
         onSuccess: useCallback(
             (_data: CreateBlockUserResponse, variables: CreateBlockUserRequest) => {
-                openToast({ contents: '차단에 성공했어요', severity: 'info' });
-                navigation.popToTop();
-
                 queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.list, exact: true });
                 queryClient.removeQueries({ queryKey: SHARE_POST_QUERY_KEYS.profileDetail(variables.nickname), exact: true });
                 queryClient.removeQueries({ queryKey: SHARE_POST_QUERY_KEYS.detailUserPosts(variables.nickname), exact: true });
 
                 queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.defaultComment });
                 queryClient.invalidateQueries({ queryKey: SHARE_POST_QUERY_KEYS.defaultCommentReply });
+
+                navigation.navigate('bottom-tab/routes', {
+                    screen: 'tab',
+                    params: {
+                        screen: 'share-post/routes',
+                        params: {
+                            screen: 'bottom-tab/list',
+                        },
+                    },
+                });
+
+                openToast({ contents: '차단에 성공했어요', severity: 'info' });
             },
             [openToast, navigation, queryClient],
         ),

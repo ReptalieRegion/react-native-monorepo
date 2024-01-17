@@ -3,9 +3,7 @@ import React from 'react';
 import { Platform, StatusBar, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const backgroundColor = __DEV__
-    ? color.Green[500].toString()
-    : Platform.select({ ios: color.White.toString(), android: undefined });
+const backgroundColor = __DEV__ ? color.White.toString() : Platform.select({ ios: color.White.toString(), android: undefined });
 
 export default function MainStatusBar() {
     const { top } = useSafeAreaInsets();
