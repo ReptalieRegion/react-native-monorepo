@@ -1,3 +1,3 @@
 import FollowerUserList from './FollowerUserList';
-export { default as FollowerUserListSkeleton } from './loading';
+export { default as FollowerUserListSkeleton } from './Loading';
 export default FollowerUserList;

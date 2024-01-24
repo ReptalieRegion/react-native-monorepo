@@ -9,7 +9,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import useTagHandler from '../../hooks/useTagHandler';
 import useTagSearch from '../../hooks/useTagSearch';
 
-import FollowerUserListSkeleton from './loading';
+import FollowerUserListSkeleton from './Loading';
 
 import useInfiniteSearchFollowerUser from '@/apis/share-post/user/hooks/queries/useInfiniteSearchFollowerUser';
 import { Avatar, ConditionalRenderer, ListFooterLoading } from '@/components/@common/atoms';

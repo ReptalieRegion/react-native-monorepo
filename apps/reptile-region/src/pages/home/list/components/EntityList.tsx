@@ -5,12 +5,13 @@ import React from 'react';
 import { Platform, StyleSheet, View, type StyleProp, type ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import EntityEmpty from './EntityEmpty';
+
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import TagView from '@/components/@common/atoms/TagView/TagView';
 import BasicImageCarousel from '@/components/@common/molecules/BasicImageCarousel/BasicImageCarousel';
 import GenderIcon from '@/components/@common/molecules/GenderIcon/GenderIcon';
 import useInfiniteFetchEntity from '@/pages/diary/entity-manager/ListPage/hooks/queries/useInfiniteFetchEntity';
-import EntityEmpty from '@/pages/home/List/components/EntityEmpty';
 import type { FetchEntityListResponse } from '@/types/apis/diary/entity';
 import type { EntityDetailParams } from '@/types/routes/params/diary';
 

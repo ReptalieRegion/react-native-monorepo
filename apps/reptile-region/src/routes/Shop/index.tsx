@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
 import { NativeStackDefaultHeader } from '@/components/@common/molecules';
-import ShopListPage from '@/pages/shop/List/page';
+import ShopListPage from '@/pages/shop/list/page';
 import type { ShopBottomTabParamList } from '@/types/routes/param-list/shop';
 
 const Stack = createNativeStackNavigator<ShopBottomTabParamList>();

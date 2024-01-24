@@ -1,11 +1,10 @@
 import { color } from '@crawl/design-system';
 import React from 'react';
 
-import type { EntityGender } from '../../../../pages/diary/entity-manager/Create/@common/context/CreateEntity/type';
-
 import Female from '@/assets/icons/Female';
 import Male from '@/assets/icons/Male';
 import Question from '@/assets/icons/Question';
+import type { EntityGender } from '@/types/apis/diary/entity';
 
 type GenderIconProps = {
     gender: EntityGender;
