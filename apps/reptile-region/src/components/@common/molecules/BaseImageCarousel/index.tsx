@@ -5,7 +5,6 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import type { ImageType } from '@/types/global/image';
-import { imageUriParsing } from '@/utils/development';
 
 export type BaseImageCarouselProps = {
     images: ImageType[];
@@ -33,15 +32,13 @@ export default React.forwardRef<FlashList<ImageType>, BaseImageCarouselProps>(fu
     const renderItem = ({ item, index }: ListRenderItemInfo<ImageType>) => {
         const isFirstImage = index === 0;
         const priority = isFirstImage ? 'high' : 'low';
-        const recyclingKey = item.src;
-        const newUri = imageUriParsing(item.src);
 
         return (
             <View style={[styles.itemContainer, { width, height }]}>
                 <Image
-                    source={{ uri: newUri, width, height }}
+                    source={{ uri: item.src, width, height }}
                     priority={priority}
-                    recyclingKey={recyclingKey}
+                    recyclingKey={item.src}
                     style={{ width, height }}
                     contentFit="cover"
                     placeholderContentFit="cover"

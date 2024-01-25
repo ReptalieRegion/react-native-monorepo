@@ -7,7 +7,6 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import ConditionalRenderer from '../ConditionalRenderer';
 
 import type { ImageType } from '@/types/global/image';
-import { imageUriParsing } from '@/utils/development';
 
 type AvatarProps = Omit<ImageProps, 'style' | 'source'> & {
     image: ImageType | undefined;
@@ -16,7 +15,6 @@ type AvatarProps = Omit<ImageProps, 'style' | 'source'> & {
 };
 
 export default function Avatar({ size = 30, image, onPress, ...rest }: AvatarProps) {
-    const newUri = imageUriParsing(image?.src ?? '');
     const sizeStyle = useMemo(() => [styles.image, { width: size, height: size }], [size]);
 
     return (
@@ -25,7 +23,7 @@ export default function Avatar({ size = 30, image, onPress, ...rest }: AvatarPro
             trueContent={
                 <TouchableOpacity onPress={onPress} activeOpacity={0.3}>
                     <Image
-                        source={{ uri: newUri }}
+                        source={{ uri: image?.src }}
                         style={sizeStyle}
                         contentFit="cover"
                         placeholderContentFit="cover"
@@ -36,7 +34,7 @@ export default function Avatar({ size = 30, image, onPress, ...rest }: AvatarPro
             }
             falseContent={
                 <Image
-                    source={{ uri: newUri }}
+                    source={{ uri: image?.src }}
                     style={sizeStyle}
                     contentFit="cover"
                     placeholderContentFit="cover"
