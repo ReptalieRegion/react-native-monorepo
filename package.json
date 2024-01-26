@@ -8,7 +8,7 @@
     ],
     "scripts": {
         "playground": "yarn workspace playground",
-        "rr": "yarn workspace reptile-region",
+        "crawl": "yarn workspace crawl",
         "async-boundary": "yarn workspace @crawl/async-boundary",
         "bottom-sheet": "yarn workspace @crawl/bottom-sheet",
         "calendar": "yarn workspace @crawl/calendar",
