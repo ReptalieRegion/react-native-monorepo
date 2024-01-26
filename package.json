@@ -7,6 +7,7 @@
         "packages/*"
     ],
     "scripts": {
+        "playground": "yarn workspace playground",
         "rr": "yarn workspace reptile-region",
         "async-boundary": "yarn workspace @crawl/async-boundary",
         "bottom-sheet": "yarn workspace @crawl/bottom-sheet",

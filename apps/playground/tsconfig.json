@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "references": [
+      { "path": "../../packages/bottom-sheet" },
+      { "path": "../../packages/calendar" },
+      { "path": "../../packages/camera-album" },
+      { "path": "../../packages/design-system" },
+      { "path": "../../packages/error-boundary" },
+      { "path": "../../packages/overlay-manager" },
+      { "path": "../../packages/react-hooks" },
+      { "path": "../../packages/utils" },
+      { "path": "../../packages/async-boundary" }
+  ]
+}
