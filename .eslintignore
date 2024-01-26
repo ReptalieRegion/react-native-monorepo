@@ -5,8 +5,8 @@
 .eslintrc.js
 
 # react native index 파일
-**/apps/reptile-region/index.js
-**/apps/reptile-region/react-native.config.js
+**/apps/crawl/index.js
+**/apps/crawl/react-native.config.js
 
 # node_modules
 node_modules/
