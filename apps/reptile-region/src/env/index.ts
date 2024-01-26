@@ -1,5 +1,5 @@
 import type { ModeType } from '@env';
-import { END_POINT_URI, HOME_PAGE_URI, WEB_PAGE_URI } from '@env';
+import { END_POINT_URI, WEB_PAGE_URI } from '@env';
 
 import { REACT_NATIVE_ENV } from './config';
 
@@ -10,7 +10,6 @@ const defaultEnv = {
     isDev: currentMode('development'),
     isProd: currentMode('production'),
     END_POINT_URI,
-    HOME_PAGE_URI,
     WEB_PAGE_URI,
 };
 
