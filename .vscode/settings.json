@@ -6,7 +6,6 @@
      * TODO: https://github.com/prettier/prettier-vscode/issues/3007#issuecomment-1628836459
      * 임시로 prettier 경로 지정
      */
-    "prettier.prettierPath": "node_modules/prettier/index.cjs",
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "explicit"
     },
