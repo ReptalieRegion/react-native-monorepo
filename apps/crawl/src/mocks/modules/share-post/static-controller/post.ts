@@ -1,15 +1,15 @@
 import { range } from '@crawl/utils';
 import { rest } from 'msw';
+import Config from 'react-native-config';
 
 import createPostList from '../service/createPostList';
 import createUserPostImages from '../service/createUserPostImages';
 
-import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 import type { FetchPostResponse } from '@/types/apis/share-post/post';
 
 const staticPostController = () => {
-    const BASE_URI = ENV.END_POINT_URI + 'api/';
+    const BASE_URI = Config.END_POINT_URI + 'api/';
 
     return [
         /** GET */

@@ -1,14 +1,14 @@
 import { range } from '@crawl/utils';
 import { rest } from 'msw';
+import Config from 'react-native-config';
 
 import type { CreateCommentProps } from '../service/createComment';
 import createComment from '../service/createComment';
 
-import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 
 const commentController = () => {
-    const BASE_URI = ENV.END_POINT_URI + 'api/';
+    const BASE_URI = Config.END_POINT_URI + 'api/';
 
     return [
         /** GET */

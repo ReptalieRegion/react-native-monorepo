@@ -1,15 +1,15 @@
 import { range } from '@crawl/utils';
 import { fakerKO } from '@faker-js/faker';
 import { rest } from 'msw';
+import Config from 'react-native-config';
 
 import createPostUserProfile from '../service/createPostUserProfile';
 import createSearchUser from '../service/createSearchUser';
 
-import ENV from '@/env';
 import createInfinityData from '@/mocks/modules/share-post/service/createInfinityData';
 
 const userController = () => {
-    const BASE_URI = ENV.END_POINT_URI + 'api/';
+    const BASE_URI = Config.END_POINT_URI + 'api/';
 
     return [
         /** GET */

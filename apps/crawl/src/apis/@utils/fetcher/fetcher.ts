@@ -1,3 +1,5 @@
+import Config from 'react-native-config';
+
 import { USER_ERROR_CODE } from '../error/code';
 
 import { METHOD } from './constants';
@@ -6,7 +8,6 @@ import type { CustomRequestInit, FetchInfo, RefreshItem } from './types';
 import HTTPError, { type HTTPErrorField } from '@/apis/@utils/error/HTTPError';
 import TokenRefreshError from '@/apis/@utils/error/TokenRefreshError';
 import { deleteAuthTokens, getAccessToken, getRefreshToken, registerAuthTokens } from '@/apis/auth/utils/secure-storage-token';
-import ENV from '@/env';
 import type { RefreshToken } from '@/types/apis/auth';
 
 /**
@@ -74,7 +75,7 @@ function fetcher() {
         if (init) {
             const { method, ignorePrefix, isFormData, body, headers, credentials, ...rest } = init;
             const newMethod = method ? method : baseInit.method;
-            const url = ignorePrefix ? input : ENV.END_POINT_URI + input;
+            const url = ignorePrefix ? input : Config.END_POINT_URI + input;
             const newCredentials = credentials ? credentials : baseInit.credentials;
             const newBody = body ? (isFormData ? (body as FormData) : JSON.stringify(body)) : undefined;
             const newHeaders = Object.assign({}, isFormData ? undefined : baseInit.headers, accessTokenHeader, headers);
@@ -93,7 +94,7 @@ function fetcher() {
         }
 
         return {
-            input: ENV.END_POINT_URI + input,
+            input: Config.END_POINT_URI + input,
             init: {
                 ...baseInit,
                 headers: Object.assign({}, baseInit.headers, accessTokenHeader),

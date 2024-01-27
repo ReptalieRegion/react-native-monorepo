@@ -1,9 +1,9 @@
+import Config from 'react-native-config';
+
 import { METHOD } from '../@utils/fetcher';
 
-import ENV from '@/env';
-
 export const fetchWebviewPage = async (path: string) => {
-    const response = await fetch(ENV.WEB_PAGE_URI + path, {
+    const response = await fetch(Config.WEB_PAGE_URI + path, {
         method: METHOD.GET,
     });
 

@@ -69,6 +69,7 @@ yarn-error.log
 .yarnrc.yml
 
 # env
+.env
 .env.*
 /src/env/config.ts
 # Expo
@@ -95,3 +96,6 @@ web-build/
 **/GoogleService-Info.plist
 
 firebase.ts
+
+# react-native-config codegen
+tmp.xcconfig

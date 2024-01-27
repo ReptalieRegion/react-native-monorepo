@@ -1,8 +1,8 @@
 import React from 'react';
+import Config from 'react-native-config';
 
 import ProgressBarWebview from '@/components/ProgressBarWebview';
-import ENV from '@/env';
 
 export default function HomePage() {
-    return <ProgressBarWebview source={{ uri: ENV.WEB_PAGE_URI }} />;
+    return <ProgressBarWebview source={{ uri: Config.WEB_PAGE_URI }} />;
 }

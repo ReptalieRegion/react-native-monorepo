@@ -39,8 +39,8 @@ platform :ios do
     end
   end
 
-  desc "Push a new beta build to TestFlight"
-  lane :beta do |options|
+  desc "Push a new release build to TestFlight"
+  lane :release do |options|
     # 인증
     match(
       git_url: ENV["GIT_URL"],
@@ -58,7 +58,32 @@ platform :ios do
     increment_build_number(xcodeproj: ENV["XCODEPROJ"])
 
     # 빌드
-    build_app(workspace: ENV["WORKSPACE"], scheme: ENV["SCHEME"])
+    build_app(workspace: ENV["WORKSPACE"], scheme: ENV["PROD_SCHEME"])
+
+    # 배포
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+  end
+
+  desc "Push a new development build to TestFlight"
+  lane :development do |options|
+    # 인증
+    match(
+      git_url: ENV["GIT_URL"],
+      storage_mode: ENV["STORAGE_MODE"],
+      type: "appstore",
+      app_identifier: [ENV["APP_IDENTIFIER"], ENV["NOTIFEE_IDENTIFIER"]],
+      readonly: true
+    )
+
+    # Cache 삭제
+    clear_derived_data
+
+    # 버전
+    updateVersion(options)
+    increment_build_number(xcodeproj: ENV["XCODEPROJ"])
+
+    # 빌드
+    build_app(workspace: ENV["WORKSPACE"], scheme: ENV["DEV_SCHEME"])
 
     # 배포
     upload_to_testflight(skip_waiting_for_build_processing: true)

@@ -14,8 +14,8 @@ import KakaoSDKUser
 @objc(RNKakaoAuth)
 class RNKakaoAuth: NSObject {
   public override init() {
-    let appKey: String = "fb6048a72a53141ec9a16c06ca98a10d"
-    KakaoSDK.initSDK(appKey: appKey)
+    let appKey: String? = Bundle.main.object(forInfoDictionaryKey: "KAKAO_APP_KEY") as? String
+    KakaoSDK.initSDK(appKey: appKey!)
   }
 
   @objc(isKakaoTalkLoginUrl:)
