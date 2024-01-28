@@ -71,7 +71,7 @@ platform :ios do
       git_url: ENV["GIT_URL"],
       storage_mode: ENV["STORAGE_MODE"],
       type: "appstore",
-      app_identifier: [ENV["APP_IDENTIFIER"], ENV["NOTIFEE_IDENTIFIER"]],
+      app_identifier: [ENV["APP_IDENTIFIER_DEV"], ENV["NOTIFEE_IDENTIFIER_DEV"]],
       readonly: true
     )
 
