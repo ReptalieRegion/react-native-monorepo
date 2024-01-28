@@ -1,6 +1,11 @@
 # `async-boundary`
 코드를 선언적으로 관리하기 위해 도입했습니다.
 
+## Install
+```
+yarn workspace <설치할 패키지 이름> add @crawl/async-boundary
+```
+
 ## AsyncBoundary
 `Suspense`, `ErrorBoundary`를 동시에 처리하는 컴포넌트입니다. `ref`가 제공하는 `reset()`함수로 `Error`상태를 초기화할 수 있습니다.
 
