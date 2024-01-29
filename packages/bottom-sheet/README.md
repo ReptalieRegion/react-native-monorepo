@@ -2,7 +2,14 @@
 - 바텀 시트 형태 제공
 - 부드러운 제스처 및 snap 애니메이션 제공
 - Reanimated v3 사용
-  
+
+## Preview
+<p>
+  <img src="https://github.com/ReptalieRegion/react-native-monorepo/assets/96051437/f2c16302-7c25-489a-83e3-0eeebd80646b" width="295" height="640" />
+  <img src="https://github.com/ReptalieRegion/react-native-monorepo/assets/96051437/19aa294a-ba42-4990-8042-b84c7df592ce" width="360" height="640" />
+</p>
+
+
 ## Installation
 ```
 yarn workspace <설치할 패키지 이름> add @crawl/bottom-sheet
