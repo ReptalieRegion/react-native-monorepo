@@ -11,7 +11,7 @@ import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import RootRoutes from './src/routes/RootRoutues';
+import RootRoutes from './src/routes/RootRoutes';
 
 export default function App(): React.JSX.Element {
     return (
