@@ -1,9 +1,10 @@
 # `camera-album`
 
 -   기기의 앨범을 격자 형태로 리스트 형태로 보여줄 수 있습니다.
-<!-- export { default as useCameraAlbum } from './hooks/useCameraAlbum';
-export { default as useCameraAlbumHandler } from './hooks/useCameraAlbumHandler';
-export { default as CameraAlbum } from './providers/CameraAlbum'; -->
+
+## Preview
+
+![Simulator Screen Recording - iPhone 15 - 2024-01-30 at 04 21 20](https://github.com/ReptalieRegion/react-native-monorepo/assets/96051437/ae9dae50-b9c4-40f7-95b6-b352063548b1)
 
 ## Usage
 
