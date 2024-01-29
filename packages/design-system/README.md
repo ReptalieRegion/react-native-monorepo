@@ -6,10 +6,13 @@
 ## Typography
 
 크롤에서 자주 사용하는 Text관련한 컴포넌트입니다.
+
 [Typo](./src/components/Text/Typo.md)
+
 [TouchableTypo](./src/components/Text/TouchableTypo.md)
 
 ## Color
 
 크롤에서 자주 사용하는 색상을 사용할 수 있습니다.
+
 [color](./src/token/color.md)
