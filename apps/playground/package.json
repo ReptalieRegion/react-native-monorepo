@@ -10,8 +10,26 @@
         "test": "jest"
     },
     "dependencies": {
+        "@crawl/async-boundary": "workspace:^",
+        "@crawl/bottom-sheet": "workspace:^",
+        "@crawl/calendar": "workspace:^",
+        "@crawl/camera-album": "workspace:^",
+        "@crawl/design-system": "workspace:^",
+        "@crawl/error-boundary": "workspace:^",
+        "@crawl/image-crop": "workspace:^",
+        "@crawl/overlay-manager": "workspace:^",
+        "@crawl/react-hooks": "workspace:^",
+        "@crawl/utils": "workspace:^",
+        "@faker-js/faker": "^8.0.2",
+        "@react-navigation/bottom-tabs": "^6.5.11",
+        "@react-navigation/native": "^6.1.9",
+        "@react-navigation/native-stack": "^6.9.17",
         "react": "18.2.0",
-        "react-native": "0.73.2"
+        "react-native": "0.73.2",
+        "react-native-gesture-handler": "^2.14.1",
+        "react-native-reanimated": "^3.6.2",
+        "react-native-safe-area-context": "^4.8.2",
+        "react-native-screens": "^3.27.0"
     },
     "devDependencies": {
         "@babel/core": "^7.23.2",
