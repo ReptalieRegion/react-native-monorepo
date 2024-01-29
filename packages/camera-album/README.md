@@ -6,6 +6,18 @@
 
 ![Simulator Screen Recording - iPhone 15 - 2024-01-30 at 04 21 20](https://github.com/ReptalieRegion/react-native-monorepo/assets/96051437/ae9dae50-b9c4-40f7-95b6-b352063548b1)
 
+## Installation
+
+```
+yarn workspace <설치할 패키지 이름> add @crawl/camera-album
+```
+
+### Dependencies
+
+```
+yarn workspace <설치할 패키지 이름> add @crawl/design-system @react-native-camera-roll/camera-roll expo-image react-native-gesture-handler react-native-reanimated react-native-safe-area-context
+```
+
 ## Usage
 
 ```tsx
