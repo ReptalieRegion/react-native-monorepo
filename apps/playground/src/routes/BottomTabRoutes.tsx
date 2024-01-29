@@ -32,7 +32,7 @@ export default function BottomTabRoutes() {
                 name="카메라앨범"
                 component={CameraAlbum}
                 options={{
-                    tabBarLabel: '캘린더',
+                    tabBarLabel: '카메라 앨범',
                     headerShown: false,
                 }}
             />

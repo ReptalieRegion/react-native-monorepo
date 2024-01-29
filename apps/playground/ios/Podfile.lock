@@ -1196,9 +1196,9 @@ DEPENDENCIES:
   - boost (from `../../../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - DoubleConversion (from `../../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXConstants (from `../../../node_modules/expo-constants/ios`)
-  - Expo (from `../node_modules/expo`)
-  - ExpoFileSystem (from `../node_modules/expo-file-system/ios`)
-  - ExpoImage (from `../node_modules/expo-image/ios`)
+  - Expo (from `../../../node_modules/expo`)
+  - ExpoFileSystem (from `../../../node_modules/expo-file-system/ios`)
+  - ExpoImage (from `../../../node_modules/expo-image/ios`)
   - ExpoModulesCore (from `../../../node_modules/expo-modules-core`)
   - FBLazyVector (from `../../../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../../../node_modules/react-native/React/FBReactNativeSpec`)
@@ -1313,11 +1313,11 @@ EXTERNAL SOURCES:
   EXConstants:
     :path: "../../../node_modules/expo-constants/ios"
   Expo:
-    :path: "../node_modules/expo"
+    :path: "../../../node_modules/expo"
   ExpoFileSystem:
-    :path: "../node_modules/expo-file-system/ios"
+    :path: "../../../node_modules/expo-file-system/ios"
   ExpoImage:
-    :path: "../node_modules/expo-image/ios"
+    :path: "../../../node_modules/expo-image/ios"
   ExpoModulesCore:
     :path: "../../../node_modules/expo-modules-core"
   FBLazyVector:
@@ -1517,6 +1517,6 @@ SPEC CHECKSUMS:
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: e64aa65de36c0832d04e8c7bd614396c77a80047
 
-PODFILE CHECKSUM: 7df86a0c0f8debb5c4a2c59f0fb4433b9a5e21a6
+PODFILE CHECKSUM: b33f247926d2ea3bb380c126f37cf63f56ae9305
 
 COCOAPODS: 1.14.3
