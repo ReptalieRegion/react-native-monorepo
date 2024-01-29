@@ -17,3 +17,9 @@ const bar = { bar: 'foo' };
 isDifferentArray([foo, bar], [foo, bar]); // false
 isDifferentArray([foo, bar], [{ foo: 'bar' }, { bar: 'foo' }]); // true
 ```
+
+## References
+
+@toss/utils의 isDifferentArray 참고했습니다.
+
+https://slash.page/ko/libraries/common/utils/src/array/isDifferentArray.i18n
