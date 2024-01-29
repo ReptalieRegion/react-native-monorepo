@@ -2,6 +2,12 @@
 
 -   선언적으로 에러관리하기 위해서 사용하는 패키지입니다.
 
+## Installation
+
+```
+yarn workspace <설치할 패키지 이름> add @crawl/error-boundary
+```
+
 ## ErrorBoundary
 
 children의 render/useEffect에서 발생한 에러를 잡아서 renderFallback으로 주어진 컴포넌트를 렌더링합니다.

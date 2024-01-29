@@ -3,6 +3,12 @@
 크롤에서 사용하기 위한 디자인 시스템입니다.
 현재 미완성으로 구상 중에 있습니다.
 
+## Installation
+
+```
+yarn workspace <설치할 패키지 이름> add @crawl/design-system
+```
+
 ## Typography
 
 크롤에서 자주 사용하는 Text관련한 컴포넌트입니다.
