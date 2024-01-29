@@ -3,7 +3,7 @@ import { useOverlay } from '@crawl/overlay-manager';
 import React, { useCallback } from 'react';
 
 import ConditionRender from '../../../components/ConditionRender';
-import { BOTTOM_SHEET_LIST } from '../mocks/list';
+import { BOTTOM_SHEET_LIST } from '../../../mocks/bottom-sheet-list';
 
 import TestBottomSheet from './TestBottomSheet';
 

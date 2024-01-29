@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Text, StyleSheet, type ListRenderItem, TextInput } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-import type { BottomSheetListType } from '../mocks/list';
+import type { BottomSheetListType } from '../../../mocks/bottom-sheet-list';
 
 type TestBottomSheetState = {
     data: BottomSheetListType[];

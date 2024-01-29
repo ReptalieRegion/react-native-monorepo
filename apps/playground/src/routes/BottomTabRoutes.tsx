@@ -1,15 +1,18 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import BottomSheetPage from '../pages/BottomSheetPage/page';
+import BottomSheetPage from '../pages/BottomSheet/page';
+import type { BottomTabParamList } from '../types/routes/bottom-tab';
 
-const BottomTabStack = createBottomTabNavigator();
+import CalendarRoutes from './CalendarRoutes';
+
+const BottomTabStack = createBottomTabNavigator<BottomTabParamList>();
 
 export default function BottomTabRoutes() {
     return (
-        <BottomTabStack.Navigator initialRouteName="bottom-sheet" screenOptions={{ headerShown: false }}>
+        <BottomTabStack.Navigator initialRouteName="바텀시트" screenOptions={{ headerShown: false }}>
             <BottomTabStack.Screen
-                name="bottom-sheet"
+                name="바텀시트"
                 component={BottomSheetPage}
                 options={{
                     tabBarLabel: '바텀시트',
@@ -17,8 +20,8 @@ export default function BottomTabRoutes() {
                 }}
             />
             <BottomTabStack.Screen
-                name="calendar"
-                component={BottomSheetPage}
+                name="캘린더"
+                component={CalendarRoutes}
                 options={{
                     tabBarLabel: '캘린더',
                     headerShown: false,

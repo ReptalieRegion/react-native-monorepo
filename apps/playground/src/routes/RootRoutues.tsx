@@ -4,16 +4,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 
+import type { RootRoutesParamList } from '../types/routes/root';
+
 import BottomTabRoutes from './BottomTabRoutes';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootRoutesParamList>();
 
 export default function RootRoutes() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="bottom-tab" screenOptions={{ contentStyle: styles.wrapper }}>
+            <Stack.Navigator initialRouteName="바텀탭" screenOptions={{ contentStyle: styles.wrapper }}>
                 <Stack.Screen
-                    name="bottom-tab"
+                    name="바텀탭"
                     component={BottomTabRoutes}
                     options={{
                         contentStyle: styles.wrapper,
