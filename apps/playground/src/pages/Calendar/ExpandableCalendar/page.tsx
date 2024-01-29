@@ -30,9 +30,6 @@ export default function ExpandableCalendarPage() {
         }
     };
 
-    console.log(MARKED_DATES);
-    console.log(CALENDAR_LIST_DATA);
-
     return (
         <View style={styles.wrapper}>
             <CalendarProvider>
