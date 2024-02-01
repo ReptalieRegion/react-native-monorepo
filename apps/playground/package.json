@@ -22,6 +22,7 @@
         "@crawl/utils": "workspace:^",
         "@faker-js/faker": "^8.0.2",
         "@react-native-camera-roll/camera-roll": "^7.3.0",
+        "@react-native-community/image-editor": "^3.0.0",
         "@react-navigation/bottom-tabs": "^6.5.11",
         "@react-navigation/native": "^6.1.9",
         "@react-navigation/native-stack": "^6.9.17",

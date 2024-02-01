@@ -3,6 +3,7 @@ import React from 'react';
 
 import BottomSheetPage from '../pages/BottomSheet/page';
 import CameraAlbum from '../pages/CameraAlbum/page';
+import ImageCrop from '../pages/ImageCrop/page';
 import type { BottomTabParamList } from '../types/routes/bottom-tab';
 
 import CalendarRoutes from './CalendarRoutes';
@@ -33,6 +34,14 @@ export default function BottomTabRoutes() {
                 component={CameraAlbum}
                 options={{
                     tabBarLabel: '카메라 앨범',
+                    headerShown: false,
+                }}
+            />
+            <BottomTabStack.Screen
+                name="이미지크롭"
+                component={ImageCrop}
+                options={{
+                    tabBarLabel: '이미지크롭',
                     headerShown: false,
                 }}
             />
