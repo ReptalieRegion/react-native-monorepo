@@ -55,6 +55,16 @@ if linkage != nil
 end
 
 target 'crawl' do
+  project 'crawl',
+    'Debug' => :debug,
+    'Debug(Production)' => :debug,
+    'Debug(Dev)' => :debug,
+    'Debug(Staging)' => :debug,
+    'Release' => :release,
+    'Release(Production)' => :release,
+    'Release(Dev)' => :release,
+    'Release(Staging)' => :release
+
   use_expo_modules!
   post_integrate do |installer|
     begin

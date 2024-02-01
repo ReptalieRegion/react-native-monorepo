@@ -1,8 +1,11 @@
 import { useErrorBoundaryGroup } from '@crawl/error-boundary';
 import messaging from '@react-native-firebase/messaging';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import type { NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { useEffect } from 'react';
+import { Platform } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
+import Config from 'react-native-config';
 
 import { useAuth, useAuthHandler } from './auth';
 
@@ -79,10 +82,18 @@ export default function useEffectInitial({ navigationRef }: UseEffectInitialProp
     useEffect(() => {
         const id = setTimeout(() => {
             BootSplash.hide({ fade: true });
-        }, 1500);
+        }, 1000);
 
         return () => {
             clearTimeout(id);
         };
     }, [isLoading]);
+
+    useEffect(() => {
+        if (Platform.OS === 'android') {
+            GoogleSignin.configure({
+                webClientId: Config.ANDROID_GOOGLE_WEB_CLIENT_ID,
+            });
+        }
+    }, []);
 }

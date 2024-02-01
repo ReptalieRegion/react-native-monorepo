@@ -1,5 +1,3 @@
 <resources>
-    <string name="app_name">crawl</string>
-    <string name="app_name_dev">crawl dev</string>
-    <string name="app_name_test">crawl test</string>
+    <string name="app_name">크롤</string>
 </resources>

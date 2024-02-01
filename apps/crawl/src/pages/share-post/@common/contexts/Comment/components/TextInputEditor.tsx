@@ -25,7 +25,7 @@ export default function CommentTextInputEditor({
     onSubmit,
 }: CommentTextInputProps & CommentTextInputActions) {
     const { width } = useWindowDimensions();
-    const paddingBottom = useSharedValue(0);
+    const paddingBottom = useSharedValue(Platform.select({ ios: 0, android: 10 }));
     const animated = useAnimatedStyle(() => ({
         paddingBottom: paddingBottom.value,
     }));
@@ -43,10 +43,10 @@ export default function CommentTextInputEditor({
 
         const keyboardShow = Platform.select({
             ios: Keyboard.addListener('keyboardWillShow', () => {
-                paddingBottom.value = withSpring(8);
+                paddingBottom.value = withSpring(0);
             }),
             android: Keyboard.addListener('keyboardDidShow', () => {
-                paddingBottom.value = withTiming(8);
+                paddingBottom.value = withTiming(10);
             }),
         });
 
