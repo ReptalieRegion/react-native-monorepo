@@ -2,6 +2,10 @@
 
 인스타그램처럼 zoom으로 이미지를 Crop할 수 있는 패키지입니다.
 
+## Preview
+![Simulator Screen Recording - iPhone 15 - 2024-02-01 at 11 32 48](https://github.com/ReptalieRegion/react-native-monorepo/assets/96051437/26203868-7166-4a30-b775-14e9bfbffbdc)
+
+
 ## Installation
 
 ```
