@@ -16,20 +16,15 @@
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
-
-  desc "Submit a new Beta Build to Crashlytics Beta"
-  lane :beta do
+  desc "Deploy a new verison to the Google Play - DEV"
+  lane :dev do
     increment_version_code(
       gradle_file_path: "./app/build.gradle",
     )
     gradle(task: "clean bundleRelease")
     upload_to_play_store(
-      package_name: 'com.crawl',
-      aab: './app/build/outputs/bundle/productionRelease/app-production-release.aab',
+      package_name: 'com.crawl.dev',
+      aab: './app/build/outputs/bundle/developmentRelease/app-development-release.aab',
       track: 'internal',
       release_status: 'draft'
     )
@@ -39,7 +34,7 @@ platform :android do
   end
 
   desc "Deploy a new version to the Google Play"
-  lane :deploy do
+  lane :prod do
     increment_version_code(
       gradle_file_path: "./app/build.gradle",
     )
