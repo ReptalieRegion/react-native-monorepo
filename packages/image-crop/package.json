@@ -18,16 +18,14 @@
         "prepack": "bob build",
         "postinstall": "bob build"
     },
-    "dependencies": {
-        "@react-native-community/image-editor": "^3.0.0"
-    },
     "devDependencies": {
         "react-native-builder-bob": "^0.23.1",
         "typescript": "5.2.2"
     },
     "peerDependencies": {
         "react": "*",
-        "react-native": "0.73.1",
+        "react-native": "0.73.2",
+        "@react-native-community/image-editor": "^3.0.0",
         "react-native-gesture-handler": ">=2.12.0",
         "react-native-reanimated": ">=3.4.2"
     },
