@@ -94,6 +94,7 @@ web-build/
 # google
 **/google-services.json
 **/GoogleService-Info.plist
+**/google-play.json
 
 firebase.ts
 
