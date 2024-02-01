@@ -10,7 +10,7 @@ project.ext.envConfigFiles = [
     developmentrelease: ".env.development",
     developmentdebug: ".env.development",
     stagingrelease: ".env.test",
-    stagingdebug: ".env.test"
+    stagingdebug: ".env.test",
 ]
 apply from: project(":react-native-config").projectDir.getPath() + "/dotenv.gradle"
 
@@ -113,8 +113,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.1.23"
         resValue "string", "build_config_package", "com.crawl"
     }
 

@@ -16,8 +16,7 @@ interface GlobalErrorActions {
 
 type GlobalErrorProps = GlobalErrorState & GlobalErrorActions;
 
-export default function GlobalError({ reset, error }: GlobalErrorProps) {
-    console.log(error);
+export default function GlobalError({ reset }: GlobalErrorProps) {
     const queryClient = useQueryClient();
 
     const handleReset = () => {
