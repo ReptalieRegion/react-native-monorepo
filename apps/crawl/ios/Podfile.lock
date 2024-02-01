@@ -6,7 +6,7 @@ PODS:
   - DoubleConversion (1.1.6)
   - EXConstants (15.4.5):
     - ExpoModulesCore
-  - Expo (50.0.3):
+  - Expo (50.0.4):
     - ExpoModulesCore
   - ExpoFileSystem (16.0.5):
     - ExpoModulesCore
@@ -1553,7 +1553,7 @@ SPEC CHECKSUMS:
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
   EXConstants: 988aa430ca0f76b43cd46b66e7fae3287f9cc2fc
-  Expo: 88b4aa68115bbb57c1a07cc30161c2352ab2fc25
+  Expo: 1e3bcf9dd99de57a636127057f6b488f0609681a
   ExpoFileSystem: 04795dd4d47e76eaf12e38c92091f77d794f9e7f
   ExpoImage: 2674cbdeaf6292b065727fdeacf78104b486dc58
   ExpoModulesCore: 96d1751929ad10622773bb729ab28a8423f0dd0c
