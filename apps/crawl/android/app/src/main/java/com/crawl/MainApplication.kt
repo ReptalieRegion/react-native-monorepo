@@ -18,7 +18,6 @@ import com.facebook.soloader.SoLoader
 
 import expo.modules.ApplicationLifecycleDispatcher
 
-import com.crawl.googleAuth.RNGoogleAuthPackage
 import com.crawl.kakaoauth.RNKakaoAuthPackage
 import com.crawl.versionCheck.RNVersionCheckPackage
 
@@ -30,7 +29,6 @@ class MainApplication : Application(), ReactApplication {
               override fun getPackages(): ArrayList<ReactPackage> =
                   PackageList(this).packages.apply {
                       add(RNKakaoAuthPackage())
-                      add(RNGoogleAuthPackage())
                       add(RNVersionCheckPackage())
                   }
 

@@ -1,4 +1,5 @@
 import { Typo, color } from '@crawl/design-system';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
@@ -7,7 +8,6 @@ import useGoogleAuth from '../../hooks/mutations/useGoogleAuth';
 
 import GoogleSymbol from '@/assets/icons/GoogleSymbol';
 import useGlobalLoading from '@/components/@common/organisms/Loading/useGlobalLoading';
-import { GoogleAuth } from '@/native-modules/google-auth/RNGoogleAuthModule';
 
 interface GoogleButtonActions {
     onError(error: unknown): void;
@@ -22,8 +22,8 @@ export default function GoogleButton({ onError }: GoogleButtonProps) {
     const handlePress = async () => {
         try {
             openLoading();
-            const result = await GoogleAuth.login();
-            if (result.idToken === null) {
+            const result = await GoogleSignin.signIn();
+            if (!result?.idToken) {
                 throw new Error('[Google Auth]: no idToken');
             }
             mutate({ idToken: result.idToken });

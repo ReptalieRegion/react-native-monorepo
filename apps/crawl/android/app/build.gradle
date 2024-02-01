@@ -111,7 +111,6 @@ android {
 
     namespace "com.crawl"
     defaultConfig {
-        applicationId "com.crawl"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -122,10 +121,13 @@ android {
     flavorDimensions "default"
     productFlavors {
         production {
+            applicationId "com.crawl"
         }
         staging {
+            applicationId "com.crawl.staging"
         }
         development {
+            applicationId "com.crawl.dev"
         }
     }
 
@@ -153,6 +155,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            matchingFallbacks = ['debug', 'release']
         }
         release {
             signingConfig signingConfigs.release

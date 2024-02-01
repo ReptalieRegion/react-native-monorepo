@@ -71,7 +71,7 @@ const SharePostImageThumbnailListPage = withAsyncBoundary<
         );
     },
     {
-        rejectedFallback: (error) => {
+        rejectedFallback: ({ error }) => {
             return (
                 <PageWrapper style={errorStyle.wrapper}>
                     <Warning width={50} height={50} fill={color.Orange[750].toString()} />
