@@ -22,11 +22,9 @@ yarn workspace <설치할 패키지 이름> add @react-native-community/image-ed
 
 ```tsx
 import { ImageZoom, cropImage, type CropInfo } from '@crawl/image-crop';
-import { useCameraRoll } from '@react-native-camera-roll/camera-roll';
 import { Image } from 'expo-image';
-import React, { useEffect, useMemo, useState } from 'react';
-import { Button, View, useWindowDimensions } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import React, { useState } from 'react';
+import { Button } from 'react-native';
 
 import ConditionRender from '../../components/ConditionRender';
 
