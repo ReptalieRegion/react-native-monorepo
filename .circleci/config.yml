@@ -1,15 +1,40 @@
 version: 2.1
 jobs:
-    build-and-test:
+    react-native-test:
+        docker:
+            - image: cimg/node:18.8
+        steps:
+            - checkout
+            - restore_cache:
+                  key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+            - restore_cache:
+                  key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+            - run: yarn install
+            - run: yarn test
+            - run: yarn tsc
+            - save_cache:
+                  key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
+                  paths:
+                      - ~/.cache/yarn
+            - save_cache:
+                  key: node-v1-{{ checksum "package.json" }}-{{ arch }}
+                  paths:
+                      - node_modules
+
+    macos-build-and-deploy:
         macos:
-            xcode: 15.2.0
+            xcode: 14.2.0
         environment:
             FL_OUTPUT_DIR: output
             FASTLANE_LANE: beta
         steps:
             - checkout
+            - restore_cache:
+                  key: dependency-cache-{{ checksum "yarn.lock" }}
+            - run:
+                  name: Install Dependencies
+                  command: npm install
             - run: |
-                  ls
                   cd ./apps/crawl/ios
                   bundle install
                   bundle exec fastlane $FASTLANE_LANE version:1.1.23
@@ -21,7 +46,5 @@ jobs:
 workflows:
     build-test-testflight:
         jobs:
-            - build-and-test:
-                  filters: &tagged
-                      tags:
-                          only: /crawl/*-ios/
+            - react-native-test
+            - macos-build-and-deploy
