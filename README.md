@@ -1,13 +1,13 @@
 # crawl-react-native
 
-react native로 모노레포입니다.
+yarn workspace로 구성한 React Native 모노레포입니다.
 
 ## 구성
 
 -   `apps` - 앱 단위의 프로젝트
     -   `crawl`
         -   파충류 커뮤니티 앱
-        -   [README](./apps/crawl//README.md)
+        -   [README](./apps/crawl/README.md)
     -   `playground`
         -   여러 라이브러리를 테스트 해볼 수 있는 앱
         -   [README](./apps/playground/README.md)
@@ -24,7 +24,7 @@ react native로 모노레포입니다.
         -   [README](./packages/calendar/README.md)
     -   `camera-album`
         -   기기에 있는 사진을 격자 형태의 앨범으로 보여주고 사진 저장 기능을 제공합니다.
-        -   [README](./packages/camer-album/README.md)
+        -   [README](./packages/camera-album/README.md)
     -   `design-system`
         -   크롤의 디자인 시스템을 제공합니다.
         -   현재는 Typo, color만 제공있고 구상하고 있습니다.
