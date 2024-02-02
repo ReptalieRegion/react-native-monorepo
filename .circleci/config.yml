@@ -6,7 +6,6 @@ jobs:
         environment:
             FASTLANE_LANE: beta
         steps:
-            - checkout
             - run: |
                   cd ./apps/reptile-region/ios
                   bundle install
