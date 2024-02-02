@@ -18,12 +18,14 @@
         "prepack": "bob build",
         "postinstall": "bob build"
     },
+    "dependencies": {
+        "@crawl/design-system": "1.0.0"
+    },
     "devDependencies": {
         "react-native-builder-bob": "^0.23.1",
         "typescript": "5.2.2"
     },
     "peerDependencies": {
-        "@crawl/design-system": "1.0.0",
         "@react-native-camera-roll/camera-roll": "^7.3.0",
         "@shopify/flash-list": "^1.6.3",
         "expo-image": "~1.3.5",
