@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-    macos-build-and-deploy:
+    build-and-test:
         macos:
             xcode: 15.2.0
         environment:
@@ -51,7 +51,7 @@ jobs:
 workflows:
     build-test-testflight:
         jobs:
-            - macos-build-and-deploy:
+            - build-and-test:
                   filters:
                       tags:
                           only: /crawl-*-ios/
