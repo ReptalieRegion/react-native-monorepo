@@ -3,4 +3,5 @@ export type CalendarRoutesParamList = {
     월간캘린더: undefined;
     주간캘린더: undefined;
     캘린더접고펴기: undefined;
+    캘린더라이브러리: undefined;
 };

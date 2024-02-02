@@ -14,6 +14,7 @@ export default function CalendarListPage() {
             <Button title="월간 캘린더" onPress={() => navigation.navigate('월간캘린더')} />
             <Button title="주간 캘린더" onPress={() => navigation.navigate('주간캘린더')} />
             <Button title="캘린더접고펴기" onPress={() => navigation.navigate('캘린더접고펴기')} />
+            <Button title="캘린더라이브러리" onPress={() => navigation.navigate('캘린더라이브러리')} />
         </SafeAreaView>
     );
 }
