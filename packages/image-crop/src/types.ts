@@ -1,6 +1,6 @@
-import type { ImageProps, ImageSourcePropType } from 'react-native';
+import type { ImageProps } from 'react-native';
 
-type ImageZoomProps = Pick<ImageProps, 'onLayout'> & {
+type ImageZoomProps = Pick<ImageProps, 'onLayout' | 'source'> & {
     uri?: string;
     minScale?: number;
     maxScale?: number;
@@ -14,7 +14,6 @@ type ImageZoomProps = Pick<ImageProps, 'onLayout'> & {
     onPinchEnd?(): void;
     onPanStart?(): void;
     onPanEnd?(): void;
-    source?: ImageSourcePropType;
     containerStyle: {
         width: number;
         height: number;
