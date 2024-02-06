@@ -1,13 +1,33 @@
 # .circleci/config.yml
 version: 2.1
 jobs:
-    development:
+    install:
+        executor: node/default
+        steps:
+            - checkout
+            - node/install-packages:
+                  pkg-manager: yarn
+            - run:
+                  command: yarn install
+                  name: yarn install
+    build-and-test:
         macos:
             xcode: 14.2.0
+        environment:
+            FL_OUTPUT_DIR: output
         steps:
-            - run: bundle exec fastlane development 1.1.23
+            - checkout
+            - run: bundle install
+            - run:
+                  name: Fastlane
+                  command: bundle exec fastlane development 1.1.23
+            - store_artifacts:
+                  path: output
 
 workflows:
     build-test-adhoc:
         jobs:
-            - development
+            - install
+            - development:
+                  requires:
+                      - install
