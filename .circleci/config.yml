@@ -1,57 +1,27 @@
+# .circleci/config.yml
 version: 2.1
 jobs:
     build-and-test:
         macos:
-            xcode: 15.2.0
-        environment:
-            FL_OUTPUT_DIR: output
+            xcode: 14.2.0
         steps:
-            - checkout
-            - ruby/install-deps
-            - working_directory: ./apps/crawl
-            - restore_cache:
-                  key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-            - restore_cache:
-                  key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-            - run: yarn install
-            - save_cache:
-                  key: yarn-v1-{{ checksum "yarn.lock" }}-{{ arch }}
-                  paths:
-                      - ~/yarn/cache
-            - save_cache:
-                  key: node-v1-{{ checksum "package.json" }}-{{ arch }}
-                  paths:
-                      - ~/node_modules
-            - restore_cache:
-                  key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-            - restore_cache:
-                  key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
-            - run:
-                  command: pod install
-                  working_directory: ios
-            - run:
-                  command: bundle install
-                  working_directory: ios
-            - save_cache:
-                  key: bundle-v1-{{ checksum "ios/Gemfile.lock" }}-{{ arch }}
-                  paths:
-                      - vendor/bundle
-            - save_cache:
-                  key: pods-v1-{{ checksum "ios/Podfile.lock" }}-{{ arch }}
-                  paths:
-                      - ios/Pods
-            - run:
-                  name: Fastlane deploy TestFlight
-                  command: yarn deploy:dev 1.1.23
-            - store_artifacts:
-                  path: output
-            - store_test_results:
-                  path: output/scan
+            # ...
+            - run: bundle exec fastlane test
+
+    adhoc:
+        macos:
+            xcode: 14.2.0
+        steps:
+            # ...
+            - run: bundle exec fastlane adhoc
 
 workflows:
-    build-test-testflight:
+    build-test-adhoc:
         jobs:
-            - build-and-test:
+            - build-and-test
+            - adhoc:
                   filters:
-                      tags:
-                          only: /crawl-*-ios/
+                      branches:
+                          only: development
+                  requires:
+                      - build-and-test
