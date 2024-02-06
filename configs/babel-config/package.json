@@ -1,0 +1,14 @@
+{
+    "name": "@crawl/babel-config",
+    "version": "1.0.0",
+    "private": true,
+    "files": [
+        "index.js"
+    ],
+    "packageManager": "yarn@3.6.0",
+    "devDependencies": {
+        "@babel/preset-env": "^7.23.9",
+        "@babel/preset-react": "^7.23.3",
+        "@babel/preset-typescript": "^7.23.3"
+    }
+}

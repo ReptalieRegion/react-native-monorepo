@@ -16,18 +16,26 @@
         "watch": "tsc --watch",
         "typecheck": "tsc --noEmit",
         "prepack": "bob build",
-        "postinstall": "bob build"
+        "postinstall": "bob build",
+        "test": "jest"
     },
     "dependencies": {
         "lodash.debounce": "^4.0.8"
     },
     "devDependencies": {
+        "@crawl/babel-config": "1.0.0",
+        "@testing-library/dom": "^9.3.4",
+        "@testing-library/react": "^14.2.1",
+        "@testing-library/user-event": "^14.5.2",
         "@types/lodash.debounce": "^4",
+        "@types/react": "^18.2.53",
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0",
+        "jsdom": "^24.0.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "react-native-builder-bob": "^0.23.1",
         "typescript": "5.2.2"
-    },
-    "peerDependencies": {
-        "react": "*"
     },
     "react-native-builder-bob": {
         "source": "src",

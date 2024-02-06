@@ -1,0 +1,3 @@
+{
+    "extends": "@crawl/babel-config"
+}
