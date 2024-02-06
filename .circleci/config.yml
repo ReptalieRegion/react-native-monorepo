@@ -8,9 +8,6 @@ jobs:
             - run: bundle exec fastlane development 1.1.23
 
 workflows:
-    build-test-development:
+    build-test-adhoc:
         jobs:
-            - development:
-                  filters:
-                      branches:
-                          only: development
+            - development
