@@ -1,17 +1,19 @@
 # .circleci/config.yml
 version: 2.1
 
+orbs:
+    node: circleci/node@5.2.0
+
 jobs:
     yarn-install:
         docker:
-            - image: cimg/node:18.19.0
+            - image: cimg/base:stable
         steps:
             - checkout
-            - run:
-                  name: Install Node.js and Yarn
-                  command: |
-                      corepack enable
-                      yarn set version stable
+            - node/install:
+                  install-yarn: true
+                  yarn-version: 3.6.0
+                  node-version: '18.18.2'
             - run:
                   name: yarn install
                   command: |
