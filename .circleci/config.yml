@@ -16,7 +16,7 @@ jobs:
                       - gems-ios-{{ checksum "apps/crawl/Gemfile.lock" }}
             - run:
                   name: Set Ruby Version
-                  command: rbenv global 2.7.6
+                  command: rbenv install 2.7.6
             - save_cache:
                   key: gems-ios-{{ checksum "Gemfile.lock" }}
                   paths:
