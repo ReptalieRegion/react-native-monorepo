@@ -19,7 +19,7 @@
         "postinstall": "bob build"
     },
     "dependencies": {
-        "@crawl/design-system": "1.0.0",
+        "@crawl/design-system": "workspace:^",
         "@react-native-camera-roll/camera-roll": "^7.3.0"
     },
     "devDependencies": {

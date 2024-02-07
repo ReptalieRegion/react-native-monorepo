@@ -1750,11 +1750,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@crawl/async-boundary@1.0.0, @crawl/async-boundary@workspace:^, @crawl/async-boundary@workspace:packages/async-boundary":
+"@crawl/async-boundary@workspace:^, @crawl/async-boundary@workspace:packages/async-boundary":
   version: 0.0.0-use.local
   resolution: "@crawl/async-boundary@workspace:packages/async-boundary"
   dependencies:
-    "@crawl/async-boundary": 1.0.0
+    "@crawl/error-boundary": "workspace:^"
     react-native-builder-bob: ^0.23.1
     typescript: 5.2.2
   languageName: unknown
@@ -1768,7 +1768,6 @@ __metadata:
     react-native-builder-bob: ^0.23.1
     typescript: 5.2.2
   peerDependencies:
-    "@crawl/design-system": 1.0.0
     "@shopify/flash-list": ^1.6.3
     react: "*"
     react-native: 0.73.1
@@ -1782,11 +1781,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@crawl/calendar@workspace:packages/calendar"
   dependencies:
+    "@crawl/design-system": "workspace:^"
+    "@crawl/react-hooks": "workspace:^"
     react-native-builder-bob: ^0.23.1
     typescript: 5.2.2
   peerDependencies:
-    "@crawl/design-system": 1.0.0
-    "@crawl/react-hooks": 1.0.0
     "@shopify/flash-list": ^1.6.3
     dayjs: ^1.11.10
     react: "*"
@@ -1802,11 +1801,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@crawl/camera-album@workspace:packages/camera-album"
   dependencies:
+    "@crawl/design-system": "workspace:^"
+    "@react-native-camera-roll/camera-roll": ^7.3.0
     react-native-builder-bob: ^0.23.1
     typescript: 5.2.2
   peerDependencies:
-    "@crawl/design-system": 1.0.0
-    "@react-native-camera-roll/camera-roll": ^7.3.0
     "@shopify/flash-list": ^1.6.3
     expo-image: ~1.3.5
     react: "*"
@@ -1834,8 +1833,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@crawl/error-boundary@workspace:packages/error-boundary"
   dependencies:
-    "@crawl/react-hooks": 1.0.0
-    "@crawl/utils": 1.0.0
+    "@crawl/react-hooks": "workspace:^"
+    "@crawl/utils": "workspace:^"
     react-native-builder-bob: ^0.23.1
     typescript: 5.2.2
   peerDependencies:
@@ -1847,10 +1846,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@crawl/image-crop@workspace:packages/image-crop"
   dependencies:
+    "@react-native-community/image-editor": ^3.0.0
     react-native-builder-bob: ^0.23.1
     typescript: 5.2.2
   peerDependencies:
-    "@react-native-community/image-editor": ^3.0.0
     react: "*"
     react-native: 0.73.2
     react-native-gesture-handler: ">=2.12.0"
@@ -1870,7 +1869,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@crawl/react-hooks@1.0.0, @crawl/react-hooks@workspace:^, @crawl/react-hooks@workspace:packages/react-hooks":
+"@crawl/react-hooks@workspace:^, @crawl/react-hooks@workspace:packages/react-hooks":
   version: 0.0.0-use.local
   resolution: "@crawl/react-hooks@workspace:packages/react-hooks"
   dependencies:
@@ -1883,7 +1882,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@crawl/utils@1.0.0, @crawl/utils@workspace:^, @crawl/utils@workspace:packages/utils":
+"@crawl/utils@workspace:^, @crawl/utils@workspace:packages/utils":
   version: 0.0.0-use.local
   resolution: "@crawl/utils@workspace:packages/utils"
   dependencies:

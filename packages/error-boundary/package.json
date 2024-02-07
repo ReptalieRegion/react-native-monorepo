@@ -19,8 +19,8 @@
         "postinstall": "bob build"
     },
     "dependencies": {
-        "@crawl/react-hooks": "1.0.0",
-        "@crawl/utils": "1.0.0"
+        "@crawl/react-hooks": "workspace:^",
+        "@crawl/utils": "workspace:^"
     },
     "devDependencies": {
         "react-native-builder-bob": "^0.23.1",
