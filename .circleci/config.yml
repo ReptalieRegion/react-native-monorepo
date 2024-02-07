@@ -13,7 +13,7 @@ jobs:
             - checkout
             - run:
                   name: ruby install
-                  command: rbenv install 2.7.5
+                  command: rbenv install 2.7.6
             - ruby/install-deps:
                   key: gems-ios
                   app-dir: ./apps/crawl
@@ -21,11 +21,13 @@ jobs:
                   name: yarn install
                   command: yarn install
             - run:
-                  name: Install pods
+                  name: bundle install
+                  working_directory: ~/apps/crawl
+                  command: bundle install
+            - run:
+                  name: pod install
                   working_directory: ~/apps/crawl/ios
-                  command: |
-                      bundle install
-                      bundle exec pod install
+                  command: bundle exec pod install
             - run:
                   name: Fastlane
                   command: yarn deploy:dev 1.1.23
