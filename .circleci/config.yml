@@ -12,6 +12,7 @@ jobs:
         steps:
             - checkout
             - run: ls
+            - working_directory: apps/crawl
             - restore_cache:
                   keys:
                       - gems-ios-{{ checksum "Gemfile.lock" }}
@@ -21,11 +22,12 @@ jobs:
             - save_cache:
                   key: gems-ios-{{ checksum "Gemfile.lock" }}
                   paths:
-                      - ~/apps/crawl/vendor/bundle
+                      - apps/crawl/vendor/bundle
             - ruby/install-deps:
                   key: gems-ios
-                  app-dir: ./apps/crawl
+                  app-dir: apps/crawl
 
+            - working_directory: ../../
             - restore_cache:
                   keys:
                       - yarn-cache-{{ checksum "yarn.lock" }}
@@ -35,11 +37,12 @@ jobs:
             - save_cache:
                   key: yarn-cache-{{ checksum "yarn.lock" }}
                   paths:
-                      - ~/.yarn/cache
+                      - .yarn/cache
 
             - run:
                   name: bundle install
-                  command: cd ~/apps/crawl && bundle install
+                  working_directory: apps/crawl
+                  command: bundle install
             - run:
                   name: pod install
                   command: cd ~/apps/crawl/ios && bundle exec pod install
