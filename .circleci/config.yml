@@ -11,11 +11,9 @@ jobs:
             xcode: 15.2.0
         steps:
             - checkout
-            - run: ls
-            - working_directory: apps/crawl
             - restore_cache:
                   keys:
-                      - gems-ios-{{ checksum "Gemfile.lock" }}
+                      - gems-ios-{{ checksum "apps/crawlGemfile.lock" }}
             - run:
                   name: Set Ruby Version
                   command: rbenv global 2.7.6
@@ -27,7 +25,6 @@ jobs:
                   key: gems-ios
                   app-dir: apps/crawl
 
-            - working_directory: ../../
             - restore_cache:
                   keys:
                       - yarn-cache-{{ checksum "yarn.lock" }}
