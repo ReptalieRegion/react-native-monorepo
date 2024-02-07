@@ -2,42 +2,34 @@
 version: 2.1
 
 orbs:
-    node: circleci/node@5.2.0
+    ruby: circleci/ruby@2.1.1
+    macos: circleci/macos@2
 
 jobs:
-    yarn-install:
-        executor:
-            name: node/default
-            tag: '18.18'
-        steps:
-            - checkout
-            - node/install-packages:
-                  pkg-manager: yarn-berry
-            - run:
-                  name: yarn install
-                  command: |
-                      yarn install
-    fastlane-build:
+    deploy-ios:
         macos:
             xcode: 14.2.0
-        environment:
-            FL_OUTPUT_DIR: output
+        # resource_class: large
         steps:
-            - run: ls
-            - run: cd apps/crawl
+            - checkout
+            - ls
+            - macos/switch-ruby:
+                  version: '2.7.6'
+            - ruby/install-deps:
+                  key: gems-ios
+                  app-dir: ./apps/crawl/ios
             - run:
-                  name: bundle install
-                  command: bundle install
+                  name: yarn install
+                  command: yarn install
+            - run:
+                  name: Install pods
+                  working_directory: ~/apps/crawl/ios
+                  command: bundle exec pod install
             - run:
                   name: Fastlane
-                  command: cd ios && bundle exec fastlane development 1.1.23
-            - store_artifacts:
-                  path: output
+                  command: yarn deploy:dev 1.1.23
 
 workflows:
-    build:
+    deploy-app:
         jobs:
-            - yarn-install
-            - fastlane-build:
-                  requires:
-                      - yarn-install
+            - deploy-ios
