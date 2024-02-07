@@ -10,12 +10,8 @@ jobs:
             - run:
                   name: Install Node.js and Yarn
                   command: |
-                      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-                      export NVM_DIR="$HOME/.nvm"
-                      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
-                      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  
-                      nvm install --lts
-                      npm install -g yarn@3.6.0
+                      corepack enable
+                      yarn set version stable
             - run:
                   name: yarn install
                   command: |
