@@ -11,16 +11,9 @@ jobs:
             xcode: 15.2.0
         steps:
             - checkout
-            - restore_cache:
-                  keys:
-                      - gems-ios-{{ checksum "apps/crawl/Gemfile.lock" }}
             - run:
                   name: Set Ruby Version
                   command: rbenv install 2.7.6
-            - save_cache:
-                  key: gems-ios-{{ checksum "apps/crawl/Gemfile.lock" }}
-                  paths:
-                      - apps/crawl/vendor/bundle
             - ruby/install-deps:
                   key: gems-ios
                   app-dir: apps/crawl
@@ -35,6 +28,31 @@ jobs:
                   key: yarn-cache-{{ checksum "yarn.lock" }}
                   paths:
                       - .yarn/cache
+
+            - restore_cache:
+                  keys:
+                      - bundle-cache-{{ checksum "apps/crawl/Gemfile.lock" }}
+            - run:
+                  name: bundle install
+                  working_directory: apps/crawl
+                  command: bundle install
+            - save_cache:
+                  key: yarn-cache-{{ checksum "apps/crawl/Gemfile.lock" }}
+                  paths:
+                      - apps/crawl/vendor/bundle
+
+            - restore_cache:
+                  keys:
+                      - pod-cache-{{ checksum "apps/crawl/ios/Podfile.lock" }}
+            - run:
+                  name: pod install
+                  working_directory: apps/crawl/ios
+                  command: pod install
+            - save_cache:
+                  key: pod-cache-{{ checksum "apps/crawl/ios/Podfile.lock" }}
+                  paths:
+                      - apps/crawl/ios/Pods
+
             - run:
                   name: Fastlane
                   command: yarn deploy:dev 1.1.23
