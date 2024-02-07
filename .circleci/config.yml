@@ -11,8 +11,9 @@ jobs:
         steps:
             - checkout
             - node/install:
-                  install-yarn: true
+                  pkg-manager: yarn-berry
                   node-version: '18.18.2'
+
             - run:
                   name: yarn install
                   command: |
