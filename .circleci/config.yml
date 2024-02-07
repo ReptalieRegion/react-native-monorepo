@@ -12,13 +12,14 @@ jobs:
             - checkout
             - node/install:
                   pkg-manager: yarn-berry
+                  install-yarn: true
                   node-version: '18.18.2'
 
             - run:
                   name: yarn install
                   command: |
                       yarn install
-    build-and-test:
+    fastlane-build:
         macos:
             xcode: 14.2.0
         environment:
@@ -36,9 +37,9 @@ jobs:
                   path: output
 
 workflows:
-    build-test-adhoc:
+    build:
         jobs:
             - yarn-install
-            - build-and-test:
+            - fastlane-build:
                   requires:
                       - yarn-install
