@@ -8,7 +8,7 @@ orbs:
 jobs:
     deploy-ios:
         macos:
-            xcode: 15.2.0
+            xcode: 14.2.0
         steps:
             - checkout
             - run:
