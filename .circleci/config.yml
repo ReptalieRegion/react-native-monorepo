@@ -11,6 +11,9 @@ jobs:
             xcode: 15.2.0
         steps:
             - checkout
+            - run:
+                  name: ruby install
+                  command: rbenv install 2.7.5
             - ruby/install-deps:
                   key: gems-ios
                   app-dir: ./apps/crawl
