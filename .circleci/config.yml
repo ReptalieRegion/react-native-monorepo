@@ -3,27 +3,28 @@ version: 2.1
 
 orbs:
     ruby: circleci/ruby@2.1.1
-    macos: circleci/macos@2
+    macos: circleci/macos@2.4.1
 
 jobs:
     deploy-ios:
         macos:
             xcode: 14.2.0
-        # resource_class: large
         steps:
             - checkout
-            - macos/switch-ruby:
+            - ruby/install:
                   version: '2.7.6'
             - ruby/install-deps:
                   key: gems-ios
-                  app-dir: ./apps/crawl/ios
+                  app-dir: ./apps/crawl
             - run:
                   name: yarn install
                   command: yarn install
             - run:
                   name: Install pods
                   working_directory: ~/apps/crawl/ios
-                  command: bundle exec pod install
+                  command: |
+                      bundle install
+                      bundle exec pod install
             - run:
                   name: Fastlane
                   command: yarn deploy:dev 1.1.23
