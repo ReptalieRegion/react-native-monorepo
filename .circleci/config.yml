@@ -3,7 +3,7 @@ version: 2.1
 
 orbs:
     ruby: circleci/ruby@2.1.1
-    macos: circleci/macos@2
+    macos: circleci/macos@2.4.1
 
 jobs:
     deploy-ios:
@@ -11,8 +11,6 @@ jobs:
             xcode: 15.2.0
         steps:
             - checkout
-            - macos/switch-ruby:
-                  version: '2.7.5'
             - ruby/install-deps:
                   key: gems-ios
                   app-dir: ./apps/crawl
