@@ -3,7 +3,7 @@ version: 2.1
 
 orbs:
     ruby: circleci/ruby@2.1.1
-    macos: circleci/macos@2
+    macos: circleci/macos@2.4.1
 
 jobs:
     deploy-ios:
@@ -11,9 +11,8 @@ jobs:
             xcode: 14.2.0
         steps:
             - checkout
-            - run:
-                  name: Set Ruby Version
-                  command: rbenv install 2.7.6
+            - macos/switch-ruby:
+                  version: '2.7'
             - ruby/install-deps:
                   key: gems-ios
                   app-dir: apps/crawl
