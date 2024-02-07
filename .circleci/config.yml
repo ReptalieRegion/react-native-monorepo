@@ -6,15 +6,13 @@ orbs:
 
 jobs:
     yarn-install:
-        docker:
-            - image: cimg/base:stable
+        executor:
+            name: node/default
+            tag: '18.18'
         steps:
             - checkout
-            - node/install:
+            - node/install-packages:
                   pkg-manager: yarn-berry
-                  install-yarn: true
-                  node-version: '18.18.2'
-
             - run:
                   name: yarn install
                   command: |
