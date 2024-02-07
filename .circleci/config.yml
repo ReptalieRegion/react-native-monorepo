@@ -3,7 +3,7 @@ version: 2.1
 
 orbs:
     ruby: circleci/ruby@2.1.1
-    macos: circleci/macos@2.4.1
+    macos: circleci/macos@2
 
 jobs:
     deploy-ios:
@@ -11,23 +11,38 @@ jobs:
             xcode: 15.2.0
         steps:
             - checkout
+            - run: ls
+            - restore_cache:
+                  keys:
+                      - gems-ios-{{ checksum "Gemfile.lock" }}
             - run:
-                  name: ruby install
-                  command: rbenv install 2.7.6
+                  name: Set Ruby Version
+                  command: rbenv global 2.7.6
+            - save_cache:
+                  key: gems-ios-{{ checksum "Gemfile.lock" }}
+                  paths:
+                      - ~/apps/crawl/vendor/bundle
             - ruby/install-deps:
                   key: gems-ios
                   app-dir: ./apps/crawl
+
+            - restore_cache:
+                  keys:
+                      - yarn-cache-{{ checksum "yarn.lock" }}
             - run:
                   name: yarn install
                   command: yarn install
+            - save_cache:
+                  key: yarn-cache-{{ checksum "yarn.lock" }}
+                  paths:
+                      - ~/.yarn/cache
+
             - run:
                   name: bundle install
-                  working_directory: ~/apps/crawl
-                  command: bundle install
+                  command: cd ~/apps/crawl && bundle install
             - run:
                   name: pod install
-                  working_directory: ~/apps/crawl/ios
-                  command: bundle exec pod install
+                  command: cd ~/apps/crawl/ios && bundle exec pod install
             - run:
                   name: Fastlane
                   command: yarn deploy:dev 1.1.23
