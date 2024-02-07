@@ -11,7 +11,7 @@ jobs:
             xcode: 15.2.0
         steps:
             - checkout
-            - ruby/install:
+            - macos/switch-ruby:
                   version: '2.7.5'
             - ruby/install-deps:
                   key: gems-ios
