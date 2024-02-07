@@ -18,7 +18,7 @@ jobs:
                   name: Set Ruby Version
                   command: rbenv install 2.7.6
             - save_cache:
-                  key: gems-ios-{{ checksum "Gemfile.lock" }}
+                  key: gems-ios-{{ checksum "apps/crawl/Gemfile.lock" }}
                   paths:
                       - apps/crawl/vendor/bundle
             - ruby/install-deps:
@@ -35,14 +35,6 @@ jobs:
                   key: yarn-cache-{{ checksum "yarn.lock" }}
                   paths:
                       - .yarn/cache
-
-            - run:
-                  name: bundle install
-                  working_directory: apps/crawl
-                  command: bundle install
-            - run:
-                  name: pod install
-                  command: cd ~/apps/crawl/ios && bundle exec pod install
             - run:
                   name: Fastlane
                   command: yarn deploy:dev 1.1.23
