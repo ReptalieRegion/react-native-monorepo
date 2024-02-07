@@ -12,7 +12,7 @@ jobs:
         steps:
             - checkout
             - ruby/install:
-                  version: '2.7.6'
+                  version: '2.7'
             - ruby/install-deps:
                   key: gems-ios
                   app-dir: ./apps/crawl
