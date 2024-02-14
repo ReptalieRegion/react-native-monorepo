@@ -27,7 +27,7 @@
         "test": "jest",
         "typecheck": "tsc --noEmit",
         "postinstall": "pod-install",
-        "code-push": "appcenter codepush release-react -a yongp99-nate.com/crawl -d Production"
+        "code-push": "appcenter codepush release-react -a yunchanpark/crawl_ios -d Dev"
     },
     "dependencies": {
         "@crawl/async-boundary": "workspace:^",

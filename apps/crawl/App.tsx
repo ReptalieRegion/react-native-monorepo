@@ -3,6 +3,7 @@ import { OverlayProvider } from '@crawl/overlay-manager';
 import { useNavigationContainerRef } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import CodePush from 'react-native-code-push';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
@@ -14,7 +15,7 @@ import ReactQueryProvider from '@/providers/ReactQuery';
 import RootRoutes from '@/routes/RootRoutes';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 
-export default function App(): React.JSX.Element {
+function App(): React.JSX.Element {
     const navigationRef = useNavigationContainerRef<RootRoutesParamList>();
     useEffectNotifee(navigationRef);
 
@@ -42,3 +43,5 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
+
+export default CodePush(App);
