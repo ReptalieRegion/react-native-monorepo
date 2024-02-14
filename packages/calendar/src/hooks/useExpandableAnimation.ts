@@ -92,9 +92,11 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
         if (isShowWeek) {
             applyContext.calendarTranslateY.value = calendarGoalTranslateY;
             applyContext.listTranslateY.value = listMinTranslateY;
+            startContext.weekPageIndex.value = -1;
             applyContext.weekCalendarTranslateY.value = withTiming(0);
             applyContext.listHeight.value = startContext.layoutHeight.value - headerHeight - dayHeight;
         } else {
+            applyContext.weekCalendarTranslateY.value = dayHeight * (calendarState.selectedWeekNumber - 1);
             applyContext.listHeight.value = startContext.layoutHeight.value - headerHeight - calendarHeight;
         }
 
@@ -266,10 +268,13 @@ export default function useExpandableAnimation({ onScrollToIndexWeekCalendar, on
 
             if (applyContext.weekCalendarZIndex.value === 1) {
                 applyContext.calendarTranslateY.value = -dayHeight * weekPageIndex;
+            } else {
+                applyContext.weekCalendarTranslateY.value = dayHeight * weekPageIndex;
             }
         },
         [
             applyContext.calendarTranslateY,
+            applyContext.weekCalendarTranslateY,
             applyContext.weekCalendarZIndex.value,
             dayHeight,
             startContext.changeWeekCalendarGoalTranslateY,
