@@ -15,14 +15,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios versionup
-
-```sh
-[bundle exec] fastlane ios versionup
-```
-
-iOS version up
-
 ### ios release
 
 ```sh
