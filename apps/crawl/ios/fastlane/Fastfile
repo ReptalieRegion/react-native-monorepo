@@ -39,6 +39,23 @@ platform :ios do
     end
   end
 
+  desc "iOS version up"
+  lane :versionup do |options|
+    xcodeproj = ENV["XCODEPROJ"]
+    increment_build_number(xcodeproj: xcodeproj)
+    increment_version_number_in_plist(
+      target: 'crawl',
+      xcodeproj: xcodeproj, 
+      bump_type: 'patch'
+    )
+    increment_version_number_in_plist(
+      target: 'crawlTests',
+      xcodeproj: xcodeproj, 
+      bump_type: 'patch'
+    )
+  end
+
+
   desc "Push a new release build to TestFlight"
   lane :release do |options|
     # 인증
