@@ -27,7 +27,8 @@
         "test": "jest",
         "typecheck": "tsc --noEmit",
         "postinstall": "pod-install",
-        "code-push": "appcenter codepush release-react -a yunchanpark/crawl_ios -d Dev"
+        "code-push:dev": "appcenter codepush release-react -a yunchanpark/crawl_ios -d Dev",
+        "code-push:prod": "appcenter codepush release-react -a yunchanpark/crawl_ios -d Production"
     },
     "dependencies": {
         "@crawl/async-boundary": "workspace:^",
@@ -133,5 +134,5 @@
     "resolutions": {
         "react-native@0.73.1": "patch:react-native@npm%3A0.73.1#./.yarn/patches/react-native-npm-0.73.1-35751404af.patch"
     },
-    "packageManager": "yarn@3.6.0"
+    "packageManager": "yarn@4.1.0"
 }
