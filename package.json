@@ -2,10 +2,12 @@
     "name": "react-native-monorepo",
     "version": "0.0.1",
     "private": true,
-    "workspaces": [
-        "apps/*",
-        "packages/*"
-    ],
+    "workspaces": {
+        "packages": [
+            "apps/*",
+            "packages/*"
+        ]
+    },
     "scripts": {
         "playground": "yarn workspace playground",
         "crawl": "yarn workspace crawl",
