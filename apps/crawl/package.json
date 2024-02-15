@@ -18,17 +18,17 @@
         "lint": "eslint .",
         "lint:fix": "eslint --fix .",
         "lint-front": "lint-staged",
-        "set:env:test": "sh ./scripts/set-env.sh test",
-        "set:env:dev": "sh ./scripts/set-env.sh development",
-        "set:env:prod": "sh ./scripts/set-env.sh production",
-        "start": "sh ./scripts/start.sh",
-        "deploy:dev": "sh ./scripts/deploy.sh development",
-        "deploy:prod": "sh ./scripts/deploy.sh release",
+        "start": "react-native start --reset-cache",
+        "start:reset": "watchman watch-del-all && react-native start --reset-cache",
         "test": "jest",
         "typecheck": "tsc --noEmit",
         "postinstall": "pod-install",
-        "code-push:dev": "appcenter codepush release-react -a yunchanpark/crawl_ios -d Dev",
-        "code-push:prod": "appcenter codepush release-react -a yunchanpark/crawl_ios -d Production"
+        "deploy:dev": "sh ./scripts/deploy.sh development",
+        "deploy:prod": "sh ./scripts/deploy.sh release",
+        "link:node_modules": "ln -s ../../node_modules node_modules",
+        "delete:node_modules": "rm -rf node_modules",
+        "code-push:dev": "yarn link:node_modules && appcenter codepush release-react -a yunchanpark/crawl_ios -d Dev && yarn delete:node_modules",
+        "code-push:prod": "yarn link:node_modules && appcenter codepush release-react -a yunchanpark/crawl_ios -d Production && yarn delete:node_modules"
     },
     "dependencies": {
         "@crawl/async-boundary": "workspace:^",
@@ -133,9 +133,6 @@
     },
     "resolutions": {
         "react-native@0.73.1": "patch:react-native@npm%3A0.73.1#./.yarn/patches/react-native-npm-0.73.1-35751404af.patch"
-    },
-    "installConfig": {
-        "hoistingLimits": "workspaces"
     },
     "packageManager": "yarn@4.1.0"
 }
