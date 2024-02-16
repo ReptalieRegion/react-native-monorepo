@@ -131,8 +131,5 @@
     "engines": {
         "node": ">=18"
     },
-    "resolutions": {
-        "react-native@0.73.1": "patch:react-native@npm%3A0.73.1#./.yarn/patches/react-native-npm-0.73.1-35751404af.patch"
-    },
     "packageManager": "yarn@4.1.0"
 }
