@@ -6,10 +6,12 @@ import { useEffect } from 'react';
 import { Platform } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 import Config from 'react-native-config';
+import { getBuildNumber, getSystemName, getSystemVersion, getVersion } from 'react-native-device-info';
 
 import { useAuth, useAuthHandler } from './auth';
 
 import { initRefreshFailCallback } from '@/apis/@utils/fetcher';
+import useUpdateDeviceInfo from '@/apis/me/profile/hooks/mutations/useUpdateDeviceInfo';
 import useUpdateFCMToken from '@/apis/me/profile/hooks/mutations/useUpdateFCMToken';
 import useUpdatePushAgree from '@/apis/notification/push/hooks/mutations/useBaseUpdatePushAgree';
 import { PushAgreeType } from '@/types/apis/notification';
@@ -26,6 +28,7 @@ export default function useEffectInitial({ navigationRef }: UseEffectInitialProp
     const { isSignIn, isLoading } = useAuth();
     const { mutate: updateFCMTokenMutate } = useUpdateFCMToken();
     const { mutate: updatePushAgreeMutate } = useUpdatePushAgree();
+    const { mutate: updateDeviceInfoMutate } = useUpdateDeviceInfo();
     const { signOut } = useAuthHandler();
 
     /**
@@ -73,8 +76,15 @@ export default function useEffectInitial({ navigationRef }: UseEffectInitialProp
                     }
                     updatePushAgreeMutate({ type: PushAgreeType.Device, isAgree: hasPermission });
                 });
+
+            updateDeviceInfoMutate({
+                version: getVersion(),
+                buildNumber: getBuildNumber(),
+                systemName: getSystemName(),
+                systemVersion: getSystemVersion(),
+            });
         }
-    }, [isLoading, isSignIn, updateFCMTokenMutate, updatePushAgreeMutate]);
+    }, [isLoading, isSignIn, updateDeviceInfoMutate, updateFCMTokenMutate, updatePushAgreeMutate]);
 
     /**
      * 로그인 체크 완료 시, 스플레쉬 닫기
@@ -89,6 +99,9 @@ export default function useEffectInitial({ navigationRef }: UseEffectInitialProp
         };
     }, [isLoading]);
 
+    /**
+     * 구글 로그인 초기화
+     */
     useEffect(() => {
         if (Platform.OS === 'android') {
             GoogleSignin.configure({

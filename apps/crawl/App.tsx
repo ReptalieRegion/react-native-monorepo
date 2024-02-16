@@ -1,8 +1,8 @@
 import { ErrorBoundary, ErrorBoundaryGroup } from '@crawl/error-boundary';
 import { OverlayProvider } from '@crawl/overlay-manager';
 import { useNavigationContainerRef } from '@react-navigation/native';
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { Suspense } from 'react';
+import { StyleSheet, View } from 'react-native';
 import CodePush from 'react-native-code-push';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -27,7 +27,9 @@ function App(): React.JSX.Element {
                         <OverlayProvider>
                             <ErrorBoundaryGroup blockOutside={false}>
                                 <ErrorBoundary renderFallback={(props) => <GlobalError {...props} />}>
-                                    <RootRoutes navigationRef={navigationRef} />
+                                    <Suspense fallback={<View />}>
+                                        <RootRoutes navigationRef={navigationRef} />
+                                    </Suspense>
                                 </ErrorBoundary>
                             </ErrorBoundaryGroup>
                         </OverlayProvider>

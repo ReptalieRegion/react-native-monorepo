@@ -1,5 +1,5 @@
 import clientFetch, { METHOD } from '@/apis/@utils/fetcher';
-import type { UpdateFCMToken, UpdateProfileImage } from '@/types/apis/me';
+import type { UpdateFCMToken, UpdateMeDeviceInfo, UpdateProfileImage } from '@/types/apis/me';
 
 /**
  *
@@ -27,6 +27,26 @@ export const updateMeProfile = async ({ name, type, uri }: UpdateProfileImage['R
         method: METHOD.PUT,
         body: formData,
         isFormData: true,
+    });
+
+    return response.json();
+};
+
+// 사용자의 디바이스 정보 수정
+export const updateMeDeviceInfo = async ({
+    buildNumber,
+    systemName,
+    systemVersion,
+    version,
+}: UpdateMeDeviceInfo['Request']) => {
+    const response = await clientFetch('api/users/device-info', {
+        method: METHOD.PUT,
+        body: {
+            buildNumber,
+            systemName,
+            systemVersion,
+            version,
+        },
     });
 
     return response.json();

@@ -59,3 +59,8 @@ export const REPORT_QUERY_KEYS = {
 export const WEB_VIEW = {
     webview: (path: string) => ['webview', path],
 };
+
+/** Meta Data */
+export const META_DATA_QUERY_KEYS = {
+    remoteConfig: ['meta_data-remoteConfig'],
+};

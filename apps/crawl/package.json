@@ -60,6 +60,7 @@
         "appcenter": "5.0.1",
         "appcenter-analytics": "5.0.1",
         "appcenter-crashes": "5.0.1",
+        "compare-versions": "^6.1.0",
         "dayjs": "^1.11.10",
         "expo": "^50.0.6",
         "expo-image": "~1.10.6",

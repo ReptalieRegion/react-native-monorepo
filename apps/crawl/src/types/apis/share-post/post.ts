@@ -120,6 +120,13 @@ type FetchLikeResponse = {
 
 type FetchLike = ServerAPI<FetchLikeRequest, InfiniteState<FetchLikeResponse[]>>;
 
+type FetchRemoteConfigResponse = {
+    disabledVersion: string;
+    isServiceReady: 'T' | 'F';
+};
+
+type FetchRemoteConfig = ServerAPI<void, FetchRemoteConfigResponse>;
+
 /**
  *
  * POST 시작
@@ -248,4 +255,6 @@ export type {
     UpdateLikeRequest,
     UpdateLikeResponse,
     UpdatePost,
+    FetchRemoteConfigResponse,
+    FetchRemoteConfig,
 };
