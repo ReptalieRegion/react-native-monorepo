@@ -1,6 +1,7 @@
 import { Typo, color } from '@crawl/design-system';
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
+import { getVersion } from 'react-native-device-info';
 
 import useLogout from './hooks/mutations/useLogout';
 import type { SettingList } from './type';
@@ -10,7 +11,6 @@ import useFetchPushAgree from '@/apis/notification/push/hooks/queries/useFetchPu
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import ListItem from '@/components/@common/molecules/ListItem/Item';
 import { Profile } from '@/components/@common/molecules/Profile';
-import VersionCheck from '@/native-modules/version-check/VersionCheck';
 import useMeListNavigation from '@/pages/me/List/hooks/useMeListNavigation';
 
 export default function MyListPage() {
@@ -80,7 +80,7 @@ export default function MyListPage() {
                 },
                 {
                     title: '앱 버전',
-                    rightChildren: VersionCheck.getVersion(),
+                    rightChildren: getVersion(),
                 },
             ],
         },

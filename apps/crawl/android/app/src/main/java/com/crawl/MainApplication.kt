@@ -19,7 +19,6 @@ import com.facebook.soloader.SoLoader
 import expo.modules.ApplicationLifecycleDispatcher
 
 import com.crawl.kakaoauth.RNKakaoAuthPackage
-import com.crawl.versionCheck.RNVersionCheckPackage
 
 import java.util.ArrayList
 
@@ -29,7 +28,6 @@ class MainApplication : Application(), ReactApplication {
               override fun getPackages(): ArrayList<ReactPackage> =
                   PackageList(this).packages.apply {
                       add(RNKakaoAuthPackage())
-                      add(RNVersionCheckPackage())
                   }
 
             override fun getJSMainModuleName(): String = ".expo/.virtual-metro-entry"
