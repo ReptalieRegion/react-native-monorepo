@@ -1,7 +1,7 @@
 {
     "name": "@crawl/image-crop",
     "version": "1.0.0",
-    "packageManager": "yarn@3.6.0",
+    "packageManager": "yarn@4.1.0",
     "main": "lib/commonjs/index.js",
     "module": "lib/module/index.js",
     "react-native": "src/index.ts",
@@ -23,9 +23,9 @@
         "typescript": "5.2.2"
     },
     "peerDependencies": {
-        "@react-native-community/image-editor": "^3.0.0",
+        "@react-native-community/image-editor": "^3.2.0",
         "react": "*",
-        "react-native": "0.73.2",
+        "react-native": "0.73.4",
         "react-native-gesture-handler": ">=2.12.0",
         "react-native-reanimated": ">=3.4.2"
     },

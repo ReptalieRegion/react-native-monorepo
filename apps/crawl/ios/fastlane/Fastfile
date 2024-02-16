@@ -20,18 +20,36 @@ platform :ios do
     if options[:version]
       version = options[:version]
     else
-      version = prompt(text: "Enter the version type or specific version\n(major, minor, patch or 1.0.0): ")
+      version = prompt(
+        text: "Enter the version type or specific version\n(major, minor, patch or 1.0.0): ",
+        ci_input: "patch"
+      )
     end
 
     re = /\d+.\d+.\d+/
     versionNum = version[re, 0]
+    xcodeproj = ENV["XCODEPROJ"]
 
     if (versionNum)
-      increment_version_number(
+      increment_version_number_in_plist(
+        target: 'crawl',
+        xcodeproj: xcodeproj, 
+        version_number: versionNum
+      )
+      increment_version_number_in_plist(
+        target: 'crawlTests',
+        xcodeproj: xcodeproj, 
         version_number: versionNum
       )
     elsif (version == 'major' || version == 'minor' || version == 'patch')
-      increment_version_number(
+      increment_version_number_in_plist(
+        target: 'crawl',
+        xcodeproj: xcodeproj, 
+        bump_type: version
+      )
+      increment_version_number_in_plist(
+        target: 'crawlTests',
+        xcodeproj: xcodeproj, 
         bump_type: version
       )
     else

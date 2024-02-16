@@ -1,7 +1,7 @@
 {
     "name": "@crawl/overlay-manager",
     "version": "1.0.0",
-    "packageManager": "yarn@3.6.0",
+    "packageManager": "yarn@4.1.0",
     "main": "lib/commonjs/index.js",
     "module": "lib/module/index.js",
     "react-native": "src/index.ts",
@@ -24,7 +24,7 @@
     },
     "peerDependencies": {
         "react": "*",
-        "react-native": "0.73.1"
+        "react-native": "0.73.4"
     },
     "react-native-builder-bob": {
         "source": "src",
