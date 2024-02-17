@@ -2,8 +2,10 @@ import { color } from '@crawl/design-system';
 import messaging from '@react-native-firebase/messaging';
 import { NavigationContainer, type LinkingOptions, type NavigationContainerRefWithCurrent } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { compare } from 'compare-versions';
 import React from 'react';
 import { Linking, StyleSheet } from 'react-native';
+import { getVersion } from 'react-native-device-info';
 
 import SignUpRoutes from './Auth/SignUpRoutes';
 import BottomTabNativeStackRoutes from './BottomTabNativeStackRoutes';
@@ -11,7 +13,10 @@ import EntityManagerCreateRoutes from './Diary/EntityManagerCreateRoutes';
 import SharePostModalRoutes from './SharePost/ModalRoutes';
 import PostingRoutes from './SharePost/PostingRoutes';
 
+import useFetchRemoteConfig from '@/apis/meta-data/hooks/queries/useFetchRemoteConfig';
 import { NativeStackDefaultBackHeader } from '@/components/@common/molecules';
+import MandatoryUpdateRedirect from '@/components/MandatoryUpdateRedirect';
+import ServiceSetupInProgress from '@/components/ServiceSetupInProgress';
 import useEffectInitial from '@/hooks/useEffectInitial';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
@@ -95,8 +100,18 @@ type RootRoutesProps = {
 const Stack = createNativeStackNavigator<RootRoutesParamList>();
 
 export default function RootRoutes({ navigationRef }: RootRoutesProps) {
+    const { data } = useFetchRemoteConfig();
+
     // clientFetch, refresh 실패 시 실행할 콜백함수 초기화, 자동 로그인 및 FCM Token 초기화
     useEffectInitial({ navigationRef });
+
+    if (data.isServiceReady === 'T') {
+        return <ServiceSetupInProgress />;
+    }
+
+    if (compare(data.disabledVersion, getVersion(), '>')) {
+        return <MandatoryUpdateRedirect />;
+    }
 
     return (
         <NavigationContainer<RootRoutesParamList> ref={navigationRef} linking={linking}>

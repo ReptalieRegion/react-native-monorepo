@@ -5730,6 +5730,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"compare-versions@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "compare-versions@npm:6.1.0"
+  checksum: 10/20f349e7f8ad784704c68265f4e660e2abbe2c3d5c75793184fccb85f0c5c0263260e01fdd4488376f6b74b0f069e16c9684463f7316b075716fb1581eb36b77
+  languageName: node
+  linkType: hard
+
 "component-emitter@npm:^1.3.0":
   version: 1.3.1
   resolution: "component-emitter@npm:1.3.1"
@@ -5914,6 +5921,7 @@ __metadata:
     appcenter-crashes: "npm:5.0.1"
     babel-jest: "npm:^29.6.3"
     babel-plugin-module-resolver: "npm:^5.0.0"
+    compare-versions: "npm:^6.1.0"
     dayjs: "npm:^1.11.10"
     eslint: "npm:^8.51.0"
     expo: "npm:^50.0.6"
@@ -5934,6 +5942,7 @@ __metadata:
     react-native-code-push: "npm:^8.2.1"
     react-native-config: "npm:^1.5.1"
     react-native-date-picker: "npm:^4.3.6"
+    react-native-device-info: "npm:^10.12.0"
     react-native-gesture-handler: "npm:^2.15.0"
     react-native-haptic-feedback: "npm:^2.2.0"
     react-native-image-crop-picker: "npm:^0.40.3"
@@ -12596,6 +12605,15 @@ __metadata:
     react: ">= 17.0.1"
     react-native: ">= 0.64.3"
   checksum: 10/84ac7fd36173c70163241bb1637a0f66e34f93e3bb3f10f42df7c24975105d5486909e52ca706ab247326a3d050b8ee376b300d2d8b53e9693dc14d61a227419
+  languageName: node
+  linkType: hard
+
+"react-native-device-info@npm:^10.12.0":
+  version: 10.12.0
+  resolution: "react-native-device-info@npm:10.12.0"
+  peerDependencies:
+    react-native: "*"
+  checksum: 10/0b2ba3d204f346dbb66369b810fbf55ed0310ed9e4679876fc9eed5ca4ceaf1cc9e8761d957cc0e880e898dc638a29fd48ab1dcbb54f6e5fd2f4aa43c1fabe2f
   languageName: node
   linkType: hard
 

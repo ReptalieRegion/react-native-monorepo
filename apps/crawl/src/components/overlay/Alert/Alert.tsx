@@ -1,7 +1,7 @@
 import { Typo, color } from '@crawl/design-system';
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Animated, { FadeOut, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { ALERT_STYLES } from './token';
@@ -17,7 +17,8 @@ type ButtonType = {
 type AlertState = {
     title?: string;
     contents?: string;
-    buttons: ButtonType[];
+    isBackdropClosable?: boolean;
+    buttons?: ButtonType[];
 };
 
 interface AlertActions {
@@ -26,7 +27,7 @@ interface AlertActions {
 
 export type AlertProps = AlertState & AlertActions;
 
-export default function Alert({ title, contents, buttons, onClose }: AlertProps) {
+export default function Alert({ title, contents, buttons, isBackdropClosable = true, onClose }: AlertProps) {
     const opacity = useSharedValue(0);
     const scale = useSharedValue(0.95);
 
@@ -45,9 +46,13 @@ export default function Alert({ title, contents, buttons, onClose }: AlertProps)
 
     return (
         <View style={styles.touchWrapper}>
-            <TouchableOpacity style={styles.touchContainer} containerStyle={styles.touchContainer} onPress={onClose}>
+            <TouchableWithoutFeedback
+                style={styles.touchContainer}
+                containerStyle={styles.touchContainer}
+                onPress={isBackdropClosable ? onClose : undefined}
+            >
                 <Animated.View style={wrapperStyles} />
-            </TouchableOpacity>
+            </TouchableWithoutFeedback>
             <Animated.View style={styles.wrapper} exiting={FadeOut}>
                 <Animated.View style={[styles.container, containerStyles]}>
                     <View style={styles.titleWrapper}>
@@ -55,7 +60,7 @@ export default function Alert({ title, contents, buttons, onClose }: AlertProps)
                         <ConditionalRenderer condition={!!contents} trueContent={<Typo variant="body2">{contents}</Typo>} />
                     </View>
                     <View style={styles.buttonWrapper}>
-                        {buttons.map(({ text, style, onPress }) => {
+                        {buttons?.map(({ text, style, onPress }) => {
                             const textStyle = style ? ALERT_STYLES[style] : ALERT_STYLES.default;
                             return (
                                 <TouchableOpacity

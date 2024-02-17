@@ -1256,6 +1256,8 @@ PODS:
     - React-Core
   - RNDateTimePicker (7.6.2):
     - React-Core
+  - RNDeviceInfo (10.12.0):
+    - React-Core
   - RNFBApp (18.8.0):
     - Firebase/CoreOnly (= 10.20.0)
     - React-Core
@@ -1398,6 +1400,7 @@ DEPENDENCIES:
   - RNBootSplash (from `../../../node_modules/react-native-bootsplash`)
   - "RNCMaskedView (from `../../../node_modules/@react-native-masked-view/masked-view`)"
   - "RNDateTimePicker (from `../../../node_modules/@react-native-community/datetimepicker`)"
+  - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
   - "RNFBApp (from `../../../node_modules/@react-native-firebase/app`)"
   - "RNFBMessaging (from `../../../node_modules/@react-native-firebase/messaging`)"
   - "RNFlashList (from `../../../node_modules/@shopify/flash-list`)"
@@ -1593,6 +1596,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@react-native-masked-view/masked-view"
   RNDateTimePicker:
     :path: "../../../node_modules/@react-native-community/datetimepicker"
+  RNDeviceInfo:
+    :path: "../../../node_modules/react-native-device-info"
   RNFBApp:
     :path: "../../../node_modules/@react-native-firebase/app"
   RNFBMessaging:
@@ -1721,6 +1726,7 @@ SPEC CHECKSUMS:
   RNBootSplash: 009c55e0258f3e56be9c5f7a578bf2baf140c4bc
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
   RNDateTimePicker: fc2e4f2795877d45e84d85659bebe627eba5c931
+  RNDeviceInfo: db5c64a060e66e5db3102d041ebe3ef307a85120
   RNFBApp: 5810d39f89d38272f29d9908cb19ef641922c081
   RNFBMessaging: 8863c0206cc1a5577678eac6c1ec2b2965bd8e52
   RNFlashList: 4b4b6b093afc0df60ae08f9cbf6ccd4c836c667a

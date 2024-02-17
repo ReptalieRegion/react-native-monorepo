@@ -31,6 +31,15 @@ type UpdateFCMTokenRequest = {
 
 type UpdateFCMToken = ServerAPI<UpdateFCMTokenRequest, void>;
 
+type UpdateMeDeviceInfoRequest = {
+    version: string;
+    buildNumber: string;
+    systemName: string;
+    systemVersion: string;
+};
+
+type UpdateMeDeviceInfo = ServerAPI<UpdateMeDeviceInfoRequest, void>;
+
 /**
  *
  * DELETE
@@ -38,4 +47,4 @@ type UpdateFCMToken = ServerAPI<UpdateFCMTokenRequest, void>;
 // FCM 토큰 삭제
 type DeleteFCMToken = ServerAPI<void, void>;
 
-export type { DeleteFCMToken, UpdateFCMToken, UpdateProfileImage };
+export type { DeleteFCMToken, UpdateFCMToken, UpdateProfileImage, UpdateMeDeviceInfoRequest, UpdateMeDeviceInfo };
