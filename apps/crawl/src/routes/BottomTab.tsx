@@ -4,6 +4,7 @@ import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useCallback } from 'react';
 
+import AdoptionRoutes from './Adoption/AdoptionRoutes';
 import DiaryRoutes from './Diary/TopTabRoutes';
 import HomeRoutes from './Home';
 import MeRoutes from './Me';
@@ -54,6 +55,7 @@ export default function BottomTabRoutes({ navigation }: BottomTabScreenProps) {
             }}
         >
             <BottomTab.Screen name="home/routes" component={HomeRoutes} />
+            <BottomTab.Screen name="adoption/routes" component={AdoptionRoutes} />
             <BottomTab.Screen name="share-post/routes" component={SharePostRoutes} />
             <BottomTab.Screen name="diary/routes" component={DiaryRoutes} />
             <BottomTab.Screen name="me/routes" component={MeRoutes} />

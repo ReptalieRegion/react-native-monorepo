@@ -32,3 +32,4 @@ export { default as Trash } from './Trash';
 export { default as UpArrow } from './UpArrow';
 export { default as Warning } from './Warning';
 export { default as Meatballs } from './Meatballs';
+export { default as VolunteerActivism } from './VolunteerActivism';
