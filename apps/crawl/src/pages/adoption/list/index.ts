@@ -1,2 +1,2 @@
+export { default as AdoptionListPage } from './async-page';
 export * from './header';
-export { default as AdoptionListPage } from './page';

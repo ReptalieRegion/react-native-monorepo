@@ -20,11 +20,13 @@ type AdoptionPost = {
     location: Location;
     title: string;
     content: string;
+    price: number;
     user: {
         id: string;
         profile: ImageType;
         nickname: string;
     };
+    createdAt: string;
 };
 
 /**
