@@ -3,6 +3,7 @@ import { FlashList, type ListRenderItem } from '@shopify/flash-list';
 import { Image } from 'expo-image';
 import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import useSuspenseInfiniteAdoption from '@/apis/adoption/hooks/queries/useSuspenseInfiniteAdoption';
 import { PostWriteIcon, UpArrow } from '@/assets/icons';
@@ -37,30 +38,46 @@ export default function AdoptionListPage({ navigation }: AdoptionListPageScreen)
         onScrollUp: secondaryIconUpAnimation,
     });
 
-    const renderItem: ListRenderItem<AdoptionPost> = useCallback(({ item }) => {
-        return (
-            <View style={styles.itemWrapper}>
-                <Image source={{ uri: item.images[0].src }} style={styles.imageSize} recyclingKey={item.images[0].src} />
-                <View style={styles.itemContentWrapper}>
-                    <Typo variant="title4" numberOfLines={2}>
-                        {item.title}
-                    </Typo>
-                    <Typo variant="body3" color="placeholder">
-                        {`${item.location.sido} ${item.location.gungu} • ${calculateTimeAgo(item.createdAt)}`}
-                    </Typo>
-                    <Typo variant="title4">{formatToKRW(item.price)}</Typo>
-                    <View style={styles.tagContentWrapper}>
-                        <View style={styles.tag}>
-                            <Typo variant="body3" color="sub-placeholder">
-                                {item.size}
+    const navigateAdoptionDetailPage = useCallback(
+        (adoptionId: string) => {
+            navigation.navigate('adoption/detail', { adoptionId });
+        },
+        [navigation],
+    );
+
+    const renderItem: ListRenderItem<AdoptionPost> = useCallback(
+        ({ item }) => {
+            return (
+                <TouchableOpacity onPress={() => navigateAdoptionDetailPage(item.id)}>
+                    <View style={styles.itemWrapper}>
+                        <Image
+                            source={{ uri: item.images[0].src }}
+                            style={styles.imageSize}
+                            recyclingKey={item.images[0].src}
+                        />
+                        <View style={styles.itemContentWrapper}>
+                            <Typo variant="title4" numberOfLines={2}>
+                                {item.title}
                             </Typo>
+                            <Typo variant="body3" color="placeholder">
+                                {`${item.location.sido} ${item.location.gungu} • ${calculateTimeAgo(item.createdAt)}`}
+                            </Typo>
+                            <Typo variant="title4">{formatToKRW(item.price)}</Typo>
+                            <View style={styles.tagContentWrapper}>
+                                <View style={styles.tag}>
+                                    <Typo variant="body3" color="sub-placeholder">
+                                        {item.size}
+                                    </Typo>
+                                </View>
+                                <GenderIcon gender={item.gender} size={14} />
+                            </View>
                         </View>
-                        <GenderIcon gender={item.gender} size={14} />
                     </View>
-                </View>
-            </View>
-        );
-    }, []);
+                </TouchableOpacity>
+            );
+        },
+        [navigateAdoptionDetailPage],
+    );
 
     const handleEndReached = useCallback(
         () => hasNextPage && !isFetchingNextPage && fetchNextPage(),

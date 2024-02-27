@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import { AdoptionListHeader, AdoptionListPage } from '@/pages/adoption/list';
+import { AdoptionListHeader, AdoptionListPage } from '@/pages/adoption/List';
 import type { AdoptionParamList } from '@/types/routes/param-list/adoption';
 
 const Stack = createNativeStackNavigator<AdoptionParamList>();

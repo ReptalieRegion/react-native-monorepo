@@ -10,4 +10,6 @@ type AdoptionListPageScreen = CompositeScreenProps<
     NativeStackScreenProps<RootRoutesParamList>
 >;
 
-export type { AdoptionListPageScreen };
+type AdoptionDetailPageScreen = NativeStackScreenProps<RootRoutesParamList, 'adoption/detail'>;
+
+export type { AdoptionDetailPageScreen, AdoptionListPageScreen };

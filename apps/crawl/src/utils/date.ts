@@ -15,15 +15,15 @@ export function calculateTimeAgo(postDate: string) {
     if (diffInMinutes < 1) {
         return '방금 전';
     } else if (diffInMinutes < 60) {
-        return `${diffInMinutes}분`;
+        return `${diffInMinutes}분 전`;
     } else if (diffInHours < 24) {
-        return `${diffInHours}시간`;
+        return `${diffInHours}시간 전`;
     } else if (diffInDays < 7) {
-        return `${diffInDays}일`;
+        return `${diffInDays}일 전`;
     } else if (diffInWeeks < 52) {
-        return `${diffInWeeks}주`;
+        return `${diffInWeeks}주 전`;
     } else {
-        return `${diffInYears}년`;
+        return `${diffInYears}년 전`;
     }
 }
 
