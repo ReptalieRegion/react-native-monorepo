@@ -1,3 +1,4 @@
+import type { EntityGender, EntityVariety } from '../../common';
 import type { InfiniteState, ServerAPI } from '../../utils';
 
 import type { ImageType } from '@/types/global/image';
@@ -6,18 +7,8 @@ import type { ImageType } from '@/types/global/image';
  *
  * 공통 타입
  */
-// 개체 성별
-type EntityGender = 'Male' | 'Female' | 'Uncategorized';
-
 // 개체 무게 단위
 type WeightUnit = 'g' | 'kg';
-
-type EntityVariety = {
-    classification: string;
-    species: string;
-    detailedSpecies: string;
-    morph?: string[];
-};
 
 /**
  *
