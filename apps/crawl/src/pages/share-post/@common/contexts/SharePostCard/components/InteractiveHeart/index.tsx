@@ -5,7 +5,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } 
 
 import useHeartAnimation from '../../hooks/useHeartAnimation';
 
-import LikeIcon from '@/pages/share-post/@common/components/Like';
+import LikeIcon from '@/components/Like';
 
 type InteractiveHeartState = {
     isLike: boolean | undefined;

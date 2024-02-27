@@ -18,6 +18,7 @@ import { NativeStackDefaultBackHeader } from '@/components/@common/molecules';
 import MandatoryUpdateRedirect from '@/components/MandatoryUpdateRedirect';
 import ServiceSetupInProgress from '@/components/ServiceSetupInProgress';
 import useEffectInitial from '@/hooks/useEffectInitial';
+import { AdoptionDetailPage } from '@/pages/adoption/Detail';
 import { SignInHeader } from '@/pages/auth/SignIn/header';
 import SignInPage from '@/pages/auth/SignIn/page';
 import { SignUpHeader } from '@/pages/auth/SignUp/header';
@@ -229,6 +230,10 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     options={{ header: CalendarDetailHeader }}
                 />
                 {/* 다이어리 끝 */}
+
+                {/* 분양 시작 */}
+                <Stack.Screen name="adoption/detail" component={AdoptionDetailPage} options={{ headerShown: false }} />
+                {/* 분양 끝 */}
             </Stack.Navigator>
         </NavigationContainer>
     );

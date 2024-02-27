@@ -7,7 +7,8 @@
      * 임시로 prettier 경로 지정
      */
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": "explicit"
+        "source.fixAll.eslint": "explicit",
+        "source.organizeImports": "always"
     },
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.rulers": [120],
@@ -34,6 +35,7 @@
         "Roboto",
         "tanstack",
         "typecheck",
+        "Uncategorized",
         "viewability",
         "yunchanpark",
         "zustand"

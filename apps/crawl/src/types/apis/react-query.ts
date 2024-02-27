@@ -1,3 +1,5 @@
+import type { FetchAdoptionPostList } from './adoption';
+
 type QueryKey =
     | string
     | {
@@ -7,4 +9,6 @@ type QueryKey =
 
 type CustomQueryKey = readonly QueryKey[];
 
-export type { CustomQueryKey };
+type AdoptionFilterQueryKey = (string | FetchAdoptionPostList['Request'])[];
+
+export type { AdoptionFilterQueryKey, CustomQueryKey };

@@ -26,7 +26,7 @@ type GenderMapItem = {
 const GENDER_MAP: GenderMapItem[] = [
     { text: '암컷', gender: 'Female', Icon: Female, color: color.Pink[500].toString() },
     { text: '수컷', gender: 'Male', Icon: Male, color: color.Blue[500].toString() },
-    { text: '미구분', gender: 'Uncategorized', Icon: Question, color: color.Red[500].toString() },
+    { text: '미구분', gender: 'Uncategorized', Icon: Question, color: color.Gray[500].toString() },
 ];
 
 export default function EntityManagerGenderPage({ navigation }: EntityManagerCreateGenderScreenProps) {

@@ -1,5 +1,6 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
+import type { AdoptionParamList } from './adoption';
 import type { DiaryParamList } from './diary';
 import type { HomeBottomTabParamList } from './home';
 import type { MeBottomTabParamList } from './me';
@@ -8,6 +9,7 @@ import type { CommentParamList, SharePostBottomTabParamList } from './sharePost'
 // 바텀 탭 라우터
 type BottomTabParamList = {
     'home/routes': NavigatorScreenParams<HomeBottomTabParamList>;
+    'adoption/routes': NavigatorScreenParams<AdoptionParamList>;
     'share-post/routes': NavigatorScreenParams<SharePostBottomTabParamList>;
     'diary/routes': NavigatorScreenParams<DiaryParamList>;
     'me/routes': NavigatorScreenParams<MeBottomTabParamList>;

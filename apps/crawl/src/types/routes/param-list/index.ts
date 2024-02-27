@@ -1,5 +1,6 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
 
+import type { AdoptionDetailParams } from '../params/adoption';
 import type { SignInParams } from '../params/auth';
 import type { CalendarDetailParams, EntityDetailParams, EntityUpdateParams } from '../params/diary';
 import type { LicenseContentsParams } from '../params/me';
@@ -45,6 +46,9 @@ type RootRoutesParamList = {
     // Calendar
     'calendar/create': undefined;
     'calendar/detail': CalendarDetailParams;
+
+    // Adoption
+    'adoption/detail': AdoptionDetailParams;
 };
 
 export type { RootRoutesParamList };

@@ -1,3 +1,5 @@
+import type { FetchAdoptionPostList } from '@/types/apis/adoption';
+
 /** Auth */
 export const AUTH_QUERY_KEYS = {
     signInCheck: ['auth_sign_in_check'],
@@ -44,6 +46,12 @@ export const SHARE_POST_QUERY_KEYS = {
     searchUser: (search: string) => ['user', 'search', search],
     activitySummary: (nickname: string) => ['user', 'activity_summary', nickname],
 } as const;
+
+/** Adoption */
+export const ADOPTION_QUERY_KEYS = {
+    list: (props: FetchAdoptionPostList['Request']) => ['adoption_list', props],
+    detail: (id: string) => ['adoption_list', id],
+};
 
 export const SHARE_POST_MUTATION_KEYS = {
     create: ['share-post', 'create'],
