@@ -15,6 +15,7 @@ import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
 import com.facebook.react.flipper.ReactNativeFlipper
 import com.facebook.soloader.SoLoader
+import com.microsoft.codepush.react.CodePush
 
 import expo.modules.ApplicationLifecycleDispatcher
 
@@ -28,11 +29,16 @@ class MainApplication : Application(), ReactApplication {
               override fun getPackages(): ArrayList<ReactPackage> =
                   PackageList(this).packages.apply {
                       add(RNKakaoAuthPackage())
+
                   }
 
             override fun getJSMainModuleName(): String = ".expo/.virtual-metro-entry"
 
             override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
+
+            override fun getJSBundleFile(): String {
+                return CodePush.getJSBundleFile() 
+            }
 
             override val isNewArchEnabled: Boolean = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
             override val isHermesEnabled: Boolean = BuildConfig.IS_HERMES_ENABLED
