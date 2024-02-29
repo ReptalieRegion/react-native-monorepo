@@ -87,6 +87,12 @@ type FetchPushReadCheck = ServerAPI<void, FetchPushReadCheckResponse>;
 // 푸시알림 동의 생성
 type CreatePushAgree = ServerAPI<void, void>;
 
+type SendSlackMessageRequest = {
+    text: string;
+};
+
+type SendSlackMessage = ServerAPI<SendSlackMessageRequest, void>;
+
 /**
  * PUT
  */
@@ -107,6 +113,8 @@ export { ContentType, PushAgreeType, TemplateTitleType };
 export type {
     CreatePushAgree,
     FetchPushAgree,
+    SendSlackMessage,
+    SendSlackMessageRequest,
     FetchPushLog,
     FetchPushLogResponse,
     FetchPushReadCheck,

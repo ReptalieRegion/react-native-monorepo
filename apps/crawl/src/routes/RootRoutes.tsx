@@ -105,11 +105,11 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
     // clientFetch, refresh 실패 시 실행할 콜백함수 초기화, 자동 로그인 및 FCM Token 초기화
     useEffectInitial({ navigationRef });
 
-    if (data.isServiceReady === 'T') {
+    if (data?.isServiceReady === 'T') {
         return <ServiceSetupInProgress />;
     }
 
-    if (compare(data.disabledVersion, getVersion(), '>')) {
+    if (data?.disabledVersion && compare(data.disabledVersion, getVersion(), '>')) {
         return <MandatoryUpdateRedirect />;
     }
 

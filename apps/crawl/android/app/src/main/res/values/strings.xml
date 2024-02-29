@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">크롤</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">@string/PRODUCTION_CODE_PUSH_KEY</string>
 </resources>

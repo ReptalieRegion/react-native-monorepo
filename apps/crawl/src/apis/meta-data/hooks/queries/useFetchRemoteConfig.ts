@@ -12,6 +12,7 @@ export default function useFetchRemoteConfig() {
         queryKey: META_DATA_QUERY_KEYS.remoteConfig,
         refetchInterval: 5 * 60 * 1000,
         gcTime: Infinity,
+        retry: 1,
         queryFn: getRemoteConfig,
     });
 }
