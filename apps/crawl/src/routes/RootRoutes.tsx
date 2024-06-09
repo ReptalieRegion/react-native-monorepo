@@ -28,6 +28,7 @@ import { EntityManagerDetailPageHeader } from '@/pages/diary/entity-manager/Deta
 import EntityMangerDetailPage from '@/pages/diary/entity-manager/DetailPage/page';
 import { EntityMangerUpdateHeader } from '@/pages/diary/entity-manager/UpdatePage/header';
 import EntityMangerUpdate from '@/pages/diary/entity-manager/UpdatePage/page';
+import PlaygroundFlashList from '@/pages/flash-list';
 import HomePage from '@/pages/home/HomePage/page';
 import { BlockUserListHeader } from '@/pages/me/BlockUserList/header';
 import BlockUserListPage from '@/pages/me/BlockUserList/page';
@@ -46,6 +47,7 @@ import PrivacyPolicyPage from '@/pages/me/Terms/PrivacyPolicy/page';
 import { TermsOfUseHeader } from '@/pages/me/Terms/TermsOfUse/header';
 import TermsOfUsePage from '@/pages/me/Terms/TermsOfUse/page';
 import { PushLogList, PushLogListHeader } from '@/pages/notification/PushLogList';
+import Playground from '@/pages/playground';
 import { SharePostUpdatePostPage, SharePostUpdatePosteHeader } from '@/pages/share-post/UpdatePost';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
@@ -125,6 +127,13 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     }}
                 />
                 {/** 바텀 탭 끝 */}
+
+                <Stack.Screen
+                    name="playground-flash-list"
+                    component={PlaygroundFlashList}
+                    options={{ header: NativeStackDefaultBackHeader }}
+                />
+                <Stack.Screen name="playground" component={Playground} options={{ header: NativeStackDefaultBackHeader }} />
 
                 {/** 홈 시작 */}
                 <Stack.Screen name="homepage" component={HomePage} options={{ header: NativeStackDefaultBackHeader }} />

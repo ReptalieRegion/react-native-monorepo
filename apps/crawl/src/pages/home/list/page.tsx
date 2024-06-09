@@ -1,7 +1,7 @@
 import { Typo, color } from '@crawl/design-system';
 import { ErrorBoundary } from '@crawl/error-boundary';
 import React, { Suspense, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 
 import EntityList from './components/EntityList';
@@ -25,7 +25,14 @@ const HomeListPage = withPageHeaderUpdate<HomeListPageScreenProp>(
     () => {
         const { imageWidth, marginHorizontal, offset, sharePostHeight, gap } = useCalcCarouselSize();
 
-        const { navigateDiary, navigateEntityDetail, navigateSharePost, navigationPostDetail } = useHomeListNavigation();
+        const {
+            navigatePlayground,
+            navigatePlaygroundFlashList,
+            navigateDiary,
+            navigateEntityDetail,
+            navigateSharePost,
+            navigationPostDetail,
+        } = useHomeListNavigation();
 
         return (
             <ScrollView
@@ -33,6 +40,8 @@ const HomeListPage = withPageHeaderUpdate<HomeListPageScreenProp>(
                 contentContainerStyle={styles.contentContainer}
                 showsVerticalScrollIndicator={false}
             >
+                <Button title="이미지 playground-flash-list" onPress={navigatePlaygroundFlashList} />
+                <Button title="이미지" onPress={navigatePlayground} />
                 <NoticeImageCarousel />
                 <View style={styles.container}>
                     <View>

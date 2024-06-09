@@ -10,6 +10,14 @@ export default function useHomeListNavigation() {
     const { requireAuthNavigation } = useAuthNavigation();
     const navigation = useNavigation<HomeListPageNavigationProp>();
 
+    const navigatePlayground = useCallback(() => {
+        navigation.navigate('playground');
+    }, [navigation]);
+
+    const navigatePlaygroundFlashList = useCallback(() => {
+        navigation.navigate('playground-flash-list');
+    }, [navigation]);
+
     const navigateSharePost = useCallback(() => {
         navigation.navigate('bottom-tab/routes', {
             screen: 'tab',
@@ -69,7 +77,17 @@ export default function useHomeListNavigation() {
             navigateEntityDetail,
             navigationPostDetail,
             navigationEntityCreate,
+            navigatePlayground,
+            navigatePlaygroundFlashList,
         }),
-        [navigateDiary, navigateEntityDetail, navigateSharePost, navigationEntityCreate, navigationPostDetail],
+        [
+            navigateDiary,
+            navigateEntityDetail,
+            navigateSharePost,
+            navigationEntityCreate,
+            navigationPostDetail,
+            navigatePlayground,
+            navigatePlaygroundFlashList,
+        ],
     );
 }

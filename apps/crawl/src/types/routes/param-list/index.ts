@@ -14,6 +14,9 @@ type RootRoutesParamList = {
     // 바텀 탭
     'bottom-tab/routes': NavigatorScreenParams<BottomTabNativeStackParamList>;
 
+    playground: undefined;
+    'playground-flash-list': undefined;
+
     //Home
     homepage: undefined;
 
