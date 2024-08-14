@@ -1064,7 +1064,7 @@ PODS:
     - react-native-config/App (= 1.5.1)
   - react-native-config/App (1.5.1):
     - React-Core
-  - react-native-date-picker (4.3.6):
+  - react-native-date-picker (5.0.4):
     - React-Core
   - react-native-image-editor (3.2.0):
     - glog
@@ -1254,7 +1254,7 @@ PODS:
     - React-Core
   - RNCMaskedView (0.3.1):
     - React-Core
-  - RNDateTimePicker (7.6.2):
+  - RNDateTimePicker (8.2.0):
     - React-Core
   - RNDeviceInfo (10.12.0):
     - React-Core
@@ -1697,7 +1697,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 63913773ed7f96b814a2521e13e6d010282096ad
   react-native-cameraroll: 1c980a71284ab9b86bdb65476bf20fdb57fb5021
   react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8
-  react-native-date-picker: c28ccf1b3bc3de3bc6a785792a393fee49677f89
+  react-native-date-picker: 6891317e850deae5b53d51355226e07a495aba61
   react-native-image-editor: b4aebcfa2a11104bb8affef293f417df53c57931
   react-native-pager-view: d81ab2060b9caf57ca8c3a0d57467ff407cdb825
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
@@ -1725,7 +1725,7 @@ SPEC CHECKSUMS:
   RNAppleAuthentication: e99eaf3c4c01ad8ecb6125dd6f0cfd98871685b5
   RNBootSplash: 009c55e0258f3e56be9c5f7a578bf2baf140c4bc
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
-  RNDateTimePicker: fc2e4f2795877d45e84d85659bebe627eba5c931
+  RNDateTimePicker: 40ffda97d071a98a10fdca4fa97e3977102ccd14
   RNDeviceInfo: db5c64a060e66e5db3102d041ebe3ef307a85120
   RNFBApp: 5810d39f89d38272f29d9908cb19ef641922c081
   RNFBMessaging: 8863c0206cc1a5577678eac6c1ec2b2965bd8e52
