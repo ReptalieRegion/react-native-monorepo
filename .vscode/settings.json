@@ -37,5 +37,6 @@
         "viewability",
         "yunchanpark",
         "zustand"
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
