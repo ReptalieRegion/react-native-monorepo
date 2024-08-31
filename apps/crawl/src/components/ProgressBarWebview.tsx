@@ -60,7 +60,13 @@ export default function ProgressBarWebview({
                     <Progress.Bar width={width} height={2} progress={percent} color={progressBar.color} borderWidth={0} />
                 }
             />
-            <WebView onLoadStart={_onLoadStart} onLoadProgress={_onLoadProgress} onLoadEnd={_onLoadEnd} {...props} />
+            <WebView
+                onLoadStart={_onLoadStart}
+                onLoadProgress={_onLoadProgress}
+                onLoadEnd={_onLoadEnd}
+                decelerationRate={1.2}
+                {...props}
+            />
         </PageWrapper>
     );
 }

@@ -27,8 +27,8 @@
         "deploy:prod": "sh ./scripts/deploy.sh release",
         "link:node_modules": "ln -s ../../node_modules node_modules",
         "delete:node_modules": "rm -rf node_modules",
-        "code-push:dev": "yarn link:node_modules && appcenter codepush release-react -a yunchanpark/crawl_ios -d Dev && yarn delete:node_modules",
-        "code-push:prod": "yarn link:node_modules && appcenter codepush release-react -a yunchanpark/crawl_ios -d Production && yarn delete:node_modules"
+        "code-push:dev": "yarn delete:node_modules && yarn link:node_modules && appcenter codepush release-react -a yunchanpark/crawl_ios -d Dev",
+        "code-push:prod": "yarn delete:node_modules && yarn link:node_modules && appcenter codepush release-react -a yunchanpark/crawl_ios -d Production "
     },
     "dependencies": {
         "@crawl/async-boundary": "workspace:^",
