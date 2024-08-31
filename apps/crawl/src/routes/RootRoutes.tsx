@@ -47,6 +47,8 @@ import { TermsOfUseHeader } from '@/pages/me/Terms/TermsOfUse/header';
 import TermsOfUsePage from '@/pages/me/Terms/TermsOfUse/page';
 import { PushLogList, PushLogListHeader } from '@/pages/notification/PushLogList';
 import { SharePostUpdatePostPage, SharePostUpdatePosteHeader } from '@/pages/share-post/UpdatePost';
+import { WebviewListHeader } from '@/pages/webview/header';
+import WebviewPage from '@/pages/webview/page';
 import type { RootRoutesParamList } from '@/types/routes/param-list';
 import Notifee from '@/utils/notification/notifee';
 
@@ -229,6 +231,8 @@ export default function RootRoutes({ navigationRef }: RootRoutesProps) {
                     options={{ header: CalendarDetailHeader }}
                 />
                 {/* 다이어리 끝 */}
+
+                <Stack.Screen name="webview" component={WebviewPage} options={{ header: WebviewListHeader }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

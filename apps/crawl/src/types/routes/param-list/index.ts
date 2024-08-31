@@ -1,4 +1,5 @@
 import type { NavigatorScreenParams } from '@react-navigation/native';
+import type { WebViewProps } from 'react-native-webview';
 
 import type { SignInParams } from '../params/auth';
 import type { CalendarDetailParams, EntityDetailParams, EntityUpdateParams } from '../params/diary';
@@ -45,6 +46,8 @@ type RootRoutesParamList = {
     // Calendar
     'calendar/create': undefined;
     'calendar/detail': CalendarDetailParams;
+
+    webview: WebViewProps;
 };
 
 export type { RootRoutesParamList };

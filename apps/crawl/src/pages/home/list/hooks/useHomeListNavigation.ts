@@ -62,6 +62,12 @@ export default function useHomeListNavigation() {
         });
     }, [navigation]);
 
+    const navigationGoogleFormWebview = useCallback(() => {
+        navigation.navigate('webview', {
+            source: { uri: 'https://forms.gle/jA8Kv7tQVBh6JMbx6' },
+        });
+    }, [navigation]);
+
     return useMemo(
         () => ({
             navigateSharePost,
@@ -69,7 +75,15 @@ export default function useHomeListNavigation() {
             navigateEntityDetail,
             navigationPostDetail,
             navigationEntityCreate,
+            navigationGoogleFormWebview,
         }),
-        [navigateDiary, navigateEntityDetail, navigateSharePost, navigationEntityCreate, navigationPostDetail],
+        [
+            navigateDiary,
+            navigateEntityDetail,
+            navigateSharePost,
+            navigationEntityCreate,
+            navigationGoogleFormWebview,
+            navigationPostDetail,
+        ],
     );
 }

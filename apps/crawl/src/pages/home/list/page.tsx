@@ -1,5 +1,6 @@
 import { Typo, color } from '@crawl/design-system';
 import { ErrorBoundary } from '@crawl/error-boundary';
+import { Image } from 'expo-image';
 import React, { Suspense, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -14,7 +15,7 @@ import EntityListSkeleton from './loading/EntitySkeleton';
 import SharePostSkeleton from './loading/SharePostSkeleton';
 
 import useFetchPushReadCheck from '@/apis/notification/push/hooks/queries/useFetchPushReadCheck';
-import { NotificationIcon } from '@/assets/icons';
+import { Fire, NotificationIcon, Reptile } from '@/assets/icons';
 import { ConditionalRenderer } from '@/components/@common/atoms';
 import withPageHeaderUpdate from '@/components/withPageHeaderUpdate';
 import { useAuth } from '@/hooks/auth';
@@ -25,7 +26,8 @@ const HomeListPage = withPageHeaderUpdate<HomeListPageScreenProp>(
     () => {
         const { imageWidth, marginHorizontal, offset, sharePostHeight, gap } = useCalcCarouselSize();
 
-        const { navigateDiary, navigateEntityDetail, navigateSharePost, navigationPostDetail } = useHomeListNavigation();
+        const { navigateDiary, navigateEntityDetail, navigateSharePost, navigationPostDetail, navigationGoogleFormWebview } =
+            useHomeListNavigation();
 
         return (
             <ScrollView
@@ -37,7 +39,9 @@ const HomeListPage = withPageHeaderUpdate<HomeListPageScreenProp>(
                 <View style={styles.container}>
                     <View>
                         <View style={styles.title}>
-                            <Typo variant="title2">최근 일상 🔥</Typo>
+                            <Typo variant="title2">
+                                최근 일상 <Fire />
+                            </Typo>
                             <TouchableOpacity onPress={navigateSharePost}>
                                 <Typo variant="title3" color="primary">
                                     전체보기
@@ -57,9 +61,16 @@ const HomeListPage = withPageHeaderUpdate<HomeListPageScreenProp>(
                             />
                         </Suspense>
                     </View>
+
+                    <TouchableOpacity onPress={navigationGoogleFormWebview}>
+                        <Image source={require('@/assets/images/reptile_story.png')} style={styles.bannerImage} />
+                    </TouchableOpacity>
+
                     <View>
                         <View style={styles.title}>
-                            <Typo variant="title2">개체 관리 🦎</Typo>
+                            <Typo variant="title2">
+                                개체 관리 <Reptile />
+                            </Typo>
                             <TouchableOpacity onPress={navigateDiary}>
                                 <Typo variant="title3" color="primary">
                                     전체보기
@@ -141,7 +152,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 20,
         paddingHorizontal: 20,
     },
     imageBorder: {
@@ -158,6 +168,10 @@ const styles = StyleSheet.create({
         width: 8,
         top: 0,
         right: 1,
+    },
+    bannerImage: {
+        width: '100%',
+        aspectRatio: '720/173',
     },
 });
 
