@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import type {
     GestureUpdateEvent,
     PanGestureHandlerEventPayload,
@@ -59,59 +59,62 @@ export const useGestures = ({
         }
     };
 
-    const getTranslate = ({
-        translateX,
-        translateY,
-        focalX,
-        focalY,
-    }: {
-        translateX: number;
-        translateY: number;
-        focalX: number;
-        focalY: number;
-    }) => {
-        'worklet';
-        const clampedScale = Math.min(Math.max(1, scale.value), maxScale);
-        const scaleWidth = (imageSize.width * clampedScale - imageSize.width) / 2;
-        const scaleHeight = (imageSize.height * clampedScale - imageSize.height) / 2;
+    const getTranslate = useCallback(
+        ({
+            translateX,
+            translateY,
+            focalX,
+            focalY,
+        }: {
+            translateX: number;
+            translateY: number;
+            focalX: number;
+            focalY: number;
+        }) => {
+            'worklet';
+            const clampedScale = Math.min(Math.max(1, scale.value), maxScale);
+            const scaleWidth = (imageSize.width * clampedScale - imageSize.width) / 2;
+            const scaleHeight = (imageSize.height * clampedScale - imageSize.height) / 2;
 
-        const leftTranslateX = scaleWidth;
-        const rightTranslateX = -(imageSize.width - screenSize.width + scaleWidth);
+            const leftTranslateX = scaleWidth;
+            const rightTranslateX = -(imageSize.width - screenSize.width + scaleWidth);
 
-        const topTranslateY = scaleHeight;
-        const bottomTranslateY = -(imageSize.height - screenSize.height + scaleHeight);
+            const topTranslateY = scaleHeight;
+            const bottomTranslateY = -(imageSize.height - screenSize.height + scaleHeight);
 
-        const changeTranslateX = Math.max(rightTranslateX, Math.min(leftTranslateX, translateX));
-        const changeTranslateY = Math.max(bottomTranslateY, Math.min(topTranslateY, translateY));
+            const changeTranslateX = Math.max(rightTranslateX, Math.min(leftTranslateX, translateX));
+            const changeTranslateY = Math.max(bottomTranslateY, Math.min(topTranslateY, translateY));
 
-        const changeFocal = {
-            x: focalX,
-            y: focalY,
-        };
+            const changeFocal = {
+                x: focalX,
+                y: focalY,
+            };
 
-        if (changeTranslateX + focalX > leftTranslateX) {
-            changeFocal.x = leftTranslateX - changeTranslateX;
-        } else if (changeTranslateX + focalX < rightTranslateX) {
-            changeFocal.x = rightTranslateX - changeTranslateX;
-        }
+            if (changeTranslateX + focalX > leftTranslateX) {
+                changeFocal.x = leftTranslateX - changeTranslateX;
+            } else if (changeTranslateX + focalX < rightTranslateX) {
+                changeFocal.x = rightTranslateX - changeTranslateX;
+            }
 
-        if (changeTranslateY + focalY > topTranslateY) {
-            changeFocal.y = topTranslateY - changeTranslateY;
-        } else if (changeTranslateY + focalY < bottomTranslateY) {
-            changeFocal.y = bottomTranslateY - changeTranslateY;
-        }
+            if (changeTranslateY + focalY > topTranslateY) {
+                changeFocal.y = topTranslateY - changeTranslateY;
+            } else if (changeTranslateY + focalY < bottomTranslateY) {
+                changeFocal.y = bottomTranslateY - changeTranslateY;
+            }
 
-        return {
-            scaleWidth,
-            scaleHeight,
-            clampedScale,
-            changeTranslateX,
-            changeTranslateY,
-            changeFocal,
-        };
-    };
+            return {
+                scaleWidth,
+                scaleHeight,
+                clampedScale,
+                changeTranslateX,
+                changeTranslateY,
+                changeFocal,
+            };
+        },
+        [imageSize.height, imageSize.width, maxScale, scale.value, screenSize.height, screenSize.width],
+    );
 
-    const onInteractionEnded = () => {
+    const onInteractionEnded = useCallback(() => {
         if (isInteracting.current && !isPinching.current && !isPanning.current) {
             isInteracting.current = false;
 
@@ -162,7 +165,23 @@ export const useGestures = ({
                 },
             });
         }
-    };
+    }, [
+        focal.x,
+        focal.y,
+        getTranslate,
+        imageSize.height,
+        imageSize.width,
+        imageUri,
+        onInteractionEnd,
+        originImageSize.height,
+        originImageSize.width,
+        scale,
+        screenSize.height,
+        screenSize.width,
+        translate.x,
+        translate.y,
+        viewRatio,
+    ]);
 
     const onPinchStarted = () => {
         onInteractionStarted();
@@ -251,6 +270,50 @@ export const useGestures = ({
     }));
 
     const gestures = Gesture.Simultaneous(pinchGesture, panGesture);
+
+    // 초기값 설정 로직
+    useEffect(() => {
+        if (initial) {
+            translate.x.value = initial.x;
+            translate.y.value = initial.y;
+            focal.x.value = initial.focalX;
+            focal.y.value = initial.focalY;
+            scale.value = initial.scale;
+        } else {
+            // 기본 크기 및 위치 설정
+            const defaultScale = minScale;
+            scale.value = defaultScale;
+
+            const defaultTranslateX = (screenSize.width - originImageSize.width * defaultScale) / 2;
+            const defaultTranslateY = (screenSize.height - originImageSize.height * defaultScale) / 2;
+
+            translate.x.value = defaultTranslateX;
+            translate.y.value = defaultTranslateY;
+
+            focal.x.value = center.x;
+            focal.y.value = center.y;
+        }
+
+        // 기본 설정이 완료된 후 호출
+        onInteractionEnd?.(imageUri, {
+            size: {
+                width: originImageSize.width / scale.value,
+                height: originImageSize.height / scale.value,
+            },
+            offset: {
+                x: translate.x.value,
+                y: translate.y.value,
+            },
+            translation: {
+                x: translate.x.value,
+                y: translate.y.value,
+                focalX: focal.x.value,
+                focalY: focal.y.value,
+                scale: scale.value,
+            },
+        });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [imageUri]);
 
     return { gestures, animatedStyle };
 };
