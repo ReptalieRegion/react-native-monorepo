@@ -13,7 +13,6 @@ export function useCreatePostActions() {
 
     const setCropInfo = useCallback(
         (uri: string, cropInfo: CropInfo) => {
-            console.log(uri, cropInfo);
             dispatch({ type: 'SET_CROP_INFO', uri, cropInfo });
         },
         [dispatch],
